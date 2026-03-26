@@ -1,0 +1,793 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Spacing",
+    "file": "Spacing",
+    "generatedAt": "2025-12-30T08:44:12.214Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Spacing component"
+    ],
+    "componentCount": 3,
+    "elementCount": 8
+  },
+  "components": [
+    {
+      "key": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "name": ".SpacerСell",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "SpacerСell",
+      "defaultVariant": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "variantStructures": {
+        "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc": []
+      },
+      "variants": [
+        {
+          "id": "6:881",
+          "key": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+          "name": ".SpacerСell"
+        }
+      ]
+    },
+    {
+      "key": "d87c34e9e898529e807141865c2d4ae0883e5a8f",
+      "name": "↔ SpacingHorizontal",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Shift+ctrl+4 чтобы увидеть заливку. Можно тянуть вверх и вниз.",
+      "category": "SpacingHorizontal",
+      "defaultVariant": "a7473d403b0868186e3866a4fd52e8d7a5f53f7a",
+      "variantStructures": {
+        "a7473d403b0868186e3866a4fd52e8d7a5f53f7a": [],
+        "2d8aa95c8cb69a9b0bf04aabb397105f81a32cd6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=2"
+            }
+          }
+        ],
+        "382e2f356e70196e3ebd168da57c3c0aa05e1207": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=4"
+            }
+          }
+        ],
+        "7aadbe89248e8e0b25857ef18550918b42577d30": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=6"
+            }
+          }
+        ],
+        "6c18f853032b17780d357be8d61659a3c19a330d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=8"
+            }
+          }
+        ],
+        "9940e5f115e082c54b7eb2b1a3ab1c5cbce65a6d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=12"
+            }
+          }
+        ],
+        "793e5c374a5c2b208a7203535880d3d4cc3c795a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=16",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "0594b3881f4fffca997c590d564996f9d29f6e03": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=20"
+            }
+          }
+        ],
+        "498c9fac2bca51a9ee75d4d01f9e8faf647a62e4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=24"
+            }
+          }
+        ],
+        "f167a0adb3a6aa72aeb080b97a249e189dc5f368": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=32"
+            }
+          }
+        ],
+        "56fe477ee48ce0c2c9d0e07cfaa1297ab89dff1c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=40"
+            }
+          }
+        ],
+        "ef4b569633d0836a98c05322c7dad782a183eb6d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=48"
+            }
+          }
+        ],
+        "d7bebb331a11d7f3b016943b81fc832838967d82": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=56"
+            }
+          }
+        ],
+        "e0cf70643dc7cd6a7ee9aae6cef6ccb2bcfe1e7d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=64"
+            }
+          }
+        ],
+        "dccb4d1e49eff989310829d7b61a10f05d020872": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=72"
+            }
+          }
+        ],
+        "b349db5ce91a6488aac4567042006787715713ef": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=80"
+            }
+          }
+        ],
+        "195cfdb057e7f9da840c500c4a78961d03d4741a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=96"
+            }
+          }
+        ],
+        "52f6b3174b65f7d4e91e449fadcb749d8ec9ddcc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=128",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "101157423ff306710c8546e3c22f751f9579b972": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=256",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "7de9f988221a271c546d770ae7c91cc90d42a806": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Fill"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "6:4949",
+          "key": "a7473d403b0868186e3866a4fd52e8d7a5f53f7a",
+          "name": "Size=1"
+        },
+        {
+          "id": "6:850",
+          "key": "2d8aa95c8cb69a9b0bf04aabb397105f81a32cd6",
+          "name": "Size=2"
+        },
+        {
+          "id": "6:852",
+          "key": "382e2f356e70196e3ebd168da57c3c0aa05e1207",
+          "name": "Size=4"
+        },
+        {
+          "id": "6:4951",
+          "key": "7aadbe89248e8e0b25857ef18550918b42577d30",
+          "name": "Size=6"
+        },
+        {
+          "id": "6:854",
+          "key": "6c18f853032b17780d357be8d61659a3c19a330d",
+          "name": "Size=8"
+        },
+        {
+          "id": "6:856",
+          "key": "9940e5f115e082c54b7eb2b1a3ab1c5cbce65a6d",
+          "name": "Size=12"
+        },
+        {
+          "id": "6:858",
+          "key": "793e5c374a5c2b208a7203535880d3d4cc3c795a",
+          "name": "Size=16"
+        },
+        {
+          "id": "6:860",
+          "key": "0594b3881f4fffca997c590d564996f9d29f6e03",
+          "name": "Size=20"
+        },
+        {
+          "id": "6:862",
+          "key": "498c9fac2bca51a9ee75d4d01f9e8faf647a62e4",
+          "name": "Size=24"
+        },
+        {
+          "id": "6:864",
+          "key": "f167a0adb3a6aa72aeb080b97a249e189dc5f368",
+          "name": "Size=32"
+        },
+        {
+          "id": "6:866",
+          "key": "56fe477ee48ce0c2c9d0e07cfaa1297ab89dff1c",
+          "name": "Size=40"
+        },
+        {
+          "id": "6:868",
+          "key": "ef4b569633d0836a98c05322c7dad782a183eb6d",
+          "name": "Size=48"
+        },
+        {
+          "id": "7:432",
+          "key": "d7bebb331a11d7f3b016943b81fc832838967d82",
+          "name": "Size=56"
+        },
+        {
+          "id": "6:870",
+          "key": "e0cf70643dc7cd6a7ee9aae6cef6ccb2bcfe1e7d",
+          "name": "Size=64"
+        },
+        {
+          "id": "6:872",
+          "key": "dccb4d1e49eff989310829d7b61a10f05d020872",
+          "name": "Size=72"
+        },
+        {
+          "id": "7:434",
+          "key": "b349db5ce91a6488aac4567042006787715713ef",
+          "name": "Size=80"
+        },
+        {
+          "id": "6:874",
+          "key": "195cfdb057e7f9da840c500c4a78961d03d4741a",
+          "name": "Size=96"
+        },
+        {
+          "id": "6:876",
+          "key": "52f6b3174b65f7d4e91e449fadcb749d8ec9ddcc",
+          "name": "Size=128"
+        },
+        {
+          "id": "7:440",
+          "key": "101157423ff306710c8546e3c22f751f9579b972",
+          "name": "Size=256"
+        },
+        {
+          "id": "6:878",
+          "key": "7de9f988221a271c546d770ae7c91cc90d42a806",
+          "name": "Size=Fill"
+        }
+      ]
+    },
+    {
+      "key": "2038eba49b808faf3f35b4c9e57166f366e2660b",
+      "name": "↕ SpacingVertical",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Shift+ctrl+4 чтобы увидеть заливку. Можно тянуть влево и вправо.",
+      "category": "SpacingVertical",
+      "defaultVariant": "92e8a83bcddf8c7843fa1390810e41c9140b7214",
+      "variantStructures": {
+        "92e8a83bcddf8c7843fa1390810e41c9140b7214": [],
+        "334a9d5a0f567f14cd5730c1b735de4d689cc103": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=2"
+            }
+          }
+        ],
+        "ebd3cacd0284a8f9bafab96399e1353c3dead84c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=4"
+            }
+          }
+        ],
+        "c9332f6f108a9a87091d0bbfa29f6a7ba16f0176": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=6"
+            }
+          }
+        ],
+        "71146279f8df2164da2be60f3403dd21fc383a49": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=8"
+            }
+          }
+        ],
+        "e20ee33385ac041ce04e356b5ba698cad16e18d5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=12"
+            }
+          }
+        ],
+        "452ccc2cfcaa139709c7538d175c592b00232332": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=16"
+            }
+          }
+        ],
+        "d286c770f0a92c0d865b594890c64061744f37c6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=20"
+            }
+          }
+        ],
+        "508d47492708bb3aaf5971a85357be62b7ccbfc3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=24"
+            }
+          }
+        ],
+        "49a470db9fbf5e656508d3ace1a3dda30c0f2702": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=32"
+            }
+          }
+        ],
+        "d9ff997b66740aeae4839862e3cce64981951db4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=40"
+            }
+          }
+        ],
+        "588035337fac15a2cd4ec2edcbdde2dd38e9bc47": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=48"
+            }
+          }
+        ],
+        "70efb97c744bb8595e464277d59e46497cf346b8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=56"
+            }
+          }
+        ],
+        "34889b4e849ea298e6c2bc286cfe45654d79defc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=64"
+            }
+          }
+        ],
+        "51f1507a5fa833b405f1186ce9756bb56fefc23c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=72"
+            }
+          }
+        ],
+        "79470223d0f978a61aaf9865ed870e5a7a77d689": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=80"
+            }
+          }
+        ],
+        "274dad253ab3c08e8a6ceba4e737403750deb038": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=96"
+            }
+          }
+        ],
+        "06ea28380b5b9352634e372fca482b3f3688b8da": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=128"
+            }
+          }
+        ],
+        "1c029b150aeef3149495be23c5b1548ea40bee79": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=256"
+            }
+          }
+        ],
+        "ed2738a11a3989a5be0e04f7be847fb49297f912": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Fill"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "6:819",
+          "key": "92e8a83bcddf8c7843fa1390810e41c9140b7214",
+          "name": "Size=1"
+        },
+        {
+          "id": "6:4743",
+          "key": "334a9d5a0f567f14cd5730c1b735de4d689cc103",
+          "name": "Size=2"
+        },
+        {
+          "id": "6:821",
+          "key": "ebd3cacd0284a8f9bafab96399e1353c3dead84c",
+          "name": "Size=4"
+        },
+        {
+          "id": "6:4745",
+          "key": "c9332f6f108a9a87091d0bbfa29f6a7ba16f0176",
+          "name": "Size=6"
+        },
+        {
+          "id": "6:823",
+          "key": "71146279f8df2164da2be60f3403dd21fc383a49",
+          "name": "Size=8"
+        },
+        {
+          "id": "6:825",
+          "key": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+          "name": "Size=12"
+        },
+        {
+          "id": "6:827",
+          "key": "452ccc2cfcaa139709c7538d175c592b00232332",
+          "name": "Size=16"
+        },
+        {
+          "id": "6:829",
+          "key": "d286c770f0a92c0d865b594890c64061744f37c6",
+          "name": "Size=20"
+        },
+        {
+          "id": "6:831",
+          "key": "508d47492708bb3aaf5971a85357be62b7ccbfc3",
+          "name": "Size=24"
+        },
+        {
+          "id": "6:833",
+          "key": "49a470db9fbf5e656508d3ace1a3dda30c0f2702",
+          "name": "Size=32"
+        },
+        {
+          "id": "6:835",
+          "key": "d9ff997b66740aeae4839862e3cce64981951db4",
+          "name": "Size=40"
+        },
+        {
+          "id": "6:837",
+          "key": "588035337fac15a2cd4ec2edcbdde2dd38e9bc47",
+          "name": "Size=48"
+        },
+        {
+          "id": "6:4904",
+          "key": "70efb97c744bb8595e464277d59e46497cf346b8",
+          "name": "Size=56"
+        },
+        {
+          "id": "6:839",
+          "key": "34889b4e849ea298e6c2bc286cfe45654d79defc",
+          "name": "Size=64"
+        },
+        {
+          "id": "6:841",
+          "key": "51f1507a5fa833b405f1186ce9756bb56fefc23c",
+          "name": "Size=72"
+        },
+        {
+          "id": "6:4906",
+          "key": "79470223d0f978a61aaf9865ed870e5a7a77d689",
+          "name": "Size=80"
+        },
+        {
+          "id": "6:843",
+          "key": "274dad253ab3c08e8a6ceba4e737403750deb038",
+          "name": "Size=96"
+        },
+        {
+          "id": "6:845",
+          "key": "06ea28380b5b9352634e372fca482b3f3688b8da",
+          "name": "Size=128"
+        },
+        {
+          "id": "7:438",
+          "key": "1c029b150aeef3149495be23c5b1548ea40bee79",
+          "name": "Size=256"
+        },
+        {
+          "id": "6:4908",
+          "key": "ed2738a11a3989a5be0e04f7be847fb49297f912",
+          "name": "Size=Fill"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": ".SpacerСell",
+      "type": "COMPONENT",
+      "componentKey": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": ".SpacerСell / bg",
+      "type": "RECTANGLE",
+      "componentKey": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(248,207,208,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": ".SpacerСell / size",
+      "type": "TEXT",
+      "componentKey": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "4"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 18,
+        "lineHeight": 20,
+        "letterSpacing": 0.30000001192092896
+      }
+    },
+    {
+      "id": 4,
+      "path": ".SpacerСell / name",
+      "type": "TEXT",
+      "componentKey": "b3f45f64aec7a23b5ccacadea6d7bca8a6337bfc",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "2xs"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.30000001192092896
+      }
+    },
+    {
+      "id": 1,
+      "path": "↔ SpacingHorizontal / Size=1",
+      "type": "COMPONENT",
+      "componentKey": "d87c34e9e898529e807141865c2d4ae0883e5a8f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "↔ SpacingHorizontal / Size=1 / Fixer",
+      "type": "FRAME",
+      "componentKey": "d87c34e9e898529e807141865c2d4ae0883e5a8f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "↕ SpacingVertical / Size=1",
+      "type": "COMPONENT",
+      "componentKey": "2038eba49b808faf3f35b4c9e57166f366e2660b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "↕ SpacingVertical / Size=1 / Fixer",
+      "type": "FRAME",
+      "componentKey": "2038eba49b808faf3f35b4c9e57166f366e2660b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

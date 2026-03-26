@@ -49,12 +49,8 @@ figma.ui.onmessage = (msg) => {
   }
 
   if (msg.type === 'scan-selection') {
-    try {
-      console.log('audit start');
-      runAudit();
-    } catch (error) {
-      console.error('scan failed', error);
-    }
+    console.log('audit start');
+    void runAudit();
     return;
   }
 
@@ -81,6 +77,13 @@ let catalogPreloadFinished = false;
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
+
+class AuditCancelledError extends Error {
+  constructor() {
+    super('AUDIT_CANCELLED');
+    this.name = 'AuditCancelledError';
+  }
+}
 
 export const getTimestamp = () =>
   typeof performance !== 'undefined' && performance.now
@@ -136,14 +139,10 @@ async function runAudit() {
     );
   };
 
-  const abortIfNeeded = () => {
+  const throwIfCancelled = () => {
     if (cancelRequested) {
-      finalize('cancelled');
-
-      return true;
+      throw new AuditCancelledError();
     }
-
-    return false;
   };
 
   try {
@@ -154,8 +153,14 @@ async function runAudit() {
     await ensureReferenceCatalogsLoaded();
     await ensureTokenLabelMapLoaded();
     await ensureStyleLabelMapLoaded();
+    throwIfCancelled();
 
   } catch (error) {
+    if (error instanceof AuditCancelledError) {
+      finalize('cancelled');
+      return;
+    }
+
     console.error('Failed to load reference catalogs', error);
 
     const message =
@@ -171,6 +176,8 @@ async function runAudit() {
   }
 
   try {
+    throwIfCancelled();
+
     const selection = figma.currentPage.selection;
 
     if (selection.length === 0) {
@@ -199,7 +206,15 @@ async function runAudit() {
       tokenColorMap: tokenColorMap ?? new Map(),
     };
 
-    await collectTargets(selection, checkState, referenceStructureCache, customStyleReasonOptions, textNodeOptions, checkedComponentNodesList );
+    await collectTargets(
+      selection,
+      checkState,
+      referenceStructureCache,
+      customStyleReasonOptions,
+      textNodeOptions,
+      checkedComponentNodesList,
+      throwIfCancelled,
+    );
     
     if (checkState.totalItems === 0) {
       const message = 'Компоненты или инстансы в выделении не найдены.';
@@ -209,9 +224,7 @@ async function runAudit() {
       figma.ui.postMessage({ type: 'scan-error', payload: { message } });
     }
 
-    if (abortIfNeeded()) {
-      return;
-    }
+    throwIfCancelled();
 
     const changesResults = computeChangesResults(checkState.relevanceBuckets.current);
 
@@ -257,6 +270,11 @@ async function runAudit() {
     });
     finalize('finished');
   } catch (error) {
+    if (error instanceof AuditCancelledError) {
+      finalize('cancelled');
+      return;
+    }
+
     console.error('Unhandled error during audit', error);
 
     const message = 'Не удалось завершить проверку. Подробности в консоли.';
@@ -297,8 +315,11 @@ async function collectTargets(
   customStyleReasonOptions: CustomStyleCollectionOptions,
   textOptions: TextNodeCollectionOptions,
   checkedComponentNodesList: Set<string>,
+  throwIfCancelled: () => void,
 ) {
   const visit = async (node: SceneNode): Promise<void> => {
+      throwIfCancelled();
+
       if (!node.visible) {
         return;
       }
@@ -306,7 +327,13 @@ async function collectTargets(
       const nodeIsComponent = node.type === 'INSTANCE' || node.type === 'COMPONENT'
 
       if (nodeIsComponent) {
-        const item = await classifyNode(node, referenceStructureCache, checkedComponentNodesList);
+        const item = await classifyNode(
+          node,
+          referenceStructureCache,
+          checkedComponentNodesList,
+          throwIfCancelled,
+        );
+        throwIfCancelled();
 
         checkState.totalItems++;
 
@@ -360,12 +387,14 @@ async function collectTargets(
 
       if ('children' in node && node.children.length > 0) {
         for (const child of node.children) {
+          throwIfCancelled();
           await visit(child as SceneNode);
         }
       }
   };
 
   for (const node of selection) {
+    throwIfCancelled();
     await visit(node as SceneNode);
   }
 }
@@ -377,8 +406,10 @@ async function collectTargets(
 async function classifyNode(
   node: SceneNode,
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
-  checkedComponentNodesList: Set<string>
+  checkedComponentNodesList: Set<string>,
+  throwIfCancelled: () => void,
 ): Promise<AuditItem> {
+  throwIfCancelled();
   const nodeSegments = buildNodeSegments(node);
 
   const pathSegments =
@@ -391,6 +422,7 @@ async function classifyNode(
   const pageName = getPageName(node);
   const fullPath = buildNodePath(node);
   const componentKey = await getComponentKey(node);
+  throwIfCancelled();
   const ref = componentKey ? findComponent(componentKey): null;
 
   if (!componentKey || !ref) {
@@ -443,6 +475,7 @@ async function classifyNode(
     needsDiff && (ref?.status !== 'current' || instanceHasOverrides);
   const actualStructure =
     shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
+  throwIfCancelled();
   const alignedActualStructure =
     referenceStructure && actualStructure
       ? alignStructurePaths(actualStructure, referenceStructure)

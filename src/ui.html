@@ -192,105 +192,6 @@
         flex-direction: column;
         min-height: 0;
       }
-      .gpt-card {
-        margin: 16px 20px 0;
-        padding: 16px;
-        border-radius: 16px;
-        border: 1px solid #eaecf0;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
-        transition:
-          opacity 0.15s ease,
-          max-height 0.15s ease;
-      }
-      .gpt-card.hidden {
-        display: none;
-      }
-      .gpt-card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .gpt-card-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #0f172a;
-      }
-      .gpt-fill-button,
-      .gpt-submit-button {
-        border: none;
-        border-radius: 999px;
-        padding: 6px 16px;
-        font-size: 12px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background 0.15s ease;
-      }
-      .gpt-fill-button {
-        background: #e5e7f0;
-        color: #111;
-      }
-      .gpt-fill-button:hover {
-        background: #d5d8e6;
-      }
-      .gpt-actions {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      .gpt-submit-button {
-        background: #0f0f0f;
-        color: #fff;
-      }
-      .gpt-submit-button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-      .gpt-input,
-      .gpt-result,
-      .gpt-folder-input {
-        width: 100%;
-        font-size: 14px;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid #d1d5db;
-        font-family: inherit;
-        background: #f9fafb;
-        color: #111;
-        resize: vertical;
-      }
-      .gpt-input {
-        min-height: 110px;
-      }
-      .gpt-result {
-        min-height: 80px;
-        background: #fff;
-        border-radius: 12px;
-      }
-      .gpt-folder-input {
-        min-height: 0;
-        resize: none;
-      }
-      .gpt-label {
-        font-size: 12px;
-        color: #6b7280;
-      }
-      .gpt-status {
-        font-size: 12px;
-        color: #6b7280;
-      }
-      .gpt-api-key-input {
-        width: 100%;
-        padding: 10px 14px;
-        border-radius: 12px;
-        border: 1px solid #d1d5db;
-        font-size: 13px;
-        background: #fff;
-      }
 
       /* ======= Карточки и строчка списка ======= */
       /* Эти правила используются и в табе Актуальные компоненты (карточки `result-card`)
@@ -496,34 +397,6 @@
           <div id="tabs"></div>
         </aside>
         <main class="main">
-          <section id="gpt-card" class="gpt-card hidden" hidden aria-hidden="true">
-            <div class="gpt-card-header">
-              <span class="gpt-card-title"
-                >Проверка текстов через Yandex Cloud AI</span
-              >
-              <button
-                id="gpt-fill-button"
-                type="button"
-                class="gpt-fill-button"
-              >
-                Заполнить тексты
-              </button>
-            </div>
-            <div class="gpt-label">Текст для проверки</div>
-            <textarea
-              id="gpt-input"
-              class="gpt-input"
-              placeholder="Скопируйте текст вручную или нажмите «Заполнить тексты»"
-            ></textarea>
-            <div class="gpt-actions">
-              <button id="gpt-submit" type="button" class="gpt-submit-button">
-                Отправить в Yandex
-              </button>
-              <span id="gpt-status" class="gpt-status">Ожидает ввода</span>
-            </div>
-            <div class="gpt-label">Ответ Yandex Cloud AI</div>
-            <div id="gpt-result" class="gpt-result">—</div>
-          </section>
           <div id="results" class="placeholder">Начните со сканирования.</div>
         </main>
       </div>
@@ -652,20 +525,20 @@
         const summaryCountEl = document.getElementById('summary-count');
         const toastEl = document.getElementById('toast');
         const filterVisibleEl = document.getElementById('filter-visible');
-        const gptInputEl = document.getElementById('gpt-input');
-        const gptFillButton = document.getElementById('gpt-fill-button');
-        const gptSubmitButton = document.getElementById('gpt-submit');
-        const gptStatusEl = document.getElementById('gpt-status');
-        const gptResultEl = document.getElementById('gpt-result');
         const filters = {
           visibleOnly: true,
         };
-        let gptRequestInProgress = false;
-        let gptHasManualText = false;
 
         if (scanButton) {
           scanButton.onclick = () => {
-            if (isScanning || !catalogsReady) return;
+            if (isScanning) {
+              parent.postMessage(
+                { pluginMessage: { type: 'cancel-scan' } },
+                '*',
+              );
+              return;
+            }
+            if (!catalogsReady) return;
             parent.postMessage(
               { pluginMessage: { type: 'scan-selection' } },
               '*',
@@ -694,8 +567,6 @@
         initFilterControls();
         setScanningState(false);
 
-        initGptControls();
-
         /* ========== Инициализация фильтров и событий ======= */
         /**
          * Инициализирует UI-фильтры и заставляет список перерисовываться и обновлять бейджи.
@@ -708,24 +579,6 @@
               filters.visibleOnly = filterVisibleEl.checked;
               renderList();
               updateActiveTabClasses();
-            });
-          }
-        }
-
-        function initGptControls() {
-          if (gptFillButton instanceof HTMLButtonElement) {
-            gptFillButton.addEventListener('click', () => {
-              fillGptTextFromResults({ manualTrigger: true });
-            });
-          }
-          if (gptInputEl instanceof HTMLTextAreaElement) {
-            gptInputEl.addEventListener('input', () => {
-              gptHasManualText = true;
-            });
-          }
-          if (gptSubmitButton instanceof HTMLButtonElement) {
-            gptSubmitButton.addEventListener('click', () => {
-              triggerGptRequest();
             });
           }
         }
@@ -1254,88 +1107,10 @@
          * Формирует список инстансов с реальными diff-ами и без ошибок темизации,
          * чтобы таб «Кастомизация» показывал только актуальные расхождения.
          */
-        function tryUpdateGptStatus(status) {
-          if (gptStatusEl) {
-            gptStatusEl.textContent = status;
-          }
-        }
-
-        // Собирает текстовые узлы из payload-а и наполняет GPT-панель, даже без видимого таба.
-        function fillGptTextFromResults({ manualTrigger = false } = {}) {
-          if (!gptInputEl) return;
-          const nodes = currentResults?.views?.textAll ?? [];
-          if (!nodes.length) {
-            gptInputEl.value = '';
-            gptHasManualText = manualTrigger;
-            return;
-          }
-          const aggregated = nodes
-            .map((node, index) => {
-              const text =
-                typeof node.value === 'string' && node.value.trim()
-                  ? node.value.trim()
-                  : node.name || 'Текст';
-              return `${index + 1}. ${text}`;
-            })
-            .join('\n\n');
-          gptInputEl.value = aggregated;
-          gptHasManualText = manualTrigger;
-        }
-
-        function triggerGptRequest() {
-          if (!gptInputEl || !gptSubmitButton) return;
-          const text = gptInputEl.value?.trim();
-          if (gptRequestInProgress) {
-            tryUpdateGptStatus('Запрос уже выполняется');
-            return;
-          }
-          if (!text) {
-            tryUpdateGptStatus('Введите текст для проверки');
-            return;
-          }
-          gptRequestInProgress = true;
-          gptSubmitButton.disabled = true;
-          tryUpdateGptStatus('Отправлено, ждём ответа…');
-          parent.postMessage(
-            {
-              pluginMessage: {
-                type: 'gpt-request',
-                payload: {
-                  prompt: text,
-                },
-              },
-            },
-            '*',
-          );
-        }
-
         function setScanningState(active) {
           isScanning = active;
           refreshScanButton();
           updateLoaderVisibility();
-        }
-
-        function handleGptResponse(text) {
-          console.log('apollo ui response', { text });
-          if (gptResultEl) {
-            gptResultEl.textContent = text || '—';
-          }
-          gptRequestInProgress = false;
-          if (gptSubmitButton instanceof HTMLButtonElement) {
-            gptSubmitButton.disabled = false;
-          }
-          tryUpdateGptStatus('Получен ответ');
-        }
-
-        function handleGptError(message) {
-          if (gptResultEl) {
-            gptResultEl.textContent = '—';
-          }
-          gptRequestInProgress = false;
-          if (gptSubmitButton instanceof HTMLButtonElement) {
-            gptSubmitButton.disabled = false;
-          }
-          tryUpdateGptStatus(message || 'Ошибка при запросе');
         }
 
         function getItemLibraryName(item) {
@@ -1396,9 +1171,23 @@
             updateSnapshotButton();
           }
 
-          if (msg.type === 'scan-finished' || msg.type === 'scan-cancelled') {
+          if (msg.type === 'scan-finished') {
             setScanningState(false);
             updateSnapshotButton();
+            return;
+          }
+
+          if (msg.type === 'scan-cancelled') {
+            setScanningState(false);
+            updateSnapshotButton();
+            showToast('Проверка остановлена');
+            if (currentResults) {
+              renderList();
+            } else if (listContainer) {
+              listContainer.innerHTML =
+                '<div class="placeholder">Проверка остановлена.</div>';
+            }
+            return;
           }
 
           if (msg.type === 'scan-result') {
@@ -1412,9 +1201,7 @@
             showToast(
               `Проверено компонентов: ${currentResults.summary.totalTargets}`,
             );
-            if (!gptHasManualText) {
-              fillGptTextFromResults();
-            }
+            return;
           }
 
           if (msg.type === 'scan-error') {
@@ -1422,14 +1209,7 @@
             snapshotReady = false;
             scanCompleted = false;
             updateSnapshotButton();
-          }
-
-          if (msg.type === 'gpt-response') {
-            handleGptResponse(msg.payload?.text ?? '');
-          }
-
-          if (msg.type === 'gpt-error') {
-            handleGptError(msg.payload?.message ?? '');
+            return;
           }
 
           if (msg.type === 'catalog-file-loaded') {

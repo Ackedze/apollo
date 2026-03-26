@@ -60,7 +60,7 @@
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
 
 ## Источники данных
-Плагин работает с JSON-справочниками в [`JSON`](./JSON), а в рантайме берёт список источников с GitHub Pages:
+Плагин работает с JSON-справочниками в [`JSONS`](./JSONS), а в рантайме берёт список источников с GitHub Pages:
 
 - основной URL: `https://ackedze.github.io/apollo/JSONS/referenceSourcesMVP.json`;
 - component/style/token каталоги: пути из этого списка;
@@ -100,7 +100,7 @@
 - [`src/structure`](./src/structure) — snapshot и diff.
 - [`src/services`](./src/services) — подготовка представлений для UI.
 - [`src/utils`](./src/utils) — вспомогательные утилиты.
-- [`JSON`](./JSON) — локальные JSON-артефакты справочников.
+- [`JSONS`](./JSONS) — локальные JSON-артефакты справочников.
 - [`scripts`](./scripts) — служебные скрипты подготовки reference-списка и экспортов.
 
 ## Сборка и запуск

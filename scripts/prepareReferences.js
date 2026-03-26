@@ -9,7 +9,7 @@ const referenceListPath = path.resolve(
 );
 const jsonsPath = path.resolve(
   __dirname,
-  '../JSONS/referenceSourcesMVP.json',
+  '../JSON/referenceSourcesMVP.json',
 );
 
 const DEFAULT_REMOTE_URL =

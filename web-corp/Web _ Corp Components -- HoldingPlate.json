@@ -1,0 +1,501 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:32:14.022Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "HoldingPlate"
+    ],
+    "componentCount": 1,
+    "elementCount": 23
+  },
+  "components": [
+    {
+      "key": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "name": "🔒 HoldingPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HoldingPlate",
+      "defaultVariant": "064735a152a60b891ff5c29e89dbc3a5aae18165",
+      "variants": [
+        {
+          "id": "82459:21200",
+          "key": "064735a152a60b891ff5c29e89dbc3a5aae18165",
+          "name": "width=12 col"
+        },
+        {
+          "id": "82459:21247",
+          "key": "78e90e2195a76567c71dfa5357aefc79b8b9aa93",
+          "name": "width=8 col"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔒 HoldingPlate / width=12 col",
+      "type": "COMPONENT",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(30,43,68,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": false,
+      "layout": {
+        "padding": [
+          4,
+          8,
+          4,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 999
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge / 🔩 Content",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge / 🔩 Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge / 🔩 Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] AddonLeft / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer / 🔩 [D] Main",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer / 🔩 [D] Main / Title",
+      "type": "FRAME",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          12,
+          6,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer / 🔩 [D] Main / Title / Title",
+      "type": "TEXT",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Вы работаете от лица [Название компании]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer / 🔩 [D] Main / Caption",
+      "type": "FRAME",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          4,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Content / Fixer / 🔩 [D] Main / Caption / Caption",
+      "type": "TEXT",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Caption"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          12
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton / Icon",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton / Icon / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 HoldingPlate / width=12 col / [D] Plate / 🔩 [D] Controls / IconButton / Icon / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "2ae29ad1eedf15fcc9cdc927a718121e3595f156",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

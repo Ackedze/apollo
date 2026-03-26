@@ -1,0 +1,3481 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:31:50.114Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "VOC"
+    ],
+    "componentCount": 4,
+    "elementCount": 180
+  },
+  "components": [
+    {
+      "key": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "name": "[D] VOC",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] VOC",
+      "defaultVariant": "f7198e738fea0ea0118eb01fd119924f96e3d697",
+      "variants": [
+        {
+          "id": "44430:34483",
+          "key": "f7198e738fea0ea0118eb01fd119924f96e3d697",
+          "name": "State=Default"
+        },
+        {
+          "id": "44430:34488",
+          "key": "d04df09a038c82a043dd5498046d7e53b00ac83a",
+          "name": "State=Rated"
+        },
+        {
+          "id": "44430:34493",
+          "key": "12dbe53b8c843a3fa31fdce716b119a9e26e8f83",
+          "name": "State=StatusScreen"
+        }
+      ]
+    },
+    {
+      "key": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "name": "[M] VOC",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] VOC",
+      "defaultVariant": "0679ad4f86ea1218f7dd274101f3a0576986fe1e",
+      "variants": [
+        {
+          "id": "44430:34470",
+          "key": "0679ad4f86ea1218f7dd274101f3a0576986fe1e",
+          "name": "Step=Default"
+        },
+        {
+          "id": "44430:34474",
+          "key": "613c9281213e74ac62cf077ad90435e01eb8c095",
+          "name": "Step=Rated"
+        },
+        {
+          "id": "44430:34478",
+          "key": "10cf94a1f4a075ad9282943d316fd5371053c03f",
+          "name": "Step=StatusScreen"
+        }
+      ]
+    },
+    {
+      "key": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "name": "🔩 [D] StarRating",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] StarRating",
+      "defaultVariant": "326498d41733fb574543b4ade41dabf704ef9215",
+      "variants": [
+        {
+          "id": "44430:34433",
+          "key": "326498d41733fb574543b4ade41dabf704ef9215",
+          "name": "Selected=0"
+        },
+        {
+          "id": "44430:34439",
+          "key": "9310956dbe72264f7674c047565a286d93f3cdd5",
+          "name": "Selected=1"
+        },
+        {
+          "id": "44430:34445",
+          "key": "47c0d8668396caf86af32a0219295776790ab89e",
+          "name": "Selected=2"
+        },
+        {
+          "id": "44430:34451",
+          "key": "ed8f50488923bd12d026958229c7ffcb70afe09b",
+          "name": "Selected=3"
+        },
+        {
+          "id": "44430:34457",
+          "key": "6e04d55c5d6656bc7e0cd72a75357f31258eb327",
+          "name": "Selected=4"
+        },
+        {
+          "id": "44430:34463",
+          "key": "12c85ee75637c1696ee82283f725c44f4f13ffa5",
+          "name": "Selected=5"
+        }
+      ]
+    },
+    {
+      "key": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "name": "🔩 [D] Stars",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] Stars",
+      "defaultVariant": "5d767c4bf349ffd82e24bfc9c59d32c6f1c8e26e",
+      "variants": [
+        {
+          "id": "44430:34313",
+          "key": "5d767c4bf349ffd82e24bfc9c59d32c6f1c8e26e",
+          "name": "Selected / Hover=No"
+        },
+        {
+          "id": "44430:34315",
+          "key": "bfa8a11136e73af107b459df2fe8681978a08797",
+          "name": "Selected / Hover=Yes"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "[D] VOC / State=Default",
+      "type": "COMPONENT",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          20,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "padding": [
+          28,
+          28,
+          0,
+          28
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot / Fixer",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.04)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium / shape",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / Border",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalHeader / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          40,
+          24,
+          40
+        ],
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / Title",
+      "type": "TEXT",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "[Главный заголовок]"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 22,
+        "lineHeight": 26,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / Subtitle",
+      "type": "TEXT",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "[Вопрос к пользователю]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / [D] ModalBody / MainContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "[Поставьте оценку от 1 до 5, где 5 — очень довольны]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / 🔄 ModalDesktopFooter",
+      "type": "INSTANCE",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] VOC / State=Default / ModalContainer / 🔄 ModalDesktopFooter / Fixer",
+      "type": "FRAME",
+      "componentKey": "e4ceefe506e9c0b54354427e9accd02b892a0d46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default",
+      "type": "COMPONENT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          8,
+          4,
+          8
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / BackArrow",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / BackArrow / Fixer",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / MiddleSlot / Fixer",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross / Fixer",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / 🔩 [M] NavigationContent / Cross / Cross / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / Border",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalHeader / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          16
+        ],
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / Title",
+      "type": "TEXT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "[Главный заголовок]"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Semibold",
+        "size": 20,
+        "lineHeight": 28,
+        "letterSpacing": 0.3799999952316284
+      }
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / Subtitle",
+      "type": "TEXT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "[Вопрос к пользователю]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / 🔩 [D] StarRating / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalBody / MainContent / Caption",
+      "type": "TEXT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "[Поставьте оценку от 1 до 5, где 5 — очень довольны]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / Border",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          24,
+          4,
+          24
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "[Не оценивать]"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / Text / Hint",
+      "type": "TEXT",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] VOC / Step=Default / [M] ModalFooter / 🔩 [M][Corporate] ModalFooterContent / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "97b3fe2ac57f0dbc0f910d5b1a78be22488aada7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0",
+      "type": "COMPONENT",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] StarRating / Selected=0 / 🔩 [D] Stars / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "5b146d4fb895a3be7be96000cfb68e8dddd08f4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No",
+      "type": "COMPONENT",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper / Wrapper / PaintMe / star",
+      "type": "INSTANCE",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] Stars / Selected / Hover=No / IconWrapper / Wrapper / PaintMe / star / icon",
+      "type": "VECTOR",
+      "componentKey": "1e0f8a24d65e2dfe2b85b0d030d1fcf7a2168fec",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

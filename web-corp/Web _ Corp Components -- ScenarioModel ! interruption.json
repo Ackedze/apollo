@@ -1,0 +1,3261 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:33:57.478Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ScenarioModel ! interruption"
+    ],
+    "componentCount": 5,
+    "elementCount": 163
+  },
+  "components": [
+    {
+      "key": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "name": "❌ ScenarioModel ! interruption",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "ScenarioModel ! interruption",
+      "defaultVariant": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "variants": [
+        {
+          "id": "92453:91238",
+          "key": "dc196cbf57106333a445224f891563cf21d9aa7f",
+          "name": "❌ ScenarioModel ! interruption"
+        }
+      ]
+    },
+    {
+      "key": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "name": "🔒 ScenarioModel ! interruption",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ScenarioModel ! interruption",
+      "defaultVariant": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "variants": [
+        {
+          "id": "109741:66789",
+          "key": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+          "name": "🔒 ScenarioModel ! interruption"
+        }
+      ]
+    },
+    {
+      "key": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "name": "🔒 ModalDesktopHeader ! interruption",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "ModalDesktopHeader ! interruption",
+      "defaultVariant": "f050bbf372e2f5af3c78bdd90ad54664e0187341",
+      "variants": [
+        {
+          "id": "109741:148477",
+          "key": "f050bbf372e2f5af3c78bdd90ad54664e0187341",
+          "name": "Type=Default"
+        },
+        {
+          "id": "109741:148479",
+          "key": "d909fbc0bd03defe378f43e63d570666e94813ed",
+          "name": "Type=SaveAs"
+        }
+      ]
+    },
+    {
+      "key": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "name": "🔒 ModalDesktopFooter ! interruption",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "ModalDesktopFooter ! interruption",
+      "defaultVariant": "da70951fdd1248d620a5b893955e70071b03f8b1",
+      "variants": [
+        {
+          "id": "92453:91233",
+          "key": "da70951fdd1248d620a5b893955e70071b03f8b1",
+          "name": "Type=Default"
+        },
+        {
+          "id": "92460:102175",
+          "key": "63793ffff34c06ec41d3f45cf2b3a68b1c99a2fb",
+          "name": "Type=SaveAs"
+        }
+      ]
+    },
+    {
+      "key": "71388cda57af6b561b8a36b329d95ef4c32e215f",
+      "name": "🔒 ModalDesktopBody ! interruption",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "ModalDesktopBody ! interruption",
+      "defaultVariant": "ae849f81cf1edb5df1171e69576e42059c285675",
+      "variants": [
+        {
+          "id": "92453:91224",
+          "key": "ae849f81cf1edb5df1171e69576e42059c285675",
+          "name": "Type=Default"
+        },
+        {
+          "id": "92453:91228",
+          "key": "de191a11226939542eda830133f17b27b8546573",
+          "name": "Type=SaveAs"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "❌ ScenarioModel ! interruption",
+      "type": "COMPONENT",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          28,
+          28,
+          0,
+          28
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          12,
+          16,
+          12
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot / Title",
+      "type": "TEXT",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Выйти без сохранения?"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.04)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium / shape",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / Border",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / [D] ModalHeader / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption / Text",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          40,
+          8,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption / Text / Text",
+      "type": "TEXT",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Придётся [создавать]+[сущность] / [вносить изменения] заново"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          40,
+          40,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / Border",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Выйти"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Остаться"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "dc196cbf57106333a445224f891563cf21d9aa7f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption",
+      "type": "COMPONENT",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 24
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          28,
+          28,
+          0,
+          28
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot / Title",
+      "type": "TEXT",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Выйти без сохранения?"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 22,
+        "lineHeight": 26,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.04)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium / shape",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / Border",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopHeader ! interruption / [D] ModalHeader / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption / Text",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          40,
+          8,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopBody ! interruption / Text / Text",
+      "type": "TEXT",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Придётся [создавать]+[сущность] / [вносить изменения] заново"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          40,
+          40,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / Border",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Выйти"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Остаться"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ScenarioModel ! interruption / 🔒 ModalDesktopFooter ! interruption / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "f7644c318f200ae2d63acba8f6def7a1aa3a749b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default",
+      "type": "COMPONENT",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader",
+      "type": "INSTANCE",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          28,
+          28,
+          0,
+          28
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets",
+      "type": "INSTANCE",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / MiddleSlot / Title",
+      "type": "TEXT",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Выйти без сохранения?"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 22,
+        "lineHeight": 26,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.04)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium",
+      "type": "INSTANCE",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / 🔩 [D] ModalNavigationPresets / Cross / Cross / IconWrapper / Wrapper / PaintMe / cross-medium / shape",
+      "type": "VECTOR",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / Border",
+      "type": "FRAME",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopHeader ! interruption / Type=Default / [D] ModalHeader / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "77b9620925b121815e18528c0980c5eebd87d0d9",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default",
+      "type": "COMPONENT",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          40,
+          40,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / Border",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Выйти"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 4,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Остаться"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopFooter ! interruption / Type=Default / [D] ModalFooter / 🔩 [D][Corporate] ModalFooterContent / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47bf7233e78b2265942edc18cc21748005a1e4ab",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopBody ! interruption / Type=Default",
+      "type": "COMPONENT",
+      "componentKey": "71388cda57af6b561b8a36b329d95ef4c32e215f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopBody ! interruption / Type=Default / Text",
+      "type": "FRAME",
+      "componentKey": "71388cda57af6b561b8a36b329d95ef4c32e215f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          40,
+          8,
+          40
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 ModalDesktopBody ! interruption / Type=Default / Text / Text",
+      "type": "TEXT",
+      "componentKey": "71388cda57af6b561b8a36b329d95ef4c32e215f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Придётся [создавать]+[сущность] / [вносить изменения] заново"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

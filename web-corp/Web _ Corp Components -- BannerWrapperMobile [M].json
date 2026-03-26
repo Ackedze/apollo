@@ -1,0 +1,5265 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:22:49.569Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "BannerWrapperMobile [M]"
+    ],
+    "componentCount": 5,
+    "elementCount": 277
+  },
+  "components": [
+    {
+      "key": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "name": ".RightContent",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "RightContent",
+      "defaultVariant": "14d6bbaa485d4380a6f212cf75badec7bea64e4c",
+      "variants": [
+        {
+          "id": "12184:137597",
+          "key": "14d6bbaa485d4380a6f212cf75badec7bea64e4c",
+          "name": "Type=IconWrapper, Skeleton=No"
+        },
+        {
+          "id": "12184:137599",
+          "key": "7fe3842065473aeaed86ce8989e3a4009f04b610",
+          "name": "Type=IconWrapper, Skeleton=Yes"
+        },
+        {
+          "id": "12184:137601",
+          "key": "ae563172f52190a3b170000a7afa173e3a8e7b87",
+          "name": "Type=Badge_Icon_Light, Skeleton=No"
+        },
+        {
+          "id": "12184:137603",
+          "key": "e7a1cecab5adcae0a9919e3299f220090c9658fe",
+          "name": "Type=Badge_Icon_Light, Skeleton=Yes"
+        },
+        {
+          "id": "12184:137605",
+          "key": "cd38daa0ff2e54ed52df448287ecda5973c1717d",
+          "name": "Type=Indicator, Skeleton=No"
+        },
+        {
+          "id": "12184:137607",
+          "key": "dc161bc0ce8c3005f5823080c0ae0e3f8e65c4ec",
+          "name": "Type=Indicator, Skeleton=Yes"
+        },
+        {
+          "id": "12184:137609",
+          "key": "fb1c30c58e23f8d33144f54889eb4284ce3cf38e",
+          "name": "Type=Text content, Skeleton=No"
+        }
+      ]
+    },
+    {
+      "key": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "name": ".TextContent",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "TextContent",
+      "defaultVariant": "578f8f93f73de222e75c5bcafee9816537458700",
+      "variants": [
+        {
+          "id": "12184:137564",
+          "key": "578f8f93f73de222e75c5bcafee9816537458700",
+          "name": "Type=Subhead"
+        },
+        {
+          "id": "12184:137572",
+          "key": "818e35f657cd29619d56e3a9848dd492b0bdf798",
+          "name": "Type=ExtraTitle"
+        },
+        {
+          "id": "12184:137580",
+          "key": "81699889a399c7b7a24470daf642a7e477ce8eb8",
+          "name": "Type=Title"
+        },
+        {
+          "id": "12184:137588",
+          "key": "1e6c5727c221d9f52cb049eff88a22058b6ee70a",
+          "name": "Type=Subtitle"
+        }
+      ]
+    },
+    {
+      "key": "f862a483ce943e47fb05de027dd29d79368f5461",
+      "name": "SwapMe",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "SwapMe",
+      "defaultVariant": "f862a483ce943e47fb05de027dd29d79368f5461",
+      "variants": [
+        {
+          "id": "14413:193357",
+          "key": "f862a483ce943e47fb05de027dd29d79368f5461",
+          "name": "SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "name": ".LeftAddon",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "LeftAddon",
+      "defaultVariant": "9912846397e21c15c344588cb13dfd1b6fcdf3e2",
+      "variants": [
+        {
+          "id": "12184:137551",
+          "key": "9912846397e21c15c344588cb13dfd1b6fcdf3e2",
+          "name": "Type=IconView, Skeleton=No"
+        },
+        {
+          "id": "12184:137553",
+          "key": "9338a856a37e21f724280a615262f906e9e1daab",
+          "name": "Type=IconView, Skeleton=Yes"
+        },
+        {
+          "id": "12184:137555",
+          "key": "09c34910ac1786cfacf9420a6633be552ae01659",
+          "name": "Type=IconWrapper, Skeleton=No"
+        },
+        {
+          "id": "12184:137557",
+          "key": "2e8b1be90071600013f353e2b5faf338b54dd3ea",
+          "name": "Type=IconWrapper, Skeleton=Yes"
+        },
+        {
+          "id": "12184:137559",
+          "key": "5391676d545a3be5d55ebbed4c93ddb262575b4b",
+          "name": "Type=Custom, Skeleton=No"
+        },
+        {
+          "id": "12184:137561",
+          "key": "fefa8b234d57259a00f280c0a7d0cdaebeb63b89",
+          "name": "Type=Custom, Skeleton=Yes"
+        }
+      ]
+    },
+    {
+      "key": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "name": "BannerWrapperMobile",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "BannerWrapperMobile",
+      "defaultVariant": "3e76347e60d7fb3fae0d39df9c2d9bd74df6468c",
+      "variants": [
+        {
+          "id": "12184:137479",
+          "key": "3e76347e60d7fb3fae0d39df9c2d9bd74df6468c",
+          "name": "Banner=False, Skeleton=False"
+        },
+        {
+          "id": "12184:137247",
+          "key": "41b1f8f85cd5bf6ffdce8693268ea5cbf1be7af3",
+          "name": "Banner=False, Skeleton=True"
+        },
+        {
+          "id": "12194:177392",
+          "key": "8d1c0a79ae768c80f9e1d6b8307ed82b609737d3",
+          "name": "Banner=True, Skeleton=False"
+        },
+        {
+          "id": "12194:178507",
+          "key": "a92d8fb89be86b04946301149067175dfa5b301c",
+          "name": "Banner=True, Skeleton=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No",
+      "type": "COMPONENT",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(184,185,192,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper / Wrapper / PaintMe / chevron-right-shift-right",
+      "type": "INSTANCE",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".RightContent / Type=IconWrapper, Skeleton=No / IconWrapper / Wrapper / PaintMe / chevron-right-shift-right / icon",
+      "type": "VECTOR",
+      "componentKey": "e242686831c6dddb92fb5ab4240625c9f4c20ef9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".TextContent / Type=Subhead",
+      "type": "COMPONENT",
+      "componentKey": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".TextContent / Type=Subhead / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".TextContent / Type=Subhead / Wrapper / value",
+      "type": "TEXT",
+      "componentKey": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Subhead"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".TextContent / Type=Subhead / Wrapper / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".TextContent / Type=Subhead / Wrapper / Skeleton / Shape",
+      "type": "RECTANGLE",
+      "componentKey": "1a52b04e62b45887eb0bbc468e83870205ea90ae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "f862a483ce943e47fb05de027dd29d79368f5461",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "SwapMe / Rectangle 1",
+      "type": "RECTANGLE",
+      "componentKey": "f862a483ce943e47fb05de027dd29d79368f5461",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No",
+      "type": "COMPONENT",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5714284181594849,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".LeftAddon / Type=IconView, Skeleton=No / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "ba105a4edc0334c971c10c9c40fb43b3a9823f96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False",
+      "type": "COMPONENT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5714284181594849,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .LeftAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subhead",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subhead / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subhead / Wrapper / value",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Subhead"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subhead / Wrapper / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subhead / Wrapper / Skeleton / Shape",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Extra Title",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Extra Title / wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Extra Title / wrapper / value",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Extra Title"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Extra Title / wrapper / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Extra Title / wrapper / Skeleton / Shape",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Title",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Title / wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Title / wrapper / value",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Title"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Title / wrapper / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Title / wrapper / Skeleton / Shape",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subtitle",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subtitle / wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subtitle / wrapper / value",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subtitle / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / TextContent / Subtitle / Skeleton / Shape",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(184,185,192,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper / Wrapper / PaintMe / chevron-right-shift-right",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / .RightContent / IconWrapper / Wrapper / PaintMe / chevron-right-shift-right / icon",
+      "type": "VECTOR",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / Content / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ButtonMobile",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ButtonMobile / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ButtonMobile / 👻 Base / 👻 Fixer",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ButtonMobile / 👻 Base / Content",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / ContentLayout / 🔄 ButtonMobile / 👻 Base / Content / Label",
+      "type": "TEXT",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / Layout / 🔄 ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "BannerWrapperMobile / Banner=False, Skeleton=False / 🔄 ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1a52994e95b3fb6821d554e9a2d0f475b4262505",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

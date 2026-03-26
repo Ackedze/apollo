@@ -1,0 +1,1750 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:24:08.378Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "CardImage"
+    ],
+    "componentCount": 7,
+    "elementCount": 58
+  },
+  "components": [
+    {
+      "key": "e0f79b3378bd428cea895ce4124199edf5509f93",
+      "name": "🔩 Shadow",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Shadow",
+      "defaultVariant": "3823dc6fa76439527c35fe053d1cbcc246bac827",
+      "variants": [
+        {
+          "id": "20005:49864",
+          "key": "3823dc6fa76439527c35fe053d1cbcc246bac827",
+          "name": "Size=264x164"
+        },
+        {
+          "id": "20005:49865",
+          "key": "4fbf55d7ec437fa9d2bb1e901445439e2b4c3aa7",
+          "name": "Size=212x132"
+        },
+        {
+          "id": "20005:49866",
+          "key": "b49a16b8718d232fb64fa7bd18d76e56abe1d0eb",
+          "name": "Size=68x42"
+        },
+        {
+          "id": "20005:49867",
+          "key": "9c9b7c469df57de530aa39950ac03e6437fa9775",
+          "name": "Size=44x28"
+        }
+      ]
+    },
+    {
+      "key": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "name": "🔩 Cover",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "description": "Технический компонент для отображения рубашки карты",
+      "category": "Cover",
+      "defaultVariant": "17f96f039bf80e17c49df4b944777613679d954e",
+      "variants": [
+        {
+          "id": "20005:49799",
+          "key": "17f96f039bf80e17c49df4b944777613679d954e",
+          "name": "Product Type=Archive, Size=24x16"
+        },
+        {
+          "id": "20005:49806",
+          "key": "78263437591c4c208388df0c82e8779bcde7924d",
+          "name": "Product Type=Archive, Size=44x28"
+        },
+        {
+          "id": "20005:49809",
+          "key": "466827bd1516496e32384287a32fc38db712b3fd",
+          "name": "Product Type=Archive, Size=68x42"
+        },
+        {
+          "id": "20005:49812",
+          "key": "eb671821781048c305163c0a77194a31da89b2fd",
+          "name": "Product Type=Archive, Size=212x132"
+        },
+        {
+          "id": "20005:49815",
+          "key": "be71def62672a34e442f7b4c9aa3e644acf1b679",
+          "name": "Product Type=Archive, Size=264x164"
+        },
+        {
+          "id": "20005:49818",
+          "key": "2a02bc513486ebced9152bb6e1b6a352326c8a05",
+          "name": "Product Type=AB, Size=264x164"
+        },
+        {
+          "id": "20005:49821",
+          "key": "eb89159d0720596412147f2b8d58a0f3cfb2f31e",
+          "name": "Product Type=AB Credit, Size=264x164"
+        },
+        {
+          "id": "20005:49824",
+          "key": "baac09d01bab6203d10248abf43bd27612976c84",
+          "name": "Product Type=AB Premium, Size=264x164"
+        },
+        {
+          "id": "20005:49827",
+          "key": "dd6bdaa62b4f8634ebc4d6d8871f979e650a2f9f",
+          "name": "Product Type=AB, Size=212x132"
+        },
+        {
+          "id": "20005:49830",
+          "key": "cd9cff1645469189e934206dd8bd2c44dadf85ec",
+          "name": "Product Type=AB Credit, Size=212x132"
+        },
+        {
+          "id": "20005:49833",
+          "key": "ffc2c365717a21f9ef544613718f08167c08151b",
+          "name": "Product Type=AB Premium, Size=212x132"
+        },
+        {
+          "id": "20005:49836",
+          "key": "8374412d6e838af5b5ff5394300043ac736b2af1",
+          "name": "Product Type=AB, Size=68x42"
+        },
+        {
+          "id": "20005:49839",
+          "key": "2d2dbffe2dd2c9580a22377b7afeaf03fae7f6ae",
+          "name": "Product Type=AB Credit, Size=68x42"
+        },
+        {
+          "id": "20005:49842",
+          "key": "65393d7cb60997b3eb09e911fbe9bdfb092bf014",
+          "name": "Product Type=AB Premium, Size=68x42"
+        },
+        {
+          "id": "20005:49845",
+          "key": "fdbb5cbffacafb0276da5abb3b6f0adfca47a443",
+          "name": "Product Type=AB, Size=44x28"
+        },
+        {
+          "id": "20005:49848",
+          "key": "3930ffddd174cbd8f2cdf8e3c11e83fcb74ada3d",
+          "name": "Product Type=AB Credit, Size=44x28"
+        },
+        {
+          "id": "20005:49851",
+          "key": "759a909aae5b72846d7a0263e4ba8b8c73880b6f",
+          "name": "Product Type=AB Premium, Size=44x28"
+        },
+        {
+          "id": "20005:49854",
+          "key": "da5d68abd878db60d5f18a589c2deeadde16027b",
+          "name": "Product Type=AB, Size=24x16"
+        },
+        {
+          "id": "20005:49857",
+          "key": "97908d8d820345aa32c1fd2638427a1a8fadece3",
+          "name": "Product Type=AB Credit, Size=24x16"
+        },
+        {
+          "id": "20005:49860",
+          "key": "9ef05e3f4c3e5d15790a5d8ac8f83bb1e02b9821",
+          "name": "Product Type=AB Premium, Size=24x16"
+        }
+      ]
+    },
+    {
+      "key": "6e00263c654cf43f85ae1d65455b515f2a843f18",
+      "name": "🔩 State",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "State",
+      "defaultVariant": "99a7e3cd4217a9519ff34f63b941955ed7fe8386",
+      "variants": [
+        {
+          "id": "20005:49774",
+          "key": "99a7e3cd4217a9519ff34f63b941955ed7fe8386",
+          "name": "Size=44x28, State=Inactive"
+        },
+        {
+          "id": "20005:49777",
+          "key": "855d623762d225b1a039321d30aa9f9e9543111a",
+          "name": "Size=44x28, State=Locked"
+        },
+        {
+          "id": "20005:49780",
+          "key": "9e1317497d217af5afd46c0e270271c5275ff237",
+          "name": "Size=68x42, State=Inactive"
+        },
+        {
+          "id": "20005:49783",
+          "key": "e472a9d7c100b9266a1470f02614dc8d70399394",
+          "name": "Size=68x42, State=Locked"
+        },
+        {
+          "id": "20005:49786",
+          "key": "50932f24775ad90d0a8839ff785e4980ea612add",
+          "name": "Size=212x132, State=Inactive"
+        },
+        {
+          "id": "20005:49789",
+          "key": "5bcf9752ff62f3f9d6b69909a000eccf4254d6a4",
+          "name": "Size=212x132, State=Locked"
+        },
+        {
+          "id": "20005:49792",
+          "key": "88e1fbabecc82b746abe2a648e14afe0364fa8e3",
+          "name": "Size=264x164, State=Inactive"
+        },
+        {
+          "id": "20005:49795",
+          "key": "3e156af830dd23f0c3d800f9c7ef33688ba97e8a",
+          "name": "Size=264x164, State=Locked"
+        }
+      ]
+    },
+    {
+      "key": "6bb6d7b6fdf195d182ad0b1001500d17dd40960d",
+      "name": "🔩 UserData",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "UserData",
+      "defaultVariant": "5e80f73360078f5f85eea3f48bbd2fcdf67d6a59",
+      "variants": [
+        {
+          "id": "20005:49743",
+          "key": "5e80f73360078f5f85eea3f48bbd2fcdf67d6a59",
+          "name": "Size=44x28, Style=Default"
+        },
+        {
+          "id": "20005:49745",
+          "key": "7724ae229478cdb4f93ad20f86bff2e9a390d90a",
+          "name": "Size=44x28, Style=Inverse"
+        },
+        {
+          "id": "20005:49747",
+          "key": "9a7cb6adfbe799e8f9bee57fca704000bf89e3e8",
+          "name": "Size=68x42, Style=Default"
+        },
+        {
+          "id": "20005:49749",
+          "key": "e8e5ea5f8ebbf441c1947671926a564cdd5777bf",
+          "name": "Size=68x42, Style=Inverse"
+        },
+        {
+          "id": "20005:49751",
+          "key": "880db0bd4216a9a2f98cdaaa86c35fc8e12ac714",
+          "name": "Size=212x132, Style=Default"
+        },
+        {
+          "id": "20005:49754",
+          "key": "6569deac6b3c5cedcf549249960be793b35b3cf9",
+          "name": "Size=212x132, Style=Inverse"
+        },
+        {
+          "id": "20005:49757",
+          "key": "377bbc7a9cc702019670f25cbcc80f0d1c3ca769",
+          "name": "Size=264x164, Style=Default"
+        },
+        {
+          "id": "20005:49765",
+          "key": "338b46fbd2a518b3d7ed436ec6b79bf34254d62a",
+          "name": "Size=264x164, Style=Inverse"
+        }
+      ]
+    },
+    {
+      "key": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "name": "🔩 CardItem",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "CardItem",
+      "defaultVariant": "e71d93b680cb4b3314e43adf22415ef7a8ec837e",
+      "variants": [
+        {
+          "id": "20005:49722",
+          "key": "e71d93b680cb4b3314e43adf22415ef7a8ec837e",
+          "name": "Size=264x164"
+        },
+        {
+          "id": "20005:49726",
+          "key": "ea72647c0dd4e4d88f3eeff073b621ba89ac183d",
+          "name": "Size=212x132"
+        },
+        {
+          "id": "20005:49730",
+          "key": "120e55b005e2805006dcad92fa0c712f46274526",
+          "name": "Size=68x42"
+        },
+        {
+          "id": "20005:49734",
+          "key": "cd93abe00c60009bfcfc12516409a40b489eb3e8",
+          "name": "Size=44x28"
+        },
+        {
+          "id": "20005:49738",
+          "key": "b5b668c439cc8dd0eb012324819806f79b3b16b3",
+          "name": "Size=24x16"
+        }
+      ]
+    },
+    {
+      "key": "3fd06cdd38d50a431893a8d2ce9d25f75149a3ac",
+      "name": "🔩 SilverLine",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SilverLine",
+      "defaultVariant": "8615390fc2acbc1e94dc866b12fc2d49ae69e64a",
+      "variants": [
+        {
+          "id": "20005:49717",
+          "key": "8615390fc2acbc1e94dc866b12fc2d49ae69e64a",
+          "name": "Type=simple"
+        },
+        {
+          "id": "20005:49719",
+          "key": "b822a4df9fee56a50bae59c49b8890af962f2595",
+          "name": "Type=complex"
+        }
+      ]
+    },
+    {
+      "key": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "name": "CardImage",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CardImage",
+      "defaultVariant": "4c595860008f6c3efaa0c25b336f59fb9d1bd87e",
+      "variants": [
+        {
+          "id": "20005:49515",
+          "key": "4c595860008f6c3efaa0c25b336f59fb9d1bd87e",
+          "name": "Cover=Alfa Business, Size=24x16, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49518",
+          "key": "a86da2d25a937eadf4faaf360d95935c37b6400f",
+          "name": "Cover=Alfa Business Premium, Size=24x16, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49521",
+          "key": "24b0d2d3ea8bc743a3eff05ac085dbe785040d10",
+          "name": "Cover=Alfa Business Credit, Size=24x16, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49524",
+          "key": "4607c83d08c93e00a4569a6eb64857d23d768a10",
+          "name": "Cover=None, Size=24x16, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49527",
+          "key": "edc7780b27a3a903b848f7ac85233bd22e16d15f",
+          "name": "Cover=Alfa Business, Size=44x28, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49531",
+          "key": "578152905240ae817e243f51e66445372ad738a9",
+          "name": "Cover=Alfa Business Premium, Size=44x28, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49535",
+          "key": "9d38702cf046c74dbdc347cb24640ef114f7f499",
+          "name": "Cover=Alfa Business Credit, Size=44x28, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49539",
+          "key": "7379167fc380b8fff7a244748af1d35555939232",
+          "name": "Cover=None, Size=44x28, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49543",
+          "key": "ff80f0e34327e45213702079ff01bb75950f57e3",
+          "name": "Cover=Alfa Business, Size=44x28, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49546",
+          "key": "f5ce250fbec6d074258522a6b4619ffb6ee62b19",
+          "name": "Cover=Alfa Business Premium, Size=44x28, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49549",
+          "key": "4959d424301667a940d0a2373a80fd9c8cb330fa",
+          "name": "Cover=Alfa Business Credit, Size=44x28, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49552",
+          "key": "5734237e5028a5d959a8be1cb43f145c3d222041",
+          "name": "Cover=None, Size=44x28, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49555",
+          "key": "54a5bac509c2fb21b12d21b5471b1e0d180a37c1",
+          "name": "Cover=Alfa Business Premium, Size=24x16, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49557",
+          "key": "09f42c1f5911a63ebe781debf97d360685d6f5bc",
+          "name": "Cover=Alfa Business, Size=44x28, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49560",
+          "key": "838f55ab176162ff4f21db884ae56753d794d53a",
+          "name": "Cover=Alfa Business Premium, Size=44x28, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49563",
+          "key": "5c9709f85903650710364f54cf5b3042e5351d0b",
+          "name": "Cover=Alfa Business Credit, Size=44x28, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49566",
+          "key": "a3390555250fe3c31a48b7e6616ef0e0dae4a271",
+          "name": "Cover=None, Size=44x28, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49569",
+          "key": "ba73b84dd9a5e854d939748e3f46925fea3985d5",
+          "name": "Cover=Alfa Business Premium, Size=24x16, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49571",
+          "key": "c4f8c6c5e466b880cb8bd98e1965dac4efe77ece",
+          "name": "Cover=Alfa Business, Size=44x28, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49574",
+          "key": "962eaae156b59fc96fa5d8e580d851a3d87d75af",
+          "name": "Cover=Alfa Business Premium, Size=44x28, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49577",
+          "key": "7371df736af9c3ea721245e8d83d1e4381db8ca4",
+          "name": "Cover=Alfa Business Credit, Size=44x28, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49580",
+          "key": "a6d3f76809c2975534e82ccfb35f3f7637f9572f",
+          "name": "Cover=None, Size=44x28, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49583",
+          "key": "acc0bda0cee8df12ef3be8b215b5858fbd19afcb",
+          "name": "Cover=Alfa Business, Size=24x16, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49585",
+          "key": "b2ffcd025d42acf7b2cda563033eb003ab78065a",
+          "name": "Cover=Alfa Business Premium, Size=24x16, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49587",
+          "key": "f0b3b19d48f9b8edca188b900768880a36e84e88",
+          "name": "Cover=Alfa Business Credit, Size=24x16, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49589",
+          "key": "944264670da03578d4460260e508413ab916098a",
+          "name": "Cover=None, Size=24x16, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49591",
+          "key": "c1e9d0675ba88f7cf9f14dbdb5bb806c1c7b08eb",
+          "name": "Cover=Alfa Business, Size=68x42, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49595",
+          "key": "96e5e9f1590b7bc50eada5c6f877eb0114c82947",
+          "name": "Cover=Alfa Business Premium, Size=68x42, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49599",
+          "key": "5553558190b94328551f0b0c5d2cc6d02b9a1198",
+          "name": "Cover=Alfa Business Credit, Size=68x42, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49603",
+          "key": "a36fd8d40438c95bb134d02a8182d9fd790e2ac7",
+          "name": "Cover=None, Size=68x42, State=Active, Stack=true"
+        },
+        {
+          "id": "20005:49607",
+          "key": "6298ab0330b5b82bc2f27467754d884a56d5e62b",
+          "name": "Cover=Alfa Business, Size=68x42, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49610",
+          "key": "bf081f48e6c2bdd192c9d44a18fcbcacad25d6fa",
+          "name": "Cover=Alfa Business Premium, Size=68x42, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49613",
+          "key": "acf829d1430f4783ed0bd03a91f0812b75e79f72",
+          "name": "Cover=Alfa Business Credit, Size=68x42, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49616",
+          "key": "79d40b2136983d9199f333d8e635e4dab501ad27",
+          "name": "Cover=None, Size=68x42, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49619",
+          "key": "cd3afc6dd04a9e9e9b4383879ed0c0570a0f32a7",
+          "name": "Cover=Alfa Business, Size=212x132, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49622",
+          "key": "bd63134e0bd02c7375e4b771dd7de4d683538ab9",
+          "name": "Cover=Alfa Business Premium, Size=212x132, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49625",
+          "key": "a2a8ea30d79207ba9b728edfa77545e69a456ddd",
+          "name": "Cover=Alfa Business Credit, Size=212x132, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49628",
+          "key": "d5970751e0db694ea77dac5920a43065a6dc96de",
+          "name": "Cover=None, Size=212x132, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49631",
+          "key": "771211312c5f77dbf03b6e68d0e69cced06d6b49",
+          "name": "Cover=Alfa Business, Size=264x164, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49634",
+          "key": "9f4b5cfaf318fb9351e30b0358ca8298589a0383",
+          "name": "Cover=Alfa Business Premium, Size=264x164, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49637",
+          "key": "4a66d48c482c2ff27da2ce8e4c5a289a30b32f38",
+          "name": "Cover=Alfa Business Credit, Size=264x164, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49640",
+          "key": "55d4ae8bce809582d0abbe63746a69527deddf34",
+          "name": "Cover=None, Size=264x164, State=Inactive, Stack=false"
+        },
+        {
+          "id": "20005:49643",
+          "key": "83768a97d59987d642576f4b3b378292d3b3ecfb",
+          "name": "Cover=Alfa Business, Size=68x42, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49646",
+          "key": "617f0af1faa35b4f10f8a45b32d779341979a097",
+          "name": "Cover=Alfa Business Premium, Size=68x42, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49649",
+          "key": "c5c6774e07175c8b719759405dd5c0a9e1c1b73a",
+          "name": "Cover=Alfa Business Credit, Size=68x42, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49652",
+          "key": "40cf105e5a746c65145a533d45fcb7c8e4a4fb50",
+          "name": "Cover=None, Size=68x42, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49655",
+          "key": "623849230b0d5757457442fd9b7b50700c3963a2",
+          "name": "Cover=Alfa Business, Size=212x132, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49658",
+          "key": "c5c6f4c593142d1932f8d0b64b87d5dea9c6ae1e",
+          "name": "Cover=Alfa Business Premium, Size=212x132, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49661",
+          "key": "06e0c7e3c7a074f6be21ed80fd3bd335c53ea8f4",
+          "name": "Cover=Alfa Business Credit, Size=212x132, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49664",
+          "key": "a556735fadd28ed0a92200d19e5360452b8a6069",
+          "name": "Cover=None, Size=212x132, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49667",
+          "key": "58737c2850fd6f918c1645c838e29743ac2fb9b2",
+          "name": "Cover=Alfa Business, Size=264x164, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49670",
+          "key": "0ac7e8516627683400fdcc0012fc70532730b676",
+          "name": "Cover=Alfa Business Premium, Size=264x164, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49673",
+          "key": "278f1ea75dc98efedbbce414285f6a2b9eb1d1f1",
+          "name": "Cover=Alfa Business Credit, Size=264x164, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49676",
+          "key": "226673cb369c2e1f3161d0b9943ba79ca14e46d0",
+          "name": "Cover=None, Size=264x164, State=Locked, Stack=false"
+        },
+        {
+          "id": "20005:49679",
+          "key": "1bb7bf30129bd7ce3bb530ac0d22b160752a9c69",
+          "name": "Cover=Alfa Business, Size=68x42, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49682",
+          "key": "cb27a12cdb7179500bb51a5d6ee775638922fd0c",
+          "name": "Cover=Alfa Business Premium, Size=68x42, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49685",
+          "key": "074920dbb358ca521adf690d2dd4bbecaddffd2a",
+          "name": "Cover=Alfa Business Credit, Size=68x42, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49688",
+          "key": "29d6acb756aaffee2b4ad447c676942e0f46f1eb",
+          "name": "Cover=None, Size=68x42, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49691",
+          "key": "9cb3646aa5c25fb2c62dda071eff2ec1915ea28d",
+          "name": "Cover=Alfa Business, Size=212x132, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49694",
+          "key": "77bb487d422e1ee50e05fc9d1a56c20784572bd4",
+          "name": "Cover=Alfa Business Premium, Size=212x132, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49697",
+          "key": "42533801494658909368e20dbd821518f0830cc1",
+          "name": "Cover=Alfa Business Credit, Size=212x132, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49700",
+          "key": "7ce89ec5a6bd50edc70686ba79c7906e13a4c71d",
+          "name": "Cover=None, Size=212x132, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49703",
+          "key": "f2cbe75d38171b748403312eb38380ac3868b7f7",
+          "name": "Cover=Alfa Business, Size=264x164, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49706",
+          "key": "125c0f92c4009de5610ca29f929f63e113ad7a81",
+          "name": "Cover=Alfa Business Premium, Size=264x164, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49709",
+          "key": "27c8ddc23218d8cc06e07a8d549fe6dcf7ec6745",
+          "name": "Cover=Alfa Business Credit, Size=264x164, State=Active, Stack=false"
+        },
+        {
+          "id": "20005:49712",
+          "key": "c2fde1ea300fd120753686c7d475d0e267f86f74",
+          "name": "Cover=None, Size=264x164, State=Active, Stack=false"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔩 Shadow / Size=264x164",
+      "type": "COMPONENT",
+      "componentKey": "e0f79b3378bd428cea895ce4124199edf5509f93",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16",
+      "type": "COMPONENT",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Stack Card",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(186,187,194,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Stack Card / line",
+      "type": "RECTANGLE",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(217,217,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Stack Card / mask",
+      "type": "RECTANGLE",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": [
+          0,
+          0,
+          3,
+          0
+        ]
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Card",
+      "type": "RECTANGLE",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(186,187,194,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Logo Alfa XS",
+      "type": "FRAME",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 Cover / Product Type=Archive, Size=24x16 / Logo Alfa XS / Vector",
+      "type": "VECTOR",
+      "componentKey": "2254a4b0565c2acbe8c7fbca11a55b4c92fc5232",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 State / Size=44x28, State=Inactive",
+      "type": "COMPONENT",
+      "componentKey": "6e00263c654cf43f85ae1d65455b515f2a843f18",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 State / Size=44x28, State=Inactive / overlay",
+      "type": "FRAME",
+      "componentKey": "6e00263c654cf43f85ae1d65455b515f2a843f18",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 5
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 State / Size=44x28, State=Inactive / power-button-circle",
+      "type": "INSTANCE",
+      "componentKey": "6e00263c654cf43f85ae1d65455b515f2a843f18",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 State / Size=44x28, State=Inactive / power-button-circle / icon",
+      "type": "VECTOR",
+      "componentKey": "6e00263c654cf43f85ae1d65455b515f2a843f18",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 UserData / Size=44x28, Style=Default",
+      "type": "COMPONENT",
+      "componentKey": "6bb6d7b6fdf195d182ad0b1001500d17dd40960d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 UserData / Size=44x28, Style=Default / Ellipsis",
+      "type": "TEXT",
+      "componentKey": "6bb6d7b6fdf195d182ad0b1001500d17dd40960d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "…"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164",
+      "type": "COMPONENT",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / Cover",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / Cover / Image Container",
+      "type": "FRAME",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / Cover / Image Container / SilverLine",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / Cover / Image Container / SilverLine / Vector",
+      "type": "VECTOR",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Cardholder Name",
+      "type": "TEXT",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "CARDHOLDER NAME"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line",
+      "type": "FRAME",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Major",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Major / ✎ Major",
+      "type": "TEXT",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "·· "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Minor",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Minor / ✎ Minor",
+      "type": "TEXT",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1234"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          6
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 999
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / UserData / Second Line / PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / State",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / State / overlay",
+      "type": "FRAME",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / State / lock-closed",
+      "type": "INSTANCE",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 CardItem / Size=264x164 / State / lock-closed / icon",
+      "type": "VECTOR",
+      "componentKey": "801c15ba3f3cdd87b5fa7bc089cc48379aa37972",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 SilverLine / Type=simple",
+      "type": "COMPONENT",
+      "componentKey": "3fd06cdd38d50a431893a8d2ce9d25f75149a3ac",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 SilverLine / Type=simple / Vector",
+      "type": "RECTANGLE",
+      "componentKey": "3fd06cdd38d50a431893a8d2ce9d25f75149a3ac",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.39957278966903687,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true",
+      "type": "COMPONENT",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Stack Card",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(186,187,194,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Stack Card / line",
+      "type": "RECTANGLE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(217,217,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Stack Card / mask",
+      "type": "RECTANGLE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": [
+          0,
+          0,
+          3,
+          0
+        ]
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Card",
+      "type": "RECTANGLE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(186,187,194,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Logo Alfa XS",
+      "type": "FRAME",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / Cover / Logo Alfa XS / Vector",
+      "type": "VECTOR",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / UserData",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / CardItem / UserData / Ellipsis",
+      "type": "TEXT",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "…"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / Cover",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 3
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / Cover / Image Container",
+      "type": "FRAME",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / Cover / Image Container / SilverLine",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / Cover / Image Container / SilverLine / Vector",
+      "type": "RECTANGLE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.39957278966903687,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / UserData",
+      "type": "INSTANCE",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "CardImage / Cover=Alfa Business, Size=24x16, State=Active, Stack=true / 🔩 CardItem / UserData / Ellipsis",
+      "type": "TEXT",
+      "componentKey": "e0b688215640e6280ff9effdbf880ccf248cc65a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "…"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

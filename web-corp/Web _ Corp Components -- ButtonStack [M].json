@@ -1,0 +1,1630 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:32:05.242Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ButtonStack [M]"
+    ],
+    "componentCount": 5,
+    "elementCount": 73
+  },
+  "components": [
+    {
+      "key": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "name": "🔒 [M] ButtonStack",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Вспомогательный компонент Figma, в коде не существует.",
+      "category": "M] ButtonStack",
+      "defaultVariant": "0946de85408790654221b1af6200989fe8500387",
+      "variants": [
+        {
+          "id": "34796:35425",
+          "key": "0946de85408790654221b1af6200989fe8500387",
+          "name": "Presets=Primary, Background=False"
+        },
+        {
+          "id": "34802:44296",
+          "key": "aa9b7e5313ef64fdb64b05eee1629e0e3235e5bb",
+          "name": "Presets=Primary, Background=True"
+        },
+        {
+          "id": "34816:65315",
+          "key": "4e8d1d8140c80e9f7f59ca7463c40a26d71747e4",
+          "name": "Presets=Secondary, Background=False"
+        },
+        {
+          "id": "34816:65321",
+          "key": "77b9c3493e6842486f2f9f2f97a577db2ecca713",
+          "name": "Presets=Secondary, Background=True"
+        },
+        {
+          "id": "34802:44305",
+          "key": "5a53473c3ef78d5084fbfc5860038426dcee8fce",
+          "name": "Presets=Group Horizontal, Background=False"
+        },
+        {
+          "id": "34796:35436",
+          "key": "5edecf07ccdada4cf92ae6b2e01325cb54ab3ca4",
+          "name": "Presets=Group Horizontal, Background=True"
+        },
+        {
+          "id": "34796:35430",
+          "key": "6d3825f219d46dc6f02bc427ccb5bad8494a6c59",
+          "name": "Presets=Group Vertical, Background=False"
+        },
+        {
+          "id": "34802:44300",
+          "key": "5921a669310abb7590978af61e9da9e4ce49ab72",
+          "name": "Presets=Group Vertical, Background=True"
+        },
+        {
+          "id": "34796:35442",
+          "key": "135cd8fbc18dec0dc4a080b5f05e522993722d3c",
+          "name": "Presets=Primary + Icon, Background=False"
+        },
+        {
+          "id": "34802:44311",
+          "key": "43c6ee420fef536ca93c9f95d58716b50a2e9dcd",
+          "name": "Presets=Primary + Icon, Background=True"
+        }
+      ]
+    },
+    {
+      "key": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "name": "❌ MainButtonStack ❌",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Заменить на актуальный",
+      "category": "MainButtonStack ❌",
+      "defaultVariant": "7fc8e713a68f241c2fae4a4cae7fd07f22599762",
+      "variants": [
+        {
+          "id": "12902:189482",
+          "key": "7fc8e713a68f241c2fae4a4cae7fd07f22599762",
+          "name": "Preset=Only Lable"
+        },
+        {
+          "id": "12902:189487",
+          "key": "e05bba0afe6ac4c885b942105e85784f8b9e784c",
+          "name": "Preset=2 Vertical Button"
+        },
+        {
+          "id": "12902:189493",
+          "key": "afbede2c773579dfe75d740c7638eaaded802a7d",
+          "name": "Preset=2 Horizontal Button"
+        },
+        {
+          "id": "12902:189499",
+          "key": "9187c710e15210919afe15cbe4b36a34d0cd9e23",
+          "name": "Preset=Lable + Icon"
+        }
+      ]
+    },
+    {
+      "key": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "name": "❌ .Details / TextView ❌",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Custom",
+      "category": "Details",
+      "defaultVariant": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "variants": [
+        {
+          "id": "12902:212637",
+          "key": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+          "name": "❌ .Details / TextView ❌"
+        }
+      ]
+    },
+    {
+      "key": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "name": "❌ MainButtonStack",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "MainButtonStack",
+      "defaultVariant": "516b21ef4dcf25c22dcb43346801b4112453d713",
+      "variants": [
+        {
+          "id": "544:94655",
+          "key": "516b21ef4dcf25c22dcb43346801b4112453d713",
+          "name": "Preset=Only Lable"
+        },
+        {
+          "id": "544:94653",
+          "key": "1014126db5ae62ce0957fa277ac656e5eef05db6",
+          "name": "Preset=2 Vertical Button"
+        },
+        {
+          "id": "544:94654",
+          "key": "683a90a1706dd84e2b699edd3ad2ec6d488f6974",
+          "name": "Preset=2 Horizontal Button"
+        },
+        {
+          "id": "544:94652",
+          "key": "fa565a5e51454e15ebc7f9cbcb15cfd083b4af1b",
+          "name": "Preset=Lable + Icon"
+        }
+      ]
+    },
+    {
+      "key": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "name": ".❌ Details / TextView",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Custom",
+      "category": "Details",
+      "defaultVariant": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "variants": [
+        {
+          "id": "544:94101",
+          "key": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+          "name": ".❌ Details / TextView"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False",
+      "type": "COMPONENT",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content / Label",
+      "type": "TEXT",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          4,
+          6
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 999
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          24,
+          4,
+          24
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text / Hint",
+      "type": "TEXT",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(238,238,251,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable",
+      "type": "COMPONENT",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌",
+      "type": "INSTANCE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": false,
+      "layout": {
+        "padding": [
+          12,
+          24,
+          8,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap",
+      "type": "FRAME",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547
+      }
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack",
+      "type": "FRAME",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          20,
+          16,
+          20
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile",
+      "type": "INSTANCE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          28,
+          16,
+          28
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / 👻 Fixer",
+      "type": "INSTANCE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / Content",
+      "type": "FRAME",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / Content / Label",
+      "type": "TEXT",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / NativeHomeBar",
+      "type": "INSTANCE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": false,
+      "layout": {
+        "padding": [
+          21,
+          120,
+          8,
+          120
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / NativeHomeBar / Home Indicator",
+      "type": "RECTANGLE",
+      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 100
+      },
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ .Details / TextView ❌",
+      "type": "COMPONENT",
+      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          24,
+          8,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ .Details / TextView ❌ / content-wrap",
+      "type": "FRAME",
+      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ .Details / TextView ❌ / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ .Details / TextView ❌ / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547
+      }
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable",
+      "type": "COMPONENT",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView",
+      "type": "INSTANCE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          12,
+          24,
+          8,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547
+      }
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack",
+      "type": "FRAME",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          20,
+          16,
+          20
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button",
+      "type": "INSTANCE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          28,
+          16,
+          28
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / 👻 Fixer",
+      "type": "INSTANCE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / Content",
+      "type": "FRAME",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / Content / Label",
+      "type": "TEXT",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / NativeHomeBar",
+      "type": "INSTANCE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          21,
+          120,
+          8,
+          120
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ MainButtonStack / Preset=Only Lable / NativeHomeBar / Home Indicator",
+      "type": "RECTANGLE",
+      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 100
+      },
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".❌ Details / TextView",
+      "type": "COMPONENT",
+      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          24,
+          8,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".❌ Details / TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".❌ Details / TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".❌ Details / TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547
+      }
+    }
+  ]
+}

@@ -1,0 +1,1372 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:31:28.847Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "PaymentControl [M]"
+    ],
+    "componentCount": 3,
+    "elementCount": 67
+  },
+  "components": [
+    {
+      "key": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "name": "[M] Amount",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] Amount",
+      "defaultVariant": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "variants": [
+        {
+          "id": "34837:101827",
+          "key": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+          "name": "[M] Amount"
+        }
+      ]
+    },
+    {
+      "key": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "name": "[M] PaymentControl",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] PaymentControl",
+      "defaultVariant": "2f5dfb7380c4c2ab5e32751a49c741803ef90b7f",
+      "variants": [
+        {
+          "id": "34837:100807",
+          "key": "2f5dfb7380c4c2ab5e32751a49c741803ef90b7f",
+          "name": "State=Empty"
+        },
+        {
+          "id": "34837:100815",
+          "key": "068197616ce630e00ceea89b144dddd315b8d5fd",
+          "name": "State=Active"
+        },
+        {
+          "id": "34837:100823",
+          "key": "f8848547932da2b0888c4fd1cd7f5fa97a418221",
+          "name": "State=ActiveFilled"
+        },
+        {
+          "id": "34837:100831",
+          "key": "a85f68dc90987100862666802dcdcbad9b961725",
+          "name": "State=Filled"
+        },
+        {
+          "id": "34837:100839",
+          "key": "9fdb5054f1f3d558db3d2d453a43fc43b9a6739a",
+          "name": "State=DisabledEmpty"
+        },
+        {
+          "id": "34837:100847",
+          "key": "8d715fa40daf5d5dd9e5b5b45747cf098f544026",
+          "name": "State=DisabledFilled"
+        },
+        {
+          "id": "34837:100855",
+          "key": "319e307a225a2c7c349e84b8f9c5762536f0fb79",
+          "name": "State=ErrorFilled"
+        }
+      ]
+    },
+    {
+      "key": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "name": "[M] Hint",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] Hint",
+      "defaultVariant": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "variants": [
+        {
+          "id": "34837:101785",
+          "key": "d27233755497bc8580b3a12812a83700c33a4e37",
+          "name": "[M] Hint"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "[M] Amount",
+      "type": "COMPONENT",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount",
+      "type": "INSTANCE",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(5,8,29,0.38)"
+      },
+      "text": {
+        "value": "0"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Semibold",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": 0.36000001430511475
+      }
+    },
+    {
+      "path": "[M] Amount / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] Amount / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(5,8,29,0.38)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Regular",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": 0.36000001430511475
+      }
+    },
+    {
+      "path": "[M] Amount / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Amount / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "d04a931ce171beecabb1be7b18cd34506bc2981d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty",
+      "type": "COMPONENT",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          24
+        ],
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          0,
+          16,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(5,8,29,0.38)"
+      },
+      "text": {
+        "value": "0"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Semibold",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": 0.36000001430511475
+      }
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(5,8,29,0.38)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Regular",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": 0.36000001430511475
+      }
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Amount / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 6,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / Hint",
+      "type": "TEXT",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Indicator / fixer",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Shape / Shape",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Shape / Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Content",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe / information-circle",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe / information-circle / icon",
+      "type": "VECTOR",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Border / Border",
+      "type": "INSTANCE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Border / Border / Mask",
+      "type": "VECTOR",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / [M] Hint / IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] PaymentControl / State=Empty / Content / Inner shadow",
+      "type": "RECTANGLE",
+      "componentKey": "bd58cd9ec1fa8169e6c334c1ee9e4a974eefa86d",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint",
+      "type": "COMPONENT",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": 6,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / Hint",
+      "type": "TEXT",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] Hint / IconView",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content",
+      "type": "FRAME",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Indicator / fixer",
+      "type": "FRAME",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Shape / Shape",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Shape / Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Content",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe / information-circle",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Content / Fixer / PaintMe / information-circle / icon",
+      "type": "VECTOR",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Border / Border",
+      "type": "INSTANCE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Border / Border / Mask",
+      "type": "VECTOR",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.800000011920929,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Hint / IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "d27233755497bc8580b3a12812a83700c33a4e37",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

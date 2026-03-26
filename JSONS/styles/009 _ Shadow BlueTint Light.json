@@ -1,0 +1,2249 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-26T21:44:27.484Z",
+    "fileName": "009 :: Shadow BlueTint Light",
+    "library": "009 :: Shadow BlueTint Light"
+  },
+  "styles": [
+    {
+      "key": "74517f8295b246ac3c28207aecb858ab5841359f",
+      "name": "XS Flat/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "74517f8295b246ac3c28207aecb858ab5841359f",
+      "name": "XS Flat/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "097f45318104daa5eaaaaeb39b0c726dc548dc3b",
+      "name": "XS Flat/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "097f45318104daa5eaaaaeb39b0c726dc548dc3b",
+      "name": "XS Flat/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "41d6f5282874bea29fadf073864a318b0e51d293",
+      "name": "XS Flat/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "41d6f5282874bea29fadf073864a318b0e51d293",
+      "name": "XS Flat/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "fc02f635fba4e0f3de4fa2b33802dd27d1dc2129",
+      "name": "XS Flat/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "fc02f635fba4e0f3de4fa2b33802dd27d1dc2129",
+      "name": "XS Flat/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8aeec92efb88cb4bbc3c370a0a44931441e69b36",
+      "name": "S Action/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8aeec92efb88cb4bbc3c370a0a44931441e69b36",
+      "name": "S Action/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8aeec92efb88cb4bbc3c370a0a44931441e69b36",
+      "name": "S Action/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "fa5f1d70597e62cc9b5d4d6971468e2dc5f9ff73",
+      "name": "S Action/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "fa5f1d70597e62cc9b5d4d6971468e2dc5f9ff73",
+      "name": "S Action/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "fa5f1d70597e62cc9b5d4d6971468e2dc5f9ff73",
+      "name": "S Action/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "6b47d77c668eb47bbe4bd9e4f45e9fb1c3985287",
+      "name": "S Action/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "6b47d77c668eb47bbe4bd9e4f45e9fb1c3985287",
+      "name": "S Action/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "6b47d77c668eb47bbe4bd9e4f45e9fb1c3985287",
+      "name": "S Action/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "95e9d8e032fd06c9f5da67772c0eb2d10267cf79",
+      "name": "S Action/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "95e9d8e032fd06c9f5da67772c0eb2d10267cf79",
+      "name": "S Action/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "95e9d8e032fd06c9f5da67772c0eb2d10267cf79",
+      "name": "S Action/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "f518c18a1feb36db27732c46fc98d45edae7326b",
+      "name": "M Fixed/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "f518c18a1feb36db27732c46fc98d45edae7326b",
+      "name": "M Fixed/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "f518c18a1feb36db27732c46fc98d45edae7326b",
+      "name": "M Fixed/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "f518c18a1feb36db27732c46fc98d45edae7326b",
+      "name": "M Fixed/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "4ae4a6a03e232521e364057985c1a746743e1f9e",
+      "name": "M Fixed/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "4ae4a6a03e232521e364057985c1a746743e1f9e",
+      "name": "M Fixed/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "4ae4a6a03e232521e364057985c1a746743e1f9e",
+      "name": "M Fixed/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "4ae4a6a03e232521e364057985c1a746743e1f9e",
+      "name": "M Fixed/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "817bf29fb6fe4842a74c4c9a207bb1c4b1ef4d12",
+      "name": "M Fixed/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "817bf29fb6fe4842a74c4c9a207bb1c4b1ef4d12",
+      "name": "M Fixed/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "817bf29fb6fe4842a74c4c9a207bb1c4b1ef4d12",
+      "name": "M Fixed/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "817bf29fb6fe4842a74c4c9a207bb1c4b1ef4d12",
+      "name": "M Fixed/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "66222ebc52e576b78de671bc1f3ab03de816c81c",
+      "name": "M Fixed/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "66222ebc52e576b78de671bc1f3ab03de816c81c",
+      "name": "M Fixed/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "66222ebc52e576b78de671bc1f3ab03de816c81c",
+      "name": "M Fixed/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "66222ebc52e576b78de671bc1f3ab03de816c81c",
+      "name": "M Fixed/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "707d9a71363a7ef287e830d6b9a48f4baf98b161",
+      "name": "L Raised/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "707d9a71363a7ef287e830d6b9a48f4baf98b161",
+      "name": "L Raised/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "707d9a71363a7ef287e830d6b9a48f4baf98b161",
+      "name": "L Raised/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "707d9a71363a7ef287e830d6b9a48f4baf98b161",
+      "name": "L Raised/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "707d9a71363a7ef287e830d6b9a48f4baf98b161",
+      "name": "L Raised/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "0796331c0018838ffb66a5bd2530ec66ea623895",
+      "name": "L Raised/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "0796331c0018838ffb66a5bd2530ec66ea623895",
+      "name": "L Raised/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "0796331c0018838ffb66a5bd2530ec66ea623895",
+      "name": "L Raised/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "0796331c0018838ffb66a5bd2530ec66ea623895",
+      "name": "L Raised/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "0796331c0018838ffb66a5bd2530ec66ea623895",
+      "name": "L Raised/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8928232a6602ed60cf8c7181504c906aa4827d6c",
+      "name": "L Raised/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8928232a6602ed60cf8c7181504c906aa4827d6c",
+      "name": "L Raised/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8928232a6602ed60cf8c7181504c906aa4827d6c",
+      "name": "L Raised/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8928232a6602ed60cf8c7181504c906aa4827d6c",
+      "name": "L Raised/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "8928232a6602ed60cf8c7181504c906aa4827d6c",
+      "name": "L Raised/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "a3a4fc387501faab004e96a325e0cd88f6108953",
+      "name": "L Raised/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "a3a4fc387501faab004e96a325e0cd88f6108953",
+      "name": "L Raised/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "a3a4fc387501faab004e96a325e0cd88f6108953",
+      "name": "L Raised/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "a3a4fc387501faab004e96a325e0cd88f6108953",
+      "name": "L Raised/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "a3a4fc387501faab004e96a325e0cd88f6108953",
+      "name": "L Raised/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "1a00fdbe2b5550e913a2c6792d2536870da7a68e",
+      "name": "XL Modal/Default",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 40,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": 32
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.03999999910593033
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "bc4587a71f88e7978ec19cac1fa20b3271b3fc16",
+      "name": "XL Modal/Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 40,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.07999999821186066
+          },
+          "offset": {
+            "x": 0,
+            "y": -32
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "85380cd98e56fcfc961636b058f943c3b42dc7cd",
+      "name": "XL Modal/Hard",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 40,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": 32
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 1,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 8,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -4
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 16,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.1599999964237213
+          },
+          "offset": {
+            "x": 0,
+            "y": -12
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 24,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -20
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 32,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -24
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    },
+    {
+      "key": "ec6e400c9d650cca8344ffa1995804a3629ba2b4",
+      "name": "XL Modal/Hard Up",
+      "group": "shadow",
+      "type": "drop shadow",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 40,
+          "boundVariables": {},
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.20000000298023224
+          },
+          "offset": {
+            "x": 0,
+            "y": -32
+          },
+          "spread": 0,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      }
+    }
+  ]
+}

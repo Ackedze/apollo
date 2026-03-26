@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { createRequire } = require('module');
+const { spawnSync } = require('child_process');
 const isWatch = process.argv.includes('--watch');
 
 function loadEsbuild() {
@@ -12,27 +12,37 @@ function loadEsbuild() {
     }
   }
 
-  const legacyEsbuildEntry = path.join(
-    __dirname,
-    '..',
-    'Nemesis-mvp',
-    'node_modules',
-    'esbuild',
+  console.warn(
+    '[Apollo] esbuild is missing. Running `npm install` in Apollo before build...',
   );
+  installDependencies();
+  return require('esbuild');
+}
 
-  try {
-    const legacyRequire = createRequire(legacyEsbuildEntry);
-    const legacyEsbuild = legacyRequire(legacyEsbuildEntry);
-    console.warn('[Apollo] using esbuild from ../Nemesis-mvp/node_modules');
-    return legacyEsbuild;
-  } catch (error) {
-    const message = [
-      '[Apollo] esbuild is not available.',
-      'Install dependencies in Apollo with `npm install`',
-      'or keep ../Nemesis-mvp/node_modules available as a fallback.',
-    ].join(' ');
-    console.error(message);
-    throw error;
+function installDependencies() {
+  const npmExecPath = process.env.npm_execpath;
+  const command = npmExecPath
+    ? process.execPath
+    : process.platform === 'win32'
+      ? 'npm.cmd'
+      : 'npm';
+  const args = npmExecPath
+    ? [npmExecPath, 'install', '--no-audit', '--no-fund']
+    : ['install', '--no-audit', '--no-fund'];
+
+  const result = spawnSync(command, args, {
+    cwd: __dirname,
+    stdio: 'inherit',
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  if (typeof result.status === 'number' && result.status !== 0) {
+    throw new Error(
+      `[Apollo] npm install failed with exit code ${result.status}`,
+    );
   }
 }
 

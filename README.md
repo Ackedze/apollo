@@ -102,7 +102,7 @@ cd Apollo
 npm install
 ```
 
-Важно: `node_modules` не хранится в git и игнорируется репозиторием. После нового clone, cleanup, reset или ручного удаления зависимостей нужно заново выполнить `npm install`, иначе `npm run build` упадёт с ошибкой `Cannot find module 'esbuild'`.
+`node_modules` не хранится в git и игнорируется репозиторием. Если зависимости отсутствуют, `npm run build` автоматически выполнит `npm install` перед сборкой. Первый запуск после clone, cleanup или ручного удаления `node_modules` может занять дольше обычного.
 
 ### Сборка
 ```bash
@@ -110,6 +110,7 @@ npm run build
 ```
 
 Команда:
+- при необходимости автоматически восстанавливает зависимости через `npm install`;
 - собирает `dist/code.js` через `esbuild`;
 - копирует [`src/ui.html`](./src/ui.html) в `dist/ui.html`;
 - запускает [`scripts/exportComponentTree.js`](./scripts/exportComponentTree.js).

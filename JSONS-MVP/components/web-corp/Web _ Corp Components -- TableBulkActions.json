@@ -1,0 +1,6644 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:20:13.896Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "TableBulkActions"
+    ],
+    "componentCount": 12,
+    "elementCount": 330
+  },
+  "components": [
+    {
+      "key": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "name": "[D] AmountRowSlider",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] AmountRowSlider",
+      "defaultVariant": "fc5e592c400803a5470c7f22b869994d3a97b517",
+      "variants": [
+        {
+          "id": "41989:139544",
+          "key": "fc5e592c400803a5470c7f22b869994d3a97b517",
+          "name": "Amount=single"
+        },
+        {
+          "id": "41989:139546",
+          "key": "abcd8493c6c402b6842496e18a65f7c1ece4eaa5",
+          "name": "Amount=multiple"
+        },
+        {
+          "id": "41989:139555",
+          "key": "27045ee8dc7771c41634567406fa7006367392c4",
+          "name": "Amount=slider"
+        }
+      ]
+    },
+    {
+      "key": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "name": "[D] AmountItem",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] AmountItem",
+      "defaultVariant": "c4cd3190405e66678d649bd27c9713a3d00a53ad",
+      "variants": [
+        {
+          "id": "34668:45836",
+          "key": "c4cd3190405e66678d649bd27c9713a3d00a53ad",
+          "name": "Counter=false"
+        },
+        {
+          "id": "34668:45828",
+          "key": "a1b5fbc4456ee49069b941f57e22ed6362579f84",
+          "name": "Counter=true"
+        }
+      ]
+    },
+    {
+      "key": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "name": "[D] AmountRow",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] AmountRow",
+      "defaultVariant": "9980b63c7c255b14bcf6695d6bc5cebbe756812e",
+      "variants": [
+        {
+          "id": "34668:45814",
+          "key": "9980b63c7c255b14bcf6695d6bc5cebbe756812e",
+          "name": "Amount=single"
+        },
+        {
+          "id": "34668:45816",
+          "key": "130be0cecf3346f676be388da1dc67ea8d0cac75",
+          "name": "Amount=multiple"
+        }
+      ]
+    },
+    {
+      "key": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "name": "[D] Counter",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] Counter",
+      "defaultVariant": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "variants": [
+        {
+          "id": "34668:45799",
+          "key": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+          "name": "[D] Counter"
+        }
+      ]
+    },
+    {
+      "key": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "name": "[D] Slider",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] Slider",
+      "defaultVariant": "f729ecf268debe9ea53d681735884109a9286977",
+      "variants": [
+        {
+          "id": "34668:45778",
+          "key": "f729ecf268debe9ea53d681735884109a9286977",
+          "name": "Slider=start"
+        },
+        {
+          "id": "34668:45786",
+          "key": "bef26f1b44a6b8143768a20c20d1511f4385eb3e",
+          "name": "Slider=center"
+        },
+        {
+          "id": "34668:45794",
+          "key": "79cf64afe096e68a5c8c30f60512e21a712bdea9",
+          "name": "Slider=end"
+        }
+      ]
+    },
+    {
+      "key": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "name": "[D] ButtonsGroup",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] ButtonsGroup",
+      "defaultVariant": "7f1c9f979bf3b97f15156cf7f762794bfc14ea11",
+      "variants": [
+        {
+          "id": "34668:45755",
+          "key": "7f1c9f979bf3b97f15156cf7f762794bfc14ea11",
+          "name": "Overflow=false"
+        },
+        {
+          "id": "34668:45760",
+          "key": "e0d797f904efee14eab871925518c3f164e6fad6",
+          "name": "Overflow=true"
+        }
+      ]
+    },
+    {
+      "key": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "name": "[M] TableBulkActions",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Adaptive (320 – 600) ⛔️ Не для MW",
+      "category": "M] TableBulkActions",
+      "defaultVariant": "3b47665e0c1d29214b7b177ace179b509ecf4818",
+      "variants": [
+        {
+          "id": "40937:73117",
+          "key": "3b47665e0c1d29214b7b177ace179b509ecf4818",
+          "name": "Amount=false"
+        },
+        {
+          "id": "34668:45973",
+          "key": "f1f7a573b252e090964e8250f06a4b31ef3bcfd1",
+          "name": "Amount=true"
+        }
+      ]
+    },
+    {
+      "key": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "name": "[M] AmountItem",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] AmountItem",
+      "defaultVariant": "665dc0d9fe12f6d69447b5b939798dc7fd85f6dc",
+      "variants": [
+        {
+          "id": "40937:75223",
+          "key": "665dc0d9fe12f6d69447b5b939798dc7fd85f6dc",
+          "name": "Counter=false"
+        },
+        {
+          "id": "40937:75215",
+          "key": "fc294096665781e7db7c0e38ed80b56dbcc014ad",
+          "name": "Counter=true"
+        }
+      ]
+    },
+    {
+      "key": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "name": "[M] Counter",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] Counter",
+      "defaultVariant": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "variants": [
+        {
+          "id": "34668:59693",
+          "key": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+          "name": "[M] Counter"
+        }
+      ]
+    },
+    {
+      "key": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "name": "[M] AmountRow",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] AmountRow",
+      "defaultVariant": "1e4e47e31d2eaafd7ab7c8e2f584955cd9bc98d9",
+      "variants": [
+        {
+          "id": "34668:45855",
+          "key": "1e4e47e31d2eaafd7ab7c8e2f584955cd9bc98d9",
+          "name": "Amount=single"
+        },
+        {
+          "id": "34668:45857",
+          "key": "338f9d22002d4a53d05f81baa0caed410f811fa1",
+          "name": "Amount=multiple"
+        }
+      ]
+    },
+    {
+      "key": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "name": "[M] ButtonsGroup",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] ButtonsGroup",
+      "defaultVariant": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "variants": [
+        {
+          "id": "34668:45849",
+          "key": "84049a88ec5a64877b61c3086ca850aeb672be88",
+          "name": "[M] ButtonsGroup"
+        }
+      ]
+    },
+    {
+      "key": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "name": "[D] TableBulkActions",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Desktop (1920-768)",
+      "category": "D] TableBulkActions",
+      "defaultVariant": "455b26dc1527f2534b2cb3c4c506f3ff8fec369e",
+      "variants": [
+        {
+          "id": "34668:45938",
+          "key": "455b26dc1527f2534b2cb3c4c506f3ff8fec369e",
+          "name": "Tablet=false, TopRow=false, Amount=false"
+        },
+        {
+          "id": "41292:61416",
+          "key": "ca46402c92b2ceef1a418d60c3f45a80ffb523ad",
+          "name": "Tablet=true, TopRow=false, Amount=false"
+        },
+        {
+          "id": "34668:45943",
+          "key": "f1502bedb719964e3f2eb545f0d6ccc60be32a0a",
+          "name": "Tablet=false, TopRow=true, Amount=false"
+        },
+        {
+          "id": "41292:61411",
+          "key": "583d7386f863567afd9b0beee100283b9d4a66b6",
+          "name": "Tablet=true, TopRow=true, Amount=false"
+        },
+        {
+          "id": "38462:74570",
+          "key": "c51a1142288e4c9c624983597ef3c4f06f102035",
+          "name": "Tablet=false, TopRow=false, Amount=true"
+        },
+        {
+          "id": "41292:61404",
+          "key": "a0d75179190ded2c96f99844dbd356c9e2f47530",
+          "name": "Tablet=true, TopRow=false, Amount=true"
+        },
+        {
+          "id": "34668:45923",
+          "key": "7089659957609d046a27c20c98fb732d76e48393",
+          "name": "Tablet=false, TopRow=true, Amount=true"
+        },
+        {
+          "id": "41292:61397",
+          "key": "233da4345be709265429d857f620d13fc227d791",
+          "name": "Tablet=true, TopRow=true, Amount=true"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "[D] AmountRowSlider / Amount=single",
+      "type": "COMPONENT",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content",
+      "type": "FRAME",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Text",
+      "type": "FRAME",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRowSlider / Amount=single / [D] AmountItem / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "74ec63fc5f15a3370064a7e7a1260c2da923790e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false",
+      "type": "COMPONENT",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content",
+      "type": "FRAME",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Text",
+      "type": "FRAME",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountItem / Counter=false / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "b1e7a500b2deca9e27f2a33a1ff0530fd45a6bdf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single",
+      "type": "COMPONENT",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content",
+      "type": "FRAME",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Text",
+      "type": "FRAME",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountRow / Amount=single / [D] AmountItem / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "05b943dd1bffdf4d049088c778870bb00a61e340",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter",
+      "type": "COMPONENT",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          8,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Checkbox_24",
+      "type": "INSTANCE",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Checkbox_24 / Content",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Checkbox_24 / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Checkbox_24 / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Checkbox_24 / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Text",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Text / Label",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Content / Text / Label / Label",
+      "type": "TEXT",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Выбрано"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] Counter / Content / Text / Label / :",
+      "type": "TEXT",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": ":"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] Counter / Content / Text / N",
+      "type": "TEXT",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] Counter / Shadow",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Shadow / Overflow Effect",
+      "type": "GROUP",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": null,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Shadow / Overflow Effect / Shadow",
+      "type": "RECTANGLE",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Shadow / Overflow Effect / bgColor",
+      "type": "RECTANGLE",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Border",
+      "type": "FRAME",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Counter / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "49f5412dd514f10f9f4c826a61d3676d69d4aa59",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start",
+      "type": "COMPONENT",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Overflow Effect",
+      "type": "GROUP",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": null,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Overflow Effect / Shadow",
+      "type": "RECTANGLE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Overflow Effect / bgColor",
+      "type": "RECTANGLE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Border",
+      "type": "FRAME",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons",
+      "type": "FRAME",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left / Icon",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(5,11,44,0.18)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left / Icon / Fixer / PaintMe / chevron-left",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Left / Icon / Fixer / PaintMe / chevron-left / icon",
+      "type": "VECTOR",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right / Icon",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right / Icon / Fixer / PaintMe / chevron-right",
+      "type": "INSTANCE",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] Slider / Slider=start / Buttons / Right / Icon / Fixer / PaintMe / chevron-right / icon",
+      "type": "VECTOR",
+      "componentKey": "79ddeb88660e74d5f76462977b73fcea362e6251",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false",
+      "type": "COMPONENT",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Primary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 2"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 3"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ButtonsGroup / Overflow=false / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "01ef51785b240d21eabfbaaa66c5a0b43a39249c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false",
+      "type": "COMPONENT",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          20,
+          16,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          8,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Checkbox_24",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Checkbox_24 / Content",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Checkbox_24 / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Checkbox_24 / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Checkbox_24 / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Text",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Text / Label",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Text / Label / Label",
+      "type": "TEXT",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Выбрано"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Text / Label / :",
+      "type": "TEXT",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": ":"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Content / Text / N",
+      "type": "TEXT",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Border",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / TopRow / [M] Counter / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Primary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 4,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / Content / [M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] TableBulkActions / Amount=false / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "145420e9fd1f756cc6f0ada663b72ef3f81e22e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false",
+      "type": "COMPONENT",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content",
+      "type": "FRAME",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Text",
+      "type": "FRAME",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountItem / Counter=false / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "256352cb25b0dcc867d190a2b23fafe175b2db66",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter",
+      "type": "COMPONENT",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content",
+      "type": "FRAME",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          8,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Checkbox_24",
+      "type": "INSTANCE",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Checkbox_24 / Content",
+      "type": "FRAME",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Checkbox_24 / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Checkbox_24 / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Checkbox_24 / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Text",
+      "type": "FRAME",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Text / Label",
+      "type": "FRAME",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Content / Text / Label / Label",
+      "type": "TEXT",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Выбрано"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] Counter / Content / Text / Label / :",
+      "type": "TEXT",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": ":"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] Counter / Content / Text / N",
+      "type": "TEXT",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] Counter / Border",
+      "type": "FRAME",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] Counter / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "6198db13380aebfcc6f7dfddfed3dbfba3ee4ff7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single",
+      "type": "COMPONENT",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content",
+      "type": "FRAME",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Text",
+      "type": "FRAME",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] AmountRow / Amount=single / [M] AmountItem / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "980392088b1f844d333eb18a0bcaa96d2f96d944",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup",
+      "type": "COMPONENT",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Primary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 4,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ButtonsGroup / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "84049a88ec5a64877b61c3086ca850aeb672be88",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false",
+      "type": "COMPONENT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          50,
+          16,
+          50
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 24,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          8,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Checkbox_24",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Checkbox_24 / Content",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Checkbox_24 / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Checkbox_24 / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Checkbox_24 / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Text",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Text / Label",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Text / Label / Label",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Выбрано"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Text / Label / :",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": ":"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Content / Text / N",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Shadow",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Shadow / Overflow Effect",
+      "type": "GROUP",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Shadow / Overflow Effect / Shadow",
+      "type": "RECTANGLE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Shadow / Overflow Effect / bgColor",
+      "type": "RECTANGLE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Border",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] Counter / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Primary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 2"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary 3"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] TableBulkActions / Tablet=false, TopRow=false, Amount=false / Content / [D] ButtonsGroup / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "e5dafdda4ce8bf06e41108061ba487dd3065c4de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

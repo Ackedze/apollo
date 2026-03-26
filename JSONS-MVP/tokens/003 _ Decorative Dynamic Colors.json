@@ -1,0 +1,4579 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-30T07:20:52.738Z",
+    "fileName": "003 :: Decorative Dynamic Colors",
+    "library": "003 :: Decorative Dynamic Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:944:1243",
+      "name": "Decorative Dynamic",
+      "key": "3d3e31edd2b344df54d1f8ba645c57d6fc05278b",
+      "defaultModeId": "944:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "944:0",
+          "name": "Light"
+        },
+        {
+          "modeId": "944:1",
+          "name": "Dark"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:944:1244",
+          "name": "decorative/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "597a81128823004864d92c979f176546367bcf66",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.4588235318660736,
+              "b": 0.3686274588108063,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FE5E48",
+            "944:1": "#FF755E"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:944:1245",
+          "name": "decorative/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1ed16e7c7c35df1accad554a4d459513eae89a06",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FA9313",
+            "944:1": "#FDA136"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:944:1246",
+          "name": "decorative/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "719280f4d66f70abee2bc93e9acb2ace8ccb4838",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9843137264251709,
+              "g": 0.843137264251709,
+              "b": 0,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FBD700",
+            "944:1": "#FEDF00"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:944:1247",
+          "name": "decorative/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "312e6cb286cb85c6498db19410954d99844238df",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.501960813999176,
+              "g": 0.7529411911964417,
+              "b": 0.007843137718737125,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.545098066329956,
+              "g": 0.7960784435272217,
+              "b": 0.0235294122248888,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#80C002",
+            "944:1": "#8BCB06"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:944:1248",
+          "name": "decorative/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bb8ea0bd3df0adc26d161951b941888f14a0e6eb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0CC44D",
+            "944:1": "#17D055"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:944:1249",
+          "name": "decorative/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a47e114c7dc39b0d65b422d1e5c350f8cea32a00",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.03921568766236305,
+              "g": 0.7450980544090271,
+              "b": 0.5803921818733215,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.007843137718737125,
+              "g": 0.8078431487083435,
+              "b": 0.6352941393852234,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0ABE94",
+            "944:1": "#02CEA2"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:944:1250",
+          "name": "decorative/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e4db2651e23ee2582352e24d4288135865f6f83d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.03529411926865578,
+              "g": 0.7254902124404907,
+              "b": 0.7450980544090271,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.03529411926865578,
+              "g": 0.7843137383460999,
+              "b": 0.8156862854957581,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#09B9BE",
+            "944:1": "#09C8D0"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:944:1251",
+          "name": "decorative/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "996e702017a0e56b8d6532a0bb422ed177b465f3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.04313725605607033,
+              "g": 0.6941176652908325,
+              "b": 0.9058823585510254,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.04313725605607033,
+              "g": 0.7450980544090271,
+              "b": 0.9529411792755127,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0BB1E7",
+            "944:1": "#0BBEF3"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:944:1252",
+          "name": "decorative/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b2eeb3c4c02e5eab348bbc6434a62146cf735838",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#3193FC",
+            "944:1": "#4A9DFC"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:944:1253",
+          "name": "decorative/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dacf2490f2a452b7a94b2c5ccdb983a124b47152",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.5372549295425415,
+              "g": 0.4941176474094391,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.6000000238418579,
+              "g": 0.545098066329956,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#897EFF",
+            "944:1": "#998BFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:944:1254",
+          "name": "decorative/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f718389f8202eb3dad6f65470c6f8887d7d0b671",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8313725590705872,
+              "g": 0.4274509847164154,
+              "b": 0.9803921580314636,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8470588326454163,
+              "g": 0.5176470875740051,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D46DFA",
+            "944:1": "#D884FE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:944:1255",
+          "name": "decorative/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "855c065c28e49a97a95bea69787041297682e155",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9725490212440491,
+              "g": 0.3490196168422699,
+              "b": 0.772549033164978,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.4431372582912445,
+              "b": 0.8313725590705872,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F859C5",
+            "944:1": "#FC71D4"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:944:1256",
+          "name": "decorative/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2a9d827c69d0d1eca00cd253bcdfdd78be905271",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.3294117748737335,
+              "b": 0.5803921818733215,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.4470588266849518,
+              "b": 0.6352941393852234,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FF5494",
+            "944:1": "#FF72A2"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1543:87547",
+          "name": "decorative-soft/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c7d6c5bb629c57fc4baa580eb35bec73709f8f90",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.6941176652908325,
+              "b": 0.6549019813537598,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.5568627715110779,
+              "b": 0.48235294222831726,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FCB1A7",
+            "944:1": "#FC8E7B"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1543:87548",
+          "name": "decorative-soft/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8c51472e2dea53b99ca77487729fe8bbaeee3785",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9921568632125854,
+              "g": 0.7568627595901489,
+              "b": 0.47843137383461,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9647058844566345,
+              "g": 0.658823549747467,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FDC17A",
+            "944:1": "#F6A850"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1543:87549",
+          "name": "decorative-soft/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bc4d20ff53d21c639eca6428e085aae75bb254e5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.929411768913269,
+              "g": 0.772549033164978,
+              "b": 0.12941177189350128,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F6D53D",
+            "944:1": "#EDC521"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1543:87550",
+          "name": "decorative-soft/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f3630b5385686aec0de12ed285c075b6d00fa48b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.7137255072593689,
+              "g": 0.8588235378265381,
+              "b": 0.4627451002597809,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#B6DB76",
+            "944:1": "#9CC350"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1543:87551",
+          "name": "decorative-soft/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7a5aa75f693773b6d2c5d155d3fa0a193b9547ad",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.5568627715110779,
+              "g": 0.886274516582489,
+              "b": 0.6117647290229797,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.4156862795352936,
+              "g": 0.7921568751335144,
+              "b": 0.47843137383461,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#8EE29C",
+            "944:1": "#6ACA7A"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1543:87552",
+          "name": "decorative-soft/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "63b122cb693b4dd94b0b7aac468d3dc1a29581b8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.4901960790157318,
+              "g": 0.8823529481887817,
+              "b": 0.7529411911964417,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#7DE1C0",
+            "944:1": "#53C9A4"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1543:87553",
+          "name": "decorative-soft/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "14b738761d09f76ba2f747cc4267fa348ff72459",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.4588235318660736,
+              "g": 0.8666666746139526,
+              "b": 0.8745098114013672,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.29019609093666077,
+              "g": 0.772549033164978,
+              "b": 0.7803921699523926,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#75DDDF",
+            "944:1": "#4AC5C7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1543:87554",
+          "name": "decorative-soft/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5d64ca4e662266b3ea88acaf74a1cf6d1b3b02e9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.5411764979362488,
+              "g": 0.8313725590705872,
+              "b": 0.9529411792755127,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.3686274588108063,
+              "g": 0.7450980544090271,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#8AD4F3",
+            "944:1": "#5EBEE1"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1543:87555",
+          "name": "decorative-soft/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "87e4da4a8144493a6ad4502e2e864d66eb506c70",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.6705882549285889,
+              "g": 0.8078431487083435,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.5098039507865906,
+              "g": 0.7098039388656616,
+              "b": 0.9647058844566345,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#ABCEFF",
+            "944:1": "#82B5F6"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1543:87556",
+          "name": "decorative-soft/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "59ab13cbe895e7e898908a4a67dde082668189b8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.7490196228027344,
+              "g": 0.7686274647712708,
+              "b": 0.9960784316062927,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.6549019813537598,
+              "g": 0.6549019813537598,
+              "b": 0.9686274528503418,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#BFC4FE",
+            "944:1": "#A7A7F7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1543:87557",
+          "name": "decorative-soft/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b394e50709360e3bf1f24b9b6b720c4344f2ee04",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8980392217636108,
+              "g": 0.7372549176216125,
+              "b": 0.9803921580314636,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8470588326454163,
+              "g": 0.6000000238418579,
+              "b": 0.9411764740943909,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E5BCFA",
+            "944:1": "#D899F0"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1543:87558",
+          "name": "decorative-soft/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dfd8b3950a5f945b1204c4a7a354f2fc0e4ce526",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6941176652908325,
+              "b": 0.8941176533699036,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9647058844566345,
+              "g": 0.5568627715110779,
+              "b": 0.8274509906768799,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FDB1E4",
+            "944:1": "#F68ED3"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1543:87559",
+          "name": "decorative-soft/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c86f93ac910b9ef279089a84879f8f48484de4d1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.6980392336845398,
+              "b": 0.7764706015586853,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.5607843399047852,
+              "b": 0.6901960968971252,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FCB2C6",
+            "944:1": "#FC8FB0"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:944:1270",
+          "name": "decorative-muted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aba5f04775be4eb20594dbf16db04ed53e17dbc2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.9215686321258545,
+              "b": 0.9215686321258545,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.2235294133424759,
+              "g": 0.14509804546833038,
+              "b": 0.13725490868091583,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FFEBEB",
+            "944:1": "#392523"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:944:1271",
+          "name": "decorative-muted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0ef0441d39118d418935896864b39d922539ae93",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.9372549057006836,
+              "b": 0.8509804010391235,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.21176470816135406,
+              "g": 0.16078431904315948,
+              "b": 0.12156862765550613,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FFEFD9",
+            "944:1": "#36291F"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:944:1272",
+          "name": "decorative-muted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "035a9b5668090dbcc8ee31c99733c98b5625648f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9843137264251709,
+              "g": 0.9490196108818054,
+              "b": 0.8274509906768799,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.20000000298023224,
+              "g": 0.16862745583057404,
+              "b": 0.10980392247438431,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FBF2D3",
+            "944:1": "#332B1C"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:944:1273",
+          "name": "decorative-muted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "caacd794d35671b96f0539f1494db6682558b940",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9137254953384399,
+              "g": 0.9686274528503418,
+              "b": 0.8509804010391235,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.16470588743686676,
+              "g": 0.1764705926179886,
+              "b": 0.12941177189350128,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E9F7D9",
+            "944:1": "#2A2D21"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:944:1274",
+          "name": "decorative-muted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1bdb74a695d6fd76ad1c18b835db95956a22aef8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8745098114013672,
+              "g": 0.9725490212440491,
+              "b": 0.8980392217636108,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.13725490868091583,
+              "g": 0.1764705926179886,
+              "b": 0.14509804546833038,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#DFF8E5",
+            "944:1": "#232D25"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:944:1275",
+          "name": "decorative-muted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7e3f78810a71e6346148c5602cb9687643d46a2c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8549019694328308,
+              "g": 0.9803921580314636,
+              "b": 0.9372549057006836,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.12156862765550613,
+              "g": 0.18039216101169586,
+              "b": 0.16470588743686676,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#DAFAEF",
+            "944:1": "#1F2E2A"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:944:1276",
+          "name": "decorative-muted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d62bf0aa8503b6423ba6f7f45a7c58e8649c7aea",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8549019694328308,
+              "g": 0.9686274528503418,
+              "b": 0.9725490212440491,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.11372549086809158,
+              "g": 0.1764705926179886,
+              "b": 0.1921568661928177,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#DAF7F8",
+            "944:1": "#1D2D31"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:944:1277",
+          "name": "decorative-muted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0d334022cc6980ebe68697a73679bddfba9f4a42",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8705882430076599,
+              "g": 0.9607843160629272,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.11764705926179886,
+              "g": 0.1725490242242813,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#DEF5FF",
+            "944:1": "#1E2C37"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:944:1278",
+          "name": "decorative-muted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d5cebe65184f497b00375c71a09976926a7ed688",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.13333334028720856,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E4F0FF",
+            "944:1": "#222A3E"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:944:1279",
+          "name": "decorative-muted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "68c64746218c3878766144c451d07709d842ab2f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9333333373069763,
+              "g": 0.929411768913269,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.16862745583057404,
+              "g": 0.15294118225574493,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#EEEDFF",
+            "944:1": "#2B2736"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:944:1280",
+          "name": "decorative-muted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7755674e99342956439408169a28990569bf29b7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9764705896377563,
+              "g": 0.9215686321258545,
+              "b": 0.9960784316062927,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.20000000298023224,
+              "g": 0.14901961386203766,
+              "b": 0.20000000298023224,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F9EBFE",
+            "944:1": "#332633"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:944:1281",
+          "name": "decorative-muted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "346801ceab608d7ab5a25275fe21d6aa841a2f4e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.9176470637321472,
+              "b": 0.9803921580314636,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.21176470816135406,
+              "g": 0.1411764770746231,
+              "b": 0.18039216101169586,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FCEAFA",
+            "944:1": "#36242E"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:944:1282",
+          "name": "decorative-muted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8fcacb69b2cd9255b5d357686ca61decf1c1d73a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.9176470637321472,
+              "b": 0.9333333373069763,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.21960784494876862,
+              "g": 0.13725490868091583,
+              "b": 0.14901961386203766,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FFEAEE",
+            "944:1": "#382326"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1029:1643",
+          "name": "decorative-muted-alt/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c159c2210fbc7d54f1c496ae74267cf8522a2aae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.8745098114013672,
+              "b": 0.8745098114013672,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.2666666805744171,
+              "g": 0.16078431904315948,
+              "b": 0.14901961386203766,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FFDFDF",
+            "944:1": "#442926"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1029:1644",
+          "name": "decorative-muted-alt/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0fe17017989facc740269e8645b4df55cd6c0c65",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9921568632125854,
+              "g": 0.9019607901573181,
+              "b": 0.7843137383460999,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.2549019753932953,
+              "g": 0.18431372940540314,
+              "b": 0.13333334028720856,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FDE6C8",
+            "944:1": "#412F22"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1029:1645",
+          "name": "decorative-muted-alt/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9558cd53c609f24e1e542c1b341b402470a8aafb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9686274528503418,
+              "g": 0.9176470637321472,
+              "b": 0.7568627595901489,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.239215686917305,
+              "g": 0.20000000298023224,
+              "b": 0.125490203499794,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F7EAC1",
+            "944:1": "#3D3320"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1029:1646",
+          "name": "decorative-muted-alt/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "48cbcb50f92fcc7e39c54e385d6d5303ac691f18",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8784313797950745,
+              "g": 0.9372549057006836,
+              "b": 0.7843137383460999,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.1764705926179886,
+              "g": 0.20000000298023224,
+              "b": 0.13333334028720856,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E0EFC8",
+            "944:1": "#2D3322"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1029:1647",
+          "name": "decorative-muted-alt/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9e7b8bc6c6f728c8b7f40b45b801a98fc7116bd3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8196078538894653,
+              "g": 0.9450980424880981,
+              "b": 0.843137264251709,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.14509804546833038,
+              "g": 0.2078431397676468,
+              "b": 0.1568627506494522,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D1F1D7",
+            "944:1": "#253528"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1029:1648",
+          "name": "decorative-muted-alt/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "70cc5b982f32455c7276e76c1c681deca064f0a7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.7882353067398071,
+              "g": 0.9490196108818054,
+              "b": 0.9019607901573181,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.11764705926179886,
+              "g": 0.21176470816135406,
+              "b": 0.1921568661928177,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#C9F2E6",
+            "944:1": "#1E3631"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1029:1649",
+          "name": "decorative-muted-alt/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "499dbe43e8e022def099b3efb4a0e0dd279227e0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.7843137383460999,
+              "g": 0.9450980424880981,
+              "b": 0.9529411792755127,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.10588235408067703,
+              "g": 0.2078431397676468,
+              "b": 0.22745098173618317,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#C8F1F3",
+            "944:1": "#1B353A"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1029:1650",
+          "name": "decorative-muted-alt/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0270a28c1919a314c9854c7fb5025878b8ac8abc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.800000011920929,
+              "g": 0.9333333373069763,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.11372549086809158,
+              "g": 0.20392157137393951,
+              "b": 0.25882354378700256,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#CCEEFC",
+            "944:1": "#1D3442"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1029:1651",
+          "name": "decorative-muted-alt/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "32090416c070bf4effd00f7d5bd614400615ae72",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8470588326454163,
+              "g": 0.9176470637321472,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.16078431904315948,
+              "g": 0.1882352977991104,
+              "b": 0.2666666805744171,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D8EAFF",
+            "944:1": "#293044"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1029:1652",
+          "name": "decorative-muted-alt/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "546c89f3ab23c26a4beea3ccdd61cc7f22fff31d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8901960849761963,
+              "g": 0.9019607901573181,
+              "b": 0.9960784316062927,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.20000000298023224,
+              "g": 0.1764705926179886,
+              "b": 0.25882354378700256,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E3E6FE",
+            "944:1": "#332D42"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1029:1653",
+          "name": "decorative-muted-alt/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "790563dcbfdf3ae6c9a27244d73f57bccb22b78f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9450980424880981,
+              "g": 0.886274516582489,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.239215686917305,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F1E2FC",
+            "944:1": "#3D2A3E"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1029:1654",
+          "name": "decorative-muted-alt/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4165e142357ffae3ee401bf55615d136d3417151",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9725490212440491,
+              "g": 0.8745098114013672,
+              "b": 0.95686274766922,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.250980406999588,
+              "g": 0.1568627506494522,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F8DFF4",
+            "944:1": "#402837"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1029:1655",
+          "name": "decorative-muted-alt/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8e0e8003104bb4562fe8066d447bb67b21df38e0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0.9019607901573181,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.27450981736183167,
+              "g": 0.1568627506494522,
+              "b": 0.1764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FEDFE6",
+            "944:1": "#46282D"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1015:1106",
+          "name": "decorative-text/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "faf89c757f3913777f72b5ece80a4e451b7e2829",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#EC2D20",
+            "944:1": "#FF4837"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:944:1257",
+          "name": "decorative_inverted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "995ba7d23bb58c2ee586d5091349ad32749cfa5a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.4588235318660736,
+              "b": 0.3686274588108063,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FF755E",
+            "944:1": "#FE5E48"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:944:1258",
+          "name": "decorative_inverted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ea891c9922c188e67c002b14240ce9a941d5e98f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FDA136",
+            "944:1": "#FA9313"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:944:1259",
+          "name": "decorative_inverted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a44aaba5198d01d7e3e60b872a4ccee347b858dc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9843137264251709,
+              "g": 0.843137264251709,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FEDF00",
+            "944:1": "#FBD700"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:944:1260",
+          "name": "decorative_inverted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "80a8040f4c205c5b3bcbafa9220e75b468b93622",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.545098066329956,
+              "g": 0.7960784435272217,
+              "b": 0.0235294122248888,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.501960813999176,
+              "g": 0.7529411911964417,
+              "b": 0.007843137718737125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#8BCB06",
+            "944:1": "#80C002"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:944:1261",
+          "name": "decorative_inverted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "537a1b50431e1753f73b43108c9eaa118f9a1d4a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#17D055",
+            "944:1": "#0CC44D"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:944:1262",
+          "name": "decorative_inverted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "437aadd36741cdbae320818fba902d17f8968d11",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.007843137718737125,
+              "g": 0.8078431487083435,
+              "b": 0.6352941393852234,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.03921568766236305,
+              "g": 0.7450980544090271,
+              "b": 0.5803921818733215,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#02CEA2",
+            "944:1": "#0ABE94"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:944:1263",
+          "name": "decorative_inverted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dbf673b112337c77db3deefd5f2e6b32fb0493ae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.03529411926865578,
+              "g": 0.7843137383460999,
+              "b": 0.8156862854957581,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.03529411926865578,
+              "g": 0.7254902124404907,
+              "b": 0.7450980544090271,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#09C8D0",
+            "944:1": "#09B9BE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:944:1264",
+          "name": "decorative_inverted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "75df0b996b240a315b54397bb44d84a6904a6f48",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.04313725605607033,
+              "g": 0.7450980544090271,
+              "b": 0.9529411792755127,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.04313725605607033,
+              "g": 0.6941176652908325,
+              "b": 0.9058823585510254,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0BBEF3",
+            "944:1": "#0BB1E7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:944:1265",
+          "name": "decorative_inverted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ffdf2c03e09c963babaeab386b894c96c8ff3ff3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#4A9DFC",
+            "944:1": "#3193FC"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:944:1266",
+          "name": "decorative_inverted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9491f0b86c46fd0bacec7b156eff1750caa1adcf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.6000000238418579,
+              "g": 0.545098066329956,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.5372549295425415,
+              "g": 0.4941176474094391,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#998BFF",
+            "944:1": "#897EFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:944:1267",
+          "name": "decorative_inverted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "75c203b74be0dac738dedbf6bb23592e967a4cd0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8470588326454163,
+              "g": 0.5176470875740051,
+              "b": 0.9960784316062927,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8313725590705872,
+              "g": 0.4274509847164154,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D884FE",
+            "944:1": "#D46DFA"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:944:1268",
+          "name": "decorative_inverted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b4339cd318ce06d3fa41810e9d861bfcf150e8e0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.4431372582912445,
+              "b": 0.8313725590705872,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9725490212440491,
+              "g": 0.3490196168422699,
+              "b": 0.772549033164978,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FC71D4",
+            "944:1": "#F859C5"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:944:1269",
+          "name": "decorative_inverted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d22a78b910e075d715837417ba44b39ffe34f94",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.4470588266849518,
+              "b": 0.6352941393852234,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.3294117748737335,
+              "b": 0.5803921818733215,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FF72A2",
+            "944:1": "#FF5494"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative_inverted",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1015:1107",
+          "name": "decorative-text/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "68157b3c5775b9ab5ff75b17a1fe3c385be0150e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#EA8313",
+            "944:1": "#FA9313"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1015:1108",
+          "name": "decorative-text/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9af2b7c65194e14289032355bc74d37f73014c4a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8627451062202454,
+              "g": 0.7019608020782471,
+              "b": 0.04313725605607033,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#DCB30B",
+            "944:1": "#FEDF00"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1015:1109",
+          "name": "decorative-text/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e322c33c72f64e696e0d211b293d71818ed7f213",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.3803921639919281,
+              "g": 0.545098066329956,
+              "b": 0.007843137718737125,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.501960813999176,
+              "g": 0.7529411911964417,
+              "b": 0.007843137718737125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#618B02",
+            "944:1": "#80C002"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1015:1110",
+          "name": "decorative-text/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "816d73cd4950f3b36c90398019ff9b9e00c3a42d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0D9336",
+            "944:1": "#0CC44D"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1015:1111",
+          "name": "decorative-text/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5f741cba93ff7aafae0ff45af96ca34799d3fa02",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.05098039284348488,
+              "g": 0.5568627715110779,
+              "b": 0.45490196347236633,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.03921568766236305,
+              "g": 0.7450980544090271,
+              "b": 0.5803921818733215,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0D8E74",
+            "944:1": "#0ABE94"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1015:1112",
+          "name": "decorative-text/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b2108475b693e86d1c92f25901af8f7e789f2c16",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.019607843831181526,
+              "g": 0.5411764979362488,
+              "b": 0.5607843399047852,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.03529411926865578,
+              "g": 0.7254902124404907,
+              "b": 0.7450980544090271,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#058A8F",
+            "944:1": "#09B9BE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1015:1113",
+          "name": "decorative-text/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9dce51fcfcbf546c673af9fe74c982403f8d1d6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.0470588244497776,
+              "g": 0.5215686559677124,
+              "b": 0.7058823704719543,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.04313725605607033,
+              "g": 0.6941176652908325,
+              "b": 0.9058823585510254,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0C85B4",
+            "944:1": "#0BB1E7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1015:1114",
+          "name": "decorative-text/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "76cf24991f72feffd008945472dadc4069167be0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#2A77EF",
+            "944:1": "#4A9DFC"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1015:1115",
+          "name": "decorative-text/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0274c1566804833e847449b4c8b2ec411fef2744",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.47843137383461,
+              "g": 0.38823530077934265,
+              "b": 0.9450980424880981,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.6000000238418579,
+              "g": 0.545098066329956,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#7A63F1",
+            "944:1": "#998BFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1015:1116",
+          "name": "decorative-text/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "66cee287648afc73922908423d40b776ddf7c6ae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.729411780834198,
+              "g": 0.239215686917305,
+              "b": 0.8470588326454163,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8313725590705872,
+              "g": 0.4274509847164154,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#BA3DD8",
+            "944:1": "#D46DFA"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1015:1117",
+          "name": "decorative-text/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "76adb8761a80aa2cea2dd34da2bcfae22668786a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8392156958580017,
+              "g": 0.18431372940540314,
+              "b": 0.5843137502670288,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9725490212440491,
+              "g": 0.3490196168422699,
+              "b": 0.772549033164978,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D62F95",
+            "944:1": "#F859C5"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1015:1118",
+          "name": "decorative-text/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "58d8c1abf853b2e2ca5c673e14df02c2cad09861",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8823529481887817,
+              "g": 0.12941177189350128,
+              "b": 0.4117647111415863,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.3294117748737335,
+              "b": 0.5803921818733215,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#E12169",
+            "944:1": "#FF5494"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1543:87573",
+          "name": "decorative-soft_inverted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "172c5d0f6fc3f18c1992cabc0c3652e87e538a2f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.5568627715110779,
+              "b": 0.48235294222831726,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.6941176652908325,
+              "b": 0.6549019813537598,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FC8E7B",
+            "944:1": "#FCB1A7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1543:87574",
+          "name": "decorative-soft_inverted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9c7e1e1432b2c4fc5254d81b5ac640007859cffa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9647058844566345,
+              "g": 0.658823549747467,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9921568632125854,
+              "g": 0.7568627595901489,
+              "b": 0.47843137383461,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F6A850",
+            "944:1": "#FDC17A"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1543:87575",
+          "name": "decorative-soft_inverted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9e7187cb9473282c8a176face1d0c77b3593356d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.929411768913269,
+              "g": 0.772549033164978,
+              "b": 0.12941177189350128,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#EDC521",
+            "944:1": "#F6D53D"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1543:87576",
+          "name": "decorative-soft_inverted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "21cf6c67bd770b5fc936dd6d80fb38b96324b170",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.7137255072593689,
+              "g": 0.8588235378265381,
+              "b": 0.4627451002597809,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#9CC350",
+            "944:1": "#B6DB76"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1543:87577",
+          "name": "decorative-soft_inverted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d0d0b6019c78514812fbef2639c825330f92129",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.4156862795352936,
+              "g": 0.7921568751335144,
+              "b": 0.47843137383461,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.5568627715110779,
+              "g": 0.886274516582489,
+              "b": 0.6117647290229797,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#6ACA7A",
+            "944:1": "#8EE29C"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1543:87578",
+          "name": "decorative-soft_inverted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9679d485e5786f8b8215816efa64292e3e893a1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.4901960790157318,
+              "g": 0.8823529481887817,
+              "b": 0.7529411911964417,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#53C9A4",
+            "944:1": "#7DE1C0"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1543:87579",
+          "name": "decorative-soft_inverted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9bf4b16e1257c3365e2aad522c1b31905af3a318",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.29019609093666077,
+              "g": 0.772549033164978,
+              "b": 0.7803921699523926,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.4588235318660736,
+              "g": 0.8666666746139526,
+              "b": 0.8745098114013672,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#4AC5C7",
+            "944:1": "#75DDDF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1543:87580",
+          "name": "decorative-soft_inverted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a674a1a887bb1d22d84b718720e643928ae26dc3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.3686274588108063,
+              "g": 0.7450980544090271,
+              "b": 0.8823529481887817,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.5411764979362488,
+              "g": 0.8313725590705872,
+              "b": 0.9529411792755127,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#5EBEE1",
+            "944:1": "#8AD4F3"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1543:87581",
+          "name": "decorative-soft_inverted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3fe6235f835553026ae3a97f1b010fda7a41595c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.5098039507865906,
+              "g": 0.7098039388656616,
+              "b": 0.9647058844566345,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.6705882549285889,
+              "g": 0.8078431487083435,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#82B5F6",
+            "944:1": "#ABCEFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1543:87582",
+          "name": "decorative-soft_inverted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74744f2779a3772a967c1ec5b85d7c9e80c1e91d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.6549019813537598,
+              "g": 0.6549019813537598,
+              "b": 0.9686274528503418,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.7490196228027344,
+              "g": 0.7686274647712708,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#A7A7F7",
+            "944:1": "#BFC4FE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1543:87583",
+          "name": "decorative-soft_inverted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7a0344adb73eae53c56c3ff615f20622b5e2c124",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8470588326454163,
+              "g": 0.6000000238418579,
+              "b": 0.9411764740943909,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8980392217636108,
+              "g": 0.7372549176216125,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D899F0",
+            "944:1": "#E5BCFA"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1543:87584",
+          "name": "decorative-soft_inverted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "96978dcf4f1adcebc2fc55b8d077ee45d9f3286a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9647058844566345,
+              "g": 0.5568627715110779,
+              "b": 0.8274509906768799,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6941176652908325,
+              "b": 0.8941176533699036,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F68ED3",
+            "944:1": "#FDB1E4"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1543:87585",
+          "name": "decorative-soft_inverted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "354f9ce2bc62b16c7901e5e085a89db661d519cf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9882352948188782,
+              "g": 0.5607843399047852,
+              "b": 0.6901960968971252,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.6980392336845398,
+              "b": 0.7764706015586853,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FC8FB0",
+            "944:1": "#FCB2C6"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-soft_inverted",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:944:1283",
+          "name": "decorative-muted_inverted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c3d1b0735d3c038aeeffe29aa27a0778e34bb318",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.2235294133424759,
+              "g": 0.14509804546833038,
+              "b": 0.13725490868091583,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.9215686321258545,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#392523",
+            "944:1": "#FFEBEB"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:944:1284",
+          "name": "decorative-muted_inverted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d8c6d15401696cfdacc0776724f1d33a2bb68e12",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.21176470816135406,
+              "g": 0.16078431904315948,
+              "b": 0.12156862765550613,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.9372549057006836,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#36291F",
+            "944:1": "#FFEFD9"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:944:1285",
+          "name": "decorative-muted_inverted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7c4be2d143dde288ae8f0beee474a7c71577b3fc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.20000000298023224,
+              "g": 0.16862745583057404,
+              "b": 0.10980392247438431,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9843137264251709,
+              "g": 0.9490196108818054,
+              "b": 0.8274509906768799,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#332B1C",
+            "944:1": "#FBF2D3"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:944:1286",
+          "name": "decorative-muted_inverted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "56f870903efbfe03d92745509994ae9d334c0c30",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.16470588743686676,
+              "g": 0.1764705926179886,
+              "b": 0.12941177189350128,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9137254953384399,
+              "g": 0.9686274528503418,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#2A2D21",
+            "944:1": "#E9F7D9"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:944:1287",
+          "name": "decorative-muted_inverted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "497cccb61e6546f05134df67a96b27ce19600ecf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.13725490868091583,
+              "g": 0.1764705926179886,
+              "b": 0.14509804546833038,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8745098114013672,
+              "g": 0.9725490212440491,
+              "b": 0.8980392217636108,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#232D25",
+            "944:1": "#DFF8E5"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:944:1288",
+          "name": "decorative-muted_inverted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1da91579f312d80b50b791d8004e967a049432dc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.12156862765550613,
+              "g": 0.18039216101169586,
+              "b": 0.16470588743686676,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8549019694328308,
+              "g": 0.9803921580314636,
+              "b": 0.9372549057006836,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1F2E2A",
+            "944:1": "#DAFAEF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:944:1289",
+          "name": "decorative-muted_inverted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e5efd63ba9cb2c691fb47b3c82faa2dc84577196",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.11372549086809158,
+              "g": 0.1764705926179886,
+              "b": 0.1921568661928177,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8549019694328308,
+              "g": 0.9686274528503418,
+              "b": 0.9725490212440491,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1D2D31",
+            "944:1": "#DAF7F8"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:944:1290",
+          "name": "decorative-muted_inverted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9747a5560e14678542eae5d3a4f8adbbf4be6ee",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.11764705926179886,
+              "g": 0.1725490242242813,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8705882430076599,
+              "g": 0.9607843160629272,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1E2C37",
+            "944:1": "#DEF5FF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:944:1291",
+          "name": "decorative-muted_inverted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7a9b10f3c8c2f3efc4468701e2e9b3b6eda1b682",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.13333334028720856,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#222A3E",
+            "944:1": "#E4F0FF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:944:1292",
+          "name": "decorative-muted_inverted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a0109969d5ec3a6711abdd91b2bd7076553ad572",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.16862745583057404,
+              "g": 0.15294118225574493,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9333333373069763,
+              "g": 0.929411768913269,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#2B2736",
+            "944:1": "#EEEDFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:944:1293",
+          "name": "decorative-muted_inverted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cfe203ebb1fd9ee289cf1f500b923a823b49a45b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.20000000298023224,
+              "g": 0.14901961386203766,
+              "b": 0.20000000298023224,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9764705896377563,
+              "g": 0.9215686321258545,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#332633",
+            "944:1": "#F9EBFE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:944:1294",
+          "name": "decorative-muted_inverted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "62a85af8d9b3e82af9b9dea6bd3741fc3213a855",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.21176470816135406,
+              "g": 0.1411764770746231,
+              "b": 0.18039216101169586,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9882352948188782,
+              "g": 0.9176470637321472,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#36242E",
+            "944:1": "#FCEAFA"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:944:1295",
+          "name": "decorative-muted_inverted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "04491fdf13e90b171527b27a4477ccf980d6b4b1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.21960784494876862,
+              "g": 0.13725490868091583,
+              "b": 0.14901961386203766,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.9176470637321472,
+              "b": 0.9333333373069763,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#382326",
+            "944:1": "#FFEAEE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted_inverted",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1029:1669",
+          "name": "decorative-muted-alt_inverted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "64c4d5c83f2bc13b2c0ca98853dc4df65e213f06",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.2666666805744171,
+              "g": 0.16078431904315948,
+              "b": 0.14901961386203766,
+              "a": 1
+            },
+            "944:1": {
+              "r": 1,
+              "g": 0.8745098114013672,
+              "b": 0.8745098114013672,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#442926",
+            "944:1": "#FFDFDF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1029:1670",
+          "name": "decorative-muted-alt_inverted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "267325361400c1576a4410368de54575c6cede6a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.2549019753932953,
+              "g": 0.18431372940540314,
+              "b": 0.13333334028720856,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9921568632125854,
+              "g": 0.9019607901573181,
+              "b": 0.7843137383460999,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#412F22",
+            "944:1": "#FDE6C8"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1029:1671",
+          "name": "decorative-muted-alt_inverted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e8b5eeafbb828f1402db4032b43fbf29eafe4479",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.239215686917305,
+              "g": 0.20000000298023224,
+              "b": 0.125490203499794,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9686274528503418,
+              "g": 0.9176470637321472,
+              "b": 0.7568627595901489,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#3D3320",
+            "944:1": "#F7EAC1"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1029:1672",
+          "name": "decorative-muted-alt_inverted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aa4ace980561654b9acee7929b3631ab3c6015c3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.1764705926179886,
+              "g": 0.20000000298023224,
+              "b": 0.13333334028720856,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8784313797950745,
+              "g": 0.9372549057006836,
+              "b": 0.7843137383460999,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#2D3322",
+            "944:1": "#E0EFC8"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1029:1673",
+          "name": "decorative-muted-alt_inverted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f65655b24882f735f27a0022eb9f4092da3770b9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.14509804546833038,
+              "g": 0.2078431397676468,
+              "b": 0.1568627506494522,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8196078538894653,
+              "g": 0.9450980424880981,
+              "b": 0.843137264251709,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#253528",
+            "944:1": "#D1F1D7"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1029:1674",
+          "name": "decorative-muted-alt_inverted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "69b58f3a3cc2835c55474d21dd3be49e97d0ee9b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.11764705926179886,
+              "g": 0.21176470816135406,
+              "b": 0.1921568661928177,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.7882353067398071,
+              "g": 0.9490196108818054,
+              "b": 0.9019607901573181,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1E3631",
+            "944:1": "#C9F2E6"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1029:1675",
+          "name": "decorative-muted-alt_inverted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7f99d7e2475cc835f9f2e106bb9fc2957bb6ec0f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.10588235408067703,
+              "g": 0.2078431397676468,
+              "b": 0.22745098173618317,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.7843137383460999,
+              "g": 0.9450980424880981,
+              "b": 0.9529411792755127,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1B353A",
+            "944:1": "#C8F1F3"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1029:1676",
+          "name": "decorative-muted-alt_inverted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7eabcfad0b6a7ced4810a0fbb163988a60b79df0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.11372549086809158,
+              "g": 0.20392157137393951,
+              "b": 0.25882354378700256,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.800000011920929,
+              "g": 0.9333333373069763,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#1D3442",
+            "944:1": "#CCEEFC"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1029:1677",
+          "name": "decorative-muted-alt_inverted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cfc8f1c0a13214256439cab560b3e381bacbfb8e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.16078431904315948,
+              "g": 0.1882352977991104,
+              "b": 0.2666666805744171,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8470588326454163,
+              "g": 0.9176470637321472,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#293044",
+            "944:1": "#D8EAFF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1029:1678",
+          "name": "decorative-muted-alt_inverted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f312c3012213402fe3f0914d89dd543c15273a55",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.20000000298023224,
+              "g": 0.1764705926179886,
+              "b": 0.25882354378700256,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8901960849761963,
+              "g": 0.9019607901573181,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#332D42",
+            "944:1": "#E3E6FE"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1029:1679",
+          "name": "decorative-muted-alt_inverted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b6e63e5b9928418a78f2d95ea91f96e5b3e58f4f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.239215686917305,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9450980424880981,
+              "g": 0.886274516582489,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#3D2A3E",
+            "944:1": "#F1E2FC"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1029:1680",
+          "name": "decorative-muted-alt_inverted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "08f86171fd02064856f9311fb5c9006e94b54902",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.250980406999588,
+              "g": 0.1568627506494522,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9725490212440491,
+              "g": 0.8745098114013672,
+              "b": 0.95686274766922,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#402837",
+            "944:1": "#F8DFF4"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1029:1681",
+          "name": "decorative-muted-alt_inverted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d9d19a9e851955561aff4e1f4936018ad5f591ae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.27450981736183167,
+              "g": 0.1568627506494522,
+              "b": 0.1764705926179886,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0.9019607901573181,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#46282D",
+            "944:1": "#FEDFE6"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-muted-alt_inverted",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1015:1145",
+          "name": "decorative-text_inverted/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ad946d98a39c33259ca6f95f71a7a7983b39c830",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FF4837",
+            "944:1": "#EC2D20"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1015:1146",
+          "name": "decorative-text_inverted/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e2df648d4969382e1b4aae2cbe68c4592f534381",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FA9313",
+            "944:1": "#EA8313"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1015:1147",
+          "name": "decorative-text_inverted/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7334ad25f0500fabc7b1620cd1a05f67678fcf9c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9960784316062927,
+              "g": 0.8745098114013672,
+              "b": 0,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8627451062202454,
+              "g": 0.7019608020782471,
+              "b": 0.04313725605607033,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FEDF00",
+            "944:1": "#DCB30B"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1015:1148",
+          "name": "decorative-text_inverted/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ad4b44913d46d2aa1ec5669c9a35c1be86a62083",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.501960813999176,
+              "g": 0.7529411911964417,
+              "b": 0.007843137718737125,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.3803921639919281,
+              "g": 0.545098066329956,
+              "b": 0.007843137718737125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#80C002",
+            "944:1": "#618B02"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1015:1149",
+          "name": "decorative-text_inverted/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b473f2ca1ecd0be6f81fd0010a7997895974cd64",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0CC44D",
+            "944:1": "#0D9336"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1015:1150",
+          "name": "decorative-text_inverted/jungle",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "44a641e42785c2cb0b2fb35f942a358ac167f6de",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.03921568766236305,
+              "g": 0.7450980544090271,
+              "b": 0.5803921818733215,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.05098039284348488,
+              "g": 0.5568627715110779,
+              "b": 0.45490196347236633,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0ABE94",
+            "944:1": "#0D8E74"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:1015:1151",
+          "name": "decorative-text_inverted/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dbfa9a8376285d64ecbb41dcce7b9c4a93a1f920",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.03529411926865578,
+              "g": 0.7254902124404907,
+              "b": 0.7450980544090271,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.019607843831181526,
+              "g": 0.5411764979362488,
+              "b": 0.5607843399047852,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#09B9BE",
+            "944:1": "#058A8F"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1015:1152",
+          "name": "decorative-text_inverted/cyan",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ef3cb6cf3ff3f0a0fbf970c884613f40ecd91b9e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.04313725605607033,
+              "g": 0.6941176652908325,
+              "b": 0.9058823585510254,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.0470588244497776,
+              "g": 0.5215686559677124,
+              "b": 0.7058823704719543,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#0BB1E7",
+            "944:1": "#0C85B4"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:1015:1153",
+          "name": "decorative-text_inverted/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "952b7677be3027576fd775c3f0b8f5e05d03f540",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#4A9DFC",
+            "944:1": "#2A77EF"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1015:1154",
+          "name": "decorative-text_inverted/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b12a3b5227eb6afabbca875a7e5fcc265911d3d5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.6000000238418579,
+              "g": 0.545098066329956,
+              "b": 1,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.47843137383461,
+              "g": 0.38823530077934265,
+              "b": 0.9450980424880981,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#998BFF",
+            "944:1": "#7A63F1"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1015:1155",
+          "name": "decorative-text_inverted/purple",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "49bb5a2d636363ef88ef552ac987dc43742c3b21",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.8313725590705872,
+              "g": 0.4274509847164154,
+              "b": 0.9803921580314636,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.729411780834198,
+              "g": 0.239215686917305,
+              "b": 0.8470588326454163,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#D46DFA",
+            "944:1": "#BA3DD8"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:1015:1156",
+          "name": "decorative-text_inverted/fuchsia",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b1748240c12e75fa4ad9f806bbf3c4dee2aa6613",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 0.9725490212440491,
+              "g": 0.3490196168422699,
+              "b": 0.772549033164978,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8392156958580017,
+              "g": 0.18431372940540314,
+              "b": 0.5843137502670288,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#F859C5",
+            "944:1": "#D62F95"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "fuchsia"
+        },
+        {
+          "id": "VariableID:1015:1157",
+          "name": "decorative-text_inverted/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e6da26cbf030409e22b8264f6123c4bbc84d5841",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:944:1243",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "944:0": {
+              "r": 1,
+              "g": 0.3294117748737335,
+              "b": 0.5803921818733215,
+              "a": 1
+            },
+            "944:1": {
+              "r": 0.8823529481887817,
+              "g": 0.12941177189350128,
+              "b": 0.4117647111415863,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "944:0": "#FF5494",
+            "944:1": "#E12169"
+          },
+          "collectionName": "Decorative Dynamic",
+          "groupName": "decorative-text_inverted",
+          "tokenName": "magenta"
+        }
+      ]
+    }
+  ]
+}

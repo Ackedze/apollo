@@ -1,0 +1,842 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:23:12.449Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "WidgetPlate [D]"
+    ],
+    "componentCount": 5,
+    "elementCount": 39
+  },
+  "components": [
+    {
+      "key": "d006e827ed70f589b6ac8a7566705721d5f1ace5",
+      "name": "Addon",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Addon",
+      "defaultVariant": "bf142f30043e1e4c028bccab024f956ec9042d66",
+      "variants": [
+        {
+          "id": "49485:26167",
+          "key": "bf142f30043e1e4c028bccab024f956ec9042d66",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "49450:54863",
+          "key": "d0c630785c981cee0d2b987d483cc256ecd7c509",
+          "name": "Presets=IconPrimary"
+        },
+        {
+          "id": "50592:22284",
+          "key": "5fca3c756d4c4a77b7401adf0ad9afa38c71d4be",
+          "name": "Presets=None"
+        }
+      ]
+    },
+    {
+      "key": "561dc4286c661578607af63713fbada1e4c6c068",
+      "name": "Content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Content",
+      "defaultVariant": "561dc4286c661578607af63713fbada1e4c6c068",
+      "variants": [
+        {
+          "id": "49632:25917",
+          "key": "561dc4286c661578607af63713fbada1e4c6c068",
+          "name": "Content"
+        }
+      ]
+    },
+    {
+      "key": "760038aadef4e912263607529816973228a6e4d2",
+      "name": "Footer",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Footer",
+      "defaultVariant": "760038aadef4e912263607529816973228a6e4d2",
+      "variants": [
+        {
+          "id": "49632:25798",
+          "key": "760038aadef4e912263607529816973228a6e4d2",
+          "name": "Footer"
+        }
+      ]
+    },
+    {
+      "key": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "name": "Header",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Header",
+      "defaultVariant": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "variants": [
+        {
+          "id": "49450:54871",
+          "key": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+          "name": "Header"
+        }
+      ]
+    },
+    {
+      "key": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "name": "[D] WidgetPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] WidgetPlate",
+      "defaultVariant": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "variants": [
+        {
+          "id": "49310:69958",
+          "key": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+          "name": "[D] WidgetPlate"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "Addon / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "d006e827ed70f589b6ac8a7566705721d5f1ace5",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Addon / Presets=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "d006e827ed70f589b6ac8a7566705721d5f1ace5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Content",
+      "type": "COMPONENT",
+      "componentKey": "561dc4286c661578607af63713fbada1e4c6c068",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "561dc4286c661578607af63713fbada1e4c6c068",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Footer",
+      "type": "COMPONENT",
+      "componentKey": "760038aadef4e912263607529816973228a6e4d2",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Footer / Fixer",
+      "type": "FRAME",
+      "componentKey": "760038aadef4e912263607529816973228a6e4d2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header",
+      "type": "COMPONENT",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Left",
+      "type": "FRAME",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Left / Title",
+      "type": "TEXT",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Widget Title"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Header / Left / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": false,
+      "layout": {
+        "padding": [
+          2,
+          4,
+          2,
+          4
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(30,43,68,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Left / Indicator / Count",
+      "type": "TEXT",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Header / Addon",
+      "type": "INSTANCE",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Addon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Header / Addon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "3fdb8e7c23f8ebafb5c4cabce422e903ff550504",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate",
+      "type": "COMPONENT",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "padding": [
+          20,
+          24,
+          20,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / [D] BackgroundPlate",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / [D] BackgroundPlate / [D] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Left",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Left / Title",
+      "type": "TEXT",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Widget Title"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Left / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": false,
+      "layout": {
+        "padding": [
+          2,
+          4,
+          2,
+          4
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(30,43,68,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Left / Indicator / Count",
+      "type": "TEXT",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Addon",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Addon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Header / Addon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Content",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Footer",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / Footer / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / GraphicsGap",
+      "type": "INSTANCE",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] WidgetPlate / GraphicsGap / Fixer",
+      "type": "FRAME",
+      "componentKey": "1da36f35897602fbabbb38724d4e0dc1a90bac41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

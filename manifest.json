@@ -1,0 +1,21 @@
+{
+  "name": "Apollo",
+  "id": "1616850453760090547",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": [
+    "figma"
+  ],
+  "documentAccess": "dynamic-page",
+  "networkAccess": {
+    "allowedDomains": [
+      "https://ackedze.github.io",
+      "https://llm.api.cloud.yandex.net"
+    ],
+    "devAllowedDomains": [
+      "http://localhost:3000"
+    ],
+    "reasoning": "Local proxy is used for development only to bypass CORS limitations"
+  }
+}

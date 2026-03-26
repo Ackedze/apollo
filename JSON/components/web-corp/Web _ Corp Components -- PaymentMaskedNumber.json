@@ -1,0 +1,548 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:31:35.558Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "PaymentMaskedNumber"
+    ],
+    "componentCount": 5,
+    "elementCount": 21
+  },
+  "components": [
+    {
+      "key": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "name": "PaymentMaskedNumber",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "PaymentMaskedNumber",
+      "defaultVariant": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "variants": [
+        {
+          "id": "23266:258531",
+          "key": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+          "name": "PaymentMaskedNumber"
+        }
+      ]
+    },
+    {
+      "key": "eb8009882df50e638b8b6ce42814355546576de7",
+      "name": "RightAddon",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "RightAddon",
+      "defaultVariant": "e386c9fe0ec00124fc8b65b8476d338a4bcf4a81",
+      "variants": [
+        {
+          "id": "23266:258521",
+          "key": "e386c9fe0ec00124fc8b65b8476d338a4bcf4a81",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "74683:74736",
+          "key": "0ab63538bfd52d7f4a39ea945c1fd87cc65305da",
+          "name": "Presets=StatusBadge"
+        },
+        {
+          "id": "74683:74762",
+          "key": "e65ffcd8308745a6da1838e3b12f2e602bd1cf98",
+          "name": "Presets=IconPrimary"
+        },
+        {
+          "id": "74683:74784",
+          "key": "b3c2546c041c677a300fc49875f31635810cc8ab",
+          "name": "Presets=IconSecondary"
+        },
+        {
+          "id": "74683:74788",
+          "key": "d16ffb26434e1411a56d41ea11d1240901619290",
+          "name": "Presets=IconTertiary"
+        },
+        {
+          "id": "74683:74849",
+          "key": "50049a53c00f61224df2fc05e9462960a66b5e5c",
+          "name": "Presets=IconCustom"
+        }
+      ]
+    },
+    {
+      "key": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+      "name": "Minor",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Minor",
+      "defaultVariant": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+      "variants": [
+        {
+          "id": "23266:258519",
+          "key": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+          "name": "Minor"
+        }
+      ]
+    },
+    {
+      "key": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+      "name": "SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+      "variants": [
+        {
+          "id": "26906:10171",
+          "key": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+          "name": "SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "b4b0b34c80492fba153134447c5f0aa1eaccd892",
+      "name": "Major",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Major",
+      "defaultVariant": "e1f5bf7317b09ffcd37f011dcf88ceb2d346b5eb",
+      "variants": [
+        {
+          "id": "23266:258526",
+          "key": "e1f5bf7317b09ffcd37f011dcf88ceb2d346b5eb",
+          "name": "Mask Number=False"
+        },
+        {
+          "id": "23266:258524",
+          "key": "8baa19f6863ddc17643730d2abc0b98371a58111",
+          "name": "Mask Number=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "PaymentMaskedNumber",
+      "type": "COMPONENT",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Major",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Major / ✎ Major",
+      "type": "TEXT",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "40802 810 0 0000 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "PaymentMaskedNumber / Minor",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Minor / ✎ Minor",
+      "type": "TEXT",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1234"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          6
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 999
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+      "type": "INSTANCE",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "RightAddon / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          6
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "RightAddon / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "RightAddon / Presets=SwapMe / SwapMe / Wrapper",
+      "type": "FRAME",
+      "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Minor",
+      "type": "COMPONENT",
+      "componentKey": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Minor / ✎ Minor",
+      "type": "TEXT",
+      "componentKey": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1234"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "SwapMe / Wrapper",
+      "type": "FRAME",
+      "componentKey": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Major / Mask Number=False",
+      "type": "COMPONENT",
+      "componentKey": "b4b0b34c80492fba153134447c5f0aa1eaccd892",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Major / Mask Number=False / ✎ Major",
+      "type": "TEXT",
+      "componentKey": "b4b0b34c80492fba153134447c5f0aa1eaccd892",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "40802 810 0 0000 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

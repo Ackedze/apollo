@@ -1,0 +1,378 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-30T07:05:08.391Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "CustomButton"
+    ],
+    "componentCount": 2,
+    "elementCount": 14
+  },
+  "components": [
+    {
+      "key": "6ce10b93f08e126465e4d856ff99ae350b2511cf",
+      "name": "🔩 SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "6ce10b93f08e126465e4d856ff99ae350b2511cf",
+      "variantStructures": {
+        "6ce10b93f08e126465e4d856ff99ae350b2511cf": []
+      },
+      "variants": [
+        {
+          "id": "16:11034",
+          "key": "6ce10b93f08e126465e4d856ff99ae350b2511cf",
+          "name": "🔩 SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "name": "CustomButton",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CustomButton",
+      "defaultVariant": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "variantStructures": {
+        "7136c943be86b77f792200b5d309959fa3e128ca": []
+      },
+      "variants": [
+        {
+          "id": "3:7695",
+          "key": "7136c943be86b77f792200b5d309959fa3e128ca",
+          "name": "CustomButton"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "6ce10b93f08e126465e4d856ff99ae350b2511cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          24,
+          4,
+          24
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 SwapMe / fixer",
+      "type": "FRAME",
+      "componentKey": "6ce10b93f08e126465e4d856ff99ae350b2511cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "CustomButton",
+      "type": "COMPONENT",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CustomButton / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CustomButton / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CustomButton / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CustomButton / Content",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          8
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CustomButton / Content / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          24,
+          4,
+          24
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CustomButton / Content / SwapMe / fixer",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CustomButton / Content / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          24,
+          4,
+          24
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "CustomButton / Content / SwapMe / fixer",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "CustomButton / RightAddon",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "CustomButton / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          10,
+          10,
+          10
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "CustomButton / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7136c943be86b77f792200b5d309959fa3e128ca",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

@@ -1,0 +1,981 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:50:33.180Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Switch"
+    ],
+    "componentCount": 4,
+    "elementCount": 18
+  },
+  "components": [
+    {
+      "key": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "name": "SwitchLabel_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "SwitchLabel_Inverted",
+      "defaultVariant": "718bef2d5ba22e1790c60cb485c144581db32cbf",
+      "variantStructures": {
+        "718bef2d5ba22e1790c60cb485c144581db32cbf": [],
+        "16290cfa07138d5b21040b33b8d08d1ee58ee4a8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=False, Hint=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Reverse=False, Hint=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 238,
+                    "g": 238,
+                    "b": 251,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "300c7a288065632e98bf8831dd83c3099d25f2e7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=True, Hint=False"
+            }
+          }
+        ],
+        "b48aed1dd8eca0db4d6cb3602033b19fcb1163bb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=True, Hint=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Reverse=True, Hint=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 238,
+                    "g": 238,
+                    "b": 251,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "39519:16326",
+          "key": "718bef2d5ba22e1790c60cb485c144581db32cbf",
+          "name": "Reverse=False, Hint=False"
+        },
+        {
+          "id": "39519:16330",
+          "key": "16290cfa07138d5b21040b33b8d08d1ee58ee4a8",
+          "name": "Reverse=False, Hint=True"
+        },
+        {
+          "id": "39519:16335",
+          "key": "300c7a288065632e98bf8831dd83c3099d25f2e7",
+          "name": "Reverse=True, Hint=False"
+        },
+        {
+          "id": "39519:16339",
+          "key": "b48aed1dd8eca0db4d6cb3602033b19fcb1163bb",
+          "name": "Reverse=True, Hint=True"
+        }
+      ]
+    },
+    {
+      "key": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "name": "SwitchLabel",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "SwitchLabel",
+      "defaultVariant": "c95dbb4fd131076336d96a38a49a088e6522e559",
+      "variantStructures": {
+        "c95dbb4fd131076336d96a38a49a088e6522e559": [],
+        "84799656a1b3be0232a00be64594d496fbbf4b1c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=False, Hint=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Reverse=False, Hint=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "d260b2d53fc460544739a60b526da7ca8dfc2f31": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=True, Hint=False"
+            }
+          }
+        ],
+        "067baf8b29e70a23006884fb6a794afdb0625fab": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Reverse=True, Hint=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Reverse=True, Hint=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "166:8506",
+          "key": "c95dbb4fd131076336d96a38a49a088e6522e559",
+          "name": "Reverse=False, Hint=False"
+        },
+        {
+          "id": "166:8510",
+          "key": "84799656a1b3be0232a00be64594d496fbbf4b1c",
+          "name": "Reverse=False, Hint=True"
+        },
+        {
+          "id": "166:8540",
+          "key": "d260b2d53fc460544739a60b526da7ca8dfc2f31",
+          "name": "Reverse=True, Hint=False"
+        },
+        {
+          "id": "166:8544",
+          "key": "067baf8b29e70a23006884fb6a794afdb0625fab",
+          "name": "Reverse=True, Hint=True"
+        }
+      ]
+    },
+    {
+      "key": "3b466e00d6b12f79155c5ef3a2e3ad0ffe78f837",
+      "name": "Switch_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Switch_Inverted",
+      "defaultVariant": "ab9a7a6c8d9bccafd4aa2a4b2f3f5db83888684d",
+      "variantStructures": {
+        "ab9a7a6c8d9bccafd4aa2a4b2f3f5db83888684d": [],
+        "029a64060e6e3c202327b7cc11fcd0ad9a11dfdc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 238,
+                    "g": 238,
+                    "b": 251,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:fb9344ab3c225f8dc12600ba4091329d0a6815ae/3541:146"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47"
+            }
+          }
+        ],
+        "622e74c9dfc4aa1fd4c123651c9145d66f8340b1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True"
+            }
+          }
+        ],
+        "bb762f486fa6d800813e53b9f2819a7d7784ea07": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 23,
+                    "g": 208,
+                    "b": 85,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:d514921c9ebde7b0072a036b1a4f298e39861710/3541:187"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "39519:16313",
+          "key": "ab9a7a6c8d9bccafd4aa2a4b2f3f5db83888684d",
+          "name": "SelectedState=False, DisabledState=True"
+        },
+        {
+          "id": "39519:16316",
+          "key": "029a64060e6e3c202327b7cc11fcd0ad9a11dfdc",
+          "name": "SelectedState=False, DisabledState=False"
+        },
+        {
+          "id": "39519:16319",
+          "key": "622e74c9dfc4aa1fd4c123651c9145d66f8340b1",
+          "name": "SelectedState=True, DisabledState=True"
+        },
+        {
+          "id": "39519:16322",
+          "key": "bb762f486fa6d800813e53b9f2819a7d7784ea07",
+          "name": "SelectedState=True, DisabledState=False"
+        }
+      ]
+    },
+    {
+      "key": "7ea79a8992bd08cef8a25815b143549983ef8a5a",
+      "name": "Switch",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Switch",
+      "defaultVariant": "88338562a779c5ce8848e2560c9f943335a1cf27",
+      "variantStructures": {
+        "88338562a779c5ce8848e2560c9f943335a1cf27": [],
+        "a65f40e3d8b146e4ff5499b25871c37b8760fd2a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47"
+            }
+          }
+        ],
+        "606081638dd9a0efbc63ece465014d6c9f493f95": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True"
+            }
+          }
+        ],
+        "a6e98fb2f8dcd0ed74e5e46b415fca95457092fa": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "166:8101",
+          "key": "88338562a779c5ce8848e2560c9f943335a1cf27",
+          "name": "SelectedState=False, DisabledState=True"
+        },
+        {
+          "id": "166:8104",
+          "key": "a65f40e3d8b146e4ff5499b25871c37b8760fd2a",
+          "name": "SelectedState=False, DisabledState=False"
+        },
+        {
+          "id": "166:8107",
+          "key": "606081638dd9a0efbc63ece465014d6c9f493f95",
+          "name": "SelectedState=True, DisabledState=True"
+        },
+        {
+          "id": "166:8110",
+          "key": "a6e98fb2f8dcd0ed74e5e46b415fca95457092fa",
+          "name": "SelectedState=True, DisabledState=False"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False",
+      "type": "COMPONENT",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False / Switch_Inverted",
+      "type": "INSTANCE",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False / Switch_Inverted / area",
+      "type": "RECTANGLE",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d514921c9ebde7b0072a036b1a4f298e39861710/3541:187",
+        "color": "rgba(23,208,85,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False / Switch_Inverted / Oval",
+      "type": "VECTOR",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False / Content",
+      "type": "FRAME",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "SwitchLabel_Inverted / Reverse=False, Hint=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "b2b3fcef1fc50d2a0fc657a98dce158a3d0a9560",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "SwitchLabel / Reverse=False, Hint=False",
+      "type": "COMPONENT",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "SwitchLabel / Reverse=False, Hint=False / Switch",
+      "type": "INSTANCE",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "SwitchLabel / Reverse=False, Hint=False / Switch / area",
+      "type": "RECTANGLE",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "SwitchLabel / Reverse=False, Hint=False / Switch / Oval",
+      "type": "VECTOR",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "SwitchLabel / Reverse=False, Hint=False / Content",
+      "type": "FRAME",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "SwitchLabel / Reverse=False, Hint=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "81f5658b3f20ac89638e96c0c92ae17576a2bc31",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "Switch_Inverted / SelectedState=False, DisabledState=True",
+      "type": "COMPONENT",
+      "componentKey": "3b466e00d6b12f79155c5ef3a2e3ad0ffe78f837",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Switch_Inverted / SelectedState=False, DisabledState=True / area",
+      "type": "RECTANGLE",
+      "componentKey": "3b466e00d6b12f79155c5ef3a2e3ad0ffe78f837",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:263c63f73d920cf3572113cec74e3b8a73ff1d1c/3541:119",
+        "color": "rgba(225,225,248,0.09)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Switch_Inverted / SelectedState=False, DisabledState=True / Oval",
+      "type": "VECTOR",
+      "componentKey": "3b466e00d6b12f79155c5ef3a2e3ad0ffe78f837",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109",
+        "color": "rgba(228,228,251,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Switch / SelectedState=False, DisabledState=True",
+      "type": "COMPONENT",
+      "componentKey": "7ea79a8992bd08cef8a25815b143549983ef8a5a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Switch / SelectedState=False, DisabledState=True / area",
+      "type": "RECTANGLE",
+      "componentKey": "7ea79a8992bd08cef8a25815b143549983ef8a5a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+        "color": "rgba(30,43,68,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Switch / SelectedState=False, DisabledState=True / Oval",
+      "type": "VECTOR",
+      "componentKey": "7ea79a8992bd08cef8a25815b143549983ef8a5a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

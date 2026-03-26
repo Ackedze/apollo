@@ -1,0 +1,3641 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-23T18:59:51.386Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "BackgroundPlate"
+    ],
+    "componentCount": 12,
+    "elementCount": 16
+  },
+  "components": [
+    {
+      "key": "a5a4240097211b28195291a593c567e9d7c62bd3",
+      "name": "[D][Promo] Style Level 2",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "💅🏻 For Promo page only",
+      "category": "D][Promo] Style Level 2",
+      "defaultVariant": "37096b0c45ec31bf4acb3957f8017dcb726ca2a3",
+      "variantStructures": {
+        "37096b0c45ec31bf4acb3957f8017dcb726ca2a3": [],
+        "858e595f607e17d9334af199284c01c0e3b8abd5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "9ad4191125fad61014cebdd77ff3b9a46e73b4d0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "dde2593b7f46875cee43adba458f81723cd08110": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "9b28d475024ffc776da1c1fbe9a13b809c88f795": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "2722ad22e12a3ece84aaa61c99c2fb97a13f31e1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "7cbb3a3d0ec5c6f01c857163ef7b3f3a353e6449": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "88e0937e4e264e2616a5b201b41a7ab492dc6ec9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "f017a3035b525fb670b37527e424db53ce09779e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "27703dffb0dde1b95197de629385d538fd5fbc91": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "95ab25695017744c9031a246574eac181630ff8b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "1b614fc400e892ce5521df29be30d8c797809678": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139663",
+          "key": "37096b0c45ec31bf4acb3957f8017dcb726ca2a3",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "102592:139664",
+          "key": "858e595f607e17d9334af199284c01c0e3b8abd5",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "102592:139665",
+          "key": "9ad4191125fad61014cebdd77ff3b9a46e73b4d0",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "102592:139666",
+          "key": "dde2593b7f46875cee43adba458f81723cd08110",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "102592:139667",
+          "key": "9b28d475024ffc776da1c1fbe9a13b809c88f795",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "102592:139668",
+          "key": "2722ad22e12a3ece84aaa61c99c2fb97a13f31e1",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:94120",
+          "key": "7cbb3a3d0ec5c6f01c857163ef7b3f3a353e6449",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:94122",
+          "key": "88e0937e4e264e2616a5b201b41a7ab492dc6ec9",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:94119",
+          "key": "f017a3035b525fb670b37527e424db53ce09779e",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:94123",
+          "key": "27703dffb0dde1b95197de629385d538fd5fbc91",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:94118",
+          "key": "95ab25695017744c9031a246574eac181630ff8b",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:94121",
+          "key": "1b614fc400e892ce5521df29be30d8c797809678",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "b33f77cc56c5feffb4f24a5912d74e3af927140e",
+      "name": "[M][Promo] Style Level 2",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "description": "💅🏻 For Promo page only",
+      "category": "M][Promo] Style Level 2",
+      "defaultVariant": "6a2898bddc91b60dabc559fdfeeead14041061a3",
+      "variantStructures": {
+        "6a2898bddc91b60dabc559fdfeeead14041061a3": [],
+        "15f4c724f960224d1d2c583b9f8629268db5ed71": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "b5f1a14c30ddab3727e57e74ddc65a93ad3fdb8a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "7d392b61f1fe895f3df23a5260a4366aa156309b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "f12ba2816ed48af9424d7230d7eb3c2c37bb822d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "0fb18ebf09ad0b31c4799de29f5a82211c84afba": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "53e93ff1ca1dc76c9c45deb757d0383a1d2f1a7f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "76b735436f8e3dde46f1a3d58c5f713090367aea": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "5efc9a5f46304334f8d92eb4c4a98be94b85a2ea": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "2e381f7f83906787a0fe914102b06b10ed27e346": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "3dd9048211b43ec71dbdaeecc2d608de779aaa5b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "1ad0c05a2dbf019234fa7537d2a746a40c10fcb5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139656",
+          "key": "6a2898bddc91b60dabc559fdfeeead14041061a3",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "102592:139657",
+          "key": "15f4c724f960224d1d2c583b9f8629268db5ed71",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "102592:139658",
+          "key": "b5f1a14c30ddab3727e57e74ddc65a93ad3fdb8a",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "102592:139659",
+          "key": "7d392b61f1fe895f3df23a5260a4366aa156309b",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "102592:139660",
+          "key": "f12ba2816ed48af9424d7230d7eb3c2c37bb822d",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "102592:139661",
+          "key": "0fb18ebf09ad0b31c4799de29f5a82211c84afba",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:94132",
+          "key": "53e93ff1ca1dc76c9c45deb757d0383a1d2f1a7f",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:94134",
+          "key": "76b735436f8e3dde46f1a3d58c5f713090367aea",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:94131",
+          "key": "5efc9a5f46304334f8d92eb4c4a98be94b85a2ea",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:94135",
+          "key": "2e381f7f83906787a0fe914102b06b10ed27e346",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:94130",
+          "key": "3dd9048211b43ec71dbdaeecc2d608de779aaa5b",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:94133",
+          "key": "1ad0c05a2dbf019234fa7537d2a746a40c10fcb5",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "2b46e94cdecdab7d4cb977055c0405b2f6204127",
+      "name": "[D][Promo] Style Level 1",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "💅🏻 For Promo page only",
+      "category": "D][Promo] Style Level 1",
+      "defaultVariant": "bac32c5171ecc91da2430f70fba7005199159716",
+      "variantStructures": {
+        "bac32c5171ecc91da2430f70fba7005199159716": [],
+        "e4b626fc09ac393f11c1854d182af55e637316e2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "d6f3213be3aba875706dd61c0935360358f1010e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "43e7e60c0044a41f817aef45a3107163f5d021ac": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "b686be39ae36d018a193e361cc81d96dee6eaf06": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "7afc7e34d974def0524c683ab9d3f3cded373353": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "cb29302091975b0d9c2159c1cc5c09a11fcb3d0a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "f7e77c4bcd132d9e316ab4f1d301ae8c6f3b0bbe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "8a3ce04cb36ecb54372383663a7fcd2a4e8d402c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "1fb277e7acec4cc0dfdb4820108bc577c336dac8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "a1b512c53817d274d822bde38fff790865ff2fb0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "5aa94c5d16b1b01bc6bd14e9de4d279a2b78520a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "b76b8c7fcef36b08ebb266631bbb216cf891d112": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "e9d85c01328cdf3260455ecf1c3dc0fe28f8a6ea": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "e184e90784e122d2cbc60e2fc076c961d2a6688d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "f3f2e58a4a18459b1e0793ceb6e796aea00a7b24": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139647",
+          "key": "bac32c5171ecc91da2430f70fba7005199159716",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "102592:139648",
+          "key": "e4b626fc09ac393f11c1854d182af55e637316e2",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "102592:139649",
+          "key": "d6f3213be3aba875706dd61c0935360358f1010e",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "102592:139650",
+          "key": "43e7e60c0044a41f817aef45a3107163f5d021ac",
+          "name": "BackgroundColor=base-bg (white), Type=Secondary"
+        },
+        {
+          "id": "102592:139651",
+          "key": "b686be39ae36d018a193e361cc81d96dee6eaf06",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "102592:139652",
+          "key": "7afc7e34d974def0524c683ab9d3f3cded373353",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "102592:139653",
+          "key": "cb29302091975b0d9c2159c1cc5c09a11fcb3d0a",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "102592:139654",
+          "key": "f7e77c4bcd132d9e316ab4f1d301ae8c6f3b0bbe",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:94091",
+          "key": "8a3ce04cb36ecb54372383663a7fcd2a4e8d402c",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:94094",
+          "key": "1fb277e7acec4cc0dfdb4820108bc577c336dac8",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:94090",
+          "key": "a1b512c53817d274d822bde38fff790865ff2fb0",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "104072:94095",
+          "key": "5aa94c5d16b1b01bc6bd14e9de4d279a2b78520a",
+          "name": "BackgroundColor=modal-bg (white), Type=Secondary"
+        },
+        {
+          "id": "104072:94089",
+          "key": "b76b8c7fcef36b08ebb266631bbb216cf891d112",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:94093",
+          "key": "e9d85c01328cdf3260455ecf1c3dc0fe28f8a6ea",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:94088",
+          "key": "e184e90784e122d2cbc60e2fc076c961d2a6688d",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:94092",
+          "key": "f3f2e58a4a18459b1e0793ceb6e796aea00a7b24",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "19b4b6ed5718d82888a6551b56e0c776f4993ccc",
+      "name": "[M][Promo] Style Level 1",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "description": "💅🏻 For Promo page only",
+      "category": "M][Promo] Style Level 1",
+      "defaultVariant": "f2e00ffe68c988361d6c68f090a10910b7fbadda",
+      "variantStructures": {
+        "f2e00ffe68c988361d6c68f090a10910b7fbadda": [],
+        "a67224c0acd2cb9a7a05d02912ea1d6b20a97d3b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "6be0770e624432adad51e2ea3c9adf93e51607a4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "3df43e290d262453bacb64b742c7c8db29d65703": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "f7af9b459c3a48cdae68e00c488612b25cd58b1c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "31f37d8f388fc2b6408467e778ab62b7b826efc2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "6b65f19a5dd9a97ebb6cf7dd67ef4b1cef36671f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "655921dfc3e8ff810d15affd140259ca0d3660c5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "42cfac22776db9e939000e37bcc81b0c6869e786": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "10747985aa45a46127b3f2781603dc78d31237fc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "5523742b40c4855f48785c7d6597844fce4a9560": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "9200dd51ec07e82fb71c43ec0c88647b4faabe06": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "7fe1a0c9147e0159602a910dd968ba15429cdabe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "2d3adb81d64c3d8b7c5e49387a4e20cde7f9d6cf": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "968cca2b72d10f22d168f988a7a8aa607381b467": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "7f665531e55ffe62393ea21886439ee1aa491a99": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139638",
+          "key": "f2e00ffe68c988361d6c68f090a10910b7fbadda",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "102592:139639",
+          "key": "a67224c0acd2cb9a7a05d02912ea1d6b20a97d3b",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "102592:139640",
+          "key": "6be0770e624432adad51e2ea3c9adf93e51607a4",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "102592:139641",
+          "key": "3df43e290d262453bacb64b742c7c8db29d65703",
+          "name": "BackgroundColor=base-bg (white), Type=Secondary"
+        },
+        {
+          "id": "102592:139642",
+          "key": "f7af9b459c3a48cdae68e00c488612b25cd58b1c",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "102592:139643",
+          "key": "31f37d8f388fc2b6408467e778ab62b7b826efc2",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "102592:139644",
+          "key": "6b65f19a5dd9a97ebb6cf7dd67ef4b1cef36671f",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "102592:139645",
+          "key": "655921dfc3e8ff810d15affd140259ca0d3660c5",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:94107",
+          "key": "42cfac22776db9e939000e37bcc81b0c6869e786",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:94110",
+          "key": "10747985aa45a46127b3f2781603dc78d31237fc",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:94106",
+          "key": "5523742b40c4855f48785c7d6597844fce4a9560",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "104072:94111",
+          "key": "9200dd51ec07e82fb71c43ec0c88647b4faabe06",
+          "name": "BackgroundColor=modal-bg (white), Type=Secondary"
+        },
+        {
+          "id": "104072:94105",
+          "key": "7fe1a0c9147e0159602a910dd968ba15429cdabe",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:94109",
+          "key": "2d3adb81d64c3d8b7c5e49387a4e20cde7f9d6cf",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:94104",
+          "key": "968cca2b72d10f22d168f988a7a8aa607381b467",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:94108",
+          "key": "7f665531e55ffe62393ea21886439ee1aa491a99",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "a58fa7ae11989280fc24069f204ba617fdb1f93c",
+      "name": "[M][Promo] BackgroundPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "💅🏻 For Promo page only",
+      "category": "M][Promo] BackgroundPlate",
+      "defaultVariant": "226115cfb30c2c99106d802b9a3661b04406bad9",
+      "variantStructures": {
+        "226115cfb30c2c99106d802b9a3661b04406bad9": [],
+        "e6012d05c0321fd9371dbac3f416de65e4847c59": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Level 2 (inner)"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Position=Level 2 (inner) / [M][Promo] Style Level 2",
+              "type": "INSTANCE",
+              "name": "[M][Promo] Style Level 2",
+              "visible": true,
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+              "componentInstance": {
+                "componentKey": "6a2898bddc91b60dabc559fdfeeead14041061a3",
+                "variantProperties": {
+                  "BackgroundColor": "base-bg-alt (gray)",
+                  "Type": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139632",
+          "key": "226115cfb30c2c99106d802b9a3661b04406bad9",
+          "name": "Position=Level 1 (outer)"
+        },
+        {
+          "id": "102592:139634",
+          "key": "e6012d05c0321fd9371dbac3f416de65e4847c59",
+          "name": "Position=Level 2 (inner)"
+        }
+      ]
+    },
+    {
+      "key": "c49f08db71ab44ea64f0880730220de1d93ac263",
+      "name": "[D][Promo] BackgroundPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "💅🏻 For Promo page only",
+      "category": "D][Promo] BackgroundPlate",
+      "defaultVariant": "708600a70f0a11849aec35592e2c6c72d4bad7a1",
+      "variantStructures": {
+        "708600a70f0a11849aec35592e2c6c72d4bad7a1": [],
+        "d885f2d6a7875da3609167cc9b62875bf6c5eac7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Level 2 (inner)"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Position=Level 2 (inner) / [D][Promo] Style Level 2",
+              "type": "INSTANCE",
+              "name": "[D][Promo] Style Level 2",
+              "visible": true,
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+              "componentInstance": {
+                "componentKey": "37096b0c45ec31bf4acb3957f8017dcb726ca2a3",
+                "variantProperties": {
+                  "BackgroundColor": "base-bg-alt (gray)",
+                  "Type": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "102592:139627",
+          "key": "708600a70f0a11849aec35592e2c6c72d4bad7a1",
+          "name": "Position=Level 1 (outer)"
+        },
+        {
+          "id": "102592:139629",
+          "key": "d885f2d6a7875da3609167cc9b62875bf6c5eac7",
+          "name": "Position=Level 2 (inner)"
+        }
+      ]
+    },
+    {
+      "key": "74f025a02889239c3f6eed60d74ba85f292bdcb0",
+      "name": "[M] Style Level 2",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] Style Level 2",
+      "defaultVariant": "b2dca6f62c6a8e50f1762cf47f3eeae2a35618c7",
+      "variantStructures": {
+        "b2dca6f62c6a8e50f1762cf47f3eeae2a35618c7": [],
+        "95935886e2a410299186829791aa736883c6cee9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "139dce31d4c559b2ae596db183d2f6bdd7538648": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "89b9ce75af136aa3a7ce4fd13e5af22f7a08f1db": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "9842a27a145ee0a46162293a8fb72aa2bf5bfd32": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "74624d01bb02fdb96a5bf09a249f56c3a41ce0a6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "730f7776600af897a7ae93d30d90aec92220ba06": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "119c355662ad7239568e72c9304337a001f5807d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "f1b78b271522802f7a858d9469bf2dcb4d022b9e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "b653fbbd3e0ac9dce005a8e30e914d198a306f1c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "b0983c2601eb045ffe6a31d44b5d6c57ea5fea58": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "3c6f0921814b9eb113688dfc690df41818b962e0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30743",
+          "key": "b2dca6f62c6a8e50f1762cf47f3eeae2a35618c7",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "66402:30744",
+          "key": "95935886e2a410299186829791aa736883c6cee9",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "66402:30745",
+          "key": "139dce31d4c559b2ae596db183d2f6bdd7538648",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "66402:30746",
+          "key": "89b9ce75af136aa3a7ce4fd13e5af22f7a08f1db",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "66402:30747",
+          "key": "9842a27a145ee0a46162293a8fb72aa2bf5bfd32",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "66402:30748",
+          "key": "74624d01bb02fdb96a5bf09a249f56c3a41ce0a6",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:94074",
+          "key": "730f7776600af897a7ae93d30d90aec92220ba06",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:94079",
+          "key": "119c355662ad7239568e72c9304337a001f5807d",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:94076",
+          "key": "f1b78b271522802f7a858d9469bf2dcb4d022b9e",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:94077",
+          "key": "b653fbbd3e0ac9dce005a8e30e914d198a306f1c",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:94075",
+          "key": "b0983c2601eb045ffe6a31d44b5d6c57ea5fea58",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:94078",
+          "key": "3c6f0921814b9eb113688dfc690df41818b962e0",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "c8735f4834a8b43fd2ab821ffc0a6e72a57c4b5b",
+      "name": "[D] Style Level 2",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] Style Level 2",
+      "defaultVariant": "3db7b24d3047696007a36a13c8da09f9256014e0",
+      "variantStructures": {
+        "3db7b24d3047696007a36a13c8da09f9256014e0": [],
+        "652e2e633dcb4e03d03bb5cd8a5cfcac76f458bf": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "7284b75d30c097d88c53734d46867472b555ec45": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "da3a14109e34e8a1720a01b95613e9f2320eaedb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "a22be074b0d25e3f89d18e58918f5f14f2f65f52": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "51b911712d9039ce43c21454e7d2631a88078219": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "35a947e605bd8de46bff62e3779b48e4fbad5f4a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "5d9d21e2872df8a7904000e15c9ac7fc2487e7e4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            }
+          }
+        ],
+        "eb7133d6d5722b13557bda90ca83fac99703a468": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "42973943047b0dab77507cd9373211c2e8bc4e90": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "44e571eacde8739d014159b18f9c6dfdb893975c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "9aca967b0a99eb8de6cc7c66f599c725f4939a8b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30736",
+          "key": "3db7b24d3047696007a36a13c8da09f9256014e0",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "66402:30737",
+          "key": "652e2e633dcb4e03d03bb5cd8a5cfcac76f458bf",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "66402:30738",
+          "key": "7284b75d30c097d88c53734d46867472b555ec45",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "66402:30739",
+          "key": "da3a14109e34e8a1720a01b95613e9f2320eaedb",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "66402:30740",
+          "key": "a22be074b0d25e3f89d18e58918f5f14f2f65f52",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "66402:30741",
+          "key": "51b911712d9039ce43c21454e7d2631a88078219",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:92270",
+          "key": "35a947e605bd8de46bff62e3779b48e4fbad5f4a",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:92272",
+          "key": "5d9d21e2872df8a7904000e15c9ac7fc2487e7e4",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:92269",
+          "key": "eb7133d6d5722b13557bda90ca83fac99703a468",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:92273",
+          "key": "42973943047b0dab77507cd9373211c2e8bc4e90",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:92268",
+          "key": "44e571eacde8739d014159b18f9c6dfdb893975c",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:92271",
+          "key": "9aca967b0a99eb8de6cc7c66f599c725f4939a8b",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "efc528bd86582d96a824edeb2c257dc8b22a8f14",
+      "name": "[M] Style Level 1",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] Style Level 1",
+      "defaultVariant": "01b744c9f1d5183cd25aa5ac48759857487931b7",
+      "variantStructures": {
+        "01b744c9f1d5183cd25aa5ac48759857487931b7": [],
+        "cdc3f827449db161006abe2250f936b0ee27fafc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "91bb47b10b8433a90c5a74f700389bd5615ae0c0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "fc246ec371a6b9b110bfc9933d2a607d40e63f2d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "22ba26c520d3ec408ac2d1118b943507245908e8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "6891c8321467c60aa0f32b6dd9168e5018eaf45d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "40aebe93a25b4c05af2f7a280bd51fb43c42bda6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "677ef55016590c1597185205636d787f30c5ec1b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "9fe52d1fd9448b544c55fe64087e5989219111c6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "20d596830009b3c405862c2e00989849e613e36d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "aa232a23cd96c4919b3950c0145eb0af6621563a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "9aa7a76cfca576ff59b7dabfc5086cbc89e171f8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "0bfb06cf3ac6a762dad52fea61e641fc8fb68907": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "fd581df1569fd89b74d19093a17134ec647f1fd7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "a7d163d41ea00579301b0583650113a655c82191": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "a0c4c9b0a690eeb4d80f83b3aa7f4216ffdad523": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30727",
+          "key": "01b744c9f1d5183cd25aa5ac48759857487931b7",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "66402:30728",
+          "key": "cdc3f827449db161006abe2250f936b0ee27fafc",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "66402:30729",
+          "key": "91bb47b10b8433a90c5a74f700389bd5615ae0c0",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "66402:30730",
+          "key": "fc246ec371a6b9b110bfc9933d2a607d40e63f2d",
+          "name": "BackgroundColor=base-bg (white), Type=Secondary"
+        },
+        {
+          "id": "66402:30731",
+          "key": "22ba26c520d3ec408ac2d1118b943507245908e8",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "66402:30732",
+          "key": "6891c8321467c60aa0f32b6dd9168e5018eaf45d",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "66402:30733",
+          "key": "40aebe93a25b4c05af2f7a280bd51fb43c42bda6",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "66402:30734",
+          "key": "677ef55016590c1597185205636d787f30c5ec1b",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:88316",
+          "key": "9fe52d1fd9448b544c55fe64087e5989219111c6",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:88320",
+          "key": "20d596830009b3c405862c2e00989849e613e36d",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:88314",
+          "key": "aa232a23cd96c4919b3950c0145eb0af6621563a",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "104072:88319",
+          "key": "9aa7a76cfca576ff59b7dabfc5086cbc89e171f8",
+          "name": "BackgroundColor=modal-bg (white), Type=Secondary"
+        },
+        {
+          "id": "104072:88315",
+          "key": "0bfb06cf3ac6a762dad52fea61e641fc8fb68907",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:88317",
+          "key": "fd581df1569fd89b74d19093a17134ec647f1fd7",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:88313",
+          "key": "a7d163d41ea00579301b0583650113a655c82191",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:88318",
+          "key": "a0c4c9b0a690eeb4d80f83b3aa7f4216ffdad523",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "adb65a62cde9ebedc5d0d41d2d77cd63e71e0745",
+      "name": "[D] Style Level 1",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] Style Level 1",
+      "defaultVariant": "4f38c23d743bed97de0b14c39b4d4eaf5b511a2a",
+      "variantStructures": {
+        "4f38c23d743bed97de0b14c39b4d4eaf5b511a2a": [],
+        "1bb1a4ce3b8b2f4ed6c34a96043d86e4156155b3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "d47f9b1b979c1a5ab90bfbba6a2ace9becc368d1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "781a60402258a03a2d701503b6741a718a0f26c1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "86fe66bc39733dc333904e6428c2cb1698f3ad96": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "32add9cd3db51aa674a4bd3375fa1abb7d37b317": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "dc4d6280389d1c6ba7d835b2cd693c113c6d79d1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "f5a44b78d701d9c1cfb04384c23774ead4257c3c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=base-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "f0e224787998541a8d9feffd2edd59d15b6ac403": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+            }
+          }
+        ],
+        "94337b46c1b857576de664448205610826f66281": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          }
+        ],
+        "ef66521d677a6cdb3455bf48188f25c1a7ee6c08": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "3bbc72a35034eedc2257c57c94ec919cbb3e92fe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Secondary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "2a6b54d5ef30b943132651b57223ffae9214010f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "f57e70670a4d9afca94db446490d998bef7dfd2e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Colored",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183"
+            }
+          }
+        ],
+        "904435dbeac00ae7a4d9647471d80f60c44d41e6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg-alt (gray), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ],
+        "9d19454ee8d57e058af8176227c17c997a9f5e8e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BackgroundColor=modal-bg (white), Type=Border",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30718",
+          "key": "4f38c23d743bed97de0b14c39b4d4eaf5b511a2a",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "66402:30719",
+          "key": "1bb1a4ce3b8b2f4ed6c34a96043d86e4156155b3",
+          "name": "BackgroundColor=base-bg (white), Type=Primary"
+        },
+        {
+          "id": "66402:30720",
+          "key": "d47f9b1b979c1a5ab90bfbba6a2ace9becc368d1",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "66402:30721",
+          "key": "781a60402258a03a2d701503b6741a718a0f26c1",
+          "name": "BackgroundColor=base-bg (white), Type=Secondary"
+        },
+        {
+          "id": "66402:30722",
+          "key": "86fe66bc39733dc333904e6428c2cb1698f3ad96",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "66402:30723",
+          "key": "32add9cd3db51aa674a4bd3375fa1abb7d37b317",
+          "name": "BackgroundColor=base-bg (white), Type=Colored"
+        },
+        {
+          "id": "66402:30724",
+          "key": "dc4d6280389d1c6ba7d835b2cd693c113c6d79d1",
+          "name": "BackgroundColor=base-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "66402:30725",
+          "key": "f5a44b78d701d9c1cfb04384c23774ead4257c3c",
+          "name": "BackgroundColor=base-bg (white), Type=Border"
+        },
+        {
+          "id": "104072:53527",
+          "key": "f0e224787998541a8d9feffd2edd59d15b6ac403",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Primary"
+        },
+        {
+          "id": "104072:53529",
+          "key": "94337b46c1b857576de664448205610826f66281",
+          "name": "BackgroundColor=modal-bg (white), Type=Primary"
+        },
+        {
+          "id": "104072:53526",
+          "key": "ef66521d677a6cdb3455bf48188f25c1a7ee6c08",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Secondary"
+        },
+        {
+          "id": "104072:53531",
+          "key": "3bbc72a35034eedc2257c57c94ec919cbb3e92fe",
+          "name": "BackgroundColor=modal-bg (white), Type=Secondary"
+        },
+        {
+          "id": "104072:53525",
+          "key": "2a6b54d5ef30b943132651b57223ffae9214010f",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Colored"
+        },
+        {
+          "id": "104072:53528",
+          "key": "f57e70670a4d9afca94db446490d998bef7dfd2e",
+          "name": "BackgroundColor=modal-bg (white), Type=Colored"
+        },
+        {
+          "id": "104072:53524",
+          "key": "904435dbeac00ae7a4d9647471d80f60c44d41e6",
+          "name": "BackgroundColor=modal-bg-alt (gray), Type=Border"
+        },
+        {
+          "id": "104072:53530",
+          "key": "9d19454ee8d57e058af8176227c17c997a9f5e8e",
+          "name": "BackgroundColor=modal-bg (white), Type=Border"
+        }
+      ]
+    },
+    {
+      "key": "4cfe3915785e5c37255190ae16314f6f2a1d05b3",
+      "name": "[M] BackgroundPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] BackgroundPlate",
+      "defaultVariant": "41e2c5c17d573baf32ae78d01b69c0a3d7ba033c",
+      "variantStructures": {
+        "41e2c5c17d573baf32ae78d01b69c0a3d7ba033c": [],
+        "e5542ae4d2f93c65ce520258e8060738c38a4976": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Level 2 (inner)"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Position=Level 2 (inner) / [M] Style Level 2",
+              "type": "INSTANCE",
+              "name": "[M] Style Level 2",
+              "visible": true,
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+              "componentInstance": {
+                "componentKey": "b2dca6f62c6a8e50f1762cf47f3eeae2a35618c7",
+                "variantProperties": {
+                  "BackgroundColor": "base-bg-alt (gray)",
+                  "Type": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30704",
+          "key": "41e2c5c17d573baf32ae78d01b69c0a3d7ba033c",
+          "name": "Position=Level 1 (outer)"
+        },
+        {
+          "id": "66402:30706",
+          "key": "e5542ae4d2f93c65ce520258e8060738c38a4976",
+          "name": "Position=Level 2 (inner)"
+        }
+      ]
+    },
+    {
+      "key": "2c7332d281570f4d5af6d334f8df378d24a1f235",
+      "name": "[D] BackgroundPlate",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] BackgroundPlate",
+      "defaultVariant": "34e9064066253fb2f2d7bc056bb36a2580fd860e",
+      "variantStructures": {
+        "34e9064066253fb2f2d7bc056bb36a2580fd860e": [],
+        "8a2632caec67f4422bf2fb78dc9da907369e9fd3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Level 2 (inner)"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Position=Level 2 (inner) / [D] Style Level 2",
+              "type": "INSTANCE",
+              "name": "[D] Style Level 2",
+              "visible": true,
+              "opacity": 1,
+              "radius": 12,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+              "componentInstance": {
+                "componentKey": "3db7b24d3047696007a36a13c8da09f9256014e0",
+                "variantProperties": {
+                  "BackgroundColor": "base-bg-alt (gray)",
+                  "Type": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "66402:30697",
+          "key": "34e9064066253fb2f2d7bc056bb36a2580fd860e",
+          "name": "Position=Level 1 (outer)"
+        },
+        {
+          "id": "66402:30699",
+          "key": "8a2632caec67f4422bf2fb78dc9da907369e9fd3",
+          "name": "Position=Level 2 (inner)"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "[D][Promo] Style Level 2 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "a5a4240097211b28195291a593c567e9d7c62bd3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M][Promo] Style Level 2 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "b33f77cc56c5feffb4f24a5912d74e3af927140e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D][Promo] Style Level 1 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "2b46e94cdecdab7d4cb977055c0405b2f6204127",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M][Promo] Style Level 1 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "19b4b6ed5718d82888a6551b56e0c776f4993ccc",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M][Promo] BackgroundPlate / Position=Level 1 (outer)",
+      "type": "COMPONENT",
+      "componentKey": "a58fa7ae11989280fc24069f204ba617fdb1f93c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[M][Promo] BackgroundPlate / Position=Level 1 (outer) / [M][Promo] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "a58fa7ae11989280fc24069f204ba617fdb1f93c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D][Promo] BackgroundPlate / Position=Level 1 (outer)",
+      "type": "COMPONENT",
+      "componentKey": "c49f08db71ab44ea64f0880730220de1d93ac263",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[D][Promo] BackgroundPlate / Position=Level 1 (outer) / [D][Promo] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "c49f08db71ab44ea64f0880730220de1d93ac263",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M] Style Level 2 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "74f025a02889239c3f6eed60d74ba85f292bdcb0",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D] Style Level 2 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "c8735f4834a8b43fd2ab821ffc0a6e72a57c4b5b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M] Style Level 1 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "efc528bd86582d96a824edeb2c257dc8b22a8f14",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D] Style Level 1 / BackgroundColor=base-bg-alt (gray), Type=Primary",
+      "type": "COMPONENT",
+      "componentKey": "adb65a62cde9ebedc5d0d41d2d77cd63e71e0745",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[M] BackgroundPlate / Position=Level 1 (outer)",
+      "type": "COMPONENT",
+      "componentKey": "4cfe3915785e5c37255190ae16314f6f2a1d05b3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[M] BackgroundPlate / Position=Level 1 (outer) / [M] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "4cfe3915785e5c37255190ae16314f6f2a1d05b3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D] BackgroundPlate / Position=Level 1 (outer)",
+      "type": "COMPONENT",
+      "componentKey": "2c7332d281570f4d5af6d334f8df378d24a1f235",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[D] BackgroundPlate / Position=Level 1 (outer) / [D] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "2c7332d281570f4d5af6d334f8df378d24a1f235",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

@@ -1,0 +1,3669 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-23T17:55:47.833Z",
+    "fileName": "001 :: Interface Dynamic Colors",
+    "library": "001 :: Interface Dynamic Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:868:9636",
+      "name": "Interface Dynamic",
+      "key": "2ae5c089455193b1a150088ae44ee3e41cd081cc",
+      "defaultModeId": "868:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "868:0",
+          "name": "BlueTint Light"
+        },
+        {
+          "modeId": "873:0",
+          "name": "BlueTint Dark"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:868:9637",
+          "name": "text/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "53f842b1771349c5dca692351edfc422e8f081b5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            }
+          },
+          "hexByMode": {
+            "868:0": "#030306",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9638",
+          "name": "text/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d9d26239617e3ab9e69d7ed378d811a3c4561063",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            },
+            "873:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040413",
+            "873:0": "#EEEEFB"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9639",
+          "name": "text/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0313725508749485,
+              "b": 0.11372549086809158,
+              "a": 0.3799999952316284
+            },
+            "873:0": {
+              "r": 0.9137254953384399,
+              "g": 0.9137254953384399,
+              "b": 0.9803921580314636,
+              "a": 0.3700000047683716
+            }
+          },
+          "hexByMode": {
+            "868:0": "#05081D",
+            "873:0": "#E9E9FA"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9640",
+          "name": "text/quaternary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3a95bcb2c699aa7797574a9fc8b1b45924ec924d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            },
+            "873:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050B2C",
+            "873:0": "#E7E7F8"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "quaternary"
+        },
+        {
+          "id": "VariableID:868:9641",
+          "name": "text/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d66b0fa6d4773da3b8edeb4136d3d309f676af9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0D9336",
+            "873:0": "#0CC44D"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9643",
+          "name": "text/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4a586dc276c6f95982e9dea4448ae04173d66c11",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EA8313",
+            "873:0": "#FA9313"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9644",
+          "name": "text/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fa7238dec28f445e6e50a00c04d5f081adafe4de",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EC2D20",
+            "873:0": "#FF4837"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9642",
+          "name": "text/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "373a7154059297e96c397d0055152b95685c34d5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2A77EF",
+            "873:0": "#4A9DFC"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:868:9645",
+          "name": "text_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "de53e1056e003a1b3aedbb9e81b2d767e4c85fa2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            },
+            "873:0": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#030306"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9646",
+          "name": "text_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "161225b731874655180c29126e4a344df42cff83",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            },
+            "873:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EEEEFB",
+            "873:0": "#040413"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9647",
+          "name": "text_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3fdc0c1392b0689ace91a3177985a662294830d9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9137254953384399,
+              "g": 0.9137254953384399,
+              "b": 0.9803921580314636,
+              "a": 0.3700000047683716
+            },
+            "873:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0313725508749485,
+              "b": 0.11372549086809158,
+              "a": 0.3799999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E9E9FA",
+            "873:0": "#05081D"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9648",
+          "name": "text_inverted/quaternary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "672cdcec9397a4b45e073bca3786189aac2d10c8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            },
+            "873:0": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E7F8",
+            "873:0": "#050B2C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "quaternary"
+        },
+        {
+          "id": "VariableID:868:9649",
+          "name": "text_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "193c3e5e973b13746b026988e7db9ef1d17c58e7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0CC44D",
+            "873:0": "#0D9336"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9650",
+          "name": "text_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "03f90eea26476f4f3b2c34c6602aa2dfd13452fa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FA9313",
+            "873:0": "#EA8313"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9651",
+          "name": "text_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8753f5809fec5eb6709890d21fe976f844ff35dd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF4837",
+            "873:0": "#EC2D20"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9652",
+          "name": "text_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "50b0cf07737d0379d42370717a3f47de6f18cb8b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#4A9DFC",
+            "873:0": "#2A77EF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "text_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:2771:2117",
+          "name": "neutral/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d8fdd2d33bde75b054a497055e53d61a7553c3e3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#212124",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:868:9694",
+          "name": "neutral/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6d79dab22065d6235e925db28794e4ede838d304",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#898991",
+            "873:0": "#898991"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:868:9695",
+          "name": "neutral/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ab7b3e0d9a0b4c6f0688fd7a543bb91cf30c9295",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.29019609093666077,
+              "g": 0.29019609093666077,
+              "b": 0.3176470696926117,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#BABBC2",
+            "873:0": "#4A4A51"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:868:9696",
+          "name": "neutral/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a7c18f5825f95e560138779e61e9faf51129998c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D2D3D9",
+            "873:0": "#353539"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:868:9697",
+          "name": "neutral/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bcc6045b2bc9387b616536919eae45800337605d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E8EB",
+            "873:0": "#29292C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:868:9698",
+          "name": "neutral/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c48cbe10ac90b72b46253d540810bb3055aa89dc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.929411768913269,
+              "g": 0.9333333373069763,
+              "b": 0.9411764740943909,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EDEEF0",
+            "873:0": "#212124"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:927:2811",
+          "name": "neutral/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aa26b8f4b0aa0245c30526f8217f804393c953b7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#1C1C1E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:868:9699",
+          "name": "neutral/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1dbf4d56a942745335ed8230dfe5b594c0f71841",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.14901961386203766,
+              "g": 0.14901961386203766,
+              "b": 0.16078431904315948,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#262629"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:868:9693",
+          "name": "neutral/1500 (deprecated)",
+          "description": "Замени на neutral-translucent/1300 или accent/secondary",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "605c12ec22e180fbb50043a22db65e2b87765243",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#121213",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral",
+          "tokenName": "1500 (deprecated)"
+        },
+        {
+          "id": "VariableID:2166:125293",
+          "name": "neutral-translucent/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e86a96753bbf5affba4ec9ebf5bc294c4b824a97",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            }
+          },
+          "hexByMode": {
+            "868:0": "#030306",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:868:9712",
+          "name": "neutral-translucent/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "faac436b14cc199cfe97243b05af867af9ecb365",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.08235294371843338,
+              "a": 0.4699999988079071
+            },
+            "873:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040415",
+            "873:0": "#EEEEFB"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:868:9711",
+          "name": "neutral-translucent/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.03529411926865578,
+              "g": 0.0470588244497776,
+              "b": 0.14509804546833038,
+              "a": 0.2800000011920929
+            },
+            "873:0": {
+              "r": 0.8941176533699036,
+              "g": 0.8941176533699036,
+              "b": 0.9843137264251709,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#090C25",
+            "873:0": "#E4E4FB"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:868:9710",
+          "name": "neutral-translucent/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "87bb2e45a3a8802ee00fa824bdafe8d088f1f94f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            },
+            "873:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050B2C",
+            "873:0": "#E7E7F8"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:868:9709",
+          "name": "neutral-translucent/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d344a6475fd206b89cf76bef3272e63e04bdf26d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.05882352963089943,
+              "g": 0.09803921729326248,
+              "b": 0.21568627655506134,
+              "a": 0.10000000149011612
+            },
+            "873:0": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0F1937",
+            "873:0": "#DEDEEE"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:868:9708",
+          "name": "neutral-translucent/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "446796436fc66df888a34eb47bed90e0341e558c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.11764705926179886,
+              "g": 0.16862745583057404,
+              "b": 0.2666666805744171,
+              "a": 0.07999999821186066
+            },
+            "873:0": {
+              "r": 0.8823529481887817,
+              "g": 0.8823529481887817,
+              "b": 0.9725490212440491,
+              "a": 0.09000000357627869
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1E2B44",
+            "873:0": "#E1E1F8"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:868:9707",
+          "name": "neutral-translucent/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8981b6bfc89935b939b249245e60158b88ca252e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.14901961386203766,
+              "g": 0.21568627655506134,
+              "b": 0.3450980484485626,
+              "a": 0.05999999865889549
+            },
+            "873:0": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            }
+          },
+          "hexByMode": {
+            "868:0": "#263758",
+            "873:0": "#D6D6E5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:987:1893",
+          "name": "neutral-translucent/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e1a55e6f9cfb9bd52f5ad0be76740f24731f6a43",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#D6D6E5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:2771:2118",
+          "name": "neutral_inverted/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f75474242081bef9c9f0f10199b95180e3dff6a8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#212124"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:868:9701",
+          "name": "neutral_inverted/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4bf262579530751578646e0e52eb155cd40d0cd4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#898991",
+            "873:0": "#898991"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:868:9702",
+          "name": "neutral_inverted/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d5e6af0486c73fcd7f81077196546573a676c569",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.29019609093666077,
+              "g": 0.29019609093666077,
+              "b": 0.3176470696926117,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#4A4A51",
+            "873:0": "#BABBC2"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:868:9703",
+          "name": "neutral_inverted/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f589da42a8717db347d358f1c6eacd5bac01d03a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539",
+            "873:0": "#D2D3D9"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:868:9704",
+          "name": "neutral_inverted/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0a81f269a9caa39c9e4e58536a90bc77409714b6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C",
+            "873:0": "#E7E8EB"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:868:9705",
+          "name": "neutral_inverted/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "66b2f2847dfacca5bba8a6d7dea1c59123c4ec7f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.929411768913269,
+              "g": 0.9333333373069763,
+              "b": 0.9411764740943909,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#212124",
+            "873:0": "#EDEEF0"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:930:3065",
+          "name": "neutral_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1C1C1E",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:868:9706",
+          "name": "neutral_inverted/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "640e23de1b27c980f8ca2a21a4fdabf26a3a6d52",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.14901961386203766,
+              "g": 0.14901961386203766,
+              "b": 0.16078431904315948,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#262629",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:868:9700",
+          "name": "neutral_inverted/1500 (deprecated)",
+          "description": "Замени на neutral-translucent/1300 или accent/secondary",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f834de624b44e1f08b4e4dbba960a714c08037db",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#121213"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral_inverted",
+          "tokenName": "1500 (deprecated)"
+        },
+        {
+          "id": "VariableID:2166:125296",
+          "name": "neutral-translucent_inverted/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "40c66e4914c6bc4528e459831c0fe21731462d9d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            },
+            "873:0": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#030306"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:868:9718",
+          "name": "neutral-translucent_inverted/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fb9344ab3c225f8dc12600ba4091329d0a6815ae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            },
+            "873:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.08235294371843338,
+              "a": 0.4699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EEEEFB",
+            "873:0": "#040415"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:868:9717",
+          "name": "neutral-translucent_inverted/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aafe87fe728b68facde98cad3d334151ebc4b3ed",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8941176533699036,
+              "g": 0.8941176533699036,
+              "b": 0.9843137264251709,
+              "a": 0.2800000011920929
+            },
+            "873:0": {
+              "r": 0.03529411926865578,
+              "g": 0.0470588244497776,
+              "b": 0.14509804546833038,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E4E4FB",
+            "873:0": "#090C25"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:868:9716",
+          "name": "neutral-translucent_inverted/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "90cf9d34e70c24747ebd05aaa35e1c19d843a283",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            },
+            "873:0": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E7F8",
+            "873:0": "#050B2C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:868:9715",
+          "name": "neutral-translucent_inverted/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "571bd9b6345e0fd4100bc6f257570d120f77b61b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            },
+            "873:0": {
+              "r": 0.05882352963089943,
+              "g": 0.09803921729326248,
+              "b": 0.21568627655506134,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DEDEEE",
+            "873:0": "#0F1937"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:868:9714",
+          "name": "neutral-translucent_inverted/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "263c63f73d920cf3572113cec74e3b8a73ff1d1c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8823529481887817,
+              "g": 0.8823529481887817,
+              "b": 0.9725490212440491,
+              "a": 0.09000000357627869
+            },
+            "873:0": {
+              "r": 0.11764705926179886,
+              "g": 0.16862745583057404,
+              "b": 0.2666666805744171,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E1E1F8",
+            "873:0": "#1E2B44"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:868:9713",
+          "name": "neutral-translucent_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3d53e633d971e4b9f89daee977977ffedb098813",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            },
+            "873:0": {
+              "r": 0.14901961386203766,
+              "g": 0.21568627655506134,
+              "b": 0.3450980484485626,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D6D6E5",
+            "873:0": "#263758"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:987:1894",
+          "name": "neutral-translucent_inverted/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c0c1bab5b195e4e8b9f15bbd3a580514c3eb1416",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D6D6E5",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "neutral-translucent_inverted",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:868:9677",
+          "name": "status/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0CC44D",
+            "873:0": "#17D055"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9678",
+          "name": "status/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FA9313",
+            "873:0": "#FDA136"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9679",
+          "name": "status/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c00af0030dca573ab6bfdc1a6c47bc162e36090d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF4837",
+            "873:0": "#FF4837"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9680",
+          "name": "status/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b10db1879590531b56541f549df1687fe4a23efb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.13333334028720856,
+              "g": 0.5333333611488342,
+              "b": 0.9803921580314636,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2288FA",
+            "873:0": "#3193FC"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:868:9681",
+          "name": "status-muted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "08c84bdb13317d770ee7044b25d0f5c77c4fb9ae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8745098114013672,
+              "g": 0.9725490212440491,
+              "b": 0.8980392217636108,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.13725490868091583,
+              "g": 0.1764705926179886,
+              "b": 0.14509804546833038,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DFF8E5",
+            "873:0": "#232D25"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9682",
+          "name": "status-muted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5af69480d6f3df4e19f41f50bb4c18073efefde7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.9372549057006836,
+              "b": 0.8509804010391235,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.21176470816135406,
+              "g": 0.16078431904315948,
+              "b": 0.12156862765550613,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFEFD9",
+            "873:0": "#36291F"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9683",
+          "name": "status-muted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5e69677d8d33234d6d050cfc7e411750ca9f3aa4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.9215686321258545,
+              "b": 0.9215686321258545,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2235294133424759,
+              "g": 0.14509804546833038,
+              "b": 0.13725490868091583,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFEBEB",
+            "873:0": "#392523"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9684",
+          "name": "status-muted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b637eaf33ef806563249441181a611f11f15cfb5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.13333334028720856,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E4F0FF",
+            "873:0": "#222A3E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1101:1892",
+          "name": "status-muted-alt/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ebf498adcb141e14947473aa41f3037ffa83180a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8196078538894653,
+              "g": 0.9450980424880981,
+              "b": 0.843137264251709,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.14509804546833038,
+              "g": 0.2078431397676468,
+              "b": 0.1568627506494522,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D1F1D7",
+            "873:0": "#253528"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1101:1893",
+          "name": "status-muted-alt/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "92e038c65f63ab733ab5c1137c8870d3382408f6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9921568632125854,
+              "g": 0.9019607901573181,
+              "b": 0.7843137383460999,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2549019753932953,
+              "g": 0.18431372940540314,
+              "b": 0.13333334028720856,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FDE6C8",
+            "873:0": "#412F22"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1101:1894",
+          "name": "status-muted-alt/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "56ba2e47eeb703c7881f1b874e43b140635b2175",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.8745098114013672,
+              "b": 0.8745098114013672,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2666666805744171,
+              "g": 0.16078431904315948,
+              "b": 0.14901961386203766,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFDFDF",
+            "873:0": "#442926"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1101:1895",
+          "name": "status-muted-alt/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "587496c4b18675f26a868d9dd6c8c5589f177de5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8470588326454163,
+              "g": 0.9176470637321472,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.1882352977991104,
+              "b": 0.2666666805744171,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D8EAFF",
+            "873:0": "#293044"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:868:9685",
+          "name": "status_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d514921c9ebde7b0072a036b1a4f298e39861710",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#17D055",
+            "873:0": "#0CC44D"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9686",
+          "name": "status_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8c3a1de9c91fcb3495f37c90b2426948225b3d25",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FDA136",
+            "873:0": "#FA9313"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9687",
+          "name": "status_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "220741b5724a1934c627a3fe6b5318e51e209a25",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF4837",
+            "873:0": "#FF4837"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9688",
+          "name": "status_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ef9760284da3e9bea17c8ccb689f1c11d03f55a2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.13333334028720856,
+              "g": 0.5333333611488342,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#3193FC",
+            "873:0": "#2288FA"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:868:9689",
+          "name": "status-muted_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a12e220fbe6cf18a4a4ff93b7d767f2807043c9d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.13725490868091583,
+              "g": 0.1764705926179886,
+              "b": 0.14509804546833038,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8745098114013672,
+              "g": 0.9725490212440491,
+              "b": 0.8980392217636108,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#232D25",
+            "873:0": "#DFF8E5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:868:9690",
+          "name": "status-muted_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e7b4735a7da03f2e20361361a5a452701331494c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.21176470816135406,
+              "g": 0.16078431904315948,
+              "b": 0.12156862765550613,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.9372549057006836,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#36291F",
+            "873:0": "#FFEFD9"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:868:9691",
+          "name": "status-muted_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6f1974a3e9db5d8ff033ab2f87b7fffdd1e50cd3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2235294133424759,
+              "g": 0.14509804546833038,
+              "b": 0.13725490868091583,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.9215686321258545,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#392523",
+            "873:0": "#FFEBEB"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:868:9692",
+          "name": "status-muted_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2f7934a3ddb26a07c0629c3f21c654db9a03f9f9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.13333334028720856,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#222A3E",
+            "873:0": "#E4F0FF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1101:1900",
+          "name": "status-muted-alt_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "03f9292f60de86edb563b2d084490a1f5491ffd3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.14509804546833038,
+              "g": 0.2078431397676468,
+              "b": 0.1568627506494522,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8196078538894653,
+              "g": 0.9450980424880981,
+              "b": 0.843137264251709,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#253528",
+            "873:0": "#D1F1D7"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1101:1901",
+          "name": "status-muted-alt_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "56499f34855df3f692333e9d6f35264207781cd6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2549019753932953,
+              "g": 0.18431372940540314,
+              "b": 0.13333334028720856,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9921568632125854,
+              "g": 0.9019607901573181,
+              "b": 0.7843137383460999,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#412F22",
+            "873:0": "#FDE6C8"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1101:1902",
+          "name": "status-muted-alt_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cfff8f01f8711fb301080e2ce2aa0d15f86ef8bc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2666666805744171,
+              "g": 0.16078431904315948,
+              "b": 0.14901961386203766,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 0.8745098114013672,
+              "b": 0.8745098114013672,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#442926",
+            "873:0": "#FFDFDF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1101:1903",
+          "name": "status-muted-alt_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.1882352977991104,
+              "b": 0.2666666805744171,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#293044",
+            "873:0": "#E4F0FF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "status-muted-alt_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:868:9653",
+          "name": "base-bg/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "14ac29210fc546f67acfa8e0dfd252c210d0c78b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#121213"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9654",
+          "name": "base-bg/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#1C1C1E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9655",
+          "name": "base-bg/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3cda68f4518536efebc1e42b5be7bb4549ec1601",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#29292C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9656",
+          "name": "base-bg-alt/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5ffdfac4b248819bc8fc25adf4a5f74b165af190",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#121213"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9657",
+          "name": "base-bg-alt/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8e2800951104c0afbc2ed28e5331d61aa4214a9a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#1C1C1E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9658",
+          "name": "base-bg-alt/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#29292C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9665",
+          "name": "modal-bg/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "224167a7a0d8a160932c76a7ef008143801aab08",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#1C1C1E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9666",
+          "name": "modal-bg/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1de385413d3a6777c4de3169721c03819f85923f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#29292C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9667",
+          "name": "modal-bg/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "df6537fd1b429bb3c285b551aa8b65717617b33e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#353539"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9668",
+          "name": "modal-bg-alt/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2708217254e78223aa2e69b749f2ffca92a16420",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#1C1C1E"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9669",
+          "name": "modal-bg-alt/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6889e07c224263b589ff5c9e0c8d031845c61f9f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#29292C"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9670",
+          "name": "modal-bg-alt/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8f93aef89bd2b440ab3e748ec9e1d0cb19edec22",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#353539"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9659",
+          "name": "base-bg_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1fe43a2b34ea630d11029ff69e14d5cc7559b860",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#121213",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9660",
+          "name": "base-bg_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d08bafb2d26cd797ff3a4c7f648353684154408",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1C1C1E",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9661",
+          "name": "base-bg_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6e7a0aa3411e332c4d04993bd8ca5df3d4a8d41a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9662",
+          "name": "base-bg-alt_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "73b4f9df1822912c190de05f867611ce367da96f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#121213",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9663",
+          "name": "base-bg-alt_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "428b46b8a812664341b98cdc137e17f39c4b5884",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1C1C1E",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9664",
+          "name": "base-bg-alt_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b338ae11490bf16856ffc3e26381a5759ca2e985",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "base-bg-alt_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9671",
+          "name": "modal-bg_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a90b2ece0b76e46edeeb1baa0e49915ecbf4299c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1C1C1E",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9672",
+          "name": "modal-bg_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "283a0e2726844609e56eebabf10a081a011f2e65",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9673",
+          "name": "modal-bg_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8f7bb74a4ec26772be1e1e79d8d270349080c98f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9674",
+          "name": "modal-bg-alt_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8a405018d537f10b7da883cb627e75e237fca206",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1C1C1E",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9675",
+          "name": "modal-bg-alt_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "228569eb468f6de48c534639f17cc3c050d8303b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9676",
+          "name": "modal-bg-alt_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a60df2b6015518c4374286b0976cb695a1f1fe54",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "modal-bg-alt_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:868:9719",
+          "name": "accent/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "15bff314b7c8001f28f69bab9b6234c4e0050b43",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9372549057006836,
+              "g": 0.1921568661928177,
+              "b": 0.1411764770746231,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9725490212440491,
+              "g": 0.22745098173618317,
+              "b": 0.16470588743686676,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EF3124",
+            "873:0": "#F83A2A"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "accent",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9720",
+          "name": "accent/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d52c0f0fb8cd8562b1314c4bc8318625b466017b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#212124",
+            "873:0": "#F2F3F5"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "accent",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9721",
+          "name": "accent_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bb2320423e10975e525775edfb56939ec102deb7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9725490212440491,
+              "g": 0.22745098173618317,
+              "b": 0.16470588743686676,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.9372549057006836,
+              "g": 0.1921568661928177,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F83A2A",
+            "873:0": "#EF3124"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "accent_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:868:9722",
+          "name": "accent_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            },
+            "873:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F2F3F5",
+            "873:0": "#212124"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "accent_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:868:9723",
+          "name": "overlay/default",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3db12f0354650cc686276f12b894d6f9deb46f78",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.6000000238418579
+            },
+            "873:0": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#000000",
+            "873:0": "#000000"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "overlay",
+          "tokenName": "default"
+        },
+        {
+          "id": "VariableID:1134:2068",
+          "name": "transparent/default",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c52bca1d1a94f5d75adbada37c98813cd1b4f9ef",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0
+            },
+            "873:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF",
+            "873:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Dynamic",
+          "groupName": "transparent",
+          "tokenName": "default"
+        }
+      ]
+    }
+  ]
+}

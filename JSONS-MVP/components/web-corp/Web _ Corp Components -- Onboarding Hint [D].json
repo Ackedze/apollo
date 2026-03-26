@@ -1,0 +1,1286 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:21:41.169Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Onboarding Hint [D]"
+    ],
+    "componentCount": 3,
+    "elementCount": 58
+  },
+  "components": [
+    {
+      "key": "55308b6713348e69272d9005cfb00ae22515db5e",
+      "name": "Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "0404138f7783cf45f48e5dec0f9cde94b888be11",
+      "variants": [
+        {
+          "id": "38696:32961",
+          "key": "0404138f7783cf45f48e5dec0f9cde94b888be11",
+          "name": "Direction=→"
+        },
+        {
+          "id": "38696:32963",
+          "key": "acfcd5af8715773b774d6281a9c428295e1abfa9",
+          "name": "Direction=↑"
+        },
+        {
+          "id": "38696:32965",
+          "key": "1b061357b0af3263d41ff05a41f9501b9be2d5e3",
+          "name": "Direction=↓"
+        },
+        {
+          "id": "38696:32967",
+          "key": "4151c027d57f5d59f0ec6761f89a6e004912dfce",
+          "name": "Direction=←"
+        }
+      ]
+    },
+    {
+      "key": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "name": "🔄  Onboarding Hint",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Max width: 420px;  \nRecommended width: 360px",
+      "category": "Onboarding Hint",
+      "defaultVariant": "b1faf0d9ddd9dd0b4df6eab6ef3970e076e959b6",
+      "variants": [
+        {
+          "id": "38696:32980",
+          "key": "b1faf0d9ddd9dd0b4df6eab6ef3970e076e959b6",
+          "name": "Tail Direction=←, Tail Position=Center"
+        },
+        {
+          "id": "38696:32992",
+          "key": "66972dc32cb16fe0efe55e1b344181bc45f14607",
+          "name": "Tail Direction=↑, Tail Position=Center"
+        },
+        {
+          "id": "38696:33004",
+          "key": "5735865117d791bfa0430f3da0e525146b01a753",
+          "name": "Tail Direction=↓, Tail Position=Center"
+        },
+        {
+          "id": "38696:33016",
+          "key": "b2be987b0b26cd540353f0fb3f4f05201a47a75b",
+          "name": "Tail Direction=→, Tail Position=Center"
+        },
+        {
+          "id": "38696:33028",
+          "key": "1b02e51643eaed7313bd5a3e62c3d2240ece91e0",
+          "name": "Tail Direction=←, Tail Position=Start"
+        },
+        {
+          "id": "38696:33040",
+          "key": "341d3befe9fbf1df173c9b021f2b30931199f66e",
+          "name": "Tail Direction=↑, Tail Position=Start"
+        },
+        {
+          "id": "38696:33052",
+          "key": "69663575796fe90ee5038a504d5f13f2968df548",
+          "name": "Tail Direction=↓, Tail Position=Start"
+        },
+        {
+          "id": "38696:33064",
+          "key": "f3eb0898961326b6d7f836e00e3fb97b91ceb046",
+          "name": "Tail Direction=→, Tail Position=Start"
+        },
+        {
+          "id": "38696:33076",
+          "key": "4400d04738334a2cc3e16ae8764a6275192022f4",
+          "name": "Tail Direction=←, Tail Position=End"
+        },
+        {
+          "id": "38696:33088",
+          "key": "920926f603a73281bd819118c5a24113db6e5a65",
+          "name": "Tail Direction=↑, Tail Position=End"
+        },
+        {
+          "id": "38696:33100",
+          "key": "ff3e583cdf2a647dae41d6be0f03ebbaa4cb23d6",
+          "name": "Tail Direction=↓, Tail Position=End"
+        },
+        {
+          "id": "38696:33112",
+          "key": "75575f9fe0b65f172f734e82eeaa7007b205b544",
+          "name": "Tail Direction=→, Tail Position=End"
+        }
+      ]
+    },
+    {
+      "key": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "name": "Onboarding Hint",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Max width: 420px;  \nRecommended width: 360px",
+      "category": "Onboarding Hint",
+      "defaultVariant": "fe87c25d53e2914be45ed3e6f852502fe400eb08",
+      "variants": [
+        {
+          "id": "67467:50173",
+          "key": "fe87c25d53e2914be45ed3e6f852502fe400eb08",
+          "name": "Tail Direction=←, Tail Position=Center"
+        },
+        {
+          "id": "67467:50181",
+          "key": "79120802642e54163a042942dbdd7f9737ff696a",
+          "name": "Tail Direction=↑, Tail Position=Center"
+        },
+        {
+          "id": "67467:50189",
+          "key": "8de9082870192d400b13e7dca389b88c4b3ee292",
+          "name": "Tail Direction=↓, Tail Position=Center"
+        },
+        {
+          "id": "67467:50197",
+          "key": "640a7b44b6b4984a41ab6ce85e544b1dbe46f068",
+          "name": "Tail Direction=→, Tail Position=Center"
+        },
+        {
+          "id": "67467:50205",
+          "key": "cbf52cd71ca47f8e6185643247d86cbd8c7dede0",
+          "name": "Tail Direction=←, Tail Position=Start"
+        },
+        {
+          "id": "67467:50213",
+          "key": "840ba97400f8f0ee88d33967957dd7394ab7d44b",
+          "name": "Tail Direction=↑, Tail Position=Start"
+        },
+        {
+          "id": "67467:50221",
+          "key": "9c53e2007bda2d47ee902c501fdf7309dd361dbf",
+          "name": "Tail Direction=↓, Tail Position=Start"
+        },
+        {
+          "id": "67467:50229",
+          "key": "d2a4415b48992f1441b4ac2f4ad0835b3f7d4a17",
+          "name": "Tail Direction=→, Tail Position=Start"
+        },
+        {
+          "id": "67467:50237",
+          "key": "fd3525c15c1422ac813c58f51b7e53dce2c9299f",
+          "name": "Tail Direction=←, Tail Position=End"
+        },
+        {
+          "id": "67467:50245",
+          "key": "e465c226ef2721ce00d615250f57e775a643d49b",
+          "name": "Tail Direction=↑, Tail Position=End"
+        },
+        {
+          "id": "67467:50253",
+          "key": "275a2d3160996838e6a2f472216a263b835df3dd",
+          "name": "Tail Direction=↓, Tail Position=End"
+        },
+        {
+          "id": "67467:50261",
+          "key": "643735a1f5692aa8f2e50642175645c8389544c3",
+          "name": "Tail Direction=→, Tail Position=End"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "Tail / Direction=→",
+      "type": "COMPONENT",
+      "componentKey": "55308b6713348e69272d9005cfb00ae22515db5e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Tail / Direction=→ / Vector 1",
+      "type": "VECTOR",
+      "componentKey": "55308b6713348e69272d9005cfb00ae22515db5e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center",
+      "type": "COMPONENT",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail / Tail",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail / Tail / Vector 1",
+      "type": "VECTOR",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          16,
+          16
+        ],
+        "gap": 8,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / Title",
+      "type": "TEXT",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Tooltip text."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / Text",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Content / [D] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross / Icon / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔄  Onboarding Hint / Tail Direction=←, Tail Position=Center / .Details / Body / Cross / Icon / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "47262e3ea1f330b418eb4b65f8f26dcd132ad032",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center",
+      "type": "COMPONENT",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail / Tail",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Tail / Tail / Vector 1",
+      "type": "VECTOR",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          12,
+          12
+        ],
+        "gap": 8,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / Title",
+      "type": "TEXT",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Tooltip text."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 6,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Content / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross / 🔩 Icon",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross / 🔩 Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross / 🔩 Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross / 🔩 Icon / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Hint / Tail Direction=←, Tail Position=Center / Content / Cross / 🔩 Icon / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "cdb832111bbc0efc2c6d215db6b4eed1e1d02e51",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

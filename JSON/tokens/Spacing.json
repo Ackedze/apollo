@@ -1,0 +1,445 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-30T08:43:59.758Z",
+    "fileName": "Spacing",
+    "library": "Spacing"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:1:2",
+      "name": "Spacing",
+      "key": "4e9e05b4b83539bd2e89ef5269968080d7080fea",
+      "defaultModeId": "1:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "1:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:1:3",
+          "name": "0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "72e2988d91d32bc45f988052a35513d3755e8c56",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 0
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:1:6",
+          "name": "1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "503330940dbf2616ce5ff96451818c607aef37fa",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 1
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "1"
+        },
+        {
+          "id": "VariableID:1:7",
+          "name": "2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bb87c4cc487bde4016ae4c2c586854c28e23dafd",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 2
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:1:8",
+          "name": "4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aabb094442ebbfd4862c74d603a5c19eeca3aedd",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 4
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:1:9",
+          "name": "6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d07b2622ff8b3c1a264bdeb1382dc170ed4a356e",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 6
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:1:10",
+          "name": "8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4a3bd04e770632550b1e8f6c00c38881bb5b461c",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 8
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:1:11",
+          "name": "12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "db3a0028f7ea99ecf1616491ae315d2121bf74bc",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 12
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:1:12",
+          "name": "16",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "59ff0616087ba120b5ba63514ac2699c634960e4",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 16
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:1:13",
+          "name": "20",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0ddfa1db444d0a441a6e816f9e74f1b53a5ec8d0",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 20
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:1:14",
+          "name": "24",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f7b969edbf5d6f8d732bf46ef7fd3f7c5511fb49",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 24
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "24"
+        },
+        {
+          "id": "VariableID:1:15",
+          "name": "32",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3d9a2eee092ea793ffa757f1b5e04abb658296a2",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 32
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "32"
+        },
+        {
+          "id": "VariableID:1:16",
+          "name": "40",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1e4235376a9ae4b87eca764d405436003098cd5b",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 40
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:1:17",
+          "name": "48",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5cb48ace727b6c0f0cbe18c47550072032c66da3",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 48
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:1:18",
+          "name": "56",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e2ff2c6daafc139f5d1d76b0c4f5665e2fca0710",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 56
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "56"
+        },
+        {
+          "id": "VariableID:1:19",
+          "name": "64",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "abf9135fa9474cff989e193615cdd3b0186b1aac",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 64
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "64"
+        },
+        {
+          "id": "VariableID:1:20",
+          "name": "72",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8656c840a1de94ad08416a2dcf19530c98d4bc02",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 72
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "72"
+        },
+        {
+          "id": "VariableID:1:21",
+          "name": "80",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "221cd5d5364cf54c09dddb6820a6afd005b8c7ed",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 80
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "80"
+        },
+        {
+          "id": "VariableID:1:22",
+          "name": "96",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4149249080a02f141fb6034acde8cd7eba6445c7",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 96
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "96"
+        },
+        {
+          "id": "VariableID:1:23",
+          "name": "128",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f5a8ae5620dd60bdeb032a1aa40c52d66cd0da27",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 128
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "128"
+        },
+        {
+          "id": "VariableID:1:24",
+          "name": "256",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4614fc05d243d3d836a0d2a783bdd85c53aaed78",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:1:2",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1:0": 256
+          },
+          "hexByMode": {},
+          "collectionName": "Spacing",
+          "groupName": "Без группы",
+          "tokenName": "256"
+        }
+      ]
+    }
+  ]
+}

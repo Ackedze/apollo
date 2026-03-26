@@ -1,0 +1,1337 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-30T07:05:03.022Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ActionButton"
+    ],
+    "componentCount": 1,
+    "elementCount": 7
+  },
+  "components": [
+    {
+      "key": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "name": "ActionButton",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ActionButton",
+      "defaultVariant": "d712322d7de3b8bc87b33b9ac9aef0c63a6998d9",
+      "variantStructures": {
+        "d712322d7de3b8bc87b33b9ac9aef0c63a6998d9": [],
+        "40c31b11b273c79095d63f088a2614b8662a1d11": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=False, Static=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d5317ee30cdf40e8d5f8e3a8f7d05bb1834e95cd/1930:22",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d5317ee30cdf40e8d5f8e3a8f7d05bb1834e95cd/1930:22"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77"
+            }
+          }
+        ],
+        "441e5b8d89d7bee01de2dddb97c3314ee14fcf7f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=True, Static=False, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            }
+          }
+        ],
+        "c6d2c8d6945b0e7e40e6d73ea62c32839bad7918": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=True, Static=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:670794407ff9819e432cf06474f8498fe09cc8dd/1930:16",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:670794407ff9819e432cf06474f8498fe09cc8dd/1930:16"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          }
+        ],
+        "6150d17e055f996a1a87faf7fc70c3aee7d692cc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=False, Static=False, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          }
+        ],
+        "73c817a27a8b5c808d6bde09ae6e33a2d6ab4b85": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=False, Static=True, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "fillToken": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:2c6035a149d933e7d61465bf927a8d6e0bbdc0b2/1930:74",
+                  "colorHex": "#05081D"
+                }
+              ],
+              "fillToken": "VariableID:2c6035a149d933e7d61465bf927a8d6e0bbdc0b2/1930:74"
+            }
+          }
+        ],
+        "33cb8fc6902e1ecc5e13953ae5e255c088fb36f7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=True, Static=False, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842,
+                  "tokenKey": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+                  "colorHex": "#DEDEEE"
+                }
+              ],
+              "fillToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716,
+                  "tokenKey": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182",
+                  "colorHex": "#E9E9FA"
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          }
+        ],
+        "28764c9a6a8f05b142935483835c725cf2e6c2dc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Primary, Inverted=True, Static=True, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842,
+                  "tokenKey": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10",
+                  "colorHex": "#DEDEEE"
+                }
+              ],
+              "fillToken": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716,
+                  "tokenKey": "VariableID:bb93abb38f4014656a4b38a39b52cb5961e370a1/1930:55",
+                  "colorHex": "#E9E9FA"
+                }
+              ],
+              "fillToken": "VariableID:bb93abb38f4014656a4b38a39b52cb5961e370a1/1930:55"
+            }
+          }
+        ],
+        "3ad9a4b15415657edb073159998cf09504bb2162": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=False, Static=False, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          }
+        ],
+        "fbd4bcadd9728bf6644c3601a71f1bdbd5d8bf3a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=False, Static=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77"
+            }
+          }
+        ],
+        "e3144edfa9d1322aa593448e4e9e47bd74c9f655": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=True, Static=False, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            }
+          }
+        ],
+        "1f69d6086dac3045172602595f572d68aacd1ff2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=True, Static=True, DisabledState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          }
+        ],
+        "d74d7522b688d7372d4d47601419ac1a9fe93e89": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=False, Static=False, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          }
+        ],
+        "ac0e167116a2119595e864662669cf2258a25576": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=False, Static=True, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:5c4560d87fd790b82b543012eb93ad48b0575551/1930:4"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "fillToken": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:2c6035a149d933e7d61465bf927a8d6e0bbdc0b2/1930:74",
+                  "colorHex": "#05081D"
+                }
+              ],
+              "fillToken": "VariableID:2c6035a149d933e7d61465bf927a8d6e0bbdc0b2/1930:74"
+            }
+          }
+        ],
+        "f6c99bce9766955a2cc8aa41ea9e6dfe19bafce8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=True, Static=False, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:27b3eb029bb417d829b5b4eafd7c3ee2d6ad8e56/3541:188"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842,
+                  "tokenKey": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+                  "colorHex": "#DEDEEE"
+                }
+              ],
+              "fillToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716,
+                  "tokenKey": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182",
+                  "colorHex": "#E9E9FA"
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          }
+        ],
+        "c37a13bed8e6ad998de6a3c75d336325fcd70498": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Secondary, Inverted=True, Static=True, DisabledState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9",
+                  "colorHex": "#1C1C1E"
+                }
+              ],
+              "fillToken": "VariableID:cc0082f40640801db179fbfe821ced7402eb108c/1930:9"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842,
+                  "tokenKey": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10",
+                  "colorHex": "#DEDEEE"
+                }
+              ],
+              "fillToken": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10"
+            }
+          },
+          {
+            "op": "update",
+            "id": 7,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716,
+                  "tokenKey": "VariableID:bb93abb38f4014656a4b38a39b52cb5961e370a1/1930:55",
+                  "colorHex": "#E9E9FA"
+                }
+              ],
+              "fillToken": "VariableID:bb93abb38f4014656a4b38a39b52cb5961e370a1/1930:55"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "603:82956",
+          "key": "d712322d7de3b8bc87b33b9ac9aef0c63a6998d9",
+          "name": "View=Primary, Inverted=False, Static=False, DisabledState=False"
+        },
+        {
+          "id": "603:83133",
+          "key": "40c31b11b273c79095d63f088a2614b8662a1d11",
+          "name": "View=Primary, Inverted=False, Static=True, DisabledState=False"
+        },
+        {
+          "id": "603:83049",
+          "key": "441e5b8d89d7bee01de2dddb97c3314ee14fcf7f",
+          "name": "View=Primary, Inverted=True, Static=False, DisabledState=False"
+        },
+        {
+          "id": "603:83139",
+          "key": "c6d2c8d6945b0e7e40e6d73ea62c32839bad7918",
+          "name": "View=Primary, Inverted=True, Static=True, DisabledState=False"
+        },
+        {
+          "id": "603:83007",
+          "key": "6150d17e055f996a1a87faf7fc70c3aee7d692cc",
+          "name": "View=Primary, Inverted=False, Static=False, DisabledState=True"
+        },
+        {
+          "id": "603:83145",
+          "key": "73c817a27a8b5c808d6bde09ae6e33a2d6ab4b85",
+          "name": "View=Primary, Inverted=False, Static=True, DisabledState=True"
+        },
+        {
+          "id": "603:83055",
+          "key": "33cb8fc6902e1ecc5e13953ae5e255c088fb36f7",
+          "name": "View=Primary, Inverted=True, Static=False, DisabledState=True"
+        },
+        {
+          "id": "603:83151",
+          "key": "28764c9a6a8f05b142935483835c725cf2e6c2dc",
+          "name": "View=Primary, Inverted=True, Static=True, DisabledState=True"
+        },
+        {
+          "id": "603:82986",
+          "key": "3ad9a4b15415657edb073159998cf09504bb2162",
+          "name": "View=Secondary, Inverted=False, Static=False, DisabledState=False"
+        },
+        {
+          "id": "603:83157",
+          "key": "fbd4bcadd9728bf6644c3601a71f1bdbd5d8bf3a",
+          "name": "View=Secondary, Inverted=False, Static=True, DisabledState=False"
+        },
+        {
+          "id": "603:83061",
+          "key": "e3144edfa9d1322aa593448e4e9e47bd74c9f655",
+          "name": "View=Secondary, Inverted=True, Static=False, DisabledState=False"
+        },
+        {
+          "id": "603:83163",
+          "key": "1f69d6086dac3045172602595f572d68aacd1ff2",
+          "name": "View=Secondary, Inverted=True, Static=True, DisabledState=False"
+        },
+        {
+          "id": "603:83013",
+          "key": "d74d7522b688d7372d4d47601419ac1a9fe93e89",
+          "name": "View=Secondary, Inverted=False, Static=False, DisabledState=True"
+        },
+        {
+          "id": "603:83169",
+          "key": "ac0e167116a2119595e864662669cf2258a25576",
+          "name": "View=Secondary, Inverted=False, Static=True, DisabledState=True"
+        },
+        {
+          "id": "603:83067",
+          "key": "f6c99bce9766955a2cc8aa41ea9e6dfe19bafce8",
+          "name": "View=Secondary, Inverted=True, Static=False, DisabledState=True"
+        },
+        {
+          "id": "603:83175",
+          "key": "c37a13bed8e6ad998de6a3c75d336325fcd70498",
+          "name": "View=Secondary, Inverted=True, Static=True, DisabledState=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False",
+      "type": "COMPONENT",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Bg",
+      "type": "FRAME",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 999
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer",
+      "type": "FRAME",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "ActionButton / View=Primary, Inverted=False, Static=False, DisabledState=False / Label",
+      "type": "TEXT",
+      "componentKey": "dcb5dc1f3ad0e2150b6699f6ee5bbeefb0e9e023",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad,2771:6"
+      }
+    }
+  ]
+}

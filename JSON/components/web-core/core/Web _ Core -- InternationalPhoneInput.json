@@ -1,0 +1,538 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:48:54.124Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "InternationalPhoneInput"
+    ],
+    "componentCount": 2,
+    "elementCount": 19
+  },
+  "components": [
+    {
+      "key": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "name": "🔩 CountryPicker",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "CountryPicker",
+      "defaultVariant": "61e42e3031edea5a46b75bf60fe4a2c093ad7197",
+      "variantStructures": {
+        "61e42e3031edea5a46b75bf60fe4a2c093ad7197": [],
+        "16f10083bd4ee2526e8a1de4f1cac5331a4550ef": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "DefinedCountry=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "DefinedCountry=False / Flag / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "DefinedCountry=False / Flag / PaintMe / world-magnifier",
+              "type": "INSTANCE",
+              "name": "world-magnifier",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "210aacc2c85c1ef4489a4e202614d80d76bde705",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "DefinedCountry=False / Flag / PaintMe / world-magnifier / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 7
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "69799:150529",
+          "key": "61e42e3031edea5a46b75bf60fe4a2c093ad7197",
+          "name": "DefinedCountry=True"
+        },
+        {
+          "id": "69799:150530",
+          "key": "16f10083bd4ee2526e8a1de4f1cac5331a4550ef",
+          "name": "DefinedCountry=False"
+        }
+      ]
+    },
+    {
+      "key": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "name": "🔩 OptionListContent_CountryCode",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "OptionListContent_CountryCode",
+      "defaultVariant": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "variantStructures": {
+        "4dc00752673cd8f0ae40c174ec499c2917055add": []
+      },
+      "variants": [
+        {
+          "id": "569:51587",
+          "key": "4dc00752673cd8f0ae40c174ec499c2917055add",
+          "name": "🔩 OptionListContent_CountryCode"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 CountryPicker / DefinedCountry=True",
+      "type": "COMPONENT",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag",
+      "type": "FRAME",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag / russia_m_color",
+      "type": "INSTANCE",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          4,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag / russia_m_color / Group",
+      "type": "GROUP",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag / russia_m_color / Group / Vector",
+      "type": "VECTOR",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(245,245,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag / russia_m_color / Group / Vector",
+      "type": "VECTOR",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,75,85,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Flag / russia_m_color / Group / Vector",
+      "type": "VECTOR",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(65,71,155,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Fixer",
+      "type": "FRAME",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Fixer / PaintMe / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "🔩 CountryPicker / DefinedCountry=True / Fixer / PaintMe / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "9e7b0dfd18867cdf2741011425f997b76c756b96",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 OptionListContent_CountryCode",
+      "type": "COMPONENT",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 OptionListContent_CountryCode / undefined_m_color",
+      "type": "INSTANCE",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          4,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 OptionListContent_CountryCode / undefined_m_color / Undefined country",
+      "type": "RECTANGLE",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 OptionListContent_CountryCode / Country",
+      "type": "FRAME",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 OptionListContent_CountryCode / Country / Name",
+      "type": "FRAME",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔩 OptionListContent_CountryCode / Country / Name / Text",
+      "type": "TEXT",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "CountryName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 7,
+      "path": "🔩 OptionListContent_CountryCode / Country / Code",
+      "type": "FRAME",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "🔩 OptionListContent_CountryCode / Country / Code / Text",
+      "type": "TEXT",
+      "componentKey": "4dc00752673cd8f0ae40c174ec499c2917055add",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "+00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,6711 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:20:34.577Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Pagination [D]"
+    ],
+    "componentCount": 9,
+    "elementCount": 318
+  },
+  "components": [
+    {
+      "key": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "name": "❌ [D] Pagination",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] Pagination",
+      "defaultVariant": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "variants": [
+        {
+          "id": "30426:24206",
+          "key": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+          "name": "❌ [D] Pagination"
+        }
+      ]
+    },
+    {
+      "key": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "name": "[D] StickyPagination",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] StickyPagination",
+      "defaultVariant": "247493c2a998da351244a910b337df8cdd50b736",
+      "variants": [
+        {
+          "id": "81998:242952",
+          "key": "247493c2a998da351244a910b337df8cdd50b736",
+          "name": "Presets=Pagination"
+        },
+        {
+          "id": "81998:242974",
+          "key": "1623fdff6ac61ffc5d5cf429833e81f2620d8242",
+          "name": "Presets=BulkActions"
+        },
+        {
+          "id": "87899:144847",
+          "key": "1476c4ada3bdbb4d9084b3354775ca5eb587d7a1",
+          "name": "Presets=None"
+        }
+      ]
+    },
+    {
+      "key": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "name": "Pagination",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Pagination",
+      "defaultVariant": "012268dbcf4631b62cf02a2e443568ef738b770c",
+      "variants": [
+        {
+          "id": "30426:21950",
+          "key": "012268dbcf4631b62cf02a2e443568ef738b770c",
+          "name": "Skeleton=false"
+        },
+        {
+          "id": "102739:225171",
+          "key": "0726ca4413011112e1fe24e33694610adb7344aa",
+          "name": "Skeleton=true"
+        }
+      ]
+    },
+    {
+      "key": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "name": "AmountOptionList",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "AmountOptionList",
+      "defaultVariant": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "variants": [
+        {
+          "id": "88526:29829",
+          "key": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+          "name": "AmountOptionList"
+        }
+      ]
+    },
+    {
+      "key": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "name": "[D] AmountListCell",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] AmountListCell",
+      "defaultVariant": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "variants": [
+        {
+          "id": "87899:177044",
+          "key": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+          "name": "[D] AmountListCell"
+        }
+      ]
+    },
+    {
+      "key": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "name": "Counter",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Counter",
+      "defaultVariant": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "variants": [
+        {
+          "id": "83934:37597",
+          "key": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+          "name": "Counter"
+        }
+      ]
+    },
+    {
+      "key": "1dee0111de93252e10f44270765161667279ea9a",
+      "name": "AmountRow",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "AmountRow",
+      "defaultVariant": "4a5e96173d9b195ad22284b7685dacbc255806f6",
+      "variants": [
+        {
+          "id": "87899:61676",
+          "key": "4a5e96173d9b195ad22284b7685dacbc255806f6",
+          "name": "Multiple=false"
+        },
+        {
+          "id": "87899:143842",
+          "key": "ab0a8dc8f75e93f542cb405b60174ac3f97874e2",
+          "name": "Multiple=true"
+        }
+      ]
+    },
+    {
+      "key": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "name": "ButtonsGroup",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "ButtonsGroup",
+      "defaultVariant": "04c595d77d0dba1246a0a0e4a579819c60c965e5",
+      "variants": [
+        {
+          "id": "83934:35334",
+          "key": "04c595d77d0dba1246a0a0e4a579819c60c965e5",
+          "name": "Overflow=true"
+        },
+        {
+          "id": "83934:35366",
+          "key": "03cba6e9d5bc1cb2b150e5663d00fcd07e6667e6",
+          "name": "Overflow=false"
+        }
+      ]
+    },
+    {
+      "key": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "name": "OptionSelect",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "OptionSelect",
+      "defaultVariant": "7378fd4ba358273153f3b085bda9373466ae21cf",
+      "variants": [
+        {
+          "id": "30426:17202",
+          "key": "7378fd4ba358273153f3b085bda9373466ae21cf",
+          "name": "OptionList=Closed"
+        },
+        {
+          "id": "30426:17204",
+          "key": "a71e08b823b336741b10a90d021be050e765f198",
+          "name": "OptionList=Opened ↓"
+        },
+        {
+          "id": "30671:44371",
+          "key": "938140d0913fee6f34634e9c3fe00252f7239594",
+          "name": "OptionList=Opened ↑"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "❌ [D] Pagination",
+      "type": "COMPONENT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          0,
+          16,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / Text",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / Text / Показывать по",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Показывать по\\"
+      },
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / Text / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Fixer",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left / icon",
+      "type": "VECTOR",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "3"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "4"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "5"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / 🔩 Page / ...",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "..."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right / icon",
+      "type": "VECTOR",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Scrollbar",
+      "type": "INSTANCE",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Scrollbar / kolbaska",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          18,
+          0,
+          18
+        ],
+        "gap": 10,
+        "radius": 100
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Scrollbar / kolbaska / Fixer",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Border",
+      "type": "FRAME",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "❌ [D] Pagination / Border / BorderLine",
+      "type": "VECTOR",
+      "componentKey": "fb1777593ecc73fbe862744b49bd267e480cdf8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination",
+      "type": "COMPONENT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": [
+          0,
+          0,
+          16,
+          16
+        ]
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          20,
+          16,
+          24,
+          32
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          12,
+          1,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / Text",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / Text / Показывать по",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Показывать по\\"
+      },
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / Text / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Fixer",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left / icon",
+      "type": "VECTOR",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "3"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "4"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "5"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / 🔩 Page / ...",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "..."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Content / Pagination / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right / icon",
+      "type": "VECTOR",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Scrollbar",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Scrollbar / kolbaska",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          164,
+          0,
+          164
+        ],
+        "gap": 10,
+        "radius": 100
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / Scrollbar / kolbaska / Fixer",
+      "type": "FRAME",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / BorderLine",
+      "type": "INSTANCE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          16
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] StickyPagination / Presets=Pagination / BorderLine / Line",
+      "type": "RECTANGLE",
+      "componentKey": "40f157d2b473c9c3d9155ba500d884d395c00e84",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false",
+      "type": "COMPONENT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / Text",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / Text / Показывать по",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Показывать по\\"
+      },
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / Text / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon / 🔩 Addon",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / OptionSelect / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Fixer",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 ArrowLeft / Icon / Fixer / PaintMe / chevron-left / icon",
+      "type": "VECTOR",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "3"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "4"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "5"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / 🔩 Page / ...",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "..."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          6,
+          4,
+          6,
+          4
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / Page / N",
+      "type": "TEXT",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon / Fixer",
+      "type": "FRAME",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon / Fixer / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right",
+      "type": "INSTANCE",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Pagination / Skeleton=false / Pagination / ArrowRight / Icon / Fixer / PaintMe / chevron-right / icon",
+      "type": "VECTOR",
+      "componentKey": "f015064108e37d845c00ccdf79ff7b419631c4cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList",
+      "type": "COMPONENT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountOptionList / [D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "e0d2d05fe2ee94fb425e0f4164630089678d9c8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell",
+      "type": "COMPONENT",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          12
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent",
+      "type": "FRAME",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Caption",
+      "type": "TEXT",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "N на сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount",
+      "type": "INSTANCE",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] AmountListCell / CellContent / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "f6002338c57f1799e3b2ff5c04f0912e17168a99",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter",
+      "type": "COMPONENT",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "padding": [
+          5,
+          0,
+          5,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content",
+      "type": "FRAME",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Checkbox_24",
+      "type": "INSTANCE",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Checkbox_24 / Content",
+      "type": "FRAME",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Checkbox_24 / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Checkbox_24 / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Checkbox_24 / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Text",
+      "type": "FRAME",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Counter / Content / Text / N",
+      "type": "TEXT",
+      "componentKey": "ec0e27c4bf6d8a9f4caf5a1dc5d9eb2279121c92",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountRow / Multiple=false",
+      "type": "COMPONENT",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          12,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Border",
+      "type": "FRAME",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Border / BorderLine",
+      "type": "RECTANGLE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(231,232,235,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content",
+      "type": "FRAME",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Text",
+      "type": "FRAME",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Text / Label",
+      "type": "TEXT",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "На сумму"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount",
+      "type": "INSTANCE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 18,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 18,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 18,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "AmountRow / Multiple=false / Content / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "1dee0111de93252e10f44270765161667279ea9a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true",
+      "type": "COMPONENT",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Primary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / Text / Label",
+      "type": "TEXT",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Secondary"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 4,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ButtonsGroup / Overflow=true / [D][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "6fe9424f8edb74f06e00bb66f3776c72231ae933",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed",
+      "type": "COMPONENT",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button",
+      "type": "FRAME",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 2,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / Text",
+      "type": "FRAME",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / Text / Показывать по",
+      "type": "TEXT",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": null,
+      "text": {
+        "value": "Показывать по\\"
+      },
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / Text / N",
+      "type": "TEXT",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "10"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon",
+      "type": "FRAME",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon / 🔩 Addon",
+      "type": "INSTANCE",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon / 🔩 Addon / Fixer",
+      "type": "FRAME",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon / 🔩 Addon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "OptionSelect / OptionList=Closed / Button / RightAddon / 🔩 Addon / Fixer / PaintMe / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "6beccd614e36b55184bc41a4bd8e3d72ebe2682c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

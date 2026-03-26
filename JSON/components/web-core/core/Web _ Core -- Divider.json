@@ -1,0 +1,79 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:52:10.351Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Divider"
+    ],
+    "componentCount": 1,
+    "elementCount": 2
+  },
+  "components": [
+    {
+      "key": "1c89182fbdf115e734202238489088060151c2a1",
+      "name": "Divider",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Divider",
+      "defaultVariant": "1c89182fbdf115e734202238489088060151c2a1",
+      "variantStructures": {
+        "1c89182fbdf115e734202238489088060151c2a1": []
+      },
+      "variants": [
+        {
+          "id": "9997:20838",
+          "key": "1c89182fbdf115e734202238489088060151c2a1",
+          "name": "Divider"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Divider",
+      "type": "COMPONENT",
+      "componentKey": "1c89182fbdf115e734202238489088060151c2a1",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Divider / Line",
+      "type": "RECTANGLE",
+      "componentKey": "1c89182fbdf115e734202238489088060151c2a1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a7c18f5825f95e560138779e61e9faf51129998c/3541:164",
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

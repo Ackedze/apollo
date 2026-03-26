@@ -1,0 +1,1005 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:53:03.873Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Amount"
+    ],
+    "componentCount": 5,
+    "elementCount": 17
+  },
+  "components": [
+    {
+      "key": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "name": "Amount",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Amount",
+      "defaultVariant": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "variantStructures": {
+        "fe3399f71c9e0971646821d935b64657e462c28e": []
+      },
+      "variants": [
+        {
+          "id": "485:67101",
+          "key": "fe3399f71c9e0971646821d935b64657e462c28e",
+          "name": "Amount"
+        }
+      ]
+    },
+    {
+      "key": "b95166da66ad15ecad14244d670ab1b66db66f80",
+      "name": "🔩 Addon",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Addon",
+      "defaultVariant": "b95166da66ad15ecad14244d670ab1b66db66f80",
+      "variantStructures": {
+        "b95166da66ad15ecad14244d670ab1b66db66f80": []
+      },
+      "variants": [
+        {
+          "id": "485:67049",
+          "key": "b95166da66ad15ecad14244d670ab1b66db66f80",
+          "name": "🔩 Addon"
+        }
+      ]
+    },
+    {
+      "key": "33bfa9e278712759a5ea601d87135003599c98f2",
+      "name": "🔩 Currency",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Currency",
+      "defaultVariant": "5bef50328b151427bf28c514c2266233e2bfbf6c",
+      "variantStructures": {
+        "5bef50328b151427bf28c514c2266233e2bfbf6c": [],
+        "8b36c76abd64a42172837ddf663cda3e4e358c6d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=$"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " $ ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "0154181859e03eb33d5aa291e0f5956e804f696f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=€"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " € ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "6570aee2e73a8726beede2a05212d7ef891e2aad": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=¥"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " ¥ ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "89819a3fdc5ee056735df309531d15d725a6d6cc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=RUB"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " RUB ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "a2b00858eab4a518af88b45902451364266fe14b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=USD"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " USD ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "dfb8beef1b72612d7b2bd17c8658cb13c999899b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=EUR"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " EUR ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "cc9186ae8adba78e9518fc28402cf0e8070c5b03": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=CNY"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " CNY ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "faf78e14227c564cefc1fdfc70a9a283bb8fb1e2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=False, Type=Custom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " Custom ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "eeaa1e217d2654477668d0485573067cfcb9d312": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=₽",
+              "opacity": 0.6000000238418579
+            }
+          }
+        ],
+        "fba8e39ec41bd16c38d9b27d759ff40ed011d28b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=$",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " $ ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "2ee947b43779c696512321bdb8d0f5b25e1b476b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=€",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " € ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "a2f7ba2ab797eb03424c22bfaa022001bf17a37b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=¥",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " ¥ ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "d3f1c9f53245bbe9fee32b7822263083b0873688": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=RUB",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " RUB ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "fd014a70878a54f07ddf268d1de767eee3aa3d9d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=USD",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " USD ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "e0cfcfd83f0e687d73ba2ac5ba3d77697a70236b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=EUR",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " EUR ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "f60f871718feabda3dfccd3147ede1e623acdd13": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=CNY",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " CNY ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ],
+        "fd702ca09da627d4817767f2288e59c668450518": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True, Type=Custom",
+              "opacity": 0.6000000238418579
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": " Custom ",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "485:67045",
+          "key": "5bef50328b151427bf28c514c2266233e2bfbf6c",
+          "name": "Opacity=False, Type=₽"
+        },
+        {
+          "id": "28268:5136",
+          "key": "8b36c76abd64a42172837ddf663cda3e4e358c6d",
+          "name": "Opacity=False, Type=$"
+        },
+        {
+          "id": "28268:5138",
+          "key": "0154181859e03eb33d5aa291e0f5956e804f696f",
+          "name": "Opacity=False, Type=€"
+        },
+        {
+          "id": "28268:5140",
+          "key": "6570aee2e73a8726beede2a05212d7ef891e2aad",
+          "name": "Opacity=False, Type=¥"
+        },
+        {
+          "id": "28268:5152",
+          "key": "89819a3fdc5ee056735df309531d15d725a6d6cc",
+          "name": "Opacity=False, Type=RUB"
+        },
+        {
+          "id": "28268:5154",
+          "key": "a2b00858eab4a518af88b45902451364266fe14b",
+          "name": "Opacity=False, Type=USD"
+        },
+        {
+          "id": "28268:5156",
+          "key": "dfb8beef1b72612d7b2bd17c8658cb13c999899b",
+          "name": "Opacity=False, Type=EUR"
+        },
+        {
+          "id": "28268:5158",
+          "key": "cc9186ae8adba78e9518fc28402cf0e8070c5b03",
+          "name": "Opacity=False, Type=CNY"
+        },
+        {
+          "id": "28268:5189",
+          "key": "faf78e14227c564cefc1fdfc70a9a283bb8fb1e2",
+          "name": "Opacity=False, Type=Custom"
+        },
+        {
+          "id": "485:67047",
+          "key": "eeaa1e217d2654477668d0485573067cfcb9d312",
+          "name": "Opacity=True, Type=₽"
+        },
+        {
+          "id": "28268:5142",
+          "key": "fba8e39ec41bd16c38d9b27d759ff40ed011d28b",
+          "name": "Opacity=True, Type=$"
+        },
+        {
+          "id": "28268:5144",
+          "key": "2ee947b43779c696512321bdb8d0f5b25e1b476b",
+          "name": "Opacity=True, Type=€"
+        },
+        {
+          "id": "28268:5146",
+          "key": "a2f7ba2ab797eb03424c22bfaa022001bf17a37b",
+          "name": "Opacity=True, Type=¥"
+        },
+        {
+          "id": "28268:5160",
+          "key": "d3f1c9f53245bbe9fee32b7822263083b0873688",
+          "name": "Opacity=True, Type=RUB"
+        },
+        {
+          "id": "28268:5162",
+          "key": "fd014a70878a54f07ddf268d1de767eee3aa3d9d",
+          "name": "Opacity=True, Type=USD"
+        },
+        {
+          "id": "28268:5164",
+          "key": "e0cfcfd83f0e687d73ba2ac5ba3d77697a70236b",
+          "name": "Opacity=True, Type=EUR"
+        },
+        {
+          "id": "28268:5166",
+          "key": "f60f871718feabda3dfccd3147ede1e623acdd13",
+          "name": "Opacity=True, Type=CNY"
+        },
+        {
+          "id": "28268:5191",
+          "key": "fd702ca09da627d4817767f2288e59c668450518",
+          "name": "Opacity=True, Type=Custom"
+        }
+      ]
+    },
+    {
+      "key": "e92f061b2cdfa20bd17d98554e113f4ce8c991b2",
+      "name": "🔩 Minor",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Minor",
+      "defaultVariant": "1af9948d2ef74777f91e41a8d889ca28d036d7bb",
+      "variantStructures": {
+        "1af9948d2ef74777f91e41a8d889ca28d036d7bb": [],
+        "befbce9afb22a1dfc58bf9daeb72cfb1375bec43": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Opacity=True",
+              "opacity": 0.6000000238418579
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "485:67040",
+          "key": "1af9948d2ef74777f91e41a8d889ca28d036d7bb",
+          "name": "Opacity=False"
+        },
+        {
+          "id": "485:67042",
+          "key": "befbce9afb22a1dfc58bf9daeb72cfb1375bec43",
+          "name": "Opacity=True"
+        }
+      ]
+    },
+    {
+      "key": "a833c02e4fcb75fea1a89bf786912e108b8f93ba",
+      "name": "🔩 Major",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Major",
+      "defaultVariant": "a833c02e4fcb75fea1a89bf786912e108b8f93ba",
+      "variantStructures": {
+        "a833c02e4fcb75fea1a89bf786912e108b8f93ba": []
+      },
+      "variants": [
+        {
+          "id": "485:67037",
+          "key": "a833c02e4fcb75fea1a89bf786912e108b8f93ba",
+          "name": "🔩 Major"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Amount",
+      "type": "COMPONENT",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 4,
+      "path": "Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 6,
+      "path": "Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 8,
+      "path": "Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "fe3399f71c9e0971646821d935b64657e462c28e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Addon",
+      "type": "COMPONENT",
+      "componentKey": "b95166da66ad15ecad14244d670ab1b66db66f80",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "b95166da66ad15ecad14244d670ab1b66db66f80",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Currency / Opacity=False, Type=₽",
+      "type": "COMPONENT",
+      "componentKey": "33bfa9e278712759a5ea601d87135003599c98f2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Currency / Opacity=False, Type=₽ / Currency",
+      "type": "TEXT",
+      "componentKey": "33bfa9e278712759a5ea601d87135003599c98f2",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 Minor / Opacity=False",
+      "type": "COMPONENT",
+      "componentKey": "e92f061b2cdfa20bd17d98554e113f4ce8c991b2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Minor / Opacity=False / Minor",
+      "type": "TEXT",
+      "componentKey": "e92f061b2cdfa20bd17d98554e113f4ce8c991b2",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 Major",
+      "type": "COMPONENT",
+      "componentKey": "a833c02e4fcb75fea1a89bf786912e108b8f93ba",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Major / Major",
+      "type": "TEXT",
+      "componentKey": "a833c02e4fcb75fea1a89bf786912e108b8f93ba",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

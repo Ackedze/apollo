@@ -1,0 +1,2165 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:23:05.571Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ContentCardWrapper"
+    ],
+    "componentCount": 11,
+    "elementCount": 98
+  },
+  "components": [
+    {
+      "key": "9db332409f3067d46a272e103ccf6f1424de412f",
+      "name": "🔩 [M] ContentPresets",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] ContentPresets",
+      "defaultVariant": "53c1adae2661463de5ee1f15796e91ee24c4e841",
+      "variants": [
+        {
+          "id": "55413:56069",
+          "key": "53c1adae2661463de5ee1f15796e91ee24c4e841",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "55413:56072",
+          "key": "bac9bc51f6e5ced1f5f433353356653d4f731545",
+          "name": "Presets=ExtraTitle"
+        },
+        {
+          "id": "55413:56074",
+          "key": "98edbc9fc6f5fb73e8e041ce02d34a2388fd9077",
+          "name": "Presets=Title"
+        },
+        {
+          "id": "55413:56078",
+          "key": "174069ddca7eb999ca90a3b0878f96b79f35d64d",
+          "name": "Presets=SubTitle"
+        }
+      ]
+    },
+    {
+      "key": "2718ac1cda9bfc894c6e39086be9c0206d19b00b",
+      "name": "SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "2718ac1cda9bfc894c6e39086be9c0206d19b00b",
+      "variants": [
+        {
+          "id": "55459:488777",
+          "key": "2718ac1cda9bfc894c6e39086be9c0206d19b00b",
+          "name": "SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "4704c20700329cff93f3202a5a591cedb4147a9f",
+      "name": "🔩 [D] ContentPresets",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] ContentPresets",
+      "defaultVariant": "b7793c4fbbcbb0cf6596cd32c86a5e305a196f7d",
+      "variants": [
+        {
+          "id": "54751:40990",
+          "key": "b7793c4fbbcbb0cf6596cd32c86a5e305a196f7d",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "55413:55308",
+          "key": "803e194564c290e6df9be40e711717fe9153c2ad",
+          "name": "Presets=ExtraTitle"
+        },
+        {
+          "id": "54751:40996",
+          "key": "a6e5ee18371527156f2e5cb89061cb51972f2976",
+          "name": "Presets=Title"
+        },
+        {
+          "id": "54751:41004",
+          "key": "f74c3b70da4c1c37e9544d44bfced85f49b0ce5f",
+          "name": "Presets=SubTitle"
+        }
+      ]
+    },
+    {
+      "key": "614600f3cb08696ad202f23cb6d9af4cebf36238",
+      "name": "🔩 [M] MiddleContentSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] MiddleContentSlot",
+      "defaultVariant": "1851ed7b5ff79b0a25b940926f397c5537957765",
+      "variants": [
+        {
+          "id": "55413:56048",
+          "key": "1851ed7b5ff79b0a25b940926f397c5537957765",
+          "name": "Capacity=1, Connected=True"
+        },
+        {
+          "id": "55413:56050",
+          "key": "9914d71e26b32bb97531daa654172610e24f8255",
+          "name": "Capacity=2, Connected=True"
+        },
+        {
+          "id": "55413:56054",
+          "key": "6d2d1ed0523e917509450fb306cb7d7f205d0701",
+          "name": "Capacity=3, Connected=True"
+        },
+        {
+          "id": "55413:56060",
+          "key": "334b85c6d76db1a55613df835cde22bd7cf06a71",
+          "name": "Capacity=4, Connected=True"
+        },
+        {
+          "id": "55482:490212",
+          "key": "3e6b9b5592f619dc1650938b84054a98805deeac",
+          "name": "Capacity=1, Connected=False"
+        },
+        {
+          "id": "55482:490214",
+          "key": "3e4f6fc3f9ea99da532cade0b0ed8639bd4c674d",
+          "name": "Capacity=2, Connected=False"
+        },
+        {
+          "id": "55482:490218",
+          "key": "564789a29f14743724c3c840ad49fdf2db0fe4bf",
+          "name": "Capacity=3, Connected=False"
+        },
+        {
+          "id": "55482:490224",
+          "key": "2aeb2e749d3e0506b68c92a64696ae1956aec106",
+          "name": "Capacity=4, Connected=False"
+        }
+      ]
+    },
+    {
+      "key": "98c552a6f80d47ffc0dc9d0a7803c94e45c8a14d",
+      "name": "🔩 MiddleContentSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "MiddleContentSlot",
+      "defaultVariant": "a03ab76ad69de1b09e96177da8454d0eec199006",
+      "variants": [
+        {
+          "id": "55482:490358",
+          "key": "a03ab76ad69de1b09e96177da8454d0eec199006",
+          "name": "Capacity=1, Connected=True"
+        },
+        {
+          "id": "55482:490360",
+          "key": "593834bd3a06bc7262762a7eefb1fcec8040d720",
+          "name": "Capacity=2, Connected=True"
+        },
+        {
+          "id": "55482:490364",
+          "key": "cea5adbaf268bf00cef9f260167523889fff5b4e",
+          "name": "Capacity=3, Connected=True"
+        },
+        {
+          "id": "55482:490370",
+          "key": "9a3a91ebce53645ecf0a79386e71ad4072b4747a",
+          "name": "Capacity=4, Connected=True"
+        },
+        {
+          "id": "54751:40953",
+          "key": "cbc49fd5598be2d5d43edb41ad53b5524a230a89",
+          "name": "Capacity=1, Connected=False"
+        },
+        {
+          "id": "54751:40955",
+          "key": "283463a5433b4781b0752016654d42be56eb9155",
+          "name": "Capacity=2, Connected=False"
+        },
+        {
+          "id": "54751:40959",
+          "key": "a9cdaf04196df8d48a0c01424faaef7d5f471e4c",
+          "name": "Capacity=3, Connected=False"
+        },
+        {
+          "id": "55413:55755",
+          "key": "97f05597c0502789ca33577b118ab0b67a28e05b",
+          "name": "Capacity=4, Connected=False"
+        }
+      ]
+    },
+    {
+      "key": "afba72501912bdedfd119d5518222cdc745a2017",
+      "name": "🔩 [M] RightSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] RightSlot",
+      "defaultVariant": "44bf54487580ada6dc362c600b8047c6d7db6516",
+      "variants": [
+        {
+          "id": "55413:56033",
+          "key": "44bf54487580ada6dc362c600b8047c6d7db6516",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "55413:56035",
+          "key": "84a8e243b82e42e86945ef05846e10bc63891f60",
+          "name": "Presets=IconButton"
+        }
+      ]
+    },
+    {
+      "key": "b178252ddcb994f4621b344e7edabf01ee4e8046",
+      "name": "🔩 [D] RightSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] RightSlot",
+      "defaultVariant": "15753ca11ab0ad6017983cfd12dfb45ec4a6ea7a",
+      "variants": [
+        {
+          "id": "55413:55987",
+          "key": "15753ca11ab0ad6017983cfd12dfb45ec4a6ea7a",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "54751:41040",
+          "key": "3306117dae38c0f239cc31f02da16e98678a4d76",
+          "name": "Presets=IconButton"
+        }
+      ]
+    },
+    {
+      "key": "a3b5569104e21235ba20be471a0f990a93f5c829",
+      "name": "🔩 [M] LeftSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "M] LeftSlot",
+      "defaultVariant": "5e97fb8c81abb55ff0b1ce8b6ecdd09eca470e07",
+      "variants": [
+        {
+          "id": "55413:56024",
+          "key": "5e97fb8c81abb55ff0b1ce8b6ecdd09eca470e07",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "55413:56026",
+          "key": "4ce605424bc8bdc3fce135fc155d127810101457",
+          "name": "Presets=Checkbox"
+        },
+        {
+          "id": "55413:56028",
+          "key": "78fddd1da7d240598ae99cfec5d56c8b9df5ae4f",
+          "name": "Presets=Radio"
+        },
+        {
+          "id": "55413:56030",
+          "key": "f48b121a01c4041496b5b43cbf483dc337660bc0",
+          "name": "Presets=Switch"
+        }
+      ]
+    },
+    {
+      "key": "52e197f8264c36dd3e757bc041941e999fb0f01d",
+      "name": "🔩 [D] LeftSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "D] LeftSlot",
+      "defaultVariant": "cd392d918f3312fd4bde32d67f056b4dfbe322f5",
+      "variants": [
+        {
+          "id": "55413:55986",
+          "key": "cd392d918f3312fd4bde32d67f056b4dfbe322f5",
+          "name": "Presets=SwapMe"
+        },
+        {
+          "id": "54751:41033",
+          "key": "f6b5bd9f2e1808887d3cc002853d2b0869b04137",
+          "name": "Presets=Checkbox"
+        },
+        {
+          "id": "54751:41035",
+          "key": "25f61dfcc211e0ea727339ac30d08652862ec547",
+          "name": "Presets=Radio"
+        },
+        {
+          "id": "54751:41037",
+          "key": "08cc6eca964d083ddbbdaf758b4b072dde3b8f60",
+          "name": "Presets=Switch"
+        }
+      ]
+    },
+    {
+      "key": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "name": "[M] ContentCardWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] ContentCardWrapper",
+      "defaultVariant": "49f3809833823f53f1594fbff9104dd08fe990c4",
+      "variants": [
+        {
+          "id": "55413:56436",
+          "key": "49f3809833823f53f1594fbff9104dd08fe990c4",
+          "name": "State=Active"
+        },
+        {
+          "id": "55413:56444",
+          "key": "11df6d753e04ad4bbb384b25d43a02135e477777",
+          "name": "State=Disabled"
+        },
+        {
+          "id": "55413:56432",
+          "key": "f98fdaacf5a9422dc2e1a79f5e35e09263e8ca2b",
+          "name": "State=Empty"
+        },
+        {
+          "id": "63815:76104",
+          "key": "b4770c87f313da8f2250fbea241e03016d456d67",
+          "name": "State=Error"
+        },
+        {
+          "id": "55413:56452",
+          "key": "dfc09c42d0125c6d3d9af0b3ac03a0702dbcb8cd",
+          "name": "State=Skeleton"
+        }
+      ]
+    },
+    {
+      "key": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "name": "[D] ContentCardWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] ContentCardWrapper",
+      "defaultVariant": "db811120887de6e1719c687338fe388fcc37fd1b",
+      "variants": [
+        {
+          "id": "54751:40857",
+          "key": "db811120887de6e1719c687338fe388fcc37fd1b",
+          "name": "State=Active"
+        },
+        {
+          "id": "55398:41358",
+          "key": "81046be14457ddb960e501532eb2f4620dc6cb55",
+          "name": "State=Disabled"
+        },
+        {
+          "id": "54751:40853",
+          "key": "da59e7b92b8380b20fbdcba0cd05461a1f779524",
+          "name": "State=Empty"
+        },
+        {
+          "id": "63815:75628",
+          "key": "06a20af09b20c97581624ea8f47bd484a3e85653",
+          "name": "State=Error"
+        },
+        {
+          "id": "54751:40866",
+          "key": "10f45d9da200836620f39221b2076434e5f88b55",
+          "name": "State=Skeleton"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔩 [M] ContentPresets / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "9db332409f3067d46a272e103ccf6f1424de412f",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] ContentPresets / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "9db332409f3067d46a272e103ccf6f1424de412f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] ContentPresets / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "9db332409f3067d46a272e103ccf6f1424de412f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "2718ac1cda9bfc894c6e39086be9c0206d19b00b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "2718ac1cda9bfc894c6e39086be9c0206d19b00b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] ContentPresets / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "4704c20700329cff93f3202a5a591cedb4147a9f",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] ContentPresets / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "4704c20700329cff93f3202a5a591cedb4147a9f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] ContentPresets / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "4704c20700329cff93f3202a5a591cedb4147a9f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] MiddleContentSlot / Capacity=1, Connected=True",
+      "type": "COMPONENT",
+      "componentKey": "614600f3cb08696ad202f23cb6d9af4cebf36238",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] MiddleContentSlot / Capacity=1, Connected=True / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "614600f3cb08696ad202f23cb6d9af4cebf36238",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] MiddleContentSlot / Capacity=1, Connected=True / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "614600f3cb08696ad202f23cb6d9af4cebf36238",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] MiddleContentSlot / Capacity=1, Connected=True / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "614600f3cb08696ad202f23cb6d9af4cebf36238",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 MiddleContentSlot / Capacity=1, Connected=True",
+      "type": "COMPONENT",
+      "componentKey": "98c552a6f80d47ffc0dc9d0a7803c94e45c8a14d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 MiddleContentSlot / Capacity=1, Connected=True / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "98c552a6f80d47ffc0dc9d0a7803c94e45c8a14d",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 MiddleContentSlot / Capacity=1, Connected=True / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "98c552a6f80d47ffc0dc9d0a7803c94e45c8a14d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 MiddleContentSlot / Capacity=1, Connected=True / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "98c552a6f80d47ffc0dc9d0a7803c94e45c8a14d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] RightSlot / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "afba72501912bdedfd119d5518222cdc745a2017",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] RightSlot / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "afba72501912bdedfd119d5518222cdc745a2017",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] RightSlot / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "afba72501912bdedfd119d5518222cdc745a2017",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] RightSlot / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "b178252ddcb994f4621b344e7edabf01ee4e8046",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] RightSlot / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "b178252ddcb994f4621b344e7edabf01ee4e8046",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] RightSlot / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "b178252ddcb994f4621b344e7edabf01ee4e8046",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] LeftSlot / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "a3b5569104e21235ba20be471a0f990a93f5c829",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] LeftSlot / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "a3b5569104e21235ba20be471a0f990a93f5c829",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [M] LeftSlot / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "a3b5569104e21235ba20be471a0f990a93f5c829",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] LeftSlot / Presets=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "52e197f8264c36dd3e757bc041941e999fb0f01d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] LeftSlot / Presets=SwapMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "52e197f8264c36dd3e757bc041941e999fb0f01d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔩 [D] LeftSlot / Presets=SwapMe / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "52e197f8264c36dd3e757bc041941e999fb0f01d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active",
+      "type": "COMPONENT",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] LeftSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] LeftSlot / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] LeftSlot / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": false,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [M] StatusPreset",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [M] StatusPreset / Status",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 99
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [M] StatusPreset / Status / Label",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [M] StatusPreset / Status / Label / Label",
+      "type": "TEXT",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / MiddleSlot / 🔩 [M] MiddleContentSlot / 🔩 [M] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] RightSlot",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] RightSlot / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / 🔩 [M] RightSlot / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / [M] BackgroundPlate",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[M] ContentCardWrapper / State=Active / [M] BackgroundPlate / [M] Style Level 1",
+      "type": "INSTANCE",
+      "componentKey": "56a1c753cc6f1c71454623ef9907dd5db2e9a999",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 24
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active",
+      "type": "COMPONENT",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          24,
+          24,
+          24
+        ],
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] LeftSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] LeftSlot / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] LeftSlot / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [D] StatusPreset",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [D] StatusPreset / Status",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 99
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [D] StatusPreset / Status / 🔩 Label",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / StatusSlot / 🔒 [D] StatusPreset / Status / 🔩 Label / Label",
+      "type": "TEXT",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / MiddleSlot / 🔩 MiddleContentSlot / 🔩 [D] ContentPresets / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] RightSlot",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] RightSlot / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / 🔩 [D] RightSlot / SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / [D] BackgroundPlate",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "[D] ContentCardWrapper / State=Active / [D] BackgroundPlate / [D] Style Level 2",
+      "type": "INSTANCE",
+      "componentKey": "5c53b3d9a9357a015219531e6d4ad1843faeef6b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

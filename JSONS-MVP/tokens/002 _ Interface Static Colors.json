@@ -1,0 +1,2209 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-30T07:20:10.331Z",
+    "fileName": "002 :: Interface Static Colors",
+    "library": "002 :: Interface Static Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:942:3863",
+      "name": "Interface Static",
+      "key": "a0fea5dd5c2157f87b0b43817d43fd49656761f0",
+      "defaultModeId": "942:1",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "942:1",
+          "name": "BlueTint Static"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:942:3864",
+          "name": "static_text/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "35ea1ba98cfbbc081b766a140740e82ab3e01c92",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "942:1": "#030306"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:942:3865",
+          "name": "static_text/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "438816910cd5820c631348629d15d4126486c9d9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "942:1": "#040413"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:942:3866",
+          "name": "static_text/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2c6035a149d933e7d61465bf927a8d6e0bbdc0b2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.019607843831181526,
+              "g": 0.0313725508749485,
+              "b": 0.11372549086809158,
+              "a": 0.3799999952316284
+            }
+          },
+          "hexByMode": {
+            "942:1": "#05081D"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:942:3867",
+          "name": "static_text/quaternary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2770ad0e01912c8c76179bb3a0f5b83a2091598a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "942:1": "#050B2C"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "quaternary"
+        },
+        {
+          "id": "VariableID:942:3868",
+          "name": "static_text/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ef1d6a24d3ccccf0267e24fb5834b4bdb11d09a2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#0D9336"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:942:3869",
+          "name": "static_text/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6f6584d08d351668a63fb350c2d864520c076e3b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EA8313"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:942:3870",
+          "name": "static_text/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6dad6f6e0800ff92ac43b98832cd530a3026a96c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EC2D20"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:942:3871",
+          "name": "static_text/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cf9d632fd83952b75c22d11f37b7beabeb2d3107",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#2A77EF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:942:3872",
+          "name": "static_text_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d628b4143392a46dacd623e81b3de011d3cc6a1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFFFFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:942:3873",
+          "name": "static_text_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "56a9afc39274193265e59d3ddb182c089f4bbfd0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EEEEFB"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:942:3874",
+          "name": "static_text_inverted/tertiary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bb93abb38f4014656a4b38a39b52cb5961e370a1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9137254953384399,
+              "g": 0.9137254953384399,
+              "b": 0.9803921580314636,
+              "a": 0.3700000047683716
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E9E9FA"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "tertiary"
+        },
+        {
+          "id": "VariableID:942:3875",
+          "name": "static_text_inverted/quaternary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7715ba18f2708d17378fe5741afe1f1758aff130",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E7E7F8"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "quaternary"
+        },
+        {
+          "id": "VariableID:942:3876",
+          "name": "static_text_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4da57122e96f74357e270e753a945c0ca4b662cf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#0CC44D"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:942:3877",
+          "name": "static_text_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "24f152dc1c7ef43ed8a9acddece9b1a819844035",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FA9313"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:942:3878",
+          "name": "static_text_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2e143b48768c7e514f05d05881682eb566502fba",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FF4837"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:942:3879",
+          "name": "static_text_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4086134b2fc950f2c99e58c6efb896cc6aec70dd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.29019609093666077,
+              "g": 0.615686297416687,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#4A9DFC"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_text_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1730:789",
+          "name": "static_neutral/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#212124"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:942:3881",
+          "name": "static_neutral/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f503202b84c55390b9c967999703471cdadcc0c7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#898991"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:942:3882",
+          "name": "static_neutral/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9c11aadaa65fab5d0047b7673c468d7316fbff99",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#BABBC2"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:942:3883",
+          "name": "static_neutral/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0444d05c4d071e9eb163325545b602a719c986c1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#D2D3D9"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:942:3884",
+          "name": "static_neutral/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0142adeb30156f814da1d91dd8bb8dba64931365",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E7E8EB"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:942:3885",
+          "name": "static_neutral/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2200cd6b482fe9d9a112588ebb9d162c22d8bf51",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.929411768913269,
+              "g": 0.9333333373069763,
+              "b": 0.9411764740943909,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EDEEF0"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:990:1039",
+          "name": "static_neutral/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5c4560d87fd790b82b543012eb93ad48b0575551",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#F2F3F5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:942:3886",
+          "name": "static_neutral/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "301d7bbf1c36b77ee22fa00b2008e56228859595",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFFFFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:942:3880",
+          "name": "static_neutral/1500 (deprecated)",
+          "description": "Замени на neutral-translucent/1300 или accent/secondary",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1872fd7695fd7e1e73a8d289cb2bce48a98a9901",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.07058823853731155,
+              "g": 0.07058823853731155,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#121213"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral",
+          "tokenName": "1500 (deprecated)"
+        },
+        {
+          "id": "VariableID:1730:790",
+          "name": "static_neutral_inverted/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#F2F3F5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:942:3888",
+          "name": "static_neutral_inverted/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c6d44c89d8531c19d5696bee14404b38f973ced7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#898991"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:942:3889",
+          "name": "static_neutral_inverted/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "674ca70694575d79202d33d25c6c3183ddcd4b3c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.29019609093666077,
+              "g": 0.29019609093666077,
+              "b": 0.3176470696926117,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#4A4A51"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:942:3890",
+          "name": "static_neutral_inverted/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "53016c7bfdff9525bb2cf83ef8f5fc5238740baa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#353539"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:942:3891",
+          "name": "static_neutral_inverted/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "83a3a2251024846b68a41a4101deb2afbc6f8043",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#29292C"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:942:3892",
+          "name": "static_neutral_inverted/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b2f2201767ee05831f32d4e07918eade658e2213",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#212124"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:990:1026",
+          "name": "static_neutral_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cc0082f40640801db179fbfe821ced7402eb108c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.10980392247438431,
+              "g": 0.10980392247438431,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#1C1C1E"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:942:3893",
+          "name": "static_neutral_inverted/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ca11bb25e074026fc2c6a2969903ef9b73f0c04a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.14901961386203766,
+              "g": 0.14901961386203766,
+              "b": 0.16078431904315948,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#262629"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:942:3887",
+          "name": "static_neutral_inverted/1500 (deprecated)",
+          "description": "Замени на neutral-translucent/1300 или accent/secondary",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3120d28d00861693ccd49006ad3356e5030cad79",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFFFFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1500 (deprecated)"
+        },
+        {
+          "id": "VariableID:1531:787",
+          "name": "static_neutral-translucent/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a85d96e37cfd4de58ccd8515f26255a3f86c4160",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.0117647061124444,
+              "g": 0.0117647061124444,
+              "b": 0.0235294122248888,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "942:1": "#030306"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:942:3899",
+          "name": "static_neutral-translucent/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "968d67c62bf431169b5aa6216fa2148aefd4680a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.08235294371843338,
+              "a": 0.4699999988079071
+            }
+          },
+          "hexByMode": {
+            "942:1": "#040415"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:942:3898",
+          "name": "static_neutral-translucent/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cec493954c2d8570d65a28040a566a3e17f2dba8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.03529411926865578,
+              "g": 0.0470588244497776,
+              "b": 0.14509804546833038,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "942:1": "#090C25"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:942:3897",
+          "name": "static_neutral-translucent/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5c438222d6e0fe0c87653832dea07fc722f993d0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "942:1": "#050B2C"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:942:3896",
+          "name": "static_neutral-translucent/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.05882352963089943,
+              "g": 0.09803921729326248,
+              "b": 0.21568627655506134,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "942:1": "#0F1937"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:942:3895",
+          "name": "static_neutral-translucent/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7838c78a500f3c2b12ea0172bb9bc43732254734",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.11764705926179886,
+              "g": 0.16862745583057404,
+              "b": 0.2666666805744171,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "942:1": "#1E2B44"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:942:3894",
+          "name": "static_neutral-translucent/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c656d86dbacf670a0050a7c8cba95555b4c7d96f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.14901961386203766,
+              "g": 0.21568627655506134,
+              "b": 0.3450980484485626,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "942:1": "#263758"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:1033:537",
+          "name": "static_neutral-translucent/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0bed7f04eede2ac497d51f3960ee9afa0d2b14a9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFFFFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:1531:788",
+          "name": "static_neutral-translucent_inverted/1300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3ae8a4cacc6e560441bd23207c4bf16316c166e0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.9399999976158142
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFFFFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "1300"
+        },
+        {
+          "id": "VariableID:942:3905",
+          "name": "static_neutral-translucent_inverted/700",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0652a4df4478b13cd98727ed5fdcd95dba934aeb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EEEEFB"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "700"
+        },
+        {
+          "id": "VariableID:942:3904",
+          "name": "static_neutral-translucent_inverted/500",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "46508b48cef3a0cf20396827ad4fc6f3659222f9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8941176533699036,
+              "g": 0.8941176533699036,
+              "b": 0.9843137264251709,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E4E4FB"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "500"
+        },
+        {
+          "id": "VariableID:942:3903",
+          "name": "static_neutral-translucent_inverted/400",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "835a7f933d8b45f2431f994ea25a3e8884bdb3e8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E7E7F8"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "400"
+        },
+        {
+          "id": "VariableID:942:3902",
+          "name": "static_neutral-translucent_inverted/300",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ab6a628c01ecc95af1aa3e42acba69381802c86f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            }
+          },
+          "hexByMode": {
+            "942:1": "#DEDEEE"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "300"
+        },
+        {
+          "id": "VariableID:942:3901",
+          "name": "static_neutral-translucent_inverted/200",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4f1a08a45e0beda59daba983e1f4e862963fd986",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8823529481887817,
+              "g": 0.8823529481887817,
+              "b": 0.9725490212440491,
+              "a": 0.09000000357627869
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E1E1F8"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "200"
+        },
+        {
+          "id": "VariableID:942:3900",
+          "name": "static_neutral-translucent_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4e809ce05b974c97ce165003804eeff79f2c7c0c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            }
+          },
+          "hexByMode": {
+            "942:1": "#D6D6E5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:1033:538",
+          "name": "static_neutral-translucent_inverted/0",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3dcce8beb543b0c92488615482d6fa63bbca3785",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8392156958580017,
+              "g": 0.8392156958580017,
+              "b": 0.8980392217636108,
+              "a": 0.07000000029802322
+            }
+          },
+          "hexByMode": {
+            "942:1": "#D6D6E5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "0"
+        },
+        {
+          "id": "VariableID:1188:878",
+          "name": "static_status/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "531ae58f61aaeaf1c3c05cac68695cb6ac919ab0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#0CC44D"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:879",
+          "name": "static_status/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "eba11967a55f9993405796ee9b31726e55c4b39d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FA9313"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:880",
+          "name": "static_status/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d0b619728b074e3df9d98ddd77be98925453dade",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FF4837"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:881",
+          "name": "static_status/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d3fe33d71b2536d9214042db5dbcd5fa205d2b27",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.13333334028720856,
+              "g": 0.5333333611488342,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#2288FA"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1188:886",
+          "name": "static_status-muted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "28d0cdc846c9bec3f8e65cb42465f8677bbfc6f4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8745098114013672,
+              "g": 0.9725490212440491,
+              "b": 0.8980392217636108,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#DFF8E5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:887",
+          "name": "static_status-muted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3d5d8e29e2dcce4b1f32be8f521667852662ed1c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.9372549057006836,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFEFD9"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:888",
+          "name": "static_status-muted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "79a05d34437b144173e1c7f25b1f78f3cec5cf27",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.9215686321258545,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFEBEB"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:889",
+          "name": "static_status-muted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "38fa42e016fb4001ded17e3f2861bba0578458a9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8941176533699036,
+              "g": 0.9411764740943909,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#E4F0FF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1188:891",
+          "name": "static_status-muted-alt/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2d8c99d154b193c7d56eafd16903e06ac0072a97",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8196078538894653,
+              "g": 0.9450980424880981,
+              "b": 0.843137264251709,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#D1F1D7"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:892",
+          "name": "static_status-muted-alt/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2c0085971e0952457a5f657b05d7251e0de3e6b6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9921568632125854,
+              "g": 0.9019607901573181,
+              "b": 0.7843137383460999,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FDE6C8"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:893",
+          "name": "static_status-muted-alt/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ef59d1644f0014f1ebd3365759f4b7fc168037fb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.8745098114013672,
+              "b": 0.8745098114013672,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FFDFDF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:894",
+          "name": "static_status-muted-alt/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "54f22b6012c3a1bd693f3cfbd0116d7fd9410fab",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.8470588326454163,
+              "g": 0.9176470637321472,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#D8EAFF"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1188:882",
+          "name": "static_status_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7a982de8004b01db506bcc87c1174c17bb7a0d09",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#17D055"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:883",
+          "name": "static_status_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ac05c9d021846a54db66dd6eb0ab0962ab6532da",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FDA136"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:884",
+          "name": "static_status_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "237b53dc6ba6a89819da126796935c45f99914c3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#FF4837"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:885",
+          "name": "static_status_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ca638ed5d3af463de4367232356a8679233c8cb3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#3193FC"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1188:895",
+          "name": "static_status-muted_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ac75f51c2baa3c0f3996452466b0b92f7a783ef7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.13725490868091583,
+              "g": 0.1764705926179886,
+              "b": 0.14509804546833038,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#232D25"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:896",
+          "name": "static_status-muted_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b0604853a3c9deb101592ba35c024a7170510edb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.21176470816135406,
+              "g": 0.16078431904315948,
+              "b": 0.12156862765550613,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#36291F"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:897",
+          "name": "static_status-muted_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "db1522e469309c1286c41817200d38953caea4e3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.2235294133424759,
+              "g": 0.14509804546833038,
+              "b": 0.13725490868091583,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#392523"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:898",
+          "name": "static_status-muted_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4d443045e855b9f4c858c0d4ce877c32932bab7a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.13333334028720856,
+              "g": 0.16470588743686676,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#222A3E"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:1188:899",
+          "name": "static_status-muted-alt_inverted/positive",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "eb35f0165ef34bff5064443afdd3fd57e828226d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.14509804546833038,
+              "g": 0.2078431397676468,
+              "b": 0.1568627506494522,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#253528"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt_inverted",
+          "tokenName": "positive"
+        },
+        {
+          "id": "VariableID:1188:900",
+          "name": "static_status-muted-alt_inverted/attention",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "57510c0faa11f7433315f20dfd33135dc2ad6f11",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.2549019753932953,
+              "g": 0.18431372940540314,
+              "b": 0.13333334028720856,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#412F22"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt_inverted",
+          "tokenName": "attention"
+        },
+        {
+          "id": "VariableID:1188:901",
+          "name": "static_status-muted-alt_inverted/negative",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f8ee2a5656699077b5ee40bc031a3a55a9636008",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.2666666805744171,
+              "g": 0.16078431904315948,
+              "b": 0.14901961386203766,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#442926"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt_inverted",
+          "tokenName": "negative"
+        },
+        {
+          "id": "VariableID:1188:902",
+          "name": "static_status-muted-alt_inverted/info",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ef0f41c0cf4bd02c91ac38bb8076ae39fffcd003",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.16078431904315948,
+              "g": 0.1882352977991104,
+              "b": 0.2666666805744171,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#293044"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_status-muted-alt_inverted",
+          "tokenName": "info"
+        },
+        {
+          "id": "VariableID:942:3906",
+          "name": "static_accent/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "147a591866d6c962259dd579992206718e762ada",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9372549057006836,
+              "g": 0.1921568661928177,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#EF3124"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_accent",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:942:3907",
+          "name": "static_accent/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d5317ee30cdf40e8d5f8e3a8f7d05bb1834e95cd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#212124"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_accent",
+          "tokenName": "secondary"
+        },
+        {
+          "id": "VariableID:942:3908",
+          "name": "static_accent_inverted/primary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4d5e212daf62b010ecc6d098bd30aaa709f8b3c3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9725490212440491,
+              "g": 0.22745098173618317,
+              "b": 0.16470588743686676,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#F83A2A"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_accent_inverted",
+          "tokenName": "primary"
+        },
+        {
+          "id": "VariableID:942:3909",
+          "name": "static_accent_inverted/secondary",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "670794407ff9819e432cf06474f8498fe09cc8dd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:942:3863",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "942:1": {
+              "r": 0.9490196108818054,
+              "g": 0.9529411792755127,
+              "b": 0.9607843160629272,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "942:1": "#F2F3F5"
+          },
+          "collectionName": "Interface Static",
+          "groupName": "static_accent_inverted",
+          "tokenName": "secondary"
+        }
+      ]
+    }
+  ]
+}

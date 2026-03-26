@@ -1,0 +1,1535 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-23T18:40:12.463Z",
+    "fileName": "Web :: Corp Components",
+    "library": "Web :: Corp Components"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:42724:47369",
+      "name": "🔄  [Old] Grid Values",
+      "key": "320b256b19ec86f46b369baecd8c6e91036bd9a8",
+      "defaultModeId": "42724:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "42724:0",
+          "name": "Basic"
+        },
+        {
+          "modeId": "42724:1",
+          "name": "Wide"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:42724:47370",
+          "name": "Paddings/mobile",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "eec1aca27f9c898f06c6fd203e5a2a9ac661e70c",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 20,
+            "42724:1": 20
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "mobile"
+        },
+        {
+          "id": "VariableID:42724:47371",
+          "name": "Paddings/tablet",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9ad81927ea34b3919bf7b18e1bfbc2d07fd38649",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 32,
+            "42724:1": 32
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "tablet"
+        },
+        {
+          "id": "VariableID:42724:47372",
+          "name": "Paddings/desktop 1024",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7fb9553edfb528b1ea5cc0c34adcc8a84a6450e4",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 33,
+            "42724:1": 30
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "desktop 1024"
+        },
+        {
+          "id": "VariableID:42724:47373",
+          "name": "Paddings/desktop 1280",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6083a3e27ad4ca00e63ab89999370f3408ea8f66",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 49,
+            "42724:1": 30
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "desktop 1280"
+        },
+        {
+          "id": "VariableID:42724:47374",
+          "name": "Paddings/desktop 1440",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "baf89fcfd850e931a429499756faabc43d375401",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 50,
+            "42724:1": 50
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "desktop 1440"
+        },
+        {
+          "id": "VariableID:42724:47375",
+          "name": "Paddings/desktop 1600",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "90051d5e163174955c9a2f9e2d81893d912f97cf",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 130,
+            "42724:1": 52
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "desktop 1600"
+        },
+        {
+          "id": "VariableID:42724:47623",
+          "name": "Paddings/desktop 1920",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9ecb2831ce464eac31d2d678c01ebc44179c569",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 290,
+            "42724:1": 212
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "Paddings",
+          "tokenName": "desktop 1920"
+        },
+        {
+          "id": "VariableID:67558:8074",
+          "name": "1600+ Cols/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "810937562fea78c62939329c02d82470a8dafddf",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 255,
+            "42724:1": 294
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1600+ Cols",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:67558:8075",
+          "name": "1600+ Cols/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6cb4902d537310b24cf98f022539045265ae86d0",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "CORNER_RADIUS",
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 348,
+            "42724:1": 400
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1600+ Cols",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:67558:8076",
+          "name": "1600+ Cols/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0b2bfa0010da79cb3dacde4557bee67c3cbc03d1",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 534,
+            "42724:1": 612
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1600+ Cols",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:67558:8077",
+          "name": "1600+ Cols/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "304b097b71d56ca2ca179109d31381a77956ec78",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "CORNER_RADIUS",
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 720,
+            "42724:1": 824
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1600+ Cols",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:67558:8078",
+          "name": "1600+ Cols/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3fea2c23217a9834772033b44d1762049e82e674",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 1092,
+            "42724:1": 1248
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1600+ Cols",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:67522:58363",
+          "name": "1440 Cols/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "61a751560ea94d653fa4d33b5b49dc85fa57d8a2",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 255,
+            "42724:1": 255
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1440 Cols",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:67522:58364",
+          "name": "1440 Cols/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7bce8005ef605df2236a7ae85b4d8b178706dcb1",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 348,
+            "42724:1": 348
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1440 Cols",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:67522:58366",
+          "name": "1440 Cols/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dff488989444c0c10405bd16319f18f4d7fce726",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 534,
+            "42724:1": 534
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1440 Cols",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:67522:58365",
+          "name": "1440 Cols/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "612a8b056ffa8d9d4011b28514dadb508304ace0",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 720,
+            "42724:1": 720
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1440 Cols",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:67522:58368",
+          "name": "1440 Cols/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3a1acad8f26a980a04d297e8ada44c404cb5c44e",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 1092,
+            "42724:1": 1092
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1440 Cols",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:67522:59032",
+          "name": "1280 Cols/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "56b63b1f01bfaf5c0d858d47396cd7554d781f52",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 215.5,
+            "42724:1": 225
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1280 Cols",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:67522:59033",
+          "name": "1280 Cols/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1ecf474ba42d09ce5aeb428d8e34d51f5ef2a2d8",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 295.3299865722656,
+            "42724:1": 308
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1280 Cols",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:67522:59034",
+          "name": "1280 Cols/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2b86ebcf7c698a2c509fbc7ab0aeb101799ccf83",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 455,
+            "42724:1": 474
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1280 Cols",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:67522:59035",
+          "name": "1280 Cols/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9102968f07a219cea21ef5a8b2d5e4fa84e18fe6",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 614.6699829101562,
+            "42724:1": 640
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1280 Cols",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:67522:59036",
+          "name": "1280 Cols/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f0886aaf81d86675119aea40d4b63dc50c13db57",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 934,
+            "42724:1": 972
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1280 Cols",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:67522:59037",
+          "name": "1024 Cols/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e17c103f1d4621857bf591d640c80af3c3e1652a",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 165.5,
+            "42724:1": 167
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1024 Cols",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:67522:59038",
+          "name": "1024 Cols/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a506e03f7cedc379bfb61ecf362aac1c629b2167",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 226,
+            "42724:1": 228
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1024 Cols",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:67522:59039",
+          "name": "1024 Cols/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7b20049f0879e836a3b520b50e7748eb6b0c277b",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 347,
+            "42724:1": 350
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1024 Cols",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:67522:59040",
+          "name": "1024 Cols/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "11076e0067c45ef6bb470dadd646cfdf466fd955",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 468,
+            "42724:1": 472
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1024 Cols",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:67522:59041",
+          "name": "1024 Cols/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "75fb2f532875db13ce9c6577825627119e421c8a",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 710,
+            "42724:1": 716
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "1024 Cols",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:67558:8069",
+          "name": "768 Cols/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a75445d2f143d4403c8b669420fb97d9f4788fbf",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 164,
+            "42724:1": 164
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "768 Cols",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:67558:8070",
+          "name": "768 Cols/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9db2fa389c9af8f876a9019ee5ceff76f959b5da",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 224,
+            "42724:1": 224
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "768 Cols",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:67558:8071",
+          "name": "768 Cols/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "93770d21cc13418c938035f1c9f81914b95a4a4f",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 344,
+            "42724:1": 344
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "768 Cols",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:67558:8072",
+          "name": "768 Cols/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8a38c37e1ff6283c5b16ef450dc8215f618755b4",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 464,
+            "42724:1": 464
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "768 Cols",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:67558:8073",
+          "name": "768 Cols/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b5812d935f20605f1708cb6d1b7b87826b4bbdbf",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:42724:47369",
+          "scopes": [
+            "CORNER_RADIUS",
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "42724:0": 704,
+            "42724:1": 704
+          },
+          "hexByMode": {},
+          "collectionName": "🔄  [Old] Grid Values",
+          "groupName": "768 Cols",
+          "tokenName": "12"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:76532:102337",
+      "name": "[D] Grid & Cols",
+      "key": "5f96960a28ff79ed2672bea2cea5205b948d333f",
+      "defaultModeId": "76532:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "76532:0",
+          "name": "1600+"
+        },
+        {
+          "modeId": "76532:1",
+          "name": "1440"
+        },
+        {
+          "modeId": "76532:2",
+          "name": "1280"
+        },
+        {
+          "modeId": "76532:3",
+          "name": "1024"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:76532:102338",
+          "name": "Grid/Page W",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2c7ff5fa3f7e6bc4a173353f5c32a7bc4ef98909",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 1600,
+            "76532:1": 1440,
+            "76532:2": 1280,
+            "76532:3": 1024
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Page W"
+        },
+        {
+          "id": "VariableID:89622:29573",
+          "name": "Grid/Page H",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cb1cdd91a0d9d03c0f06f321137071db640ab7d3",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 900,
+            "76532:1": 860,
+            "76532:2": 720,
+            "76532:3": 768
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Page H"
+        },
+        {
+          "id": "VariableID:82268:155710",
+          "name": "Grid/TopMargin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4164cb88d5e217e5e7fb57d3406fe5f1b80513fc",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 40,
+            "76532:1": 40,
+            "76532:2": 40,
+            "76532:3": 40
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "TopMargin"
+        },
+        {
+          "id": "VariableID:82268:155711",
+          "name": "Grid/BottomMargin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "52fc62cb9c1fce007e8dcc60de8dbcbb02d6ff21",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 64,
+            "76532:1": 64,
+            "76532:2": 64,
+            "76532:3": 64
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "BottomMargin"
+        },
+        {
+          "id": "VariableID:76532:102339",
+          "name": "Grid/Content",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74acd2db7371b4cf1c17c2e1d816ddce55af70d3",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 1352,
+            "76532:1": 1192,
+            "76532:2": 1032,
+            "76532:3": 776
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Content"
+        },
+        {
+          "id": "VariableID:76532:102340",
+          "name": "Grid/Grid Margin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8639635851a9e73bce1c13be1883647bf83f13f2",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 52,
+            "76532:1": 50,
+            "76532:2": 30,
+            "76532:3": 30
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Grid Margin"
+        },
+        {
+          "id": "VariableID:76532:102341",
+          "name": "Grid/Gutter",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "67fc551318d78d7bc25640a965ed9356695a7f4e",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 24,
+            "76532:1": 24,
+            "76532:2": 24,
+            "76532:3": 16
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Gutter"
+        },
+        {
+          "id": "VariableID:76532:102342",
+          "name": "Cols/3 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "32648922235fd721db9c465d26db22a536c469a8",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 294,
+            "76532:1": 255,
+            "76532:2": 225,
+            "76532:3": 167
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "3 Col"
+        },
+        {
+          "id": "VariableID:76532:102343",
+          "name": "Cols/4 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fb64ee91a6d9eabbca54aaf4cf8a4c723f54f779",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 400,
+            "76532:1": 348,
+            "76532:2": 308,
+            "76532:3": 228
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "4 Col"
+        },
+        {
+          "id": "VariableID:76532:102344",
+          "name": "Cols/6 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e1a7e890ccc56b29b10ac41b5a58ab0330783b34",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 612,
+            "76532:1": 534,
+            "76532:2": 474,
+            "76532:3": 350
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "6 Col"
+        },
+        {
+          "id": "VariableID:76532:102345",
+          "name": "Cols/8 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5fe6c148cd3fc810088b7327f19fc768ad7d7e2f",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 824,
+            "76532:1": 720,
+            "76532:2": 640,
+            "76532:3": 472
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "8 Col"
+        },
+        {
+          "id": "VariableID:123714:48274",
+          "name": "Cols/9 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "46e2219050fa6e369c811fde1e468dad22e40d71",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 930,
+            "76532:1": 813,
+            "76532:2": 693,
+            "76532:3": 533
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "9 Col"
+        },
+        {
+          "id": "VariableID:76532:102346",
+          "name": "Cols/12 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d677954a4d564f85c88a4da62193ff974b972ba3",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP",
+            "FONT_VARIATIONS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 1248,
+            "76532:1": 1092,
+            "76532:2": 972,
+            "76532:3": 716
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "12 Col"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:89619:27005",
+      "name": "[T] Grid & Cols",
+      "key": "15f600f8a6ef999faa4a8dcddd9957cd69972c38",
+      "defaultModeId": "89619:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "89619:0",
+          "name": "768"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:89619:27006",
+          "name": "Grid/Page W",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "eee67f081a88ee8a633997b6d5e736bc003ffb6a",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 768
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Page W"
+        },
+        {
+          "id": "VariableID:89626:80017",
+          "name": "Grid/Page H",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74c282398e6e8350af04dbd30ca4bc4f75bcadfa",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 1024
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Page H"
+        },
+        {
+          "id": "VariableID:89619:27007",
+          "name": "Grid/TopMargin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6588de4ebca5a4606bb2033ff312a74f368091a8",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 40
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "TopMargin"
+        },
+        {
+          "id": "VariableID:89619:27008",
+          "name": "Grid/BottomMargin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1d76be806d20907dc0cea739fcdf386d37106060",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 64
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "BottomMargin"
+        },
+        {
+          "id": "VariableID:89619:27010",
+          "name": "Grid/Content",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3a2069be6330c4550faf097eeb676e5a4cc5d7a1",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 768
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Content"
+        },
+        {
+          "id": "VariableID:89619:27011",
+          "name": "Grid/Grid Margin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9ef925626b001e71b797af2ec5f9aefa10f5e7d7",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 32
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Grid Margin"
+        },
+        {
+          "id": "VariableID:89619:27012",
+          "name": "Grid/Gutter",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6bfc164230e0dc614d207c275e2f80ddf45fa6fc",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 16
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "Gutter"
+        },
+        {
+          "id": "VariableID:89626:80014",
+          "name": "Cols/3 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "26fbe0b0da68bc18c6b048fda2e1b6b6b26508ba",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 164
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "3 Col"
+        },
+        {
+          "id": "VariableID:89626:80015",
+          "name": "Cols/4 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f6d6602d7d6465d0c12714977b4740929a49b10d",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 224
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "4 Col"
+        },
+        {
+          "id": "VariableID:89626:80013",
+          "name": "Cols/6 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bc453a828fa9ae7c1f219ace9ee1135ffe71c9c6",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 344
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "6 Col"
+        },
+        {
+          "id": "VariableID:89626:80016",
+          "name": "Cols/8 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "de14835f89313eda89394df1145cc0bc79ebbdf2",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 464
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "8 Col"
+        },
+        {
+          "id": "VariableID:89619:27013",
+          "name": "Cols/12 Col",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "85ebac7c1959e2b0eb74e79cd418a5634be2ceaa",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89619:27005",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89619:0": 704
+          },
+          "hexByMode": {},
+          "collectionName": "[T] Grid & Cols",
+          "groupName": "Cols",
+          "tokenName": "12 Col"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:89622:31939",
+      "name": "[M] Grid & Cols",
+      "key": "eba2710685dfcb49ecd2d6eae0e4867e3a0f1c32",
+      "defaultModeId": "89622:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "89622:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:89622:31940",
+          "name": "Page W",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3e1b7896e7638014dd8fd67dacaee9d3e0070f67",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89622:31939",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89622:0": 375
+          },
+          "hexByMode": {},
+          "collectionName": "[M] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "Page W"
+        },
+        {
+          "id": "VariableID:89626:80018",
+          "name": "Page H",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2bcd3debb72f0558d4795a46ac962b437b20aed8",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89622:31939",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89622:0": 812
+          },
+          "hexByMode": {},
+          "collectionName": "[M] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "Page H"
+        },
+        {
+          "id": "VariableID:89626:79999",
+          "name": "Content",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "535f90df151b6f2bc6189d9a625d263f532b2bfb",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89622:31939",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89622:0": 335
+          },
+          "hexByMode": {},
+          "collectionName": "[M] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "Content"
+        },
+        {
+          "id": "VariableID:89626:80001",
+          "name": "Gutter",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9d3a3f3c6e01c34c277017cf296a10e1b0743ff2",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89622:31939",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89622:0": 16
+          },
+          "hexByMode": {},
+          "collectionName": "[M] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "Gutter"
+        },
+        {
+          "id": "VariableID:89626:80003",
+          "name": "Grid Margin",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c8c6690aa916b68a373748cc7f9e83d2f9d434e0",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:89622:31939",
+          "scopes": [
+            "WIDTH_HEIGHT",
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "89622:0": 20
+          },
+          "hexByMode": {},
+          "collectionName": "[M] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "Grid Margin"
+        }
+      ]
+    }
+  ]
+}

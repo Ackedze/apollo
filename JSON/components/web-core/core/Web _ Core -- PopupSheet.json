@@ -1,0 +1,664 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:51:35.543Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "PopupSheet"
+    ],
+    "componentCount": 3,
+    "elementCount": 27
+  },
+  "components": [
+    {
+      "key": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+      "name": "🔩 SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+      "variantStructures": {
+        "63e9c30b2899ee9109ed279c9604d53b3b31fbba": []
+      },
+      "variants": [
+        {
+          "id": "373:16742",
+          "key": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+          "name": "🔩 SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "name": "[AO] PopupSheet",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "AO Theme",
+      "category": "AO] PopupSheet",
+      "defaultVariant": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "variantStructures": {
+        "865013cfcc37d92d47103e5f9805332bead6f000": []
+      },
+      "variants": [
+        {
+          "id": "5546:21004",
+          "key": "865013cfcc37d92d47103e5f9805332bead6f000",
+          "name": "[AO] PopupSheet"
+        }
+      ]
+    },
+    {
+      "key": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "name": "PopupSheet",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "PopupSheet",
+      "defaultVariant": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "variantStructures": {
+        "feb5891ea1273da6aeeceb0982561e63adf0bc32": []
+      },
+      "variants": [
+        {
+          "id": "373:16737",
+          "key": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+          "name": "PopupSheet"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+      "visible": true,
+      "layout": {
+        "padding": [
+          32,
+          32,
+          32,
+          32
+        ],
+        "gap": 0,
+        "radius": 36
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 SwapMe / Placeholder",
+      "type": "FRAME",
+      "componentKey": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+      "visible": true,
+      "layout": {
+        "padding": [
+          80,
+          80,
+          80,
+          80
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 SwapMe / Placeholder / Placeholder",
+      "type": "TEXT",
+      "componentKey": "63e9c30b2899ee9109ed279c9604d53b3b31fbba",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": {
+        "value": "Custom"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:ad18a9a57c5f4e305430df89e88d879cf06eb4c5,2771:9"
+      }
+    },
+    {
+      "id": 1,
+      "path": "[AO] PopupSheet",
+      "type": "COMPONENT",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:3db12f0354650cc686276f12b894d6f9deb46f78/3541:120",
+        "color": "rgba(0,0,0,0.6)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[AO] PopupSheet / Content",
+      "type": "FRAME",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 36
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "[AO] PopupSheet / Content / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "padding": [
+          32,
+          32,
+          32,
+          32
+        ],
+        "gap": 0,
+        "radius": 36
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "[AO] PopupSheet / Content / SwapMe / Placeholder",
+      "type": "FRAME",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "padding": [
+          80,
+          80,
+          80,
+          80
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "[AO] PopupSheet / Content / SwapMe / Placeholder / Placeholder",
+      "type": "TEXT",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": {
+        "value": "Custom"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:ad18a9a57c5f4e305430df89e88d879cf06eb4c5,2771:9"
+      }
+    },
+    {
+      "id": 6,
+      "path": "[AO] PopupSheet / Content / Cross",
+      "type": "FRAME",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "[AO] PopupSheet / Content / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "[AO] PopupSheet / Content / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "[AO] PopupSheet / Content / Cross / Cross / Fixer",
+      "type": "FRAME",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "[AO] PopupSheet / Content / Cross / Cross / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "[AO] PopupSheet / Content / Cross / Cross / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "[AO] PopupSheet / Content / Cross / Cross / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "865013cfcc37d92d47103e5f9805332bead6f000",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "PopupSheet",
+      "type": "COMPONENT",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:3db12f0354650cc686276f12b894d6f9deb46f78/3541:120",
+        "color": "rgba(0,0,0,0.6)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "PopupSheet / Content",
+      "type": "FRAME",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 36
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "PopupSheet / Content / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "padding": [
+          32,
+          32,
+          32,
+          32
+        ],
+        "gap": 0,
+        "radius": 36
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "PopupSheet / Content / SwapMe / Placeholder",
+      "type": "FRAME",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "padding": [
+          80,
+          80,
+          80,
+          80
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "PopupSheet / Content / SwapMe / Placeholder / Placeholder",
+      "type": "TEXT",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": {
+        "value": "Custom"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:ad18a9a57c5f4e305430df89e88d879cf06eb4c5,2771:9"
+      }
+    },
+    {
+      "id": 6,
+      "path": "PopupSheet / Content / Cross",
+      "type": "FRAME",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "PopupSheet / Content / Cross / Cross",
+      "type": "FRAME",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "PopupSheet / Content / Cross / Cross / BG",
+      "type": "RECTANGLE",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "PopupSheet / Content / Cross / Cross / Fixer",
+      "type": "FRAME",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "PopupSheet / Content / Cross / Cross / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "PopupSheet / Content / Cross / Cross / Fixer / PaintMe / cross",
+      "type": "INSTANCE",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "PopupSheet / Content / Cross / Cross / Fixer / PaintMe / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "feb5891ea1273da6aeeceb0982561e63adf0bc32",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

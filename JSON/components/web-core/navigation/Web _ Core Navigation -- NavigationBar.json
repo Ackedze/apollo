@@ -1,0 +1,2761 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core Navigation",
+    "file": "Web :: Core Navigation",
+    "generatedAt": "2025-12-30T09:21:26.796Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "NavigationBar"
+    ],
+    "componentCount": 6,
+    "elementCount": 26
+  },
+  "components": [
+    {
+      "key": "25da268ba91dd834d2ef96cebc96f929fb1a366d",
+      "name": "🔩 BottomAddon",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "BottomAddon",
+      "defaultVariant": "25da268ba91dd834d2ef96cebc96f929fb1a366d",
+      "variantStructures": {
+        "25da268ba91dd834d2ef96cebc96f929fb1a366d": []
+      },
+      "variants": [
+        {
+          "id": "2809:23194",
+          "key": "25da268ba91dd834d2ef96cebc96f929fb1a366d",
+          "name": "🔩 BottomAddon"
+        }
+      ]
+    },
+    {
+      "key": "686478fa305dc632741d2c3e9c162afe80fa59d3",
+      "name": "🔩 RightAddon",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "RightAddon",
+      "defaultVariant": "babf44c32e3f7c9b0022de0fb63ce20eb11b68e1",
+      "variantStructures": {
+        "babf44c32e3f7c9b0022de0fb63ce20eb11b68e1": [],
+        "232aba9522df92844dff4825f3aff4a95bd908d2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Blank",
+              "radius": 0
+            }
+          }
+        ],
+        "a4bf93eaf89f92bf55a9102511c889531eca4fb0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=ActionPrimary",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=ActionPrimary / Label",
+              "type": "TEXT",
+              "name": "Label",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:aae5de06136376c7653394d3648478f48372d63f,2771:7"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "7a46f77a27843126de214a6e10adb248309a73e5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=ActionSecondary",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=ActionSecondary / Label",
+              "type": "TEXT",
+              "name": "Label",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "6eb82686ef72076ae780d59b1a1d747e48bd6e21": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=FloatedCross",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 12,
+                  "bottom": 8,
+                  "left": 12
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=FloatedCross / Cross",
+              "type": "FRAME",
+              "name": "Cross",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Content=FloatedCross / Cross / BG",
+              "type": "RECTANGLE",
+              "name": "BG",
+              "visible": true,
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "opacity": 1,
+              "radius": 50,
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Content=FloatedCross / Cross / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Content=FloatedCross / Cross / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Content=FloatedCross / Cross / Fixer / PaintMe / cross",
+              "type": "INSTANCE",
+              "name": "cross",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "1be795657b3ef5f5a00977a02210ae73bf0ae3b7",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Content=FloatedCross / Cross / Fixer / PaintMe / cross / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "8f6fea57168c3b92f6fbcd10f321f4b9e70b92a2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Icons",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 4
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=Icons / [D] IconButton",
+              "type": "INSTANCE",
+              "name": "[D] IconButton",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 10,
+              "componentInstance": {
+                "componentKey": "9d720ce992448fb61a1bda7d3e04643a68583a4a",
+                "variantProperties": {
+                  "Size": "40",
+                  "View": "Primary",
+                  "TransparentBg": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Content=Icons / [D] IconButton / Icon",
+              "type": "INSTANCE",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "0acc12c55f8d55764ac0f21cd19061555a0ff057",
+                "variantProperties": {
+                  "Type": "Icon 24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "Content=Icons / [D] IconButton",
+              "type": "INSTANCE",
+              "name": "[D] IconButton",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 10,
+              "componentInstance": {
+                "componentKey": "9d720ce992448fb61a1bda7d3e04643a68583a4a",
+                "variantProperties": {
+                  "Size": "40",
+                  "View": "Primary",
+                  "TransparentBg": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "Content=Icons / [D] IconButton / Icon",
+              "type": "INSTANCE",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "0acc12c55f8d55764ac0f21cd19061555a0ff057",
+                "variantProperties": {
+                  "Type": "Icon 24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 11,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 1,
+              "path": "Content=Icons / [D] IconButton",
+              "type": "INSTANCE",
+              "name": "[D] IconButton",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 10,
+              "componentInstance": {
+                "componentKey": "9d720ce992448fb61a1bda7d3e04643a68583a4a",
+                "variantProperties": {
+                  "Size": "40",
+                  "View": "Primary",
+                  "TransparentBg": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Content=Icons / [D] IconButton / Icon",
+              "type": "INSTANCE",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "0acc12c55f8d55764ac0f21cd19061555a0ff057",
+                "variantProperties": {
+                  "Type": "Icon 24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 18,
+              "path": "Content=Icons / [D] IconButton / Icon / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2809:23182",
+          "key": "babf44c32e3f7c9b0022de0fb63ce20eb11b68e1",
+          "name": "Content=SwapMe"
+        },
+        {
+          "id": "2809:23184",
+          "key": "232aba9522df92844dff4825f3aff4a95bd908d2",
+          "name": "Content=Blank"
+        },
+        {
+          "id": "2837:4498",
+          "key": "a4bf93eaf89f92bf55a9102511c889531eca4fb0",
+          "name": "Content=ActionPrimary"
+        },
+        {
+          "id": "2837:4503",
+          "key": "7a46f77a27843126de214a6e10adb248309a73e5",
+          "name": "Content=ActionSecondary"
+        },
+        {
+          "id": "2809:23186",
+          "key": "6eb82686ef72076ae780d59b1a1d747e48bd6e21",
+          "name": "Content=FloatedCross"
+        },
+        {
+          "id": "2837:4593",
+          "key": "8f6fea57168c3b92f6fbcd10f321f4b9e70b92a2",
+          "name": "Content=Icons"
+        }
+      ]
+    },
+    {
+      "key": "5ee6557e0c7e5df050470aec83d941fda3384011",
+      "name": "🔩 LeftAddon",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "LeftAddon",
+      "defaultVariant": "6d3511623adca66cf74f7b971fa7bb0c7b024aff",
+      "variantStructures": {
+        "6d3511623adca66cf74f7b971fa7bb0c7b024aff": [],
+        "bd114dc83f0fc8481c750a533b2839d5ba6deea2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Blank",
+              "radius": 0
+            }
+          }
+        ],
+        "a29dd97f426700a2d228e4054cdaf26450dd53c3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=ActionPrimary",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=ActionPrimary / Label",
+              "type": "TEXT",
+              "name": "Label",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:aae5de06136376c7653394d3648478f48372d63f,2771:7"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "76e7a64f57208a5ffba590fe301936ec0be63924": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=ActionSecondary",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=ActionSecondary / Label",
+              "type": "TEXT",
+              "name": "Label",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "891fb1b0a7b5c70c7e56394db7058309dc81217f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Back",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 12,
+                  "bottom": 8,
+                  "left": 12
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Content=Back / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Content=Back / Fixer / PaintMe / chevron-left-shift-left",
+              "type": "INSTANCE",
+              "name": "chevron-left-shift-left",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "b0f688aa3c3d2c9ac252818fd1e97e01ef9f3130"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Content=Back / Fixer / PaintMe / chevron-left-shift-left / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "cd9990c9137068fb97e73a1b0a2ddfdf01e5fbcb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=FloatedBack",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 12,
+                  "bottom": 8,
+                  "left": 12
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=FloatedBack / Cross",
+              "type": "FRAME",
+              "name": "Cross",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Content=FloatedBack / Cross / BG",
+              "type": "RECTANGLE",
+              "name": "BG",
+              "visible": true,
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "opacity": 1,
+              "radius": 50,
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Content=FloatedBack / Cross / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Content=FloatedBack / Cross / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Content=FloatedBack / Cross / Fixer / PaintMe / chevron-left",
+              "type": "INSTANCE",
+              "name": "chevron-left",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "57577d09c370a86a90f409dc3b170cde74054e22",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Content=FloatedBack / Cross / Fixer / PaintMe / chevron-left / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2809:23151",
+          "key": "6d3511623adca66cf74f7b971fa7bb0c7b024aff",
+          "name": "Content=SwapMe"
+        },
+        {
+          "id": "2809:23153",
+          "key": "bd114dc83f0fc8481c750a533b2839d5ba6deea2",
+          "name": "Content=Blank"
+        },
+        {
+          "id": "2837:4513",
+          "key": "a29dd97f426700a2d228e4054cdaf26450dd53c3",
+          "name": "Content=ActionPrimary"
+        },
+        {
+          "id": "2837:4512",
+          "key": "76e7a64f57208a5ffba590fe301936ec0be63924",
+          "name": "Content=ActionSecondary"
+        },
+        {
+          "id": "2809:23155",
+          "key": "891fb1b0a7b5c70c7e56394db7058309dc81217f",
+          "name": "Content=Back"
+        },
+        {
+          "id": "2862:15268",
+          "key": "cd9990c9137068fb97e73a1b0a2ddfdf01e5fbcb",
+          "name": "Content=FloatedBack"
+        }
+      ]
+    },
+    {
+      "key": "074959ce95ccdb5a49f8076ccbf7bd5b6c3f0192",
+      "name": "🔩 LeftMainSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "LeftMainSlot",
+      "defaultVariant": "d98496e9c46c0b54524a16152780fd81a3b352ab",
+      "variantStructures": {
+        "d98496e9c46c0b54524a16152780fd81a3b352ab": [],
+        "6b75919b86317127186820ecc3567ca67bc04211": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Blank",
+              "radius": 0
+            }
+          }
+        ],
+        "1596408231e6129c37c8093d9044231b4ba702bc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Title",
+              "layout": {
+                "padding": {
+                  "top": 6,
+                  "right": 16,
+                  "bottom": 6,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=Title / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:72fd753f9ec2cdf891db05a9abe2a17e033ed0fc,3387:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Title",
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": 0.3799999952316284,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "255f7b2891df2a35d7db460db1a80a6db1f489f7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Title+subtitle",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=Title+subtitle / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:0fd87667e8841a94094062af08ade71d47456827,5535:0"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Title",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 1,
+              "path": "Content=Title+subtitle / Subtitle",
+              "type": "TEXT",
+              "name": "Subtitle",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Subtitle",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2832:8228",
+          "key": "d98496e9c46c0b54524a16152780fd81a3b352ab",
+          "name": "Content=SwapMe"
+        },
+        {
+          "id": "2832:8230",
+          "key": "6b75919b86317127186820ecc3567ca67bc04211",
+          "name": "Content=Blank"
+        },
+        {
+          "id": "2832:8232",
+          "key": "1596408231e6129c37c8093d9044231b4ba702bc",
+          "name": "Content=Title"
+        },
+        {
+          "id": "2832:8234",
+          "key": "255f7b2891df2a35d7db460db1a80a6db1f489f7",
+          "name": "Content=Title+subtitle"
+        }
+      ]
+    },
+    {
+      "key": "1b223000a5e3590fb9ccf176f4418638dfc66932",
+      "name": "🔩 CentredMainSlot",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "CentredMainSlot",
+      "defaultVariant": "bd18a69c435b0dac4e8e9da9399fb98dca6976b5",
+      "variantStructures": {
+        "bd18a69c435b0dac4e8e9da9399fb98dca6976b5": [],
+        "6689f51bad24bc361838bc2dbb9ddc51b1fd9522": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Blank",
+              "radius": 0
+            }
+          }
+        ],
+        "aa19bce6a318245b2332179cf147a704f2b0cd4d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Title",
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 0,
+                  "bottom": 10,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=Title / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:0fd87667e8841a94094062af08ade71d47456827,5535:0"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Title",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "9422c4767aa2347de2a12c41abda704207870a63": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=Title+subtitle",
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Content=Title+subtitle / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:0fd87667e8841a94094062af08ade71d47456827,5535:0"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Title",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 1,
+              "path": "Content=Title+subtitle / Subtitle",
+              "type": "TEXT",
+              "name": "Subtitle",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Subtitle",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2809:23165",
+          "key": "bd18a69c435b0dac4e8e9da9399fb98dca6976b5",
+          "name": "Content=SwapMe"
+        },
+        {
+          "id": "2809:23167",
+          "key": "6689f51bad24bc361838bc2dbb9ddc51b1fd9522",
+          "name": "Content=Blank"
+        },
+        {
+          "id": "2809:23173",
+          "key": "aa19bce6a318245b2332179cf147a704f2b0cd4d",
+          "name": "Content=Title"
+        },
+        {
+          "id": "2809:23178",
+          "key": "9422c4767aa2347de2a12c41abda704207870a63",
+          "name": "Content=Title+subtitle"
+        }
+      ]
+    },
+    {
+      "key": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "name": "NavigationBar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "NavigationBar",
+      "defaultVariant": "9d5bb561c0a00aa4d428b64c8f59bc45de576083",
+      "variantStructures": {
+        "9d5bb561c0a00aa4d428b64c8f59bc45de576083": [],
+        "e43555a4ca24636f8885631f7c6cc2b7632320cb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Align=Center, BottomAddon=False"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          }
+        ],
+        "d8b92d772d024e751a421afe1e8c737f8360aac3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Align=Left, BottomAddon=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Align=Left, BottomAddon=True / Top / Main / LeftMainSlot",
+              "type": "INSTANCE",
+              "name": "LeftMainSlot",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 223,
+                    "b": 223,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:56ba2e47eeb703c7881f1b874e43b140635b2175/3541:180",
+                  "colorHex": "#FFDFDF"
+                }
+              ],
+              "fillToken": "VariableID:56ba2e47eeb703c7881f1b874e43b140635b2175/3541:180",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "strokeToken": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "d98496e9c46c0b54524a16152780fd81a3b352ab",
+                "variantProperties": {
+                  "Content": "SwapMe"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Align=Left, BottomAddon=True / Top / Main / LeftMainSlot / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          }
+        ],
+        "d1f898c0de5b6da7efdd8672ca73227906701abd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Align=Left, BottomAddon=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Align=Left, BottomAddon=False / Top / Main / LeftMainSlot",
+              "type": "INSTANCE",
+              "name": "LeftMainSlot",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 223,
+                    "b": 223,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:56ba2e47eeb703c7881f1b874e43b140635b2175/3541:180",
+                  "colorHex": "#FFDFDF"
+                }
+              ],
+              "fillToken": "VariableID:56ba2e47eeb703c7881f1b874e43b140635b2175/3541:180",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "strokeToken": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "d98496e9c46c0b54524a16152780fd81a3b352ab",
+                "variantProperties": {
+                  "Content": "SwapMe"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Align=Left, BottomAddon=False / Top / Main / LeftMainSlot / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2832:7207",
+          "key": "9d5bb561c0a00aa4d428b64c8f59bc45de576083",
+          "name": "Align=Center, BottomAddon=True"
+        },
+        {
+          "id": "2832:8161",
+          "key": "e43555a4ca24636f8885631f7c6cc2b7632320cb",
+          "name": "Align=Center, BottomAddon=False"
+        },
+        {
+          "id": "2832:8183",
+          "key": "d8b92d772d024e751a421afe1e8c737f8360aac3",
+          "name": "Align=Left, BottomAddon=True"
+        },
+        {
+          "id": "2832:8297",
+          "key": "d1f898c0de5b6da7efdd8672ca73227906701abd",
+          "name": "Align=Left, BottomAddon=False"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 BottomAddon",
+      "type": "COMPONENT",
+      "componentKey": "25da268ba91dd834d2ef96cebc96f929fb1a366d",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 BottomAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "25da268ba91dd834d2ef96cebc96f929fb1a366d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 RightAddon / Content=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "686478fa305dc632741d2c3e9c162afe80fa59d3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+        "color": "rgba(12,196,77,1)"
+      },
+      "fill": {
+        "token": "VariableID:ebf498adcb141e14947473aa41f3037ffa83180a/3541:202",
+        "color": "rgba(209,241,215,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 RightAddon / Content=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "686478fa305dc632741d2c3e9c162afe80fa59d3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 LeftAddon / Content=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "5ee6557e0c7e5df050470aec83d941fda3384011",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+        "color": "rgba(12,196,77,1)"
+      },
+      "fill": {
+        "token": "VariableID:ebf498adcb141e14947473aa41f3037ffa83180a/3541:202",
+        "color": "rgba(209,241,215,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 LeftAddon / Content=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "5ee6557e0c7e5df050470aec83d941fda3384011",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 LeftMainSlot / Content=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "074959ce95ccdb5a49f8076ccbf7bd5b6c3f0192",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+        "color": "rgba(255,72,55,1)"
+      },
+      "fill": {
+        "token": "VariableID:56ba2e47eeb703c7881f1b874e43b140635b2175/3541:180",
+        "color": "rgba(255,223,223,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 LeftMainSlot / Content=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "074959ce95ccdb5a49f8076ccbf7bd5b6c3f0192",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 CentredMainSlot / Content=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "1b223000a5e3590fb9ccf176f4418638dfc66932",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:03f90eea26476f4f3b2c34c6602aa2dfd13452fa/3541:200",
+        "color": "rgba(250,147,19,1)"
+      },
+      "fill": {
+        "token": "VariableID:92e038c65f63ab733ab5c1137c8870d3382408f6/3541:137",
+        "color": "rgba(253,230,200,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 CentredMainSlot / Content=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "1b223000a5e3590fb9ccf176f4418638dfc66932",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "NavigationBar / Align=Center, BottomAddon=True",
+      "type": "COMPONENT",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/3541:149",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+        "color": "rgba(12,196,77,1)"
+      },
+      "fill": {
+        "token": "VariableID:ebf498adcb141e14947473aa41f3037ffa83180a/3541:202",
+        "color": "rgba(209,241,215,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / RightAddon",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+        "color": "rgba(12,196,77,1)"
+      },
+      "fill": {
+        "token": "VariableID:ebf498adcb141e14947473aa41f3037ffa83180a/3541:202",
+        "color": "rgba(209,241,215,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / Main",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          48,
+          0,
+          48
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / Main / CentredMainSlot",
+      "type": "INSTANCE",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:03f90eea26476f4f3b2c34c6602aa2dfd13452fa/3541:200",
+        "color": "rgba(250,147,19,1)"
+      },
+      "fill": {
+        "token": "VariableID:92e038c65f63ab733ab5c1137c8870d3382408f6/3541:137",
+        "color": "rgba(253,230,200,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Top / Main / CentredMainSlot / Fixer",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Bottom",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Bottom / BottomAddon",
+      "type": "INSTANCE",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Bottom / BottomAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Border",
+      "type": "FRAME",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "NavigationBar / Align=Center, BottomAddon=True / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "4c0ba07caf5bbbe074ebe7028149f922abc73aae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

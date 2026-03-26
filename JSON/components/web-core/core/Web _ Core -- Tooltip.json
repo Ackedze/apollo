@@ -1,0 +1,3731 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:51:41.679Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Tooltip"
+    ],
+    "componentCount": 22,
+    "elementCount": 48
+  },
+  "components": [
+    {
+      "key": "1fc300f8f62f4136106067e52b9ca2941a133007",
+      "name": "🔩 Content",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "description": "TooltipMobileContent",
+      "category": "Content",
+      "defaultVariant": "1fc300f8f62f4136106067e52b9ca2941a133007",
+      "variantStructures": {
+        "1fc300f8f62f4136106067e52b9ca2941a133007": []
+      },
+      "variants": [
+        {
+          "id": "377:4930",
+          "key": "1fc300f8f62f4136106067e52b9ca2941a133007",
+          "name": "🔩 Content"
+        }
+      ]
+    },
+    {
+      "key": "81a8ced554474ef597b4dd779652b04236228bf8",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Down, Inverted",
+      "category": "Tail",
+      "defaultVariant": "61ce30525aa7739f60a74dae069e8ba3271ed00c",
+      "variantStructures": {
+        "61ce30525aa7739f60a74dae069e8ba3271ed00c": [],
+        "2c6ca58d126f46ad10f142f5987c40ef64a5b2f2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "b6b668c58666a4331216f5514e6c18c7231a6d3d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1426",
+          "key": "61ce30525aa7739f60a74dae069e8ba3271ed00c",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1428",
+          "key": "2c6ca58d126f46ad10f142f5987c40ef64a5b2f2",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1430",
+          "key": "b6b668c58666a4331216f5514e6c18c7231a6d3d",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "1b204604f2e4c7dcf25ca4248680253c4ac00c97",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Down, Inverted",
+      "category": "Tail",
+      "defaultVariant": "c50bbbd8666c86ac8d2040309944a37b4a2648f7",
+      "variantStructures": {
+        "c50bbbd8666c86ac8d2040309944a37b4a2648f7": [],
+        "48b09610def0760a7672cd19de362b90bd1139b4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "51f97c4e2d125472cf9ef61bfd3c11b3ca1aa09b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "730:2756",
+          "key": "c50bbbd8666c86ac8d2040309944a37b4a2648f7",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "730:2758",
+          "key": "48b09610def0760a7672cd19de362b90bd1139b4",
+          "name": "Position=Start"
+        },
+        {
+          "id": "730:2760",
+          "key": "51f97c4e2d125472cf9ef61bfd3c11b3ca1aa09b",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "fd0a29f3045215175fd607278eb8909e87a68aad",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "b8ecc70398a772c40287adec92d35fdb632c428d",
+      "variantStructures": {
+        "b8ecc70398a772c40287adec92d35fdb632c428d": [],
+        "8722f15557ecee00cd8ec7030c06e9249da73830": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "c92d5b91edeee3f1ba9c4daad1bb2887fafc1aaf": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1419",
+          "key": "b8ecc70398a772c40287adec92d35fdb632c428d",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1421",
+          "key": "8722f15557ecee00cd8ec7030c06e9249da73830",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1423",
+          "key": "c92d5b91edeee3f1ba9c4daad1bb2887fafc1aaf",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "379605128e3b1e8ce5e1db1c2183565dec0657b6",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "b8177332de508a4298fad03d50dfc9b3b8338d67",
+      "variantStructures": {
+        "b8177332de508a4298fad03d50dfc9b3b8338d67": [],
+        "a63a6ce716a03b0b21623d0369f1c07cbf018d07": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "ab7228aa0505bf0c1378abedd1dfb3d9c78ccd71": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12491",
+          "key": "b8177332de508a4298fad03d50dfc9b3b8338d67",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "376:12493",
+          "key": "a63a6ce716a03b0b21623d0369f1c07cbf018d07",
+          "name": "Position=Start"
+        },
+        {
+          "id": "376:12495",
+          "key": "ab7228aa0505bf0c1378abedd1dfb3d9c78ccd71",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "295887716222af60838cea5d5f940ee8175aa21a",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Top, Inverted",
+      "category": "Tail",
+      "defaultVariant": "28de3178c00ffdba589c1846089c617ddc2e220e",
+      "variantStructures": {
+        "28de3178c00ffdba589c1846089c617ddc2e220e": [],
+        "6ce05a5b3de93b236dbe98d5a1259c47aa65ed03": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "261a0fc9ea85caa039db392ed3ac7c3e98635394": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1412",
+          "key": "28de3178c00ffdba589c1846089c617ddc2e220e",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1414",
+          "key": "6ce05a5b3de93b236dbe98d5a1259c47aa65ed03",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1416",
+          "key": "261a0fc9ea85caa039db392ed3ac7c3e98635394",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "f955c123c469235c012e2fd66f2ea068539a4333",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Top, Inverted",
+      "category": "Tail",
+      "defaultVariant": "9dda74375de07e68d0d171e36d055fc9ea943814",
+      "variantStructures": {
+        "9dda74375de07e68d0d171e36d055fc9ea943814": [],
+        "f8a0afc4fdacd4939c7e9b75d8b6d31a1b23ea63": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "42dbecf95d42db91dad3f73508d2f3facefe725e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "730:2749",
+          "key": "9dda74375de07e68d0d171e36d055fc9ea943814",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "730:2751",
+          "key": "f8a0afc4fdacd4939c7e9b75d8b6d31a1b23ea63",
+          "name": "Position=Start"
+        },
+        {
+          "id": "730:2753",
+          "key": "42dbecf95d42db91dad3f73508d2f3facefe725e",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "580614859ea8cd8ba4b9f59317d4fff2788200b8",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "71b601f921b278e96894ac82419ccd2668d5ec56",
+      "variantStructures": {
+        "71b601f921b278e96894ac82419ccd2668d5ec56": [],
+        "8ff0ce6a6f1d35a3b186b93554d0353781b03615": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "f958ac426d7c7c9049db204a386ce73fd9365b9e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1405",
+          "key": "71b601f921b278e96894ac82419ccd2668d5ec56",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1407",
+          "key": "8ff0ce6a6f1d35a3b186b93554d0353781b03615",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1409",
+          "key": "f958ac426d7c7c9049db204a386ce73fd9365b9e",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "7b8e8dbd469a4023e69b2666a5c132387132dc17",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "d9912337c53c8e905980e8f259dcba0d1e6d1be4",
+      "variantStructures": {
+        "d9912337c53c8e905980e8f259dcba0d1e6d1be4": [],
+        "8bb9359f9245fcae599251c363de032190c734db": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "aa13f57e75628172eace0d3677624c41ed3f02c4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12482",
+          "key": "d9912337c53c8e905980e8f259dcba0d1e6d1be4",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "376:12484",
+          "key": "8bb9359f9245fcae599251c363de032190c734db",
+          "name": "Position=Start"
+        },
+        {
+          "id": "376:12487",
+          "key": "aa13f57e75628172eace0d3677624c41ed3f02c4",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "0a85704e5a492b925b06536a041f50f127655a46",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Right, Inverted",
+      "category": "Tail",
+      "defaultVariant": "f2fb732c6c5c2faaa782d1e7cb7c7c651618bd6d",
+      "variantStructures": {
+        "f2fb732c6c5c2faaa782d1e7cb7c7c651618bd6d": [],
+        "16feb3ab82f1d60f937f15a4199a61d8a26d2e30": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "40ae30c398ea32a5cd20fe498b9caa569c971aa6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1398",
+          "key": "f2fb732c6c5c2faaa782d1e7cb7c7c651618bd6d",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1400",
+          "key": "16feb3ab82f1d60f937f15a4199a61d8a26d2e30",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1402",
+          "key": "40ae30c398ea32a5cd20fe498b9caa569c971aa6",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "6782652c1fbec76c6a8ac3805b869985c1dce221",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Right, Inverted",
+      "category": "Tail",
+      "defaultVariant": "649464f5a927e1bdebd21f2266aa57c8314d6ed5",
+      "variantStructures": {
+        "649464f5a927e1bdebd21f2266aa57c8314d6ed5": [],
+        "7eb7d0e7b4c7d49947aa9f5fc959d825d4b55e18": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "144c6f40d2ff0c2f91d7b280d744e7d073410e84": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "730:2742",
+          "key": "649464f5a927e1bdebd21f2266aa57c8314d6ed5",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "730:2744",
+          "key": "7eb7d0e7b4c7d49947aa9f5fc959d825d4b55e18",
+          "name": "Position=Start"
+        },
+        {
+          "id": "730:2746",
+          "key": "144c6f40d2ff0c2f91d7b280d744e7d073410e84",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "824067ce828dfbb8966c68f45a6ee4da15444e87",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "9fe51ee46f98be03869c99bc80aeb47920f2830d",
+      "variantStructures": {
+        "9fe51ee46f98be03869c99bc80aeb47920f2830d": [],
+        "b8fbba410036d704cddb9f03e457bdbfbbb9afed": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "d2b3289725b9815e0e7563576b561e6f86ae1197": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1391",
+          "key": "9fe51ee46f98be03869c99bc80aeb47920f2830d",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1393",
+          "key": "b8fbba410036d704cddb9f03e457bdbfbbb9afed",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1395",
+          "key": "d2b3289725b9815e0e7563576b561e6f86ae1197",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "b06d457380bdc82f8972b5b467372516071e8367",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "37b65c0868273d1c84c46c35aac053e02134880c",
+      "variantStructures": {
+        "37b65c0868273d1c84c46c35aac053e02134880c": [],
+        "41461e5ce53c1cd0e8d06654306a40cf5b08dc15": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "0545b2e2a98094da16135971d5f6eafe2db0a964": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12437",
+          "key": "37b65c0868273d1c84c46c35aac053e02134880c",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "376:12435",
+          "key": "41461e5ce53c1cd0e8d06654306a40cf5b08dc15",
+          "name": "Position=Start"
+        },
+        {
+          "id": "376:12439",
+          "key": "0545b2e2a98094da16135971d5f6eafe2db0a964",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "d6ebdc8b0a9e005558ffec83841a31b38ddccf37",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Left, Inverted",
+      "category": "Tail",
+      "defaultVariant": "2e7baff31ee15d91feb2636512f4e969b42210a9",
+      "variantStructures": {
+        "2e7baff31ee15d91feb2636512f4e969b42210a9": [],
+        "4d4f4138beb25f56a62f4fb21d7fdadf22ac0fc1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "a90426a57d4a51bcdfc3158fa238899e5794bea0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1384",
+          "key": "2e7baff31ee15d91feb2636512f4e969b42210a9",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1386",
+          "key": "4d4f4138beb25f56a62f4fb21d7fdadf22ac0fc1",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1388",
+          "key": "a90426a57d4a51bcdfc3158fa238899e5794bea0",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "db67b5053e3db8bafd360247225785a1ab4cdfe9",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Left, Inverted",
+      "category": "Tail",
+      "defaultVariant": "17af90b083a73febcae65b0f5c3d52f4334acfe8",
+      "variantStructures": {
+        "17af90b083a73febcae65b0f5c3d52f4334acfe8": [],
+        "1cfe5dee3d3c06891af07edfc2be56aedc3a1c6d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "3b3e18e8ef1b0180986c01d0faba1a45e5573c0d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "730:2735",
+          "key": "17af90b083a73febcae65b0f5c3d52f4334acfe8",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "730:2737",
+          "key": "1cfe5dee3d3c06891af07edfc2be56aedc3a1c6d",
+          "name": "Position=Start"
+        },
+        {
+          "id": "730:2739",
+          "key": "3b3e18e8ef1b0180986c01d0faba1a45e5573c0d",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "36b939c296c9ebe500140f6ca337689f034f203b",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "6ad0554a494db67ea49a24275a1a8d48f549e452",
+      "variantStructures": {
+        "6ad0554a494db67ea49a24275a1a8d48f549e452": [],
+        "674c0364bc092379ac4494f4d673efb8a3039bca": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "cca1df0583a7aec0f460c8e7b8c81748fc8ce4b8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56444:1377",
+          "key": "6ad0554a494db67ea49a24275a1a8d48f549e452",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "56444:1379",
+          "key": "674c0364bc092379ac4494f4d673efb8a3039bca",
+          "name": "Position=Start"
+        },
+        {
+          "id": "56444:1381",
+          "key": "cca1df0583a7aec0f460c8e7b8c81748fc8ce4b8",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "00035af30b4625616ef06ee710cb92dd38129b65",
+      "name": "🔩 Tail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Tail",
+      "defaultVariant": "aefb3d8e44d049473e414d2af1c8f8d7b068430c",
+      "variantStructures": {
+        "aefb3d8e44d049473e414d2af1c8f8d7b068430c": [],
+        "b2009b87e7dd2f179b0eeaf3134144920fc3d1fa": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "987363e313b668233bd3201647501a447dd035f1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12414",
+          "key": "aefb3d8e44d049473e414d2af1c8f8d7b068430c",
+          "name": "Position=Middle"
+        },
+        {
+          "id": "376:12416",
+          "key": "b2009b87e7dd2f179b0eeaf3134144920fc3d1fa",
+          "name": "Position=Start"
+        },
+        {
+          "id": "376:12419",
+          "key": "987363e313b668233bd3201647501a447dd035f1",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "ea3f265e704299ead6f7578f01729e0ab14b6d55",
+      "name": "🔩 Content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Hint",
+      "category": "Content",
+      "defaultVariant": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+      "variantStructures": {
+        "87cd69ec1de65ea6b631bac2fe43eb760636bc8b": [],
+        "f51afd6a9f8befc3c6bf84c12e6be2ddf4abbdf7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 4,
+                  "bottom": 4,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / _Text",
+              "type": "TEXT",
+              "name": "_Text",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,2768:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Tooltip text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 13,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 13
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12712",
+          "key": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "376:12714",
+          "key": "f51afd6a9f8befc3c6bf84c12e6be2ddf4abbdf7",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "43a1c2f978640bd02e72a93892e2b5d4143ef00f",
+      "name": "🔩 Content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Tooltip I\nnverted",
+      "category": "Content",
+      "defaultVariant": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+      "variantStructures": {
+        "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0": [],
+        "12cbde496bb3d3a145b5220677d1061b52e70164": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 12,
+                  "bottom": 12,
+                  "left": 12
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / _Text",
+              "type": "TEXT",
+              "name": "_Text",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Tooltip text two line. Tooltip text two line.",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12633",
+          "key": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "376:12635",
+          "key": "12cbde496bb3d3a145b5220677d1061b52e70164",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "7fad73d4f53f0dee2df8b367c6bd2d1615eda6db",
+      "name": "🔩 Content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Hint Inverted",
+      "category": "Content",
+      "defaultVariant": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+      "variantStructures": {
+        "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254": [],
+        "e8835ed74c0d87e9a4f4fa9f3d05f0c7ed1dec2d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 4,
+                  "bottom": 4,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / _Text",
+              "type": "TEXT",
+              "name": "_Text",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,2768:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Tooltip text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 13,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 13
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:12706",
+          "key": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "376:12708",
+          "key": "e8835ed74c0d87e9a4f4fa9f3d05f0c7ed1dec2d",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "ebe0ccbe143919be8bcc683da9fc731188f3fade",
+      "name": "🔩 Content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "description": "Tooltip",
+      "category": "Content",
+      "defaultVariant": "03163c01eab6eb98c684f41834ca231b9d7f560f",
+      "variantStructures": {
+        "03163c01eab6eb98c684f41834ca231b9d7f560f": [],
+        "b6a599562b666d2e23f08644a64d11247b06b76d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 12,
+                  "bottom": 12,
+                  "left": 12
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / _Text",
+              "type": "TEXT",
+              "name": "_Text",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Tooltip text two line. Tooltip text two line.",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:6214",
+          "key": "03163c01eab6eb98c684f41834ca231b9d7f560f",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "376:12237",
+          "key": "b6a599562b666d2e23f08644a64d11247b06b76d",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "name": "Tooltip",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Tooltip",
+      "defaultVariant": "616efc1a7920830519efc23455364ec23cf6d852",
+      "variantStructures": {
+        "616efc1a7920830519efc23455364ec23cf6d852": [],
+        "59615bc58ab0f470c96f91ad48f15106c7e73a1f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=←, Colors=Default, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "2e7baff31ee15d91feb2636512f4e969b42210a9",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          }
+        ],
+        "a1517eca734b7d5d6e69ff314c97e7652c776ca5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=←, Colors=Inverted, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "6ad0554a494db67ea49a24275a1a8d48f549e452",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          }
+        ],
+        "4836270f3f3045b34a11b6a3b4e3b4391d191e4d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=←, Colors=Inverted, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "17af90b083a73febcae65b0f5c3d52f4334acfe8",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          }
+        ],
+        "4de8da6c6b070b123cb15640e9c783ecb9723896": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↓, Colors=Default, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b8177332de508a4298fad03d50dfc9b3b8338d67",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          }
+        ],
+        "6cac9476341db6a8ee90a066802283354e189b5b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↓, Colors=Default, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "61ce30525aa7739f60a74dae069e8ba3271ed00c",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          }
+        ],
+        "16df7f7071ec2ad824889774b483cc6ab0ea504b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↓, Colors=Inverted, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b8ecc70398a772c40287adec92d35fdb632c428d",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          }
+        ],
+        "d182d39e77d94aff72b32fcb8b1950dcb8a27c05": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↓, Colors=Inverted, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "c50bbbd8666c86ac8d2040309944a37b4a2648f7",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          }
+        ],
+        "c2e1e76ca01fc9d8fa72ab05dd622bf781ae041f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=→, Colors=Default, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "37b65c0868273d1c84c46c35aac053e02134880c",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          }
+        ],
+        "6f698e24e069b8d1d9ba7905d59bc5d413268d8e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=→, Colors=Default, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "f2fb732c6c5c2faaa782d1e7cb7c7c651618bd6d",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          }
+        ],
+        "d0698a6401271b88069843213157e1f6c25276a8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=→, Colors=Inverted, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "9fe51ee46f98be03869c99bc80aeb47920f2830d",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          }
+        ],
+        "69686387aa5d4ee8c08bd3642187ade57c43da8d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=→, Colors=Inverted, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "649464f5a927e1bdebd21f2266aa57c8314d6ed5",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          }
+        ],
+        "d5c74dc256925a2ed8ed2a16aef1a02214f0cca2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↑, Colors=Default, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "d9912337c53c8e905980e8f259dcba0d1e6d1be4",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          }
+        ],
+        "9e4406fde6656d4dc3ed875b00f6fa854a03efb8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↑, Colors=Default, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "28de3178c00ffdba589c1846089c617ddc2e220e",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "87cd69ec1de65ea6b631bac2fe43eb760636bc8b",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          }
+        ],
+        "72c9bd4c02c9a2519faa06960fa0f71030f03849": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↑, Colors=Inverted, View=Hint"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "71b601f921b278e96894ac82419ccd2668d5ec56",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "radius": 8
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6e020f454d3e770b9e47f9dd0ebb8a482fcaa254",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          }
+        ],
+        "4a4a40d23bdf7a91a9b1e85957f4721207d2a6b2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TailDirection=↑, Colors=Inverted, View=Tooltip"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "9dda74375de07e68d0d171e36d055fc9ea943814",
+                "variantProperties": {
+                  "Position": "Middle"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 28,
+                    "b": 30,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "componentInstance": {
+                "componentKey": "b859d73dbed53b1a8e24a42301ba6278f8a4dbe0",
+                "variantProperties": {
+                  "Preset": "SwapMe"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 41,
+                    "g": 48,
+                    "b": 68,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 49,
+                    "g": 147,
+                    "b": 252,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "376:6082",
+          "key": "616efc1a7920830519efc23455364ec23cf6d852",
+          "name": "TailDirection=←, Colors=Default, View=Tooltip"
+        },
+        {
+          "id": "376:12665",
+          "key": "59615bc58ab0f470c96f91ad48f15106c7e73a1f",
+          "name": "TailDirection=←, Colors=Default, View=Hint"
+        },
+        {
+          "id": "376:12744",
+          "key": "a1517eca734b7d5d6e69ff314c97e7652c776ca5",
+          "name": "TailDirection=←, Colors=Inverted, View=Hint"
+        },
+        {
+          "id": "376:12608",
+          "key": "4836270f3f3045b34a11b6a3b4e3b4391d191e4d",
+          "name": "TailDirection=←, Colors=Inverted, View=Tooltip"
+        },
+        {
+          "id": "376:12530",
+          "key": "4de8da6c6b070b123cb15640e9c783ecb9723896",
+          "name": "TailDirection=↓, Colors=Default, View=Tooltip"
+        },
+        {
+          "id": "376:12669",
+          "key": "6cac9476341db6a8ee90a066802283354e189b5b",
+          "name": "TailDirection=↓, Colors=Default, View=Hint"
+        },
+        {
+          "id": "376:12749",
+          "key": "16df7f7071ec2ad824889774b483cc6ab0ea504b",
+          "name": "TailDirection=↓, Colors=Inverted, View=Hint"
+        },
+        {
+          "id": "376:12612",
+          "key": "d182d39e77d94aff72b32fcb8b1950dcb8a27c05",
+          "name": "TailDirection=↓, Colors=Inverted, View=Tooltip"
+        },
+        {
+          "id": "376:12461",
+          "key": "c2e1e76ca01fc9d8fa72ab05dd622bf781ae041f",
+          "name": "TailDirection=→, Colors=Default, View=Tooltip"
+        },
+        {
+          "id": "376:12673",
+          "key": "6f698e24e069b8d1d9ba7905d59bc5d413268d8e",
+          "name": "TailDirection=→, Colors=Default, View=Hint"
+        },
+        {
+          "id": "376:12754",
+          "key": "d0698a6401271b88069843213157e1f6c25276a8",
+          "name": "TailDirection=→, Colors=Inverted, View=Hint"
+        },
+        {
+          "id": "376:12616",
+          "key": "69686387aa5d4ee8c08bd3642187ade57c43da8d",
+          "name": "TailDirection=→, Colors=Inverted, View=Tooltip"
+        },
+        {
+          "id": "376:12529",
+          "key": "d5c74dc256925a2ed8ed2a16aef1a02214f0cca2",
+          "name": "TailDirection=↑, Colors=Default, View=Tooltip"
+        },
+        {
+          "id": "376:12677",
+          "key": "9e4406fde6656d4dc3ed875b00f6fa854a03efb8",
+          "name": "TailDirection=↑, Colors=Default, View=Hint"
+        },
+        {
+          "id": "376:12759",
+          "key": "72c9bd4c02c9a2519faa06960fa0f71030f03849",
+          "name": "TailDirection=↑, Colors=Inverted, View=Hint"
+        },
+        {
+          "id": "376:12620",
+          "key": "4a4a40d23bdf7a91a9b1e85957f4721207d2a6b2",
+          "name": "TailDirection=↑, Colors=Inverted, View=Tooltip"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 Content",
+      "type": "COMPONENT",
+      "componentKey": "1fc300f8f62f4136106067e52b9ca2941a133007",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Content / Text",
+      "type": "TEXT",
+      "componentKey": "1fc300f8f62f4136106067e52b9ca2941a133007",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Tooltip text two line. Tooltip text two line."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "81a8ced554474ef597b4dd779652b04236228bf8",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "81a8ced554474ef597b4dd779652b04236228bf8",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "1b204604f2e4c7dcf25ca4248680253c4ac00c97",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "1b204604f2e4c7dcf25ca4248680253c4ac00c97",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "fd0a29f3045215175fd607278eb8909e87a68aad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "fd0a29f3045215175fd607278eb8909e87a68aad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "379605128e3b1e8ce5e1db1c2183565dec0657b6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "379605128e3b1e8ce5e1db1c2183565dec0657b6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "295887716222af60838cea5d5f940ee8175aa21a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "295887716222af60838cea5d5f940ee8175aa21a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "f955c123c469235c012e2fd66f2ea068539a4333",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "f955c123c469235c012e2fd66f2ea068539a4333",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "580614859ea8cd8ba4b9f59317d4fff2788200b8",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "580614859ea8cd8ba4b9f59317d4fff2788200b8",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "7b8e8dbd469a4023e69b2666a5c132387132dc17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "7b8e8dbd469a4023e69b2666a5c132387132dc17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "0a85704e5a492b925b06536a041f50f127655a46",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "0a85704e5a492b925b06536a041f50f127655a46",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "6782652c1fbec76c6a8ac3805b869985c1dce221",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "6782652c1fbec76c6a8ac3805b869985c1dce221",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "824067ce828dfbb8966c68f45a6ee4da15444e87",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "824067ce828dfbb8966c68f45a6ee4da15444e87",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "b06d457380bdc82f8972b5b467372516071e8367",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "b06d457380bdc82f8972b5b467372516071e8367",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "d6ebdc8b0a9e005558ffec83841a31b38ddccf37",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "d6ebdc8b0a9e005558ffec83841a31b38ddccf37",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "db67b5053e3db8bafd360247225785a1ab4cdfe9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "db67b5053e3db8bafd360247225785a1ab4cdfe9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+        "color": "rgba(28,28,30,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "36b939c296c9ebe500140f6ca337689f034f203b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "36b939c296c9ebe500140f6ca337689f034f203b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Tail / Position=Middle",
+      "type": "COMPONENT",
+      "componentKey": "00035af30b4625616ef06ee710cb92dd38129b65",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Tail / Position=Middle / Tail",
+      "type": "VECTOR",
+      "componentKey": "00035af30b4625616ef06ee710cb92dd38129b65",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Content / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "ea3f265e704299ead6f7578f01729e0ab14b6d55",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          16,
+          8,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+        "color": "rgba(49,147,252,1)"
+      },
+      "fill": {
+        "token": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+        "color": "rgba(41,48,68,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Content / Preset=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "ea3f265e704299ead6f7578f01729e0ab14b6d55",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Content / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "43a1c2f978640bd02e72a93892e2b5d4143ef00f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          16,
+          24,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+        "color": "rgba(49,147,252,1)"
+      },
+      "fill": {
+        "token": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+        "color": "rgba(41,48,68,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Content / Preset=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "43a1c2f978640bd02e72a93892e2b5d4143ef00f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Content / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "7fad73d4f53f0dee2df8b367c6bd2d1615eda6db",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          16,
+          8,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Content / Preset=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "7fad73d4f53f0dee2df8b367c6bd2d1615eda6db",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Content / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "ebe0ccbe143919be8bcc683da9fc731188f3fade",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          16,
+          24,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Content / Preset=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "ebe0ccbe143919be8bcc683da9fc731188f3fade",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip",
+      "type": "COMPONENT",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip / Tail",
+      "type": "INSTANCE",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip / Tail / Tail",
+      "type": "VECTOR",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip / Body",
+      "type": "FRAME",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip / Body / Content",
+      "type": "INSTANCE",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          16,
+          24,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Tooltip / TailDirection=←, Colors=Default, View=Tooltip / Body / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "c863abcc29ea557cc2c7f085b95b3f683e3008b0",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

@@ -1,0 +1,1138 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:53:18.626Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Markdown"
+    ],
+    "componentCount": 1,
+    "elementCount": 3
+  },
+  "components": [
+    {
+      "key": "28dd42f6299686961984c118b07440593afbe617",
+      "name": "Markdown",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Markdown",
+      "defaultVariant": "b83ae7af8573609f7e01961d4ad30a79b9a40a29",
+      "variantStructures": {
+        "b83ae7af8573609f7e01961d4ad30a79b9a40a29": [],
+        "57a51c099cede44d032f76cc6006414a20126cfe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=# [h1] mobile"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6,3199:15"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 26,
+                "lineHeight": 32,
+                "letterSpacing": 0.36000001430511475,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 26
+              }
+            }
+          }
+        ],
+        "bac73711ded787b471af3aa5de58b10a15e6893c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=## [h2] desktop",
+              "layout": {
+                "padding": {
+                  "top": 32,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:952e7df724ba0235d6d170ca152117522e48f11c,2771:19"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Display Bold",
+                "fontSize": 22,
+                "lineHeight": 26,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Display Bold",
+                "fontSize": 22
+              }
+            }
+          }
+        ],
+        "acb5fc1c09f8559382458259f351b432f85cf3ed": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=### [h3] desktop",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:69723bb178c1d1f9ec90e7b5670389dadb9de724,2771:20"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Display Bold",
+                "fontSize": 18,
+                "lineHeight": 22,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Display Bold",
+                "fontSize": 18
+              }
+            }
+          }
+        ],
+        "deb199d1b007e70aa3f0d81af287cdc3ba688b2c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=#### [h4] desktop",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:d16140c22dd6431b15814fa9632f4bdc91a4f129,2771:14"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "f9853c56e88bb94f81ad52f6e4fb91fe4c18ecc7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=## [h2] mobile",
+              "layout": {
+                "padding": {
+                  "top": 32,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:72fd753f9ec2cdf891db05a9abe2a17e033ed0fc,3387:1"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": 0.3799999952316284,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Display Semibold",
+                "fontSize": 20
+              }
+            }
+          }
+        ],
+        "6fd0978b800df4e9757cea7d78cdb0d0d17def19": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=### [h3] mobile",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:5ab7406f0d64e21264049625acb68806389dbbe3,4350:3"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.3199999928474426,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "8c3643f49456bb682f91ce08f08b5f63d60e6cf7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=#### [h4] mobile",
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:5ab7406f0d64e21264049625acb68806389dbbe3,4350:3"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.3199999928474426,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "5b3018bbea1ee67149de9c902a4624f05c663d4f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=p [paragraph]",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "c4d8ed526d43afb59ac192ff002a1b12e9ca835d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=> [quote]",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "b97cf41017ce9b7ad30aed76605f4252fef87b27": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=❌ • [listBulleted]",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Tag=❌ • [listBulleted] / Content / Marker",
+              "type": "FRAME",
+              "name": "Marker",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 6,
+                  "bottom": 0,
+                  "left": 6
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Tag=❌ • [listBulleted] / Content / Marker / _Point",
+              "type": "TEXT",
+              "name": "_Point",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:aae5de06136376c7653394d3648478f48372d63f,2771:7"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "•",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "bbe4e11a61f48f044cf5202f77f0a8280a269256": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=- [listDashed]",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Tag=- [listDashed] / Content / Marker",
+              "type": "FRAME",
+              "name": "Marker",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 6,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Tag=- [listDashed] / Content / Marker / _Dash",
+              "type": "TEXT",
+              "name": "_Dash",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "–",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "935ea85b1b77290812f3081e62c5ddbdd1b995bc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=1. [listNumbered]",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Tag=1. [listNumbered] / Content / Marker",
+              "type": "FRAME",
+              "name": "Marker",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Tag=1. [listNumbered] / Content / Marker / Number",
+              "type": "FRAME",
+              "name": "Number",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Tag=1. [listNumbered] / Content / Marker / Number / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 4,
+              "path": "Tag=1. [listNumbered] / Content / Marker / Number / _NN",
+              "type": "TEXT",
+              "name": "_NN",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3e8495dc712d117acddf82c99ca3e3db731d3a9e,2305:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "0.",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "text": {
+                "characters": "Text",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          }
+        ],
+        "cd45656b7f0347e65e7f0b1a598ebc885dbc6f26": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Tag=! [img]",
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 24,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Tag=! [img] / Content / height",
+              "type": "FRAME",
+              "name": "height",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 180,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Tag=! [img] / Content / height / fix",
+              "type": "RECTANGLE",
+              "name": "fix",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 217,
+                    "g": 217,
+                    "b": 217,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Tag=! [img] / Content / img",
+              "type": "RECTANGLE",
+              "name": "img",
+              "visible": true,
+              "opacity": 1,
+              "radius": 12
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "494:8371",
+          "key": "b83ae7af8573609f7e01961d4ad30a79b9a40a29",
+          "name": "Tag=# [h1] desktop"
+        },
+        {
+          "id": "494:8380",
+          "key": "57a51c099cede44d032f76cc6006414a20126cfe",
+          "name": "Tag=# [h1] mobile"
+        },
+        {
+          "id": "494:8374",
+          "key": "bac73711ded787b471af3aa5de58b10a15e6893c",
+          "name": "Tag=## [h2] desktop"
+        },
+        {
+          "id": "494:8377",
+          "key": "acb5fc1c09f8559382458259f351b432f85cf3ed",
+          "name": "Tag=### [h3] desktop"
+        },
+        {
+          "id": "31315:564",
+          "key": "deb199d1b007e70aa3f0d81af287cdc3ba688b2c",
+          "name": "Tag=#### [h4] desktop"
+        },
+        {
+          "id": "494:8383",
+          "key": "f9853c56e88bb94f81ad52f6e4fb91fe4c18ecc7",
+          "name": "Tag=## [h2] mobile"
+        },
+        {
+          "id": "494:8386",
+          "key": "6fd0978b800df4e9757cea7d78cdb0d0d17def19",
+          "name": "Tag=### [h3] mobile"
+        },
+        {
+          "id": "31315:557",
+          "key": "8c3643f49456bb682f91ce08f08b5f63d60e6cf7",
+          "name": "Tag=#### [h4] mobile"
+        },
+        {
+          "id": "494:8389",
+          "key": "5b3018bbea1ee67149de9c902a4624f05c663d4f",
+          "name": "Tag=p [paragraph]"
+        },
+        {
+          "id": "494:8392",
+          "key": "c4d8ed526d43afb59ac192ff002a1b12e9ca835d",
+          "name": "Tag=> [quote]"
+        },
+        {
+          "id": "494:8395",
+          "key": "b97cf41017ce9b7ad30aed76605f4252fef87b27",
+          "name": "Tag=❌ • [listBulleted]"
+        },
+        {
+          "id": "494:8404",
+          "key": "bbe4e11a61f48f044cf5202f77f0a8280a269256",
+          "name": "Tag=- [listDashed]"
+        },
+        {
+          "id": "494:8410",
+          "key": "935ea85b1b77290812f3081e62c5ddbdd1b995bc",
+          "name": "Tag=1. [listNumbered]"
+        },
+        {
+          "id": "494:8418",
+          "key": "cd45656b7f0347e65e7f0b1a598ebc885dbc6f26",
+          "name": "Tag=! [img]"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Markdown / Tag=# [h1] desktop",
+      "type": "COMPONENT",
+      "componentKey": "28dd42f6299686961984c118b07440593afbe617",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          16,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Markdown / Tag=# [h1] desktop / Content",
+      "type": "FRAME",
+      "componentKey": "28dd42f6299686961984c118b07440593afbe617",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Markdown / Tag=# [h1] desktop / Content / Text",
+      "type": "TEXT",
+      "componentKey": "28dd42f6299686961984c118b07440593afbe617",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Text"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0,
+        "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+      }
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:52:58.882Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Text"
+    ],
+    "componentCount": 1,
+    "elementCount": 3
+  },
+  "components": [
+    {
+      "key": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+      "name": "Text",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Text",
+      "defaultVariant": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+      "variantStructures": {
+        "418cef72a4f4b0e21dce94c09cf0081a1521ba07": []
+      },
+      "variants": [
+        {
+          "id": "28:29546",
+          "key": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+          "name": "Text"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Text",
+      "type": "COMPONENT",
+      "componentKey": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Text / Content",
+      "type": "FRAME",
+      "componentKey": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Text / Content / Text",
+      "type": "TEXT",
+      "componentKey": "418cef72a4f4b0e21dce94c09cf0081a1521ba07",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Text"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1557 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        margin: 0;
+        font:
+          12px/1.4 -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          sans-serif;
+        color: #111;
+        background: #eceff3;
+      }
+      .shell {
+        width: 800px;
+        height: 860px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Стили заголовка */
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        border-bottom: 1px solid #ececf2;
+      }
+      .header-title {
+        font-size: 19px;
+        font-weight: 600;
+      }
+      .header-title.snapshot-ready {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+      }
+      .header-action {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .header-summary {
+        display: flex;
+        flex-direction: column;
+        font-size: 12px;
+        color: #555;
+      }
+      .header-summary strong {
+        font-size: 12px;
+        color: #111;
+      }
+      #scan-button {
+        padding: 10px 24px;
+        border-radius: 999px;
+        border: none;
+        background: #0f0f0f;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      /* Стили боковой панели */
+
+      .tab-button,
+      .tree-row {
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: #ffffff;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        font-weight: 500;
+      }
+      .tab-button {
+        width: 240px;
+        height: 48px;
+        padding: 0 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+      }
+      .tab-button:hover,
+      .tree-row:hover {
+        background: #f1f1f5;
+      }
+      .tab-button.active {
+        background: #f1f1f5;
+      }
+      .badge {
+        font-size: 11px;
+        background: rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 0 6px;
+      }
+      .tab-button.active .badge {
+        background: rgba(255, 255, 255, 0.25);
+      }
+      .tab-button.active .badge.has-items {
+        background: #111;
+        color: #fff;
+      }
+      .badge.has-items {
+        background: #111;
+        color: #fff;
+      }
+
+      /*Стили рабочей области*/
+
+      #results {
+        flex: 1;
+        max-height: 100%;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: #f3f4f7;
+        padding: 12px;
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: 264px 1fr;
+        gap: 8px;
+        flex: 1;
+        min-height: 0;
+      }
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        padding: 12px 12px 12px;
+        gap: 8px;
+        overflow-y: auto;
+        max-height: 100%;
+        padding-right: 4px;
+      }
+      .sidebar-footer {
+        margin-top: auto;
+        padding: 24px 24px 12px 12px;
+        border-top: 1px solid #ececf2;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .filter-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #111;
+      }
+      .filter-toggle span {
+        flex: 1;
+      }
+      .filter-toggle input {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 1px solid #111;
+        background: transparent;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        position: relative;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease;
+      }
+      .filter-toggle input::after {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border-radius: 50%;
+        background: #fff;
+        opacity: 0;
+        transition: opacity 0.15s ease;
+      }
+      .filter-toggle input:checked {
+        background: #111;
+        border-color: #111;
+      }
+      .filter-toggle input:checked::after {
+        opacity: 1;
+      }
+      .main {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .gpt-card {
+        margin: 16px 20px 0;
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid #eaecf0;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 16px 32px rgba(15, 23, 42, 0.08);
+        transition:
+          opacity 0.15s ease,
+          max-height 0.15s ease;
+      }
+      .gpt-card.hidden {
+        display: none;
+      }
+      .gpt-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .gpt-card-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #0f172a;
+      }
+      .gpt-fill-button,
+      .gpt-submit-button {
+        border: none;
+        border-radius: 999px;
+        padding: 6px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease;
+      }
+      .gpt-fill-button {
+        background: #e5e7f0;
+        color: #111;
+      }
+      .gpt-fill-button:hover {
+        background: #d5d8e6;
+      }
+      .gpt-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .gpt-submit-button {
+        background: #0f0f0f;
+        color: #fff;
+      }
+      .gpt-submit-button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .gpt-input,
+      .gpt-result,
+      .gpt-folder-input {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        font-family: inherit;
+        background: #f9fafb;
+        color: #111;
+        resize: vertical;
+      }
+      .gpt-input {
+        min-height: 110px;
+      }
+      .gpt-result {
+        min-height: 80px;
+        background: #fff;
+        border-radius: 12px;
+      }
+      .gpt-folder-input {
+        min-height: 0;
+        resize: none;
+      }
+      .gpt-label {
+        font-size: 12px;
+        color: #6b7280;
+      }
+      .gpt-status {
+        font-size: 12px;
+        color: #6b7280;
+      }
+      .gpt-api-key-input {
+        width: 100%;
+        padding: 10px 14px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        font-size: 13px;
+        background: #fff;
+      }
+
+      /* ======= Карточки и строчка списка ======= */
+      /* Эти правила используются и в табе Актуальные компоненты (карточки `result-card`)
+         и в табе Детач — помогают сохранить единый визуальный ритм. */
+
+      .result-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 12px;
+        border: none;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        transition: background 120ms ease;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .result-card:hover {
+        box-shadow: #95959555 0px 4px 12px 0px;
+      }
+      .content-line {
+        display: flex;
+        align-items: flex-start;
+        padding: 0;
+        gap: 8px;
+      }
+      .content-line + .content-line {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+      .content-line-left {
+        width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .content-line-middle {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .middle-line {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .middle-line + .middle-line {
+        margin-top: 6px;
+      }
+      .line-text {
+        font-size: 13px;
+        font-weight: 500;
+        color: #111827;
+        white-space: normal;
+        overflow: visible;
+        word-break: break-word;
+      }
+      .line-muted {
+        font-size: 13px;
+        color: #6b7280;
+        white-space: normal;
+        word-break: break-word;
+      }
+      .content-line-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .addon {
+        display: flex;
+        align-items: center;
+      }
+      .addon-2 button {
+        border: none;
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-size: 12px;
+        background: #e5e7f0;
+        cursor: pointer;
+      }
+      .addon-2 button:hover {
+        background: #d5d8e6;
+      }
+      .line-focus-button {
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        font-size: 12px;
+        line-height: 20px;
+        background: #e5e7f0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .line-focus-button:hover {
+        background: #d5d8e6;
+      }
+      .line-focus-button img {
+        width: 10px;
+        height: 10px;
+      }
+      .tree-visibility {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        opacity: 0.35;
+      }
+      .tree-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .tab-button + .tab-button {
+        margin-top: 8px;
+      }
+      .scan-loader {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 3px solid #d1d5db;
+        border-top-color: #111;
+        display: none;
+        animation: spin 0.8s linear infinite;
+      }
+      .scan-loader.visible {
+        display: inline-block;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .result-section {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 4px 0 16px;
+        border-bottom: 1px solid #e5e7f0;
+      }
+      .result-section:last-child {
+        border-bottom: none;
+      }
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0f172a;
+      }
+      .section-description {
+        font-size: 12px;
+        color: #6b7280;
+      }
+      .section-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .result-section .tree-list {
+        margin-top: 0px;
+      }
+      .placeholder {
+        padding: 24px;
+        text-align: center;
+        color: #999;
+      }
+      #toast {
+        position: absolute;
+        inset: auto 16px 16px auto;
+        background: #111827;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 999px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      #toast.visible {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="shell">
+      <header class="header">
+        <div class="header-title" id="header-title">Apollo</div>
+        <div class="header-summary">
+          <span>Найдено компонентов:</span>
+          <strong id="summary-count">0</strong>
+        </div>
+        <div class="header-action">
+          <button id="scan-button">Проверить</button>
+          <div id="scan-loader" class="scan-loader" aria-hidden="true"></div>
+        </div>
+      </header>
+      <div class="workspace">
+        <aside class="sidebar">
+          <div id="tabs"></div>
+        </aside>
+        <main class="main">
+          <section id="gpt-card" class="gpt-card hidden" hidden aria-hidden="true">
+            <div class="gpt-card-header">
+              <span class="gpt-card-title"
+                >Проверка текстов через Yandex Cloud AI</span
+              >
+              <button
+                id="gpt-fill-button"
+                type="button"
+                class="gpt-fill-button"
+              >
+                Заполнить тексты
+              </button>
+            </div>
+            <div class="gpt-label">Текст для проверки</div>
+            <textarea
+              id="gpt-input"
+              class="gpt-input"
+              placeholder="Скопируйте текст вручную или нажмите «Заполнить тексты»"
+            ></textarea>
+            <div class="gpt-actions">
+              <button id="gpt-submit" type="button" class="gpt-submit-button">
+                Отправить в Yandex
+              </button>
+              <span id="gpt-status" class="gpt-status">Ожидает ввода</span>
+            </div>
+            <div class="gpt-label">Ответ Yandex Cloud AI</div>
+            <div id="gpt-result" class="gpt-result">—</div>
+          </section>
+          <div id="results" class="placeholder">Начните со сканирования.</div>
+        </main>
+      </div>
+    </div>
+    <div id="toast"></div>
+    <script>
+      (function () {
+        /* ========== Конфигурация табов и билдеров карточек ======== */
+        const tabBuilderRegistry = {
+          audit: buildAuditCardLines,
+          changes: buildChangeCardLines,
+          customStyles: buildCustomStyleCardLines,
+          textEntry: buildTextEntryCardLines,
+          detached: buildDetachedCardLines,
+          preset: buildPresetCardLines,
+        };
+
+        let tabConfig = [];
+        /**
+         * Принимает единую конфигурацию табов от движка и подготавливает источники данных.
+         */
+        function initializeTabConfig(definitions) {
+          if (!Array.isArray(definitions)) return;
+          tabConfig = [];
+
+          const normalized = definitions
+            .map((definition) => {
+              const builderFn = tabBuilderRegistry[definition.builder];
+              const source = getTabSource(definition.id);
+              if (!builderFn || !source) return null;
+              return {
+                ...definition,
+                builderFn,
+                source,
+              };
+            })
+            .filter(Boolean);
+
+          tabConfig = normalized;
+          renderTabs();
+          const target =
+            normalized.find((tab) => tab.id === currentTab) ?? normalized[0];
+          if (target) {
+            setActiveTab(target.id);
+          }
+        }
+
+        function getValueFromPath(source, path) {
+          if (!source || !Array.isArray(path)) return undefined;
+          let current = source;
+          for (const key of path) {
+            if (!current || typeof current !== 'object') {
+              return undefined;
+            }
+            current = current[key];
+          }
+          return current;
+        }
+
+        /**
+         * Выбирает основное значение (visible vs raw) для текущего фильтра,
+         * чтобы UI не дублировал логику фильтрации видимости.
+         */
+        function resolveViewArray(path) {
+          const primary = filters.visibleOnly
+            ? currentVisibleViews ?? currentResults?.visibleViews
+            : currentResults?.views;
+          const fallback = filters.visibleOnly
+            ? currentResults?.views
+            : currentVisibleViews ?? currentResults?.visibleViews;
+          const primaryValue = getValueFromPath(primary, path);
+          if (Array.isArray(primaryValue)) return primaryValue;
+          const fallbackValue = getValueFromPath(fallback, path);
+          if (Array.isArray(fallbackValue)) return fallbackValue;
+          return [];
+        }
+
+        function getTabSource(tabId) {
+          switch (tabId) {
+            case 'current':
+              return () => resolveViewArray(['relevance', 'current']);
+            case 'detached':
+              return () => resolveViewArray(['detached']);
+            case 'changes':
+              return () => resolveViewArray(['changes']);
+            case 'textAll':
+              return () => resolveViewArray(['textAll']);
+            case 'deprecated':
+              return () =>
+                resolveViewArray(['relevance', 'deprecated']);
+            case 'update':
+              return () => resolveViewArray(['relevance', 'update']);
+            case 'themeError':
+              return () => resolveViewArray(['theme', 'error']);
+            case 'local':
+              return () => resolveViewArray(['local']);
+            case 'customStyles':
+              return () => resolveViewArray(['customStyles']);
+            case 'presets':
+              return () => resolveViewArray(['presets']);
+            default:
+              return () => [];
+          }
+        }
+
+        let currentTab = 'current';
+        let currentResults = null;
+        let currentVisibleViews = null;
+        let isScanning = false;
+        let catalogsReady = false;
+        let catalogsLoading = true;
+        let snapshotReady = false;
+        let latestSnapshot = null;
+        let scanCompleted = false;
+        const expandedNodes = new Set();
+        const iconSources = { visible: '', hidden: '' };
+        const chevronIconSrc =
+          'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzUxNTFfMTQxODM3KSI+CjxwYXRoIGQ9Ik04IDUuNUwxMi41IDEwTDggMTQuNSIgc3Ryb2tlPSJibGFjayIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfNTE1MV8xNDE4MzciPgo8cmVjdCB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==';
+        const generatedIconUrls = new Set();
+
+        const scanButton = document.getElementById('scan-button');
+        const headerTitleEl = document.getElementById('header-title');
+        const loaderEl = document.getElementById('scan-loader');
+        const tabsContainer = document.getElementById('tabs');
+        const listContainer = document.getElementById('results');
+        const summaryCountEl = document.getElementById('summary-count');
+        const toastEl = document.getElementById('toast');
+        const filterVisibleEl = document.getElementById('filter-visible');
+        const gptInputEl = document.getElementById('gpt-input');
+        const gptFillButton = document.getElementById('gpt-fill-button');
+        const gptSubmitButton = document.getElementById('gpt-submit');
+        const gptStatusEl = document.getElementById('gpt-status');
+        const gptResultEl = document.getElementById('gpt-result');
+        const filters = {
+          visibleOnly: true,
+        };
+        let gptRequestInProgress = false;
+        let gptHasManualText = false;
+
+        if (scanButton) {
+          scanButton.onclick = () => {
+            if (isScanning || !catalogsReady) return;
+            parent.postMessage(
+              { pluginMessage: { type: 'scan-selection' } },
+              '*',
+            );
+            setScanningState(true);
+          };
+        }
+        if (headerTitleEl) {
+          headerTitleEl.onclick = () => {
+            if (!latestSnapshot) return;
+
+            const payload = JSON.stringify(latestSnapshot, null, 2);
+            const blob = new Blob([payload], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.download = `normalized-snapshot-${Date.now()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+          };
+        }
+
+        initFilterControls();
+        setScanningState(false);
+
+        initGptControls();
+
+        /* ========== Инициализация фильтров и событий ======= */
+        /**
+         * Инициализирует UI-фильтры и заставляет список перерисовываться и обновлять бейджи.
+         */
+        function initFilterControls() {
+          if (filterVisibleEl instanceof HTMLInputElement) {
+            filters.visibleOnly = filterVisibleEl.checked;
+            
+            filterVisibleEl.addEventListener('change', () => {
+              filters.visibleOnly = filterVisibleEl.checked;
+              renderList();
+              updateActiveTabClasses();
+            });
+          }
+        }
+
+        function initGptControls() {
+          if (gptFillButton instanceof HTMLButtonElement) {
+            gptFillButton.addEventListener('click', () => {
+              fillGptTextFromResults({ manualTrigger: true });
+            });
+          }
+          if (gptInputEl instanceof HTMLTextAreaElement) {
+            gptInputEl.addEventListener('input', () => {
+              gptHasManualText = true;
+            });
+          }
+          if (gptSubmitButton instanceof HTMLButtonElement) {
+            gptSubmitButton.addEventListener('click', () => {
+              triggerGptRequest();
+            });
+          }
+        }
+
+        /* ====== Рендер шапки табов ====== */
+        function renderTabs() {
+          if (!tabsContainer) return;
+          tabsContainer.innerHTML = '';
+
+          for (const tab of tabConfig) {
+            const button = document.createElement('button');
+            button.textContent = tab.title;
+            button.className = 'tab-button';
+            button.dataset.tab = tab.id;
+            button.onclick = () => {
+              setActiveTab(tab.id);
+            };
+            tabsContainer.appendChild(button);
+          }
+
+          updateActiveTabClasses();
+        }
+
+        function setActiveTab(tabId) {
+          if (!tabConfig.length) {
+            currentTab = tabId;
+            return;
+          }
+          const tab = tabConfig.find((entry) => entry.id === tabId);
+          if (!tab) {
+            return;
+          }
+          currentTab = tab.id;
+          updateActiveTabClasses();
+          renderList();
+        }
+
+        function updateActiveTabClasses() {
+          if (!tabsContainer) return;
+          const children = Array.from(tabsContainer.children);
+          for (let index = 0; index < children.length; index += 1) {
+            const element = children[index];
+            const tab = tabConfig[index];
+            if (!tab) continue;
+            const isActive = tab.id === currentTab;
+            element.classList.toggle('active', isActive);
+            element.dataset.tab = tab.id;
+            element.querySelector('.badge')?.remove();
+            const items = tab.source();
+            const displayCount = items.length;
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = String(displayCount);
+            badge.classList.toggle('has-items', displayCount > 0);
+            element.appendChild(badge);
+          }
+        }
+
+        /* ======== Рендер текущего таба и маршрутизация ======= */
+        function renderList() {
+          if (!listContainer) return;
+          listContainer.innerHTML = '';
+
+          const tab = tabConfig.find((entry) => entry.id === currentTab);
+          if (!tab) {
+            showPlaceholder('Выберите таб');
+            return;
+          }
+
+          const sourceItems = tab.source();
+          const items = Array.isArray(sourceItems) ? sourceItems : [];
+
+          if (!currentResults) {
+            showPlaceholder('Пока ничего не найдено');
+            return;
+          }
+
+          if (!tab.builderFn) {
+            showPlaceholder('Нет данных для выбранного таба');
+            return;
+          }
+
+          if (!items.length) {
+            showPlaceholder(tab.emptyMessage ?? 'Нет компонентов по этому критерию');
+            return;
+          }
+
+          renderGenericCardList(items, tab.builderFn, tab.emptyMessage);
+        }
+
+        function showPlaceholder(message) {
+          if (!listContainer) return;
+          listContainer.innerHTML = '';
+          const placeholder = document.createElement('div');
+          placeholder.className = 'placeholder';
+          placeholder.textContent = message;
+          listContainer.appendChild(placeholder);
+        }
+
+        const TECHNICAL_DIFF_PATTERN = /(Token\s)|(token:)|(VariableID:)/i;
+
+        function isTechnicalDiff(diff) {
+          if (!diff || typeof diff.message !== 'string') return false;
+          return TECHNICAL_DIFF_PATTERN.test(diff.message);
+        }
+
+        function getDiffKey(diff) {
+          return (
+            diff.nodeId ??
+            diff.nodePath ??
+            diff.nodeName ??
+            String(diff.message ?? 'diff')
+          );
+        }
+
+        function dedupeDiffs(diffs) {
+          const seen = new Map();
+          const normalized = [];
+          for (const diff of diffs) {
+            const key = getDiffKey(diff);
+            const currentIsTech = isTechnicalDiff(diff);
+            const existing = seen.get(key);
+            if (existing) {
+              const existingIsTech = isTechnicalDiff(existing.diff);
+              if (!currentIsTech && existingIsTech) {
+                normalized[existing.index] = diff;
+                seen.set(key, { diff, index: existing.index });
+                continue;
+              }
+              if (currentIsTech) {
+                continue;
+              }
+            }
+            const index = normalized.length;
+            normalized.push(diff);
+            seen.set(key, { diff, index });
+          }
+          return normalized;
+        }
+
+        /**
+         * Убирает скрытые diff-ы и технические строки, оставляя человекочитаемые записи
+         * для таба «Кастомизация» и рендерингового конца.
+         */
+        function prepareChangeDiffs(item) {
+          const rawDiffs = Array.isArray(item.diffs) ? item.diffs : [];
+
+          return dedupeDiffs(rawDiffs);
+        }
+
+        const TRIVIAL_SEGMENT_TEXTS = new Set(['—', '–', '-', 'ok']);
+
+        /**
+         * Универсальный рендерер карточек, принимающий билдер строк и применяющий созданные
+         * `content-line` для всех табов.
+         */
+        function renderGenericCardList(items, buildLines, emptyMessage) {
+          if (!listContainer) return;
+          if (!items.length) {
+            showPlaceholder(emptyMessage);
+            return;
+          }
+          const container = document.createElement('div');
+          container.className = 'tree-list';
+          let rendered = false;
+          for (const item of items) {
+            const lines =
+              typeof buildLines === 'function' ? buildLines(item) : [];
+            if (!lines || !lines.length) {
+              continue;
+            }
+            const normalizedLines = normalizeCardLines(lines);
+            if (!normalizedLines.length) {
+              continue;
+            }
+            rendered = true;
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            normalizedLines.forEach((line, index) => {
+              const middleLines = line.middleLines ?? [];
+              const normalizedMiddle =
+                middleLines.length > 0
+                  ? middleLines
+                  : line.segments
+                    ? [line.segments]
+                    : [];
+              const contentLine = createContentLine({
+                visible: true,
+                showIcon:
+                  typeof line.showIcon === 'boolean'
+                    ? line.showIcon
+                    : index === 0,
+                middleLines: normalizedMiddle,
+                addon1: line.addon1 ?? [],
+                addon2: line.addon2 ?? (line.rightNode ? [line.rightNode] : []),
+              });
+              card.appendChild(contentLine);
+            });
+            container.appendChild(card);
+          }
+          if (!rendered) {
+            showPlaceholder('Нет элементов, подходящих под выбранные фильтры');
+            return;
+          }
+          listContainer.appendChild(container);
+        }
+
+        function createContentLine({
+          visible = true,
+          showIcon = false,
+          middleLines = [],
+          addon1 = [],
+          addon2 = [],
+        }) {
+          const line = document.createElement('div');
+          line.className = 'content-line';
+
+          const left = document.createElement('div');
+          left.className = 'content-line-left';
+          if (showIcon) {
+            const visibilityIcon = createVisibilityIcon(visible);
+            if (visibilityIcon) {
+              left.appendChild(visibilityIcon);
+            }
+          }
+          line.appendChild(left);
+
+          const middle = document.createElement('div');
+          middle.className = 'content-line-middle';
+          const normalizedMiddle =
+            middleLines.length > 0 ? middleLines : [[{ text: '\u00a0' }]];
+          normalizedMiddle.forEach((segments) => {
+            middle.appendChild(createMiddleLine(segments));
+          });
+          line.appendChild(middle);
+
+          const right = document.createElement('div');
+          right.className = 'content-line-right';
+          if (addon1.length) {
+            const slot = document.createElement('div');
+            slot.className = 'addon addon-1';
+            addon1.forEach((node) => slot.appendChild(node));
+            right.appendChild(slot);
+          }
+          if (addon2.length) {
+            const slot = document.createElement('div');
+            slot.className = 'addon addon-2';
+            addon2.forEach((node) => slot.appendChild(node));
+            right.appendChild(slot);
+          }
+          line.appendChild(right);
+
+          return line;
+        }
+
+        function createMiddleLine(segments = []) {
+          const middleLine = document.createElement('div');
+          middleLine.className = 'middle-line';
+          if (!segments.length) {
+            const placeholder = document.createElement('span');
+            placeholder.className = 'line-text';
+            placeholder.textContent = '\u00a0';
+            middleLine.appendChild(placeholder);
+            return middleLine;
+          }
+          segments.forEach((segment) => {
+            const span = document.createElement('span');
+            span.className = segment.muted ? 'line-muted' : 'line-text';
+            span.textContent = segment.text || '';
+            middleLine.appendChild(span);
+          });
+          return middleLine;
+        }
+
+        function createFocusButton(nodeId) {
+          if (!nodeId) return null;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'line-focus-button';
+          const icon = document.createElement('img');
+          icon.src = chevronIconSrc;
+          icon.alt = '';
+          button.appendChild(icon);
+          button.onclick = (event) => {
+            event.stopPropagation();
+            parent.postMessage(
+              {
+                pluginMessage: {
+                  type: 'focus-node',
+                  payload: { id: nodeId },
+                },
+              },
+              '*',
+            );
+          };
+          return button;
+        }
+
+        function isMeaningfulText(text) {
+          const normalized = String(text ?? '')
+            .trim()
+            .toLowerCase();
+          if (!normalized) return false;
+          return !TRIVIAL_SEGMENT_TEXTS.has(normalized);
+        }
+
+        function hasMeaningfulSegments(segments = []) {
+          return segments.some((segment) => isMeaningfulText(segment?.text));
+        }
+
+        function normalizeCardLines(lines = []) {
+          if (!Array.isArray(lines) || !lines.length) return [];
+          return lines.filter((line, index) => {
+            if (!line) return false;
+            if (line.showIcon) return true;
+            if (
+              Array.isArray(line.middleLines) &&
+              line.middleLines.some((segments) =>
+                hasMeaningfulSegments(segments),
+              )
+            ) {
+              return true;
+            }
+            if (hasMeaningfulSegments(line.segments ?? [])) {
+              return true;
+            }
+            if (Array.isArray(line.addon1) && line.addon1.length > 0) {
+              return true;
+            }
+            if (Array.isArray(line.addon2) && line.addon2.length > 0) {
+              return true;
+            }
+            if (line.rightNode) {
+              return true;
+            }
+            return false;
+          });
+        }
+
+        /**
+         * Собирает стандартную строку карточки.
+         * Нужна для предотвращения дублирования `visible`, `showIcon` и `focus`-кнопки.
+         */
+        function buildCardLine({
+          segments,
+          middleLines,
+          focusId,
+          visible,
+          showIcon = false,
+          addon1,
+          addon2,
+        }) {
+          const line = {
+            visible: visible ?? true,
+            showIcon,
+            segments,
+          };
+          if (middleLines) {
+            line.middleLines = middleLines;
+          }
+          if (addon1) {
+            line.addon1 = addon1;
+          }
+          if (addon2) {
+            line.addon2 = addon2;
+          }
+          if (focusId) {
+            line.rightNode = createFocusButton(focusId);
+          }
+          return line;
+        }
+
+        function buildAuditCardLines(item) {
+          const segments = [{ text: item.name ?? 'Без названия' }];
+          const libraryName = getItemLibraryName(item);
+          if (libraryName) {
+            segments.push({ text: libraryName, muted: true });
+          }
+          const statusSegments = [];
+          if (item.platform) statusSegments.push({ text: item.platform, muted: true });
+          if (item.role) statusSegments.push({ text: item.role, muted: true });
+          if (item.status) statusSegments.push({ text: item.status, muted: true });
+          const isThemeErrorWithRecommendation =
+            item.themeStatus === 'error' && item.themeRecommendation;
+          if (!isThemeErrorWithRecommendation && item.themeStatus) {
+            statusSegments.push({ text: item.themeStatus, muted: true });
+          }
+          const lines = [
+            buildCardLine({
+              segments,
+              focusId: item.id,
+              visible: item.visible !== false,
+              showIcon: true,
+            }),
+          ];
+          if (item.themeStatus === 'error' && item.themeRecommendation) {
+            lines.push(
+              buildCardLine({
+                segments: [
+                  { text: `→ ${item.themeRecommendation}`, muted: true },
+                ],
+              }),
+            );
+          }
+          if (statusSegments.length) {
+            lines.push(buildCardLine({ segments: statusSegments }));
+          }
+          return lines;
+        }
+
+        function buildPresetCardLines(item) {
+          return buildAuditCardLines(item);
+        }
+
+        function buildDetachedCardLines(entry) {
+          const segments = [{ text: entry.name || 'Слой' }];
+          if (entry.libraryName) {
+            segments.push({ text: entry.libraryName, muted: true });
+          }
+          const lines = [
+            buildCardLine({
+              segments,
+              focusId: entry.id,
+              visible: entry.visible !== false,
+              showIcon: true,
+            }),
+          ];
+          if (entry.componentName) {
+            lines.push(
+              buildCardLine({
+                segments: [{ text: entry.componentName, muted: true }],
+              }),
+            );
+          }
+          return lines;
+        }
+
+        function buildCustomStyleCardLines(entry) {
+          const label = entry.name || entry.pageName || 'Слой';
+          const reason = formatCustomStyleReason(entry.reason || '');
+          const lines = [
+            buildCardLine({
+              segments: [{ text: label }],
+              focusId: entry.id,
+              visible: entry.visible !== false,
+              showIcon: true,
+            }),
+          ];
+          if (reason) {
+            lines.push(
+              buildCardLine({
+                segments: [{ text: reason, muted: true }],
+              }),
+            );
+          }
+          if (entry.componentName) {
+            lines.push(
+              buildCardLine({
+                segments: [{ text: entry.componentName, muted: true }],
+              }),
+            );
+          }
+          return lines;
+        }
+
+        function buildTextEntryCardLines(node) {
+          const textValue =
+            typeof node.value === 'string' && node.value.trim()
+              ? node.value.trim()
+              : node.name || 'Текст';
+          const lines = [
+            buildCardLine({
+              segments: [{ text: textValue }],
+              focusId: node.key ?? node.id,
+              visible: node.visible !== false,
+              showIcon: true,
+            }),
+          ];
+          if (node.pageName) {
+            lines.push(
+              buildCardLine({
+                segments: [{ text: node.pageName, muted: true }],
+              }),
+            );
+          }
+          return lines;
+        }
+
+        function buildChangeCardLines(item) {
+          const { diffs } = item;
+          if (!diffs.length) {
+            return [];
+          }
+          const headerSegments = [{ text: item.name ?? 'Без названия' }];
+          const libraryName = getItemLibraryName(item);
+          if (libraryName) {
+            headerSegments.push({ text: libraryName, muted: true });
+          }
+          const lines = [
+            buildCardLine({
+              segments: headerSegments,
+              focusId: item.id,
+              visible: item.visible !== false,
+              showIcon: true,
+            }),
+          ];
+          diffs.forEach((diff) => {
+            const diffTitle = diff.nodeName || diff.nodePath || 'Слой';
+            const message = (diff.message || '').trim();
+            const middleLines = [
+              [{ text: diffTitle, muted: true }],
+              ...(message ? [[{ text: message }]] : []),
+            ];
+            lines.push(
+              buildCardLine({
+                middleLines,
+                focusId: diff.nodeId,
+                visible: diff.visible !== false,
+              }),
+            );
+          });
+          return lines;
+        }
+
+        /**
+         * Формирует список инстансов с реальными diff-ами и без ошибок темизации,
+         * чтобы таб «Кастомизация» показывал только актуальные расхождения.
+         */
+        function tryUpdateGptStatus(status) {
+          if (gptStatusEl) {
+            gptStatusEl.textContent = status;
+          }
+        }
+
+        // Собирает текстовые узлы из payload-а и наполняет GPT-панель, даже без видимого таба.
+        function fillGptTextFromResults({ manualTrigger = false } = {}) {
+          if (!gptInputEl) return;
+          const nodes = currentResults?.views?.textAll ?? [];
+          if (!nodes.length) {
+            gptInputEl.value = '';
+            gptHasManualText = manualTrigger;
+            return;
+          }
+          const aggregated = nodes
+            .map((node, index) => {
+              const text =
+                typeof node.value === 'string' && node.value.trim()
+                  ? node.value.trim()
+                  : node.name || 'Текст';
+              return `${index + 1}. ${text}`;
+            })
+            .join('\n\n');
+          gptInputEl.value = aggregated;
+          gptHasManualText = manualTrigger;
+        }
+
+        function triggerGptRequest() {
+          if (!gptInputEl || !gptSubmitButton) return;
+          const text = gptInputEl.value?.trim();
+          if (gptRequestInProgress) {
+            tryUpdateGptStatus('Запрос уже выполняется');
+            return;
+          }
+          if (!text) {
+            tryUpdateGptStatus('Введите текст для проверки');
+            return;
+          }
+          gptRequestInProgress = true;
+          gptSubmitButton.disabled = true;
+          tryUpdateGptStatus('Отправлено, ждём ответа…');
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'gpt-request',
+                payload: {
+                  prompt: text,
+                },
+              },
+            },
+            '*',
+          );
+        }
+
+        function setScanningState(active) {
+          isScanning = active;
+          refreshScanButton();
+          updateLoaderVisibility();
+        }
+
+        function handleGptResponse(text) {
+          console.log('apollo ui response', { text });
+          if (gptResultEl) {
+            gptResultEl.textContent = text || '—';
+          }
+          gptRequestInProgress = false;
+          if (gptSubmitButton instanceof HTMLButtonElement) {
+            gptSubmitButton.disabled = false;
+          }
+          tryUpdateGptStatus('Получен ответ');
+        }
+
+        function handleGptError(message) {
+          if (gptResultEl) {
+            gptResultEl.textContent = '—';
+          }
+          gptRequestInProgress = false;
+          if (gptSubmitButton instanceof HTMLButtonElement) {
+            gptSubmitButton.disabled = false;
+          }
+          tryUpdateGptStatus(message || 'Ошибка при запросе');
+        }
+
+        function getItemLibraryName(item) {
+          if (item.librarySource) {
+            return item.librarySource;
+          }
+          if (item.reference) {
+            return item.reference.source ?? 'Дизайн-система';
+          }
+          if (item.isLocal) {
+            return 'Локальный';
+          }
+          return null;
+        }
+
+        function formatCustomStyleReason(reason) {
+          if (reason.startsWith('effect:')) {
+            return reason.split(':')[1];
+          }
+          switch (reason) {
+            case 'fill':
+              return 'Заливка';
+            case 'stroke':
+              return 'Обводка';
+            case 'style':
+              return 'Стили';
+            default:
+              return 'Стиль';
+          }
+        }
+
+        function updateSummaryCount(payload) {
+          if (!summaryCountEl) return;
+          summaryCountEl.textContent = String(payload.summary.totalTargets);
+        }
+
+        window.onmessage = (event) => {
+          const msg = event.data?.pluginMessage;
+          if (!msg) return;
+
+          if (msg.type === 'icon-assets') {
+            applyIconAssets(msg.payload);
+            renderList();
+            return;
+          }
+
+          if (msg.type === 'tab-config') {
+            initializeTabConfig(msg.payload);
+            return;
+          }
+
+          if (msg.type === 'scan-started') {
+            listContainer.innerHTML = '';
+            setScanningState(true);
+            snapshotReady = false;
+            latestSnapshot = null;
+            scanCompleted = false;
+            updateSnapshotButton();
+          }
+
+          if (msg.type === 'scan-finished' || msg.type === 'scan-cancelled') {
+            setScanningState(false);
+            updateSnapshotButton();
+          }
+
+          if (msg.type === 'scan-result') {
+            currentResults = msg.payload;
+            currentVisibleViews = msg.payload?.visibleViews ?? null;
+            expandedNodes.clear();
+            updateSummaryCount(currentResults);
+            scanCompleted = true;
+            updateActiveTabClasses();
+            renderList();
+            showToast(
+              `Проверено компонентов: ${currentResults.summary.totalTargets}`,
+            );
+            if (!gptHasManualText) {
+              fillGptTextFromResults();
+            }
+          }
+
+          if (msg.type === 'scan-error') {
+            showToast(msg.payload?.message ?? 'Не удалось выполнить проверку');
+            snapshotReady = false;
+            scanCompleted = false;
+            updateSnapshotButton();
+          }
+
+          if (msg.type === 'gpt-response') {
+            handleGptResponse(msg.payload?.text ?? '');
+          }
+
+          if (msg.type === 'gpt-error') {
+            handleGptError(msg.payload?.message ?? '');
+          }
+
+          if (msg.type === 'catalog-file-loaded') {
+            handleCatalogFileLoaded(msg.payload);
+          }
+
+          if (msg.type === 'catalog-loading') {
+            catalogsLoading = true;
+            catalogsReady = false;
+            refreshScanButton();
+            updateLoaderVisibility();
+            showToast('Загружаем библиотеки…');
+          }
+
+          if (msg.type === 'catalog-ready') {
+            catalogsLoading = false;
+            catalogsReady = true;
+            refreshScanButton();
+            updateLoaderVisibility();
+            showToast('Справочники загружены');
+          }
+
+          if (msg.type === 'catalog-error') {
+            catalogsLoading = false;
+            catalogsReady = false;
+            refreshScanButton();
+            updateLoaderVisibility();
+            showToast(
+              msg.payload?.message ?? 'Не удалось загрузить справочники',
+            );
+          }
+
+          if (msg.type === 'normalized-snapshot-ready') {
+            snapshotReady = Boolean(msg.payload);
+            latestSnapshot = msg.payload;
+            updateSnapshotButton();
+          }
+        };
+
+        function showToast(message) {
+          if (!toastEl) return;
+          toastEl.textContent = message;
+          toastEl.classList.add('visible');
+          setTimeout(() => {
+            toastEl?.classList.remove('visible');
+          }, 3000);
+        }
+
+        function refreshScanButton() {
+          if (!scanButton) return;
+          if (isScanning) {
+            scanButton.disabled = false;
+            scanButton.textContent = 'Отменить';
+            scanButton.classList.add('cancel');
+          } else {
+            scanButton.classList.remove('cancel');
+            scanButton.textContent = catalogsReady ? 'Проверить' : 'Загрузка…';
+            scanButton.disabled = catalogsLoading || !catalogsReady;
+          }
+        }
+
+        function updateLoaderVisibility() {
+          if (!loaderEl) return;
+          loaderEl.classList.toggle('visible', isScanning || catalogsLoading);
+        }
+
+        function updateSnapshotButton() {
+          const visible = !isScanning && snapshotReady;
+          if (headerTitleEl) {
+            headerTitleEl.classList.toggle('snapshot-ready', visible);
+          }
+        }
+
+        function handleCatalogFileLoaded(payload) {
+          if (!payload?.name) return;
+          showToast(`Скачан справочник: ${payload.name}`);
+        }
+
+        function applyIconAssets(assets) {
+          if (!assets) return;
+          clearGeneratedIcons();
+          iconSources.visible = createObjectUrl(assets.visible);
+          iconSources.hidden = createObjectUrl(assets.hidden);
+        }
+
+        function createObjectUrl(dataUri) {
+          if (!dataUri || typeof dataUri !== 'string') return '';
+          if (!dataUri.startsWith('data:')) return dataUri;
+          const commaIndex = dataUri.indexOf(',');
+          if (commaIndex === -1) return '';
+          const header = dataUri.slice(5, commaIndex); // strip "data:"
+          const base64 = dataUri.slice(commaIndex + 1);
+          const mimeType = header.split(';')[0] || 'image/svg+xml';
+          const binary = atob(base64);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i += 1) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          const blob = new Blob([bytes], { type: mimeType });
+          const url = URL.createObjectURL(blob);
+          generatedIconUrls.add(url);
+          return url;
+        }
+
+        function clearGeneratedIcons() {
+          for (const url of generatedIconUrls) {
+            URL.revokeObjectURL(url);
+          }
+          generatedIconUrls.clear();
+        }
+
+        function createVisibilityIcon(isVisible) {
+          const src = isVisible ? iconSources.visible : iconSources.hidden;
+          if (!src) return null;
+          const img = document.createElement('img');
+          img.className = 'tree-visibility';
+          img.src = src;
+          img.alt = isVisible ? 'Слой виден' : 'Слой скрыт';
+          img.title = img.alt;
+          return img;
+        }
+      })();
+    </script>
+  </body>
+</html>

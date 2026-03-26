@@ -1,0 +1,1727 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:33:48.720Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ProgressBar"
+    ],
+    "componentCount": 2,
+    "elementCount": 78
+  },
+  "components": [
+    {
+      "key": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "name": "🔒 [D] ProgressBar :: Limits",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] ProgressBar :: Limits",
+      "defaultVariant": "bebbb58c22498af26852b95b066da821d909e745",
+      "variants": [
+        {
+          "id": "113621:72160",
+          "key": "bebbb58c22498af26852b95b066da821d909e745",
+          "name": "Presets=Limit, State=Active"
+        },
+        {
+          "id": "113621:72172",
+          "key": "7d3b962ed5a0865e9abf4d47196e0605f598d62f",
+          "name": "Presets=Limit, State=Empty"
+        },
+        {
+          "id": "113621:72184",
+          "key": "de32cd20241a656d857caa79fc708fb3e23aca85",
+          "name": "Presets=Limit, State=In progress"
+        },
+        {
+          "id": "113621:72196",
+          "key": "e1eade55cfa990dfa283c3a0a857ba38fca837b8",
+          "name": "Presets=Limit, State=Attention"
+        },
+        {
+          "id": "113621:72208",
+          "key": "fa74ea9a7dca05d0297c9b22d883c3fba85843cb",
+          "name": "Presets=Limit, State=Risk"
+        },
+        {
+          "id": "113621:72220",
+          "key": "ef61aa052bd0f02a623297fadc181b1f6e60000f",
+          "name": "Presets=Goal, State=Active"
+        },
+        {
+          "id": "113621:72232",
+          "key": "187916a54121ffcddac024ce703d8a80fcab8522",
+          "name": "Presets=Goal, State=In progress"
+        },
+        {
+          "id": "113621:72244",
+          "key": "691fe58d03ad475dd951c549ded5565744862178",
+          "name": "Presets=Goal, State=Empty"
+        },
+        {
+          "id": "113621:72256",
+          "key": "0b43da80343d2156ff10365165db5981aeccea87",
+          "name": "Presets=Goal, State=Risk"
+        },
+        {
+          "id": "113621:72268",
+          "key": "3ff85cbc5aae93a4dca1bccbcbeaa69fae80e72c",
+          "name": "Presets=Goal, State=Attention"
+        },
+        {
+          "id": "113621:72280",
+          "key": "8026794208e254f5121a12a87ab53857a9adce50",
+          "name": "Presets=Limit, State=Disabled"
+        },
+        {
+          "id": "113621:72292",
+          "key": "01957e2b41d039fecfa45575b1c3c67709594f24",
+          "name": "Presets=Goal, State=Disabled"
+        }
+      ]
+    },
+    {
+      "key": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "name": "🔒 [M] ProgressBar :: Limits",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] ProgressBar :: Limits",
+      "defaultVariant": "dff240a5ade42bf7a9ca0e5ffdb90850a698aedb",
+      "variants": [
+        {
+          "id": "113621:72015",
+          "key": "dff240a5ade42bf7a9ca0e5ffdb90850a698aedb",
+          "name": "Presets=Limit, State=Active"
+        },
+        {
+          "id": "113621:72027",
+          "key": "d9d37c2f87923c27fd2981f419df777533758a85",
+          "name": "Presets=Limit, State=Empty"
+        },
+        {
+          "id": "113621:72039",
+          "key": "0b235107a6c7c64000ab5c6578a4cd2de5bab526",
+          "name": "Presets=Limit, State=Disabled"
+        },
+        {
+          "id": "113621:72051",
+          "key": "9e795a1dbc1c39799c929bd18b17b3359db712fd",
+          "name": "Presets=Limit, State=In progress"
+        },
+        {
+          "id": "113621:72063",
+          "key": "050752271e6fd047fcf798fa517f2a4ee5f8c74e",
+          "name": "Presets=Limit, State=Attention"
+        },
+        {
+          "id": "113621:72075",
+          "key": "7167268cb450a73fafa0ab8183b44407f638a596",
+          "name": "Presets=Limit, State=Risk"
+        },
+        {
+          "id": "113621:72087",
+          "key": "884fa9d962631f9124a2f3c0271747f60c8544ec",
+          "name": "Presets=Goal, State=Active"
+        },
+        {
+          "id": "113621:72099",
+          "key": "654fca59a1ce8990c959eb9dc41a0a7bec0f3d2d",
+          "name": "Presets=Goal, State=Disabled"
+        },
+        {
+          "id": "113621:72111",
+          "key": "ef5501776c918ef576186d86c4e915bd31295ee3",
+          "name": "Presets=Goal, State=In progress"
+        },
+        {
+          "id": "113621:72123",
+          "key": "37fb5ee8783afbb2bb59cc3cdeb0f581252ab4eb",
+          "name": "Presets=Goal, State=Empty"
+        },
+        {
+          "id": "113621:72135",
+          "key": "60aa051a4a97a79210aa56bf49d93c682c438713",
+          "name": "Presets=Goal, State=Risk"
+        },
+        {
+          "id": "113621:72147",
+          "key": "a311ba95cf904618c20db890d487938fee613932",
+          "name": "Presets=Goal, State=Attention"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active",
+      "type": "COMPONENT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Label",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Доступно сегодня"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "300 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / Amount Bought",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0.9000000357627869,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "из"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "300 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar / Fill",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          300,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar / Fill / fixer",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Hint",
+      "type": "TEXT",
+      "componentKey": "ef435d71c506531af4ea14ea367d388e40ca55a7",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0.9000000357627869,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active",
+      "type": "COMPONENT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Label",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Доступно сегодня"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "300 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / Amount Bought",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0.9000000357627869,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "из"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "300 000"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Caption / 🔒 AmountParagraph / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar / Fill",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          335,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ProgressBar / Fill / fixer",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] ProgressBar :: Limits / Presets=Limit, State=Active / Content / Hint",
+      "type": "TEXT",
+      "componentKey": "2961af27f3e080dec175bccd055a07f4a19e51d1",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0.9000000357627869,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

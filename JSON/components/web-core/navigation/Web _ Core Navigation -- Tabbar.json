@@ -1,0 +1,4490 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core Navigation",
+    "file": "Web :: Core Navigation",
+    "generatedAt": "2025-12-30T09:21:20.888Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Tabbar"
+    ],
+    "componentCount": 5,
+    "elementCount": 88
+  },
+  "components": [
+    {
+      "key": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "name": "🔩 IndicatorModalBgAlt",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "description": "Используется только в Таббаре",
+      "category": "IndicatorModalBgAlt",
+      "defaultVariant": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+      "variantStructures": {
+        "a59589fda3f47a1bb43f7ff2496665a74cf13b47": [],
+        "a2d35396ecae7a597619f9581e8afe9cf7c64e2c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 999,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 20
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Content=False / Indicator / Base / fixer",
+              "type": "FRAME",
+              "name": "fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2402:4211",
+          "key": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+          "name": "Content=True"
+        },
+        {
+          "id": "2402:4216",
+          "key": "a2d35396ecae7a597619f9581e8afe9cf7c64e2c",
+          "name": "Content=False"
+        }
+      ]
+    },
+    {
+      "key": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "name": "🔩 IndicatorModalBg",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "description": "Используется только в Таббаре",
+      "category": "IndicatorModalBg",
+      "defaultVariant": "231b331eecc9bf946bb426ea43ff0a30df38774e",
+      "variantStructures": {
+        "231b331eecc9bf946bb426ea43ff0a30df38774e": [],
+        "091c32e4d7d3da812ce6356e4c389628dbcb1e8b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 999,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "strokeToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 20
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Content=False / Indicator / Base / fixer",
+              "type": "FRAME",
+              "name": "fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "1:12189",
+          "key": "231b331eecc9bf946bb426ea43ff0a30df38774e",
+          "name": "Content=True"
+        },
+        {
+          "id": "1:12194",
+          "key": "091c32e4d7d3da812ce6356e4c389628dbcb1e8b",
+          "name": "Content=False"
+        }
+      ]
+    },
+    {
+      "key": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "name": "🔩 TabModalBgAltPrimary",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "TabModalBgAltPrimary",
+      "defaultVariant": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+      "variantStructures": {
+        "608b2b3ddfaac83e56195936a7f6e5ea52683d84": [],
+        "1de2c8a88dc4ea264b40cfb1cc6d0b3b6faa887b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Selected=True, AccentColor=Primary"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          }
+        ],
+        "4dd28e86b934c66cf4bebdd374f8ddcf8d635a30": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Selected=True, AccentColor=Secondary"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "2402:4177",
+          "key": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+          "name": "Selected=False, AccentColor=Primary"
+        },
+        {
+          "id": "2402:4183",
+          "key": "1de2c8a88dc4ea264b40cfb1cc6d0b3b6faa887b",
+          "name": "Selected=True, AccentColor=Primary"
+        },
+        {
+          "id": "2402:4189",
+          "key": "4dd28e86b934c66cf4bebdd374f8ddcf8d635a30",
+          "name": "Selected=True, AccentColor=Secondary"
+        }
+      ]
+    },
+    {
+      "key": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "name": "🔩 TabModalBgPrimary",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "TabModalBgPrimary",
+      "defaultVariant": "a9625a0ddbe5d0635e471fd835034f8063487322",
+      "variantStructures": {
+        "a9625a0ddbe5d0635e471fd835034f8063487322": [],
+        "4d499f5edac709c0a45962b86ff85f7c355f441b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Selected=True, AccentColor=Primary"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          }
+        ],
+        "b485773ab3c113250e79f6e3ecd376f3e6a83414": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Selected=True, AccentColor=Secondary"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "1:12176",
+          "key": "a9625a0ddbe5d0635e471fd835034f8063487322",
+          "name": "Selected=False, AccentColor=Primary"
+        },
+        {
+          "id": "1:12182",
+          "key": "4d499f5edac709c0a45962b86ff85f7c355f441b",
+          "name": "Selected=True, AccentColor=Primary"
+        },
+        {
+          "id": "2402:3736",
+          "key": "b485773ab3c113250e79f6e3ecd376f3e6a83414",
+          "name": "Selected=True, AccentColor=Secondary"
+        }
+      ]
+    },
+    {
+      "key": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "name": "Tabbar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Tabbar",
+      "defaultVariant": "9003d18ac29109c7f507befe21aa82e5c6972eeb",
+      "variantStructures": {
+        "9003d18ac29109c7f507befe21aa82e5c6972eeb": [],
+        "423bf9d83d6078f336bbc7089d29e1d8417366b7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BgColor=Modal-bg-alt-primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary",
+              "type": "INSTANCE",
+              "name": "TabModalBgAltPrimary",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+                "variantProperties": {
+                  "Selected": "False",
+                  "AccentColor": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon",
+              "type": "FRAME",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 3,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt",
+              "type": "INSTANCE",
+              "name": "🔩 IndicatorModalBgAlt",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+                "variantProperties": {
+                  "Content": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+              "type": "FRAME",
+              "name": "Indicator",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+              "type": "FRAME",
+              "name": "Base",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+              "type": "FRAME",
+              "name": "Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+              "type": "TEXT",
+              "name": "1",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 2,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "TabName",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 1,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary",
+              "type": "INSTANCE",
+              "name": "TabModalBgAltPrimary",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+                "variantProperties": {
+                  "Selected": "False",
+                  "AccentColor": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 13,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon",
+              "type": "FRAME",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 14,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt",
+              "type": "INSTANCE",
+              "name": "🔩 IndicatorModalBgAlt",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+                "variantProperties": {
+                  "Content": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 18,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+              "type": "FRAME",
+              "name": "Indicator",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 20,
+              "parentId": 19,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+              "type": "FRAME",
+              "name": "Base",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 21,
+              "parentId": 20,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+              "type": "FRAME",
+              "name": "Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 22,
+              "parentId": 21,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+              "type": "TEXT",
+              "name": "1",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 23,
+              "parentId": 13,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "TabName",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 24,
+              "parentId": 1,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary",
+              "type": "INSTANCE",
+              "name": "TabModalBgAltPrimary",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+                "variantProperties": {
+                  "Selected": "False",
+                  "AccentColor": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 25,
+              "parentId": 24,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon",
+              "type": "FRAME",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 26,
+              "parentId": 25,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 27,
+              "parentId": 26,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 28,
+              "parentId": 27,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 29,
+              "parentId": 25,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt",
+              "type": "INSTANCE",
+              "name": "🔩 IndicatorModalBgAlt",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+                "variantProperties": {
+                  "Content": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 30,
+              "parentId": 29,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+              "type": "FRAME",
+              "name": "Indicator",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 31,
+              "parentId": 30,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+              "type": "FRAME",
+              "name": "Base",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 32,
+              "parentId": 31,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+              "type": "FRAME",
+              "name": "Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 33,
+              "parentId": 32,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+              "type": "TEXT",
+              "name": "1",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 34,
+              "parentId": 24,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "TabName",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 35,
+              "parentId": 1,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary",
+              "type": "INSTANCE",
+              "name": "TabModalBgAltPrimary",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+                "variantProperties": {
+                  "Selected": "False",
+                  "AccentColor": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 36,
+              "parentId": 35,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon",
+              "type": "FRAME",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 37,
+              "parentId": 36,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 38,
+              "parentId": 37,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 39,
+              "parentId": 38,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 40,
+              "parentId": 36,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt",
+              "type": "INSTANCE",
+              "name": "🔩 IndicatorModalBgAlt",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+                "variantProperties": {
+                  "Content": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 41,
+              "parentId": 40,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+              "type": "FRAME",
+              "name": "Indicator",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 42,
+              "parentId": 41,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+              "type": "FRAME",
+              "name": "Base",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 43,
+              "parentId": 42,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+              "type": "FRAME",
+              "name": "Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 44,
+              "parentId": 43,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+              "type": "TEXT",
+              "name": "1",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 45,
+              "parentId": 35,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "TabName",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 46,
+              "parentId": 1,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary",
+              "type": "INSTANCE",
+              "name": "TabModalBgAltPrimary",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 8,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "608b2b3ddfaac83e56195936a7f6e5ea52683d84",
+                "variantProperties": {
+                  "Selected": "False",
+                  "AccentColor": "Primary"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 47,
+              "parentId": 46,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon",
+              "type": "FRAME",
+              "name": "Icon",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 48,
+              "parentId": 47,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 49,
+              "parentId": 48,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 50,
+              "parentId": 49,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 51,
+              "parentId": 47,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt",
+              "type": "INSTANCE",
+              "name": "🔩 IndicatorModalBgAlt",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "a59589fda3f47a1bb43f7ff2496665a74cf13b47",
+                "variantProperties": {
+                  "Content": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 52,
+              "parentId": 51,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+              "type": "FRAME",
+              "name": "Indicator",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 53,
+              "parentId": 52,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+              "type": "FRAME",
+              "name": "Base",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 239,
+                    "g": 49,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+                  "colorHex": "#EF3124"
+                }
+              ],
+              "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "strokeToken": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+              "strokeWeight": 2,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 54,
+              "parentId": 53,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+              "type": "FRAME",
+              "name": "Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 4,
+                  "bottom": 0,
+                  "left": 4
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 55,
+              "parentId": 54,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+              "type": "TEXT",
+              "name": "1",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1",
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+              "typography": {
+                "fontName": "SF Pro Text Bold",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 56,
+              "parentId": 46,
+              "path": "BgColor=Modal-bg-alt-primary / TabModalBgAltPrimary / Title",
+              "type": "TEXT",
+              "name": "Title",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "TabName",
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11,
+                "lineHeight": 16,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Medium",
+                "fontSize": 11
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 44
+          },
+          {
+            "op": "remove",
+            "id": 45
+          },
+          {
+            "op": "remove",
+            "id": 46
+          },
+          {
+            "op": "remove",
+            "id": 47
+          },
+          {
+            "op": "remove",
+            "id": 48
+          },
+          {
+            "op": "remove",
+            "id": 49
+          },
+          {
+            "op": "remove",
+            "id": 50
+          },
+          {
+            "op": "remove",
+            "id": 51
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 54
+          },
+          {
+            "op": "remove",
+            "id": 52
+          },
+          {
+            "op": "remove",
+            "id": 53
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "1:12166",
+          "key": "9003d18ac29109c7f507befe21aa82e5c6972eeb",
+          "name": "BgColor=Modal-bg-primary"
+        },
+        {
+          "id": "2402:3986",
+          "key": "423bf9d83d6078f336bbc7089d29e1d8417366b7",
+          "name": "BgColor=Modal-bg-alt-primary"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 IndicatorModalBgAlt / Content=True",
+      "type": "COMPONENT",
+      "componentKey": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 IndicatorModalBgAlt / Content=True / Indicator",
+      "type": "FRAME",
+      "componentKey": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 IndicatorModalBgAlt / Content=True / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+        "color": "rgba(242,243,245,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 IndicatorModalBgAlt / Content=True / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 IndicatorModalBgAlt / Content=True / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "d8475823c6a37a55fda932decbe0f7ca1ec5a57a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 IndicatorModalBg / Content=True",
+      "type": "COMPONENT",
+      "componentKey": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 IndicatorModalBg / Content=True / Indicator",
+      "type": "FRAME",
+      "componentKey": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 IndicatorModalBg / Content=True / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 IndicatorModalBg / Content=True / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 IndicatorModalBg / Content=True / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "c06787e0f8fa8eba24b3fe375fd6fc61c8cd91fa",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary",
+      "type": "COMPONENT",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon",
+      "type": "FRAME",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBgAlt",
+      "type": "INSTANCE",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBgAlt / Indicator",
+      "type": "FRAME",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:2708217254e78223aa2e69b749f2ffca92a16420/3541:134",
+        "color": "rgba(242,243,245,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBgAlt / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 11,
+      "path": "🔩 TabModalBgAltPrimary / Selected=False, AccentColor=Primary / Title",
+      "type": "TEXT",
+      "componentKey": "6b4ccd02a9bb60805e0ca17731ac57a88d62a708",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary",
+      "type": "COMPONENT",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon",
+      "type": "FRAME",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 11,
+      "path": "🔩 TabModalBgPrimary / Selected=False, AccentColor=Primary / Title",
+      "type": "TEXT",
+      "componentKey": "c202bae3368190eb25075fc4755e3e58af971d9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 1,
+      "path": "Tabbar / BgColor=Modal-bg-primary",
+      "type": "COMPONENT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 999
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / fixer",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Title",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 12,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 999
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / fixer",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Title",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 22,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 32,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Title",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 33,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 43,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Title",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 44,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          8,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 45,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 48,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 49,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg",
+      "type": "INSTANCE",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 50,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 51,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "token": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 52,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 53,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Icon / 🔩 IndicatorModalBg / Indicator / Base / Content / 1",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+      }
+    },
+    {
+      "id": 54,
+      "path": "Tabbar / BgColor=Modal-bg-primary / TabModalBgPrimary / Title",
+      "type": "TEXT",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "TabName"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0,
+        "styleKey": "S:cf893a90732f3e16bd5144907103bab01fc1e4a0,2771:3"
+      }
+    },
+    {
+      "id": 55,
+      "path": "Tabbar / BgColor=Modal-bg-primary / Border",
+      "type": "FRAME",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 56,
+      "path": "Tabbar / BgColor=Modal-bg-primary / Border / Border",
+      "type": "VECTOR",
+      "componentKey": "738038bbf41a26b88b19cb0e498feecab6554657",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

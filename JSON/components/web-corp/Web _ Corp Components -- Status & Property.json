@@ -1,0 +1,1439 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:34:02.613Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Status & Property"
+    ],
+    "componentCount": 4,
+    "elementCount": 16
+  },
+  "components": [
+    {
+      "key": "a09aeb562901f50028d871eecf78115b584e693f",
+      "name": "🔒 [M] PropertyPreset",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Вспомогательный компонент Figma, в коде существует только Status в core-components.",
+      "category": "M] PropertyPreset",
+      "defaultVariant": "7da6cd65969e17902c3efae17a0fe92eb00ded71",
+      "variants": [
+        {
+          "id": "60800:625230",
+          "key": "7da6cd65969e17902c3efae17a0fe92eb00ded71",
+          "name": "Color=Green, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625232",
+          "key": "6dd5cd427af265009b77d179f5c07ae38529fa70",
+          "name": "Color=Green, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625234",
+          "key": "89d6afdd82fd2c028266d779b7dbbff9762cfc9e",
+          "name": "Color=Green, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625236",
+          "key": "640492167787a58f6bd5c21fe74c7da67122b901",
+          "name": "Color=Green, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625238",
+          "key": "26f541accaf086cfc270798d44b498ce57e4516e",
+          "name": "Color=Green, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625240",
+          "key": "db3b9a74c14203ea9bd073f1541f37f6260c237b",
+          "name": "Color=Green, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625242",
+          "key": "d28a26a054dfdfc37a7f5f12a760f1b80b0e414c",
+          "name": "Color=Green, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625244",
+          "key": "46be39e4a5363a4e85aa03c155e6f194bf056cdc",
+          "name": "Color=Green, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625246",
+          "key": "5fb8f988d4ed6f961f850ceea4dcde919d8ed22b",
+          "name": "Color=Orange, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625248",
+          "key": "bab01bfd79735dc7ec03e381945458a3551c4dfa",
+          "name": "Color=Orange, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625250",
+          "key": "38de972a6ab6931ca0ccd2bfb8c1141faa818e96",
+          "name": "Color=Orange, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625252",
+          "key": "e35ac677a6583f44b0f48426769d9a45c3ff4363",
+          "name": "Color=Orange, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625254",
+          "key": "e96f5679c19ea73e9d3670381efc6d45683618b8",
+          "name": "Color=Orange, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625256",
+          "key": "257ca02b8aafc8519424a7a19bed63edb87c0be6",
+          "name": "Color=Orange, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625258",
+          "key": "f56e865d79a4406772f0f583a37120503a65f11f",
+          "name": "Color=Orange, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625260",
+          "key": "761b03917223c12f38d7170a41d3d0e29eb75605",
+          "name": "Color=Orange, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625262",
+          "key": "abe17a76f1964c9d7d7256615c1cc890ae96f485",
+          "name": "Color=Red, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625264",
+          "key": "4dae1a2f79b0bee89be8a0a9048526f63c1569cf",
+          "name": "Color=Red, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625266",
+          "key": "3a93cf8ee9571a1d5f17781338799167754d78f5",
+          "name": "Color=Red, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625268",
+          "key": "a06adfd8b01ce0cf744ae7c704a1c5c213255550",
+          "name": "Color=Red, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625270",
+          "key": "e7e4247b3c2a8d4f4adbb8b87a895f4cb3403a5f",
+          "name": "Color=Red, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625272",
+          "key": "88b6145fb84bce28a41d1213802b2ccebe47d401",
+          "name": "Color=Red, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625274",
+          "key": "3c24e23cfe3c4e028b839fee57c6e9d28d0cc361",
+          "name": "Color=Red, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625276",
+          "key": "9a6a4ae20a2d0d2fbfe41e81e1e84375f587b12c",
+          "name": "Color=Red, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625278",
+          "key": "8406c07f61d3dab47cfde4ed24796f791c796eb8",
+          "name": "Color=Blue, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625280",
+          "key": "614e23d4614b2b5167cde76810b37a861872436a",
+          "name": "Color=Blue, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625282",
+          "key": "d5bb01ce3dc7cbb576ab280cd93b5f46987300bf",
+          "name": "Color=Blue, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625284",
+          "key": "0b2b87b66f3ef858d1a7e6db8504b4b7ec5ebd82",
+          "name": "Color=Blue, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625286",
+          "key": "a66c425d515d8f91a84f603b7d9350a73b2b5fd7",
+          "name": "Color=Blue, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625288",
+          "key": "61e27fe2393e383d0bcc34778300d105201c9a51",
+          "name": "Color=Blue, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625290",
+          "key": "0bda9925ad3dfc2dc9a6faefad78485c1a2175cc",
+          "name": "Color=Blue, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625292",
+          "key": "1297bdcbc9c26a82b396bedf6a2bc3bf19625e2a",
+          "name": "Color=Blue, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625294",
+          "key": "265e23f029822bc8eb692440a7d4c28929f12468",
+          "name": "Color=Grey, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625296",
+          "key": "520179729ad904a50c2bd8854e6bbc9222587224",
+          "name": "Color=Grey, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625298",
+          "key": "fb2d9bfbdfe3ffac2a1fc6c0fcfeaf0b0be0f50e",
+          "name": "Color=Grey, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625300",
+          "key": "6f4f1a06b0ec182d4e2dda5a68dee6a1a8f117d5",
+          "name": "Color=Grey, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625302",
+          "key": "17b1162a4246a6e63a578509342efba6d0a56910",
+          "name": "Color=Grey, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625304",
+          "key": "c9a3f317c8b4900eb0e2a1ee68c0488f856a6f57",
+          "name": "Color=Grey, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625306",
+          "key": "8f00ef256b36161c4f2b4247af179ddd69dd9a16",
+          "name": "Color=Grey, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625308",
+          "key": "d3c0ab690209a479ffe6e865f033d2ba502380b9",
+          "name": "Color=Grey, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625310",
+          "key": "4ff85c58a7ac78e50355f9f9c2b2e7b5393b3450",
+          "name": "Color=Indigo, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625312",
+          "key": "a39be565e828bb9dce4c277a5fcfa62a4d628ea6",
+          "name": "Color=Indigo, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625314",
+          "key": "0ddffd4288aee4b9f712d3483d91e7d50039a220",
+          "name": "Color=Indigo, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625316",
+          "key": "ff2806db797759a0a70752156c3234c62875adf8",
+          "name": "Color=Indigo, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625318",
+          "key": "e69f8faef0ca7e2b3dbf2178211cd855cf957320",
+          "name": "Color=Indigo, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625320",
+          "key": "e8946515e081f8d28a07bbe74fd70a116e706d76",
+          "name": "Color=Indigo, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625322",
+          "key": "fcb507fde17ee4a193cc983bdcb4989c8e25324c",
+          "name": "Color=Indigo, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625324",
+          "key": "a70ff95b6b8f8146607cbbda346cb3625132d57d",
+          "name": "Color=Indigo, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625783",
+          "key": "9ffdbf17bd5b91431d069e6184dcb7bc09f50ed5",
+          "name": "Color=Custom, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625785",
+          "key": "964b2fc82829c0dfedc42d0c88532ebd8e93a653",
+          "name": "Color=Custom, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625787",
+          "key": "68cd40ae539c5361017e8f629b30db2861801219",
+          "name": "Color=Custom, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625789",
+          "key": "b370ed5f0e4250834f013d5d20ad365be4f0683a",
+          "name": "Color=Custom, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625791",
+          "key": "ee9e28f6fd92326808754cfdab81172de55343f5",
+          "name": "Color=Custom, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625793",
+          "key": "a3a07bf4dfcab90d43befdd865e15041ea038286",
+          "name": "Color=Custom, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625795",
+          "key": "b89ad6400527799e585c81113272bb96f9ae6f09",
+          "name": "Color=Custom, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625797",
+          "key": "ccd718982d45c250ae1a4390a7bf217028d3ac54",
+          "name": "Color=Custom, Style=Muted, Size=20"
+        }
+      ]
+    },
+    {
+      "key": "53f4d943dc6e9b85579928e876af6ebdb6383ae9",
+      "name": "🔒 [D] PropertyPreset",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Вспомогательный компонент Figma, в коде существует только Status в core-components.",
+      "category": "D] PropertyPreset",
+      "defaultVariant": "c1d7e1e4f1b78367eddace153f4dbaa264c4845a",
+      "variants": [
+        {
+          "id": "60800:624834",
+          "key": "c1d7e1e4f1b78367eddace153f4dbaa264c4845a",
+          "name": "Color=Green, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624838",
+          "key": "55c7b3a923bfb246c0f8ce6f85558f78ec702a53",
+          "name": "Color=Green, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:624842",
+          "key": "156f349d25b76ce3114a31fc0530fe3202136e0d",
+          "name": "Color=Green, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:624846",
+          "key": "a3c44b8780c9d5dd0a038d1c89129d1342c36098",
+          "name": "Color=Green, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:624850",
+          "key": "4198fd0d786cfe04835a9da1b05add1de90de638",
+          "name": "Color=Green, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:624854",
+          "key": "9ff390f659329ba2e6574cc391532a4f4aca9c9b",
+          "name": "Color=Green, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:624858",
+          "key": "74af4e456cc1002dc0f5bf2bdc0147f9752654b7",
+          "name": "Color=Green, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:624862",
+          "key": "7d5ea49636cc87419948596d185dc780afdacdbd",
+          "name": "Color=Green, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:624866",
+          "key": "f7bdd4c99462ab4644bc1ac4f9b5660d5ef948b2",
+          "name": "Color=Orange, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624870",
+          "key": "bf36a53df9e83b153adfefe753993a564ad435de",
+          "name": "Color=Orange, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:624874",
+          "key": "ef2478c2e9b7dab08e8277000787ff3f3ef0ea0f",
+          "name": "Color=Orange, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:624878",
+          "key": "59a05265fbe208f92ccba100557144124c4d393a",
+          "name": "Color=Orange, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:624882",
+          "key": "d1c4ff8d56ad4c1ec0fc8cb29d00f2b1e222b6fa",
+          "name": "Color=Orange, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:624886",
+          "key": "3fc6efc88caced5a80b0a450e72f5ed8c9f512b6",
+          "name": "Color=Orange, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:624890",
+          "key": "5859bb44d1f0047943539ee970036c75f37cd8eb",
+          "name": "Color=Orange, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:624894",
+          "key": "2aaefeb5ec7ac6467e5c00592c23d11cc4aba8c3",
+          "name": "Color=Orange, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:624898",
+          "key": "de1ed14ef339c170be42c284749d8ddc75a6f7c1",
+          "name": "Color=Red, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624902",
+          "key": "9a6da911466d24ba732d9362b8e5c43abec69c17",
+          "name": "Color=Red, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:624906",
+          "key": "cb96dfb16a2df32a35ec4406c9daa273a1f2d8a0",
+          "name": "Color=Red, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:624910",
+          "key": "482d93474b8ca1ff38d61c7fb66bbca91ed4252e",
+          "name": "Color=Red, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:624914",
+          "key": "056aa034b7f41c654d020f51244a2a8ebf9316e1",
+          "name": "Color=Red, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:624918",
+          "key": "ef5cd6ded255a7d64e4326f410dec3bad41a3952",
+          "name": "Color=Red, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:624922",
+          "key": "d5be4ac5b9e2b8c03b14698a6d03cb90a8b9b72c",
+          "name": "Color=Red, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:624926",
+          "key": "06616bba956a7a7310b4235c025e3b0410ac33f5",
+          "name": "Color=Red, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:624930",
+          "key": "400f71cd6d42c23bdc04ed068d045c936b617aba",
+          "name": "Color=Blue, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624934",
+          "key": "0d68443b991b2eb0201c2c9ad5dd6127147fd475",
+          "name": "Color=Blue, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:624938",
+          "key": "3d0987ba0de5c0ece0cc7f0be9430f80ccc08496",
+          "name": "Color=Blue, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:624942",
+          "key": "b88407e4b75fac328155dcdcfce24ec734b5f8cc",
+          "name": "Color=Blue, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:624946",
+          "key": "0a727e8a2c6a747272488d44db296c5223e7ab3f",
+          "name": "Color=Blue, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:624950",
+          "key": "06505913f7053382ded7c228bb279526832c9882",
+          "name": "Color=Blue, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:624954",
+          "key": "522092694969c86cad1f10a425cfb0c42edd6905",
+          "name": "Color=Blue, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:624958",
+          "key": "c813845b8e22ae28ac41e01ef29adf042027e3a9",
+          "name": "Color=Blue, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:624962",
+          "key": "94407218ccfa65749e066cbc12be9a6201402291",
+          "name": "Color=Grey, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624966",
+          "key": "c1be193647deeefbf56d4604a16ecffddbec3717",
+          "name": "Color=Grey, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:624970",
+          "key": "4aa5b6e6c79d2a773eb8186da17c69c9e933683b",
+          "name": "Color=Grey, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:624974",
+          "key": "8b39b1ee74597e58137862ca400b952f194f54e5",
+          "name": "Color=Grey, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:624978",
+          "key": "71a6a85e4b100031de9623ff28bc1b47190fb964",
+          "name": "Color=Grey, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:624982",
+          "key": "9b462102049ba6aa8eaf64e8e8c6cad8c6989c0c",
+          "name": "Color=Grey, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:624986",
+          "key": "30c44cf90a6c671dc3b9c8682b7225ff1a8708a3",
+          "name": "Color=Grey, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:624990",
+          "key": "fa5c7e48fde074b205e11ae531879dc4462a5236",
+          "name": "Color=Grey, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:624994",
+          "key": "f85f9643a0ba027b31ae09d576f9aad1880b32c7",
+          "name": "Color=Indigo, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625745",
+          "key": "1efbd9f26bc6867fcc88c021fe1ad6208d33d5d6",
+          "name": "Color=Custom, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:624998",
+          "key": "a02d036a89d025782559ad12f203979ba8cd1a6a",
+          "name": "Color=Indigo, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625747",
+          "key": "230de3a0ab704d49874731819db2ba97d2e2d36c",
+          "name": "Color=Custom, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625002",
+          "key": "55a9030b2b7d585028add2c7342d485fec38656a",
+          "name": "Color=Indigo, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625749",
+          "key": "c8c0767375ab7834592a95f3d01c6f5d391cd919",
+          "name": "Color=Custom, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625006",
+          "key": "c6a9a9a6d9c55d932aa7cfe6b09f5f90784e03a2",
+          "name": "Color=Indigo, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625751",
+          "key": "9ebab1f0b205e33ee2cae0aebbbf462b737c8d7e",
+          "name": "Color=Custom, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625010",
+          "key": "88bdc665355f05237dafcc455d9ecfd53fedf398",
+          "name": "Color=Indigo, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625753",
+          "key": "c504025bd37e23858ba939f09f8b5c6ea9872c6a",
+          "name": "Color=Custom, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625014",
+          "key": "3e47d3c41aa8b6378d7f9bfaa1cce7904be8d675",
+          "name": "Color=Indigo, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625755",
+          "key": "75151a6207cb95916e907c3ae3a49ba9093957b4",
+          "name": "Color=Custom, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625018",
+          "key": "f129ef77b7eb19996dd87ff44ae29d4c6a68fbfd",
+          "name": "Color=Indigo, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625757",
+          "key": "079c008d34118ea662d7a171543b68f5eac6b532",
+          "name": "Color=Custom, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625022",
+          "key": "2694d4cffb47a7c21a8b8a61a06e6369bb61be0d",
+          "name": "Color=Indigo, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625759",
+          "key": "34a25931f0463deb922783ed7ece64956ef21242",
+          "name": "Color=Custom, Style=Muted, Size=40"
+        }
+      ]
+    },
+    {
+      "key": "f9c81f10f0a89714a38d79ab66e48c6438817a1e",
+      "name": "🔒 [M] StatusPreset",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Вспомогательный компонент Figma, в коде существует только Status в core-components.",
+      "category": "M] StatusPreset",
+      "defaultVariant": "db90b908d4867d0fad3e50c01876fc1599e09b09",
+      "variants": [
+        {
+          "id": "60800:625471",
+          "key": "db90b908d4867d0fad3e50c01876fc1599e09b09",
+          "name": "Type=Approved, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625473",
+          "key": "706ff3a8e3236d9561ceb323da32353acb778f24",
+          "name": "Type=Approved, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625475",
+          "key": "f3bfea2c6e99e89ae4260e228a75d69286ff21e6",
+          "name": "Type=Approved, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625477",
+          "key": "03666a518e851ccc38d7f0001e83346aae876b01",
+          "name": "Type=Approved, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625479",
+          "key": "a9865013feb1f1d89c018b7bcbb57debe2bd5d12",
+          "name": "Type=Approved, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625481",
+          "key": "92cf33915c6829ab6e16e5b19151e320642a8296",
+          "name": "Type=Approved, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625483",
+          "key": "f7442ad78cfec36197f61016bbd51e7d6136d5f0",
+          "name": "Type=Approved, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625485",
+          "key": "150c4e5b8cde4eeff17fd178f02cc51a028df6f7",
+          "name": "Type=Approved, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625487",
+          "key": "c1abc2fcf2c2ab0406c108bed6955e0dc2abe8d6",
+          "name": "Type=Attention, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625489",
+          "key": "611d3b6d5063079505f85f00e26986db1704e23c",
+          "name": "Type=Attention, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625491",
+          "key": "9bc18719fe374b8e30afba15fdee50fa5aea898f",
+          "name": "Type=Attention, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625493",
+          "key": "5e271a7d76a6e8cda4913a66c7a9bfda0c3cd9d0",
+          "name": "Type=Attention, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625495",
+          "key": "3704a86d7198e3f8a59331e40bb6b691083cdca0",
+          "name": "Type=Attention, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625497",
+          "key": "4c82a0629c331cde4a1b1202910dadefdcdafb6c",
+          "name": "Type=Attention, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625499",
+          "key": "17cd7bac02faadc285108428a5e35738e16d3ccd",
+          "name": "Type=Attention, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625501",
+          "key": "c0941d50edbfc9c86d3814531a5bc83b1f71a6f7",
+          "name": "Type=Attention, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625503",
+          "key": "b710078d6c6d62765d3f152eadbe156a86ec37f7",
+          "name": "Type=Error / Risk, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625505",
+          "key": "419a379b3e921daca2b1c7dd66eac223cbcaeb2f",
+          "name": "Type=Error / Risk, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625507",
+          "key": "3a36ce5752b04b86634a27fe2f675494f9cb5dc7",
+          "name": "Type=Error / Risk, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625509",
+          "key": "03009c4bdd5e55591dbbd6eb7de53aea86e1e35a",
+          "name": "Type=Error / Risk, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625511",
+          "key": "fcb85cb0f5acaab0d5cfccabc6f78c5e059b0c88",
+          "name": "Type=Error / Risk, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625513",
+          "key": "85674547a2c5d8ae0caacedaaa38dc50e9000a96",
+          "name": "Type=Error / Risk, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625515",
+          "key": "069199035c8570504365b2f8eb61132734cc92bd",
+          "name": "Type=Error / Risk, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625517",
+          "key": "1c57d356ab61957485c4e526fff4c134bcebe9b2",
+          "name": "Type=Error / Risk, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625519",
+          "key": "62416ed28de39c3eaad186d3bfff96352d6992b7",
+          "name": "Type=Action, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625521",
+          "key": "2334ccd8c9910162c0b89f482504130a01c4528c",
+          "name": "Type=Action, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625523",
+          "key": "53aee2870a2aa91bceb6b44b5d5762d9ff1a2472",
+          "name": "Type=Action, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625525",
+          "key": "062147e3dda073ce5e903f2f057f897e8e775aff",
+          "name": "Type=Action, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625527",
+          "key": "d79fe70ca719d08cb2e3ee83cd573c8c449f8b4d",
+          "name": "Type=Action, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625529",
+          "key": "e28c3a13b7f2be98d0ffcf2be7b44b85dd0ccd48",
+          "name": "Type=Action, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625531",
+          "key": "d370f8057b60278a751921a92c80f8128831f2ea",
+          "name": "Type=Action, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625533",
+          "key": "7f093b7ea40827ce0e8c699c020bbfc99c4e20bc",
+          "name": "Type=Action, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625535",
+          "key": "dde1026ba067164de96b2f694bc51e81bef86d9a",
+          "name": "Type=Neutral, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625537",
+          "key": "a9465247872baca7f1ca121d5d98f14c1624e678",
+          "name": "Type=Neutral, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625539",
+          "key": "6494f9112d34c30406c7f69ea93fa04994f54eba",
+          "name": "Type=Neutral, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625541",
+          "key": "f28bd14d1f2ba813555b0d07dfe64c91116f8345",
+          "name": "Type=Neutral, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625543",
+          "key": "0505170564386243f542035dd7cfce44264bc946",
+          "name": "Type=Neutral, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625545",
+          "key": "6958c61c7cab9a1ee8c111d4aaefcc16a3383810",
+          "name": "Type=Neutral, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625547",
+          "key": "d4b36411d04f648385b047e6776e7b803337d665",
+          "name": "Type=Neutral, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625549",
+          "key": "f2b0e80649c0c1086a53645420a1a6bc3e6cf90e",
+          "name": "Type=Neutral, Style=Muted, Size=40"
+        },
+        {
+          "id": "60800:625551",
+          "key": "57fe0b05b615bfb9cf0e2815b9eec9d3370c0a65",
+          "name": "Type=Processing, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60800:625553",
+          "key": "4b5c6b7b191a96c31b5ace78f5c64bdd25bfca00",
+          "name": "Type=Processing, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60800:625555",
+          "key": "624850928f13d18b02ca5577f61b6f853b5f1f4d",
+          "name": "Type=Processing, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60800:625557",
+          "key": "5f42d748cbb7a47f12fc88452d5add95be572684",
+          "name": "Type=Processing, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60800:625559",
+          "key": "689a45f1a9c6cf9d45baba6e4e09947bb9d3a60f",
+          "name": "Type=Processing, Style=Muted, Size=20"
+        },
+        {
+          "id": "60800:625561",
+          "key": "2d19ae666658a52bbcfce970e5ba7485dc313f5a",
+          "name": "Type=Processing, Style=Muted, Size=24"
+        },
+        {
+          "id": "60800:625563",
+          "key": "fbcf224d5e2b180e6ed9175476c5431b16d399e6",
+          "name": "Type=Processing, Style=Muted, Size=32"
+        },
+        {
+          "id": "60800:625565",
+          "key": "9c2e216bf4bb4a41cfc48bca8f0e162543657f27",
+          "name": "Type=Processing, Style=Muted, Size=40"
+        }
+      ]
+    },
+    {
+      "key": "5062ff1e0c435b64f3d1f4a0ae699dcb646b34f4",
+      "name": "🔒 [D] StatusPreset",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Вспомогательный компонент Figma, в коде существует только Status в core-components.",
+      "category": "D] StatusPreset",
+      "defaultVariant": "930878602bfd3100e2a3b210d9d88bf4208b6ef5",
+      "variants": [
+        {
+          "id": "60798:623881",
+          "key": "930878602bfd3100e2a3b210d9d88bf4208b6ef5",
+          "name": "Type=Approved, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623942",
+          "key": "26b847ef2dadd62ff9728ab50c728f6c7dcef455",
+          "name": "Type=Approved, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624062",
+          "key": "70a3151180c1319d850e66d8d6cf9208c2859566",
+          "name": "Type=Approved, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624279",
+          "key": "95a342b8f2a4b7df359c0d50a8bd9e6632b28d92",
+          "name": "Type=Approved, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623887",
+          "key": "48ffd17941f3b25a1cc63bb0a2740b6d447ccbd7",
+          "name": "Type=Approved, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623944",
+          "key": "469b9235568ef40a7c4e3894e214edbecf4f5f64",
+          "name": "Type=Approved, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624064",
+          "key": "660014b9f0b88f866af37e4c3760402abcbfefe2",
+          "name": "Type=Approved, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624281",
+          "key": "96c1c1910a2900203ac7932b0e30c3e1399a1b26",
+          "name": "Type=Approved, Style=Muted, Size=40"
+        },
+        {
+          "id": "60798:623882",
+          "key": "5288304307a09132937abf4515a830fa2c3e8e85",
+          "name": "Type=Attention, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623946",
+          "key": "273feb03fad47cd1cfd950718de05c5c612c6a64",
+          "name": "Type=Attention, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624066",
+          "key": "44450088f8e4913bef72fb2d4936b337b9ac92cc",
+          "name": "Type=Attention, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624283",
+          "key": "2c086083c584b2afd9416ef590873eb057b56773",
+          "name": "Type=Attention, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623888",
+          "key": "7e5ea33a45d0ca278c5e46190af24f2e0aa3aabc",
+          "name": "Type=Attention, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623948",
+          "key": "253447fb9de160e8cf23bb7f89f42c3e5dfeb948",
+          "name": "Type=Attention, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624068",
+          "key": "074153adf559895a075df66d9bd697ec5554b467",
+          "name": "Type=Attention, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624285",
+          "key": "0d389ffa8b6c2a77ba82a97a8ffd1c690345a6b8",
+          "name": "Type=Attention, Style=Muted, Size=40"
+        },
+        {
+          "id": "60798:623883",
+          "key": "18558ac53b8a6c0c4696a9d6086051c1a2d5079e",
+          "name": "Type=Error / Risk, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623950",
+          "key": "fd429b750d1d689194185955f4d3cd8b9f3187fc",
+          "name": "Type=Error / Risk, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624070",
+          "key": "a4870ebf53a786c10fd9645febf31c05dea63730",
+          "name": "Type=Error / Risk, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624287",
+          "key": "cb0bfc1da0c1d35facaaa696d566ade9fd2346af",
+          "name": "Type=Error / Risk, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623889",
+          "key": "9dba4ba7b0121b6beed8b2b9bbc317a0302a0c29",
+          "name": "Type=Error / Risk, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623952",
+          "key": "f537207d370f4df9b4455e10f7c2267157d6a729",
+          "name": "Type=Error / Risk, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624072",
+          "key": "f54ab01148759e8559fd6553df3065181252a416",
+          "name": "Type=Error / Risk, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624289",
+          "key": "21f2cc4c1358236c2a3e05a1230ad65dea126650",
+          "name": "Type=Error / Risk, Style=Muted, Size=40"
+        },
+        {
+          "id": "60798:623884",
+          "key": "45c938a939759fa7b5e4363bbb4693559b1430c6",
+          "name": "Type=Action, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623954",
+          "key": "46f77ea96b873d0f1583ffee122df961274b62e0",
+          "name": "Type=Action, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624074",
+          "key": "bb18439657b2bd3c11ccd5d34c503098c90ae532",
+          "name": "Type=Action, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624291",
+          "key": "35c594ad83813bff006968dc7705229bd23e6bae",
+          "name": "Type=Action, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623890",
+          "key": "19285e102ff78415287602f8da731e0884aca960",
+          "name": "Type=Action, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623956",
+          "key": "50acc42153452f60b89c74e4b5848a9edc070a66",
+          "name": "Type=Action, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624076",
+          "key": "35f9c7399ee15ed5b9234461fc1630c5bea7f591",
+          "name": "Type=Action, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624293",
+          "key": "fe66c8830de61d361273bc5bc9afa24fb792be47",
+          "name": "Type=Action, Style=Muted, Size=40"
+        },
+        {
+          "id": "60798:623886",
+          "key": "e0fc03042272d1a842ac94090148e08003db2766",
+          "name": "Type=Processing, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623962",
+          "key": "8d9b9af0d3cadac6658e0ffffa7ccdfd73b2de44",
+          "name": "Type=Processing, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624082",
+          "key": "f2ed9bbd84115caad5f66d8d88ab31a04d1d3821",
+          "name": "Type=Processing, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624299",
+          "key": "940dccfb9ba62ea034eb17d62cbd4058edfbff35",
+          "name": "Type=Processing, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623892",
+          "key": "ae2effd2c3826917be0af4b689b5f17598ee80b2",
+          "name": "Type=Processing, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623964",
+          "key": "cb85d5e17567c667b91221a91f7312cdcba0f5fe",
+          "name": "Type=Processing, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624084",
+          "key": "b89c1a32e062dcff764e772ea99ca140790419b2",
+          "name": "Type=Processing, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624301",
+          "key": "e48e4635da0dfd50a3f0ab9db32dc20578e3ff6f",
+          "name": "Type=Processing, Style=Muted, Size=40"
+        },
+        {
+          "id": "60798:623885",
+          "key": "a70c25add1c7ce064d91b6f821ba0882db4ce0c9",
+          "name": "Type=Neutral, Style=Contrast, Size=20"
+        },
+        {
+          "id": "60798:623958",
+          "key": "a762ae3bdb7c6e26de67d34aa7791095aa30f02e",
+          "name": "Type=Neutral, Style=Contrast, Size=24"
+        },
+        {
+          "id": "60798:624078",
+          "key": "4f75392e9850ff4b556b4ca8378b4972d4c1f421",
+          "name": "Type=Neutral, Style=Contrast, Size=32"
+        },
+        {
+          "id": "60798:624295",
+          "key": "901a608c28cbc04a9a41f68810bd85217dffecd5",
+          "name": "Type=Neutral, Style=Contrast, Size=40"
+        },
+        {
+          "id": "60798:623891",
+          "key": "190cf8e4e07e55603201d3a06a2538af3cc78c51",
+          "name": "Type=Neutral, Style=Muted, Size=20"
+        },
+        {
+          "id": "60798:623960",
+          "key": "a853877504bc0b958d59197e6180535d24d4748a",
+          "name": "Type=Neutral, Style=Muted, Size=24"
+        },
+        {
+          "id": "60798:624080",
+          "key": "8a776a6d86768f665d50ba8d9ee63dde89ba47c7",
+          "name": "Type=Neutral, Style=Muted, Size=32"
+        },
+        {
+          "id": "60798:624297",
+          "key": "75902b76098e8ff4c93c7398a25f3901a86b5f78",
+          "name": "Type=Neutral, Style=Muted, Size=40"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔒 [M] PropertyPreset / Color=Green, Style=Contrast, Size=20",
+      "type": "COMPONENT",
+      "componentKey": "a09aeb562901f50028d871eecf78115b584e693f",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status",
+      "type": "INSTANCE",
+      "componentKey": "a09aeb562901f50028d871eecf78115b584e693f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status / Label",
+      "type": "INSTANCE",
+      "componentKey": "a09aeb562901f50028d871eecf78115b584e693f",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status / Label / Label",
+      "type": "TEXT",
+      "componentKey": "a09aeb562901f50028d871eecf78115b584e693f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] PropertyPreset / Color=Green, Style=Contrast, Size=20",
+      "type": "COMPONENT",
+      "componentKey": "53f4d943dc6e9b85579928e876af6ebdb6383ae9",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status",
+      "type": "INSTANCE",
+      "componentKey": "53f4d943dc6e9b85579928e876af6ebdb6383ae9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status / 🔩 Label",
+      "type": "INSTANCE",
+      "componentKey": "53f4d943dc6e9b85579928e876af6ebdb6383ae9",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] PropertyPreset / Color=Green, Style=Contrast, Size=20 / Status / 🔩 Label / Label",
+      "type": "TEXT",
+      "componentKey": "53f4d943dc6e9b85579928e876af6ebdb6383ae9",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] StatusPreset / Type=Approved, Style=Contrast, Size=20",
+      "type": "COMPONENT",
+      "componentKey": "f9c81f10f0a89714a38d79ab66e48c6438817a1e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status",
+      "type": "INSTANCE",
+      "componentKey": "f9c81f10f0a89714a38d79ab66e48c6438817a1e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 99
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status / Label",
+      "type": "INSTANCE",
+      "componentKey": "f9c81f10f0a89714a38d79ab66e48c6438817a1e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status / Label / Label",
+      "type": "TEXT",
+      "componentKey": "f9c81f10f0a89714a38d79ab66e48c6438817a1e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] StatusPreset / Type=Approved, Style=Contrast, Size=20",
+      "type": "COMPONENT",
+      "componentKey": "5062ff1e0c435b64f3d1f4a0ae699dcb646b34f4",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status",
+      "type": "INSTANCE",
+      "componentKey": "5062ff1e0c435b64f3d1f4a0ae699dcb646b34f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 0,
+        "radius": 99
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status / 🔩 Label",
+      "type": "INSTANCE",
+      "componentKey": "5062ff1e0c435b64f3d1f4a0ae699dcb646b34f4",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] StatusPreset / Type=Approved, Style=Contrast, Size=20 / Status / 🔩 Label / Label",
+      "type": "TEXT",
+      "componentKey": "5062ff1e0c435b64f3d1f4a0ae699dcb646b34f4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

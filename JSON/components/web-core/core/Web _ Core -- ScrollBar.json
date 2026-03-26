@@ -1,0 +1,441 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:53:27.784Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ScrollBar"
+    ],
+    "componentCount": 1,
+    "elementCount": 3
+  },
+  "components": [
+    {
+      "key": "7f65c86cebe181f94601e9487370b14b2764a69b",
+      "name": "Scrollbar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Scrollbar",
+      "defaultVariant": "4fe34b93231529eb47dc5dcdc171df74b9732d1e",
+      "variantStructures": {
+        "4fe34b93231529eb47dc5dcdc171df74b9732d1e": [],
+        "f51d62f5a01121f2443773dea6e20079f6680817": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Center, Axis=Vertical, Inverted=False"
+            }
+          }
+        ],
+        "586649a334ed858751028606927d7261f559a0b5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End, Axis=Vertical, Inverted=False"
+            }
+          }
+        ],
+        "8462c8b8d6e655eb109e6ba0495877d0733ab110": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start, Axis=Horizontal, Inverted=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "4e239de76695e96e240a3c91e7ce4f7f3405380e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Center, Axis=Horizontal, Inverted=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "d40c9f1459d9460e6673ff333b6814a565df6fe0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End, Axis=Horizontal, Inverted=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "0cb4d37556a879ea016c87c74b66166be284b285": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start, Axis=Horizontal, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "ecf5cb044bd3b4687fd0d2356462b4ccc21d607b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Center, Axis=Horizontal, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "2680c0bea074d9a6935d44106b730824574b35d7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End, Axis=Horizontal, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 18,
+                  "bottom": 0,
+                  "left": 18
+                },
+                "itemSpacing": 10
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "2161f241ca9b605c9a31f7c7eab14997e83febc0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Start, Axis=Vertical, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "70ab14a099c979dc58e487f7d5e01b762e2e61ea": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=Center, Axis=Vertical, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "be35e4dc7419ea0e65c2441debbe2fb0a9c446be": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End, Axis=Vertical, Inverted=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "206:69757",
+          "key": "4fe34b93231529eb47dc5dcdc171df74b9732d1e",
+          "name": "Position=Start, Axis=Vertical, Inverted=False"
+        },
+        {
+          "id": "206:69759",
+          "key": "f51d62f5a01121f2443773dea6e20079f6680817",
+          "name": "Position=Center, Axis=Vertical, Inverted=False"
+        },
+        {
+          "id": "206:69761",
+          "key": "586649a334ed858751028606927d7261f559a0b5",
+          "name": "Position=End, Axis=Vertical, Inverted=False"
+        },
+        {
+          "id": "206:69763",
+          "key": "8462c8b8d6e655eb109e6ba0495877d0733ab110",
+          "name": "Position=Start, Axis=Horizontal, Inverted=False"
+        },
+        {
+          "id": "206:69765",
+          "key": "4e239de76695e96e240a3c91e7ce4f7f3405380e",
+          "name": "Position=Center, Axis=Horizontal, Inverted=False"
+        },
+        {
+          "id": "206:69767",
+          "key": "d40c9f1459d9460e6673ff333b6814a565df6fe0",
+          "name": "Position=End, Axis=Horizontal, Inverted=False"
+        },
+        {
+          "id": "206:69744",
+          "key": "0cb4d37556a879ea016c87c74b66166be284b285",
+          "name": "Position=Start, Axis=Horizontal, Inverted=True"
+        },
+        {
+          "id": "206:69746",
+          "key": "ecf5cb044bd3b4687fd0d2356462b4ccc21d607b",
+          "name": "Position=Center, Axis=Horizontal, Inverted=True"
+        },
+        {
+          "id": "206:69748",
+          "key": "2680c0bea074d9a6935d44106b730824574b35d7",
+          "name": "Position=End, Axis=Horizontal, Inverted=True"
+        },
+        {
+          "id": "206:69750",
+          "key": "2161f241ca9b605c9a31f7c7eab14997e83febc0",
+          "name": "Position=Start, Axis=Vertical, Inverted=True"
+        },
+        {
+          "id": "206:69752",
+          "key": "70ab14a099c979dc58e487f7d5e01b762e2e61ea",
+          "name": "Position=Center, Axis=Vertical, Inverted=True"
+        },
+        {
+          "id": "206:69754",
+          "key": "be35e4dc7419ea0e65c2441debbe2fb0a9c446be",
+          "name": "Position=End, Axis=Vertical, Inverted=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Scrollbar / Position=Start, Axis=Vertical, Inverted=False",
+      "type": "COMPONENT",
+      "componentKey": "7f65c86cebe181f94601e9487370b14b2764a69b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Scrollbar / Position=Start, Axis=Vertical, Inverted=False / kolbaska",
+      "type": "FRAME",
+      "componentKey": "7f65c86cebe181f94601e9487370b14b2764a69b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          18,
+          0,
+          18,
+          0
+        ],
+        "gap": 10,
+        "radius": 100
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Scrollbar / Position=Start, Axis=Vertical, Inverted=False / kolbaska / Fixer",
+      "type": "FRAME",
+      "componentKey": "7f65c86cebe181f94601e9487370b14b2764a69b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

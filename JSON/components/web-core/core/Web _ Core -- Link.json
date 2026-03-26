@@ -1,0 +1,1138 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:53:08.392Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Link"
+    ],
+    "componentCount": 2,
+    "elementCount": 19
+  },
+  "components": [
+    {
+      "key": "9945cede76dc00333e382db8b5f0f8f8a1be881b",
+      "name": "🔩 Underline",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Underline",
+      "defaultVariant": "bade0c529b189047e107a0c2f9720e94ac587f5d",
+      "variantStructures": {
+        "bade0c529b189047e107a0c2f9720e94ac587f5d": [],
+        "0e10027fa1a37d535894c58df99e52264861e09d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Line=None"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "2ae1ad9dfa1e91be953d34117d126a3a7fecd24b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Line=Pseudo"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "493:7884",
+          "key": "bade0c529b189047e107a0c2f9720e94ac587f5d",
+          "name": "Line=Solid"
+        },
+        {
+          "id": "493:7886",
+          "key": "0e10027fa1a37d535894c58df99e52264861e09d",
+          "name": "Line=None"
+        },
+        {
+          "id": "493:7887",
+          "key": "2ae1ad9dfa1e91be953d34117d126a3a7fecd24b",
+          "name": "Line=Pseudo"
+        }
+      ]
+    },
+    {
+      "key": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "name": "Link",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Link",
+      "defaultVariant": "bb2e85770f194e7bed71f247e82d40d0c4afd1e3",
+      "variantStructures": {
+        "bb2e85770f194e7bed71f247e82d40d0c4afd1e3": [],
+        "65c6fd9d42b83cb2423d046e4951e44d879ab54b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16-24)",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Size=M (16-24) / AddonLeft / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Size=M (16-24) / AddonLeft / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 42,
+                    "g": 119,
+                    "b": 239,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Size=M (16-24) / AddonLeft / Fixer / PaintMe / Placeholder",
+              "type": "RECTANGLE",
+              "name": "Placeholder",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 4,
+              "path": "Size=M (16-24) / AddonLeft / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Size=M (16-24) / AddonLeft / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                }
+              },
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 16
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 12,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Size=M (16-24) / AddonRight / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 13,
+              "path": "Size=M (16-24) / AddonRight / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 42,
+                    "g": 119,
+                    "b": 239,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Size=M (16-24) / AddonRight / Fixer / PaintMe / Placeholder",
+              "type": "RECTANGLE",
+              "name": "Placeholder",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 14,
+              "path": "Size=M (16-24) / AddonRight / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Size=M (16-24) / AddonRight / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          }
+        ],
+        "5a29bfe48638d9adec330d339a0862890f553647": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (18-24)",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Size=L (18-24) / AddonLeft / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Size=L (18-24) / AddonLeft / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 42,
+                    "g": 119,
+                    "b": 239,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Size=L (18-24) / AddonLeft / Fixer / PaintMe / Placeholder",
+              "type": "RECTANGLE",
+              "name": "Placeholder",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 4,
+              "path": "Size=L (18-24) / AddonLeft / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Size=L (18-24) / AddonLeft / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:b2633a0162f9359a941b9b6ffd702da6acbd02f3,2768:0"
+                }
+              },
+              "text": {
+                "characters": "Label",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 18,
+                "lineHeight": 24,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 18
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 12,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Size=L (18-24) / AddonRight / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 13,
+              "path": "Size=L (18-24) / AddonRight / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 42,
+                    "g": 119,
+                    "b": 239,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Size=L (18-24) / AddonRight / Fixer / PaintMe / Placeholder",
+              "type": "RECTANGLE",
+              "name": "Placeholder",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 14,
+              "path": "Size=L (18-24) / AddonRight / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Size=L (18-24) / AddonRight / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "493:7844",
+          "key": "bb2e85770f194e7bed71f247e82d40d0c4afd1e3",
+          "name": "Size=S (14-20)"
+        },
+        {
+          "id": "493:7850",
+          "key": "65c6fd9d42b83cb2423d046e4951e44d879ab54b",
+          "name": "Size=M (16-24)"
+        },
+        {
+          "id": "493:7856",
+          "key": "5a29bfe48638d9adec330d339a0862890f553647",
+          "name": "Size=L (18-24)"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 Underline / Line=Solid",
+      "type": "COMPONENT",
+      "componentKey": "9945cede76dc00333e382db8b5f0f8f8a1be881b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Underline / Line=Solid / Underline",
+      "type": "VECTOR",
+      "componentKey": "9945cede76dc00333e382db8b5f0f8f8a1be881b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "token": "VariableID:f718389f8202eb3dad6f65470c6f8887d7d0b671/1816:144",
+        "color": "rgba(212,109,250,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Link / Size=S (14-20)",
+      "type": "COMPONENT",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Link / Size=S (14-20) / AddonLeft",
+      "type": "FRAME",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Link / Size=S (14-20) / AddonLeft / Wrapper",
+      "type": "FRAME",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Link / Size=S (14-20) / AddonLeft / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Link / Size=S (14-20) / AddonLeft / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Link / Size=S (14-20) / AddonLeft / Wrapper / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Link / Size=S (14-20) / AddonLeft / Wrapper / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "Link / Size=S (14-20) / Content",
+      "type": "FRAME",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "Link / Size=S (14-20) / Content / Label",
+      "type": "TEXT",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+      }
+    },
+    {
+      "id": 10,
+      "path": "Link / Size=S (14-20) / Content / Underline",
+      "type": "INSTANCE",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "Link / Size=S (14-20) / Content / Underline / Underline",
+      "type": "VECTOR",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "token": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+        "color": "rgba(42,119,239,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "Link / Size=S (14-20) / AddonRight",
+      "type": "FRAME",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "Link / Size=S (14-20) / AddonRight / Wrapper",
+      "type": "FRAME",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "Link / Size=S (14-20) / AddonRight / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "Link / Size=S (14-20) / AddonRight / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "Link / Size=S (14-20) / AddonRight / Wrapper / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "Link / Size=S (14-20) / AddonRight / Wrapper / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c1a788fea95f376b3c344b85ce006493b530db94",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

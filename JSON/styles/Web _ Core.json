@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "generatedAt": "2025-12-23T19:04:32.153Z",
+    "fileName": "Web :: Core",
+    "library": "Web :: Core"
+  },
+  "styles": [
+    {
+      "key": "01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9",
+      "name": "ControlBlur",
+      "group": "Без группы",
+      "type": "background blur",
+      "value": {
+        "kind": "effect",
+        "data": {
+          "type": "BACKGROUND_BLUR",
+          "visible": true,
+          "radius": 80,
+          "boundVariables": {},
+          "blurType": "NORMAL"
+        }
+      }
+    }
+  ]
+}

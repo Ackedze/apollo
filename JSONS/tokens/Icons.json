@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-26T22:12:47.779Z",
+    "fileName": "Icons",
+    "library": "Icons"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:147394:10747",
+      "name": "bg",
+      "key": "fb2223ecb60433c07cc20d191215ee203cedcf4f",
+      "defaultModeId": "147394:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "147394:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:147394:10748",
+          "name": "icons-glyph-26",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "a18dbaed4b42a13d2dd35d3cd2589dbcda07a707",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:147394:10747",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "147394:0": {
+              "r": 0.9098039269447327,
+              "g": 0.8941176533699036,
+              "b": 0.9960784316062927,
+              "a": 0.029999999329447746
+            }
+          },
+          "hexByMode": {
+            "147394:0": "#E8E4FE"
+          },
+          "collectionName": "bg",
+          "groupName": "Без группы",
+          "tokenName": "icons-glyph-26"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-26T22:05:30.011Z",
+    "fileName": "Web :: Core Helpers",
+    "library": "Web :: Core Helpers"
+  },
+  "styles": [
+    {
+      "key": "a7ba8b46b760c5dab7d5d1411534c81541737ed9",
+      "name": "Solid/1",
+      "group": "💊Placeholder",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#CF70FF / rgba(207, 112, 255, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "eeaad6dd953ef4779cc5d289c047c1da30fb7c08",
+      "name": "Solid/2",
+      "group": "💊Placeholder",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#3778FB / rgba(55, 120, 251, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "b78b99b8b736087f61839aad3c3a4c4f2f8a443a",
+      "name": "Transparent/1",
+      "group": "💊Placeholder",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#CF70FF / rgba(207, 112, 255, 1.00)",
+              "opacity": 0.10000000149011612
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "af837d4476d2c2da487409e1c20bfebba4e79940",
+      "name": "Transparent/2",
+      "group": "💊Placeholder",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#3778FB / rgba(55, 120, 251, 1.00)",
+              "opacity": 0.10000000149011612
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "0b8fffa28e2e9ec7eaffae40bb8db2987e7c17fd",
+      "name": "Green",
+      "group": "💊Marker",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#1AF63D / rgba(26, 246, 61, 1.00)",
+              "opacity": 0.20000000298023224
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "bda9a6252993137052d6c2b94f9bc97e31cbfea6",
+      "name": "Red",
+      "group": "💊Marker",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FF0000 / rgba(255, 0, 0, 1.00)",
+              "opacity": 0.20000000298023224
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

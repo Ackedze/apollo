@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-26T22:07:51.435Z",
+    "fileName": "Logotypes",
+    "library": "Logotypes"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:6428:993",
+      "name": "bg",
+      "key": "7f91994b68a17b71040704ed3fb49c6e083b5a33",
+      "defaultModeId": "6428:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "6428:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:6428:994",
+          "name": "logo-corp",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "f541958306972a1215f975d45a81fef6e6549039",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:6428:993",
+          "scopes": [
+            "ALL_FILLS"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "6428:0": {
+              "r": 0.9725490212440491,
+              "g": 0.8745098114013672,
+              "b": 0.95686274766922,
+              "a": 0.03999999910593033
+            }
+          },
+          "hexByMode": {
+            "6428:0": "#F8DFF4"
+          },
+          "collectionName": "bg",
+          "groupName": "Без группы",
+          "tokenName": "logo-corp"
+        }
+      ]
+    }
+  ]
+}

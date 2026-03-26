@@ -24,6 +24,7 @@ export interface TextNodeCollectionOptions {
 
 export interface CustomStyleCollectionOptions {
   tokenLabelMap: Map<string, { label: string; library?: string }>;
+  styleLabelMap: Map<string, { label: string; library?: string }>;
 }
 
 /**
@@ -268,13 +269,20 @@ export function describeCustomStyleReasons(
   if (hasCustomPaints(node, 'strokes', 'strokeStyleId', options)) {
     reasons.push('stroke');
   }
-  const effectReasons = describeCustomEffects(node);
+  const effectReasons = describeCustomEffects(node, options);
   reasons.push(...effectReasons);
   return reasons;
 }
 
-function describeCustomEffects(node: SceneNode): string[] {
+function describeCustomEffects(
+  node: SceneNode,
+  options: CustomStyleCollectionOptions,
+): string[] {
   if (!('effects' in node)) return [];
+  const effectStyleId = (node as any).effectStyleId;
+  if (hasKnownStyleId(effectStyleId, options.styleLabelMap)) {
+    return [];
+  }
   const effects = (node as any).effects;
   if (!Array.isArray(effects)) {
     return [];
@@ -282,10 +290,6 @@ function describeCustomEffects(node: SceneNode): string[] {
   const reasons: string[] = [];
   for (const effect of effects) {
     if (!effect || effect.visible === false) continue;
-    const styleId = (effect as any).effectStyleId ?? (effect as any).styleId;
-    if (styleId && styleId !== figma.mixed && typeof styleId === 'string') {
-      continue;
-    }
     const label = mapEffectType(effect.type);
     reasons.push(`effect:${label}`);
   }
@@ -319,6 +323,7 @@ function hasCustomPaints(
     return false;
   }
   const hasStyle = hasPaintStyle(node, styleKey);
+  const styleId = hasStyle ? String((node as any)[styleKey]) : null;
 
   for (const paint of paints) {
     if (!paint) continue;
@@ -332,7 +337,7 @@ function hasCustomPaints(
       continue;
     }
     if (hasStyle) {
-      return true;
+      return !hasKnownStyleId(styleId, options.styleLabelMap);
     }
     return true;
   }
@@ -345,6 +350,23 @@ function hasPaintStyle(
 ): boolean {
   const styleId = (node as any)[styleKey];
   return Boolean(styleId && styleId !== figma.mixed && typeof styleId === 'string');
+}
+
+function hasKnownStyleId(
+  styleId: string | null | undefined,
+  styleLabelMap: Map<string, { label: string; library?: string }>,
+): boolean {
+  if (!styleId || typeof styleId !== 'string') return false;
+  if (styleLabelMap.has(styleId)) {
+    return true;
+  }
+  if (styleId.startsWith('S:')) {
+    const extracted = styleId.slice(2).split(',')[0];
+    if (extracted && styleLabelMap.has(extracted)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function dedupeDiffs(diffs: DiffEntry[]): DiffEntry[] {

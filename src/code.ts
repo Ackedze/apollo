@@ -199,6 +199,7 @@ async function runAudit() {
 
     const customStyleReasonOptions: CustomStyleCollectionOptions = {
       tokenLabelMap: tokenLabelMap ?? new Map(),
+      styleLabelMap: styleLabelMap ?? new Map(),
     };
 
     const textNodeOptions: TextNodeCollectionOptions = {

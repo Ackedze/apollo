@@ -1,0 +1,3108 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:30:46.550Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Сhat [M]"
+    ],
+    "componentCount": 6,
+    "elementCount": 146
+  },
+  "components": [
+    {
+      "key": "71da2297401b61747504766bb40fab63e59719e3",
+      "name": ".Details / Incoming BubblesStack",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "Details",
+      "defaultVariant": "8ebcf9771756d603099ba5f6939b53cc55552f35",
+      "variants": [
+        {
+          "id": "9839:183772",
+          "key": "8ebcf9771756d603099ba5f6939b53cc55552f35",
+          "name": "Bubbles=1"
+        },
+        {
+          "id": "9839:184261",
+          "key": "bcce9604c28290364725e6b7efe82f62974324dd",
+          "name": "Bubbles=2"
+        },
+        {
+          "id": "9839:184260",
+          "key": "7e84e190fac1f5998875be966963486274f00b7e",
+          "name": "Bubbles=3"
+        }
+      ]
+    },
+    {
+      "key": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "name": ".Details / Outgoing BubblesStack",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "Details",
+      "defaultVariant": "4f2f9d0f76e450eee9947dbe60ddc61612d8e5d6",
+      "variants": [
+        {
+          "id": "9839:183773",
+          "key": "4f2f9d0f76e450eee9947dbe60ddc61612d8e5d6",
+          "name": "Bubbles=1, Status=Default"
+        },
+        {
+          "id": "9839:184105",
+          "key": "78df9f19e4e0129a0666a4719b25aa6d50b4fbcd",
+          "name": "Bubbles=2, Status=Default"
+        },
+        {
+          "id": "9839:184104",
+          "key": "8c12dca0285921303993e60e377ffd7f93394f54",
+          "name": "Bubbles=3, Status=Default"
+        },
+        {
+          "id": "9839:184435",
+          "key": "012d6d5b1b284c05af11d602787b33e04a75b8dc",
+          "name": "Bubbles=1, Status=Error"
+        },
+        {
+          "id": "9839:184442",
+          "key": "308ae0303e8f10ac9fddcee594886c10cb7bfed3",
+          "name": "Bubbles=2, Status=Error"
+        },
+        {
+          "id": "9839:184450",
+          "key": "4c5bdb97bae37c62afac98d09339aeed8dd3ab45",
+          "name": "Bubbles=3, Status=Error"
+        },
+        {
+          "id": "9839:185264",
+          "key": "e42fa2b8d558ba9503e889b4776e7cf925c8a797",
+          "name": "Bubbles=1, Status=Delivered"
+        },
+        {
+          "id": "9839:185271",
+          "key": "b1c27e980adff9bd3babd4d1a358c5f9ef2121e4",
+          "name": "Bubbles=2, Status=Delivered"
+        },
+        {
+          "id": "9839:185279",
+          "key": "c2b21c4a8bb980d522e33c337e657d9f3202939d",
+          "name": "Bubbles=3, Status=Delivered"
+        },
+        {
+          "id": "11154:165728",
+          "key": "ff9616c01591b0bc1988aece4551d8afa27a7304",
+          "name": "Bubbles=1, Status=In Progress"
+        },
+        {
+          "id": "11154:165735",
+          "key": "8adb5d3aa0889f8a896853bf2147de08c5b84421",
+          "name": "Bubbles=2, Status=In Progress"
+        },
+        {
+          "id": "11154:165743",
+          "key": "3e7d72c63619079fa68b76239a9f1275d483145c",
+          "name": "Bubbles=3, Status=In Progress"
+        }
+      ]
+    },
+    {
+      "key": "1b89f21f6417f699bf5e1c3ffb7de843fe39362e",
+      "name": ".Details / ChatBubbleView",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "Details",
+      "defaultVariant": "e42f254b8a71921950706fd9b4b0944b676782cf",
+      "variants": [
+        {
+          "id": "9839:179217",
+          "key": "e42f254b8a71921950706fd9b4b0944b676782cf",
+          "name": "Sender=Incoming, Length=SignleLine, Position=Single, Style=Primary"
+        },
+        {
+          "id": "9839:179220",
+          "key": "164275af08b21ff8dc29b2dd42caa85567050ae5",
+          "name": "Sender=Incoming, Length=SignleLine, Position=First, Style=Primary"
+        },
+        {
+          "id": "9839:179223",
+          "key": "c932e083a01ccc1f91c0ce19c2c6698712913dfc",
+          "name": "Sender=Incoming, Length=SignleLine, Position=Middle, Style=Primary"
+        },
+        {
+          "id": "9839:179226",
+          "key": "00a4929f4925b7e53ed21ce99659c86c04b35134",
+          "name": "Sender=Incoming, Length=SignleLine, Position=Last, Style=Primary"
+        },
+        {
+          "id": "9839:179229",
+          "key": "342746d29e7b3ee5bede7d43a200062a5936b6b8",
+          "name": "Sender=Incoming, Length=Multiline, Position=Single, Style=Primary"
+        },
+        {
+          "id": "9839:179232",
+          "key": "f588a7cc8b7e45be541a96219d23d6b9e637881f",
+          "name": "Sender=Incoming, Length=Multiline, Position=First, Style=Primary"
+        },
+        {
+          "id": "9839:179235",
+          "key": "776a8aab32a69655765b6777413bc8e5309dc128",
+          "name": "Sender=Incoming, Length=Multiline, Position=Middle, Style=Primary"
+        },
+        {
+          "id": "9839:179238",
+          "key": "d191f2a5e4e3cc9bbabf84afcace0d0fbf82a722",
+          "name": "Sender=Incoming, Length=Multiline, Position=Last, Style=Primary"
+        },
+        {
+          "id": "9839:179241",
+          "key": "f70ad91d9aacec75c019df638309bf88b963d520",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Single, Style=Primary"
+        },
+        {
+          "id": "9839:179244",
+          "key": "13e2032197819ddc9db358aec326597eebb70bc3",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=First, Style=Primary"
+        },
+        {
+          "id": "9839:179247",
+          "key": "4e2de4c6acbb83e65a0245a3e54b77b41d8aa124",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Middle, Style=Primary"
+        },
+        {
+          "id": "9839:179250",
+          "key": "3bfa65aaea5c9ac9be8f6ba2b37c389826846a3d",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Last, Style=Primary"
+        },
+        {
+          "id": "9839:179253",
+          "key": "ceb351c640957f1b218881c9f70d6317f12b7687",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Single, Style=Primary"
+        },
+        {
+          "id": "9839:179256",
+          "key": "433aad99f8ae1adfde80f653a71a67e8966f7020",
+          "name": "Sender=Outgoing, Length=Multiline, Position=First, Style=Primary"
+        },
+        {
+          "id": "9839:179259",
+          "key": "a16a807f4c9cb4af687c9bef86463a5218c3f09e",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Middle, Style=Primary"
+        },
+        {
+          "id": "9839:179262",
+          "key": "afff723a1c9fd1d417aacc1db55e8225a04fde23",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Last, Style=Primary"
+        },
+        {
+          "id": "11207:177593",
+          "key": "5a234789a250781db74dafd95b3f15412fb063f5",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Single, Style=Disable"
+        },
+        {
+          "id": "11207:177596",
+          "key": "12c8b1d32506298627429b34fcade21da33593c7",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=First, Style=Disable"
+        },
+        {
+          "id": "11207:177599",
+          "key": "0860062435640dd561c08302de320dc51947ba00",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Middle, Style=Disable"
+        },
+        {
+          "id": "11207:177602",
+          "key": "ca3da487cea6487cae22df39a3d07da146248bb6",
+          "name": "Sender=Outgoing, Length=SignleLine, Position=Last, Style=Disable"
+        },
+        {
+          "id": "11207:177605",
+          "key": "372527e693aacad954c961abbaebab326e942e96",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Single, Style=Disable"
+        },
+        {
+          "id": "11207:177608",
+          "key": "e5ef51df70f443637881dbcbef7493ad53123bb0",
+          "name": "Sender=Outgoing, Length=Multiline, Position=First, Style=Disable"
+        },
+        {
+          "id": "11207:177611",
+          "key": "1e694873f1f435508728b6cf2981cb4c52a40c3b",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Middle, Style=Disable"
+        },
+        {
+          "id": "11207:177614",
+          "key": "f174c83d704a95eab86a5d797a246d7e76f2ef99",
+          "name": "Sender=Outgoing, Length=Multiline, Position=Last, Style=Disable"
+        }
+      ]
+    },
+    {
+      "key": "b368630ddc8d266a651edbb119ae975a44feea0f",
+      "name": ".Details / FeedSectionView",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "Details",
+      "defaultVariant": "1b450da8e5112ad26c987f9732851099f738ce10",
+      "variants": [
+        {
+          "id": "9834:128925",
+          "key": "1b450da8e5112ad26c987f9732851099f738ce10",
+          "name": "Type=Time, State=Default"
+        },
+        {
+          "id": "9834:128928",
+          "key": "707e37a69014b5872a22424f30a161dccf6a8e99",
+          "name": "Type=Time, State=On Scroll"
+        },
+        {
+          "id": "9834:128931",
+          "key": "6d96377ccc775fc0a8cd67b3a007d0d71e990c65",
+          "name": "Type=Section, State=Default"
+        }
+      ]
+    },
+    {
+      "key": "b20bc528d0684b109f56727a3fb683d6ae16e1ed",
+      "name": ".Details / Label",
+      "status": "active",
+      "role": "part",
+      "platform": "mobile-web",
+      "category": "Details",
+      "defaultVariant": "db3f40c02ad741647e92abb947cc4bc64c398ed0",
+      "variants": [
+        {
+          "id": "9839:183218",
+          "key": "db3f40c02ad741647e92abb947cc4bc64c398ed0",
+          "name": "State=In Progress"
+        },
+        {
+          "id": "9839:183220",
+          "key": "ea7015780f2236412f7c92f6c8e77814e1de645a",
+          "name": "State=Delivered"
+        },
+        {
+          "id": "9839:183222",
+          "key": "dfe4a8fad0a48c454ca16aab3cb3e2d1fea89fed",
+          "name": "State=Error"
+        },
+        {
+          "id": "9839:183612",
+          "key": "f59873cc3e222d9336c2fb274578635ba38a61d9",
+          "name": "State=Name"
+        }
+      ]
+    },
+    {
+      "key": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "name": "ChatBubbleView",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "ChatBubbleView",
+      "defaultVariant": "bd92d4a6a9d646c98a446f8ac26f1bbe827f5c2e",
+      "variants": [
+        {
+          "id": "9839:184544",
+          "key": "bd92d4a6a9d646c98a446f8ac26f1bbe827f5c2e",
+          "name": "Sender=Outgoing"
+        },
+        {
+          "id": "9839:184543",
+          "key": "e58aaf8e950a93d3d2aa83291e072d2aa0f20252",
+          "name": "Sender=Incoming"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1",
+      "type": "COMPONENT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / BottomAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1111111640930176,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.25,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8888888955116272,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / TopAddon / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / 🔄 Indicator",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / 🔄 Indicator / 👻 Base",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / 🔄 Indicator / 👻 Base / fixer",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape / 👻 Shape",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape / 👻 Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / BgIcon / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.5714284181594849,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 Text",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.71875,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 Text / initials",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border / 👻 Border",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border / 👻 Border / Mask",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / Placeholder",
+      "type": "RECTANGLE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / 🔄 IconView / Content / ShapeContent / 👻 MainContent / IconWrapper / Wrapper / PaintMe / SwapMe / vector",
+      "type": "VECTOR",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(123,97,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / .Details / Label",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          0,
+          4,
+          16
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / .Details / Label / Label",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Альфа-помощник"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / Bubble Group",
+      "type": "FRAME",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / Bubble Group / .Details / ChatBubbleView",
+      "type": "INSTANCE",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          16,
+          12,
+          16
+        ],
+        "gap": 12,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / Bubble Group / .Details / ChatBubbleView / Message Text",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Добрый день!"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Incoming BubblesStack / Bubbles=1 / Content / Bubble Group / .Details / ChatBubbleView / Timestamp",
+      "type": "TEXT",
+      "componentKey": "71da2297401b61747504766bb40fab63e59719e3",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "12:30"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default",
+      "type": "COMPONENT",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content",
+      "type": "FRAME",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend",
+      "type": "FRAME",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          10,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView",
+      "type": "INSTANCE",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView / .icon",
+      "type": "INSTANCE",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView / .icon / Icon",
+      "type": "GROUP",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": null,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView / .icon / Icon / arrows-cw",
+      "type": "INSTANCE",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView / .icon / Icon / arrows-cw / icon",
+      "type": "VECTOR",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Resend / IconView / .icon / _initials",
+      "type": "TEXT",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.7)"
+      },
+      "text": {
+        "value": "ХЙ"
+      },
+      "typography": {
+        "family": "SF Pro Text Bold",
+        "weight": "Italic",
+        "size": 15,
+        "lineHeight": 20,
+        "letterSpacing": -0.23999999463558197
+      }
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Bubble Group",
+      "type": "FRAME",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Bubble Group / .Details / ChatBubbleView",
+      "type": "INSTANCE",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          16,
+          12,
+          16
+        ],
+        "gap": 12,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Bubble Group / .Details / ChatBubbleView / Message Text",
+      "type": "TEXT",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Добрый день!"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / Content / Bubble Group / .Details / ChatBubbleView / Timestamp",
+      "type": "TEXT",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "12:30"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / .Details / Label",
+      "type": "INSTANCE",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": false,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          8,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Outgoing BubblesStack / Bubbles=1, Status=Default / .Details / Label / Label",
+      "type": "TEXT",
+      "componentKey": "0d445e5ebef4b06723485722ad4a5f1233007a53",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(236,45,32,1)"
+      },
+      "text": {
+        "value": "Не доставлено"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / ChatBubbleView / Sender=Incoming, Length=SignleLine, Position=Single, Style=Primary",
+      "type": "COMPONENT",
+      "componentKey": "1b89f21f6417f699bf5e1c3ffb7de843fe39362e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          16,
+          12,
+          16
+        ],
+        "gap": 12,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / ChatBubbleView / Sender=Incoming, Length=SignleLine, Position=Single, Style=Primary / Message Text",
+      "type": "TEXT",
+      "componentKey": "1b89f21f6417f699bf5e1c3ffb7de843fe39362e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Добрый день!"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / ChatBubbleView / Sender=Incoming, Length=SignleLine, Position=Single, Style=Primary / Timestamp",
+      "type": "TEXT",
+      "componentKey": "1b89f21f6417f699bf5e1c3ffb7de843fe39362e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "12:30"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / FeedSectionView / Type=Time, State=Default",
+      "type": "COMPONENT",
+      "componentKey": "b368630ddc8d266a651edbb119ae975a44feea0f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          0,
+          4,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / FeedSectionView / Type=Time, State=Default / Container",
+      "type": "FRAME",
+      "componentKey": "b368630ddc8d266a651edbb119ae975a44feea0f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          12,
+          4,
+          12
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / FeedSectionView / Type=Time, State=Default / Container / Timestamp",
+      "type": "TEXT",
+      "componentKey": "b368630ddc8d266a651edbb119ae975a44feea0f",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Вчера, 16:45"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 13,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": ".Details / Label / State=In Progress",
+      "type": "COMPONENT",
+      "componentKey": "b20bc528d0684b109f56727a3fb683d6ae16e1ed",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          8,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": ".Details / Label / State=In Progress / Label",
+      "type": "TEXT",
+      "componentKey": "b20bc528d0684b109f56727a3fb683d6ae16e1ed",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Отправка..."
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing",
+      "type": "COMPONENT",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content",
+      "type": "FRAME",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend",
+      "type": "FRAME",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          10,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView / .icon",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView / .icon / Icon",
+      "type": "GROUP",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": null,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView / .icon / Icon / arrows-cw",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView / .icon / Icon / arrows-cw / icon",
+      "type": "VECTOR",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Resend / IconView / .icon / _initials",
+      "type": "TEXT",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(11,31,53,0.7)"
+      },
+      "text": {
+        "value": "ХЙ"
+      },
+      "typography": {
+        "family": "SF Pro Text Bold",
+        "weight": "Italic",
+        "size": 15,
+        "lineHeight": 20,
+        "letterSpacing": -0.23999999463558197
+      }
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Bubble Group",
+      "type": "FRAME",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Bubble Group / .Details / ChatBubbleView",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          16,
+          12,
+          16
+        ],
+        "gap": 12,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Bubble Group / .Details / ChatBubbleView / Message Text",
+      "type": "TEXT",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Добрый день!"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / Content / Bubble Group / .Details / ChatBubbleView / Timestamp",
+      "type": "TEXT",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "12:30"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / .Details / Label",
+      "type": "INSTANCE",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": false,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          8,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "ChatBubbleView / Sender=Outgoing / .Details / Outgoing BubblesStack / .Details / Label / Label",
+      "type": "TEXT",
+      "componentKey": "17a8d8ef4ca2f5b5b9cf010cb57e5e74d634ebcb",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(236,45,32,1)"
+      },
+      "text": {
+        "value": "Не доставлено"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    }
+  ]
+}

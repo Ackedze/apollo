@@ -1,0 +1,2595 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:34:06.268Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "BodyHeader"
+    ],
+    "componentCount": 3,
+    "elementCount": 133
+  },
+  "components": [
+    {
+      "key": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "name": "🔒 UniversalModal :: BodyHeader",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "UniversalModal :: BodyHeader",
+      "defaultVariant": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "variants": [
+        {
+          "id": "101464:63582",
+          "key": "0e363baafe16f470ae40a23291fd102b25bb7036",
+          "name": "🔒 UniversalModal :: BodyHeader"
+        }
+      ]
+    },
+    {
+      "key": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "name": "🔒 Graphics",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Graphics",
+      "defaultVariant": "d6d7a5b55b85ab9a68be32a73bc61d864845c411",
+      "variants": [
+        {
+          "id": "116884:3285",
+          "key": "d6d7a5b55b85ab9a68be32a73bc61d864845c411",
+          "name": "Presets=Image"
+        },
+        {
+          "id": "116884:3284",
+          "key": "d9f8592a3c99b5932f23cf07fd5d3ad8f86d2a2f",
+          "name": "Presets=Spinner"
+        },
+        {
+          "id": "116884:3240",
+          "key": "d8d9ba0248e4a4adc6cc33ec9c1f9daf4b5304b4",
+          "name": "Presets=IconView"
+        }
+      ]
+    },
+    {
+      "key": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "name": "🔒 Title",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Title",
+      "defaultVariant": "467d9af5a486f18a6f51f937933c42be7fb99c1f",
+      "variants": [
+        {
+          "id": "101464:63605",
+          "key": "467d9af5a486f18a6f51f937933c42be7fb99c1f",
+          "name": "Presets=Amount"
+        },
+        {
+          "id": "101464:63607",
+          "key": "006fd96c8811e0acf9e64862c1efb60a76cb6e5f",
+          "name": "Presets=Title"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "🔒 UniversalModal :: BodyHeader",
+      "type": "COMPONENT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          16,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Indicator / fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Shape / Shape",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Shape / Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / initials",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Content",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Border / Border",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Border / Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / BottomAddon / IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Indicator / fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(207,112,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Shape / Shape",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Shape / Shape / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / initials",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": 16,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Content",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Border / Border",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Border / Border / Mask",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / TopAddon / IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 20
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Indicator / fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape / Shape",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8999999761581421,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape / Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8999999761581421,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / Shape / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / BgColor",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2.5,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / BgImg",
+      "type": "RECTANGLE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2.5,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Text",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "ЙО"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 22,
+        "lineHeight": 26,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Content",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.6666667461395264,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Content / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.6666667461395264,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.6666667461395264,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Content / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.6666667461395264,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 6
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border / Shape",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8999999761581421,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border / Shape / Mask",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 0.8999999761581421,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border / BottomAddon",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border / TopAddon",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Graphics / IconView / Content / ShapeContent / Border / Indicator",
+      "type": "ELLIPSE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Title",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / 🔒 Title / Title",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Headline-System 30-36"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / Subtitle",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Operation",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Subtitle / 🔒 [D] AmountHeadline / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Caption",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Caption / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Caption / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Caption / Caption",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Caption"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Content / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / 🔒 [D] StatusPreset",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / 🔒 [D] StatusPreset / Status",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          16,
+          6,
+          16
+        ],
+        "gap": 0,
+        "radius": 99
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(209,241,215,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / 🔒 [D] StatusPreset / Status / 🔩 Label",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / 🔒 [D] StatusPreset / Status / 🔩 Label / Label",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(13,147,54,1)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / StatusHint",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / StatusBlock / StatusHint / Hint",
+      "type": "TEXT",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Hint"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 UniversalModal :: BodyHeader / Border",
+      "type": "VECTOR",
+      "componentKey": "0e363baafe16f470ae40a23291fd102b25bb7036",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image",
+      "type": "COMPONENT",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / RadialFade",
+      "type": "ELLIPSE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image",
+      "type": "FRAME",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей",
+      "type": "INSTANCE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей / Grid",
+      "type": "RECTANGLE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1239584684371948,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей / Image",
+      "type": "RECTANGLE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1239584684371948,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей",
+      "type": "INSTANCE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей / Grid",
+      "type": "RECTANGLE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1239584684371948,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Graphics / Presets=Image / Image / Название продукта кириллицей / Image",
+      "type": "RECTANGLE",
+      "componentKey": "adc7f9545e99f4150196b5b2aaed5cba5fb78166",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1.1239584684371948,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount",
+      "type": "COMPONENT",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Operation",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": false,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 30,
+        "lineHeight": 36,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 Title / Presets=Amount / 🔒 [D] AmountHeadline / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "590c59889e075b2e4a935538ffafdc35f7bbd9de",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

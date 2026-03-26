@@ -1,0 +1,2303 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:21:34.907Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Onboarding Tooltip [D]"
+    ],
+    "componentCount": 6,
+    "elementCount": 111
+  },
+  "components": [
+    {
+      "key": "f37e127ff81d5218782f8b0b195a23b6146e9919",
+      "name": "Pips",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Pips",
+      "defaultVariant": "0387ff8c35c2255d02a8b6ca0dfd2ffe02bdd00f",
+      "variants": [
+        {
+          "id": "31961:32956",
+          "key": "0387ff8c35c2255d02a8b6ca0dfd2ffe02bdd00f",
+          "name": "Selected=True"
+        },
+        {
+          "id": "31961:32957",
+          "key": "ae1257a6781a6296f0d34ad251ae27d34523ae83",
+          "name": "Selected=False"
+        }
+      ]
+    },
+    {
+      "key": "641201dedb283e0c13f9c7163fe53e35b71d82a6",
+      "name": "👻 TooltipTail",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "TooltipTail",
+      "defaultVariant": "1b36dde2cfd269bdae994a33be00c28a24dc3528",
+      "variants": [
+        {
+          "id": "31961:32454",
+          "key": "1b36dde2cfd269bdae994a33be00c28a24dc3528",
+          "name": "View=Tooltip, Direction=←"
+        },
+        {
+          "id": "31961:32456",
+          "key": "1016344831728f424dd927da5d6ef918884b4ca7",
+          "name": "View=Tooltip, Direction=↑"
+        },
+        {
+          "id": "31961:32458",
+          "key": "f11b3cc2eb9af4305e649a70921316c268a268fc",
+          "name": "View=Tooltip, Direction=↓"
+        },
+        {
+          "id": "31961:32460",
+          "key": "62f169673b55a8c0aa4c58c98bcc24e96564deff",
+          "name": "View=Tooltip, Direction=→"
+        }
+      ]
+    },
+    {
+      "key": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "name": "Onboarding footer",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Onboarding footer",
+      "defaultVariant": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "variants": [
+        {
+          "id": "31961:32952",
+          "key": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+          "name": "Onboarding footer"
+        }
+      ]
+    },
+    {
+      "key": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "name": "Text content",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Text content",
+      "defaultVariant": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "variants": [
+        {
+          "id": "31961:32953",
+          "key": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+          "name": "Text content"
+        }
+      ]
+    },
+    {
+      "key": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+      "name": "Close",
+      "status": "active",
+      "role": "part",
+      "platform": "desktop",
+      "category": "Close",
+      "defaultVariant": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+      "variants": [
+        {
+          "id": "31961:32954",
+          "key": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+          "name": "Close"
+        }
+      ]
+    },
+    {
+      "key": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "name": "Onboarding Tooltip",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "Onboarding Tooltip",
+      "defaultVariant": "3934e7e0c56befb64870ef444f821000d43ddb6b",
+      "variants": [
+        {
+          "id": "31961:32463",
+          "key": "3934e7e0c56befb64870ef444f821000d43ddb6b",
+          "name": "Tail Direction=←, Tail Position=End"
+        },
+        {
+          "id": "31961:32471",
+          "key": "b1d99d496687a64d42f696431054ab2c245b2e6b",
+          "name": "Tail Direction=←, Tail Position=Start"
+        },
+        {
+          "id": "31961:32479",
+          "key": "31aa050dc59a500550da4f38d8eb70b0780336da",
+          "name": "Tail Direction=←, Tail Position=Center"
+        },
+        {
+          "id": "31961:32487",
+          "key": "c6b25c661164a4d127927c8357c2e3b4a2e7e6a3",
+          "name": "Tail Direction=↑, Tail Position=Center"
+        },
+        {
+          "id": "31961:32495",
+          "key": "36fb1d871b9f29f06da31d69e5c5bacb514967c8",
+          "name": "Tail Direction=↓, Tail Position=Center"
+        },
+        {
+          "id": "31961:32503",
+          "key": "75f156fcc5e280b4ab9daa4611f62a455e270e87",
+          "name": "Tail Direction=↓, Tail Position=Start"
+        },
+        {
+          "id": "31961:32511",
+          "key": "983fa7a78e165ebb4133507190a3447913a65d8f",
+          "name": "Tail Direction=↓, Tail Position=End"
+        },
+        {
+          "id": "31961:32519",
+          "key": "d273c4671b1c4f7df71585f538405f507cccd404",
+          "name": "Tail Direction=↑, Tail Position=Start"
+        },
+        {
+          "id": "31961:32527",
+          "key": "44039a7591dbf0495e74505c60440e4565747f26",
+          "name": "Tail Direction=↑, Tail Position=End"
+        },
+        {
+          "id": "31961:32535",
+          "key": "93eb834b2fe81bc75f135d082a0172527d87a2db",
+          "name": "Tail Direction=→, Tail Position=End"
+        },
+        {
+          "id": "31961:32543",
+          "key": "9547e4248a5c50140b07bb266689a0bb5d3e17ac",
+          "name": "Tail Direction=→, Tail Position=Start"
+        },
+        {
+          "id": "31961:32551",
+          "key": "46d9127b2fee52bc5e0bd1243091228d924a3af6",
+          "name": "Tail Direction=→, Tail Position=Center"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "Pips / Selected=True",
+      "type": "COMPONENT",
+      "componentKey": "f37e127ff81d5218782f8b0b195a23b6146e9919",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "👻 TooltipTail / View=Tooltip, Direction=←",
+      "type": "COMPONENT",
+      "componentKey": "641201dedb283e0c13f9c7163fe53e35b71d82a6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "👻 TooltipTail / View=Tooltip, Direction=← / Tail",
+      "type": "VECTOR",
+      "componentKey": "641201dedb283e0c13f9c7163fe53e35b71d82a6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(55,120,251,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer",
+      "type": "COMPONENT",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 138,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 1",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 2",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 3",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 4",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 5",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 6",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 7",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 8",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 9",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Pagination / 10",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / Text",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / Text / Label",
+      "type": "TEXT",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / Text",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / Text / Label",
+      "type": "TEXT",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "7de70e8a7d2d565ed5f9cdad79a4006dbdf3b8f4",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Text content",
+      "type": "COMPONENT",
+      "componentKey": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Text content / Subhead",
+      "type": "TEXT",
+      "componentKey": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Subhead"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Text content / Text content",
+      "type": "FRAME",
+      "componentKey": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Text content / Text content / Title",
+      "type": "TEXT",
+      "componentKey": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Title 18-24"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Text content / Text content / Subtitle",
+      "type": "TEXT",
+      "componentKey": "dc5b76d6efefe35cb0920c8be4d52929383b72c4",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Close",
+      "type": "COMPONENT",
+      "componentKey": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Close / cross",
+      "type": "INSTANCE",
+      "componentKey": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Close / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "ceb8ef1f3b371a92444b417e2cbdda899e45004d",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End",
+      "type": "COMPONENT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Tail",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          16,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Tail / 👻 TooltipTail",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Tail / 👻 TooltipTail / Tail",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 24,
+        "radius": 12
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Text content",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 16,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Text content / Subhead",
+      "type": "TEXT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Subhead"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Text content / Text content",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 4,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Text content / Text content / Title",
+      "type": "TEXT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Title 18-24"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Text content / Text content / Subtitle",
+      "type": "TEXT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Subtitle"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Close",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Close / cross",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Content / Close / cross / icon",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 2,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(137,137,145,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 138,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 8,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 1",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 2",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 3",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 4",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 5",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 6",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 7",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 8",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 9",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Pagination / 10",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(210,211,217,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 12,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / Text",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / Text / Label",
+      "type": "TEXT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 2 / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          4,
+          16
+        ],
+        "gap": 2,
+        "radius": 10
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / Text",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          4,
+          0,
+          4
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / Text / Label",
+      "type": "TEXT",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 0,
+        "align": "CENTER"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": false,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer",
+      "type": "FRAME",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "type": "INSTANCE",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Onboarding Tooltip / Tail Direction=←, Tail Position=End / Content / Onboarding footer / Button group / [D][Corporate] Button 1 / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "type": "VECTOR",
+      "componentKey": "c9a8db25e3fb6bc7907464f81547a6295816c59b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

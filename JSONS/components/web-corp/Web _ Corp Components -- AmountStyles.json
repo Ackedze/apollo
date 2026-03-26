@@ -1,0 +1,950 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Corp Components",
+    "file": "Web :: Corp Components",
+    "generatedAt": "2025-12-22T10:31:57.639Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "AmountStyles"
+    ],
+    "componentCount": 4,
+    "elementCount": 38
+  },
+  "components": [
+    {
+      "key": "576418aee5b143662e51e4d8f27d6fcbd57dc540",
+      "name": "Operation",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Operation",
+      "defaultVariant": "d258cf8358d424d1bc03a4aabf8e363e403bb9b7",
+      "variants": [
+        {
+          "id": "57693:403",
+          "key": "d258cf8358d424d1bc03a4aabf8e363e403bb9b7",
+          "name": "Negative=True"
+        },
+        {
+          "id": "57693:405",
+          "key": "7fadb5de6cdbf068f17027ab047c795b5737d0b4",
+          "name": "Negative=False"
+        }
+      ]
+    },
+    {
+      "key": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "name": "🔒 [M] AmountHeadline",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "description": "Вспомогательный компонент Figma, в коде существует только Amount.",
+      "category": "M] AmountHeadline",
+      "defaultVariant": "789581c0212477977780833f6ddc2bc0dd2ae6f4",
+      "variants": [
+        {
+          "id": "57388:16320",
+          "key": "789581c0212477977780833f6ddc2bc0dd2ae6f4",
+          "name": "Style=Headline 16/20"
+        },
+        {
+          "id": "57388:16324",
+          "key": "e7b108203c43321596eaeb8fa1008bc22daf87e7",
+          "name": "Style=Headline 20/28"
+        },
+        {
+          "id": "57388:16328",
+          "key": "c326bb60c05776d5d1695c014b4481dcb74893ba",
+          "name": "Style=Headline 26/32"
+        },
+        {
+          "id": "57388:16332",
+          "key": "43da0c4a03340b0a536c3ab7262a0b5b975d5ce4",
+          "name": "Style=Headline 30/36"
+        },
+        {
+          "id": "57388:16336",
+          "key": "f1c1fbe73fe896fe35275ec99d8e6b27015dc828",
+          "name": "Style=Headline 34/40"
+        }
+      ]
+    },
+    {
+      "key": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "name": "🔒 [D] AmountHeadline",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "description": "Вспомогательный компонент Figma, в коде существует только Amount.",
+      "category": "D] AmountHeadline",
+      "defaultVariant": "ec1a67a5b6bf9f6a8e80adaec907e9f47ef99433",
+      "variants": [
+        {
+          "id": "57388:16167",
+          "key": "ec1a67a5b6bf9f6a8e80adaec907e9f47ef99433",
+          "name": "Style=Headline 18/22"
+        },
+        {
+          "id": "57388:16187",
+          "key": "eccc242ad1843c28fb5042ae1229bedaf87bc24f",
+          "name": "Style=Headline 22/26"
+        },
+        {
+          "id": "57388:16195",
+          "key": "edab133e44bf09ea1d250fdf0f439fee1a7b1f49",
+          "name": "Style=Headline 30/36"
+        },
+        {
+          "id": "57388:16199",
+          "key": "d11227c61339a760b5b1ae1f9f2996841cfaa2be",
+          "name": "Style=Headline 40/48"
+        },
+        {
+          "id": "57388:16203",
+          "key": "dda29dafe7f824813050a07924991cfff6933baf",
+          "name": "Style=Headline 48/52"
+        }
+      ]
+    },
+    {
+      "key": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "name": "🔒 AmountParagraph",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Вспомогательный компонент Figma, в коде существует только Amount.",
+      "category": "AmountParagraph",
+      "defaultVariant": "d41ead6809bdacf2a1c4fec638bb9a9669f24ffd",
+      "variants": [
+        {
+          "id": "57377:15928",
+          "key": "d41ead6809bdacf2a1c4fec638bb9a9669f24ffd",
+          "name": "Style=Paragraph 14/20"
+        },
+        {
+          "id": "57377:15930",
+          "key": "26f63c6fcd070f9b80f3d82cc8c4fb44abc480b6",
+          "name": "Style=Action 14/20"
+        },
+        {
+          "id": "57377:15932",
+          "key": "56d2e978ee767799cccbb56d2fc0d151bae29dd5",
+          "name": "Style=Accent 14/20"
+        },
+        {
+          "id": "57377:15936",
+          "key": "926bc974b37ddbd3bc7e9d7b561d973e5f36adbe",
+          "name": "Style=Action 16/24"
+        },
+        {
+          "id": "57388:15281",
+          "key": "f4ee8e472f0bbdd206db931edf5cbd2b8912b515",
+          "name": "Style=Action 16/20"
+        },
+        {
+          "id": "57377:15940",
+          "key": "30d4a33dc7b1812528b1c76d1890c79d5bde8801",
+          "name": "Style=Paragraph 16/24"
+        },
+        {
+          "id": "57388:15292",
+          "key": "82764223edf97093cdc35c8ded32791d46d8f86d",
+          "name": "Style=Paragraph 16/20"
+        },
+        {
+          "id": "57377:15942",
+          "key": "bfad1c3c599e564fdb4ff1c1b8e88c7d70f265e6",
+          "name": "Style=Accent 16/24"
+        },
+        {
+          "id": "57377:48350",
+          "key": "3c24f2876f0ef07be855fbb8183848ec9953d52c",
+          "name": "Style=Accent 16/20"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "path": "Operation / Negative=True",
+      "type": "COMPONENT",
+      "componentKey": "576418aee5b143662e51e4d8f27d6fcbd57dc540",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "Operation / Negative=True / Minus",
+      "type": "TEXT",
+      "componentKey": "576418aee5b143662e51e4d8f27d6fcbd57dc540",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20",
+      "type": "COMPONENT",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Operation",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.3199999928474426
+      }
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.3199999928474426
+      }
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.3199999928474426
+      }
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.3199999928474426
+      }
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [M] AmountHeadline / Style=Headline 16/20 / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "cee3a597980650c3d43dbe8bf283d2c4f6c1507e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22",
+      "type": "COMPONENT",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Operation",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Bold",
+        "size": 18,
+        "lineHeight": 22,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 [D] AmountHeadline / Style=Headline 18/22 / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "46d9453084998704a7c26aefd8c2d4427e3a4f5c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20",
+      "type": "COMPONENT",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Operation",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Operation / Minus",
+      "type": "TEXT",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "−"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 0,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Major",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Major / Major",
+      "type": "TEXT",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "1 234 567"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Minor",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Minor / Minor",
+      "type": "TEXT",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": ",00"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Currency",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": 10,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Currency / Currency",
+      "type": "TEXT",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": null,
+      "stroke": {
+        "weight": 1,
+        "align": "OUTSIDE"
+      },
+      "fill": {
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": " ₽ "
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0
+      }
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Addon",
+      "type": "INSTANCE",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": {
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "path": "🔒 AmountParagraph / Style=Paragraph 14/20 / Amount / Addon / Wrapper",
+      "type": "FRAME",
+      "componentKey": "6276f825ec9ee2ceded5305171c715a7dd73637e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

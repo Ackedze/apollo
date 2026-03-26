@@ -1,0 +1,3643 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:49:46.727Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Checkbox"
+    ],
+    "componentCount": 8,
+    "elementCount": 44
+  },
+  "components": [
+    {
+      "key": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "name": "CheckboxLabel_20_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CheckboxLabel_20_Inverted",
+      "defaultVariant": "dd9e7fa2e5f1457353d19910734f28ad38be0f5f",
+      "variantStructures": {
+        "dd9e7fa2e5f1457353d19910734f28ad38be0f5f": [],
+        "8512805cb07431fb4a565974a890a25c59586e4e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=False / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 238,
+                    "g": 238,
+                    "b": 251,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "522ed455830e09bfba02d631b55381de3e706ffd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "f8f4fba65ff4867b8c6128a6e279753d2baab18f",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 38,
+                    "b": 41,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "ace23c1d610cdb92d962403d075619558472c925": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "f8f4fba65ff4867b8c6128a6e279753d2baab18f",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 38,
+                    "b": 41,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "3e7f3ea32d3036a00d23e3961e14a523fd5d6037": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=False, ErrorMessage=True, DisabledLabel=False / Content / ErrorMessage",
+              "type": "TEXT",
+              "name": "ErrorMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Error message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 236,
+                    "g": 45,
+                    "b": 32,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "52544:29103",
+          "key": "dd9e7fa2e5f1457353d19910734f28ad38be0f5f",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "52544:29107",
+          "key": "8512805cb07431fb4a565974a890a25c59586e4e",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "52544:29112",
+          "key": "522ed455830e09bfba02d631b55381de3e706ffd",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "52544:29116",
+          "key": "ace23c1d610cdb92d962403d075619558472c925",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "52544:29121",
+          "key": "3e7f3ea32d3036a00d23e3961e14a523fd5d6037",
+          "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+        }
+      ]
+    },
+    {
+      "key": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "name": "CheckboxLabel_20",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CheckboxLabel_20",
+      "defaultVariant": "7f96507061def941af26af8ee63694041688ddd0",
+      "variantStructures": {
+        "7f96507061def941af26af8ee63694041688ddd0": [],
+        "1a293b5e516c31e8ed4168d019820b51ec072014": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=False / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "0abf112a5150a7aaa934b8fc011353981b319d11": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "0a61dc965f081bef9609923ccee410945f53794a",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "4722a094c9be817659d1f4db2182e8716921dc7c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "0a61dc965f081bef9609923ccee410945f53794a",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "702f9081f30cc0abd20bce22cdf31794e047143f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=False, ErrorMessage=True, DisabledLabel=False / Content / ErrorMessage",
+              "type": "TEXT",
+              "name": "ErrorMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Error message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 236,
+                    "g": 45,
+                    "b": 32,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "34265:42103",
+          "key": "7f96507061def941af26af8ee63694041688ddd0",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "34265:42107",
+          "key": "1a293b5e516c31e8ed4168d019820b51ec072014",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "34265:42154",
+          "key": "0abf112a5150a7aaa934b8fc011353981b319d11",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "34265:42158",
+          "key": "4722a094c9be817659d1f4db2182e8716921dc7c",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "34265:42112",
+          "key": "702f9081f30cc0abd20bce22cdf31794e047143f",
+          "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+        }
+      ]
+    },
+    {
+      "key": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "name": "CheckboxLabel_24_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CheckboxLabel_24_Inverted",
+      "defaultVariant": "654fc71fad51d93489ec3ad07254e2c2033d5abc",
+      "variantStructures": {
+        "654fc71fad51d93489ec3ad07254e2c2033d5abc": [],
+        "15030ed7bb260b925877f474ac63fac84aa5d707": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=False / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 238,
+                    "g": 238,
+                    "b": 251,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "52ec8ea0685741c874c77287bdd01ffaf51f0919": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "0c584b7caa8906efa5e67e332bf13ea068fd2a2d",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 38,
+                    "b": 41,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "f9e08d3e9c9f335835bdc386b260988b9b4e18e8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "0c584b7caa8906efa5e67e332bf13ea068fd2a2d",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 38,
+                    "b": 41,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 233,
+                    "g": 233,
+                    "b": 250,
+                    "a": 0.37
+                  },
+                  "visible": true,
+                  "opacity": 0.3700000047683716
+                }
+              ],
+              "fillToken": "VariableID:3fdc0c1392b0689ace91a3177985a662294830d9/3541:182",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "f95444ad4f5c5c61532a0678aff743b6eb7257c5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=False, ErrorMessage=True, DisabledLabel=False / Content / ErrorMessage",
+              "type": "TEXT",
+              "name": "ErrorMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Error message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:8753f5809fec5eb6709890d21fe976f844ff35dd/3541:165",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "52544:13024",
+          "key": "654fc71fad51d93489ec3ad07254e2c2033d5abc",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "52544:13028",
+          "key": "15030ed7bb260b925877f474ac63fac84aa5d707",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "52544:13033",
+          "key": "52ec8ea0685741c874c77287bdd01ffaf51f0919",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "52544:13037",
+          "key": "f9e08d3e9c9f335835bdc386b260988b9b4e18e8",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "52544:13042",
+          "key": "f95444ad4f5c5c61532a0678aff743b6eb7257c5",
+          "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+        }
+      ]
+    },
+    {
+      "key": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "name": "CheckboxLabel_24",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CheckboxLabel_24",
+      "defaultVariant": "2a3b098b18b4b0b8901c5a586ee1240412d82b3d",
+      "variantStructures": {
+        "2a3b098b18b4b0b8901c5a586ee1240412d82b3d": [],
+        "512a49b8128e8693a724ac96a3fd344196faf790": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=False / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "61a348dc38435fc2d95ecafd18be94af7a6baacb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "035e57383a81d126806df0185da8662c82e8f2ee",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "f786423324b53fe6d11ff77528b6abb7fa8ab6af": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "035e57383a81d126806df0185da8662c82e8f2ee",
+                "variantProperties": {
+                  "SelectedState": "False",
+                  "DisabledState": "True",
+                  "IndeterminateState": "False"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 1.5,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 5,
+              "path": "Hint=True, ErrorMessage=False, DisabledLabel=True / Content / HintMessage",
+              "type": "TEXT",
+              "name": "HintMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Hint Message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 8,
+                    "b": 29,
+                    "a": 0.38
+                  },
+                  "visible": true,
+                  "opacity": 0.3799999952316284
+                }
+              ],
+              "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "6ddf37934b0ce7cacd0d4a007d4b85f90a2aaba4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 7,
+              "path": "Hint=False, ErrorMessage=True, DisabledLabel=False / Content / ErrorMessage",
+              "type": "TEXT",
+              "name": "ErrorMessage",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Error message",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 18,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 236,
+                    "g": 45,
+                    "b": 32,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "104:21082",
+          "key": "2a3b098b18b4b0b8901c5a586ee1240412d82b3d",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "104:21086",
+          "key": "512a49b8128e8693a724ac96a3fd344196faf790",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=False"
+        },
+        {
+          "id": "34265:42129",
+          "key": "61a348dc38435fc2d95ecafd18be94af7a6baacb",
+          "name": "Hint=False, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "34265:42133",
+          "key": "f786423324b53fe6d11ff77528b6abb7fa8ab6af",
+          "name": "Hint=True, ErrorMessage=False, DisabledLabel=True"
+        },
+        {
+          "id": "104:21096",
+          "key": "6ddf37934b0ce7cacd0d4a007d4b85f90a2aaba4",
+          "name": "Hint=False, ErrorMessage=True, DisabledLabel=False"
+        }
+      ]
+    },
+    {
+      "key": "39fb88aceb85d970c0322ce1df6ec3c5e5267ace",
+      "name": "Checkbox_20_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Checkbox_20_Inverted",
+      "defaultVariant": "8cc757ef39926f13888cab892cfa2c43c953e67d",
+      "variantStructures": {
+        "8cc757ef39926f13888cab892cfa2c43c953e67d": [],
+        "f8f4fba65ff4867b8c6128a6e279753d2baab18f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+            }
+          }
+        ],
+        "6756c69902bb76bb5a16105f01eb6b3c4310dcdd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "e9522592b6fd3dbccb9f54a51e1633492afbce39": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 225,
+                    "g": 225,
+                    "b": 248,
+                    "a": 0.09
+                  },
+                  "visible": true,
+                  "opacity": 0.09000000357627869
+                }
+              ],
+              "fillToken": "VariableID:263c63f73d920cf3572113cec74e3b8a73ff1d1c/3541:119"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "1bc84c1f84efd53d3aa04d0e7576f39dfa4728d4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 225,
+                    "g": 225,
+                    "b": 248,
+                    "a": 0.09
+                  },
+                  "visible": true,
+                  "opacity": 0.09000000357627869
+                }
+              ],
+              "fillToken": "VariableID:263c63f73d920cf3572113cec74e3b8a73ff1d1c/3541:119"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "8289425ec0c314a1efbe1f56fbd205b57c80ef36": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "52544:29078",
+          "key": "8cc757ef39926f13888cab892cfa2c43c953e67d",
+          "name": "SelectedState=False, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "52544:29081",
+          "key": "f8f4fba65ff4867b8c6128a6e279753d2baab18f",
+          "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "52544:29084",
+          "key": "6756c69902bb76bb5a16105f01eb6b3c4310dcdd",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "52544:29089",
+          "key": "e9522592b6fd3dbccb9f54a51e1633492afbce39",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "52544:29094",
+          "key": "1bc84c1f84efd53d3aa04d0e7576f39dfa4728d4",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+        },
+        {
+          "id": "52544:29098",
+          "key": "8289425ec0c314a1efbe1f56fbd205b57c80ef36",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+        }
+      ]
+    },
+    {
+      "key": "32e38f648ff5b9e4a296d3017dcf5c250040e740",
+      "name": "Checkbox_20",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Checkbox_20",
+      "defaultVariant": "17e046e76ad124c991afa0addcfebdabff3c0427",
+      "variantStructures": {
+        "17e046e76ad124c991afa0addcfebdabff3c0427": [],
+        "0a61dc965f081bef9609923ccee410945f53794a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+            }
+          }
+        ],
+        "3c945b1297efb71ae40d2cd8860840d62b70c4d2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "a9e7e219be1b1ac02c67f223551eb514d499f48d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 30,
+                    "g": 43,
+                    "b": 68,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066
+                }
+              ],
+              "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 9,
+                    "g": 12,
+                    "b": 37,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "846a00eed8d922c9e65292ab42ec62ce646f81fa": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 30,
+                    "g": 43,
+                    "b": 68,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066
+                }
+              ],
+              "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 9,
+                    "g": 12,
+                    "b": 37,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+            }
+          }
+        ],
+        "388a79f52f33243eec4567c923e64d26a133a59f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "34265:42059",
+          "key": "17e046e76ad124c991afa0addcfebdabff3c0427",
+          "name": "SelectedState=False, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "34265:42062",
+          "key": "0a61dc965f081bef9609923ccee410945f53794a",
+          "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "34265:42065",
+          "key": "3c945b1297efb71ae40d2cd8860840d62b70c4d2",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "34265:42070",
+          "key": "a9e7e219be1b1ac02c67f223551eb514d499f48d",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "34265:42075",
+          "key": "846a00eed8d922c9e65292ab42ec62ce646f81fa",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+        },
+        {
+          "id": "34265:42079",
+          "key": "388a79f52f33243eec4567c923e64d26a133a59f",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+        }
+      ]
+    },
+    {
+      "key": "193f110555eb0984f778aba6e785928d58b6cead",
+      "name": "Checkbox_24_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Checkbox_24_Inverted",
+      "defaultVariant": "b56d103e00cd94fce9b26cdd56ec6a196c5ec162",
+      "variantStructures": {
+        "b56d103e00cd94fce9b26cdd56ec6a196c5ec162": [],
+        "0c584b7caa8906efa5e67e332bf13ea068fd2a2d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 222,
+                    "g": 222,
+                    "b": 238,
+                    "a": 0.13
+                  },
+                  "visible": true,
+                  "opacity": 0.12999999523162842
+                }
+              ],
+              "strokeToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+            }
+          }
+        ],
+        "f0ba0b27a7a76cea9f46d8f01fdd0fda1249927c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "693e873d239559f9aa2d6eb39e0e71996ab33f81": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 225,
+                    "g": 225,
+                    "b": 248,
+                    "a": 0.09
+                  },
+                  "visible": true,
+                  "opacity": 0.09000000357627869
+                }
+              ],
+              "fillToken": "VariableID:263c63f73d920cf3572113cec74e3b8a73ff1d1c/3541:119"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "a98a815a5af40c0867f1f281f3429b577caa14e0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 225,
+                    "g": 225,
+                    "b": 248,
+                    "a": 0.09
+                  },
+                  "visible": true,
+                  "opacity": 0.09000000357627869
+                }
+              ],
+              "fillToken": "VariableID:263c63f73d920cf3572113cec74e3b8a73ff1d1c/3541:119"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 228,
+                    "b": 251,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:aafe87fe728b68facde98cad3d334151ebc4b3ed/3541:109"
+            }
+          }
+        ],
+        "93e52421c6244fd386622439c99fdc32a4c10683": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "52544:12999",
+          "key": "b56d103e00cd94fce9b26cdd56ec6a196c5ec162",
+          "name": "SelectedState=False, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "52544:13002",
+          "key": "0c584b7caa8906efa5e67e332bf13ea068fd2a2d",
+          "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "52544:13005",
+          "key": "f0ba0b27a7a76cea9f46d8f01fdd0fda1249927c",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "52544:13010",
+          "key": "693e873d239559f9aa2d6eb39e0e71996ab33f81",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "52544:13015",
+          "key": "a98a815a5af40c0867f1f281f3429b577caa14e0",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+        },
+        {
+          "id": "52544:13019",
+          "key": "93e52421c6244fd386622439c99fdc32a4c10683",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+        }
+      ]
+    },
+    {
+      "key": "4a66e1a5158dcef1aa3da25fbc8f8d2d77b24827",
+      "name": "Checkbox_24",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Checkbox_24",
+      "defaultVariant": "4cac6edad1365286a50b5bf504b313d4ea898ac9",
+      "variantStructures": {
+        "4cac6edad1365286a50b5bf504b313d4ea898ac9": [],
+        "035e57383a81d126806df0185da8662c82e8f2ee": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+            }
+          }
+        ],
+        "29a5bd3da2b0768d1b6a45bc3fd7a8b760fa4f32": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "420a32b7d792b5f4ca6e6ddaa4b9474758ac4553": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 30,
+                    "g": 43,
+                    "b": 68,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066
+                }
+              ],
+              "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 9,
+                    "g": 12,
+                    "b": 37,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=False / Content / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "7a8d734535185e1e718a5fa3c9d65f9b4cab1ea1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 30,
+                    "g": 43,
+                    "b": 68,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066
+                }
+              ],
+              "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=True, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 9,
+                    "g": 12,
+                    "b": 37,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929
+                }
+              ],
+              "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+            }
+          }
+        ],
+        "c90dbf2c27280bc61228d7f0d44ff2aa6f7d6553": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1
+                }
+              ],
+              "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "SelectedState=True, DisabledState=False, IndeterminateState=True / Content / Icon",
+              "type": "VECTOR",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142
+                }
+              ],
+              "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "104:21059",
+          "key": "4cac6edad1365286a50b5bf504b313d4ea898ac9",
+          "name": "SelectedState=False, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "104:21061",
+          "key": "035e57383a81d126806df0185da8662c82e8f2ee",
+          "name": "SelectedState=False, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "104:21063",
+          "key": "29a5bd3da2b0768d1b6a45bc3fd7a8b760fa4f32",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=False"
+        },
+        {
+          "id": "104:21068",
+          "key": "420a32b7d792b5f4ca6e6ddaa4b9474758ac4553",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=False"
+        },
+        {
+          "id": "104:21073",
+          "key": "7a8d734535185e1e718a5fa3c9d65f9b4cab1ea1",
+          "name": "SelectedState=True, DisabledState=True, IndeterminateState=True"
+        },
+        {
+          "id": "104:21077",
+          "key": "c90dbf2c27280bc61228d7f0d44ff2aa6f7d6553",
+          "name": "SelectedState=True, DisabledState=False, IndeterminateState=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False",
+      "type": "COMPONENT",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox",
+      "type": "INSTANCE",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content",
+      "type": "FRAME",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Content",
+      "type": "FRAME",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CheckboxLabel_20_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "878bb289df5882c5c6d18bd79206e986d35312ea",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 1,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False",
+      "type": "COMPONENT",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox",
+      "type": "INSTANCE",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content",
+      "type": "FRAME",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Content",
+      "type": "FRAME",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CheckboxLabel_20 / Hint=False, ErrorMessage=False, DisabledLabel=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "2dd1a98a8d57e38e2252850c09e0c56e17121676",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+      }
+    },
+    {
+      "id": 1,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False",
+      "type": "COMPONENT",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox",
+      "type": "INSTANCE",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content",
+      "type": "FRAME",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Content",
+      "type": "FRAME",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CheckboxLabel_24_Inverted / Hint=False, ErrorMessage=False, DisabledLabel=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "1543994d18cef25d2e9525f4e8376ff96307bab2",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False",
+      "type": "COMPONENT",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox",
+      "type": "INSTANCE",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content",
+      "type": "FRAME",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Checkbox / Content / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Content",
+      "type": "FRAME",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CheckboxLabel_24 / Hint=False, ErrorMessage=False, DisabledLabel=False / Content / Label",
+      "type": "TEXT",
+      "componentKey": "2e0baee85c1ac6f846e793062d3ae4c096de47a9",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Label"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0,
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "Checkbox_20_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False",
+      "type": "COMPONENT",
+      "componentKey": "39fb88aceb85d970c0322ce1df6ec3c5e5267ace",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Checkbox_20_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False / Content",
+      "type": "FRAME",
+      "componentKey": "39fb88aceb85d970c0322ce1df6ec3c5e5267ace",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Checkbox_20_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "39fb88aceb85d970c0322ce1df6ec3c5e5267ace",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE",
+        "token": "VariableID:fb9344ab3c225f8dc12600ba4091329d0a6815ae/3541:146",
+        "color": "rgba(238,238,251,0.55)"
+      },
+      "fill": {
+        "token": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+        "color": "rgba(38,38,41,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Checkbox_20 / SelectedState=False, DisabledState=False, IndeterminateState=False",
+      "type": "COMPONENT",
+      "componentKey": "32e38f648ff5b9e4a296d3017dcf5c250040e740",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Checkbox_20 / SelectedState=False, DisabledState=False, IndeterminateState=False / Content",
+      "type": "FRAME",
+      "componentKey": "32e38f648ff5b9e4a296d3017dcf5c250040e740",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Checkbox_20 / SelectedState=False, DisabledState=False, IndeterminateState=False / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "32e38f648ff5b9e4a296d3017dcf5c250040e740",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE",
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Checkbox_24_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False",
+      "type": "COMPONENT",
+      "componentKey": "193f110555eb0984f778aba6e785928d58b6cead",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Checkbox_24_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False / Content",
+      "type": "FRAME",
+      "componentKey": "193f110555eb0984f778aba6e785928d58b6cead",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Checkbox_24_Inverted / SelectedState=False, DisabledState=False, IndeterminateState=False / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "193f110555eb0984f778aba6e785928d58b6cead",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE",
+        "token": "VariableID:fb9344ab3c225f8dc12600ba4091329d0a6815ae/3541:146",
+        "color": "rgba(238,238,251,0.55)"
+      },
+      "fill": {
+        "token": "VariableID:640e23de1b27c980f8ca2a21a4fdabf26a3a6d52/3541:158",
+        "color": "rgba(38,38,41,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Checkbox_24 / SelectedState=False, DisabledState=False, IndeterminateState=False",
+      "type": "COMPONENT",
+      "componentKey": "4a66e1a5158dcef1aa3da25fbc8f8d2d77b24827",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          2,
+          2,
+          2
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Checkbox_24 / SelectedState=False, DisabledState=False, IndeterminateState=False / Content",
+      "type": "FRAME",
+      "componentKey": "4a66e1a5158dcef1aa3da25fbc8f8d2d77b24827",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Checkbox_24 / SelectedState=False, DisabledState=False, IndeterminateState=False / Content / Bg",
+      "type": "RECTANGLE",
+      "componentKey": "4a66e1a5158dcef1aa3da25fbc8f8d2d77b24827",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1.5,
+        "align": "INSIDE",
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

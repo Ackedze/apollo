@@ -1,0 +1,1204 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core",
+    "file": "Web :: Core",
+    "generatedAt": "2025-12-26T12:52:32.631Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Skeleton"
+    ],
+    "componentCount": 4,
+    "elementCount": 15
+  },
+  "components": [
+    {
+      "key": "b91c1a38f3f877aec33646d884e1fdb5266e9e75",
+      "name": "[M] Skeleton_SystemTitle",
+      "status": "active",
+      "role": "main",
+      "platform": "mobile-web",
+      "category": "M] Skeleton_SystemTitle",
+      "defaultVariant": "78e3c47481405221249d28b0866f5f179e4a5929",
+      "variantStructures": {
+        "78e3c47481405221249d28b0866f5f179e4a5929": [],
+        "f0e60e2315ebb0cdc44eb61a9b6d0c77e5bb81a3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=30_36"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 7,
+                  "right": 0,
+                  "bottom": 7,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 22,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "bc33e3d3fa8c23fc28b608eb4963ce8ae7a646bc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=26_32"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 7,
+                  "right": 0,
+                  "bottom": 7,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 18,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "f286c481147b550af571c325ab564f6caaeb6ec9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=20_28"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 7,
+                  "right": 0,
+                  "bottom": 7,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 14,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "af3be7c399ce8f0944a3b7966cf179079202e5fc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_20"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56146:841",
+          "key": "78e3c47481405221249d28b0866f5f179e4a5929",
+          "name": "TextStyle=34_40"
+        },
+        {
+          "id": "56146:843",
+          "key": "f0e60e2315ebb0cdc44eb61a9b6d0c77e5bb81a3",
+          "name": "TextStyle=30_36"
+        },
+        {
+          "id": "56146:845",
+          "key": "bc33e3d3fa8c23fc28b608eb4963ce8ae7a646bc",
+          "name": "TextStyle=26_32"
+        },
+        {
+          "id": "56146:847",
+          "key": "f286c481147b550af571c325ab564f6caaeb6ec9",
+          "name": "TextStyle=20_28"
+        },
+        {
+          "id": "56146:849",
+          "key": "af3be7c399ce8f0944a3b7966cf179079202e5fc",
+          "name": "TextStyle=16_20"
+        }
+      ]
+    },
+    {
+      "key": "2fa51b0b6e98647666d2233989d3e435988b8ec0",
+      "name": "[D] Skeleton_SystemTitle",
+      "status": "active",
+      "role": "main",
+      "platform": "desktop",
+      "category": "D] Skeleton_SystemTitle",
+      "defaultVariant": "f1685bc9546d37e68c0b0185e872761cd632c3af",
+      "variantStructures": {
+        "f1685bc9546d37e68c0b0185e872761cd632c3af": [],
+        "25d694c4f9e4ace5eb0bd9bb148731b608f20be4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=40_48"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 0,
+                  "bottom": 10,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 28,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "581b3f3e7eb7a069c5bf0129e7183f744ff8cf61": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=30_36"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 7,
+                  "right": 0,
+                  "bottom": 7,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 22,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "ebae04ff59763c05602a7f5fc145093dbdd1e1a2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=22_26"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "61761a94aea8f3f5d6706e3f4c659f0a0b95d59e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=18_22"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "56146:716",
+          "key": "f1685bc9546d37e68c0b0185e872761cd632c3af",
+          "name": "TextStyle=48_52"
+        },
+        {
+          "id": "56146:722",
+          "key": "25d694c4f9e4ace5eb0bd9bb148731b608f20be4",
+          "name": "TextStyle=40_48"
+        },
+        {
+          "id": "56146:728",
+          "key": "581b3f3e7eb7a069c5bf0129e7183f744ff8cf61",
+          "name": "TextStyle=30_36"
+        },
+        {
+          "id": "56146:734",
+          "key": "ebae04ff59763c05602a7f5fc145093dbdd1e1a2",
+          "name": "TextStyle=22_26"
+        },
+        {
+          "id": "56146:835",
+          "key": "61761a94aea8f3f5d6706e3f4c659f0a0b95d59e",
+          "name": "TextStyle=18_22"
+        }
+      ]
+    },
+    {
+      "key": "4775a9c124307ec6d472195f5c8bc277e00245d5",
+      "name": "Skeleton_Text",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Skeleton_Text",
+      "defaultVariant": "8155c63e5bd0f19cd51ba176de3ffffb5ff9397d",
+      "variantStructures": {
+        "8155c63e5bd0f19cd51ba176de3ffffb5ff9397d": [],
+        "4e96cdfd6305b12d13f3ec3e5733f4c0e0987b4a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_24, Length=164"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 164,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "c52170b0f1546e130602662890b4e6a05e1c61c4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_24, Length=56"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 56,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "0537e535bf62338a2994143be4727bc76b73ce76": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_20, Length=Fill"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "5188076a05d22410a58582254e366df7e696335e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_20, Length=164"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 164,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "0b0b3d1421af685aa84a6f6242b6b14c39cf2bc8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=16_20, Length=56"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 56,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "2195329ce0f092b4e50e6159b9698c22db9f7f51": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_20, Length=Fill"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "8b29ce4b0b6212a5988f06031650bfdfe49c15e3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_20, Length=164"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 164,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "4e0d2d6a6448e102044b165799ee0212921fa338": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_20, Length=56"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 56,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "5833e5fdf72c5ef45f5690920946fce96d70a438": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_18, Length=Fill"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "805ffe709270b9759bed2d8b64c566a731837ddb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_18, Length=164"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 164,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ],
+        "6b19e75374e42dc33f131f9a143d642491f8d2e2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "TextStyle=14_18, Length=56"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 4,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 10,
+                  "right": 56,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              }
+            }
+          }
+        ]
+      },
+      "variants": [
+        {
+          "id": "485:57552",
+          "key": "8155c63e5bd0f19cd51ba176de3ffffb5ff9397d",
+          "name": "TextStyle=16_24, Length=Fill"
+        },
+        {
+          "id": "485:57554",
+          "key": "4e96cdfd6305b12d13f3ec3e5733f4c0e0987b4a",
+          "name": "TextStyle=16_24, Length=164"
+        },
+        {
+          "id": "485:57556",
+          "key": "c52170b0f1546e130602662890b4e6a05e1c61c4",
+          "name": "TextStyle=16_24, Length=56"
+        },
+        {
+          "id": "485:57558",
+          "key": "0537e535bf62338a2994143be4727bc76b73ce76",
+          "name": "TextStyle=16_20, Length=Fill"
+        },
+        {
+          "id": "485:57560",
+          "key": "5188076a05d22410a58582254e366df7e696335e",
+          "name": "TextStyle=16_20, Length=164"
+        },
+        {
+          "id": "485:57562",
+          "key": "0b0b3d1421af685aa84a6f6242b6b14c39cf2bc8",
+          "name": "TextStyle=16_20, Length=56"
+        },
+        {
+          "id": "485:57564",
+          "key": "2195329ce0f092b4e50e6159b9698c22db9f7f51",
+          "name": "TextStyle=14_20, Length=Fill"
+        },
+        {
+          "id": "485:57566",
+          "key": "8b29ce4b0b6212a5988f06031650bfdfe49c15e3",
+          "name": "TextStyle=14_20, Length=164"
+        },
+        {
+          "id": "485:57568",
+          "key": "4e0d2d6a6448e102044b165799ee0212921fa338",
+          "name": "TextStyle=14_20, Length=56"
+        },
+        {
+          "id": "485:57570",
+          "key": "5833e5fdf72c5ef45f5690920946fce96d70a438",
+          "name": "TextStyle=14_18, Length=Fill"
+        },
+        {
+          "id": "485:57572",
+          "key": "805ffe709270b9759bed2d8b64c566a731837ddb",
+          "name": "TextStyle=14_18, Length=164"
+        },
+        {
+          "id": "485:57574",
+          "key": "6b19e75374e42dc33f131f9a143d642491f8d2e2",
+          "name": "TextStyle=14_18, Length=56"
+        }
+      ]
+    },
+    {
+      "key": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+      "name": "Skeleton",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Skeleton",
+      "defaultVariant": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+      "variantStructures": {
+        "814d646b9eaa27ce5768d350ebb25a9122ec0550": []
+      },
+      "variants": [
+        {
+          "id": "485:57541",
+          "key": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+          "name": "Skeleton"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "[M] Skeleton_SystemTitle / TextStyle=34_40",
+      "type": "COMPONENT",
+      "componentKey": "b91c1a38f3f877aec33646d884e1fdb5266e9e75",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[M] Skeleton_SystemTitle / TextStyle=34_40 / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "b91c1a38f3f877aec33646d884e1fdb5266e9e75",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          0,
+          8,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "[M] Skeleton_SystemTitle / TextStyle=34_40 / Skeleton / SkeletonBody",
+      "type": "FRAME",
+      "componentKey": "b91c1a38f3f877aec33646d884e1fdb5266e9e75",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 99
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "[M] Skeleton_SystemTitle / TextStyle=34_40 / Skeleton / SkeletonBody / Fixer",
+      "type": "FRAME",
+      "componentKey": "b91c1a38f3f877aec33646d884e1fdb5266e9e75",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "[D] Skeleton_SystemTitle / TextStyle=48_52",
+      "type": "COMPONENT",
+      "componentKey": "2fa51b0b6e98647666d2233989d3e435988b8ec0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "[D] Skeleton_SystemTitle / TextStyle=48_52 / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "2fa51b0b6e98647666d2233989d3e435988b8ec0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          9,
+          0,
+          9,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "[D] Skeleton_SystemTitle / TextStyle=48_52 / Skeleton / SkeletonBody",
+      "type": "FRAME",
+      "componentKey": "2fa51b0b6e98647666d2233989d3e435988b8ec0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          34,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 99
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "[D] Skeleton_SystemTitle / TextStyle=48_52 / Skeleton / SkeletonBody / Fixer",
+      "type": "FRAME",
+      "componentKey": "2fa51b0b6e98647666d2233989d3e435988b8ec0",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Skeleton_Text / TextStyle=16_24, Length=Fill",
+      "type": "COMPONENT",
+      "componentKey": "4775a9c124307ec6d472195f5c8bc277e00245d5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Skeleton_Text / TextStyle=16_24, Length=Fill / Skeleton",
+      "type": "INSTANCE",
+      "componentKey": "4775a9c124307ec6d472195f5c8bc277e00245d5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          6,
+          0,
+          6,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Skeleton_Text / TextStyle=16_24, Length=Fill / Skeleton / SkeletonBody",
+      "type": "FRAME",
+      "componentKey": "4775a9c124307ec6d472195f5c8bc277e00245d5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 99
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Skeleton_Text / TextStyle=16_24, Length=Fill / Skeleton / SkeletonBody / Fixer",
+      "type": "FRAME",
+      "componentKey": "4775a9c124307ec6d472195f5c8bc277e00245d5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Skeleton",
+      "type": "COMPONENT",
+      "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Skeleton / SkeletonBody",
+      "type": "FRAME",
+      "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Skeleton / SkeletonBody / Fixer",
+      "type": "FRAME",
+      "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

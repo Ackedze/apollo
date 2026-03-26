@@ -98,6 +98,7 @@ let tokenLabelLoadPromise: Promise<void> | null = null;
 let styleLabelMap: Map<string, { label: string; library?: string }> | null =
   null;
 let styleLabelLoadPromise: Promise<void> | null = null;
+const styleLookupCache = new Map<string, string | null>();
 
 /**
  * Запускает полный аудит текущего выделения: проверяет готовность справочников,
@@ -199,7 +200,7 @@ async function runAudit() {
 
     const customStyleReasonOptions: CustomStyleCollectionOptions = {
       tokenLabelMap: tokenLabelMap ?? new Map(),
-      styleLabelMap: styleLabelMap ?? new Map(),
+      isKnownStyleId,
     };
 
     const textNodeOptions: TextNodeCollectionOptions = {
@@ -364,7 +365,7 @@ async function collectTargets(
       }
 
       if (node.type !== 'SECTION') {
-          const customStyleReasons = collectCustomStyles(node, customStyleReasonOptions);
+          const customStyleReasons = await collectCustomStyles(node, customStyleReasonOptions);
 
           if (customStyleReasons.length) {
             checkState.customStyleEntries = [
@@ -965,6 +966,75 @@ function resolveStyleLabelForDiff(styleKey: string): string | null {
     }
   }
   return styleKey;
+}
+
+async function isKnownStyleId(
+  styleId: string | null | undefined,
+): Promise<boolean> {
+  const normalized = normalizeStyleId(styleId);
+  if (!normalized) {
+    return false;
+  }
+
+  const directKey = extractStyleKey(normalized);
+  if (directKey && styleLabelMap?.has(directKey)) {
+    return true;
+  }
+
+  if (styleLookupCache.has(normalized)) {
+    const cached = styleLookupCache.get(normalized);
+    return Boolean(cached && styleLabelMap?.has(cached));
+  }
+
+  const figmaApi = figma as PluginAPI & {
+    getStyleById?: (id: string) => BaseStyle | null;
+    getStyleByIdAsync?: (id: string) => Promise<BaseStyle | null>;
+  };
+
+  try {
+    const style =
+      typeof figmaApi.getStyleByIdAsync === 'function'
+        ? await figmaApi.getStyleByIdAsync(normalized)
+        : typeof figmaApi.getStyleById === 'function'
+          ? figmaApi.getStyleById(normalized)
+          : null;
+
+    const resolvedKey =
+      style && typeof style.key === 'string' && style.key
+        ? style.key
+        : null;
+
+    styleLookupCache.set(normalized, resolvedKey);
+
+    return Boolean(resolvedKey && styleLabelMap?.has(resolvedKey));
+  } catch (error) {
+    console.warn('[Apollo] failed to resolve style by id', {
+      styleId: normalized,
+      error,
+    });
+    styleLookupCache.set(normalized, null);
+    return false;
+  }
+}
+
+function normalizeStyleId(
+  styleId: string | null | undefined,
+): string | null {
+  if (!styleId || typeof styleId !== 'string' || styleId === figma.mixed) {
+    return null;
+  }
+  return styleId.trim() || null;
+}
+
+function extractStyleKey(styleId: string): string | null {
+  if (styleLabelMap?.has(styleId)) {
+    return styleId;
+  }
+  if (!styleId.startsWith('S:')) {
+    return null;
+  }
+  const extracted = styleId.slice(2).split(',')[0];
+  return extracted || null;
 }
 
 function resolveTokenLabelFromColor(color: string): string | null {

@@ -24,21 +24,21 @@ export interface TextNodeCollectionOptions {
 
 export interface CustomStyleCollectionOptions {
   tokenLabelMap: Map<string, { label: string; library?: string }>;
-  styleLabelMap: Map<string, { label: string; library?: string }>;
+  isKnownStyleId: (styleId: string | null | undefined) => Promise<boolean>;
 }
 
 /**
  * Собирает все узлы, у которых явно навешаны кастомные стили (заливка/обводка/текст) вне компонентных диффов.
  */
-export function collectCustomStyles(
+export async function collectCustomStyles(
   node: SceneNode,
   options: CustomStyleCollectionOptions,
-): CustomStyleEntry[] {
+): Promise<CustomStyleEntry[]> {
   const entries: CustomStyleEntry[] = [];
 
     if (node.type === 'SECTION') return entries;
 
-    const reasons = describeCustomStyleReasons(node, options);
+    const reasons = await describeCustomStyleReasons(node, options);
 
     if (reasons.length) {
       for (const reason of reasons) {
@@ -258,29 +258,29 @@ function getTokenAliasInfo(
   };
 }
 
-export function describeCustomStyleReasons(
+export async function describeCustomStyleReasons(
   node: SceneNode,
   options: CustomStyleCollectionOptions,
-): Array<CustomStyleEntry['reason']> {
+): Promise<Array<CustomStyleEntry['reason']>> {
   const reasons: Array<CustomStyleEntry['reason']> = [];
-  if (hasCustomPaints(node, 'fills', 'fillStyleId', options)) {
+  if (await hasCustomPaints(node, 'fills', 'fillStyleId', options)) {
     reasons.push('fill');
   }
-  if (hasCustomPaints(node, 'strokes', 'strokeStyleId', options)) {
+  if (await hasCustomPaints(node, 'strokes', 'strokeStyleId', options)) {
     reasons.push('stroke');
   }
-  const effectReasons = describeCustomEffects(node, options);
+  const effectReasons = await describeCustomEffects(node, options);
   reasons.push(...effectReasons);
   return reasons;
 }
 
-function describeCustomEffects(
+async function describeCustomEffects(
   node: SceneNode,
   options: CustomStyleCollectionOptions,
-): string[] {
+): Promise<string[]> {
   if (!('effects' in node)) return [];
   const effectStyleId = (node as any).effectStyleId;
-  if (hasKnownStyleId(effectStyleId, options.styleLabelMap)) {
+  if (await options.isKnownStyleId(effectStyleId)) {
     return [];
   }
   const effects = (node as any).effects;
@@ -292,6 +292,19 @@ function describeCustomEffects(
     if (!effect || effect.visible === false) continue;
     const label = mapEffectType(effect.type);
     reasons.push(`effect:${label}`);
+  }
+  if (reasons.length) {
+    console.warn('[Apollo] unresolved effect style added to custom styles', {
+      nodeId: node.id,
+      nodeName: node.name,
+      nodeType: node.type,
+      effectStyleId:
+        effectStyleId && effectStyleId !== figma.mixed ? effectStyleId : null,
+      effectTypes: effects
+        .filter((effect) => effect && effect.visible !== false)
+        .map((effect) => effect.type),
+      reasons,
+    });
   }
   return reasons;
 }
@@ -311,12 +324,12 @@ function mapEffectType(type: string): string {
   }
 }
 
-function hasCustomPaints(
+async function hasCustomPaints(
   node: SceneNode,
   paintsKey: 'fills' | 'strokes',
   styleKey: 'fillStyleId' | 'strokeStyleId',
   options: CustomStyleCollectionOptions,
-): boolean {
+): Promise<boolean> {
   if (!(paintsKey in node)) return false;
   const paints = (node as any)[paintsKey];
   if (!Array.isArray(paints)) {
@@ -337,7 +350,7 @@ function hasCustomPaints(
       continue;
     }
     if (hasStyle) {
-      return !hasKnownStyleId(styleId, options.styleLabelMap);
+      return !(await options.isKnownStyleId(styleId));
     }
     return true;
   }
@@ -350,23 +363,6 @@ function hasPaintStyle(
 ): boolean {
   const styleId = (node as any)[styleKey];
   return Boolean(styleId && styleId !== figma.mixed && typeof styleId === 'string');
-}
-
-function hasKnownStyleId(
-  styleId: string | null | undefined,
-  styleLabelMap: Map<string, { label: string; library?: string }>,
-): boolean {
-  if (!styleId || typeof styleId !== 'string') return false;
-  if (styleLabelMap.has(styleId)) {
-    return true;
-  }
-  if (styleId.startsWith('S:')) {
-    const extracted = styleId.slice(2).split(',')[0];
-    if (extracted && styleLabelMap.has(extracted)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 function dedupeDiffs(diffs: DiffEntry[]): DiffEntry[] {

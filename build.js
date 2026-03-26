@@ -1,7 +1,42 @@
-const esbuild = require('esbuild');
 const fs = require('fs');
 const path = require('path');
+const { createRequire } = require('module');
 const isWatch = process.argv.includes('--watch');
+
+function loadEsbuild() {
+  try {
+    return require('esbuild');
+  } catch (error) {
+    if (!error || error.code !== 'MODULE_NOT_FOUND') {
+      throw error;
+    }
+  }
+
+  const legacyEsbuildEntry = path.join(
+    __dirname,
+    '..',
+    'Nemesis-mvp',
+    'node_modules',
+    'esbuild',
+  );
+
+  try {
+    const legacyRequire = createRequire(legacyEsbuildEntry);
+    const legacyEsbuild = legacyRequire(legacyEsbuildEntry);
+    console.warn('[Apollo] using esbuild from ../Nemesis-mvp/node_modules');
+    return legacyEsbuild;
+  } catch (error) {
+    const message = [
+      '[Apollo] esbuild is not available.',
+      'Install dependencies in Apollo with `npm install`',
+      'or keep ../Nemesis-mvp/node_modules available as a fallback.',
+    ].join(' ');
+    console.error(message);
+    throw error;
+  }
+}
+
+const esbuild = loadEsbuild();
 
 const common = {
   entryPoints: {

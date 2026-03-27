@@ -53,9 +53,11 @@
 - layout и padding;
 - `itemSpacing`;
 - стили заливки, обводки и текста;
-- fill/stroke, включая token alias и цветовые fallback-метки;
+- fill/stroke, включая variable token alias и цветовые fallback-метки;
 - радиусы;
 - opacity.
+
+Важно: style-binding для `fill` и `stroke` сравнивается отдельно через `styles.fill.styleKey` и `styles.stroke.styleKey`. В paint-канал больше не попадают `fillStyleId` и `strokeStyleId`, чтобы styled fills/strokes не отображались в UI как ложные `token: S:...` diff-ы.
 
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
 

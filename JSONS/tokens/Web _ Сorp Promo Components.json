@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-27T20:27:56.793Z",
+    "fileName": "Web :: Сorp Promo Components",
+    "library": "Web :: Сorp Promo Components"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:3333:18287",
+      "name": "Gap :: MainContent",
+      "key": "c73458667a770ad5e283e71f2cea6ffed614b8dd",
+      "defaultModeId": "3333:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "3333:0",
+          "name": "1024+"
+        },
+        {
+          "modeId": "3333:1",
+          "name": "768"
+        },
+        {
+          "modeId": "3335:1",
+          "name": "375"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:3333:18288",
+          "name": "Page",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "afabec305c582bf4b392482756b8cd381fb94600",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:3333:18287",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3333:0": 72,
+            "3333:1": 48,
+            "3335:1": 40
+          },
+          "hexByMode": {},
+          "collectionName": "Gap :: MainContent",
+          "groupName": "Без группы",
+          "tokenName": "Page"
+        },
+        {
+          "id": "VariableID:3333:18289",
+          "name": "Modal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "61547914d0528f54f5f75e0b2a2522d1962d87ce",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:3333:18287",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3333:0": 72,
+            "3333:1": 48,
+            "3335:1": 40
+          },
+          "hexByMode": {},
+          "collectionName": "Gap :: MainContent",
+          "groupName": "Без группы",
+          "tokenName": "Modal"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:3334:18291",
+      "name": "Gap :: CorporateContent",
+      "key": "8b78581c4c14b02caf59327534e406bc00fd4b7b",
+      "defaultModeId": "3334:4",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "3334:4",
+          "name": "1024+"
+        },
+        {
+          "modeId": "3334:5",
+          "name": "768"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:3334:18292",
+          "name": "Page",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "84dfa7037db8f68ab79901b153dd438d320e9735",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:3334:18291",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3334:4": 24,
+            "3334:5": 16
+          },
+          "hexByMode": {},
+          "collectionName": "Gap :: CorporateContent",
+          "groupName": "Без группы",
+          "tokenName": "Page"
+        }
+      ]
+    }
+  ]
+}

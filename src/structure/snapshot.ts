@@ -363,16 +363,9 @@ function extractFillInfo(node: SceneNode) {
       return `rgba(${[Math.round(c.r * 255), Math.round(c.g * 255), Math.round(c.b * 255), Math.round(opacity * 100) / 100].join(',')})`;
     })
     .join(',');
-  const token =
-    'fillStyleId' in node &&
-    (node as any).fillStyleId &&
-    (node as any).fillStyleId !== figma.mixed
-      ? String((node as any).fillStyleId)
-      : null;
   const variableToken = extractPaintVariableId(fills);
-  const resolvedToken = token || variableToken;
-  if (!color && !resolvedToken) return undefined;
-  return { color: color || null, token: resolvedToken };
+  if (!color && !variableToken) return undefined;
+  return { color: color || null, token: variableToken };
 }
 
 function extractStrokeInfo(node: SceneNode) {
@@ -397,14 +390,7 @@ function extractStrokeInfo(node: SceneNode) {
         })
         .join(',')
     : null;
-  const token =
-    'strokeStyleId' in node &&
-    (node as any).strokeStyleId &&
-    (node as any).strokeStyleId !== figma.mixed
-      ? String((node as any).strokeStyleId)
-      : null;
   const variableToken = extractPaintVariableId(strokes);
-  const resolvedToken = token || variableToken;
   const weight =
     'strokeWeight' in node && typeof (node as any).strokeWeight === 'number'
       ? (node as any).strokeWeight
@@ -418,7 +404,7 @@ function extractStrokeInfo(node: SceneNode) {
   }
   return {
     color: color || null,
-    token: resolvedToken,
+    token: variableToken,
     weight,
     align,
   };

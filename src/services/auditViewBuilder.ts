@@ -9,6 +9,7 @@ import type {
   PathSegment,
   TextNodeEntry,
 } from '../types/audit';
+import { applyCustomStyleFilters } from '../filters/customStyleFilters';
 import {
   buildNodePath,
   clampColorComponent,
@@ -52,8 +53,8 @@ export async function collectCustomStyles(
         });
       }
     }
-  
-  return entries;
+
+  return applyCustomStyleFilters(node, entries);
 }
 
 /**

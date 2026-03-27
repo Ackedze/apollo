@@ -442,10 +442,6 @@
       "path": "components/Spacing -- Spacing component.json"
     },
     {
-      "fileName": "tokens/Spacing.json.json",
-      "path": "tokens/Spacing.json"
-    },
-    {
       "fileName": "tokens/001 _ Interface Dynamic Colors.json",
       "path": "tokens/001 _ Interface Dynamic Colors.json"
     },
@@ -456,6 +452,18 @@
     {
       "fileName": "tokens/003 _ Decorative Dynamic Colors.json",
       "path": "tokens/003 _ Decorative Dynamic Colors.json"
+    },
+    {
+      "fileName": "tokens/Icons.json",
+      "path": "tokens/Icons.json"
+    },
+    {
+      "fileName": "tokens/Logotypes.json",
+      "path": "tokens/Logotypes.json"
+    },
+    {
+      "fileName": "tokens/Spacing.json",
+      "path": "tokens/Spacing.json"
     },
     {
       "fileName": "tokens/Web _ Corp Components.json",

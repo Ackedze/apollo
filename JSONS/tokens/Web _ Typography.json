@@ -1,0 +1,1047 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-27T10:15:46.140Z",
+    "fileName": "Web :: Typography",
+    "library": "Web :: Typography"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:8373:165",
+      "name": "Font",
+      "key": "91551c92fe96645c967d2db10a162b2fc17e0543",
+      "defaultModeId": "8373:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "8373:0",
+          "name": "AlfaSans"
+        },
+        {
+          "modeId": "8373:1",
+          "name": "System (SF)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:8394:315",
+          "name": "weight/SF Semibold",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "698dc04cb0cd1e7a2ef2369b2a89380b4ddda3fb",
+          "resolvedType": "STRING",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "FONT_STYLE"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": "Medium",
+            "8373:1": "Semibold"
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "weight",
+          "tokenName": "SF Semibold"
+        },
+        {
+          "id": "VariableID:8373:166",
+          "name": "font_family/>19",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "85e729d7c13b8053ee323ee04c1bc70ab02d06e9",
+          "resolvedType": "STRING",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "FONT_FAMILY"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": "Alfa Interface Sans",
+            "8373:1": "SF Pro Display"
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "font_family",
+          "tokenName": ">19"
+        },
+        {
+          "id": "VariableID:8373:171",
+          "name": "font_family/<20",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "45dadc3729a6a54b3dfeeda46556291880e5b46c",
+          "resolvedType": "STRING",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "FONT_FAMILY"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": "Alfa Interface Sans",
+            "8373:1": "SF Pro Text"
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "font_family",
+          "tokenName": "<20"
+        },
+        {
+          "id": "VariableID:8379:304",
+          "name": "bold_letter_spacing/48",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "d01415e1d24920337ccb24af29de9f20680bde68",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:efd0e3a2646d5c953a5632e51a34a23d81ed538d/22:1"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4b814c41bb8cabb817682cb30c1961fbf18b0953/2012:62"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:8388:314",
+          "name": "semibold_letter_spacing/34",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "0b775ebd58cd995add2d0e197e67172f4c5a06bf",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bf7d1b730e484541b359bddd27602645141eb2d4/38:1"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:f48d2967554e751ddf5ed9876d06bb19d25d3fde/2012:79"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "semibold_letter_spacing",
+          "tokenName": "34"
+        },
+        {
+          "id": "VariableID:8393:308",
+          "name": "medium_letter_spacing/18",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "d556185976f9162e21ce3f16b43d652777607237",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4efb4007851d239719f14ca8c503524b73a04138/38:40"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:24cdebcc966bc846e88fd54e40c2df48a834e496/2012:113"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "18"
+        },
+        {
+          "id": "VariableID:8393:309",
+          "name": "medium_letter_spacing/16",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "b7120271b4e052d8c33cd9d0ef902bbfdaabf060",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:31eafd629e25cc2b02fcbbad4f382c9667c64bc4/38:42"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:7bf77471f6b41ffe2e3ae4318540cdb68183d1c4/2012:114"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:8393:310",
+          "name": "medium_letter_spacing/14",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "e0e1894bf15babdfa68ff71284174c0697114857",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:627635fde4eb9eaadb39fe3e6daecb7853a4e92e/38:44"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:da6f3dab84bed86ed81f5c3ad7487fd228ed3513/2012:115"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "14"
+        },
+        {
+          "id": "VariableID:8393:311",
+          "name": "medium_letter_spacing/13",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "8604c0c14b5435d853e3ca3219a76d7721054d51",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:765965124787c2c212e581043cb1fd1ffd674d8d/38:45"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4c9ead6cf5b18693e845c27ab84d87554f6c97d6/2012:116"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "13"
+        },
+        {
+          "id": "VariableID:8393:312",
+          "name": "medium_letter_spacing/12",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "d9f69e3c1aa825f08c8ac6d8e33a17180ea27024",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:686c339be2c1364a18395b4155cd2734c094c67a/38:46"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:dae70bdae2bd0634d1ed703439a0949525b51158/2012:117"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:8393:313",
+          "name": "medium_letter_spacing/11",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "6cc1f46396aa4c2ca2bdcd8a23c6d0d1933db7c5",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:4a4b16741877b8cff9636614032d97939cac9604/38:47"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2e3c29ed6416674f383dc5edeb659815e945d1e7/2012:118"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "medium_letter_spacing",
+          "tokenName": "11"
+        },
+        {
+          "id": "VariableID:8388:325",
+          "name": "semibold_letter_spacing/30",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "74578ee19e28ae5a215aca22e5f56ffbf816bb7f",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:f72b5b90cdb1dd17dd6480c2dfdac829894e1259/38:2"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:352e070f0cb4c59c80de582e1b62fe340a179079/2042:0"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "semibold_letter_spacing",
+          "tokenName": "30"
+        },
+        {
+          "id": "VariableID:8388:331",
+          "name": "semibold_letter_spacing/26",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "3a08e0621d6337a8d175d2194ee39b87f3c8d0ae",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:e033d333a5d2a87d57239cb15c96ae291d2cee60/38:4"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:a3a05b721661a73260c0f1ffb9311a59b7b1e9ad/2012:82"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "semibold_letter_spacing",
+          "tokenName": "26"
+        },
+        {
+          "id": "VariableID:8388:332",
+          "name": "semibold_letter_spacing/20",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "166514f45fa82d9e310755f62a5fd2decc2d6b5b",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:82558f487a0f3483ef26ebe0112841cad1332529/38:5"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:6821d3889c22601c606a5d23584f4d6f7813a988/2012:83"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "semibold_letter_spacing",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:8388:333",
+          "name": "semibold_letter_spacing/16",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "c000ac2d8e0ee051ee4c18ee250e0093ba73165e",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:855e8716c6d662c64138c99b6b71b9d365ea8c6e/38:9"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:8875a20f515c1804341f786dc6eb8d14bd7d78a3/2012:87"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "semibold_letter_spacing",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:8379:308",
+          "name": "bold_letter_spacing/40",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "52d2f0ff37a73c1b5ae798e500cc90f0961cbc9f",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:dd961d10cc436f98430fac7d7fa11b3c1f70d2f2/22:2"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9c595b3239f2773396408d7f58592e2afb3a314c/2012:63"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:8382:285",
+          "name": "bold_letter_spacing/30",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "c2db8e6294960ce41ae7103c3e23393f9344a2c0",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:8ae38bfe72cf423a290fa856eca0e81ed18f02f7/22:4"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:011febd0e80fcc10094f0263fa06f28e85870123/2012:65"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "30"
+        },
+        {
+          "id": "VariableID:8382:288",
+          "name": "bold_letter_spacing/22",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "6e4b00e43032fe2bbd0dd497af166189599f1049",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:a8a07497840e6d4cea75a0226408b85715bfacd9/22:6"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:cbef4db18a30a3a893e24b175e844427a179a471/2012:67"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "22"
+        },
+        {
+          "id": "VariableID:8382:290",
+          "name": "bold_letter_spacing/18",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "06d2a9f885357762501c4ce6a2717394ceb23a36",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:5bcccd25f6299f709e1fd7f2320ef85219cdd9cd/22:9"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:97d628d703cc7764aabde620a3f454e1c28495f5/2012:70"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "18"
+        },
+        {
+          "id": "VariableID:8385:286",
+          "name": "bold_letter_spacing/16",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "15ca44d12e65f55968ac6612463266abfa573913",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:b09b7d83fd91975fd920c864291e9b52ed9e06e0/22:11"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:cf3cb4e491bfb4946c20c7bf24eb118dec34ada1/2012:72"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:8386:288",
+          "name": "bold_letter_spacing/14",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "e4642204d1345cbb1bb648ea8291ffa88b3bc4ea",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:6b500e75b78e433f2dcfa2aaa132e35b492ad9f8/22:13"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:53f58586374aeff6f09d82222bc664358d0130e2/2012:74"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "14"
+        },
+        {
+          "id": "VariableID:8386:290",
+          "name": "bold_letter_spacing/13",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "b436e6cb6d283dd27bb0ea37e31686d969ac1676",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:c0e349281e067abb63815d318606221707f9b7b9/22:14"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:db919be825893f5f75bca8af13480f4f7e213bf2/2012:75"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "13"
+        },
+        {
+          "id": "VariableID:8386:291",
+          "name": "bold_letter_spacing/12",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "2080abaf4fec477e63a3eb327825087bf9bb6a13",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:03f2725cd4d2cc372fce8adb5f70a84c1e7d13df/22:15"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:98dedbd81aa1e47ba9715b3faec4c9a0413ac1c2/2012:76"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:8386:297",
+          "name": "bold_letter_spacing/11",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "2cd697e19e8512c6f529c4bcf62c496b2c213464",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:0bad20f05057963003ef0db7cd778329f70bb657/22:16"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:94021f2d80a813c18235eb64adbd278e9c617445/2012:77"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "bold_letter_spacing",
+          "tokenName": "11"
+        },
+        {
+          "id": "VariableID:8393:331",
+          "name": "regular_letter_spacing/48",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "0996892dba2d64877d5899ac631cefa77e640505",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:20835a47ead915d90a5e2ea17b46e30a19b147a3/22:49"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:b3a7bba1781afda73f1e24389006550dda4a35b1/2012:110"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:8393:357",
+          "name": "regular_letter_spacing/40",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "4d8b355b0136a35d6aecd91fd7f982526cbfb396",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:fca89a3fcff61cd21db243c0e5ed0a172c47f555/22:33"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:0c6d7bbd18168ef6eb414526f35a6b81d729e1c7/2012:94"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:8393:386",
+          "name": "regular_letter_spacing/34",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "5e59914a73fb6c2b85da277acec1f78e3fa85e61",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:ba40926e8547651f92e9bc95105f867ae7445c8a/22:34"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:6d9384000776ce49f9b1ce611afb3e6f91feac75/2012:95"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "34"
+        },
+        {
+          "id": "VariableID:8393:360",
+          "name": "regular_letter_spacing/30",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "5304642bf67260edefdc51086a8be8af0a801d44",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:e0d0f44c83514009cd777b6c8b3ac7fb957c74f4/22:50"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:1abf1504cbd655360bb8644092255d9524c69508/2040:2"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "30"
+        },
+        {
+          "id": "VariableID:8393:388",
+          "name": "regular_letter_spacing/26",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "98f910a4539159f1893eb7208403b2d5401cab0e",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:aaf3eee1ad6a2f5b8f95568bf758b7752eef62e8/22:37"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:08c4a9c655d189e9863d343a68f41bc573066e6e/2012:98"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "26"
+        },
+        {
+          "id": "VariableID:8393:362",
+          "name": "regular_letter_spacing/22",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "4516cea85d5e24d164f9e448f872c25642d860be",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:1b18535ada7bd069090e374f37edf44bd818fe38/22:38"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:73330fac8e084940ff1807cc49770dd2b8872cc0/2012:99"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "22"
+        },
+        {
+          "id": "VariableID:8393:390",
+          "name": "regular_letter_spacing/20",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "ace9b99d18699f382ca178a6f9de94623138ef29",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:37b324cfe0da454aa82d68f2805b084c1fc94ca6/22:39"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:11cc9dd1b444ddb42a41aefe3ef0e8fbca4543e7/2012:100"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:8393:364",
+          "name": "regular_letter_spacing/18",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "30e8efe4e881cee9240c375b23cbed8792858102",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:c85dfa10e4dff06c4b72f1aef6c04b83088f4ae4/22:41"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:937b0c96bf32fda9443c7eff7ba5130503fbf797/2012:102"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "18"
+        },
+        {
+          "id": "VariableID:8393:392",
+          "name": "regular_letter_spacing/16",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "4a90c3aa1a9718ea38fb757c4676f4d5e2217285",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:5806cde918ef505ec4e8342ec5f008d6e31dd33e/22:43"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:28de36563ca5af9734cfab2612fca5787cb0590d/2012:104"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:8393:432",
+          "name": "regular_letter_spacing/14",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "92cf07b9293d13f66c460e3ad17e71b714d44c91",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:cb5df60674ab3cd514f702e1c1ba5f04db0b62da/22:45"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:2d06e01681e5a6a17d2c704d244452f182b5e50e/2012:106"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "14"
+        },
+        {
+          "id": "VariableID:8393:434",
+          "name": "regular_letter_spacing/13",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "b99ffde4975cebdf5c56fdd61b35d9fc79fbffac",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:72bbd35d2aa6ed021a437c127422196a1966f506/22:46"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:fe02c2c60ee640a0df57c2b6c8b376764a2accee/2012:107"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "13"
+        },
+        {
+          "id": "VariableID:8393:436",
+          "name": "regular_letter_spacing/12",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "1a51a7536f7eb03342a06087bcbd2ef58083f458",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:ee0a3f0f9c60cd5d8d377be973653abcf0d54ded/22:47"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:c72c5e2478f0bd368ae1249d7ca2c6e93462033b/2012:108"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:8393:438",
+          "name": "regular_letter_spacing/11",
+          "description": "",
+          "hiddenFromPublishing": true,
+          "remote": false,
+          "key": "e1f9bab740c9c1afcec1833cac36a0cacd0053d3",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:8373:165",
+          "scopes": [
+            "LETTER_SPACING"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "8373:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:c8d27b9361714f69953b17f7fc67e6ff4f561d85/22:48"
+            },
+            "8373:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:f7191979711b49fae47f0835ca5ad3c45e386224/2012:109"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Font",
+          "groupName": "regular_letter_spacing",
+          "tokenName": "11"
+        }
+      ]
+    }
+  ]
+}

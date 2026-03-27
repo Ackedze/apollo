@@ -1,157 +1,157 @@
 {
   "meta": {
-    "generatedAt": "2025-12-23T19:05:14.211Z",
+    "generatedAt": "2026-03-27T10:16:09.260Z",
     "fileName": "Web :: Typography",
     "library": "Web :: Typography"
   },
   "styles": [
     {
       "key": "385e7c15a1ff1d8bc65c26cdad779b6c0294af96",
-      "name": "48–52 xLarge (Typography.Title view='xlarge' font='system')",
+      "name": "48–52 xLarge (Typography.Title view=’xlarge’)",
       "group": "Headline–System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Bold",
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 48,
           "lineHeight": "52.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.10"
         }
       }
     },
     {
       "key": "e451446afce66cddd400f39abc5837a829b5a6c2",
-      "name": "40–48 Large (Typography.Title view='large' font='system')",
+      "name": "40–48 Large (Typography.Title view='large')",
       "group": "Headline–System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Bold",
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 40,
           "lineHeight": "48.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.10"
         }
       }
     },
     {
       "key": "26aa508b944e7f86657fec06b59611bca6bb2448",
-      "name": "30–36 Medium (Typography.Title view='medium' font='system')",
+      "name": "30–36 Medium (Typography.Title view='medium')",
       "group": "Headline–System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Bold",
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 30,
           "lineHeight": "36.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.10"
         }
       }
     },
     {
       "key": "952e7df724ba0235d6d170ca152117522e48f11c",
-      "name": "22–26 Small (Typography.Title view='small' font='system')",
+      "name": "22–26 Small (Typography.Title view='small')",
       "group": "Headline–System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Bold",
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 22,
           "lineHeight": "26.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.20"
         }
       }
     },
     {
       "key": "69723bb178c1d1f9ec90e7b5670389dadb9de724",
-      "name": "18–22 xSmall (Typography.Title view='xsmall' font='system')",
+      "name": "18–22 xSmall (Typography.Title view='xsmall')",
       "group": "Headline–System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Bold",
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 18,
           "lineHeight": "22.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "fce615bb338288dd2b2dc2d34878d6c1a3e9e641",
-      "name": "34–40 xLarge",
-      "group": "Headline-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Semibold",
-          "fontSize": 34,
-          "lineHeight": "40.00",
-          "letterSpacing": "0.37"
-        }
-      }
-    },
-    {
-      "key": "e16784bdce8a29100f40300ab8b132c3c3eac27f",
-      "name": "30–36 Large",
-      "group": "Headline-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Semibold",
-          "fontSize": 30,
-          "lineHeight": "36.00",
-          "letterSpacing": "0.36"
-        }
-      }
-    },
-    {
-      "key": "48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6",
-      "name": "26–32 Medium",
-      "group": "Headline-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Semibold",
-          "fontSize": 26,
-          "lineHeight": "32.00",
-          "letterSpacing": "0.36"
-        }
-      }
-    },
-    {
-      "key": "72fd753f9ec2cdf891db05a9abe2a17e033ed0fc",
-      "name": "20–28 Small",
-      "group": "Headline-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Semibold",
-          "fontSize": 20,
-          "lineHeight": "28.00",
           "letterSpacing": "0.38"
         }
       }
     },
     {
-      "key": "5ab7406f0d64e21264049625acb68806389dbbe3",
-      "name": "16–20 xSmall",
+      "key": "fce615bb338288dd2b2dc2d34878d6c1a3e9e641",
+      "name": "34–40 xLarge (Typography.TitleMobile view='xlarge')",
       "group": "Headline-System-Mobile",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Semibold",
+          "fontName": "Alfa Interface Sans Medium",
+          "fontSize": 34,
+          "lineHeight": "40.00",
+          "letterSpacing": "-0.32"
+        }
+      }
+    },
+    {
+      "key": "e16784bdce8a29100f40300ab8b132c3c3eac27f",
+      "name": "30–36 Large (Typography.TitleMobile view='large')",
+      "group": "Headline-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Medium",
+          "fontSize": 30,
+          "lineHeight": "36.00",
+          "letterSpacing": "-0.25"
+        }
+      }
+    },
+    {
+      "key": "48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6",
+      "name": "26–32 Medium (Typography.TitleMobile view='medium')",
+      "group": "Headline-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Medium",
+          "fontSize": 26,
+          "lineHeight": "32.00",
+          "letterSpacing": "-0.25"
+        }
+      }
+    },
+    {
+      "key": "72fd753f9ec2cdf891db05a9abe2a17e033ed0fc",
+      "name": "20–28 Small (Typography.TitleMobile view='small')",
+      "group": "Headline-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Medium",
+          "fontSize": 20,
+          "lineHeight": "28.00",
+          "letterSpacing": "-0.15"
+        }
+      }
+    },
+    {
+      "key": "5ab7406f0d64e21264049625acb68806389dbbe3",
+      "name": "16–20 xSmall (Typography.TitleMobile view='xsmall')",
+      "group": "Headline-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 16,
           "lineHeight": "20.00",
-          "letterSpacing": "-0.32"
+          "letterSpacing": "0.17"
         }
       }
     },
@@ -163,10 +163,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 18,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.36"
         }
       }
     },
@@ -178,10 +178,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 16,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.24"
         }
       }
     },
@@ -193,10 +193,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 14,
           "lineHeight": "20.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.08"
         }
       }
     },
@@ -208,7 +208,7 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 13,
           "lineHeight": "16.00",
           "letterSpacing": "0.00"
@@ -223,10 +223,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 12,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.06"
         }
       }
     },
@@ -238,10 +238,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 11,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.15"
         }
       }
     },
@@ -253,10 +253,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 16,
           "lineHeight": "20.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.24"
         }
       }
     },
@@ -268,22 +268,22 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 14,
           "lineHeight": "18.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.08"
         }
       }
     },
     {
       "key": "a874ad4d0ef2692e18be3128232ad04b3b8d40c6",
-      "name": "12-16 TAGLINE",
+      "name": "12-16 TAGLINE (Typography.Text view='tagline')",
       "group": "Paragraph",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 12,
           "lineHeight": "16.00",
           "letterSpacing": "1.25"
@@ -298,157 +298,7 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
-          "fontSize": 12,
-          "lineHeight": "16.00",
-          "letterSpacing": "1.25"
-        }
-      }
-    },
-    {
-      "key": "92e9a9e9ef07551eca0316447d0913d0b4297f13",
-      "name": "18–24 Primary Large (Typography.Text view='primary-large' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 18,
-          "lineHeight": "24.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "d16140c22dd6431b15814fa9632f4bdc91a4f129",
-      "name": "16–24 Primary Medium (Typography.Text view='primary-medium' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 16,
-          "lineHeight": "24.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "b657c53719573a5b414a97d0b5d3d69739579de2",
-      "name": "14–20 Primary Small (Typography.Text view='primary-small' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 14,
-          "lineHeight": "20.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "3398cbadbaac938521c5deebe296c54a26cdec93",
-      "name": "13–16 Secondary Large (Typography.Text view='secondary-large' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 13,
-          "lineHeight": "16.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "7e5262c21ead9d10863da05cc954acb91acaf238",
-      "name": "12–16 Secondary Medium (Typography.Text view='secondary-medium' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 12,
-          "lineHeight": "16.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "3b8f755205216e2142f722883e68078b09e41ff5",
-      "name": "11–16 Secondary Small (Typography.Text view='secondary-small' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 11,
-          "lineHeight": "16.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "a1848d32b95c97f348cf0ba724570da19764dd4f",
-      "name": "16–20 Component Primary (Typography.Text view='component' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 16,
-          "lineHeight": "20.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "45b5f455fe6e3289d7c3977c6c1f9106354de1ad",
-      "name": "14–18 Component Secondary (Typography.Text view='component-secondary' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 14,
-          "lineHeight": "18.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "3839460e5ea8099dc91631d321d3c5978f5aac68",
-      "name": "12-16 TAGLINE",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
-          "fontSize": 12,
-          "lineHeight": "16.00",
-          "letterSpacing": "1.25"
-        }
-      }
-    },
-    {
-      "key": "ad18a9a57c5f4e305430df89e88d879cf06eb4c5",
-      "name": "12–16 CAPS (Typography.Text view='caps' weight='bold')",
-      "group": "Accent",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Bold",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 12,
           "lineHeight": "16.00",
           "letterSpacing": "1.25"
@@ -463,10 +313,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 18,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.17"
         }
       }
     },
@@ -478,10 +328,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 16,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.05"
         }
       }
     },
@@ -493,10 +343,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 14,
           "lineHeight": "20.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.07"
         }
       }
     },
@@ -508,10 +358,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 13,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.13"
         }
       }
     },
@@ -523,10 +373,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 12,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.19"
         }
       }
     },
@@ -538,10 +388,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 11,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.24"
         }
       }
     },
@@ -553,10 +403,10 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 16,
           "lineHeight": "20.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.05"
         }
       }
     },
@@ -568,22 +418,22 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Medium",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 14,
           "lineHeight": "18.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.07"
         }
       }
     },
     {
       "key": "88fddb36d7765848517300ff27447199c7e6dcbd",
-      "name": "12-16 TAGLINE",
+      "name": "12-16 TAGLINE (Typography.Text view=”tagline” weight=”medium”)",
       "group": "Action",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Bold",
+          "fontName": "Alfa Interface Sans Medium",
           "fontSize": 12,
           "lineHeight": "16.00",
           "letterSpacing": "1.25"
@@ -598,7 +448,157 @@
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Bold",
+          "fontName": "Alfa Interface Sans Medium",
+          "fontSize": 12,
+          "lineHeight": "16.00",
+          "letterSpacing": "1.25"
+        }
+      }
+    },
+    {
+      "key": "92e9a9e9ef07551eca0316447d0913d0b4297f13",
+      "name": "18–24 Primary Large (Typography.Text view=”primary-large” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 18,
+          "lineHeight": "24.00",
+          "letterSpacing": "0.38"
+        }
+      }
+    },
+    {
+      "key": "d16140c22dd6431b15814fa9632f4bdc91a4f129",
+      "name": "16–24 Primary Medium (Typography.Text view=”primary-medium” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 16,
+          "lineHeight": "24.00",
+          "letterSpacing": "0.43"
+        }
+      }
+    },
+    {
+      "key": "b657c53719573a5b414a97d0b5d3d69739579de2",
+      "name": "14–20 Primary Small (Typography.Text view=”primary-small” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 14,
+          "lineHeight": "20.00",
+          "letterSpacing": "0.47"
+        }
+      }
+    },
+    {
+      "key": "3398cbadbaac938521c5deebe296c54a26cdec93",
+      "name": "13–16 Secondary Large (Typography.Text view=”secondary-large” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 13,
+          "lineHeight": "16.00",
+          "letterSpacing": "0.54"
+        }
+      }
+    },
+    {
+      "key": "7e5262c21ead9d10863da05cc954acb91acaf238",
+      "name": "12–16 Secondary Medium (Typography.Text view=”secondary-medium” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 12,
+          "lineHeight": "16.00",
+          "letterSpacing": "0.57"
+        }
+      }
+    },
+    {
+      "key": "3b8f755205216e2142f722883e68078b09e41ff5",
+      "name": "11–16 Secondary Small (Typography.Text view=”secondary-small” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 11,
+          "lineHeight": "16.00",
+          "letterSpacing": "0.54"
+        }
+      }
+    },
+    {
+      "key": "a1848d32b95c97f348cf0ba724570da19764dd4f",
+      "name": "16–20 Component Primary (Typography.Text view=”component” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 16,
+          "lineHeight": "20.00",
+          "letterSpacing": "0.43"
+        }
+      }
+    },
+    {
+      "key": "45b5f455fe6e3289d7c3977c6c1f9106354de1ad",
+      "name": "14–18 Component Secondary (Typography.Text view=”component-secondary” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 14,
+          "lineHeight": "18.00",
+          "letterSpacing": "0.47"
+        }
+      }
+    },
+    {
+      "key": "3839460e5ea8099dc91631d321d3c5978f5aac68",
+      "name": "12-16 TAGLINE (Typography.Text view=”tagline” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
+          "fontSize": 12,
+          "lineHeight": "16.00",
+          "letterSpacing": "1.25"
+        }
+      }
+    },
+    {
+      "key": "ad18a9a57c5f4e305430df89e88d879cf06eb4c5",
+      "name": "12–16 CAPS (Typography.Text view=”caps” weight=”bold”)",
+      "group": "Accent",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Bold",
           "fontSize": 12,
           "lineHeight": "16.00",
           "letterSpacing": "1.25"
@@ -607,58 +607,58 @@
     },
     {
       "key": "a0b4961e0a4495b032ba121f87f8c99ce402594e",
-      "name": "18–24 Primary Large (Typography.Text view='primary-large' monospaceNumbers={true})",
+      "name": "18–24 Primary Large (Typography.Text view=”primary-large” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 18,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.36"
         }
       }
     },
     {
       "key": "3e8495dc712d117acddf82c99ca3e3db731d3a9e",
-      "name": "16–24 Primary Medium (Typography.Text view='primary-medium' monospaceNumbers={true})",
+      "name": "16–24 Primary Medium (Typography.Text view=”primary-medium” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 16,
           "lineHeight": "24.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.24"
         }
       }
     },
     {
       "key": "d4e8b7443a1861a31772b4191097e54bcb86d7e7",
-      "name": "14–20 Primary Small (Typography.Text view='primary-small' monospaceNumbers={true})",
+      "name": "14–20 Primary Small (Typography.Text view=”primary-small” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 14,
           "lineHeight": "20.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.08"
         }
       }
     },
     {
       "key": "b4d46efc0d7f37599b2b997efe5c6b0e92e7d809",
-      "name": "13–16 Secondary Large (Typography.Text view='secondary-large' monospaceNumbers={true})",
+      "name": "13–16 Secondary Large (Typography.Text view=”secondary-large” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 13,
           "lineHeight": "16.00",
           "letterSpacing": "0.00"
@@ -667,181 +667,181 @@
     },
     {
       "key": "15ca6a6aa2c308ee48440713acc517a243b7510e",
-      "name": "12–16 Secondary Medium (Typography.Text view='secondary-medium' monospaceNumbers={true})",
+      "name": "12–16 Secondary Medium (Typography.Text view=”secondary-medium” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 12,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.06"
         }
       }
     },
     {
       "key": "051d38ade4d8fd8ef1da0d62a0149e998c7e7145",
-      "name": "11–16 Secondary Small (Typography.Text view='secondary-small' monospaceNumbers={true})",
+      "name": "11–16 Secondary Small (Typography.Text view=”secondary-small” monospaceNumbers={true})",
       "group": "Mono",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 11,
           "lineHeight": "16.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "0.15"
         }
       }
     },
     {
       "key": "dc3c7768fb8dd71f760c8ef3b394a7509ad23e30",
-      "name": "48–52 xLarge",
+      "name": "48–52 xLarge (Typography.Title view=”xlarge” weight=”regular”)",
       "group": "Promo-System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 48,
           "lineHeight": "52.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-2.10"
         }
       }
     },
     {
       "key": "26875a16e6e481d8a456081903011169c150c97f",
-      "name": "40–48 Large",
+      "name": "40–48 Large (Typography.Title view=”large” weight=”regular”)",
       "group": "Promo-System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 40,
           "lineHeight": "48.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-1.70"
         }
       }
     },
     {
       "key": "89624686d1ffc75520a9b30a2889efe23df5e655",
-      "name": "30–36 Medium",
+      "name": "30–36 Medium (Typography.Title view=”medium” weight=”regular”)",
       "group": "Promo-System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 30,
           "lineHeight": "36.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-1.25"
         }
       }
     },
     {
       "key": "298505bef6f9fbb4200225923bb6a1c0bdc680b8",
-      "name": "22–26 Small",
+      "name": "22–26 Small (Typography.Title view=”small” weight=”regular”)",
       "group": "Promo-System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 22,
           "lineHeight": "26.00",
-          "letterSpacing": "0.00"
+          "letterSpacing": "-0.80"
         }
       }
     },
     {
       "key": "29954f325abeb2765d0039ebb963062cc7117a98",
-      "name": "18–22 xSmall",
+      "name": "18–22 xSmall (Typography.Title view=”xsmall” weight=”regular”)",
       "group": "Promo-System",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Text Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 18,
           "lineHeight": "22.00",
-          "letterSpacing": "0.00"
-        }
-      }
-    },
-    {
-      "key": "3a0ecb397aee922eacd2093ef7f7827740374a22",
-      "name": "30-36 Large",
-      "group": "Promo-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Regular",
-          "fontSize": 30,
-          "lineHeight": "36.00",
-          "letterSpacing": "0.36"
-        }
-      }
-    },
-    {
-      "key": "58d3b557665b8c77f38d1b737e372994b2c41f32",
-      "name": "26-32 Medium",
-      "group": "Promo-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Regular",
-          "fontSize": 26,
-          "lineHeight": "32.00",
-          "letterSpacing": "0.36"
-        }
-      }
-    },
-    {
-      "key": "f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a",
-      "name": "20-28 Small",
-      "group": "Promo-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Display Regular",
-          "fontSize": 20,
-          "lineHeight": "28.00",
-          "letterSpacing": "0.38"
-        }
-      }
-    },
-    {
-      "key": "9184e4332a4ae0206fd15911c96340da26d6f60d",
-      "name": "16-20 xSmall",
-      "group": "Promo-System-Mobile",
-      "type": "text",
-      "value": {
-        "kind": "text",
-        "data": {
-          "fontName": "SF Pro Text Regular",
-          "fontSize": 16,
-          "lineHeight": "20.00",
-          "letterSpacing": "-0.32"
+          "letterSpacing": "-0.36"
         }
       }
     },
     {
       "key": "bd543a27f7e179f1d66fc88ee8326b5515a2234e",
-      "name": "34-40 xLarge",
+      "name": "34-40 xLarge (Typography.TitleMobile view=”xlarge” weight=”regular”)",
       "group": "Promo-System-Mobile",
       "type": "text",
       "value": {
         "kind": "text",
         "data": {
-          "fontName": "SF Pro Display Regular",
+          "fontName": "Alfa Interface Sans Regular",
           "fontSize": 34,
           "lineHeight": "40.00",
-          "letterSpacing": "0.37"
+          "letterSpacing": "-1.36"
+        }
+      }
+    },
+    {
+      "key": "3a0ecb397aee922eacd2093ef7f7827740374a22",
+      "name": "30-36 Large (Typography.TitleMobile view=”large” weight=”regular”)",
+      "group": "Promo-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Regular",
+          "fontSize": 30,
+          "lineHeight": "36.00",
+          "letterSpacing": "-1.25"
+        }
+      }
+    },
+    {
+      "key": "58d3b557665b8c77f38d1b737e372994b2c41f32",
+      "name": "26-32 Medium (Typography.TitleMobile view=”medium” weight=”regular”)",
+      "group": "Promo-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Regular",
+          "fontSize": 26,
+          "lineHeight": "32.00",
+          "letterSpacing": "-1.00"
+        }
+      }
+    },
+    {
+      "key": "f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a",
+      "name": "20-28 Small (Typography.TitleMobile view=”small” weight=”regular”)",
+      "group": "Promo-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Regular",
+          "fontSize": 20,
+          "lineHeight": "28.00",
+          "letterSpacing": "-0.68"
+        }
+      }
+    },
+    {
+      "key": "9184e4332a4ae0206fd15911c96340da26d6f60d",
+      "name": "16-20 xSmall (Typography.TitleMobile view=”xsmall” weight=”regular”)",
+      "group": "Promo-System-Mobile",
+      "type": "text",
+      "value": {
+        "kind": "text",
+        "data": {
+          "fontName": "Alfa Interface Sans Regular",
+          "fontSize": 16,
+          "lineHeight": "20.00",
+          "letterSpacing": "-0.24"
         }
       }
     }

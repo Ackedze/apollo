@@ -48,6 +48,7 @@
 - [`src/structure/diff.ts`](./src/structure/diff.ts) сравнивает layout, padding, стили, fill/stroke, radius и opacity.
 - [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей.
 - [`src/types/audit.ts`](./src/types/audit.ts) описывает `AuditItem`, `DetachedEntry`, `CustomStyleEntry` и связанные типы.
+- [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts) и [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) содержат управляемые исключения для известных технических кейсов DS.
 
 ### Что считается в diff
 Сравнение учитывает:
@@ -61,6 +62,7 @@
 Важно: style-binding для `fill` и `stroke` сравнивается отдельно через `styles.fill.styleKey` и `styles.stroke.styleKey`. В paint-канал больше не попадают `fillStyleId` и `strokeStyleId`, чтобы styled fills/strokes не отображались в UI как ложные `token: S:...` diff-ы.
 Важно: для text/fill/stroke style diff в UI используется нормализованный label стиля. Если raw `styleKey` отличаются, но после резолва дают одно и то же имя стиля, такая пара больше не считается кастомизацией.
 Важно: в `paint-diff` Apollo не гадает по совпадению цвета. Если у слоя есть явная привязка к токену или стилю, в UI показывается label по id, а если label не найден — сам id. Только при отсутствии привязки показывается фактический цвет: непрозрачный как `#RRGGBB`, полупрозрачный как `rgba(...)`.
+Важно: known technical nodes можно исключать из `Кастомизации` и `Кастомных стилей` отдельными фильтрами, не меняя базовую логику diff.
 
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
 

@@ -28,6 +28,7 @@ import {
   type CustomStyleCollectionOptions,
 } from './services/auditViewBuilder';
 import { CheckState, createCheckState } from './create-check-state';
+import { applyCustomizationFilters } from './filters/customizationFilters';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 figma.ui.postMessage({
@@ -502,7 +503,7 @@ async function classifyNode(
     comparisonIssues.push(...diffResult.issues);
   }
 
-  const diffs = diffResult.diffs;
+  const diffs = applyCustomizationFilters(node, diffResult.diffs);
 
   if (comparisonIssues.length) {
     console.warn('[Apollo] comparison issues', {

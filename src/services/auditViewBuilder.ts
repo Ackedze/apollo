@@ -10,6 +10,7 @@ import type {
   TextNodeEntry,
 } from '../types/audit';
 import { applyCustomStyleFilters } from '../filters/customStyleFilters';
+import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
 import {
   buildNodePath,
   clampColorComponent,
@@ -36,6 +37,10 @@ export async function collectCustomStyles(
   options: CustomStyleCollectionOptions,
 ): Promise<CustomStyleEntry[]> {
   const entries: CustomStyleEntry[] = [];
+
+    if (await shouldIgnoreNodeDiagnostics(node)) {
+      return entries;
+    }
 
     if (node.type === 'SECTION') return entries;
 

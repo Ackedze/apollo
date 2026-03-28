@@ -29,6 +29,7 @@ import {
 } from './services/auditViewBuilder';
 import { CheckState, createCheckState } from './create-check-state';
 import { applyCustomizationFilters } from './filters/customizationFilters';
+import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 figma.ui.postMessage({
@@ -230,6 +231,9 @@ async function runAudit() {
     throwIfCancelled();
 
     const changesResults = computeChangesResults(checkState.relevanceBuckets.current);
+    const visibleLocalItems = filterIgnoredLocalLibraryItems(
+      checkState.localLibraryItems,
+    );
 
     const counts = {
       current: checkState.relevanceBuckets.current.length,
@@ -238,7 +242,7 @@ async function runAudit() {
       themeError: checkState.themeBuckets.error.length,
       textNodes: checkState.textNodes.length,
       textAll: checkState.textAll.length,
-      local: checkState.localLibraryItems.length,
+      local: visibleLocalItems.length,
       detached: checkState.detachedEntries,
       changes: changesResults.length,
     };
@@ -246,7 +250,7 @@ async function runAudit() {
     const visibleViews = {
       relevance: checkState.relevanceBuckets,
       theme: checkState.themeBuckets,
-      local: checkState.localLibraryItems,
+      local: visibleLocalItems,
       customStyles: checkState.customStyleEntries,
       detached: checkState.detachedEntries,
       textNodes: checkState.textNodes.length,

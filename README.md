@@ -48,7 +48,7 @@
 - [`src/structure/diff.ts`](./src/structure/diff.ts) сравнивает layout, padding, стили, fill/stroke, radius и opacity.
 - [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей.
 - [`src/types/audit.ts`](./src/types/audit.ts) описывает `AuditItem`, `DetachedEntry`, `CustomStyleEntry` и связанные типы.
-- [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts) и [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) содержат управляемые исключения для известных технических кейсов DS.
+- [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts) и [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) содержат управляемые исключения для известных технических кейсов DS, включая технические `PaintMe`-узлы в `IconView` и `FilterTag`.
 
 ### Что считается в diff
 Сравнение учитывает:

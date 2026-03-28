@@ -22,6 +22,38 @@ const rules: CustomizationFilterRule[] = [
       });
     },
   },
+  {
+    id: 'ignore_filter_tag_arrow_paintme_fill_customization',
+    apply(node, diffs) {
+      if (!diffs.length) {
+        return diffs;
+      }
+
+      return diffs.filter((diff) => {
+        if (!isFilterTagArrowPaintMeDiff(diff)) {
+          return true;
+        }
+
+        return !isFillCustomizationMessage(diff.message);
+      });
+    },
+  },
+  {
+    id: 'ignore_filter_tag_clear_paintme_fill_customization',
+    apply(node, diffs) {
+      if (!diffs.length) {
+        return diffs;
+      }
+
+      return diffs.filter((diff) => {
+        if (!isFilterTagClearPaintMeDiff(diff)) {
+          return true;
+        }
+
+        return !isFillCustomizationMessage(diff.message);
+      });
+    },
+  },
 ];
 
 export function applyCustomizationFilters(
@@ -41,7 +73,7 @@ export function applyCustomizationFilters(
 }
 
 function isIconViewPaintMeDiff(diff: DiffEntry): boolean {
-  if (!diff || diff.nodeName !== 'PaintMe') {
+  if (!hasPaintMeNodeName(diff)) {
     return false;
   }
 
@@ -50,6 +82,28 @@ function isIconViewPaintMeDiff(diff: DiffEntry): boolean {
     path.includes('/ Fixer / PaintMe') &&
     path.includes('/ ShapeContent / Content /')
   );
+}
+
+function isFilterTagArrowPaintMeDiff(diff: DiffEntry): boolean {
+  if (!hasPaintMeNodeName(diff)) {
+    return false;
+  }
+
+  const path = diff.nodePath ?? '';
+  return path.includes('/ Arrow / Fixer / PaintMe');
+}
+
+function isFilterTagClearPaintMeDiff(diff: DiffEntry): boolean {
+  if (!hasPaintMeNodeName(diff)) {
+    return false;
+  }
+
+  const path = diff.nodePath ?? '';
+  return path.includes('/ Clear / 🔩 Clear / Fixer / PaintMe');
+}
+
+function hasPaintMeNodeName(diff: DiffEntry): boolean {
+  return !!diff && diff.nodeName === 'PaintMe';
 }
 
 function isFillCustomizationMessage(message: string): boolean {

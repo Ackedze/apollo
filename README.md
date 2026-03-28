@@ -39,6 +39,7 @@
 - [`src/code.ts`](./src/code.ts) показывает UI, слушает сообщения UI и запускает `runAudit`.
 - `runAudit` подгружает каталоги, затем собирает состояние проверки через `collectTargets`.
 - `classifyNode` ищет `componentKey`, находит reference через `findComponent`, при необходимости строит snapshot (`snapshotTree`) и считает diff (`diffStructures`).
+- при загрузке style catalogs Apollo пересобирает lookup-карты заново, поэтому новые или только что добавленные paint/effect styles корректно участвуют и в `Кастомизации`, и в `Кастомных стилях`.
 - Результаты складываются в `CheckState`, после чего UI получает `scan-result`.
 
 ### Сервисы и модели
@@ -53,12 +54,13 @@
 - layout и padding;
 - `itemSpacing`;
 - стили заливки, обводки и текста;
-- fill/stroke, включая variable token alias и цветовые fallback-метки;
+- fill/stroke, включая variable token alias, style-binding и raw color values;
 - радиусы;
 - opacity.
 
 Важно: style-binding для `fill` и `stroke` сравнивается отдельно через `styles.fill.styleKey` и `styles.stroke.styleKey`. В paint-канал больше не попадают `fillStyleId` и `strokeStyleId`, чтобы styled fills/strokes не отображались в UI как ложные `token: S:...` diff-ы.
 Важно: для text/fill/stroke style diff в UI используется нормализованный label стиля. Если raw `styleKey` отличаются, но после резолва дают одно и то же имя стиля, такая пара больше не считается кастомизацией.
+Важно: в `paint-diff` Apollo не гадает по совпадению цвета. Если у слоя есть явная привязка к токену или стилю, в UI показывается label по id, а если label не найден — сам id. Только при отсутствии привязки показывается фактический цвет: непрозрачный как `#RRGGBB`, полупрозрачный как `rgba(...)`.
 
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
 

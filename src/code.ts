@@ -98,7 +98,7 @@ let tokenLabelLoadPromise: Promise<void> | null = null;
 let styleLabelMap: Map<string, { label: string; library?: string }> | null =
   null;
 let styleLabelLoadPromise: Promise<void> | null = null;
-const styleLookupCache = new Map<string, string | null>();
+const styleLookupCache = new Map<string, string>();
 
 /**
  * Запускает полный аудит текущего выделения: проверяет готовность справочников,
@@ -495,7 +495,6 @@ async function classifyNode(
       ? diffStructures(alignedActualStructure, expandedReferenceStructure, {
           strict: STRICT_COMPARISON,
           resolveTokenLabel: resolveTokenLabelForDiff,
-          resolveColorLabel: resolveTokenLabelFromColor,
           resolveStyleLabel: resolveStyleLabelForDiff,
         })
       : { diffs: [], issues: [] };
@@ -899,9 +898,11 @@ async function ensureStyleLabelMapLoaded(): Promise<void> {
           map.set(style.key, { label, library: libraryName || undefined });
         }
       }
+      styleLookupCache.clear();
       styleLabelMap = map;
     } catch (error) {
       console.warn('[Apollo] failed to load style catalogs', error);
+      styleLookupCache.clear();
       styleLabelMap = new Map();
     } finally {
       styleLabelLoadPromise = null;
@@ -1004,15 +1005,17 @@ async function isKnownStyleId(
         ? style.key
         : null;
 
-    styleLookupCache.set(normalized, resolvedKey);
+    if (resolvedKey) {
+      styleLookupCache.set(normalized, resolvedKey);
+      return Boolean(styleLabelMap?.has(resolvedKey));
+    }
 
-    return Boolean(resolvedKey && styleLabelMap?.has(resolvedKey));
+    return false;
   } catch (error) {
     console.warn('[Apollo] failed to resolve style by id', {
       styleId: normalized,
       error,
     });
-    styleLookupCache.set(normalized, null);
     return false;
   }
 }
@@ -1037,14 +1040,28 @@ function extractStyleKey(styleId: string): string | null {
   return extracted || null;
 }
 
-function resolveTokenLabelFromColor(color: string): string | null {
-  const normalized = normalizeRgba(color);
-  const label = tokenColorMap?.get(normalized);
-  return label?.label ?? null;
-}
-
 function normalizeRgba(value: string): string {
-  return value.replace(/\s+/g, '');
+  const compact = value.replace(/\s+/g, '');
+  const match = compact.match(
+    /^rgba\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)$/i,
+  );
+  if (!match) {
+    return compact;
+  }
+
+  const [, rawR, rawG, rawB, rawA] = match;
+  const toNumber = (input: string) => Number.parseFloat(input);
+  const formatAlpha = (input: string) => {
+    const parsed = toNumber(input);
+    if (!Number.isFinite(parsed)) {
+      return input;
+    }
+    return String(Math.round(parsed * 100) / 100);
+  };
+
+  return `rgba(${Math.round(toNumber(rawR))},${Math.round(
+    toNumber(rawG),
+  )},${Math.round(toNumber(rawB))},${formatAlpha(rawA)})`;
 }
 
 function toRgbaStringFromToken(value: any): string | null {

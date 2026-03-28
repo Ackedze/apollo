@@ -323,11 +323,21 @@ function compareStyle(
     return resolveStyleLabel ? resolveStyleLabel(styleKey) || styleKey : styleKey;
   };
 
+  const formattedReference = formatStyle(reference);
+  const formattedActual = formatStyle(actual);
+
+  // Different raw style ids can resolve to the same DS typography label.
+  // In that case the user-facing style is effectively unchanged and should
+  // not create a customization entry.
+  if (formattedReference === formattedActual) {
+    return;
+  }
+
   pushDiff(
     diffs,
     actualNode,
     path,
-    `Стиль ${label}: ${formatStyle(reference)} → ${formatStyle(actual)}`,
+    `Стиль ${label}: ${formattedReference} → ${formattedActual}`,
   );
 }
 

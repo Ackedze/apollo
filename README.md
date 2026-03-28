@@ -58,6 +58,7 @@
 - opacity.
 
 Важно: style-binding для `fill` и `stroke` сравнивается отдельно через `styles.fill.styleKey` и `styles.stroke.styleKey`. В paint-канал больше не попадают `fillStyleId` и `strokeStyleId`, чтобы styled fills/strokes не отображались в UI как ложные `token: S:...` diff-ы.
+Важно: для text/fill/stroke style diff в UI используется нормализованный label стиля. Если raw `styleKey` отличаются, но после резолва дают одно и то же имя стиля, такая пара больше не считается кастомизацией.
 
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
 

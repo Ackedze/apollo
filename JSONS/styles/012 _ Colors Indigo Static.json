@@ -1,0 +1,369 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-28T09:30:57.212Z",
+    "fileName": "012 :: Colors Indigo Static",
+    "library": "012 :: Colors Indigo Static"
+  },
+  "styles": [
+    {
+      "key": "52a27da1d0070422ee9a5c14f258f3cc578112cf",
+      "name": "text/primary-dark (?staticTextColorPrimaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#0B1F35 / rgba(11, 31, 53, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "861ddce54ffbd2388c47a81a4f39440a3dcf1f88",
+      "name": "text/secondary-dark (?staticTextColorSecondaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#0B1F35 / rgba(11, 31, 53, 1.00)",
+              "opacity": 0.6000000238418579
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "74142ed8a118e186084f652450ab8fc7773e4561",
+      "name": "text/tertiary-dark (?staticTextColorTertiaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#0B1F35 / rgba(11, 31, 53, 1.00)",
+              "opacity": 0.30000001192092896
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "c4431105d542ce0a039c8453e841f9ec027e05c7",
+      "name": "text/accent (?staticTextColorAccent)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#EF3124 / rgba(239, 49, 36, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "5784eb1335bdf006a31bac517ec440461c8d554e",
+      "name": "text/primary-light (?staticTextColorPrimaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FFFFFF / rgba(255, 255, 255, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "cc3090dce283e45dddb53c89e10d8b3c1089a455",
+      "name": "text/secondary-light (?staticTextColorSecondaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FFFFFF / rgba(255, 255, 255, 1.00)",
+              "opacity": 0.699999988079071
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "10f970a87299cc5a8e05e39d6a0bfeff3ee70fa1",
+      "name": "text/tertiary-light (?staticTextColorTertiaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FFFFFF / rgba(255, 255, 255, 1.00)",
+              "opacity": 0.4000000059604645
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "7aa29cb41231f3fde186334636203df3f84fb5b9",
+      "name": "bg/primary-dark (?staticBackgroundColorPrimaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#0B1F35 / rgba(11, 31, 53, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "e6ffea821c2dd0cba15a8f7f78ec95b1feac3c1e",
+      "name": "bg/secondary-dark (?staticBackgroundColorSecondaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#233549 / rgba(35, 53, 73, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "a8539ec1d2e8ca6d78fc09db3b53023bf37e8015",
+      "name": "bg/tertiary-dark (?staticBackgroundColorTertiaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#3C4C5D / rgba(60, 76, 93, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "6d0b4f1b4c09c1a22c3c29de526bdab5561bc98d",
+      "name": "bg/quaternary-dark (?staticBackgroundColorQuaternaryDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#485767 / rgba(72, 87, 103, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "b90b20f5bbe26c5f16dd39f7b589b74cb5463378",
+      "name": "bg/accent (?staticBackgroundColorAccent)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#EF3124 / rgba(239, 49, 36, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "f65aaa970320de0ab41532b02c69a5b28332b67d",
+      "name": "bg/primary-light (?staticBackgroundColorPrimaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FFFFFF / rgba(255, 255, 255, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "78dcc132bbe2a66c1179f8a9865b0ba8e40514f4",
+      "name": "bg/secondary-light (?staticBackgroundColorSecondaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#F3F4F5 / rgba(243, 244, 245, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "be8677cffe4a91b3cf30372334c825457c9e5b10",
+      "name": "bg/tertiary-light (?staticBackgroundColorTertiaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#E7E9EB / rgba(231, 233, 235, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "5d3921011a4fabf67734726f57deb5df0925a702",
+      "name": "bg/quaternary-light (?staticBackgroundColorQuaternaryLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#DBDEE1 / rgba(219, 222, 225, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "401fe08adab2686f39ac9b4c7909be2254beac29",
+      "name": "border/accent (?staticBorderColorAccent)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#EF3124 / rgba(239, 49, 36, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "75a128a944efa710b95b2131e516e1f733b82a7f",
+      "name": "graphic/dark (?staticGraphicColorDark)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#0B1F35 / rgba(11, 31, 53, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "950bb55797a4c7558e05010bda44d1a04e461b4b",
+      "name": "graphic/accent (?staticGraphicColorAccent)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#EF3124 / rgba(239, 49, 36, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "3b53d458f0473234136c9f430a2e9f3a1b522dff",
+      "name": "graphic/light (?staticGraphicColorLight)",
+      "group": "static",
+      "type": "paint",
+      "value": {
+        "kind": "paint",
+        "data": {
+          "paints": [
+            {
+              "type": "solid",
+              "color": "#FFFFFF / rgba(255, 255, 255, 1.00)",
+              "opacity": 1
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

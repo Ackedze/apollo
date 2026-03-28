@@ -290,6 +290,14 @@
       "path": "components/web-corp/Web _ Corp Components -- FiltersBlock.json"
     },
     {
+      "fileName": "components/web-corp/Web _ Corp Components -- Forms.json",
+      "path": "components/web-corp/Web _ Corp Components -- Forms.json"
+    },
+    {
+      "fileName": "components/web-corp/Web _ Corp Components -- HoldingPlate.json",
+      "path": "components/web-corp/Web _ Corp Components -- HoldingPlate.json"
+    },
+    {
       "fileName": "components/web-corp/Web _ Corp Components -- LandingPage.json",
       "path": "components/web-corp/Web _ Corp Components -- LandingPage.json"
     },
@@ -394,6 +402,10 @@
       "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json"
     },
     {
+      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json",
+      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json"
+    },
+    {
       "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json",
       "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json"
     },
@@ -424,6 +436,10 @@
     {
       "fileName": "icons/Icons -- general (glyph).json",
       "path": "icons/Icons -- general (glyph).json"
+    },
+    {
+      "fileName": "icons/Icons -- glyph-26.json",
+      "path": "icons/Icons -- glyph-26.json"
     },
     {
       "fileName": "logotypes/Logotypes -- general (logo).json",
@@ -488,6 +504,18 @@
     {
       "fileName": "styles/009 _ Shadow BlueTint Light.json",
       "path": "styles/009 _ Shadow BlueTint Light.json"
+    },
+    {
+      "fileName": "styles/010 _ Colors Indigo Light.json",
+      "path": "styles/010 _ Colors Indigo Light.json"
+    },
+    {
+      "fileName": "styles/011 _ Colors Indigo Dark.json",
+      "path": "styles/011 _ Colors Indigo Dark.json"
+    },
+    {
+      "fileName": "styles/012 _ Colors Indigo Static.json",
+      "path": "styles/012 _ Colors Indigo Static.json"
     },
     {
       "fileName": "styles/Web _ Typography.json",

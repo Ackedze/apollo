@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:52:32.631Z",
+    "generatedAt": "2026-03-29T18:41:51.614Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -180,6 +180,94 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "TextStyle=34_40",
+          "type": "COMPONENT",
+          "name": "TextStyle=34_40",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "TextStyle=34_40 / Skeleton",
+          "type": "INSTANCE",
+          "name": "Skeleton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 0,
+              "bottom": 8,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2,
+          "componentInstance": {
+            "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "TextStyle=34_40 / Skeleton / SkeletonBody",
+          "type": "FRAME",
+          "name": "SkeletonBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 99,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "TextStyle=34_40 / Skeleton / SkeletonBody / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "56146:841",
@@ -375,6 +463,94 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "TextStyle=48_52",
+          "type": "COMPONENT",
+          "name": "TextStyle=48_52",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "TextStyle=48_52 / Skeleton",
+          "type": "INSTANCE",
+          "name": "Skeleton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 9,
+              "right": 0,
+              "bottom": 9,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2,
+          "componentInstance": {
+            "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "TextStyle=48_52 / Skeleton / SkeletonBody",
+          "type": "FRAME",
+          "name": "SkeletonBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 34,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 99,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "TextStyle=48_52 / Skeleton / SkeletonBody / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "56146:716",
@@ -798,6 +974,94 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "TextStyle=16_24, Length=Fill",
+          "type": "COMPONENT",
+          "name": "TextStyle=16_24, Length=Fill",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "TextStyle=16_24, Length=Fill / Skeleton",
+          "type": "INSTANCE",
+          "name": "Skeleton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 6,
+              "right": 0,
+              "bottom": 6,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2,
+          "componentInstance": {
+            "componentKey": "814d646b9eaa27ce5768d350ebb25a9122ec0550"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "TextStyle=16_24, Length=Fill / Skeleton / SkeletonBody",
+          "type": "FRAME",
+          "name": "SkeletonBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 12,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 99,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "TextStyle=16_24, Length=Fill / Skeleton / SkeletonBody / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "485:57552",
@@ -872,6 +1136,72 @@
       "variantStructures": {
         "814d646b9eaa27ce5768d350ebb25a9122ec0550": []
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Skeleton",
+          "type": "COMPONENT",
+          "name": "Skeleton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 2
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Skeleton / SkeletonBody",
+          "type": "FRAME",
+          "name": "SkeletonBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 2,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Skeleton / SkeletonBody / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "485:57541",

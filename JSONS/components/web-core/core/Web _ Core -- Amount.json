@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:53:03.873Z",
+    "generatedAt": "2026-03-29T18:42:25.896Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -24,6 +24,340 @@
       "variantStructures": {
         "fe3399f71c9e0971646821d935b64657e462c28e": []
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Amount",
+          "type": "COMPONENT",
+          "name": "Amount",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Amount / Major",
+          "type": "INSTANCE",
+          "name": "Major",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "a833c02e4fcb75fea1a89bf786912e108b8f93ba"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Amount / Major / Major",
+          "type": "TEXT",
+          "name": "Major",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "1 234 567",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Amount / Minor",
+          "type": "INSTANCE",
+          "name": "Minor",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "1af9948d2ef74777f91e41a8d889ca28d036d7bb",
+            "variantProperties": {
+              "Opacity": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Amount / Minor / Minor",
+          "type": "TEXT",
+          "name": "Minor",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": ",00",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "path": "Amount / Currency",
+          "type": "INSTANCE",
+          "name": "Currency",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "5bef50328b151427bf28c514c2266233e2bfbf6c",
+            "variantProperties": {
+              "Opacity": "False",
+              "Type": "₽"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Amount / Currency / Currency",
+          "type": "TEXT",
+          "name": "Currency",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": " ₽ ",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "Amount / Addon",
+          "type": "INSTANCE",
+          "name": "Addon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "b95166da66ad15ecad14244d670ab1b66db66f80"
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Amount / Addon / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "485:67101",
@@ -43,6 +377,71 @@
       "variantStructures": {
         "b95166da66ad15ecad14244d670ab1b66db66f80": []
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩 Addon",
+          "type": "COMPONENT",
+          "name": "🔩 Addon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩 Addon / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "485:67049",
@@ -448,6 +847,79 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Opacity=False, Type=₽",
+          "type": "COMPONENT",
+          "name": "Opacity=False, Type=₽",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Opacity=False, Type=₽ / Currency",
+          "type": "TEXT",
+          "name": "Currency",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": " ₽ ",
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16
+          }
+        }
+      ],
       "variants": [
         {
           "id": "485:67045",
@@ -562,6 +1034,79 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Opacity=False",
+          "type": "COMPONENT",
+          "name": "Opacity=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Opacity=False / Minor",
+          "type": "TEXT",
+          "name": "Minor",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": ",00",
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16
+          }
+        }
+      ],
       "variants": [
         {
           "id": "485:67040",
@@ -586,6 +1131,79 @@
       "variantStructures": {
         "a833c02e4fcb75fea1a89bf786912e108b8f93ba": []
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩 Major",
+          "type": "COMPONENT",
+          "name": "🔩 Major",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩 Major / Major",
+          "type": "TEXT",
+          "name": "Major",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "1 234 567",
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "SF Pro Text Bold",
+            "fontSize": 16
+          }
+        }
+      ],
       "variants": [
         {
           "id": "485:67037",
@@ -659,12 +1277,13 @@
         "value": "1 234 567"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 20,
-        "letterSpacing": 0,
-        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
       }
     },
     {
@@ -708,12 +1327,13 @@
         "value": ",00"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 20,
-        "letterSpacing": 0,
-        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
       }
     },
     {
@@ -757,12 +1377,13 @@
         "value": " ₽ "
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 20,
-        "letterSpacing": 0,
-        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,5535:2"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:020582d780ac6ecbb4d8916c4b68099e42b09126,9221:132"
       }
     },
     {

@@ -1,0 +1,6425 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core Misc",
+    "file": "Web :: Core Misc",
+    "generatedAt": "2026-03-29T18:53:46.293Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Steps"
+    ],
+    "componentCount": 14,
+    "elementCount": 89
+  },
+  "components": [
+    {
+      "key": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "name": "Steps_Horizontal",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Steps_Horizontal",
+      "defaultVariant": "a3f8602ed190d2192626784906dd2d3e94382272",
+      "variantStructures": {
+        "a3f8602ed190d2192626784906dd2d3e94382272": [],
+        "dbdabbd5be329e959b4b024809d4d5f29ac5919e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "LastStep=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "componentInstance": {
+                "componentKey": "382e2f356e70196e3ebd168da57c3c0aa05e1207",
+                "variantProperties": {
+                  "Size": "4"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "LastStep=False",
+          "type": "COMPONENT",
+          "name": "LastStep=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "LastStep=False / IndicatorContent",
+          "type": "INSTANCE",
+          "name": "IndicatorContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+            "variantProperties": {
+              "Active": "False",
+              "Ordered": "False",
+              "Positive": "False",
+              "Warning": "False",
+              "Error": "False",
+              "CriticalError": "False",
+              "Waiting": "False",
+              "Custom": "True"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "LastStep=False / IndicatorContent / Placeholder_24x24",
+          "type": "INSTANCE",
+          "name": "Placeholder_24x24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "LastStep=False / IndicatorContent / Placeholder_24x24 / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "LastStep=False / ↔ SpacingHorizontal",
+          "type": "INSTANCE",
+          "name": "↔ SpacingHorizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "382e2f356e70196e3ebd168da57c3c0aa05e1207",
+            "variantProperties": {
+              "Size": "4"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "LastStep=False / ↔ SpacingHorizontal / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "LastStep=False / HorizontalLabel",
+          "type": "INSTANCE",
+          "name": "HorizontalLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+          "componentInstance": {
+            "componentKey": "4c7138d94f7a5793ef83723a2cc6817690d435d8"
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "LastStep=False / HorizontalLabel / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Step",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "LastStep=False / Line",
+          "type": "INSTANCE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62cc1aedbccf8a928e3aa0e8fb76375661fee2f8",
+            "variantProperties": {
+              "Filled": "False",
+              "Color": "Positive"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "LastStep=False / Line / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "LastStep=False / ↔ SpacingHorizontal",
+          "type": "INSTANCE",
+          "name": "↔ SpacingHorizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6c18f853032b17780d357be8d61659a3c19a330d",
+            "variantProperties": {
+              "Size": "8"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "LastStep=False / ↔ SpacingHorizontal / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "4497:17914",
+          "key": "a3f8602ed190d2192626784906dd2d3e94382272",
+          "name": "LastStep=False"
+        },
+        {
+          "id": "4518:3528",
+          "key": "dbdabbd5be329e959b4b024809d4d5f29ac5919e",
+          "name": "LastStep=True"
+        }
+      ]
+    },
+    {
+      "key": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "name": "Steps_Vertical",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Steps_Vertical",
+      "defaultVariant": "40f736b756c33be093841bcb07bf1cc97650ae9d",
+      "variantStructures": {
+        "40f736b756c33be093841bcb07bf1cc97650ae9d": [],
+        "39f8620fc762b4625dfdffeec51abe7f3f7fb12f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "LastStep=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 6
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "LastStep=False",
+          "type": "COMPONENT",
+          "name": "LastStep=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "LastStep=False / Indicator",
+          "type": "FRAME",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "LastStep=False / Indicator / IndicatorContent",
+          "type": "INSTANCE",
+          "name": "IndicatorContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+            "variantProperties": {
+              "Active": "False",
+              "Ordered": "False",
+              "Positive": "False",
+              "Warning": "False",
+              "Error": "False",
+              "CriticalError": "False",
+              "Waiting": "False",
+              "Custom": "True"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "LastStep=False / Indicator / IndicatorContent / Placeholder_24x24",
+          "type": "INSTANCE",
+          "name": "Placeholder_24x24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "LastStep=False / Indicator / IndicatorContent / Placeholder_24x24 / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "LastStep=False / Indicator / Line",
+          "type": "INSTANCE",
+          "name": "Line",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "32c8547676e1e7b373fbef266f2580abb3863067",
+            "variantProperties": {
+              "Filled": "False",
+              "Color": "Positive"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "LastStep=False / Indicator / Line / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "LastStep=False / Content",
+          "type": "SLOT",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "LastStep=False / Content / 🔩 SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩 SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f02a875b2245040f28d2c894c13e3135ef3255f9"
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "LastStep=False / Content / 🔩 SwapMe / blank",
+          "type": "FRAME",
+          "name": "blank",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "LastStep=False / Content / 🔩 SwapMe / blank / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 8,
+          "path": "LastStep=False / Content / MinSpace",
+          "type": "INSTANCE",
+          "name": "MinSpace",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8f70a264e223768e6a92e583f5078ee19bf9b221",
+            "variantProperties": {
+              "MinSpace": "24"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "LastStep=False / Content / MinSpace / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "4474:1310",
+          "key": "40f736b756c33be093841bcb07bf1cc97650ae9d",
+          "name": "LastStep=False"
+        },
+        {
+          "id": "4474:1447",
+          "key": "39f8620fc762b4625dfdffeec51abe7f3f7fb12f",
+          "name": "LastStep=True"
+        }
+      ]
+    },
+    {
+      "key": "7a6f19ac159597fd21d667c1a5eaf31a3e091bdf",
+      "name": "🔩 MinSpace",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "MinSpace",
+      "defaultVariant": "e8007abbc8d22711237b09e3586aab6698cdc4c9",
+      "variantStructures": {
+        "e8007abbc8d22711237b09e3586aab6698cdc4c9": [],
+        "8f70a264e223768e6a92e583f5078ee19bf9b221": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "MinSpace=24"
+            }
+          }
+        ],
+        "27590b647ad4a12ff82accc2cca95c1252db65ac": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "MinSpace=32"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "MinSpace=16",
+          "type": "COMPONENT",
+          "name": "MinSpace=16",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "MinSpace=16 / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "4569:2506",
+          "key": "e8007abbc8d22711237b09e3586aab6698cdc4c9",
+          "name": "MinSpace=16"
+        },
+        {
+          "id": "4569:2505",
+          "key": "8f70a264e223768e6a92e583f5078ee19bf9b221",
+          "name": "MinSpace=24"
+        },
+        {
+          "id": "4569:2504",
+          "key": "27590b647ad4a12ff82accc2cca95c1252db65ac",
+          "name": "MinSpace=32"
+        }
+      ]
+    },
+    {
+      "key": "4c7138d94f7a5793ef83723a2cc6817690d435d8",
+      "name": "🔩 HorizontalLabel",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "HorizontalLabel",
+      "defaultVariant": "4c7138d94f7a5793ef83723a2cc6817690d435d8",
+      "variantStructures": {
+        "4c7138d94f7a5793ef83723a2cc6817690d435d8": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩 HorizontalLabel",
+          "type": "COMPONENT",
+          "name": "🔩 HorizontalLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩 HorizontalLabel / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Step",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        }
+      ],
+      "variants": [
+        {
+          "id": "4497:17919",
+          "key": "4c7138d94f7a5793ef83723a2cc6817690d435d8",
+          "name": "🔩 HorizontalLabel"
+        }
+      ]
+    },
+    {
+      "key": "530df1d0a2b24d583d47e5f4d7aa7b11ac4f0d4b",
+      "name": "🔩 Line",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Line",
+      "defaultVariant": "32c8547676e1e7b373fbef266f2580abb3863067",
+      "variantStructures": {
+        "32c8547676e1e7b373fbef266f2580abb3863067": [],
+        "8fb08c0206af460c1334598b93073c4ee0760768": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Positive"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107"
+            }
+          }
+        ],
+        "2e47e4b869d69480f85ca8a01c5c9363116450ee": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Attention"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106"
+            }
+          }
+        ],
+        "2c314e43becec3879110d233954a88537dcbe896": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Negative"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "fillToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+            }
+          }
+        ],
+        "d716b58c128c83f89cdd48b0f790da5315a36e91": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Neutral"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 137,
+                    "g": 137,
+                    "b": 145,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+                  "colorHex": "#898991"
+                }
+              ],
+              "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171"
+            }
+          }
+        ],
+        "f609e31635c74b2ed406ef5ba667ce33e750ca72": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Custom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 71,
+                    "b": 248,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FF47F8"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Filled=False, Color=Positive",
+          "type": "COMPONENT",
+          "name": "Filled=False, Color=Positive",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Filled=False, Color=Positive / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
+      "variants": [
+        {
+          "id": "4474:1512",
+          "key": "32c8547676e1e7b373fbef266f2580abb3863067",
+          "name": "Filled=False, Color=Positive"
+        },
+        {
+          "id": "4474:1514",
+          "key": "8fb08c0206af460c1334598b93073c4ee0760768",
+          "name": "Filled=True, Color=Positive"
+        },
+        {
+          "id": "4474:1522",
+          "key": "2e47e4b869d69480f85ca8a01c5c9363116450ee",
+          "name": "Filled=True, Color=Attention"
+        },
+        {
+          "id": "4474:1529",
+          "key": "2c314e43becec3879110d233954a88537dcbe896",
+          "name": "Filled=True, Color=Negative"
+        },
+        {
+          "id": "4474:1533",
+          "key": "d716b58c128c83f89cdd48b0f790da5315a36e91",
+          "name": "Filled=True, Color=Neutral"
+        },
+        {
+          "id": "4474:1625",
+          "key": "f609e31635c74b2ed406ef5ba667ce33e750ca72",
+          "name": "Filled=True, Color=Custom"
+        }
+      ]
+    },
+    {
+      "key": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+      "name": "🔩 SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+      "variantStructures": {
+        "f02a875b2245040f28d2c894c13e3135ef3255f9": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩 SwapMe",
+          "type": "COMPONENT",
+          "name": "🔩 SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩 SwapMe / blank",
+          "type": "FRAME",
+          "name": "blank",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "🔩 SwapMe / blank / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "4474:1641",
+          "key": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+          "name": "🔩 SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "edbddfe9be38e1eb6e9a2b83f8c8bb7e06cef1b3",
+      "name": "🔩 Line",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "Line",
+      "defaultVariant": "62cc1aedbccf8a928e3aa0e8fb76375661fee2f8",
+      "variantStructures": {
+        "62cc1aedbccf8a928e3aa0e8fb76375661fee2f8": [],
+        "a7dda835654506a710bd7690edcc1606b2340714": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Positive"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107"
+            }
+          }
+        ],
+        "9084180addff81d5f6197acb16a51d074c7dd052": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Attention"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106"
+            }
+          }
+        ],
+        "c49d546dcd766f062633be2f78cde4c0e65199a9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Negative"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "fillToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+            }
+          }
+        ],
+        "af9912a6b0f43f495e2e9374f9cff002c68213d5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Neutral"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 137,
+                    "g": 137,
+                    "b": 145,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+                  "colorHex": "#898991"
+                }
+              ],
+              "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171"
+            }
+          }
+        ],
+        "41c5a08403d1627b610b428361982bf5d22dd2e8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True, Color=Custom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 71,
+                    "b": 248,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FF47F8"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Filled=False, Color=Positive",
+          "type": "COMPONENT",
+          "name": "Filled=False, Color=Positive",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Filled=False, Color=Positive / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6526",
+          "key": "62cc1aedbccf8a928e3aa0e8fb76375661fee2f8",
+          "name": "Filled=False, Color=Positive"
+        },
+        {
+          "id": "33:6528",
+          "key": "a7dda835654506a710bd7690edcc1606b2340714",
+          "name": "Filled=True, Color=Positive"
+        },
+        {
+          "id": "4497:1767",
+          "key": "9084180addff81d5f6197acb16a51d074c7dd052",
+          "name": "Filled=True, Color=Attention"
+        },
+        {
+          "id": "4497:1770",
+          "key": "c49d546dcd766f062633be2f78cde4c0e65199a9",
+          "name": "Filled=True, Color=Negative"
+        },
+        {
+          "id": "4497:1773",
+          "key": "af9912a6b0f43f495e2e9374f9cff002c68213d5",
+          "name": "Filled=True, Color=Neutral"
+        },
+        {
+          "id": "4497:1776",
+          "key": "41c5a08403d1627b610b428361982bf5d22dd2e8",
+          "name": "Filled=True, Color=Custom"
+        }
+      ]
+    },
+    {
+      "key": "8fb179b20f6ec07456a9ca1941b934b5c07e0864",
+      "name": "🔩 IndicatorContent",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "IndicatorContent",
+      "defaultVariant": "2e1988c0f04b92aba65f9c732166d1f284883725",
+      "variantStructures": {
+        "2e1988c0f04b92aba65f9c732166d1f284883725": [],
+        "a9c1e110cdfafa6b55858621b74f64a34659ef5e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Checkbox",
+              "type": "ELLIPSE",
+              "name": "Checkbox",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "strokeToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "strokeWeight": 2,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Dot",
+              "type": "ELLIPSE",
+              "name": "Dot",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "04134e88815301cec2c85574ab3aafe33de90a84": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=True, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            }
+          }
+        ],
+        "e5568e8ac20545b2fb0d1dd9e5717d6354eb61ce": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=True, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=True, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Checkbox",
+              "type": "ELLIPSE",
+              "name": "Checkbox",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "strokeToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "strokeWeight": 2,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Active=True, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Dot",
+              "type": "ELLIPSE",
+              "name": "Dot",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "615a0b51df59f8926c8e690253943af223922efa": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+              "componentInstance": {
+                "componentKey": "8f532e1a96ce1a46985ed20d4be4e932c508e670",
+                "variantProperties": {
+                  "View": "PositiveCheckmark",
+                  "Size": "24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "4dd76d5f619901e4670c33f5796a163543fff93b",
+                "variantProperties": {
+                  "Size": "20",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / checkmark-compact",
+              "type": "INSTANCE",
+              "name": "checkmark-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "349fe3dda530c1be8125856e84d47312c9fd795e",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / checkmark-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "a47b1e1aaa86137b236d314ff489741d095af517": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "fillToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+              "componentInstance": {
+                "componentKey": "6aa85e56f2cb62a25cb438f406bb2101b7686f4e",
+                "variantProperties": {
+                  "View": "NegativeAlert",
+                  "Size": "24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "4dd76d5f619901e4670c33f5796a163543fff93b",
+                "variantProperties": {
+                  "Size": "20",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / exclamation-compact",
+              "type": "INSTANCE",
+              "name": "exclamation-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f9e71623f221394fc1d8f9079bea7b3eb8f234d4",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / exclamation-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "d27c7f0ba5d9808781ef182ff6cddad50fc0698d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "fillToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+              "componentInstance": {
+                "componentKey": "cafd934f4f9a9d7474d2bbc95ecc979756be0e30",
+                "variantProperties": {
+                  "View": "NegativeCross",
+                  "Size": "24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "4dd76d5f619901e4670c33f5796a163543fff93b",
+                "variantProperties": {
+                  "Size": "20",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / cross-compact",
+              "type": "INSTANCE",
+              "name": "cross-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "46f19466589b9c99e9d643ae3dddc212f32558be",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / cross-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "ef7b88851c6fa5fc303158e6c039fb48a7402f58": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:c1c4bc13ded482f172aa2eee8a5e3d28d6179ff3/3541:106",
+              "componentInstance": {
+                "componentKey": "01ca2409fd417c9189fc981786b3023ec207c268",
+                "variantProperties": {
+                  "View": "AttentionAlert",
+                  "Size": "24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "4dd76d5f619901e4670c33f5796a163543fff93b",
+                "variantProperties": {
+                  "Size": "20",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / exclamation-compact",
+              "type": "INSTANCE",
+              "name": "exclamation-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f9e71623f221394fc1d8f9079bea7b3eb8f234d4",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / exclamation-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "e9b42201034c4dde373f0e91cedf268451f29409": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 137,
+                    "g": 137,
+                    "b": 145,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+                  "colorHex": "#898991"
+                }
+              ],
+              "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+              "componentInstance": {
+                "componentKey": "c2dbf5fc5f84a6bbe934150bfcb7ea0a5c74970b",
+                "variantProperties": {
+                  "View": "NeutralOperation",
+                  "Size": "24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "4dd76d5f619901e4670c33f5796a163543fff93b",
+                "variantProperties": {
+                  "Size": "20",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / clock-hands-compact",
+              "type": "INSTANCE",
+              "name": "clock-hands-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "ff8e0ef4740fae01164a4971e6dd6fdced1c9cea",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False / StatusBadge / 🔩 Content / Fixer / PaintMe / clock-hands-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "4cb7c4e53b44b0c1e4ac3135055439416af1886d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=True / Placeholder_24x24",
+              "type": "INSTANCE",
+              "name": "Placeholder_24x24",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 8,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 228,
+                    "g": 240,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+                  "colorHex": "#E4F0FF"
+                }
+              ],
+              "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=True / Placeholder_24x24 / Wrapper",
+              "type": "FRAME",
+              "name": "Wrapper",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False",
+          "type": "COMPONENT",
+          "name": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body",
+          "type": "FRAME",
+          "name": "body",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / N",
+          "type": "TEXT",
+          "name": "N",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:b657c53719573a5b414a97d0b5d3d69739579de2,9221:106"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "N",
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.4699999988079071,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:e4642204d1345cbb1bb648ea8291ffa88b3bc4ea/9221:66"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6503",
+          "key": "2e1988c0f04b92aba65f9c732166d1f284883725",
+          "name": "Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "33:6507",
+          "key": "a9c1e110cdfafa6b55858621b74f64a34659ef5e",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "33:6511",
+          "key": "04134e88815301cec2c85574ab3aafe33de90a84",
+          "name": "Active=True, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "33:6515",
+          "key": "e5568e8ac20545b2fb0d1dd9e5717d6354eb61ce",
+          "name": "Active=True, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "33:6519",
+          "key": "615a0b51df59f8926c8e690253943af223922efa",
+          "name": "Active=False, Ordered=False, Positive=True, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "33:6521",
+          "key": "a47b1e1aaa86137b236d314ff489741d095af517",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=True, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "4946:2545",
+          "key": "d27c7f0ba5d9808781ef182ff6cddad50fc0698d",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=True, Waiting=False, Custom=False"
+        },
+        {
+          "id": "42:28051",
+          "key": "ef7b88851c6fa5fc303158e6c039fb48a7402f58",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=True, Error=False, CriticalError=False, Waiting=False, Custom=False"
+        },
+        {
+          "id": "42:28058",
+          "key": "e9b42201034c4dde373f0e91cedf268451f29409",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=True, Custom=False"
+        },
+        {
+          "id": "33:6523",
+          "key": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+          "name": "Active=False, Ordered=False, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=True"
+        }
+      ]
+    },
+    {
+      "key": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188",
+      "name": "❌   HorizontalLabel",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "HorizontalLabel",
+      "defaultVariant": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188",
+      "variantStructures": {
+        "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "❌   HorizontalLabel",
+          "type": "COMPONENT",
+          "name": "❌   HorizontalLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 8
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "❌   HorizontalLabel / _label",
+          "type": "TEXT",
+          "name": "_label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Step name",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6555",
+          "key": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188",
+          "name": "❌   HorizontalLabel"
+        }
+      ]
+    },
+    {
+      "key": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "name": "❌  Steps_Horizontal",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "Steps_Horizontal",
+      "defaultVariant": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "variantStructures": {
+        "d049346a6cb88799852fc75b55a2a97c81dc0847": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "❌  Steps_Horizontal",
+          "type": "COMPONENT",
+          "name": "❌  Steps_Horizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "❌  Steps_Horizontal / IndicatorContent",
+          "type": "INSTANCE",
+          "name": "IndicatorContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+            "variantProperties": {
+              "Active": "False",
+              "Ordered": "False",
+              "Positive": "False",
+              "Warning": "False",
+              "Error": "False",
+              "CriticalError": "False",
+              "Waiting": "False",
+              "Custom": "True"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "❌  Steps_Horizontal / IndicatorContent / Placeholder_24x24",
+          "type": "INSTANCE",
+          "name": "Placeholder_24x24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "❌  Steps_Horizontal / IndicatorContent / Placeholder_24x24 / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "❌  Steps_Horizontal / ↔ SpacingHorizontal",
+          "type": "INSTANCE",
+          "name": "↔ SpacingHorizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "382e2f356e70196e3ebd168da57c3c0aa05e1207",
+            "variantProperties": {
+              "Size": "4"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "❌  Steps_Horizontal / ↔ SpacingHorizontal / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "❌  Steps_Horizontal / HorizontalLabel",
+          "type": "INSTANCE",
+          "name": "HorizontalLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188"
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "❌  Steps_Horizontal / HorizontalLabel / _label",
+          "type": "TEXT",
+          "name": "_label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Step name",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "❌  Steps_Horizontal / Line",
+          "type": "INSTANCE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62cc1aedbccf8a928e3aa0e8fb76375661fee2f8",
+            "variantProperties": {
+              "Filled": "False",
+              "Color": "Positive"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "❌  Steps_Horizontal / Line / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6496",
+          "key": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+          "name": "❌  Steps_Horizontal"
+        }
+      ]
+    },
+    {
+      "key": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "name": "❌  Indicator",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "Indicator",
+      "defaultVariant": "9610c165ec543262fb8a733d215cbcb47a3fd1e7",
+      "variantStructures": {
+        "9610c165ec543262fb8a733d215cbcb47a3fd1e7": [],
+        "a08c578c5e3f41597b7127f493b79678a64ce72c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=MIddle"
+            }
+          }
+        ],
+        "abb5b8291a89aaecf61cb46618e3ff286117a3c9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Position=End"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Start",
+          "type": "COMPONENT",
+          "name": "Position=Start",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Start / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Position=Start / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Position=Start / IndicatorContent",
+          "type": "INSTANCE",
+          "name": "IndicatorContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+            "variantProperties": {
+              "Active": "False",
+              "Ordered": "False",
+              "Positive": "False",
+              "Warning": "False",
+              "Error": "False",
+              "CriticalError": "False",
+              "Waiting": "False",
+              "Custom": "True"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Position=Start / IndicatorContent / Placeholder_24x24",
+          "type": "INSTANCE",
+          "name": "Placeholder_24x24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Position=Start / IndicatorContent / Placeholder_24x24 / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "Position=Start / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "71146279f8df2164da2be60f3403dd21fc383a49",
+            "variantProperties": {
+              "Size": "8"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Position=Start / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "Position=Start / Line",
+          "type": "INSTANCE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "4c3ffbe377203a11636eab13a4cfc7fe556cdd89",
+            "variantProperties": {
+              "Filled": "False"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Position=Start / Line / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6531",
+          "key": "9610c165ec543262fb8a733d215cbcb47a3fd1e7",
+          "name": "Position=Start"
+        },
+        {
+          "id": "33:6536",
+          "key": "a08c578c5e3f41597b7127f493b79678a64ce72c",
+          "name": "Position=MIddle"
+        },
+        {
+          "id": "33:6542",
+          "key": "abb5b8291a89aaecf61cb46618e3ff286117a3c9",
+          "name": "Position=End"
+        }
+      ]
+    },
+    {
+      "key": "38d4aeee69e19bddb963ca327155c03291137518",
+      "name": "❌  Line",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "Line",
+      "defaultVariant": "4c3ffbe377203a11636eab13a4cfc7fe556cdd89",
+      "variantStructures": {
+        "4c3ffbe377203a11636eab13a4cfc7fe556cdd89": [],
+        "0c2ad41b5a6bea0638ab3e6c2e1d31cf727a2860": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Filled=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:4ee6dfca4cfb2bd32e81febe3c4bf0485d2e1477/3541:107"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Filled=False",
+          "type": "COMPONENT",
+          "name": "Filled=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Filled=False / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6547",
+          "key": "4c3ffbe377203a11636eab13a4cfc7fe556cdd89",
+          "name": "Filled=False"
+        },
+        {
+          "id": "33:6549",
+          "key": "0c2ad41b5a6bea0638ab3e6c2e1d31cf727a2860",
+          "name": "Filled=True"
+        }
+      ]
+    },
+    {
+      "key": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "name": "❌  SwapMe",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "variantStructures": {
+        "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "❌  SwapMe",
+          "type": "COMPONENT",
+          "name": "❌  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "❌  SwapMe / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "❌  SwapMe / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "❌  SwapMe / blank",
+          "type": "FRAME",
+          "name": "blank",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "❌  SwapMe / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "❌  SwapMe / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6551",
+          "key": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+          "name": "❌  SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "name": "❌ Steps_Vertical",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "Steps_Vertical",
+      "defaultVariant": "2978c55b426dbdad02a7e8bc200af8706bffdb60",
+      "variantStructures": {
+        "2978c55b426dbdad02a7e8bc200af8706bffdb60": [],
+        "a0386c7adeb6b07b45c9c7a2ae1560885e177eee": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "MiddlePadding=Airy, Horizontal=Left"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "componentInstance": {
+                "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+                "variantProperties": {
+                  "Size": "12"
+                }
+              }
+            }
+          }
+        ],
+        "749d8996281ee721c9dd0eac5de661325f0fc334": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "MiddlePadding=Compact, Horizontal=None"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "componentInstance": {
+                "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+                "variantProperties": {
+                  "Size": "12"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 12,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6c18f853032b17780d357be8d61659a3c19a330d",
+                "variantProperties": {
+                  "Size": "8"
+                }
+              }
+            }
+          }
+        ],
+        "29ddb4ebfbf4e514e0673230b64d253e3b022ce4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "MiddlePadding=Compact, Horizontal=Left"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "componentInstance": {
+                "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+                "variantProperties": {
+                  "Size": "12"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 12,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "6c18f853032b17780d357be8d61659a3c19a330d",
+                "variantProperties": {
+                  "Size": "8"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "MiddlePadding=Airy, Horizontal=None",
+          "type": "COMPONENT",
+          "name": "MiddlePadding=Airy, Horizontal=None",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "9610c165ec543262fb8a733d215cbcb47a3fd1e7",
+            "variantProperties": {
+              "Position": "Start"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent",
+          "type": "INSTANCE",
+          "name": "IndicatorContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4cb7c4e53b44b0c1e4ac3135055439416af1886d",
+            "variantProperties": {
+              "Active": "False",
+              "Ordered": "False",
+              "Positive": "False",
+              "Warning": "False",
+              "Error": "False",
+              "CriticalError": "False",
+              "Waiting": "False",
+              "Custom": "True"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent / Placeholder_24x24",
+          "type": "INSTANCE",
+          "name": "Placeholder_24x24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "d56235ef6831b5855f063079b7a77de6d179486b"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent / Placeholder_24x24 / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 2,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "71146279f8df2164da2be60f3403dd21fc383a49",
+            "variantProperties": {
+              "Size": "8"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 2,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / Line",
+          "type": "INSTANCE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "4c3ffbe377203a11636eab13a4cfc7fe556cdd89",
+            "variantProperties": {
+              "Filled": "False"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "MiddlePadding=Airy, Horizontal=None / Indicator / Line / Divider",
+          "type": "RECTANGLE",
+          "name": "Divider",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 12,
+          "parentId": 1,
+          "path": "MiddlePadding=Airy, Horizontal=None / ↔ SpacingHorizontal",
+          "type": "INSTANCE",
+          "name": "↔ SpacingHorizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "793e5c374a5c2b208a7203535880d3d4cc3c795a",
+            "variantProperties": {
+              "Size": "16"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "MiddlePadding=Airy, Horizontal=None / ↔ SpacingHorizontal / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 14,
+          "parentId": 1,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe",
+          "type": "INSTANCE",
+          "name": "SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 14,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe / blank",
+          "type": "FRAME",
+          "name": "blank",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 18,
+          "parentId": 14,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical",
+          "type": "INSTANCE",
+          "name": "↕ SpacingVertical",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+            "variantProperties": {
+              "Size": "12"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "33:6478",
+          "key": "2978c55b426dbdad02a7e8bc200af8706bffdb60",
+          "name": "MiddlePadding=Airy, Horizontal=None"
+        },
+        {
+          "id": "33:6482",
+          "key": "a0386c7adeb6b07b45c9c7a2ae1560885e177eee",
+          "name": "MiddlePadding=Airy, Horizontal=Left"
+        },
+        {
+          "id": "33:6487",
+          "key": "749d8996281ee721c9dd0eac5de661325f0fc334",
+          "name": "MiddlePadding=Compact, Horizontal=None"
+        },
+        {
+          "id": "33:6491",
+          "key": "29ddb4ebfbf4e514e0673230b64d253e3b022ce4",
+          "name": "MiddlePadding=Compact, Horizontal=Left"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Steps_Horizontal / LastStep=False",
+      "type": "COMPONENT",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Steps_Horizontal / LastStep=False / IndicatorContent",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Steps_Horizontal / LastStep=False / IndicatorContent / Placeholder_24x24",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Steps_Horizontal / LastStep=False / IndicatorContent / Placeholder_24x24 / Wrapper",
+      "type": "FRAME",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Steps_Horizontal / LastStep=False / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Steps_Horizontal / LastStep=False / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Steps_Horizontal / LastStep=False / HorizontalLabel",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 12,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "Steps_Horizontal / LastStep=False / HorizontalLabel / Label",
+      "type": "TEXT",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Step"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+      }
+    },
+    {
+      "id": 9,
+      "path": "Steps_Horizontal / LastStep=False / Line",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "Steps_Horizontal / LastStep=False / Line / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "Steps_Horizontal / LastStep=False / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "Steps_Horizontal / LastStep=False / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "6248360b0b187608b9b9d0206633bea83bb0d9ad",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Steps_Vertical / LastStep=False",
+      "type": "COMPONENT",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Steps_Vertical / LastStep=False / Indicator",
+      "type": "FRAME",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Steps_Vertical / LastStep=False / Indicator / IndicatorContent",
+      "type": "INSTANCE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Steps_Vertical / LastStep=False / Indicator / IndicatorContent / Placeholder_24x24",
+      "type": "INSTANCE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Steps_Vertical / LastStep=False / Indicator / IndicatorContent / Placeholder_24x24 / Wrapper",
+      "type": "FRAME",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Steps_Vertical / LastStep=False / Indicator / Line",
+      "type": "INSTANCE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Steps_Vertical / LastStep=False / Indicator / Line / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "Steps_Vertical / LastStep=False / Content",
+      "type": "SLOT",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "Steps_Vertical / LastStep=False / Content / 🔩 SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "Steps_Vertical / LastStep=False / Content / 🔩 SwapMe / blank",
+      "type": "FRAME",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "Steps_Vertical / LastStep=False / Content / 🔩 SwapMe / blank / Fixer",
+      "type": "FRAME",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "Steps_Vertical / LastStep=False / Content / MinSpace",
+      "type": "INSTANCE",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "Steps_Vertical / LastStep=False / Content / MinSpace / Fixer",
+      "type": "FRAME",
+      "componentKey": "9c47f8014b3b2814bab264b0544270c00b2afaa5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 MinSpace / MinSpace=16",
+      "type": "COMPONENT",
+      "componentKey": "7a6f19ac159597fd21d667c1a5eaf31a3e091bdf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 MinSpace / MinSpace=16 / Fixer",
+      "type": "FRAME",
+      "componentKey": "7a6f19ac159597fd21d667c1a5eaf31a3e091bdf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 HorizontalLabel",
+      "type": "COMPONENT",
+      "componentKey": "4c7138d94f7a5793ef83723a2cc6817690d435d8",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 12,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 HorizontalLabel / Label",
+      "type": "TEXT",
+      "componentKey": "4c7138d94f7a5793ef83723a2cc6817690d435d8",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Step"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+      }
+    },
+    {
+      "id": 1,
+      "path": "🔩 Line / Filled=False, Color=Positive",
+      "type": "COMPONENT",
+      "componentKey": "530df1d0a2b24d583d47e5f4d7aa7b11ac4f0d4b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Line / Filled=False, Color=Positive / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "530df1d0a2b24d583d47e5f4d7aa7b11ac4f0d4b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 SwapMe / blank",
+      "type": "FRAME",
+      "componentKey": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 SwapMe / blank / Fixer",
+      "type": "FRAME",
+      "componentKey": "f02a875b2245040f28d2c894c13e3135ef3255f9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 Line / Filled=False, Color=Positive",
+      "type": "COMPONENT",
+      "componentKey": "edbddfe9be38e1eb6e9a2b83f8c8bb7e06cef1b3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 Line / Filled=False, Color=Positive / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "edbddfe9be38e1eb6e9a2b83f8c8bb7e06cef1b3",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 IndicatorContent / Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False",
+      "type": "COMPONENT",
+      "componentKey": "8fb179b20f6ec07456a9ca1941b934b5c07e0864",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 IndicatorContent / Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body",
+      "type": "FRAME",
+      "componentKey": "8fb179b20f6ec07456a9ca1941b934b5c07e0864",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 IndicatorContent / Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "8fb179b20f6ec07456a9ca1941b934b5c07e0864",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔩 IndicatorContent / Active=False, Ordered=True, Positive=False, Warning=False, Error=False, CriticalError=False, Waiting=False, Custom=False / body / N",
+      "type": "TEXT",
+      "componentKey": "8fb179b20f6ec07456a9ca1941b934b5c07e0864",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "N"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.4699999988079071,
+        "token": "VariableID:e4642204d1345cbb1bb648ea8291ffa88b3bc4ea/9221:66",
+        "styleKey": "S:b657c53719573a5b414a97d0b5d3d69739579de2,9221:106"
+      }
+    },
+    {
+      "id": 1,
+      "path": "❌   HorizontalLabel",
+      "type": "COMPONENT",
+      "componentKey": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 12,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌   HorizontalLabel / _label",
+      "type": "TEXT",
+      "componentKey": "b166a83b5ecc99cb7bb0ebfcf54c0c6114e92188",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Step name"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+      }
+    },
+    {
+      "id": 1,
+      "path": "❌  Steps_Horizontal",
+      "type": "COMPONENT",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌  Steps_Horizontal / IndicatorContent",
+      "type": "INSTANCE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌  Steps_Horizontal / IndicatorContent / Placeholder_24x24",
+      "type": "INSTANCE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "❌  Steps_Horizontal / IndicatorContent / Placeholder_24x24 / Wrapper",
+      "type": "FRAME",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "❌  Steps_Horizontal / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "❌  Steps_Horizontal / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "❌  Steps_Horizontal / HorizontalLabel",
+      "type": "INSTANCE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          8,
+          8,
+          8
+        ],
+        "gap": 12,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "❌  Steps_Horizontal / HorizontalLabel / _label",
+      "type": "TEXT",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Step name"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+      }
+    },
+    {
+      "id": 9,
+      "path": "❌  Steps_Horizontal / Line",
+      "type": "INSTANCE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "❌  Steps_Horizontal / Line / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "d049346a6cb88799852fc75b55a2a97c81dc0847",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "❌  Indicator / Position=Start",
+      "type": "COMPONENT",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌  Indicator / Position=Start / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌  Indicator / Position=Start / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "❌  Indicator / Position=Start / IndicatorContent",
+      "type": "INSTANCE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "❌  Indicator / Position=Start / IndicatorContent / Placeholder_24x24",
+      "type": "INSTANCE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "❌  Indicator / Position=Start / IndicatorContent / Placeholder_24x24 / Wrapper",
+      "type": "FRAME",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "❌  Indicator / Position=Start / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "❌  Indicator / Position=Start / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "❌  Indicator / Position=Start / Line",
+      "type": "INSTANCE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "❌  Indicator / Position=Start / Line / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "daaf4f44ce5ca82b085a2e389e1589c3ea520572",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "❌  Line / Filled=False",
+      "type": "COMPONENT",
+      "componentKey": "38d4aeee69e19bddb963ca327155c03291137518",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌  Line / Filled=False / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "38d4aeee69e19bddb963ca327155c03291137518",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "❌  SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌  SwapMe / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌  SwapMe / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "❌  SwapMe / blank",
+      "type": "FRAME",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "❌  SwapMe / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "❌  SwapMe / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "c28c16c5663f7ec1cc9b4436936ed4fbc9d00b8c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None",
+      "type": "COMPONENT",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent / Placeholder_24x24",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / IndicatorContent / Placeholder_24x24 / Wrapper",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / Line",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / Indicator / Line / Divider",
+      "type": "RECTANGLE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / ↔ SpacingHorizontal",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / ↔ SpacingHorizontal / Fixer",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe / blank",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical",
+      "type": "INSTANCE",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "❌ Steps_Vertical / MiddlePadding=Airy, Horizontal=None / SwapMe / ↕ SpacingVertical / Fixer",
+      "type": "FRAME",
+      "componentKey": "8c6bd130660ad06137861eee848bac6f31b75600",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2026-01-28T21:49:03.828Z",
+    "generatedAt": "2026-03-29T18:41:38.351Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -117,16 +117,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -146,9 +146,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -272,16 +273,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -301,9 +302,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -460,21 +462,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:952e7df724ba0235d6d170ca152117522e48f11c,2771:19"
+                  "styleKey": "S:952e7df724ba0235d6d170ca152117522e48f11c,9221:116"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 22,
                 "lineHeight": 26,
-                "letterSpacing": 0,
+                "letterSpacing": 0.20000000298023224,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 22
-              }
+              },
+              "typographyToken": "VariableID:6e4b00e43032fe2bbd0dd497af166189599f1049/9221:63"
             }
           },
           {
@@ -1022,16 +1025,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1051,9 +1054,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -1177,16 +1181,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1206,9 +1210,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -1365,21 +1370,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:952e7df724ba0235d6d170ca152117522e48f11c,2771:19"
+                  "styleKey": "S:952e7df724ba0235d6d170ca152117522e48f11c,9221:116"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 22,
                 "lineHeight": 26,
-                "letterSpacing": 0,
+                "letterSpacing": 0.20000000298023224,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 22
-              }
+              },
+              "typographyToken": "VariableID:6e4b00e43032fe2bbd0dd497af166189599f1049/9221:63"
             }
           },
           {
@@ -1986,16 +1992,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2015,9 +2021,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -2141,16 +2148,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2170,9 +2177,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -2336,21 +2344,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:92e9a9e9ef07551eca0316447d0913d0b4297f13,2771:15"
+                  "styleKey": "S:92e9a9e9ef07551eca0316447d0913d0b4297f13,9221:104"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 18,
                 "lineHeight": 24,
-                "letterSpacing": 0,
+                "letterSpacing": 0.3799999952316284,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 18
-              }
+              },
+              "typographyToken": "VariableID:06d2a9f885357762501c4ce6a2717394ceb23a36/9221:64"
             }
           },
           {
@@ -2900,21 +2909,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -3033,21 +3043,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -3211,21 +3222,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:d16140c22dd6431b15814fa9632f4bdc91a4f129,2771:14"
+                  "styleKey": "S:d16140c22dd6431b15814fa9632f4bdc91a4f129,9221:112"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 16,
                 "lineHeight": 24,
-                "letterSpacing": 0,
+                "letterSpacing": 0.4300000071525574,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 16
-              }
+              },
+              "typographyToken": "VariableID:15ca44d12e65f55968ac6612463266abfa573913/9221:65"
             }
           },
           {
@@ -3767,21 +3779,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -3900,21 +3913,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -4083,21 +4097,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:b657c53719573a5b414a97d0b5d3d69739579de2,2771:13"
+                  "styleKey": "S:b657c53719573a5b414a97d0b5d3d69739579de2,9221:106"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 14,
                 "lineHeight": 20,
-                "letterSpacing": 0,
+                "letterSpacing": 0.4699999988079071,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:e4642204d1345cbb1bb648ea8291ffa88b3bc4ea/9221:66"
             }
           },
           {
@@ -4644,21 +4659,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -4777,21 +4793,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -4955,21 +4972,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,2771:11"
+                  "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,9221:107"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 12,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5699999928474426,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 12
-              }
+              },
+              "typographyToken": "VariableID:2080abaf4fec477e63a3eb327825087bf9bb6a13/9221:68"
             }
           },
           {
@@ -5567,21 +5585,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -6388,16 +6407,16 @@
               "visible": false,
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -6417,9 +6436,10 @@
               ],
               "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -7225,21 +7245,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+                  "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
                 }
               },
               "text": {
                 "characters": "ЙО",
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11,
                 "lineHeight": 16,
-                "letterSpacing": 0,
+                "letterSpacing": 0.5400000214576721,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 11
-              }
+              },
+              "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
             }
           },
           {
@@ -9024,16 +9045,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5400000214576721,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -9053,9 +9074,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11
-          }
+          },
+          "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
         },
         {
           "id": 19,
@@ -9515,16 +9537,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5400000214576721,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -9544,9 +9566,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11
-          }
+          },
+          "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
         },
         {
           "id": 41,
@@ -10036,16 +10059,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,2771:11"
+              "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,9221:107"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 12,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5699999928474426,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -10065,9 +10088,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 12
-          }
+          },
+          "typographyToken": "VariableID:2080abaf4fec477e63a3eb327825087bf9bb6a13/9221:68"
         },
         {
           "id": 62,
@@ -10647,16 +10671,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5400000214576721,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -10676,9 +10700,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11
-          }
+          },
+          "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
         },
         {
           "id": 89,
@@ -11138,16 +11163,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+              "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5400000214576721,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -11167,9 +11192,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 11
-          }
+          },
+          "typographyToken": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69"
         },
         {
           "id": 111,
@@ -11659,16 +11685,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,2771:11"
+              "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,9221:107"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 12,
             "lineHeight": 16,
-            "letterSpacing": 0,
+            "letterSpacing": 0.5699999928474426,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -11688,9 +11714,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Text Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 12
-          }
+          },
+          "typographyToken": "VariableID:2080abaf4fec477e63a3eb327825087bf9bb6a13/9221:68"
         },
         {
           "id": 132,
@@ -12172,16 +12199,16 @@
           "visible": false,
           "styles": {
             "text": {
-              "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+              "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
             }
           },
           "opacity": 1,
           "text": {
             "characters": "ЙО",
-            "fontName": "SF Pro Display Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 30,
             "lineHeight": 36,
-            "letterSpacing": 0,
+            "letterSpacing": 0.10000000149011612,
             "paragraphSpacing": 0
           },
           "fills": [
@@ -12201,9 +12228,10 @@
           ],
           "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
           "typography": {
-            "fontName": "SF Pro Display Bold",
+            "fontName": "Alfa Interface Sans Bold",
             "fontSize": 30
-          }
+          },
+          "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
         },
         {
           "id": 152,
@@ -16695,12 +16723,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 11,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+        "letterSpacing": 0.5400000214576721,
+        "token": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69",
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
       }
     },
     {
@@ -17105,12 +17134,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 11,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+        "letterSpacing": 0.5400000214576721,
+        "token": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69",
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
       }
     },
     {
@@ -17501,12 +17531,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 12,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,2771:11"
+        "letterSpacing": 0.5699999928474426,
+        "token": "VariableID:2080abaf4fec477e63a3eb327825087bf9bb6a13/9221:68",
+        "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,9221:107"
       }
     },
     {
@@ -18005,12 +18036,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 11,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+        "letterSpacing": 0.5400000214576721,
+        "token": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69",
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
       }
     },
     {
@@ -18415,12 +18447,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 11,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,2771:10"
+        "letterSpacing": 0.5400000214576721,
+        "token": "VariableID:2cd697e19e8512c6f529c4bcf62c496b2c213464/9221:69",
+        "styleKey": "S:3b8f755205216e2142f722883e68078b09e41ff5,9221:108"
       }
     },
     {
@@ -18811,12 +18844,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 12,
         "lineHeight": 16,
-        "letterSpacing": 0,
-        "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,2771:11"
+        "letterSpacing": 0.5699999928474426,
+        "token": "VariableID:2080abaf4fec477e63a3eb327825087bf9bb6a13/9221:68",
+        "styleKey": "S:7e5262c21ead9d10863da05cc954acb91acaf238,9221:107"
       }
     },
     {
@@ -19187,12 +19221,13 @@
         "value": "ЙО"
       },
       "typography": {
-        "family": "SF Pro Display",
+        "family": "Alfa Interface Sans",
         "weight": "Bold",
         "size": 30,
         "lineHeight": 36,
-        "letterSpacing": 0,
-        "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62",
+        "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
       }
     },
     {

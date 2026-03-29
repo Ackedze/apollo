@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core Navigation",
     "file": "Web :: Core Navigation",
-    "generatedAt": "2025-12-30T09:21:35.008Z",
+    "generatedAt": "2026-03-29T18:45:12.949Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -59,6 +59,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2"
+        }
+      ],
       "variants": [
         {
           "id": "5611:1607",
@@ -118,6 +155,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177"
+        }
+      ],
       "variants": [
         {
           "id": "5611:1604",
@@ -168,6 +242,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6"
+        }
+      ],
       "variants": [
         {
           "id": "5611:1601",
@@ -218,6 +329,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        }
+      ],
       "variants": [
         {
           "id": "5611:1598",
@@ -261,6 +409,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2"
+        }
+      ],
       "variants": [
         {
           "id": "5609:1550",
@@ -304,6 +489,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177"
+        }
+      ],
       "variants": [
         {
           "id": "5609:1547",
@@ -338,6 +560,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6"
+        }
+      ],
       "variants": [
         {
           "id": "5609:1544",
@@ -372,6 +631,43 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True",
+          "type": "COMPONENT",
+          "name": "Active=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        }
+      ],
       "variants": [
         {
           "id": "5606:1588",
@@ -501,6 +797,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5624:3881",
@@ -640,6 +983,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:c9f32b7fb1cec7dcbbb56e9920f76ac8326d6fd8/1930:2"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5601:2711",
@@ -779,6 +1169,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5624:3872",
@@ -918,6 +1355,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:f75474242081bef9c9f0f10199b95180e3dff6a8/3541:177"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5601:2702",
@@ -1057,6 +1541,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5624:3863",
@@ -1196,6 +1727,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:1eee53276f97ae589e5e28dc9a6a7e1983c0e7fa/1930:6"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5601:2693",
@@ -1335,6 +1913,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5624:3854",
@@ -1474,6 +2099,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=True, Diameter=100%",
+          "type": "COMPONENT",
+          "name": "Active=True, Diameter=100%",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=True, Diameter=100% / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5600:957",
@@ -1624,6 +2296,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 222,
+                "g": 222,
+                "b": 238,
+                "a": 0.13
+              },
+              "visible": true,
+              "opacity": 0.12999999523162842,
+              "tokenKey": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10",
+              "colorHex": "#DEDEEE"
+            }
+          ],
+          "fillToken": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5367:1261",
@@ -1764,6 +2483,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 222,
+                "g": 222,
+                "b": 238,
+                "a": 0.13
+              },
+              "visible": true,
+              "opacity": 0.12999999523162842,
+              "tokenKey": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10",
+              "colorHex": "#DEDEEE"
+            }
+          ],
+          "fillToken": "VariableID:ab6a628c01ecc95af1aa3e42acba69381802c86f/1930:10"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5367:1247",
@@ -1904,6 +2670,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5367:1232",
@@ -2044,6 +2857,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5367:1217",
@@ -2184,6 +3044,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 222,
+                "g": 222,
+                "b": 238,
+                "a": 0.13
+              },
+              "visible": true,
+              "opacity": 0.12999999523162842,
+              "tokenKey": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "colorHex": "#DEDEEE"
+            }
+          ],
+          "fillToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "4897:1147",
@@ -2324,6 +3231,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "4887:397",
@@ -2465,6 +3419,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 222,
+                "g": 222,
+                "b": 238,
+                "a": 0.13
+              },
+              "visible": true,
+              "opacity": 0.12999999523162842,
+              "tokenKey": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "colorHex": "#DEDEEE"
+            }
+          ],
+          "fillToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "4897:1139",
@@ -2606,6 +3607,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Active=False",
+          "type": "COMPONENT",
+          "name": "Active=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Active=False / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "4881:12357",
@@ -3518,6 +4566,437 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Inverted=False, Static=False",
+          "type": "COMPONENT",
+          "name": "Inverted=False, Static=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+          "componentInstance": {
+            "componentKey": "c5f57be69d9d9fd31a43bec2bab74b0eaf9f0681",
+            "variantProperties": {
+              "Active": "True"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+          "componentInstance": {
+            "componentKey": "53f73c2b8aba8a8db82ab83b23cfb544cffb6c21",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        }
+      ],
       "variants": [
         {
           "id": "5611:1553",
@@ -4040,6 +5519,309 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Inverted=False, Static=False",
+          "type": "COMPONENT",
+          "name": "Inverted=False, Static=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 30,
+                "g": 43,
+                "b": 68,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147",
+              "colorHex": "#1E2B44"
+            }
+          ],
+          "fillToken": "VariableID:446796436fc66df888a34eb47bed90e0341e558c/3541:147"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+          "componentInstance": {
+            "componentKey": "5f45a8eadebc2ed86a5aa54008dc98125be7b052",
+            "variantProperties": {
+              "Active": "True"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 40,
+          "componentInstance": {
+            "componentKey": "a76c2bc3d26a97b84483405a84082e46d84e7275",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        }
+      ],
       "variants": [
         {
           "id": "5606:1539",
@@ -5194,6 +6976,287 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=8, Inverted=False, Static=False",
+          "type": "COMPONENT",
+          "name": "Size=8, Inverted=False, Static=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+          "componentInstance": {
+            "componentKey": "ca471f8303a636069d0bf5232a2859ad8ca5f015",
+            "variantProperties": {
+              "Active": "True",
+              "Diameter": "100%"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "fb23711943bb4e5a6b67da82408bb92d9115ac93",
+            "variantProperties": {
+              "Active": "False",
+              "Diameter": "100%"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "fb23711943bb4e5a6b67da82408bb92d9115ac93",
+            "variantProperties": {
+              "Active": "False",
+              "Diameter": "100%"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "fb23711943bb4e5a6b67da82408bb92d9115ac93",
+            "variantProperties": {
+              "Active": "False",
+              "Diameter": "100%"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "fb23711943bb4e5a6b67da82408bb92d9115ac93",
+            "variantProperties": {
+              "Active": "False",
+              "Diameter": "100%"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "5601:2721",
@@ -7322,6 +9385,601 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=8, Inverted=False, Static=False",
+          "type": "COMPONENT",
+          "name": "Size=8, Inverted=False, Static=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "ec5e3ecbb3da4301fd19c8edf15c13ca801056dc",
+            "variantProperties": {
+              "Active": "True"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=8, Inverted=False, Static=False / Item / Gutter",
+          "type": "FRAME",
+          "name": "Gutter",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 56,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Size=8, Inverted=False, Static=False / Item / Gutter / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "Size=8, Inverted=False, Static=False / Item / Fill",
+          "type": "FRAME",
+          "name": "Fill",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Size=8, Inverted=False, Static=False / Item / Fill / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 19,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 1,
+          "path": "Size=8, Inverted=False, Static=False / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 40,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "cca61efc1f4f40273646b5c8a95e0d2403ed5751",
+            "variantProperties": {
+              "Active": "False"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "Size=8, Inverted=False, Static=False / Item / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "4887:429",

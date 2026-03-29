@@ -1,0 +1,403 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core ProgressBars",
+    "file": "Web :: Core ProgressBars",
+    "generatedAt": "2026-03-29T18:49:52.941Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ProgressBar"
+    ],
+    "componentCount": 2,
+    "elementCount": 6
+  },
+  "components": [
+    {
+      "key": "2a944e3a3e251f1db3c7905cc9d783a00d6aa7d7",
+      "name": "ProgressBar_Inverted",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ProgressBar_Inverted",
+      "defaultVariant": "9a801cbc3055decce9fbb1e89f348aa402370a02",
+      "variantStructures": {
+        "9a801cbc3055decce9fbb1e89f348aa402370a02": [],
+        "55cb8649030ee726a798ebca75227f1cc61a321e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=4px",
+              "radius": 4
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=8px",
+          "type": "COMPONENT",
+          "name": "Size=8px",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 222,
+                "g": 222,
+                "b": 238,
+                "a": 0.13
+              },
+              "visible": true,
+              "opacity": 0.12999999523162842,
+              "tokenKey": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+              "colorHex": "#DEDEEE"
+            }
+          ],
+          "fillToken": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=8px / Fill",
+          "type": "FRAME",
+          "name": "Fill",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 10,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": {
+            "topLeft": 0,
+            "topRight": 8,
+            "bottomRight": 8,
+            "bottomLeft": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=8px / Fill / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3009:1002",
+          "key": "9a801cbc3055decce9fbb1e89f348aa402370a02",
+          "name": "Size=8px"
+        },
+        {
+          "id": "3009:1005",
+          "key": "55cb8649030ee726a798ebca75227f1cc61a321e",
+          "name": "Size=4px"
+        }
+      ]
+    },
+    {
+      "key": "13145c0119da23352a256c184e9735f3e07faa91",
+      "name": "ProgressBar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ProgressBar",
+      "defaultVariant": "317e46760cc1f18f18d8e13558665cc0388407dc",
+      "variantStructures": {
+        "317e46760cc1f18f18d8e13558665cc0388407dc": [],
+        "0316bb517ea71bdf45a506776941ef8e26f88950": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=4px",
+              "radius": 4
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=8px",
+          "type": "COMPONENT",
+          "name": "Size=8px",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=8px / Fill",
+          "type": "FRAME",
+          "name": "Fill",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 10,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": {
+            "topLeft": 0,
+            "topRight": 8,
+            "bottomRight": 8,
+            "bottomLeft": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=8px / Fill / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3:852",
+          "key": "317e46760cc1f18f18d8e13558665cc0388407dc",
+          "name": "Size=8px"
+        },
+        {
+          "id": "3:854",
+          "key": "0316bb517ea71bdf45a506776941ef8e26f88950",
+          "name": "Size=4px"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ProgressBar_Inverted / Size=8px",
+      "type": "COMPONENT",
+      "componentKey": "2a944e3a3e251f1db3c7905cc9d783a00d6aa7d7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:571bd9b6345e0fd4100bc6f257570d120f77b61b/3541:156",
+        "color": "rgba(222,222,238,0.13)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ProgressBar_Inverted / Size=8px / Fill",
+      "type": "FRAME",
+      "componentKey": "2a944e3a3e251f1db3c7905cc9d783a00d6aa7d7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          10,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ProgressBar_Inverted / Size=8px / Fill / fixer",
+      "type": "FRAME",
+      "componentKey": "2a944e3a3e251f1db3c7905cc9d783a00d6aa7d7",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "ProgressBar / Size=8px",
+      "type": "COMPONENT",
+      "componentKey": "13145c0119da23352a256c184e9735f3e07faa91",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ProgressBar / Size=8px / Fill",
+      "type": "FRAME",
+      "componentKey": "13145c0119da23352a256c184e9735f3e07faa91",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          10,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ProgressBar / Size=8px / Fill / fixer",
+      "type": "FRAME",
+      "componentKey": "13145c0119da23352a256c184e9735f3e07faa91",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

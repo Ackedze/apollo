@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:50:00.898Z",
+    "generatedAt": "2026-03-29T18:39:50.147Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -15,10 +15,11 @@
   "components": [
     {
       "key": "5a550f0391ccf089334dc257bbcb1187cab1240c",
-      "name": "[M][AO] RadioGroup",
-      "status": "active",
+      "name": "🔄 [M][AO] RadioGroup",
+      "status": "scheduled",
       "role": "main",
       "platform": "mobile-web",
+      "description": "🔄 Замени на актуальный",
       "category": "M][AO] RadioGroup",
       "defaultVariant": "5de64e3a916f44b59eb5438f18b80d24c6529863",
       "variantStructures": {
@@ -28,17 +29,7 @@
             "op": "update",
             "id": 1,
             "value": {
-              "name": "Type=Horizontal, ErrorState=True",
-              "layout": {
-                "padding": {
-                  "top": 0,
-                  "right": 0,
-                  "bottom": 0,
-                  "left": 8
-                },
-                "itemSpacing": 12
-              },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "name": "Type=Horizontal, ErrorState=True"
             }
           },
           {
@@ -74,16 +65,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -96,14 +87,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -144,17 +138,7 @@
             "op": "update",
             "id": 1,
             "value": {
-              "name": "Type=Vertical, ErrorState=True",
-              "layout": {
-                "padding": {
-                  "top": 0,
-                  "right": 0,
-                  "bottom": 0,
-                  "left": 8
-                },
-                "itemSpacing": 12
-              },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "name": "Type=Vertical, ErrorState=True"
             }
           },
           {
@@ -205,16 +189,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -227,14 +211,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -247,6 +234,1048 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=Horizontal, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Type=Horizontal, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle",
+          "type": "FRAME",
+          "name": "GroupTitle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle / GroupTitle",
+          "type": "TEXT",
+          "name": "GroupTitle",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Group title",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 18,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / Items",
+          "type": "FRAME",
+          "name": "Items",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 24
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio",
+          "type": "INSTANCE",
+          "name": "Radio",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e1c3109ccccc391dcc03926c1b5eddbb0c7fde5c",
+            "variantProperties": {
+              "SelectedState": "True",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+        },
+        {
+          "id": 9,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Icon",
+          "type": "VECTOR",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+        },
+        {
+          "id": 10,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 12,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 16,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 18,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 22,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 24,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 28,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 30,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 34,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 36,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage",
+          "type": "FRAME",
+          "name": "HintMessage",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage / HintMessage",
+          "type": "TEXT",
+          "name": "HintMessage",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Hint message",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 18,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        }
+      ],
       "variants": [
         {
           "id": "175:55478",
@@ -285,17 +1314,7 @@
             "op": "update",
             "id": 1,
             "value": {
-              "name": "Type=Horizontal, ErrorState=True",
-              "layout": {
-                "padding": {
-                  "top": 0,
-                  "right": 0,
-                  "bottom": 0,
-                  "left": 8
-                },
-                "itemSpacing": 12
-              },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "name": "Type=Horizontal, ErrorState=True"
             }
           },
           {
@@ -310,9 +1329,9 @@
               "layout": {
                 "padding": {
                   "top": 0,
-                  "right": 4,
+                  "right": 0,
                   "bottom": 0,
-                  "left": 4
+                  "left": 0
                 },
                 "itemSpacing": 0
               },
@@ -331,16 +1350,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -353,14 +1372,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -401,17 +1423,7 @@
             "op": "update",
             "id": 1,
             "value": {
-              "name": "Type=Vertical, ErrorState=True",
-              "layout": {
-                "padding": {
-                  "top": 0,
-                  "right": 0,
-                  "bottom": 0,
-                  "left": 8
-                },
-                "itemSpacing": 12
-              },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "name": "Type=Vertical, ErrorState=True"
             }
           },
           {
@@ -441,9 +1453,9 @@
               "layout": {
                 "padding": {
                   "top": 0,
-                  "right": 4,
+                  "right": 0,
                   "bottom": 0,
-                  "left": 4
+                  "left": 0
                 },
                 "itemSpacing": 0
               },
@@ -462,16 +1474,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -484,14 +1496,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -504,6 +1519,1048 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=Horizontal, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Type=Horizontal, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle",
+          "type": "FRAME",
+          "name": "GroupTitle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle / GroupTitle",
+          "type": "TEXT",
+          "name": "GroupTitle",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Group title",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 18,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / Items",
+          "type": "SLOT",
+          "name": "Items",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 24
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio",
+          "type": "INSTANCE",
+          "name": "Radio",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e1c3109ccccc391dcc03926c1b5eddbb0c7fde5c",
+            "variantProperties": {
+              "SelectedState": "True",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+        },
+        {
+          "id": 9,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Icon",
+          "type": "VECTOR",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+        },
+        {
+          "id": 10,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 12,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 16,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 18,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 22,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 24,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 28,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 30,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 34,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 36,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage",
+          "type": "FRAME",
+          "name": "HintMessage",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage / HintMessage",
+          "type": "TEXT",
+          "name": "HintMessage",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Hint message",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 18,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        }
+      ],
       "variants": [
         {
           "id": "175:53979",
@@ -552,7 +2609,23 @@
                 },
                 "itemSpacing": 12
               },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+              "strokeAlign": "INSIDE"
             }
           },
           {
@@ -588,16 +2661,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -610,14 +2683,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -668,7 +2744,23 @@
                 },
                 "itemSpacing": 12
               },
-              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 72,
+                    "b": 55,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+                  "colorHex": "#FF4837"
+                }
+              ],
+              "strokeToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+              "strokeAlign": "INSIDE"
             }
           },
           {
@@ -719,16 +2811,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -741,14 +2833,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -761,6 +2856,1048 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=Horizontal, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Type=Horizontal, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle",
+          "type": "FRAME",
+          "name": "GroupTitle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Type=Horizontal, ErrorState=False / GroupTitle / GroupTitle",
+          "type": "TEXT",
+          "name": "GroupTitle",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Group title",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / Items",
+          "type": "SLOT",
+          "name": "Items",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 24
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio",
+          "type": "INSTANCE",
+          "name": "Radio",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e1c3109ccccc391dcc03926c1b5eddbb0c7fde5c",
+            "variantProperties": {
+              "SelectedState": "True",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+        },
+        {
+          "id": 9,
+          "parentId": 7,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Icon",
+          "type": "VECTOR",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+        },
+        {
+          "id": 10,
+          "parentId": 5,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 12,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 16,
+          "parentId": 12,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 18,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 22,
+          "parentId": 18,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 24,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 28,
+          "parentId": 24,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 30,
+          "parentId": 4,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+          "type": "INSTANCE",
+          "name": "RadioLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "51387718c0ae80826cfade731c620f007b21bec0",
+            "variantProperties": {
+              "Hint": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+          "type": "INSTANCE",
+          "name": "Radio_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05511c529e5f60bd2a16a7847a865ac3138c1feb",
+            "variantProperties": {
+              "SelectedState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+          "type": "VECTOR",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "strokeToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+          "strokeWeight": 1.5,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 34,
+          "parentId": 30,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 36,
+          "parentId": 1,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage",
+          "type": "FRAME",
+          "name": "HintMessage",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "Type=Horizontal, ErrorState=False / HintMessage / HintMessage",
+          "type": "TEXT",
+          "name": "HintMessage",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Hint message",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 18,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        }
+      ],
       "variants": [
         {
           "id": "175:53924",
@@ -788,7 +3925,7 @@
   "elements": [
     {
       "id": 1,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False",
       "type": "COMPONENT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -812,7 +3949,7 @@
     },
     {
       "id": 2,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / GroupTitle",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / GroupTitle",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -834,7 +3971,7 @@
     },
     {
       "id": 3,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / GroupTitle / GroupTitle",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / GroupTitle / GroupTitle",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -849,17 +3986,18 @@
         "value": "Group title"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 18,
-        "letterSpacing": 0,
-        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
       }
     },
     {
       "id": 4,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -883,7 +4021,7 @@
     },
     {
       "id": 5,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -905,7 +4043,7 @@
     },
     {
       "id": 6,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -927,7 +4065,7 @@
     },
     {
       "id": 7,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -943,7 +4081,7 @@
     },
     {
       "id": 8,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Bg",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Bg",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -962,7 +4100,7 @@
     },
     {
       "id": 9,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Icon",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio / Content / Icon",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -981,7 +4119,7 @@
     },
     {
       "id": 10,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1003,7 +4141,7 @@
     },
     {
       "id": 11,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1018,17 +4156,18 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 12,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1050,7 +4189,7 @@
     },
     {
       "id": 13,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1072,7 +4211,7 @@
     },
     {
       "id": 14,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1088,7 +4227,7 @@
     },
     {
       "id": 15,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1112,7 +4251,7 @@
     },
     {
       "id": 16,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1134,7 +4273,7 @@
     },
     {
       "id": 17,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1149,17 +4288,18 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 18,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1181,7 +4321,7 @@
     },
     {
       "id": 19,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1203,7 +4343,7 @@
     },
     {
       "id": 20,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1219,7 +4359,7 @@
     },
     {
       "id": 21,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1243,7 +4383,7 @@
     },
     {
       "id": 22,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1265,7 +4405,7 @@
     },
     {
       "id": 23,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1280,17 +4420,18 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 24,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1312,7 +4453,7 @@
     },
     {
       "id": 25,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1334,7 +4475,7 @@
     },
     {
       "id": 26,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1350,7 +4491,7 @@
     },
     {
       "id": 27,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1374,7 +4515,7 @@
     },
     {
       "id": 28,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1396,7 +4537,7 @@
     },
     {
       "id": 29,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1411,17 +4552,18 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 30,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1443,7 +4585,7 @@
     },
     {
       "id": 31,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24",
       "type": "INSTANCE",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1465,7 +4607,7 @@
     },
     {
       "id": 32,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1481,7 +4623,7 @@
     },
     {
       "id": 33,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Radio_24 / Content / Bg",
       "type": "VECTOR",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1505,7 +4647,7 @@
     },
     {
       "id": 34,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1527,7 +4669,7 @@
     },
     {
       "id": 35,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / Items / RadioLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1542,17 +4684,18 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 36,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / HintMessage",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / HintMessage",
       "type": "FRAME",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1574,7 +4717,7 @@
     },
     {
       "id": 37,
-      "path": "[M][AO] RadioGroup / Type=Horizontal, ErrorState=False / HintMessage / HintMessage",
+      "path": "🔄 [M][AO] RadioGroup / Type=Horizontal, ErrorState=False / HintMessage / HintMessage",
       "type": "TEXT",
       "componentKey": "5a550f0391ccf089334dc257bbcb1187cab1240c",
       "visible": true,
@@ -1589,12 +4732,13 @@
         "value": "Hint message"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 18,
-        "letterSpacing": 0,
-        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
       }
     },
     {
@@ -1630,9 +4774,9 @@
       "layout": {
         "padding": [
           0,
-          4,
           0,
-          4
+          0,
+          0
         ],
         "gap": 0,
         "radius": 0
@@ -1660,18 +4804,19 @@
         "value": "Group title"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 18,
-        "letterSpacing": 0,
-        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
       }
     },
     {
       "id": 4,
       "path": "[M] RadioGroup / Type=Horizontal, ErrorState=False / Items",
-      "type": "FRAME",
+      "type": "SLOT",
       "componentKey": "6cb4f5cba8a547abcf454e0d7737775fd1f67788",
       "visible": true,
       "layout": {
@@ -1829,12 +4974,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -1960,12 +5106,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2091,12 +5238,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2222,12 +5370,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2353,12 +5502,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2370,9 +5520,9 @@
       "layout": {
         "padding": [
           0,
-          4,
           0,
-          4
+          0,
+          0
         ],
         "gap": 0,
         "radius": 0
@@ -2400,12 +5550,13 @@
         "value": "Hint message"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 18,
-        "letterSpacing": 0,
-        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
       }
     },
     {
@@ -2471,18 +5622,19 @@
         "value": "Group title"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
       "id": 4,
       "path": "[D] RadioGroup / Type=Horizontal, ErrorState=False / Items",
-      "type": "FRAME",
+      "type": "SLOT",
       "componentKey": "415a62c4fbdfd6130d79ab147967877fa53e6610",
       "visible": true,
       "layout": {
@@ -2640,12 +5792,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2771,12 +5924,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -2902,12 +6056,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -3033,12 +6188,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -3164,12 +6320,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
@@ -3211,12 +6368,13 @@
         "value": "Hint message"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 18,
-        "letterSpacing": 0,
-        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
       }
     }
   ]

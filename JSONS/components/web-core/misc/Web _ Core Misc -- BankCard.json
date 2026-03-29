@@ -1,0 +1,1558 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core Misc",
+    "file": "Web :: Core Misc",
+    "generatedAt": "2026-03-29T18:53:24.472Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "BankCard"
+    ],
+    "componentCount": 4,
+    "elementCount": 25
+  },
+  "components": [
+    {
+      "key": "2e9b42ba86eb846ec071ec9db2c44f49973f6295",
+      "name": "🔩 PaymentSystemLogo",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "PaymentSystemLogo",
+      "defaultVariant": "aece13e16d1ad450b356a64f2a2092c9cf700cb4",
+      "variantStructures": {
+        "aece13e16d1ad450b356a64f2a2092c9cf700cb4": [],
+        "062884aa1d0c8b3cc0179c95942d55931866634f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Type=Mir",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Type=Mir / mir_m_color",
+              "type": "INSTANCE",
+              "name": "mir_m_color",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "7309e3c6b9fd83d4b01928ac996993867502eb32"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Type=Mir / mir_m_color / logo",
+              "type": "VECTOR",
+              "name": "logo",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Type=Mir / mir_m_color / logo",
+              "type": "VECTOR",
+              "name": "logo",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 77,
+                    "g": 180,
+                    "b": 94,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#4DB45E"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=SwapMe",
+          "type": "COMPONENT",
+          "name": "Type=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "5:4949",
+          "key": "aece13e16d1ad450b356a64f2a2092c9cf700cb4",
+          "name": "Type=SwapMe"
+        },
+        {
+          "id": "5:4951",
+          "key": "062884aa1d0c8b3cc0179c95942d55931866634f",
+          "name": "Type=Mir"
+        }
+      ]
+    },
+    {
+      "key": "03351556a6eaf19020c5822f3a888ffc789066f0",
+      "name": "🔩 BankLogo",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "BankLogo",
+      "defaultVariant": "cabffd10a731d1b357ee4d0d6ace532253f11241",
+      "variantStructures": {
+        "cabffd10a731d1b357ee4d0d6ace532253f11241": [],
+        "3a23cd2669b0aa00f5e296dbada9b28edbcc3e14": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Type=Alfa",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Type=Alfa / alfa-bank-sign_m",
+              "type": "INSTANCE",
+              "name": "alfa-bank-sign_m",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "40827b5b74de082bb0aabf3dc7f1bc00b61ff63a"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Type=Alfa / alfa-bank-sign_m / logo",
+              "type": "VECTOR",
+              "name": "logo",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 14,
+                    "g": 14,
+                    "b": 14,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#0E0E0E"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=SwapMe",
+          "type": "COMPONENT",
+          "name": "Type=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "5:4944",
+          "key": "cabffd10a731d1b357ee4d0d6ace532253f11241",
+          "name": "Type=SwapMe"
+        },
+        {
+          "id": "5:4946",
+          "key": "3a23cd2669b0aa00f5e296dbada9b28edbcc3e14",
+          "name": "Type=Alfa"
+        }
+      ]
+    },
+    {
+      "key": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "name": "🔩 CardNumber",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "CardNumber",
+      "defaultVariant": "977bb32909e4d9f140a8e2daf19df51063ec621f",
+      "variantStructures": {
+        "977bb32909e4d9f140a8e2daf19df51063ec621f": [],
+        "ce219ee6219708b6ff17ff12d3ff0f1080257123": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "State=Filled"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 1,
+              "path": "State=Filled / Content",
+              "type": "TEXT",
+              "name": "Content",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a,9221:146"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "1234 5678 9012 3456 7890",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": -0.6800000071525574,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 20
+              },
+              "typographyToken": "VariableID:ace9b99d18699f382ca178a6f9de94623138ef29/9221:88"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "text": {
+                  "styleKey": "S:002fd09fb152f69d6c345b171102ed33001b2684,9221:97"
+                }
+              },
+              "text": {
+                "characters": "Номер карты или счета",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 12,
+                "lineHeight": 16,
+                "letterSpacing": 0.05999999865889549,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 12
+              },
+              "typographyToken": "VariableID:1a51a7536f7eb03342a06087bcbd2ef58083f458/9221:92"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "State=Default",
+          "type": "COMPONENT",
+          "name": "State=Default",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "State=Default / Line",
+          "type": "RECTANGLE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "State=Default / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a,9221:146"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Номер карты или счёта",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 20,
+            "lineHeight": 28,
+            "letterSpacing": -0.6800000071525574,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 20
+          },
+          "typographyToken": "VariableID:ace9b99d18699f382ca178a6f9de94623138ef29/9221:88"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "State=Default / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "State=Default / Icon / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "State=Default / Icon / PaintMe / camera",
+          "type": "INSTANCE",
+          "name": "camera",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "d6bdfd81a546b53b2e3e8c9a0e46ae16a8be5fa9",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "State=Default / Icon / PaintMe / camera / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "5:4934",
+          "key": "977bb32909e4d9f140a8e2daf19df51063ec621f",
+          "name": "State=Default"
+        },
+        {
+          "id": "5:4938",
+          "key": "ce219ee6219708b6ff17ff12d3ff0f1080257123",
+          "name": "State=Filled"
+        }
+      ]
+    },
+    {
+      "key": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "name": "BankCard",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "BankCard",
+      "defaultVariant": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "variantStructures": {
+        "4eebc9f77ff32f459e7fe5c771045f89a527a87f": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "BankCard",
+          "type": "COMPONENT",
+          "name": "BankCard",
+          "visible": true,
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "BankCard / Logo",
+          "type": "FRAME",
+          "name": "Logo",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "BankCard / Logo / PaymentSystemLogo",
+          "type": "INSTANCE",
+          "name": "PaymentSystemLogo",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aece13e16d1ad450b356a64f2a2092c9cf700cb4",
+            "variantProperties": {
+              "Type": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "BankCard / Logo / PaymentSystemLogo / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "BankCard / CardNumber",
+          "type": "INSTANCE",
+          "name": "CardNumber",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "977bb32909e4d9f140a8e2daf19df51063ec621f",
+            "variantProperties": {
+              "State": "Default"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "BankCard / CardNumber / Line",
+          "type": "RECTANGLE",
+          "name": "Line",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+              "colorHex": "#040415"
+            }
+          ],
+          "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+        },
+        {
+          "id": 7,
+          "parentId": 5,
+          "path": "BankCard / CardNumber / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a,9221:146"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Номер карты или счёта",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 20,
+            "lineHeight": 28,
+            "letterSpacing": -0.6800000071525574,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 20
+          },
+          "typographyToken": "VariableID:ace9b99d18699f382ca178a6f9de94623138ef29/9221:88"
+        },
+        {
+          "id": 8,
+          "parentId": 5,
+          "path": "BankCard / CardNumber / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "BankCard / CardNumber / Icon / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "BankCard / CardNumber / Icon / PaintMe / camera",
+          "type": "INSTANCE",
+          "name": "camera",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "d6bdfd81a546b53b2e3e8c9a0e46ae16a8be5fa9",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "BankCard / CardNumber / Icon / PaintMe / camera / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "parentId": 1,
+          "path": "BankCard / Logo",
+          "type": "FRAME",
+          "name": "Logo",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "BankCard / Logo / BankLogo",
+          "type": "INSTANCE",
+          "name": "BankLogo",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 228,
+                "g": 240,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+              "colorHex": "#E4F0FF"
+            }
+          ],
+          "fillToken": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "cabffd10a731d1b357ee4d0d6ace532253f11241",
+            "variantProperties": {
+              "Type": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "BankCard / Logo / BankLogo / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "5:4926",
+          "key": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+          "name": "BankCard"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔩 PaymentSystemLogo / Type=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "2e9b42ba86eb846ec071ec9db2c44f49973f6295",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 PaymentSystemLogo / Type=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "2e9b42ba86eb846ec071ec9db2c44f49973f6295",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 BankLogo / Type=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "03351556a6eaf19020c5822f3a888ffc789066f0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 BankLogo / Type=SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "03351556a6eaf19020c5822f3a888ffc789066f0",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 CardNumber / State=Default",
+      "type": "COMPONENT",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 CardNumber / State=Default / Line",
+      "type": "RECTANGLE",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 CardNumber / State=Default / Label",
+      "type": "TEXT",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Номер карты или счёта"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 20,
+        "lineHeight": 28,
+        "letterSpacing": -0.6800000071525574,
+        "token": "VariableID:ace9b99d18699f382ca178a6f9de94623138ef29/9221:88",
+        "styleKey": "S:f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a,9221:146"
+      }
+    },
+    {
+      "id": 4,
+      "path": "🔩 CardNumber / State=Default / Icon",
+      "type": "FRAME",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔩 CardNumber / State=Default / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔩 CardNumber / State=Default / Icon / PaintMe / camera",
+      "type": "INSTANCE",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "🔩 CardNumber / State=Default / Icon / PaintMe / camera / icon",
+      "type": "VECTOR",
+      "componentKey": "3ae43117b6c691b67bb89e646f518753a38d009a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "BankCard",
+      "type": "COMPONENT",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "BankCard / Logo",
+      "type": "FRAME",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "BankCard / Logo / PaymentSystemLogo",
+      "type": "INSTANCE",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "BankCard / Logo / PaymentSystemLogo / Fixer",
+      "type": "FRAME",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "BankCard / CardNumber",
+      "type": "INSTANCE",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "BankCard / CardNumber / Line",
+      "type": "RECTANGLE",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "BankCard / CardNumber / Label",
+      "type": "TEXT",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Номер карты или счёта"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 20,
+        "lineHeight": 28,
+        "letterSpacing": -0.6800000071525574,
+        "token": "VariableID:ace9b99d18699f382ca178a6f9de94623138ef29/9221:88",
+        "styleKey": "S:f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a,9221:146"
+      }
+    },
+    {
+      "id": 8,
+      "path": "BankCard / CardNumber / Icon",
+      "type": "FRAME",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "BankCard / CardNumber / Icon / PaintMe",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "BankCard / CardNumber / Icon / PaintMe / camera",
+      "type": "INSTANCE",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "BankCard / CardNumber / Icon / PaintMe / camera / icon",
+      "type": "VECTOR",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "BankCard / Logo",
+      "type": "FRAME",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "BankCard / Logo / BankLogo",
+      "type": "INSTANCE",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:b637eaf33ef806563249441181a611f11f15cfb5/3541:183",
+        "color": "rgba(228,240,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "BankCard / Logo / BankLogo / Fixer",
+      "type": "FRAME",
+      "componentKey": "4eebc9f77ff32f459e7fe5c771045f89a527a87f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

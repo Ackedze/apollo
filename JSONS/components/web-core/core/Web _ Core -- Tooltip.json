@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:51:41.679Z",
+    "generatedAt": "2026-03-29T18:41:16.914Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -25,6 +25,85 @@
       "variantStructures": {
         "1fc300f8f62f4136106067e52b9ca2941a133007": []
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩 Content",
+          "type": "COMPONENT",
+          "name": "🔩 Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩 Content / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Tooltip text two line. Tooltip text two line.",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        }
+      ],
       "variants": [
         {
           "id": "377:4930",
@@ -81,6 +160,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1426",
@@ -147,6 +273,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "730:2756",
@@ -212,6 +385,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1419",
@@ -277,6 +497,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "376:12491",
@@ -343,6 +610,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1412",
@@ -409,6 +723,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "730:2749",
@@ -474,6 +835,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1405",
@@ -539,6 +947,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "376:12482",
@@ -605,6 +1060,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1398",
@@ -671,6 +1173,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "730:2742",
@@ -736,6 +1285,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1391",
@@ -801,6 +1397,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "376:12437",
@@ -867,6 +1510,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1384",
@@ -933,6 +1623,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 28,
+                "g": 28,
+                "b": 30,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+              "colorHex": "#1C1C1E"
+            }
+          ],
+          "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
+        }
+      ],
       "variants": [
         {
           "id": "730:2735",
@@ -998,6 +1735,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "56444:1377",
@@ -1063,6 +1847,53 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Position=Middle",
+          "type": "COMPONENT",
+          "name": "Position=Middle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Position=Middle / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        }
+      ],
       "variants": [
         {
           "id": "376:12414",
@@ -1121,13 +1952,13 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,2768:3"
+                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,9221:118"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Tooltip text",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 13,
                 "lineHeight": 16,
                 "letterSpacing": 0,
@@ -1143,14 +1974,17 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 13
-              }
+              },
+              "typographyToken": "VariableID:b99ffde4975cebdf5c56fdd61b35d9fc79fbffac/9221:91"
             }
           },
           {
@@ -1159,6 +1993,71 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 16,
+              "bottom": 8,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 41,
+                "g": 48,
+                "b": 68,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "colorHex": "#293044"
+            }
+          ],
+          "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 49,
+                "g": 147,
+                "b": 252,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+              "colorHex": "#3193FC"
+            }
+          ],
+          "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "376:12712",
@@ -1212,16 +2111,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Tooltip text two line. Tooltip text two line.",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 20,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1234,14 +2133,17 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -1250,6 +2152,71 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 16,
+              "bottom": 24,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 41,
+                "g": 48,
+                "b": 68,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+              "colorHex": "#293044"
+            }
+          ],
+          "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 49,
+                "g": 147,
+                "b": 252,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+              "colorHex": "#3193FC"
+            }
+          ],
+          "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "376:12633",
@@ -1303,13 +2270,13 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,2768:3"
+                  "styleKey": "S:cbc26c8bed6e1e260dfcb4c620505cd14a9a8668,9221:118"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Tooltip text",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 13,
                 "lineHeight": 16,
                 "letterSpacing": 0,
@@ -1325,14 +2292,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 13
-              }
+              },
+              "typographyToken": "VariableID:b99ffde4975cebdf5c56fdd61b35d9fc79fbffac/9221:91"
             }
           },
           {
@@ -1341,6 +2311,71 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 16,
+              "bottom": 8,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "376:12706",
@@ -1394,16 +2429,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+                  "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Tooltip text two line. Tooltip text two line.",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 20,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1416,14 +2451,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           },
           {
@@ -1432,6 +2470,71 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 16,
+              "bottom": 24,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "376:6214",
@@ -1489,7 +2592,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1510,7 +2615,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1545,7 +2652,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -1559,7 +2668,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -1622,7 +2733,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
                 }
               ],
               "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
@@ -1663,7 +2776,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1683,7 +2798,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1709,7 +2826,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -1723,7 +2842,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -1774,7 +2895,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1809,7 +2932,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -1823,7 +2948,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -1855,7 +2982,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1906,7 +3035,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
                 }
               ],
               "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
@@ -1947,7 +3078,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -1973,7 +3106,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -1987,7 +3122,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -2019,7 +3156,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2070,7 +3209,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2105,7 +3246,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -2119,7 +3262,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -2151,7 +3296,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2202,7 +3349,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
                 }
               ],
               "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
@@ -2243,7 +3392,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2269,7 +3420,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -2283,7 +3436,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -2315,7 +3470,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2377,7 +3534,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2398,7 +3557,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2433,7 +3594,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -2447,7 +3610,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -2510,7 +3675,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
                 }
               ],
               "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
@@ -2551,7 +3718,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2571,7 +3740,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129",
+                  "colorHex": "#1C1C1E"
                 }
               ],
               "fillToken": "VariableID:a90b2ece0b76e46edeeb1baa0e49915ecbf4299c/3541:129"
@@ -2597,7 +3768,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
+                  "colorHex": "#293044"
                 }
               ],
               "fillToken": "VariableID:dfdd9f2c19de2b2a7e4d7bb0dd3265b68f948737/3541:159",
@@ -2611,7 +3784,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166",
+                  "colorHex": "#3193FC"
                 }
               ],
               "strokeToken": "VariableID:ef9760284da3e9bea17c8ccb689f1c11d03f55a2/3541:166"
@@ -2619,6 +3794,227 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip",
+          "type": "COMPONENT",
+          "name": "TailDirection=←, Colors=Default, View=Tooltip",
+          "visible": true,
+          "styles": {
+            "effects": [
+              {
+                "styleKey": "S:f518c18a1feb36db27732c46fc98d45edae7326b,6204:28"
+              }
+            ]
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 1,
+              "color": "rgba(0, 0, 0, 0.04)",
+              "offset": {
+                "x": 0,
+                "y": 0
+              }
+            },
+            {
+              "type": "DROP_SHADOW",
+              "radius": 8,
+              "color": "rgba(0, 0, 0, 0.04)",
+              "offset": {
+                "x": 0,
+                "y": 4
+              }
+            },
+            {
+              "type": "DROP_SHADOW",
+              "radius": 16,
+              "color": "rgba(0, 0, 0, 0.04)",
+              "offset": {
+                "x": 0,
+                "y": 12
+              }
+            },
+            {
+              "type": "DROP_SHADOW",
+              "radius": 24,
+              "color": "rgba(0, 0, 0, 0.08)",
+              "offset": {
+                "x": 0,
+                "y": 20
+              }
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip / Tail",
+          "type": "INSTANCE",
+          "name": "Tail",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "aefb3d8e44d049473e414d2af1c8f8d7b068430c",
+            "variantProperties": {
+              "Position": "Middle"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip / Tail / Tail",
+          "type": "VECTOR",
+          "name": "Tail",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip / Body",
+          "type": "FRAME",
+          "name": "Body",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 4,
+              "bottom": 4,
+              "left": 4
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip / Body / Content",
+          "type": "INSTANCE",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 16,
+              "bottom": 24,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeToken": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "03163c01eab6eb98c684f41834ca231b9d7f560f",
+            "variantProperties": {
+              "Preset": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "TailDirection=←, Colors=Default, View=Tooltip / Body / Content / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "376:6082",
@@ -2745,12 +4141,13 @@
         "value": "Tooltip text two line. Tooltip text two line."
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0,
-        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {

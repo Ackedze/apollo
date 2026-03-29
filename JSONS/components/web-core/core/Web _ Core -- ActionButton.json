@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-30T07:05:03.022Z",
+    "generatedAt": "2026-03-29T18:36:23.787Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -1105,6 +1105,197 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "View=Primary, Inverted=False, Static=False, DisabledState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Bg",
+          "type": "FRAME",
+          "name": "Bg",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 999,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe / diamonds",
+          "type": "INSTANCE",
+          "name": "diamonds",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Bg / Fixer / PaintMe / diamonds / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "View=Primary, Inverted=False, Static=False, DisabledState=False / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad,9221:101"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.07000000029802322,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:e0e1894bf15babdfa68ff71284174c0697114857/9221:77"
+        }
+      ],
       "variants": [
         {
           "id": "603:82956",
@@ -1325,12 +1516,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Medium",
         "size": 14,
         "lineHeight": 20,
-        "letterSpacing": 0,
-        "styleKey": "S:f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad,2771:6"
+        "letterSpacing": 0.07000000029802322,
+        "token": "VariableID:e0e1894bf15babdfa68ff71284174c0697114857/9221:77",
+        "styleKey": "S:f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad,9221:101"
       }
     }
   ]

@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:53:08.392Z",
+    "generatedAt": "2026-03-29T18:42:30.481Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -46,6 +46,61 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Line=Solid",
+          "type": "COMPONENT",
+          "name": "Line=Solid",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Line=Solid / Underline",
+          "type": "VECTOR",
+          "name": "Underline",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 212,
+                "g": 109,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:f718389f8202eb3dad6f65470c6f8887d7d0b671/1816:144",
+              "colorHex": "#D46DFA"
+            }
+          ],
+          "strokeToken": "VariableID:f718389f8202eb3dad6f65470c6f8887d7d0b671/1816:144",
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        }
+      ],
       "variants": [
         {
           "id": "493:7884",
@@ -127,7 +182,9 @@
                     "a": 1
                   },
                   "visible": false,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
                 }
               ]
             }
@@ -153,7 +210,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+                  "colorHex": "#2A77EF"
                 }
               ],
               "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
@@ -212,7 +271,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
                 }
               ]
             }
@@ -223,21 +284,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,2768:1"
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
                 }
               },
               "text": {
                 "characters": "Label",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 16,
                 "lineHeight": 24,
-                "letterSpacing": 0,
+                "letterSpacing": -0.23999999463558197,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 16
-              }
+              },
+              "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
             }
           },
           {
@@ -276,7 +338,9 @@
                     "a": 1
                   },
                   "visible": false,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
                 }
               ]
             }
@@ -302,7 +366,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+                  "colorHex": "#2A77EF"
                 }
               ],
               "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
@@ -361,7 +427,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
                 }
               ]
             }
@@ -460,7 +528,9 @@
                     "a": 1
                   },
                   "visible": false,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
                 }
               ]
             }
@@ -486,7 +556,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+                  "colorHex": "#2A77EF"
                 }
               ],
               "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
@@ -545,7 +617,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
                 }
               ]
             }
@@ -556,21 +630,22 @@
             "value": {
               "styles": {
                 "text": {
-                  "styleKey": "S:b2633a0162f9359a941b9b6ffd702da6acbd02f3,2768:0"
+                  "styleKey": "S:b2633a0162f9359a941b9b6ffd702da6acbd02f3,9221:95"
                 }
               },
               "text": {
                 "characters": "Label",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 18,
                 "lineHeight": 24,
-                "letterSpacing": 0,
+                "letterSpacing": -0.36000001430511475,
                 "paragraphSpacing": 0
               },
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 18
-              }
+              },
+              "typographyToken": "VariableID:30e8efe4e881cee9240c375b23cbed8792858102/9221:85"
             }
           },
           {
@@ -609,7 +684,9 @@
                     "a": 1
                   },
                   "visible": false,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
                 }
               ]
             }
@@ -635,7 +712,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+                  "colorHex": "#2A77EF"
                 }
               ],
               "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
@@ -694,7 +773,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
                 }
               ]
             }
@@ -741,6 +822,450 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=S (14-20)",
+          "type": "COMPONENT",
+          "name": "Size=S (14-20)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=S (14-20) / AddonLeft",
+          "type": "FRAME",
+          "name": "AddonLeft",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=S (14-20) / AddonLeft / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Size=S (14-20) / AddonLeft / Wrapper / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 42,
+                "g": 119,
+                "b": 239,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+              "colorHex": "#2A77EF"
+            }
+          ],
+          "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Size=S (14-20) / AddonLeft / Wrapper / PaintMe / Placeholder",
+          "type": "RECTANGLE",
+          "name": "Placeholder",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 4,
+          "path": "Size=S (14-20) / AddonLeft / Wrapper / PaintMe / diamonds",
+          "type": "INSTANCE",
+          "name": "diamonds",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Size=S (14-20) / AddonLeft / Wrapper / PaintMe / diamonds / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "Size=S (14-20) / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Size=S (14-20) / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 42,
+                "g": 119,
+                "b": 239,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+              "colorHex": "#2A77EF"
+            }
+          ],
+          "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 10,
+          "parentId": 8,
+          "path": "Size=S (14-20) / Content / Underline",
+          "type": "INSTANCE",
+          "name": "Underline",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "bade0c529b189047e107a0c2f9720e94ac587f5d",
+            "variantProperties": {
+              "Line": "Solid"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Size=S (14-20) / Content / Underline / Underline",
+          "type": "VECTOR",
+          "name": "Underline",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 42,
+                "g": 119,
+                "b": 239,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+              "colorHex": "#2A77EF"
+            }
+          ],
+          "strokeToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 12,
+          "parentId": 1,
+          "path": "Size=S (14-20) / AddonRight",
+          "type": "FRAME",
+          "name": "AddonRight",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Size=S (14-20) / AddonRight / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Size=S (14-20) / AddonRight / Wrapper / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 42,
+                "g": 119,
+                "b": 239,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192",
+              "colorHex": "#2A77EF"
+            }
+          ],
+          "fillToken": "VariableID:373a7154059297e96c397d0055152b95685c34d5/3541:192"
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Size=S (14-20) / AddonRight / Wrapper / PaintMe / Placeholder",
+          "type": "RECTANGLE",
+          "name": "Placeholder",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 14,
+          "path": "Size=S (14-20) / AddonRight / Wrapper / PaintMe / diamonds",
+          "type": "INSTANCE",
+          "name": "diamonds",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "Size=S (14-20) / AddonRight / Wrapper / PaintMe / diamonds / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        }
+      ],
       "variants": [
         {
           "id": "493:7844",
@@ -976,12 +1501,13 @@
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 20,
-        "letterSpacing": 0,
-        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,2768:2"
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
       }
     },
     {

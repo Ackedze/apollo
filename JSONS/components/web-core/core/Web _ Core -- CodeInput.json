@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:49:34.081Z",
+    "generatedAt": "2026-03-29T18:39:19.548Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -16,7 +16,7 @@
     {
       "key": "ec9102096d6831ab17ec261dd456d8b1bf4434bc",
       "name": "🔩 [D][Corporate] CodeInputDigit_Compact",
-      "status": "active",
+      "status": "scheduled",
       "role": "part",
       "platform": "desktop",
       "description": "Desktop Compact",
@@ -53,7 +53,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -89,7 +91,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -106,16 +110,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -128,14 +132,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -158,16 +165,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -180,14 +187,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -207,7 +217,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -230,7 +242,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -247,16 +261,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -269,14 +283,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -299,16 +316,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -321,18 +338,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
       "variants": [
         {
           "id": "34461:40488",
@@ -374,7 +422,7 @@
     {
       "key": "7be977087e69043d7a04c588f6f3f16ecd2debe8",
       "name": "🔩 [D][Corporate] CodeInputDigit",
-      "status": "active",
+      "status": "scheduled",
       "role": "part",
       "platform": "desktop",
       "description": "Desktop",
@@ -411,7 +459,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -447,7 +497,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -464,16 +516,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -486,14 +538,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -516,16 +571,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -538,14 +593,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -565,7 +623,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -588,7 +648,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -605,16 +667,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -627,14 +689,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -657,16 +722,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -679,18 +744,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
       "variants": [
         {
           "id": "34461:40460",
@@ -732,9 +828,10 @@
     {
       "key": "c82a121d95fcdc11e252e431d44f6f31e8e1ff30",
       "name": "[D][Corporate] CodeInput",
-      "status": "active",
+      "status": "scheduled",
       "role": "main",
       "platform": "desktop",
+      "description": "🔄 Замени на актуальный",
       "category": "D][Corporate] CodeInput",
       "defaultVariant": "36d50aef4bc1c8a71c5c8d2818e8e6d346897380",
       "variantStructures": {
@@ -770,7 +867,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -787,16 +886,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -809,14 +908,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -842,7 +944,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -859,16 +963,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -881,14 +985,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -914,7 +1021,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -931,16 +1040,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -953,14 +1062,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -986,7 +1098,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1003,16 +1117,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1025,14 +1139,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1058,7 +1175,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1075,16 +1194,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1097,14 +1216,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1130,7 +1252,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1147,16 +1271,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1169,14 +1293,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1212,16 +1339,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1234,14 +1361,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ],
@@ -1405,7 +1535,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1422,16 +1554,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1444,14 +1576,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1477,7 +1612,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1494,16 +1631,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1516,14 +1653,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1549,7 +1689,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1566,16 +1708,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1588,14 +1730,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1621,7 +1766,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1638,16 +1785,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1660,14 +1807,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1693,7 +1843,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1710,16 +1862,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1732,14 +1884,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1765,7 +1920,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1782,16 +1939,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1804,14 +1961,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1837,7 +1997,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1854,16 +2016,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1876,14 +2038,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1909,7 +2074,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -1926,16 +2093,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -1948,14 +2115,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -1991,16 +2161,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2013,18 +2183,286 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Compact=False, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Compact=False, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Compact=False, ErrorState=False / Digits",
+          "type": "FRAME",
+          "name": "Digits",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "b9a094bb32402bcb93b9c395ae8e116a70fc8d02",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        }
+      ],
       "variants": [
         {
           "id": "34461:40378",
@@ -2088,7 +2526,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2124,7 +2564,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2141,16 +2583,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2163,14 +2605,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2193,16 +2638,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2215,14 +2660,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2242,7 +2690,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2265,7 +2715,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2282,16 +2734,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2304,14 +2756,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2334,16 +2789,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2356,18 +2811,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        }
+      ],
       "variants": [
         {
           "id": "777:44567",
@@ -2446,7 +2932,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2482,7 +2970,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2499,16 +2989,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2521,14 +3011,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2551,16 +3044,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2573,14 +3066,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2600,7 +3096,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2623,7 +3121,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2640,16 +3140,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2662,14 +3162,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2692,16 +3195,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2714,18 +3217,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
       "variants": [
         {
           "id": "777:44552",
@@ -2804,7 +3338,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2840,7 +3376,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -2857,16 +3395,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2879,14 +3417,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2909,16 +3450,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -2931,14 +3472,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -2958,7 +3502,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2981,7 +3527,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -2998,16 +3546,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3020,14 +3568,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -3050,16 +3601,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3072,18 +3623,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        }
+      ],
       "variants": [
         {
           "id": "777:44566",
@@ -3162,7 +3744,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -3198,7 +3782,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
@@ -3215,16 +3801,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3237,14 +3823,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -3267,16 +3856,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3289,14 +3878,17 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -3316,7 +3908,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3339,7 +3933,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3356,16 +3952,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3378,14 +3974,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ],
@@ -3408,16 +4007,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3430,18 +4029,49 @@
                     "a": 0.38
                   },
                   "visible": true,
-                  "opacity": 0.3799999952316284
+                  "opacity": 0.3799999952316284,
+                  "tokenKey": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
+                  "colorHex": "#05081D"
                 }
               ],
               "fillToken": "VariableID:200cf1d87c5bdeebd8e77f6eb8fdd00757ce6f45/3541:198",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "type": "COMPONENT",
+          "name": "ActiveState=False, FilledState=False, ErrorState=False, DisabledState=False",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        }
+      ],
       "variants": [
         {
           "id": "777:44346",
@@ -3521,7 +4151,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3538,16 +4170,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3560,14 +4192,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3593,7 +4228,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3610,16 +4247,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3632,14 +4269,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3665,7 +4305,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3682,16 +4324,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3704,14 +4346,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3737,7 +4382,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3754,16 +4401,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3776,14 +4423,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3809,7 +4459,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3826,16 +4478,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3848,14 +4500,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3881,7 +4536,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -3898,16 +4555,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3920,14 +4577,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -3963,16 +4623,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -3985,14 +4645,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ],
@@ -4156,7 +4819,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4173,16 +4838,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4195,14 +4860,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4228,7 +4896,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4245,16 +4915,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4267,14 +4937,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4300,7 +4973,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4317,16 +4992,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4339,14 +5014,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4372,7 +5050,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4389,16 +5069,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4411,14 +5091,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4444,7 +5127,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4461,16 +5146,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4483,14 +5168,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4516,7 +5204,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4533,16 +5223,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4555,14 +5245,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4588,7 +5281,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4605,16 +5300,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4627,14 +5322,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4660,7 +5358,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4677,16 +5377,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4699,14 +5399,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4742,16 +5445,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4764,18 +5467,286 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Compact=False, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Compact=False, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Compact=False, ErrorState=False / Digits",
+          "type": "FRAME",
+          "name": "Digits",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+          "componentInstance": {
+            "componentKey": "35dae338b5d3a2091d6237f4531f64b39165d781",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        }
+      ],
       "variants": [
         {
           "id": "777:44651",
@@ -4840,7 +5811,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4857,16 +5830,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4879,14 +5852,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4912,7 +5888,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -4929,16 +5907,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -4951,14 +5929,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -4984,7 +5965,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5001,16 +5984,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5023,14 +6006,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5056,7 +6042,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5073,16 +6061,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5095,14 +6083,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5128,7 +6119,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5145,16 +6138,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5167,14 +6160,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5200,7 +6196,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5217,16 +6215,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5239,14 +6237,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5282,16 +6283,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5304,14 +6305,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ],
@@ -5475,7 +6479,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5492,16 +6498,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5514,14 +6520,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5547,7 +6556,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5564,16 +6575,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5586,14 +6597,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5619,7 +6633,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5636,16 +6652,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5658,14 +6674,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5691,7 +6710,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5708,16 +6729,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5730,14 +6751,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5763,7 +6787,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5780,16 +6806,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5802,14 +6828,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5835,7 +6864,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5852,16 +6883,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5874,14 +6905,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5907,7 +6941,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5924,16 +6960,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -5946,14 +6982,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -5979,7 +7018,9 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193",
+                  "colorHex": "#FFEBEB"
                 }
               ],
               "fillToken": "VariableID:5e69677d8d33234d6d050cfc7e411750ca9f3aa4/3541:193"
@@ -5996,16 +7037,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,2771:18"
+                  "styleKey": "S:26aa508b944e7f86657fec06b59611bca6bb2448,9221:115"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "0",
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30,
                 "lineHeight": 36,
-                "letterSpacing": 0,
+                "letterSpacing": 0.10000000149011612,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -6018,14 +7059,17 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Display Bold",
+                "fontName": "Alfa Interface Sans Bold",
                 "fontSize": 30
-              }
+              },
+              "typographyToken": "VariableID:c2db8e6294960ce41ae7103c3e23393f9344a2c0/9221:62"
             }
           },
           {
@@ -6061,16 +7105,16 @@
               "visible": true,
               "styles": {
                 "text": {
-                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,1977:3"
+                  "styleKey": "S:d3ec8b47e09e08ae335e4f831491482c2eeeecb3,9221:129"
                 }
               },
               "opacity": 1,
               "text": {
                 "characters": "Error message",
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14,
                 "lineHeight": 18,
-                "letterSpacing": 0,
+                "letterSpacing": -0.07999999821186066,
                 "paragraphSpacing": 0
               },
               "fills": [
@@ -6083,18 +7127,286 @@
                     "a": 1
                   },
                   "visible": true,
-                  "opacity": 1
+                  "opacity": 1,
+                  "tokenKey": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
+                  "colorHex": "#EC2D20"
                 }
               ],
               "fillToken": "VariableID:fa7238dec28f445e6e50a00c04d5f081adafe4de/3541:186",
               "typography": {
-                "fontName": "SF Pro Text Regular",
+                "fontName": "Alfa Interface Sans Regular",
                 "fontSize": 14
-              }
+              },
+              "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
             }
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Compact=False, ErrorState=False",
+          "type": "COMPONENT",
+          "name": "Compact=False, ErrorState=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Compact=False, ErrorState=False / Digits",
+          "type": "FRAME",
+          "name": "Digits",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 2,
+          "path": "Compact=False, ErrorState=False / Digits / CodeInputDigit",
+          "type": "INSTANCE",
+          "name": "CodeInputDigit",
+          "visible": true,
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+          "componentInstance": {
+            "componentKey": "976a28724c76de1208099aa95c285012cee90490",
+            "variantProperties": {
+              "ActiveState": "False",
+              "FilledState": "False",
+              "ErrorState": "False",
+              "DisabledState": "False"
+            }
+          }
+        }
+      ],
       "variants": [
         {
           "id": "777:44612",

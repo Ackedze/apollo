@@ -210,6 +210,102 @@
       "path": "components/web-core/navigation/Web _ Core Navigation -- Tabs.json"
     },
     {
+      "fileName": "components/web-core/authentication/Web _ Core Authentication -- Confirmation.json",
+      "path": "components/web-core/authentication/Web _ Core Authentication -- Confirmation.json"
+    },
+    {
+      "fileName": "components/web-core/authentication/Web _ Core Authentication -- PassCode.json",
+      "path": "components/web-core/authentication/Web _ Core Authentication -- PassCode.json"
+    },
+    {
+      "fileName": "components/web-core/authentication/Web _ Core Authentication -- PatternLock.json",
+      "path": "components/web-core/authentication/Web _ Core Authentication -- PatternLock.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- Attach.json",
+      "path": "components/web-core/fileupload/Web _ Core File Upload -- Attach.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json",
+      "path": "components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json",
+      "path": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json",
+      "path": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- Accordion.json",
+      "path": "components/web-core/fileupload/Web _ Core Wrappers -- Accordion.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- PureCell.json",
+      "path": "components/web-core/fileupload/Web _ Core Wrappers -- PureCell.json"
+    },
+    {
+      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- Underlay.json",
+      "path": "components/web-core/fileupload/Web _ Core Wrappers -- Underlay.json"
+    },
+    {
+      "fileName": "components/web-core/misc/Web _ Core Misc -- BankCard.json",
+      "path": "components/web-core/misc/Web _ Core Misc -- BankCard.json"
+    },
+    {
+      "fileName": "components/web-core/misc/Web _ Core Misc -- Comment.json",
+      "path": "components/web-core/misc/Web _ Core Misc -- Comment.json"
+    },
+    {
+      "fileName": "components/web-core/misc/Web _ Core Misc -- Gallery.json",
+      "path": "components/web-core/misc/Web _ Core Misc -- Gallery.json"
+    },
+    {
+      "fileName": "components/web-core/misc/Web _ Core Misc -- SortableList.json",
+      "path": "components/web-core/misc/Web _ Core Misc -- SortableList.json"
+    },
+    {
+      "fileName": "components/web-core/misc/Web _ Core Misc -- Steps.json",
+      "path": "components/web-core/misc/Web _ Core Misc -- Steps.json"
+    },
+    {
+      "fileName": "components/web-core/notification/Web _ Core Notification -- Notification.json",
+      "path": "components/web-core/notification/Web _ Core Notification -- Notification.json"
+    },
+    {
+      "fileName": "components/web-core/notification/Web _ Core Notification -- Plate.json",
+      "path": "components/web-core/notification/Web _ Core Notification -- Plate.json"
+    },
+    {
+      "fileName": "components/web-core/notification/Web _ Core Notification -- SystemMessage.json",
+      "path": "components/web-core/notification/Web _ Core Notification -- SystemMessage.json"
+    },
+    {
+      "fileName": "components/web-core/notification/Web _ Core Notification -- Toast.json",
+      "path": "components/web-core/notification/Web _ Core Notification -- Toast.json"
+    },
+    {
+      "fileName": "components/web-core/pickers/Web _ Core Pickers -- Calendar.json",
+      "path": "components/web-core/pickers/Web _ Core Pickers -- Calendar.json"
+    },
+    {
+      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json",
+      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json"
+    },
+    {
+      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json",
+      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json"
+    },
+    {
+      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json",
+      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json"
+    },
+    {
+      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json",
+      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json"
+    },
+    {
       "fileName": "components/web-corp/Web _ Corp Components -- AccountSelect.json",
       "path": "components/web-corp/Web _ Corp Components -- AccountSelect.json"
     },
@@ -398,6 +494,10 @@
       "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitCard.json"
     },
     {
+      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json",
+      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json"
+    },
+    {
       "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json",
       "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json"
     },
@@ -416,10 +516,6 @@
     {
       "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json",
       "path": "components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json"
     },
     {
       "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoMainBlock.json",
@@ -442,6 +538,10 @@
       "path": "icons/Icons -- glyph-26.json"
     },
     {
+      "fileName": "icons/Icons -- sandbox.json",
+      "path": "icons/Icons -- sandbox.json"
+    },
+    {
       "fileName": "logotypes/Logotypes -- general (logo).json",
       "path": "logotypes/Logotypes -- general (logo).json"
     },
@@ -458,10 +558,6 @@
       "path": "components/Spacing -- Spacing component.json"
     },
     {
-      "fileName": "tokens/Spacing.json.json",
-      "path": "tokens/Spacing.json"
-    },
-    {
       "fileName": "tokens/001 _ Interface Dynamic Colors.json",
       "path": "tokens/001 _ Interface Dynamic Colors.json"
     },
@@ -474,8 +570,32 @@
       "path": "tokens/003 _ Decorative Dynamic Colors.json"
     },
     {
+      "fileName": "tokens/Icons.json",
+      "path": "tokens/Icons.json"
+    },
+    {
+      "fileName": "tokens/Logotypes.json",
+      "path": "tokens/Logotypes.json"
+    },
+    {
+      "fileName": "tokens/Spacing.json",
+      "path": "tokens/Spacing.json"
+    },
+    {
       "fileName": "tokens/Web _ Corp Components.json",
       "path": "tokens/Web _ Corp Components.json"
+    },
+    {
+      "fileName": "tokens/Web _ Core.json",
+      "path": "tokens/Web _ Core.json"
+    },
+    {
+      "fileName": "tokens/Web _ Typography.json",
+      "path": "tokens/Web _ Typography.json"
+    },
+    {
+      "fileName": "tokens/Web _ Сorp Promo Components.json",
+      "path": "tokens/Web _ Сorp Promo Components.json"
     },
     {
       "fileName": "styles/Web _ Core.json",

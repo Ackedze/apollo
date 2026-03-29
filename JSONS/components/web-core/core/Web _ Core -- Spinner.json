@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Core",
     "file": "Web :: Core",
-    "generatedAt": "2025-12-26T12:52:36.845Z",
+    "generatedAt": "2026-03-29T18:41:55.712Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -35,6 +35,21 @@
             "op": "update",
             "id": 5,
             "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
             }
           },
@@ -42,6 +57,21 @@
             "op": "update",
             "id": 6,
             "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
             }
           }
@@ -67,6 +97,21 @@
             "op": "update",
             "id": 5,
             "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
             }
           },
@@ -91,7 +136,9 @@
                     "a": 0.88
                   },
                   "visible": true,
-                  "opacity": 0.8799999952316284
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
                 }
               ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
@@ -123,6 +170,21 @@
             "op": "update",
             "id": 5,
             "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
             }
           },
@@ -130,6 +192,21 @@
             "op": "update",
             "id": 6,
             "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7",
+                  "colorHex": "#030306"
+                }
+              ],
               "fillToken": "VariableID:a85d96e37cfd4de58ccd8515f26255a3f86c4160/1930:7"
             }
           }
@@ -156,7 +233,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -176,7 +255,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -205,7 +286,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -225,7 +308,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -254,7 +339,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -274,7 +361,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
@@ -303,7 +392,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -323,7 +414,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -352,7 +445,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -372,7 +467,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -401,7 +498,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -421,7 +520,9 @@
                     "a": 0.94
                   },
                   "visible": true,
-                  "opacity": 0.9399999976158142
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
                 }
               ],
               "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
@@ -429,6 +530,109 @@
           }
         ]
       },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=48, Static=False, Inverted=False",
+          "type": "COMPONENT",
+          "name": "Size=48, Static=False, Inverted=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=48, Static=False, Inverted=False / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=48, Static=False, Inverted=False / Fixer / Mask",
+          "type": "FRAME",
+          "name": "Mask",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Size=48, Static=False, Inverted=False / Fixer / Mask / Mask",
+          "type": "ELLIPSE",
+          "name": "Mask",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 3,
+          "path": "Size=48, Static=False, Inverted=False / Fixer / Mask / Ellipse 1",
+          "type": "ELLIPSE",
+          "name": "Ellipse 1",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Size=48, Static=False, Inverted=False / Fixer / Head",
+          "type": "ELLIPSE",
+          "name": "Head",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+        }
+      ],
       "variants": [
         {
           "id": "24:19669",

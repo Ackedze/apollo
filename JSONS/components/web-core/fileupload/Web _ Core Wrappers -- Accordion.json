@@ -1,0 +1,3408 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core Wrappers",
+    "file": "Web :: Core Wrappers",
+    "generatedAt": "2026-03-29T18:52:10.741Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "Accordion"
+    ],
+    "componentCount": 6,
+    "elementCount": 40
+  },
+  "components": [
+    {
+      "key": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "name": "Accordion",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Accordion",
+      "defaultVariant": "6bc3a63d7ed89c43d6b78a477186b13faa66fd3e",
+      "variantStructures": {
+        "6bc3a63d7ed89c43d6b78a477186b13faa66fd3e": [],
+        "582a00330d1f466c935ae9b4e709b63f9a87dfdb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=False, ControlSide=Right"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          }
+        ],
+        "7a7206083b9359e1efa86833a8016644ba5b6892": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=True, ControlSide=Left"
+            }
+          }
+        ],
+        "927d7563560d6b767a25edcfd57d375c8bc9d249": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Content=False, ControlSide=Left"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Content=True, ControlSide=Right",
+          "type": "COMPONENT",
+          "name": "Content=True, ControlSide=Right",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+            },
+            "itemSpacingToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Content=True, ControlSide=Right / HeadLine",
+          "type": "FRAME",
+          "name": "HeadLine",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8,
+            "paddingTokens": {
+              "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+            },
+            "itemSpacingToken": "VariableID:4a3bd04e770632550b1e8f6c00c38881bb5b461c/1:34"
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Content=True, ControlSide=Right / HeadLine / Header",
+          "type": "SLOT",
+          "name": "Header",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionHeader",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "5b9dd7839a5ef5e31c3ebd06aaab190cf6d1d88c",
+            "variantProperties": {
+              "Preset": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 2,
+          "path": "Content=True, ControlSide=Right / HeadLine / Control",
+          "type": "SLOT",
+          "name": "Control",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionControl",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "114035ff0d76719d7abda0832ec0d0387beebb09",
+            "variantProperties": {
+              "Presets": "SwapMe",
+              "Open": "False"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "Content=True, ControlSide=Right / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "Content=True, ControlSide=Right / Content / Body",
+          "type": "SLOT",
+          "name": "Body",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "3e39ee250812431143777b8149bc390a394d7407",
+            "variantProperties": {
+              "Preset": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "15691:10380",
+          "key": "6bc3a63d7ed89c43d6b78a477186b13faa66fd3e",
+          "name": "Content=True, ControlSide=Right"
+        },
+        {
+          "id": "15691:10560",
+          "key": "582a00330d1f466c935ae9b4e709b63f9a87dfdb",
+          "name": "Content=False, ControlSide=Right"
+        },
+        {
+          "id": "15691:10601",
+          "key": "7a7206083b9359e1efa86833a8016644ba5b6892",
+          "name": "Content=True, ControlSide=Left"
+        },
+        {
+          "id": "15691:10610",
+          "key": "927d7563560d6b767a25edcfd57d375c8bc9d249",
+          "name": "Content=False, ControlSide=Left"
+        }
+      ]
+    },
+    {
+      "key": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "name": "❌ Accordion",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "description": "Смотри описание в спеке. Решили разкомпонентить аккордион по образу женерик враппера.",
+      "category": "Accordion",
+      "defaultVariant": "8116252d6510382e8da032f39762a2ffa8b3e0cc",
+      "variantStructures": {
+        "8116252d6510382e8da032f39762a2ffa8b3e0cc": [],
+        "6ae3f091d83cf94a9f64398de8ea5afaae7cc9dd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "ControlPosition=Left, Open=False"
+            }
+          }
+        ],
+        "4958412eee40c52d2b2188fca3c98864564ad05c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "ControlPosition=Right, Open=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "componentInstance": {
+                "componentKey": "7b5d8dba1a0f0804f5f958e66687a381b907fc2b",
+                "variantProperties": {
+                  "Presets": "SwapMe",
+                  "Open": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 1,
+              "path": "ControlPosition=Right, Open=True / Gap",
+              "type": "INSTANCE",
+              "name": "Gap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+                "variantProperties": {
+                  "Size": "12"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 11,
+              "path": "ControlPosition=Right, Open=True / Gap / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "visible": true
+            }
+          }
+        ],
+        "b374bafaa72bf1d2d9b2ea1386de0469a3628152": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "ControlPosition=Left, Open=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 8,
+            "value": {
+              "componentInstance": {
+                "componentKey": "7b5d8dba1a0f0804f5f958e66687a381b907fc2b",
+                "variantProperties": {
+                  "Presets": "SwapMe",
+                  "Open": "True"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 1,
+              "path": "ControlPosition=Left, Open=True / Gap",
+              "type": "INSTANCE",
+              "name": "Gap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "e20ee33385ac041ce04e356b5ba698cad16e18d5",
+                "variantProperties": {
+                  "Size": "12"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 11,
+              "path": "ControlPosition=Left, Open=True / Gap / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "update",
+            "id": 11,
+            "value": {
+              "visible": true
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ControlPosition=Right, Open=False",
+          "type": "COMPONENT",
+          "name": "ControlPosition=Right, Open=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+            },
+            "itemSpacingToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "ControlPosition=Right, Open=False / HeadLine",
+          "type": "FRAME",
+          "name": "HeadLine",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+              "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+            },
+            "itemSpacingToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionHeader",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "5b9dd7839a5ef5e31c3ebd06aaab190cf6d1d88c",
+            "variantProperties": {
+              "Preset": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "ControlPosition=Right, Open=False / HeadLine / Gap",
+          "type": "INSTANCE",
+          "name": "Gap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "382e2f356e70196e3ebd168da57c3c0aa05e1207",
+            "variantProperties": {
+              "Size": "4"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "ControlPosition=Right, Open=False / HeadLine / Gap / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 2,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionControl",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "114035ff0d76719d7abda0832ec0d0387beebb09",
+            "variantProperties": {
+              "Presets": "SwapMe",
+              "Open": "False"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "ControlPosition=Right, Open=False / body",
+          "type": "FRAME",
+          "name": "body",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "ControlPosition=Right, Open=False / body / 🔩 AccordionBody",
+          "type": "INSTANCE",
+          "name": "🔩 AccordionBody",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "componentInstance": {
+            "componentKey": "3e39ee250812431143777b8149bc390a394d7407",
+            "variantProperties": {
+              "Preset": "SwapMe"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "ControlPosition=Right, Open=False / body / 🔩 AccordionBody / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "ControlPosition=Right, Open=False / body / 🔩 AccordionBody / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2480:1039",
+          "key": "8116252d6510382e8da032f39762a2ffa8b3e0cc",
+          "name": "ControlPosition=Right, Open=False"
+        },
+        {
+          "id": "2480:1046",
+          "key": "6ae3f091d83cf94a9f64398de8ea5afaae7cc9dd",
+          "name": "ControlPosition=Left, Open=False"
+        },
+        {
+          "id": "2480:1053",
+          "key": "4958412eee40c52d2b2188fca3c98864564ad05c",
+          "name": "ControlPosition=Right, Open=True"
+        },
+        {
+          "id": "2480:1061",
+          "key": "b374bafaa72bf1d2d9b2ea1386de0469a3628152",
+          "name": "ControlPosition=Left, Open=True"
+        }
+      ]
+    },
+    {
+      "key": "14563c1d7e17cbfe247fc21587587e990b843f79",
+      "name": "🔩 AccordionBody",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "AccordionBody",
+      "defaultVariant": "3e39ee250812431143777b8149bc390a394d7407",
+      "variantStructures": {
+        "3e39ee250812431143777b8149bc390a394d7407": [],
+        "95be9672d94587ee349600de01eea74e42d27b93": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / Заголовок",
+              "type": "TEXT",
+              "name": "Заголовок",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Subtitle",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": -0.23999999463558197,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Preset=SwapMe / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2480:1034",
+          "key": "3e39ee250812431143777b8149bc390a394d7407",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "2480:1036",
+          "key": "95be9672d94587ee349600de01eea74e42d27b93",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "c040aff983fff50553093f5574cec66b5a32f3ae",
+      "name": "🔩 AccordionHeader",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "AccordionHeader",
+      "defaultVariant": "5b9dd7839a5ef5e31c3ebd06aaab190cf6d1d88c",
+      "variantStructures": {
+        "5b9dd7839a5ef5e31c3ebd06aaab190cf6d1d88c": [],
+        "c03a9dfd405dd28bfdfc40d57f3912e5637bd457": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=Text",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Preset=Text / Заголовок",
+              "type": "TEXT",
+              "name": "Заголовок",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:01b1bd37ddfa085d4049683f3d1875f6d741a9da,9221:100"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 18,
+                "lineHeight": 24,
+                "letterSpacing": -0.17000000178813934,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 18
+              },
+              "typographyToken": "VariableID:d556185976f9162e21ce3f16b43d652777607237/9221:75"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=SwapMe",
+          "type": "COMPONENT",
+          "name": "Preset=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=SwapMe / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Preset=SwapMe / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2480:1029",
+          "key": "5b9dd7839a5ef5e31c3ebd06aaab190cf6d1d88c",
+          "name": "Preset=SwapMe"
+        },
+        {
+          "id": "2480:1031",
+          "key": "c03a9dfd405dd28bfdfc40d57f3912e5637bd457",
+          "name": "Preset=Text"
+        }
+      ]
+    },
+    {
+      "key": "aac232a178dc1933b296306a778ed597d9b6da41",
+      "name": "🔩  SwapMe",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "SwapMe",
+      "defaultVariant": "aac232a178dc1933b296306a778ed597d9b6da41",
+      "variantStructures": {
+        "aac232a178dc1933b296306a778ed597d9b6da41": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔩  SwapMe",
+          "type": "COMPONENT",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2480:1026",
+          "key": "aac232a178dc1933b296306a778ed597d9b6da41",
+          "name": "🔩  SwapMe"
+        }
+      ]
+    },
+    {
+      "key": "2c5cb09a4530f2c241c1a3f3c65e808bedc9e869",
+      "name": "🔩 AccordionControl",
+      "status": "active",
+      "role": "part",
+      "platform": "universal",
+      "category": "AccordionControl",
+      "defaultVariant": "114035ff0d76719d7abda0832ec0d0387beebb09",
+      "variantStructures": {
+        "114035ff0d76719d7abda0832ec0d0387beebb09": [],
+        "8e4a2d78d9d8d702df2c675dca4e7a8a8cb11666": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Down Chevron, Open=False",
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=Down Chevron, Open=False / container",
+              "type": "FRAME",
+              "name": "container",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=Down Chevron, Open=False / container / ↕ TopPadding",
+              "type": "INSTANCE",
+              "name": "↕ TopPadding",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "334a9d5a0f567f14cd5730c1b735de4d689cc103",
+                "variantProperties": {
+                  "Size": "2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=Down Chevron, Open=False / container / ↕ TopPadding / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Presets=Down Chevron, Open=False / container / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Presets=Down Chevron, Open=False / container / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Presets=Down Chevron, Open=False / container / Fixer / PaintMe / chevron-down",
+              "type": "INSTANCE",
+              "name": "chevron-down",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6db8da427cb8c193cfff2727c12abc17e3eb9896",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Presets=Down Chevron, Open=False / container / Fixer / PaintMe / chevron-down / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "e36af37d072cb4c0ebb08e22852ce454178776a2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Right Chevron, Open=False",
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=Right Chevron, Open=False / container",
+              "type": "FRAME",
+              "name": "container",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=Right Chevron, Open=False / container / ↕ TopPadding",
+              "type": "INSTANCE",
+              "name": "↕ TopPadding",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "334a9d5a0f567f14cd5730c1b735de4d689cc103",
+                "variantProperties": {
+                  "Size": "2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=Right Chevron, Open=False / container / ↕ TopPadding / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Presets=Right Chevron, Open=False / container / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Presets=Right Chevron, Open=False / container / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Presets=Right Chevron, Open=False / container / Fixer / PaintMe / chevron-right",
+              "type": "INSTANCE",
+              "name": "chevron-right",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "2df39aeef707187ef0d0569610822af1c2e7b847",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Presets=Right Chevron, Open=False / container / Fixer / PaintMe / chevron-right / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "7b5d8dba1a0f0804f5f958e66687a381b907fc2b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=SwapMe, Open=True"
+            }
+          }
+        ],
+        "dc564b753e4627d1032a124daa074a24f6c3b778": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Down Chevron, Open=True",
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=Down Chevron, Open=True / container",
+              "type": "FRAME",
+              "name": "container",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=Down Chevron, Open=True / container / ↕ TopPadding",
+              "type": "INSTANCE",
+              "name": "↕ TopPadding",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "334a9d5a0f567f14cd5730c1b735de4d689cc103",
+                "variantProperties": {
+                  "Size": "2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=Down Chevron, Open=True / container / ↕ TopPadding / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Presets=Down Chevron, Open=True / container / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Presets=Down Chevron, Open=True / container / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Presets=Down Chevron, Open=True / container / Fixer / PaintMe / chevron-down",
+              "type": "INSTANCE",
+              "name": "chevron-down",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6db8da427cb8c193cfff2727c12abc17e3eb9896",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Presets=Down Chevron, Open=True / container / Fixer / PaintMe / chevron-down / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "e457f55a22e3d88f47803e411e97296a0823c3fb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Right Chevron, Open=True",
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=Right Chevron, Open=True / container",
+              "type": "FRAME",
+              "name": "container",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=Right Chevron, Open=True / container / ↕ TopPadding",
+              "type": "INSTANCE",
+              "name": "↕ TopPadding",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "334a9d5a0f567f14cd5730c1b735de4d689cc103",
+                "variantProperties": {
+                  "Size": "2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=Right Chevron, Open=True / container / ↕ TopPadding / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Presets=Right Chevron, Open=True / container / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Presets=Right Chevron, Open=True / container / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Presets=Right Chevron, Open=True / container / Fixer / PaintMe / chevron-down",
+              "type": "INSTANCE",
+              "name": "chevron-down",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6db8da427cb8c193cfff2727c12abc17e3eb9896",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Presets=Right Chevron, Open=True / container / Fixer / PaintMe / chevron-down / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Presets=SwapMe, Open=False",
+          "type": "COMPONENT",
+          "name": "Presets=SwapMe, Open=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Presets=SwapMe, Open=False / 🔩  SwapMe",
+          "type": "INSTANCE",
+          "name": "🔩  SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Presets=SwapMe, Open=False / 🔩  SwapMe / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "2480:998",
+          "key": "114035ff0d76719d7abda0832ec0d0387beebb09",
+          "name": "Presets=SwapMe, Open=False"
+        },
+        {
+          "id": "2480:1000",
+          "key": "8e4a2d78d9d8d702df2c675dca4e7a8a8cb11666",
+          "name": "Presets=Down Chevron, Open=False"
+        },
+        {
+          "id": "2480:1006",
+          "key": "e36af37d072cb4c0ebb08e22852ce454178776a2",
+          "name": "Presets=Right Chevron, Open=False"
+        },
+        {
+          "id": "2480:1012",
+          "key": "7b5d8dba1a0f0804f5f958e66687a381b907fc2b",
+          "name": "Presets=SwapMe, Open=True"
+        },
+        {
+          "id": "2480:1014",
+          "key": "dc564b753e4627d1032a124daa074a24f6c3b778",
+          "name": "Presets=Down Chevron, Open=True"
+        },
+        {
+          "id": "2480:1020",
+          "key": "e457f55a22e3d88f47803e411e97296a0823c3fb",
+          "name": "Presets=Right Chevron, Open=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "Accordion / Content=True, ControlSide=Right",
+      "type": "COMPONENT",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+        },
+        "gapToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine",
+      "type": "FRAME",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+        },
+        "gapToken": "VariableID:4a3bd04e770632550b1e8f6c00c38881bb5b461c/1:34"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Header",
+      "type": "SLOT",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Header / 🔩 AccordionHeader / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Control",
+      "type": "SLOT",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "Accordion / Content=True, ControlSide=Right / HeadLine / Control / 🔩 AccordionControl / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "Accordion / Content=True, ControlSide=Right / Content",
+      "type": "FRAME",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "Accordion / Content=True, ControlSide=Right / Content / Body",
+      "type": "SLOT",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "Accordion / Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "Accordion / Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "Accordion / Content=True, ControlSide=Right / Content / Body / 🔩 AccordionBody / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "c4e240dc55e24c724d99829eabaa9af1e5a178f5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False",
+      "type": "COMPONENT",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+        },
+        "gapToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "right": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "bottom": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7",
+          "left": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+        },
+        "gapToken": "VariableID:72e2988d91d32bc45f988052a35513d3755e8c56/1:7"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionHeader / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / Gap",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / Gap / Fixer",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / HeadLine / 🔩 AccordionControl / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / body",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / body / 🔩 AccordionBody",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / body / 🔩 AccordionBody / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "❌ Accordion / ControlPosition=Right, Open=False / body / 🔩 AccordionBody / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "6dff8dfbbc3a4578289823489e06bb801affca13",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 AccordionBody / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "14563c1d7e17cbfe247fc21587587e990b843f79",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 AccordionBody / Preset=SwapMe / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "14563c1d7e17cbfe247fc21587587e990b843f79",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 AccordionBody / Preset=SwapMe / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "14563c1d7e17cbfe247fc21587587e990b843f79",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 AccordionHeader / Preset=SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "c040aff983fff50553093f5574cec66b5a32f3ae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 AccordionHeader / Preset=SwapMe / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "c040aff983fff50553093f5574cec66b5a32f3ae",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 AccordionHeader / Preset=SwapMe / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "c040aff983fff50553093f5574cec66b5a32f3ae",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩  SwapMe",
+      "type": "COMPONENT",
+      "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "aac232a178dc1933b296306a778ed597d9b6da41",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "🔩 AccordionControl / Presets=SwapMe, Open=False",
+      "type": "COMPONENT",
+      "componentKey": "2c5cb09a4530f2c241c1a3f3c65e808bedc9e869",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔩 AccordionControl / Presets=SwapMe, Open=False / 🔩  SwapMe",
+      "type": "INSTANCE",
+      "componentKey": "2c5cb09a4530f2c241c1a3f3c65e808bedc9e869",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+        "color": "rgba(216,234,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔩 AccordionControl / Presets=SwapMe, Open=False / 🔩  SwapMe / Fixer",
+      "type": "FRAME",
+      "componentKey": "2c5cb09a4530f2c241c1a3f3c65e808bedc9e869",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

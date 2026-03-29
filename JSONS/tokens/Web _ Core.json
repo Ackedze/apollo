@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-29T18:33:51.762Z",
+    "fileName": "Web :: Core",
+    "library": "Web :: Core"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:368:60359",
+      "name": "SectionUnderlay",
+      "key": "a5789e05974b6368e21d79498f06916b2bcfb41f",
+      "defaultModeId": "368:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "368:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:368:60360",
+          "name": "Default",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7ac01a19bcccc856486de467d35c2f600eb1e627",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:368:60359",
+          "scopes": [
+            "FRAME_FILL"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "368:0": {
+              "r": 0.9215686321258545,
+              "g": 0.9176470637321472,
+              "b": 0.9176470637321472,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "368:0": "#EBEAEA"
+          },
+          "collectionName": "SectionUnderlay",
+          "groupName": "Без группы",
+          "tokenName": "Default"
+        },
+        {
+          "id": "VariableID:7781:16126",
+          "name": "Default_Inverted",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "62af7689252498c50ef9e128ea5f1a9cb868f2b4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:368:60359",
+          "scopes": [
+            "FRAME_FILL"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "368:0": {
+              "r": 0.22745098173618317,
+              "g": 0.22745098173618317,
+              "b": 0.22745098173618317,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "368:0": "#3A3A3A"
+          },
+          "collectionName": "SectionUnderlay",
+          "groupName": "Без группы",
+          "tokenName": "Default_Inverted"
+        },
+        {
+          "id": "VariableID:368:60361",
+          "name": "Corporate",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e740ed62c4fd4d5b27ec5603d4e544830039b9cd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:368:60359",
+          "scopes": [
+            "FRAME_FILL"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "368:0": {
+              "r": 0.8823529481887817,
+              "g": 0.9176470637321472,
+              "b": 0.9647058844566345,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "368:0": "#E1EAF6"
+          },
+          "collectionName": "SectionUnderlay",
+          "groupName": "Без группы",
+          "tokenName": "Corporate"
+        },
+        {
+          "id": "VariableID:368:60362",
+          "name": "AO",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "208bfb742ff37a4a641a0a907d6dd4db2d7ccfcc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:368:60359",
+          "scopes": [
+            "FRAME_FILL"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "368:0": {
+              "r": 0.8588235378265381,
+              "g": 0.9333333373069763,
+              "b": 0.8941176533699036,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "368:0": "#DBEEE4"
+          },
+          "collectionName": "SectionUnderlay",
+          "groupName": "Без группы",
+          "tokenName": "AO"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Web :: Core ProgressBars",
+    "file": "Web :: Core ProgressBars",
+    "generatedAt": "2026-03-29T18:50:03.795Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "HatchingProgressBar"
+    ],
+    "componentCount": 1,
+    "elementCount": 5
+  },
+  "components": [
+    {
+      "key": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "name": "HatchingProgressBar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HatchingProgressBar",
+      "defaultVariant": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "variantStructures": {
+        "26c5966f5a780a756c5937274a4dcd0fd9e4dca2": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "HatchingProgressBar",
+          "type": "COMPONENT",
+          "name": "HatchingProgressBar",
+          "visible": true,
+          "opacity": 1,
+          "radius": 8,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 15,
+                "g": 25,
+                "b": 55,
+                "a": 0.1
+              },
+              "visible": true,
+              "opacity": 0.10000000149011612,
+              "tokenKey": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+              "colorHex": "#0F1937"
+            }
+          ],
+          "fillToken": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "HatchingProgressBar / Hatching",
+          "type": "FRAME",
+          "name": "Hatching",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 60,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": {
+            "topLeft": 0,
+            "topRight": 8,
+            "bottomRight": 8,
+            "bottomLeft": 0
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "HatchingProgressBar / Hatching / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "HatchingProgressBar / Progress",
+          "type": "FRAME",
+          "name": "Progress",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 40,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": {
+            "topLeft": 0,
+            "topRight": 8,
+            "bottomRight": 8,
+            "bottomLeft": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "HatchingProgressBar / Progress / fixer",
+          "type": "FRAME",
+          "name": "fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "14:1576",
+          "key": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+          "name": "HatchingProgressBar"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "HatchingProgressBar",
+      "type": "COMPONENT",
+      "componentKey": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 8
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d344a6475fd206b89cf76bef3272e63e04bdf26d/3541:122",
+        "color": "rgba(15,25,55,0.1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "HatchingProgressBar / Hatching",
+      "type": "FRAME",
+      "componentKey": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          60,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "HatchingProgressBar / Hatching / fixer",
+      "type": "FRAME",
+      "componentKey": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "HatchingProgressBar / Progress",
+      "type": "FRAME",
+      "componentKey": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          40,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": [
+          0,
+          8,
+          8,
+          0
+        ]
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "HatchingProgressBar / Progress / fixer",
+      "type": "FRAME",
+      "componentKey": "26c5966f5a780a756c5937274a4dcd0fd9e4dca2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

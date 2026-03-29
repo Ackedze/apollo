@@ -46,6 +46,15 @@ export type ThemeErrorResultItem = {
   targetName: string;
 };
 
+export type ThemizationResultItem = {
+  kind: 'themization';
+  id: string;
+  title: string;
+  caption?: string;
+  targetName: string;
+  onReplace?: () => void;
+};
+
 export type CustomValueLine = {
   label: string;
   values: string[];
@@ -71,6 +80,7 @@ export type ResultsItem =
   | AuditResultItem
   | DetachedResultItem
   | ThemeErrorResultItem
+  | ThemizationResultItem
   | CustomizationResultItem;
 
 export type ResultsBridgeOptions = {

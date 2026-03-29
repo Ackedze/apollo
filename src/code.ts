@@ -27,6 +27,11 @@ import {
 import { CheckState, createCheckState } from './create-check-state';
 import { applyCustomizationFilters } from './filters/customizationFilters';
 import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
+import {
+  buildCorporateThemizationEntry,
+  buildPageThemizationEntry,
+  getContainingPage,
+} from './services/themeAudit';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 // Передаём UI конфигурацию табов из централизованного источника.
@@ -68,6 +73,14 @@ figma.ui.onmessage = (msg) => {
     void resetCustomizationGroup(msg.payload).catch((error) => {
       console.error('Failed to reset customization group', error);
       figma.notify('Не удалось сбросить изменения.');
+    });
+    return;
+  }
+
+  if (msg.type === 'apply-themization-action') {
+    void applyThemizationAction(msg.payload).catch((error) => {
+      console.error('Failed to apply themization action', error);
+      figma.notify('Не удалось применить изменения темизации.');
     });
     return;
   }
@@ -200,6 +213,11 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
 
     const checkState = createCheckState()
 
+    const pageThemizationEntry = await buildPageThemizationEntry(selection);
+    if (pageThemizationEntry) {
+      checkState.themizationEntries.push(pageThemizationEntry);
+    }
+
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
     const checkedComponentNodesList = new Set<string>();
 
@@ -237,6 +255,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       deprecated: checkState.relevanceBuckets.deprecated.length,
       update: checkState.relevanceBuckets.update.length,
       themeError: checkState.themeBuckets.error.length,
+      themization: checkState.themizationEntries.length,
       local: visibleLocalItems.length,
       detached: checkState.detachedEntries,
       changes: changesResults.length,
@@ -245,6 +264,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     const visibleViews = {
       relevance: checkState.relevanceBuckets,
       theme: checkState.themeBuckets,
+      themization: checkState.themizationEntries,
       local: visibleLocalItems,
       customStyles: checkState.customStyleEntries,
       detached: checkState.detachedEntries,
@@ -341,6 +361,16 @@ async function collectTargets(
 
         if (item.themeStatus) {
           checkState.themeBuckets[item.themeStatus].push(item);
+        }
+
+        if (item.reference) {
+          const themizationEntry = buildCorporateThemizationEntry(
+            node,
+            item.reference,
+          );
+          if (themizationEntry) {
+            checkState.themizationEntries.push(themizationEntry);
+          }
         }
 
         if (item.isLocal) {
@@ -679,6 +709,389 @@ async function getSceneNodeById(nodeId: string): Promise<SceneNode | null> {
 async function resolveSceneNodesByIds(nodeIds: string[]): Promise<SceneNode[]> {
   const resolved = await Promise.all(nodeIds.map((nodeId) => getSceneNodeById(nodeId)));
   return resolved.filter((node): node is SceneNode => Boolean(node));
+}
+
+async function rerunLastAuditWithFallback(fallbackSelection: SceneNode[]) {
+  const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
+  if (rerunSelection.length) {
+    void runAudit(rerunSelection);
+  } else if (fallbackSelection.length) {
+    void runAudit(fallbackSelection);
+  }
+}
+
+async function applyThemizationAction(payload: {
+  kind?: string;
+  nodeId?: string;
+  themeCollectionId?: string;
+  targetModeId?: string;
+}) {
+  const kind = typeof payload?.kind === 'string' ? payload.kind : '';
+  const nodeId = typeof payload?.nodeId === 'string' ? payload.nodeId : '';
+  const themeCollectionId =
+    typeof payload?.themeCollectionId === 'string' ? payload.themeCollectionId : '';
+  const targetModeId = typeof payload?.targetModeId === 'string' ? payload.targetModeId : '';
+
+  if (!kind || !nodeId) {
+    figma.notify('Недостаточно данных для изменения темизации.');
+    return;
+  }
+
+  await ensureReferenceCatalogsLoaded();
+
+  if (kind === 'corporateComponent') {
+    const node = await getSceneNodeById(nodeId);
+    if (!node || node.type !== 'INSTANCE') {
+      figma.notify('Не удалось найти инстанс для замены.');
+      return;
+    }
+
+    const replaced = await replaceCorporateInstance(node);
+    if (!replaced) {
+      figma.notify('Не удалось заменить компонент на базовую версию.');
+      return;
+    }
+
+    figma.notify('Компонент заменён.');
+    await rerunLastAuditWithFallback([node]);
+    return;
+  }
+
+  const focusNode = await getSceneNodeById(nodeId);
+  if (!focusNode) {
+    figma.notify('Не удалось найти узел для смены темизации.');
+    return;
+  }
+
+  const page = getContainingPage(focusNode);
+  if (!page) {
+    figma.notify('Не удалось определить страницу для смены темизации.');
+    return;
+  }
+
+  if (!themeCollectionId || !targetModeId) {
+    figma.notify('Недостаточно данных для смены mode Theme.');
+    return;
+  }
+
+  const collection = await figma.variables.getVariableCollectionByIdAsync(themeCollectionId);
+  if (!collection) {
+    figma.notify('Не удалось получить collection Theme для страницы.');
+    return;
+  }
+
+  if (!collection.modes.some((mode) => mode.modeId === targetModeId)) {
+    figma.notify('Mode Corp не найден в коллекции Theme.');
+    return;
+  }
+
+  page.setExplicitVariableModeForCollection(collection, targetModeId);
+  figma.notify('Темизация переключена на Corp.');
+  await rerunLastAuditWithFallback([focusNode]);
+}
+
+async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean> {
+  const sourceProperties = snapshotInstanceComponentProperties(instance);
+  const componentKey = await getComponentKey(instance);
+  const ref = componentKey ? findComponent(componentKey) : null;
+  if (!ref) {
+    return false;
+  }
+
+  const currentReferenceName = ref.displayName ?? ref.name ?? ref.names?.[0] ?? '';
+  const pair = getCorporateCounterpart(currentReferenceName);
+  const baseComponent = pair?.base ?? null;
+  if (!baseComponent) {
+    return false;
+  }
+
+  const currentVariantName =
+    ref.variants?.find((variant) => variant.key === componentKey)?.name ?? null;
+  const candidateVariantKey =
+    currentVariantName && baseComponent.variants?.length
+      ? baseComponent.variants.find((variant) => variant.name === currentVariantName)?.key ??
+        null
+      : null;
+
+  if (candidateVariantKey) {
+    try {
+      const targetVariant = await figma.importComponentByKeyAsync(candidateVariantKey);
+      instance.swapComponent(targetVariant);
+      restoreCompatibleInstanceProperties(instance, sourceProperties);
+      return true;
+    } catch (error) {
+      console.warn('[Apollo] failed to import base variant directly, trying component set fallback', {
+        nodeId: instance.id,
+        candidateVariantKey,
+        error,
+      });
+    }
+  }
+
+  const baseComponentKey = baseComponent.key ?? null;
+  if (!baseComponentKey) {
+    return false;
+  }
+
+  try {
+    const targetComponent = await figma.importComponentByKeyAsync(baseComponentKey);
+    instance.swapComponent(targetComponent);
+    restoreCompatibleInstanceProperties(instance, sourceProperties);
+    return true;
+  } catch (error) {
+    try {
+      const componentSet = await figma.importComponentSetByKeyAsync(baseComponentKey);
+      const targetVariant = findMatchingVariantInSet(componentSet, instance, currentVariantName);
+
+      if (!targetVariant) {
+        console.error('[Apollo] failed to find matching base variant in component set', {
+          nodeId: instance.id,
+          baseComponentKey,
+          currentVariantName,
+          instanceVariantProperties: instance.variantProperties,
+        });
+        return false;
+      }
+
+      instance.swapComponent(targetVariant);
+      restoreCompatibleInstanceProperties(instance, sourceProperties);
+      return true;
+    } catch (fallbackError) {
+      console.error('[Apollo] failed to swap corporate component', {
+        nodeId: instance.id,
+        baseComponentKey,
+        error:
+          fallbackError && typeof fallbackError === 'object' && 'message' in fallbackError
+            ? String((fallbackError as { message?: string }).message)
+            : String(fallbackError ?? error),
+      });
+      return false;
+    }
+  }
+}
+
+function findMatchingVariantInSet(
+  componentSet: ComponentSetNode,
+  instance: InstanceNode,
+  currentVariantName: string | null,
+): ComponentNode | null {
+  const instanceVariantProperties = instance.variantProperties ?? {};
+  const defaultVariantProperties = getDefaultVariantProperties(componentSet);
+  const variants = componentSet.children.filter(
+    (child): child is ComponentNode => child.type === 'COMPONENT',
+  );
+
+  const exactByProperties = variants.find((variant) =>
+    variantPropertiesEqual(variant.variantProperties ?? {}, instanceVariantProperties),
+  );
+  if (exactByProperties) {
+    return exactByProperties;
+  }
+
+  const defaultCompatible = variants.find((variant) =>
+    variantMatchesSourceWithDefaultExtras(
+      variant.variantProperties ?? {},
+      instanceVariantProperties,
+      defaultVariantProperties,
+    ),
+  );
+  if (defaultCompatible) {
+    return defaultCompatible;
+  }
+
+  const bestByOverlap = variants
+    .map((variant) => ({
+      variant,
+      score: countVariantPropertyMatches(variant.variantProperties ?? {}, instanceVariantProperties),
+    }))
+    .filter((entry) => entry.score > 0)
+    .sort((left, right) => right.score - left.score)[0]?.variant;
+  if (bestByOverlap) {
+    return bestByOverlap;
+  }
+
+  if (currentVariantName) {
+    const exactByName = variants.find((variant) => variant.name === currentVariantName);
+    if (exactByName) {
+      return exactByName;
+    }
+  }
+
+  return variants[0] ?? null;
+}
+
+function getDefaultVariantProperties(
+  componentSet: ComponentSetNode,
+): Record<string, string> {
+  const defaults: Record<string, string> = {};
+
+  for (const [propertyName, definition] of Object.entries(
+    componentSet.componentPropertyDefinitions ?? {},
+  )) {
+    if (definition.type !== 'VARIANT') {
+      continue;
+    }
+
+    if (typeof definition.defaultValue === 'string') {
+      defaults[propertyName] = definition.defaultValue;
+    }
+  }
+
+  return defaults;
+}
+
+function variantMatchesSourceWithDefaultExtras(
+  target: Record<string, string> | null | undefined,
+  source: Record<string, string> | null | undefined,
+  defaults: Record<string, string>,
+): boolean {
+  const targetEntries = Object.entries(target ?? {});
+  const sourceEntries = new Map(Object.entries(source ?? {}));
+
+  for (const [key, value] of sourceEntries) {
+    if (target?.[key] !== value) {
+      return false;
+    }
+  }
+
+  for (const [key, value] of targetEntries) {
+    if (sourceEntries.has(key)) {
+      continue;
+    }
+
+    if (defaults[key] !== value) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function countVariantPropertyMatches(
+  left: Record<string, string> | null | undefined,
+  right: Record<string, string> | null | undefined,
+): number {
+  const leftEntries = Object.entries(left ?? {});
+  const rightEntries = new Map(Object.entries(right ?? {}));
+  let score = 0;
+
+  for (const [key, value] of leftEntries) {
+    if (rightEntries.get(key) === value) {
+      score += 1;
+    }
+  }
+
+  return score;
+}
+
+function variantPropertiesEqual(
+  left: Record<string, string> | null | undefined,
+  right: Record<string, string> | null | undefined,
+): boolean {
+  const leftEntries = Object.entries(left ?? {}).sort(([a], [b]) => a.localeCompare(b));
+  const rightEntries = Object.entries(right ?? {}).sort(([a], [b]) => a.localeCompare(b));
+
+  if (leftEntries.length !== rightEntries.length) {
+    return false;
+  }
+
+  return leftEntries.every(([key, value], index) => {
+    const [otherKey, otherValue] = rightEntries[index] ?? [];
+    return key === otherKey && value === otherValue;
+  });
+}
+
+type InstanceComponentPropertySnapshot = {
+  sourceKey: string;
+  canonicalName: string;
+  type: ComponentPropertyType;
+  value: string | boolean | VariableAlias;
+};
+
+function snapshotInstanceComponentProperties(
+  instance: InstanceNode,
+): InstanceComponentPropertySnapshot[] {
+  return Object.entries(instance.componentProperties ?? {})
+    .map(([key, definition]) => {
+      const value = definition?.value;
+      if (value === undefined) {
+        return null;
+      }
+
+      return {
+        sourceKey: key,
+        canonicalName: canonicalComponentPropertyName(key),
+        type: definition.type,
+        value,
+      } satisfies InstanceComponentPropertySnapshot;
+    })
+    .filter((entry): entry is InstanceComponentPropertySnapshot => Boolean(entry));
+}
+
+function restoreCompatibleInstanceProperties(
+  instance: InstanceNode,
+  sourceProperties: InstanceComponentPropertySnapshot[],
+): void {
+  if (!sourceProperties.length) {
+    return;
+  }
+
+  const updates: Record<string, string | boolean | VariableAlias> = {};
+  const targetProperties = Object.entries(instance.componentProperties ?? {});
+
+  for (const [targetKey, targetDefinition] of targetProperties) {
+    const targetCanonicalName = canonicalComponentPropertyName(targetKey);
+    const source =
+      sourceProperties.find(
+        (entry) => entry.sourceKey === targetKey && entry.type === targetDefinition.type,
+      ) ??
+      sourceProperties.find(
+        (entry) =>
+          entry.canonicalName === targetCanonicalName && entry.type === targetDefinition.type,
+      );
+
+    if (!source) {
+      continue;
+    }
+
+    if (!isCompatibleComponentPropertyValue(source.value, targetDefinition)) {
+      continue;
+    }
+
+    updates[targetKey] = source.value;
+  }
+
+  if (!Object.keys(updates).length) {
+    return;
+  }
+
+  instance.setProperties(updates);
+}
+
+function canonicalComponentPropertyName(propertyName: string): string {
+  return propertyName.replace(/#.+$/, '').trim();
+}
+
+function isCompatibleComponentPropertyValue(
+  value: string | boolean | VariableAlias,
+  definition: ComponentPropertyDefinition,
+): boolean {
+  switch (definition.type) {
+    case 'BOOLEAN':
+      return typeof value === 'boolean';
+    case 'TEXT':
+      return typeof value === 'string';
+    case 'INSTANCE_SWAP':
+      return typeof value === 'string';
+    case 'VARIANT':
+      return (
+        typeof value === 'string' &&
+        Array.isArray(definition.variantOptions) &&
+        definition.variantOptions.includes(value)
+      );
+    default:
+      return false;
+  }
 }
 
 async function applyReferenceResetByMessages(

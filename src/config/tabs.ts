@@ -33,6 +33,11 @@ export const tabDefinitions: TabDefinition[] = [
     emptyMessage: 'Ошибок темизации не обнаружено',
   },
   {
+    id: 'themization',
+    title: 'Темизация',
+    emptyMessage: 'Проблем темизации не обнаружено',
+  },
+  {
     id: 'presets',
     title: 'Пресеты',
     emptyMessage: 'Пресетов не найдено',
@@ -57,6 +62,7 @@ type TabId =
   | 'deprecated'
   | 'update'
   | 'themeError'
+  | 'themization'
   | 'presets'
   | 'local'
   | 'customStyles';

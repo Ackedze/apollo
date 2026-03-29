@@ -93,9 +93,11 @@ export function ThemeErrorResultCard({
   showFocus = false,
   targetName,
   onReplace,
+  actionLabel = 'Заменить',
 }: BasePresetProps & {
   targetName: string;
   onReplace?: () => void;
+  actionLabel?: string;
 }): React.JSX.Element {
   return (
     <ResultCard
@@ -107,7 +109,7 @@ export function ThemeErrorResultCard({
     >
       <ResultSubCard
         name={targetName}
-        actions={[{ label: 'Заменить', onPress: onReplace, singleIcon: false }]}
+        actions={onReplace ? [{ label: actionLabel, onPress: onReplace, singleIcon: false }] : []}
       />
     </ResultCard>
   );

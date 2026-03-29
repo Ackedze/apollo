@@ -3,6 +3,7 @@ import type { DiffEntry } from '../structure/diff';
 
 export type RelevanceStatus = 'deprecated' | 'update' | 'current' | 'unknown';
 export type ThemeStatus = 'ok' | 'error';
+export type ThemeAuditKind = 'corporateComponent' | 'missingThemeMode';
 
 export interface PathSegment {
   id: string;
@@ -48,4 +49,20 @@ export interface CustomStyleEntry {
   pageName: string;
   visible: boolean;
   reason: string;
+}
+
+export interface ThemeAuditEntry {
+  id: string;
+  kind: ThemeAuditKind;
+  name: string;
+  pageName: string;
+  path: string;
+  visible: boolean;
+  nodeId: string | null;
+  nodeType: SceneNode['type'] | 'PAGE' | null;
+  libraryName?: string | null;
+  recommendation: string;
+  replacementComponentKey?: string | null;
+  themeCollectionId?: string | null;
+  targetModeId?: string | null;
 }

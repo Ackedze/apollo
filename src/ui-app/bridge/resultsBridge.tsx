@@ -16,6 +16,22 @@ type ResultsState =
   | { mode: 'placeholder'; title: string; description: string }
   | { mode: 'items'; items: ResultsItem[] };
 
+function getResultItemKey(item: ResultsItem, index: number): string {
+  switch (item.kind) {
+    case 'customization':
+      return `${item.kind}:${item.id}:${item.title}:${item.groups.length}:${index}`;
+    case 'detached':
+    case 'themeError':
+    case 'themization':
+      return `${item.kind}:${item.id}:${item.title}:${item.targetName}:${index}`;
+    case 'audit':
+    case 'customStyle':
+      return `${item.kind}:${item.id}:${item.title}:${item.caption ?? ''}:${index}`;
+    default:
+      return `${item.kind}:${item.id}:${index}`;
+  }
+}
+
 function ResultsPane({
   items,
   onFocusItem,
@@ -25,11 +41,13 @@ function ResultsPane({
 }): React.JSX.Element {
   return (
     <div className={styles.root}>
-      {items.map((item) => {
+      {items.map((item, index) => {
+        const itemKey = getResultItemKey(item, index);
+
         if (item.kind === 'detached') {
           return (
             <DetachedResultCard
-              key={item.id}
+              key={itemKey}
               title={item.title}
               caption={item.caption}
               targetName={item.targetName}
@@ -42,7 +60,7 @@ function ResultsPane({
         if (item.kind === 'themeError') {
           return (
             <ThemeErrorResultCard
-              key={item.id}
+              key={itemKey}
               title={item.title}
               caption={item.caption}
               targetName={item.targetName}
@@ -52,10 +70,25 @@ function ResultsPane({
           );
         }
 
+        if (item.kind === 'themization') {
+          return (
+            <ThemeErrorResultCard
+              key={itemKey}
+              title={item.title}
+              caption={item.caption}
+              targetName={item.targetName}
+              showFocus={Boolean(item.id)}
+              onFocus={() => onFocusItem(item.id)}
+              onReplace={item.onReplace}
+              actionLabel="Сменить"
+            />
+          );
+        }
+
         if (item.kind === 'customization') {
           return (
             <CustomizationResultCard
-              key={item.id}
+              key={itemKey}
               title={item.title}
               caption={item.caption}
               groups={item.groups}
@@ -67,7 +100,7 @@ function ResultsPane({
 
         return (
           <AuditResultCard
-            key={item.id}
+            key={itemKey}
             title={item.title}
             caption={item.caption}
             showFocus={Boolean(item.id)}

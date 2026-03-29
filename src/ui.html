@@ -169,6 +169,8 @@
               return () => resolveViewArray(['relevance', 'update']);
             case 'themeError':
               return () => resolveViewArray(['theme', 'error']);
+            case 'themization':
+              return () => resolveViewArray(['themization']);
             case 'local':
               return () => resolveViewArray(['local']);
             case 'customStyles':
@@ -299,6 +301,10 @@
             return;
           }
 
+          if (tab.id === 'themization' && renderThemizationReactResults(items)) {
+            return;
+          }
+
           if (tab.id === 'changes' && renderCustomizationReactResults(items)) {
             return;
           }
@@ -378,6 +384,27 @@
                   rootId,
                   nodeId,
                   messages,
+                },
+              },
+            },
+            '*',
+          );
+        }
+
+        function requestThemizationAction(kind, nodeId, themeCollectionId, targetModeId) {
+          if (!kind || !nodeId) {
+            return;
+          }
+
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'apply-themization-action',
+                payload: {
+                  kind,
+                  nodeId,
+                  themeCollectionId,
+                  targetModeId,
                 },
               },
             },
@@ -505,6 +532,45 @@
           if (!reactItems.length) {
             return false;
           }
+
+          try {
+            resultsBridge.showItems(reactItems);
+            showReactResults();
+            return true;
+          } catch (error) {
+            resultsBridgeMounted = false;
+            console.error('[Apollo] results bridge update failed', error);
+            hideReactResults();
+            return false;
+          }
+        }
+
+        function renderThemizationReactResults(items) {
+          if (!resultsBridge || !resultsBridgeMounted || !items.length) {
+            return false;
+          }
+
+          const reactItems = items.map((entry) => ({
+            kind: 'themization',
+            id: entry.nodeId || entry.id,
+            title: entry.name || 'Темизация',
+            caption:
+              entry.kind === 'corporateComponent'
+                ? entry.libraryName || undefined
+                : undefined,
+            targetName: entry.recommendation || 'Проверьте настройки темизации',
+            onReplace:
+              entry.nodeId &&
+              (entry.kind === 'corporateComponent' || entry.kind === 'missingThemeMode')
+              ? () =>
+                  requestThemizationAction(
+                    entry.kind,
+                    entry.nodeId,
+                    entry.themeCollectionId,
+                    entry.targetModeId,
+                  )
+              : undefined,
+          }));
 
           try {
             resultsBridge.showItems(reactItems);

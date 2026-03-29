@@ -1275,7 +1275,11 @@ function normalizeCorporateName(
 ): string | null {
   if (!name) return null;
 
-  return name.replace(/\[(.+?)\]\s*/g, '').trim();
+  return name
+    .replace(/🔄/g, ' ')
+    .replace(/\[(.+?)\]\s*/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
 }
 
 export function getCorporateCounterpart(componentName: string): {

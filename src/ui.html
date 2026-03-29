@@ -167,8 +167,6 @@
               return () => resolveViewArray(['relevance', 'deprecated']);
             case 'update':
               return () => resolveViewArray(['relevance', 'update']);
-            case 'themeError':
-              return () => resolveViewArray(['theme', 'error']);
             case 'themization':
               return () => resolveViewArray(['themization']);
             case 'local':
@@ -294,10 +292,6 @@
           }
 
           if (tab.id === 'detached' && renderDetachedReactResults(items)) {
-            return;
-          }
-
-          if (tab.id === 'themeError' && renderThemeErrorReactResults(items)) {
             return;
           }
 
@@ -498,40 +492,6 @@
             caption: entry.libraryName || undefined,
             targetName: entry.componentName || 'Source Component Name',
           }));
-
-          try {
-            resultsBridge.showItems(reactItems);
-            showReactResults();
-            return true;
-          } catch (error) {
-            resultsBridgeMounted = false;
-            console.error('[Apollo] results bridge update failed', error);
-            hideReactResults();
-            return false;
-          }
-        }
-
-        function renderThemeErrorReactResults(items) {
-          if (!resultsBridge || !resultsBridgeMounted || !items.length) {
-            return false;
-          }
-
-          const reactItems = items
-            .filter(
-              (item) =>
-                item.themeStatus === 'error' && item.themeRecommendation,
-            )
-            .map((item) => ({
-              kind: 'themeError',
-              id: item.id,
-              title: item.name ?? 'Без названия',
-              caption: getItemLibraryName(item) ?? undefined,
-              targetName: item.themeRecommendation ?? 'Target Component Name',
-            }));
-
-          if (!reactItems.length) {
-            return false;
-          }
 
           try {
             resultsBridge.showItems(reactItems);

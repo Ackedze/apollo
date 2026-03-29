@@ -15,7 +15,7 @@ import {LibraryComponent} from './reference/libraryTypes'
 import {  snapshotTree } from './structure/snapshot';
 import { diffStructures } from './structure/diff';
 import type { DSStructureNode } from './types/structures';
-import type { AuditItem, RelevanceStatus, ThemeStatus } from './types/audit';
+import type { AuditItem, RelevanceStatus } from './types/audit';
 import { tabDefinitions } from './config/tabs';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
@@ -254,7 +254,6 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       current: checkState.relevanceBuckets.current.length,
       deprecated: checkState.relevanceBuckets.deprecated.length,
       update: checkState.relevanceBuckets.update.length,
-      themeError: checkState.themeBuckets.error.length,
       themization: checkState.themizationEntries.length,
       local: visibleLocalItems.length,
       detached: checkState.detachedEntries,
@@ -263,7 +262,6 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     
     const visibleViews = {
       relevance: checkState.relevanceBuckets,
-      theme: checkState.themeBuckets,
       themization: checkState.themizationEntries,
       local: visibleLocalItems,
       customStyles: checkState.customStyleEntries,
@@ -359,10 +357,6 @@ async function collectTargets(
           checkState.relevanceBuckets[item.relevance].push(item);
         }
 
-        if (item.themeStatus) {
-          checkState.themeBuckets[item.themeStatus].push(item);
-        }
-
         if (item.reference) {
           const themizationEntry = buildCorporateThemizationEntry(
             node,
@@ -449,7 +443,6 @@ async function classifyNode(
       name: node.name,
       nodeType: node.type,
       relevance: 'unknown',
-      themeStatus: 'ok',
       isLocal: true,
       pageName,
       pathSegments,
@@ -457,7 +450,6 @@ async function classifyNode(
       librarySource: null,
       componentKey,
       comparisonIssues: [],
-      themeRecommendation: null,
       diffs: []
     }
   }
@@ -530,18 +522,6 @@ async function classifyNode(
 
   const relevance = normalizeRelevanceStatus(ref.status);
 
-  const themeMismatch = detectThemeMismatch(node, ref);
-  const themeStatus: ThemeStatus = themeMismatch ? 'error' : 'ok';
-
-  if (themeMismatch) {
-    diffs.unshift({
-      message: themeMismatch.message,
-      nodeId: node.id,
-      nodeName: node.name,
-      nodePath: fullPath || node.name,
-    });
-  }
-
   return {
     id: node.id,
     name: node.name,
@@ -549,15 +529,13 @@ async function classifyNode(
     pageName,
     pathSegments,
     fullPath,
-    relevance: themeStatus === 'ok' ? relevance : 'unknown',
-    themeStatus,
+    relevance,
     librarySource: ref?.source ?? null,
     isLocal: false,
     reference: ref,
     componentKey,
     diffs,
     comparisonIssues,
-    themeRecommendation: themeMismatch?.replacementName ?? null,
   };
 }
 
@@ -1626,40 +1604,6 @@ function expandReferenceWithInstanceComponents(
   }
 
   return Array.from(referenceMap.values());
-}
-
-type ThemeMismatchInfo = {
-  message: string;
-  replacementName?: string | null;
-};
-
-function detectThemeMismatch(
-  node: SceneNode,
-  ref: LibraryComponent,
-): ThemeMismatchInfo | null {
-  if (ref.role === 'Part') return null;
-
-  const name = ref.name ?? '';
-
-  const pair = getCorporateCounterpart(name);
-
-  if (!pair?.corporate) {
-    return null;
-  }
-
-  const isCorpComponent = name.includes('[Corporate]');
-
-  if (!isCorpComponent) {
-    return {
-      message: 'Доступен корпоративный вариант компонента',
-      replacementName:
-        pair.corporate?.name ??
-        pair.corporate?.displayName ??
-        `[Corporate] ${pair.base?.name ?? ''}`.trim(),
-    };
-  }
-
-  return null;
 }
 
 function isPresetCandidate(item: AuditItem): boolean {

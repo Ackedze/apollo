@@ -2,7 +2,6 @@ import type { LibraryComponent } from '../reference/libraryTypes';
 import type { DiffEntry } from '../structure/diff';
 
 export type RelevanceStatus = 'deprecated' | 'update' | 'current' | 'unknown';
-export type ThemeStatus = 'ok' | 'error';
 export type ThemeAuditKind = 'corporateComponent' | 'missingThemeMode';
 
 export interface PathSegment {
@@ -20,14 +19,12 @@ export interface AuditItem {
   pathSegments: PathSegment[];
   fullPath: string;
   relevance: RelevanceStatus;
-  themeStatus: ThemeStatus;
   librarySource: string | null;
   isLocal: boolean;
   reference?: LibraryComponent | null;
   componentKey: string | null;
   diffs: DiffEntry[];
   comparisonIssues?: string[];
-  themeRecommendation?: string | null;
   customStyleReasons?: string[];
 }
 

@@ -1,7 +1,6 @@
 import type {
   RelevanceStatus,
   AuditItem,
-  ThemeStatus,
   CustomStyleEntry,
   DetachedEntry,
   ThemeAuditEntry,
@@ -9,7 +8,6 @@ import type {
 
 export interface CheckState {
     relevanceBuckets: Record<RelevanceStatus, AuditItem[]>
-    themeBuckets: Record<ThemeStatus, AuditItem[]>
     themizationEntries: ThemeAuditEntry[]
     localLibraryItems: AuditItem[]
     presetItems: AuditItem[]
@@ -25,10 +23,6 @@ export const createCheckState = (): CheckState => {
             update: [],
             current: [],
             unknown: [],
-          },
-          themeBuckets: {
-            ok: [],
-            error: [],
           },
           themizationEntries: [],
           localLibraryItems: [],

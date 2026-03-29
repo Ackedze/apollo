@@ -28,11 +28,6 @@ export const tabDefinitions: TabDefinition[] = [
     emptyMessage: 'Все компоненты обновлены',
   },
   {
-    id: 'themeError',
-    title: 'Ошибки темизации',
-    emptyMessage: 'Ошибок темизации не обнаружено',
-  },
-  {
     id: 'themization',
     title: 'Темизация',
     emptyMessage: 'Проблем темизации не обнаружено',
@@ -61,7 +56,6 @@ type TabId =
   | 'changes'
   | 'deprecated'
   | 'update'
-  | 'themeError'
   | 'themization'
   | 'presets'
   | 'local'

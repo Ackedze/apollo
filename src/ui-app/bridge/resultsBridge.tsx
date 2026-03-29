@@ -21,7 +21,6 @@ function getResultItemKey(item: ResultsItem, index: number): string {
     case 'customization':
       return `${item.kind}:${item.id}:${item.title}:${item.groups.length}:${index}`;
     case 'detached':
-    case 'themeError':
     case 'themization':
       return `${item.kind}:${item.id}:${item.title}:${item.targetName}:${index}`;
     case 'audit':
@@ -47,19 +46,6 @@ function ResultsPane({
         if (item.kind === 'detached') {
           return (
             <DetachedResultCard
-              key={itemKey}
-              title={item.title}
-              caption={item.caption}
-              targetName={item.targetName}
-              showFocus={Boolean(item.id)}
-              onFocus={() => onFocusItem(item.id)}
-            />
-          );
-        }
-
-        if (item.kind === 'themeError') {
-          return (
-            <ThemeErrorResultCard
               key={itemKey}
               title={item.title}
               caption={item.caption}

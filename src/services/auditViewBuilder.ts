@@ -143,9 +143,6 @@ export function computeChangesResults(
 ): AuditItem[] {
   const instanceItems = items.filter((item) => item.nodeType === 'INSTANCE');
   return instanceItems.filter((item) => {
-    if (item.themeStatus === 'error') {
-      return false;
-    }
     if (!isEntryVisible(item)) {
       return false;
     }

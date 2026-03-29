@@ -38,14 +38,6 @@ export type DetachedResultItem = {
   targetName: string;
 };
 
-export type ThemeErrorResultItem = {
-  kind: 'themeError';
-  id: string;
-  title: string;
-  caption?: string;
-  targetName: string;
-};
-
 export type ThemizationResultItem = {
   kind: 'themization';
   id: string;
@@ -79,7 +71,6 @@ export type CustomizationResultItem = {
 export type ResultsItem =
   | AuditResultItem
   | DetachedResultItem
-  | ThemeErrorResultItem
   | ThemizationResultItem
   | CustomizationResultItem;
 

@@ -51,6 +51,7 @@ const esbuild = loadEsbuild();
 const common = {
   entryPoints: {
     code: './src/code.ts',
+    'ui-app': './src/ui-app/entry.tsx',
   },
   bundle: true,
   outdir: 'dist',
@@ -61,6 +62,8 @@ const common = {
   loader: {
     '.json': 'json',
     '.ts': 'ts',
+    '.tsx': 'tsx',
+    '.module.css': 'local-css',
   },
 };
 
@@ -73,7 +76,31 @@ async function buildOnce() {
 function copyHtml() {
   const srcHtml = path.join(__dirname, 'src', 'ui.html');
   const distHtml = path.join(__dirname, 'dist', 'ui.html');
-  fs.copyFileSync(srcHtml, distHtml);
+  const uiBundlePath = path.join(__dirname, 'dist', 'ui-app.js');
+  const uiCssPath = path.join(__dirname, 'dist', 'ui-app.css');
+  let html = fs.readFileSync(srcHtml, 'utf8');
+
+  if (fs.existsSync(uiCssPath)) {
+    const uiCss = fs.readFileSync(uiCssPath, 'utf8');
+    const placeholder = '<!-- ui-app-css -->';
+    const inlineCssTag = `<style>\n${uiCss}\n</style>`;
+    if (html.includes(placeholder)) {
+      html = html.replace(placeholder, inlineCssTag);
+    }
+  }
+
+  if (fs.existsSync(uiBundlePath)) {
+    const uiBundle = fs
+      .readFileSync(uiBundlePath, 'utf8')
+      .replace(/<\/script/gi, '<\\/script');
+    const placeholder = '<script src="./ui-app.js"></script>';
+    const inlineBundleTag = `<script>\n${uiBundle}\n</script>`;
+    if (html.includes(placeholder)) {
+      html = html.split(placeholder).join(inlineBundleTag);
+    }
+  }
+
+  fs.writeFileSync(distHtml, html);
 }
 
 if (isWatch) {

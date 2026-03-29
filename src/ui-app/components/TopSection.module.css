@@ -1,0 +1,29 @@
+.root,
+:global(.chrome-top-section) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 12px 16px 28px;
+}
+
+.titleButton,
+:global(.chrome-title-button) {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+  letter-spacing: 0.38px;
+  color: rgba(3, 3, 6, 0.88);
+  cursor: pointer;
+}
+
+.titleButton:hover,
+:global(.chrome-title-button:hover) {
+  opacity: 0.82;
+}

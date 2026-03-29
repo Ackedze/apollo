@@ -1,0 +1,58 @@
+.button,
+:global(.chrome-tab-card) {
+  width: 239px;
+  height: 48px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.button:hover,
+:global(.chrome-tab-card:hover) {
+  background: #f2f3f5;
+}
+
+.active,
+:global(.chrome-tab-card-active) {
+  background: #f2f3f5;
+}
+
+.title,
+:global(.chrome-tab-title) {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.08px;
+  font-weight: 400;
+  color: rgba(3, 3, 6, 0.88);
+}
+
+.empty,
+:global(.chrome-tab-card-empty) {
+  background: transparent;
+}
+
+.empty:hover,
+:global(.chrome-tab-card-empty:hover) {
+  background: transparent;
+}
+
+.empty .title,
+:global(.chrome-tab-card-empty) :global(.chrome-tab-title) {
+  color: rgba(5, 8, 29, 0.38);
+}

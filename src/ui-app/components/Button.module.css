@@ -1,0 +1,99 @@
+.button,
+:global(.chrome-action-button) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 40px;
+  min-width: 88px;
+  border-radius: 999px;
+  padding: 4px 12px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.08px;
+  font-weight: 400;
+  box-sizing: border-box;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.button:disabled,
+:global(.chrome-action-button:disabled) {
+  cursor: default;
+}
+
+.primary,
+:global(.chrome-action-button-primary) {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+}
+
+.primary:hover:not(:disabled),
+:global(.chrome-action-button-primary:hover:not(:disabled)) {
+  background: rgba(0, 0, 0, 0.72);
+  border-color: #000;
+}
+
+.secondary,
+:global(.chrome-action-button-secondary) {
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(3, 3, 6, 0.88);
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.secondary:hover:not(:disabled),
+:global(.chrome-action-button-secondary:hover:not(:disabled)) {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.04);
+}
+
+.primary:disabled,
+:global(.chrome-action-button-primary:disabled),
+.secondary:disabled,
+:global(.chrome-action-button-secondary:disabled) {
+  background: rgba(38, 55, 88, 0.06);
+  border-color: transparent;
+  color: rgba(5, 8, 29, 0.38);
+}
+
+.loader,
+:global(.chrome-inline-loader) {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(3, 3, 6, 0.16);
+  border-top-color: rgba(3, 3, 6, 0.88);
+  animation: spin 0.8s linear infinite;
+  box-sizing: border-box;
+}
+
+.text {
+  padding: 0 4px;
+}
+
+.primary .loader,
+:global(.chrome-action-button-primary) :global(.chrome-inline-loader) {
+  border-color: rgba(255, 255, 255, 0.28);
+  border-top-color: rgba(255, 255, 255, 0.94);
+}
+
+.primary:disabled .loader,
+:global(.chrome-action-button-primary:disabled) :global(.chrome-inline-loader),
+.secondary:disabled .loader,
+:global(.chrome-action-button-secondary:disabled) :global(.chrome-inline-loader) {
+  border-color: rgba(5, 8, 29, 0.16);
+  border-top-color: rgba(5, 8, 29, 0.72);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

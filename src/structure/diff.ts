@@ -132,11 +132,20 @@ function compareNode(
         `Нет данных для token itemSpacing в снапшоте для «${path}»`,
       );
     } else if (actualToken !== referenceLayout.itemSpacingToken) {
+      const formattedReferenceToken = resolveTokenLabel
+        ? resolveTokenLabel(referenceLayout.itemSpacingToken) ||
+          referenceLayout.itemSpacingToken
+        : referenceLayout.itemSpacingToken;
+      const formattedActualToken = actualToken
+        ? resolveTokenLabel
+          ? resolveTokenLabel(actualToken) || actualToken
+          : actualToken
+        : '—';
       pushDiff(
         diffs,
         actual,
         path,
-        `Token itemSpacing: ${referenceLayout.itemSpacingToken ?? '—'} → ${actualToken ?? '—'}`,
+        `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
       );
     }
   }

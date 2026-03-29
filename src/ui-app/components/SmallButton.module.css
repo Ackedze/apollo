@@ -1,0 +1,48 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(3, 3, 6, 0.88);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.singleIcon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  padding: 2px;
+}
+
+.withLabel {
+  min-height: 20px;
+  padding: 2px 6px;
+  gap: 0;
+  background: rgba(30, 43, 68, 0.08);
+}
+
+.withLabelHover {
+  background: rgba(15, 25, 55, 0.1);
+}
+
+.text {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.06px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}

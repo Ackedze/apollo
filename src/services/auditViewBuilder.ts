@@ -113,7 +113,8 @@ export function collectDetachedEntry(
           componentKey: info.componentKey,
           libraryName:
             componentRef.source ?? componentRef.names[0] ?? 'Дизайн-система',
-          componentName: componentRef.names[0] ?? null,
+          componentName:
+            componentRef.displayName ?? componentRef.names[0] ?? null,
           visible: isNodeVisible(node),
         }
       }

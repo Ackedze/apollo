@@ -1,0 +1,108 @@
+.card {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.card:hover,
+.hovered {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.topLine {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.titleGroup {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.title {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.07px;
+  font-weight: 500;
+  color: rgba(3, 3, 6, 0.88);
+}
+
+.caption {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.08px;
+  font-weight: 400;
+  color: rgba(4, 4, 19, 0.55);
+}
+
+.inlineFocus {
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  flex-shrink: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    width 0.15s ease;
+}
+
+.hovered .inlineFocus,
+.card:hover .inlineFocus {
+  width: 20px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.dividerWrap {
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #edeef0;
+}
+
+.subcards {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}

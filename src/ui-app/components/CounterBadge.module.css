@@ -1,0 +1,27 @@
+.badge,
+:global(.chrome-badge) {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.24px;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.muted,
+:global(.chrome-badge-muted) {
+  background: rgba(30, 43, 68, 0.08);
+  color: rgba(9, 12, 37, 0.28);
+}
+
+.active,
+:global(.chrome-badge-active) {
+  background: #212124;
+  color: rgba(255, 255, 255, 0.94);
+}

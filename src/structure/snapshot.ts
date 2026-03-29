@@ -353,10 +353,21 @@ function extractFillInfo(node: SceneNode) {
     return undefined;
   }
   const solids = fills.filter((paint) => paint && paint.type === 'SOLID');
-  if (!solids.length) {
+  const hasVisibleFillPaint = fills.some(
+    (paint) =>
+      paint &&
+      paint.visible !== false &&
+      (paint.opacity === undefined || paint.opacity > 0),
+  );
+  const visibleSolids = solids.filter(
+    (paint) =>
+      paint.visible !== false &&
+      (paint.opacity === undefined || paint.opacity > 0),
+  );
+  if (!visibleSolids.length) {
     return undefined;
   }
-  const color = solids
+  const color = visibleSolids
     .map((paint) => {
       const c = paint.color;
       const opacity = paint.opacity === undefined ? 1 : paint.opacity;
@@ -364,7 +375,7 @@ function extractFillInfo(node: SceneNode) {
     })
     .join(',');
   const variableToken = extractPaintVariableId(fills);
-  if (!color && !variableToken) return undefined;
+  if (!hasVisibleFillPaint && !variableToken) return undefined;
   return { color: color || null, token: variableToken };
 }
 

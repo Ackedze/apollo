@@ -21,7 +21,6 @@ export type ChromeBridgeOptions = {
   leftRootId: string;
   onActionPress: () => void;
   onTabSelect: (tabId: string) => void;
-  onTitlePress: () => void;
 };
 
 export type AuditResultItem = {
@@ -56,6 +55,8 @@ export type CustomChangeGroup = {
   id: string;
   name: string;
   lines: CustomValueLine[];
+  onFocus?: () => void;
+  onReset?: () => void;
 };
 
 export type CustomizationResultItem = {

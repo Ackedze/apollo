@@ -187,8 +187,6 @@
         let catalogsReady = false;
         let catalogsLoading = true;
         let actionPhase = 'catalog-loading';
-        let snapshotReady = false;
-        let latestSnapshot = null;
         let scanCompleted = false;
 
         const listContainer = document.getElementById('results');
@@ -210,7 +208,6 @@
                 leftRootId: 'react-left-section',
                 onActionPress: handleScanActionPress,
                 onTabSelect: setActiveTab,
-                onTitlePress: handleHeaderTitlePress,
               }),
             );
           } catch (error) {
@@ -362,6 +359,26 @@
               pluginMessage: {
                 type: 'focus-node',
                 payload: { id: nodeId },
+              },
+            },
+            '*',
+          );
+        }
+
+        function requestCustomizationReset(rootId, nodeId, messages) {
+          if (!rootId || !nodeId || !Array.isArray(messages) || !messages.length) {
+            return;
+          }
+
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'reset-customization-group',
+                payload: {
+                  rootId,
+                  nodeId,
+                  messages,
+                },
               },
             },
             '*',
@@ -570,20 +587,36 @@
 
                 if (existing) {
                   existing.lines.push(line);
+                  existing.messages.push(diff.message);
                   return;
                 }
 
-                groupsMap.set(groupId, {
+                const group = {
                   id: groupId,
                   name: diff.nodeName || diff.nodePath || 'Слой',
                   onFocus: diff.nodeId
                     ? () => focusNodeById(diff.nodeId)
                     : undefined,
+                  onReset: undefined,
                   lines: [line],
-                });
+                  messages: [diff.message],
+                };
+
+                if (diff.nodeId) {
+                  group.onReset = () =>
+                    requestCustomizationReset(item.id, diff.nodeId, group.messages);
+                }
+
+                groupsMap.set(groupId, group);
               });
 
-              const groups = Array.from(groupsMap.values());
+              const groups = Array.from(groupsMap.values()).map((group) => ({
+                id: group.id,
+                name: group.name,
+                onFocus: group.onFocus,
+                onReset: group.onReset,
+                lines: group.lines,
+              }));
               if (!groups.length) {
                 return null;
               }
@@ -730,21 +763,16 @@
           if (msg.type === 'scan-started') {
             listContainer.innerHTML = '';
             setScanningState(true);
-            snapshotReady = false;
-            latestSnapshot = null;
             scanCompleted = false;
-            updateSnapshotButton();
           }
 
           if (msg.type === 'scan-finished') {
             setScanningState(false);
-            updateSnapshotButton();
             return;
           }
 
           if (msg.type === 'scan-cancelled') {
             setScanningState(false);
-            updateSnapshotButton();
             showToast('Проверка остановлена');
             if (currentResults) {
               renderList();
@@ -770,9 +798,7 @@
           if (msg.type === 'scan-error') {
             actionPhase = getIdleActionPhase();
             showToast(msg.payload?.message ?? 'Не удалось выполнить проверку');
-            snapshotReady = false;
             scanCompleted = false;
-            updateSnapshotButton();
             return;
           }
 
@@ -815,11 +841,6 @@
             );
           }
 
-          if (msg.type === 'normalized-snapshot-ready') {
-            snapshotReady = Boolean(msg.payload);
-            latestSnapshot = msg.payload;
-            updateSnapshotButton();
-          }
         };
 
         function showToast(message) {
@@ -836,10 +857,6 @@
         }
 
         function updateLoaderVisibility() {
-          syncChromeState();
-        }
-
-        function updateSnapshotButton() {
           syncChromeState();
         }
 
@@ -867,22 +884,6 @@
           });
         }
 
-        function handleHeaderTitlePress() {
-          if (!latestSnapshot) return;
-
-          const payload = JSON.stringify(latestSnapshot, null, 2);
-          const blob = new Blob([payload], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-
-          link.href = url;
-          link.download = `normalized-snapshot-${Date.now()}.json`;
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          URL.revokeObjectURL(url);
-        }
-
         function renderChromeFallback(state) {
           renderTopSectionFallback(state);
           renderLeftSectionFallback(state.tabs);
@@ -895,12 +896,9 @@
           const section = document.createElement('div');
           section.className = 'chrome-top-section';
 
-          const titleButton = document.createElement('button');
-          titleButton.type = 'button';
+          const titleButton = document.createElement('div');
           titleButton.className = 'chrome-title-button';
           titleButton.textContent = state.title;
-          titleButton.title = 'Apollo';
-          titleButton.addEventListener('click', handleHeaderTitlePress);
           section.appendChild(titleButton);
 
           const actionButton = document.createElement('button');

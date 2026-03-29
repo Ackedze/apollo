@@ -56,7 +56,6 @@ class ApolloChromeBridge {
           actionLoading={this.state.actionLoading}
           actionType={this.state.actionType}
           onActionPress={this.options.onActionPress}
-          onTitlePress={this.options.onTitlePress}
         />,
       );
 

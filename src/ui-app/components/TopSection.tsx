@@ -9,7 +9,6 @@ type TopSectionProps = {
   actionLoading: boolean;
   actionType: 'primary' | 'secondary';
   onActionPress: () => void;
-  onTitlePress: () => void;
 };
 
 export function TopSection({
@@ -19,7 +18,6 @@ export function TopSection({
   actionLoading,
   actionType,
   onActionPress,
-  onTitlePress,
 }: TopSectionProps): React.JSX.Element {
   const actionKey = [
     actionType,
@@ -30,14 +28,9 @@ export function TopSection({
 
   return (
     <div className={styles.root}>
-      <button
-        type="button"
-        className={styles.titleButton}
-        onClick={onTitlePress}
-        title="Apollo"
-      >
+      <div className={styles.titleButton}>
         {title}
-      </button>
+      </div>
       <Button
         key={actionKey}
         label={actionLabel}

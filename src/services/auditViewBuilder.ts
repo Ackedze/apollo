@@ -7,22 +7,15 @@ import type {
   CustomStyleEntry,
   DetachedEntry,
   PathSegment,
-  TextNodeEntry,
 } from '../types/audit';
 import { applyCustomStyleFilters } from '../filters/customStyleFilters';
 import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
 import {
   buildNodePath,
-  clampColorComponent,
   extractAliasKey,
   getPageName,
   isNodeVisible,
 } from '../utils/nodeHelpers';
-
-export interface TextNodeCollectionOptions {
-  tokenLabelMap: Map<string, { label: string; library?: string }>;
-  tokenColorMap: Map<string, { label: string; library?: string }>;
-}
 
 export interface CustomStyleCollectionOptions {
   tokenLabelMap: Map<string, { label: string; library?: string }>;
@@ -60,30 +53,6 @@ export async function collectCustomStyles(
     }
 
   return applyCustomStyleFilters(node, entries);
-}
-
-/**
- * Выбирает все текстовые узлы в выделении и описывает их с точки зрения токенов/стилей.
- */
-export function collectTextNodesFromSelection(
-  selection: readonly SceneNode[],
-  options: TextNodeCollectionOptions,
-): TextNodeEntry[] {
-  const nodes: TextNode[] = [];
-  const visit = (node: SceneNode) => {
-    if (node.type === 'TEXT') {
-      nodes.push(node as TextNode);
-    }
-    if ('children' in node) {
-      for (const child of node.children as SceneNode[]) {
-        visit(child);
-      }
-    }
-  };
-  for (const node of selection) {
-    visit(node);
-  }
-  return nodes.map((node) => describeTextNode(node, options));
 }
 
 /**
@@ -183,86 +152,6 @@ export function computeChangesResults(
     const diffs = prepareChangeDiffs(item.diffs ?? []);
     return diffs.length > 0;
   });
-}
-
-export function describeTextNode(
-  node: TextNode,
-  options: TextNodeCollectionOptions,
-): TextNodeEntry {
-  const paints = Array.isArray(node.fills) ? node.fills : [];
-  let solid: SolidPaint | null = null;
-  for (const paint of paints) {
-    if (paint.type === 'SOLID' && paint.visible !== false) {
-      solid = paint;
-      break;
-    }
-  }
-  const paintInfo = solid
-    ? describeTextPaint(solid, options)
-    : { label: '—', usesToken: false, library : null };
-
-  const usesStyle =
-    'fillStyleId' in node &&
-    !!node.fillStyleId &&
-    node.fillStyleId !== figma.mixed;
-
-  return {
-    key: node.id,
-    name: node.name,
-    pageName: getPageName(node),
-    colorLabel: paintInfo.label,
-    value: node.characters,
-    visible: isNodeVisible(node),
-    usesToken: paintInfo.usesToken,
-    tokenLibrary: paintInfo.library,
-    nodeType: 'TEXT',
-    usesStyle,
-  };
-}
-
-function describeTextPaint(
-  paint: SolidPaint,
-  options: TextNodeCollectionOptions,
-): { label: string; usesToken: boolean; library: string | null } {
-  const tokenInfo = getTokenAliasInfo(paint, options.tokenLabelMap);
-
-  if (tokenInfo.aliasKey) {
-    return {
-      label: tokenInfo.label ?? tokenInfo.aliasKey,
-      usesToken: true,
-      library: tokenInfo.library,
-    };
-  }
-  const r = clampColorComponent(paint.color.r);
-  const g = clampColorComponent(paint.color.g);
-  const b = clampColorComponent(paint.color.b);
-  const opacity = paint.opacity ?? 1;
-
-  return {
-    label: `rgba(${r}, ${g}, ${b}, ${opacity.toFixed(2)})`,
-    usesToken: false,
-    library: null
-  };
-}
-
-function getTokenAliasInfo(
-  paint: SolidPaint,
-  tokenLabelMap: Map<string, { label: string; library?: string }>,
-) {
-  const boundVariables = paint.boundVariables;
-  if (!boundVariables?.color?.id) {
-    return { aliasKey: null, label: null, library: null };
-  }
-  const aliasKey = extractAliasKey(boundVariables.color.id);
-  if (!aliasKey) {
-    return { aliasKey: null, label: null, library: null };
-  }
-  const label = tokenLabelMap?.get(aliasKey);
-  return {
-    aliasKey,
-    label: label?.label ?? null,
-    library: label?.library ?? null,
-  };
 }
 
 export async function describeCustomStyleReasons(
@@ -370,6 +259,26 @@ function hasPaintStyle(
 ): boolean {
   const styleId = (node as any)[styleKey];
   return Boolean(styleId && styleId !== figma.mixed && typeof styleId === 'string');
+}
+
+function getTokenAliasInfo(
+  paint: SolidPaint,
+  tokenLabelMap: Map<string, { label: string; library?: string }>,
+) {
+  const boundVariables = paint.boundVariables;
+  if (!boundVariables?.color?.id) {
+    return { aliasKey: null, label: null, library: null };
+  }
+  const aliasKey = extractAliasKey(boundVariables.color.id);
+  if (!aliasKey) {
+    return { aliasKey: null, label: null, library: null };
+  }
+  const label = tokenLabelMap?.get(aliasKey);
+  return {
+    aliasKey,
+    label: label?.label ?? null,
+    library: label?.library ?? null,
+  };
 }
 
 function dedupeDiffs(diffs: DiffEntry[]): DiffEntry[] {

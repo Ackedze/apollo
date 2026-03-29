@@ -17,14 +17,11 @@ import { diffStructures } from './structure/diff';
 import type { DSStructureNode } from './types/structures';
 import type { AuditItem, RelevanceStatus, ThemeStatus } from './types/audit';
 import { tabDefinitions } from './config/tabs';
-import { eyeClosedIcon, eyeOpenIcon } from './icons';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
   collectCustomStyles,
   collectDetachedEntry,
   computeChangesResults,
-  describeTextNode,
-  TextNodeCollectionOptions,
   type CustomStyleCollectionOptions,
 } from './services/auditViewBuilder';
 import { CheckState, createCheckState } from './create-check-state';
@@ -32,10 +29,6 @@ import { applyCustomizationFilters } from './filters/customizationFilters';
 import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
 
 figma.showUI(__html__, { width: 800, height: 860 });
-figma.ui.postMessage({
-  type: 'icon-assets',
-  payload: { visible: eyeOpenIcon, hidden: eyeClosedIcon },
-});
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -70,12 +63,20 @@ figma.ui.onmessage = (msg) => {
     });
     return;
   }
+
+  if (msg.type === 'reset-customization-group') {
+    void resetCustomizationGroup(msg.payload).catch((error) => {
+      console.error('Failed to reset customization group', error);
+      figma.notify('Не удалось сбросить изменения.');
+    });
+    return;
+  }
 };
 
 let scanInProgress = false;
 let cancelRequested = false;
 let catalogPreloadStarted = false;
-let catalogPreloadFinished = false;
+let lastAuditSelectionIds: string[] = [];
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
@@ -106,7 +107,7 @@ const styleLookupCache = new Map<string, string>();
  * Запускает полный аудит текущего выделения: проверяет готовность справочников,
  * снимает snapshоты, классифицирует узлы и формирует структуры для табов UI.
  */
-async function runAudit() {
+async function runAudit(selectionOverride?: readonly SceneNode[]) {
   if (scanInProgress) {
     figma.notify('Проверка уже выполняется.');
     return;
@@ -181,7 +182,7 @@ async function runAudit() {
   try {
     throwIfCancelled();
 
-    const selection = figma.currentPage.selection;
+    const selection = selectionOverride ?? figma.currentPage.selection;
 
     if (selection.length === 0) {
       const message = 'Выделите область или слой, чтобы проверить компоненты.';
@@ -195,6 +196,8 @@ async function runAudit() {
       return;
     }
 
+    lastAuditSelectionIds = selection.map((node) => node.id);
+
     const checkState = createCheckState()
 
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
@@ -205,17 +208,11 @@ async function runAudit() {
       isKnownStyleId,
     };
 
-    const textNodeOptions: TextNodeCollectionOptions = {
-      tokenLabelMap: tokenLabelMap ?? new Map(),
-      tokenColorMap: tokenColorMap ?? new Map(),
-    };
-
     await collectTargets(
       selection,
       checkState,
       referenceStructureCache,
       customStyleReasonOptions,
-      textNodeOptions,
       checkedComponentNodesList,
       throwIfCancelled,
     );
@@ -240,8 +237,6 @@ async function runAudit() {
       deprecated: checkState.relevanceBuckets.deprecated.length,
       update: checkState.relevanceBuckets.update.length,
       themeError: checkState.themeBuckets.error.length,
-      textNodes: checkState.textNodes.length,
-      textAll: checkState.textAll.length,
       local: visibleLocalItems.length,
       detached: checkState.detachedEntries,
       changes: changesResults.length,
@@ -253,8 +248,6 @@ async function runAudit() {
       local: visibleLocalItems,
       customStyles: checkState.customStyleEntries,
       detached: checkState.detachedEntries,
-      textNodes: checkState.textNodes.length,
-      textAll: checkState.textAll.length,
       presets: checkState.presetItems,
       changes: changesResults,
     };
@@ -303,7 +296,6 @@ function startCatalogPreload() {
   figma.ui.postMessage({ type: 'catalog-loading' });
   ensureReferenceCatalogsLoaded()
     .then(() => {
-      catalogPreloadFinished = true;
       figma.ui.postMessage({ type: 'catalog-ready' });
     })
     .catch((error) => {
@@ -320,7 +312,6 @@ async function collectTargets(
   checkState: CheckState, 
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
   customStyleReasonOptions: CustomStyleCollectionOptions,
-  textOptions: TextNodeCollectionOptions,
   checkedComponentNodesList: Set<string>,
   throwIfCancelled: () => void,
 ) {
@@ -378,18 +369,6 @@ async function collectTargets(
               ...customStyleReasons
             ];
           }
-      }
-
-      if (node.type === 'TEXT') {
-        const item = describeTextNode(node, textOptions)
-
-        if (item) {
-          checkState.textAll.push(item)
-
-          if (!item.usesStyle && !item.usesToken) {
-            checkState.textNodes.push(item)
-          }
-        }
       }
 
       if ('children' in node && node.children.length > 0) {
@@ -615,6 +594,492 @@ async function focusNode(nodeId: string | undefined) {
     console.error('Failed to focus node on page', error);
     figma.notify('Не удалось перейти к слою на этой странице');
   }
+}
+
+async function resetCustomizationGroup(payload: {
+  rootId?: string;
+  nodeId?: string;
+  messages?: string[];
+}) {
+  const rootId = typeof payload?.rootId === 'string' ? payload.rootId : '';
+  const nodeId = typeof payload?.nodeId === 'string' ? payload.nodeId : '';
+  const messages = Array.isArray(payload?.messages)
+    ? payload.messages.filter(
+        (message): message is string =>
+          typeof message === 'string' && message.trim().length > 0,
+      )
+    : [];
+
+  if (!rootId || !nodeId || !messages.length) {
+    figma.notify('Недостаточно данных для сброса изменений.');
+    return;
+  }
+
+  await ensureReferenceCatalogsLoaded();
+
+  const rootNode = await getSceneNodeById(rootId);
+  const targetNode = await getSceneNodeById(nodeId);
+
+  if (!rootNode || !targetNode) {
+    figma.notify('Не удалось найти узел для сброса изменений.');
+    return;
+  }
+
+  const componentKey = await getComponentKey(rootNode);
+  const ref = componentKey ? findComponent(componentKey) : null;
+  const referenceStructure = getReferenceStructure(ref, componentKey);
+
+  if (!referenceStructure?.length) {
+    figma.notify('Не удалось загрузить эталонную структуру компонента.');
+    return;
+  }
+
+  const checkedComponentNodesList = new Set<string>();
+  const actualStructure = await snapshotTree(rootNode, checkedComponentNodesList);
+  const alignedActualStructure = alignStructurePaths(actualStructure, referenceStructure);
+  const expandedReferenceStructure =
+    COMPARE_NESTED_INSTANCES_BY_COMPONENT
+      ? expandReferenceWithInstanceComponents(referenceStructure, alignedActualStructure)
+      : referenceStructure;
+
+  const actualEntry = alignedActualStructure.find((entry) => entry.nodeId === nodeId);
+  if (!actualEntry) {
+    figma.notify('Не удалось сопоставить изменённый узел со структурой компонента.');
+    return;
+  }
+
+  const referenceNode = expandedReferenceStructure.find(
+    (entry) => entry.path === actualEntry.path,
+  );
+  if (!referenceNode) {
+    figma.notify('Не удалось найти эталонные значения для этого узла.');
+    return;
+  }
+
+  await applyReferenceResetByMessages(targetNode, referenceNode, messages);
+
+  figma.notify('Изменения сброшены.');
+
+  const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
+  if (rerunSelection.length) {
+    void runAudit(rerunSelection);
+  } else {
+    void runAudit([rootNode]);
+  }
+}
+
+async function getSceneNodeById(nodeId: string): Promise<SceneNode | null> {
+  const node = await figma.getNodeByIdAsync(nodeId);
+  if (!node || node.type === 'DOCUMENT') {
+    return null;
+  }
+  return node as SceneNode;
+}
+
+async function resolveSceneNodesByIds(nodeIds: string[]): Promise<SceneNode[]> {
+  const resolved = await Promise.all(nodeIds.map((nodeId) => getSceneNodeById(nodeId)));
+  return resolved.filter((node): node is SceneNode => Boolean(node));
+}
+
+async function applyReferenceResetByMessages(
+  node: SceneNode,
+  referenceNode: DSStructureNode,
+  messages: string[],
+) {
+  const uniqueMessages = Array.from(new Set(messages));
+
+  for (const message of uniqueMessages) {
+    const trimmed = message.trim();
+    const paddingMatch = trimmed.match(/^(?:Token )?padding (top|right|bottom|left):/i);
+
+    if (trimmed.startsWith('Паддинг ') || paddingMatch) {
+      const side = extractPaddingSide(trimmed);
+      if (side) {
+        await resetPaddingSide(node, referenceNode, side);
+      }
+      continue;
+    }
+
+    if (
+      trimmed.startsWith('Отступ между элементами:') ||
+      trimmed.startsWith('Token itemSpacing:')
+    ) {
+      await resetItemSpacing(node, referenceNode);
+      continue;
+    }
+
+    if (trimmed.startsWith('Стиль заливка:')) {
+      await resetStyle(node, referenceNode, 'fill');
+      continue;
+    }
+
+    if (trimmed.startsWith('Стиль обводка:')) {
+      await resetStyle(node, referenceNode, 'stroke');
+      continue;
+    }
+
+    if (trimmed.startsWith('Стиль текст:')) {
+      await resetStyle(node, referenceNode, 'text');
+      continue;
+    }
+
+    if (trimmed.startsWith('заливка:')) {
+      await resetPaint(node, referenceNode, 'fill');
+      continue;
+    }
+
+    if (trimmed.startsWith('обводка:')) {
+      await resetPaint(node, referenceNode, 'stroke');
+      continue;
+    }
+
+    if (trimmed.startsWith('Толщина обводки:')) {
+      resetStrokeWeight(node, referenceNode);
+      continue;
+    }
+
+    if (trimmed.startsWith('Token radius:') || trimmed.startsWith('Скругления:')) {
+      await resetRadius(node, referenceNode);
+      continue;
+    }
+
+    if (
+      trimmed.startsWith('Token opacity:') ||
+      trimmed.startsWith('Прозрачность:')
+    ) {
+      await resetOpacity(node, referenceNode);
+    }
+  }
+}
+
+function extractPaddingSide(message: string): 'top' | 'right' | 'bottom' | 'left' | null {
+  const match = message.match(/(top|right|bottom|left)/i);
+  if (!match) return null;
+  const side = match[1].toLowerCase();
+  if (
+    side === 'top' ||
+    side === 'right' ||
+    side === 'bottom' ||
+    side === 'left'
+  ) {
+    return side;
+  }
+  return null;
+}
+
+async function resetPaddingSide(
+  node: SceneNode,
+  referenceNode: DSStructureNode,
+  side: 'top' | 'right' | 'bottom' | 'left',
+) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+
+  const layout = referenceNode.layout;
+  const padding = layout?.padding;
+  if (!padding) {
+    return;
+  }
+
+  const fieldMap = {
+    top: 'paddingTop',
+    right: 'paddingRight',
+    bottom: 'paddingBottom',
+    left: 'paddingLeft',
+  } as const;
+  const field = fieldMap[side];
+  const value = padding[side] ?? 0;
+  (node as any)[field] = value;
+
+  await bindNodeVariable(node, field, layout?.paddingTokens?.[side] ?? null);
+}
+
+async function resetItemSpacing(node: SceneNode, referenceNode: DSStructureNode) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+  const value = referenceNode.layout?.itemSpacing ?? 0;
+  (node as any).itemSpacing = value;
+  await bindNodeVariable(
+    node,
+    'itemSpacing',
+    referenceNode.layout?.itemSpacingToken ?? null,
+  );
+}
+
+async function resetStyle(
+  node: SceneNode,
+  referenceNode: DSStructureNode,
+  target: 'fill' | 'stroke' | 'text',
+) {
+  const styleKey =
+    target === 'text'
+      ? referenceNode.styles?.text?.styleKey
+      : target === 'fill'
+        ? referenceNode.styles?.fill?.styleKey
+        : referenceNode.styles?.stroke?.styleKey;
+
+  if (target === 'text') {
+    if (node.type !== 'TEXT') return;
+    const style = styleKey ? await importStyleById(styleKey) : null;
+    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
+    return;
+  }
+
+  const style = styleKey ? await importStyleById(styleKey) : null;
+  const mutableNode = node as any;
+  const styleId = style?.id ?? '';
+
+  if (target === 'fill') {
+    if (typeof mutableNode.setFillStyleIdAsync !== 'function') {
+      return;
+    }
+    await mutableNode.setFillStyleIdAsync(styleId);
+    return;
+  }
+
+  if (typeof mutableNode.setStrokeStyleIdAsync !== 'function') {
+    return;
+  }
+  await mutableNode.setStrokeStyleIdAsync(styleId);
+}
+
+async function resetPaint(
+  node: SceneNode,
+  referenceNode: DSStructureNode,
+  target: 'fill' | 'stroke',
+) {
+  const styleKey =
+    target === 'fill'
+      ? referenceNode.styles?.fill?.styleKey
+      : referenceNode.styles?.stroke?.styleKey;
+  if (styleKey) {
+    await resetStyle(node, referenceNode, target);
+    if (target === 'stroke') {
+      resetStrokeWeight(node, referenceNode);
+    }
+    return;
+  }
+
+  const prop = target === 'fill' ? 'fills' : 'strokes';
+  if (!(prop in (node as any))) {
+    return;
+  }
+
+  const mutableNode = node as any;
+  if (target === 'fill' && typeof mutableNode.setFillStyleIdAsync === 'function') {
+    await mutableNode.setFillStyleIdAsync('');
+  } else if (
+    target === 'stroke' &&
+    typeof mutableNode.setStrokeStyleIdAsync === 'function'
+  ) {
+    await mutableNode.setStrokeStyleIdAsync('');
+  }
+
+  const referencePaint = target === 'fill' ? referenceNode.fill : referenceNode.stroke;
+
+  if (!referencePaint) {
+    mutableNode[prop] = [];
+    if (target === 'stroke' && 'strokeWeight' in mutableNode) {
+      mutableNode.strokeWeight = 0;
+    }
+    return;
+  }
+
+  const paint = await buildSolidPaintFromReference(referencePaint);
+  if (!paint) {
+    return;
+  }
+
+  mutableNode[prop] = [paint];
+
+  if (target === 'stroke') {
+    resetStrokeWeight(node, referenceNode);
+  }
+}
+
+function resetStrokeWeight(node: SceneNode, referenceNode: DSStructureNode) {
+  if (!('strokeWeight' in (node as any))) {
+    return;
+  }
+  const weight = referenceNode.stroke?.weight;
+  (node as any).strokeWeight = typeof weight === 'number' ? weight : 0;
+}
+
+async function resetRadius(node: SceneNode, referenceNode: DSStructureNode) {
+  await bindNodeVariable(node, 'cornerRadius', referenceNode.radiusToken ?? null);
+
+  const radius = referenceNode.radius;
+  if (radius === null || !('cornerRadius' in (node as any))) {
+    return;
+  }
+
+  if (typeof radius === 'number') {
+    (node as any).cornerRadius = radius;
+    return;
+  }
+
+  const mutableNode = node as any;
+  if (
+    'topLeftRadius' in mutableNode &&
+    'topRightRadius' in mutableNode &&
+    'bottomRightRadius' in mutableNode &&
+    'bottomLeftRadius' in mutableNode
+  ) {
+    mutableNode.topLeftRadius = radius.topLeft;
+    mutableNode.topRightRadius = radius.topRight;
+    mutableNode.bottomRightRadius = radius.bottomRight;
+    mutableNode.bottomLeftRadius = radius.bottomLeft;
+  }
+}
+
+async function resetOpacity(node: SceneNode, referenceNode: DSStructureNode) {
+  if (!('opacity' in (node as any))) {
+    return;
+  }
+
+  const opacity =
+    typeof referenceNode.opacity === 'number' ? referenceNode.opacity : 1;
+  (node as any).opacity = opacity;
+  await bindNodeVariable(node, 'opacity', referenceNode.opacityToken ?? null);
+}
+
+async function bindNodeVariable(
+  node: SceneNode,
+  field: string,
+  tokenId: string | null,
+) {
+  const mutableNode = node as any;
+  if (typeof mutableNode.setBoundVariable !== 'function') {
+    return;
+  }
+  const variable = tokenId ? await importVariableByToken(tokenId) : null;
+  mutableNode.setBoundVariable(field, variable);
+}
+
+async function importVariableByToken(tokenId: string): Promise<Variable | null> {
+  const key = extractAliasKey(tokenId);
+  if (!key) {
+    return null;
+  }
+
+  try {
+    return await figma.variables.importVariableByKeyAsync(key);
+  } catch (error) {
+    console.warn('[Apollo] failed to import variable by key', { tokenId, key, error });
+    return null;
+  }
+}
+
+async function importStyleById(styleId: string): Promise<BaseStyle | null> {
+  const normalized = normalizeStyleId(styleId);
+  if (!normalized) {
+    return null;
+  }
+
+  const directKey = extractStyleKey(normalized) ?? normalized;
+  try {
+    return await figma.importStyleByKeyAsync(directKey);
+  } catch (error) {
+    console.warn('[Apollo] failed to import style by key', {
+      styleId: normalized,
+      key: directKey,
+      error,
+    });
+    return null;
+  }
+}
+
+async function buildSolidPaintFromReference(
+  referencePaint: { color?: string | null; token?: string | null },
+): Promise<SolidPaint | null> {
+  const color = referencePaint.color
+    ? parseRgbaToColor(referencePaint.color)
+    : null;
+  const variable = referencePaint.token
+    ? await importVariableByToken(referencePaint.token)
+    : null;
+
+  const basePaint: SolidPaint = {
+    type: 'SOLID',
+    visible: true,
+    opacity: color?.opacity ?? 1,
+    color: color?.rgb ?? colorFromVariable(variable) ?? { r: 0, g: 0, b: 0 },
+  };
+
+  if (!variable) {
+    return basePaint;
+  }
+
+  try {
+    return figma.variables.setBoundVariableForPaint(basePaint, 'color', variable);
+  } catch (error) {
+    console.warn('[Apollo] failed to bind variable for paint', {
+      token: referencePaint.token,
+      error,
+    });
+    return basePaint;
+  }
+}
+
+function parseRgbaToColor(
+  value: string,
+): { rgb: RGB; opacity: number } | null {
+  const compact = value.replace(/\s+/g, '');
+  const match = compact.match(
+    /^rgba\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)$/i,
+  );
+  if (!match) {
+    return null;
+  }
+
+  const [, rawR, rawG, rawB, rawA] = match;
+  const r = Number.parseFloat(rawR) / 255;
+  const g = Number.parseFloat(rawG) / 255;
+  const b = Number.parseFloat(rawB) / 255;
+  const opacity = Number.parseFloat(rawA);
+
+  if (
+    !Number.isFinite(r) ||
+    !Number.isFinite(g) ||
+    !Number.isFinite(b) ||
+    !Number.isFinite(opacity)
+  ) {
+    return null;
+  }
+
+  return {
+    rgb: {
+      r: Math.max(0, Math.min(1, r)),
+      g: Math.max(0, Math.min(1, g)),
+      b: Math.max(0, Math.min(1, b)),
+    },
+    opacity: Math.max(0, Math.min(1, opacity)),
+  };
+}
+
+function colorFromVariable(variable: Variable | null): RGB | null {
+  if (!variable || variable.resolvedType !== 'COLOR') {
+    return null;
+  }
+
+  const values = Object.values(variable.valuesByMode ?? {});
+  const firstValue = values[0];
+  if (!firstValue || typeof firstValue !== 'object') {
+    return null;
+  }
+
+  const color = firstValue as RGBA;
+  if (
+    typeof color.r !== 'number' ||
+    typeof color.g !== 'number' ||
+    typeof color.b !== 'number'
+  ) {
+    return null;
+  }
+
+  return { r: color.r, g: color.g, b: color.b };
 }
 
 function getReferenceStructure(

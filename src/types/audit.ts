@@ -41,19 +41,6 @@ export interface DetachedEntry {
   visible: boolean;
 }
 
-export interface TextNodeEntry {
-  key: string;
-  name: string;
-  pageName: string;
-  colorLabel: string;
-  value: string;
-  visible: boolean;
-  usesToken: boolean;
-  tokenLibrary: string | null;
-  nodeType?: SceneNode['type'];
-  usesStyle: boolean;
-}
-
 export interface CustomStyleEntry {
   id: string;
   name: string;

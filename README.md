@@ -94,6 +94,7 @@
 - Базовый [`Button`](./src/ui-app/components/Button.tsx) выровнен по Figma component set `Button`: поддерживает `type="primary" | "secondary"` и отдельные состояния `hover`/`disabled` через CSS, включая загрузочные варианты с addon-spinner.
 - [`CategoryCard`](./src/ui-app/components/CategoryCard.tsx) соответствует `categoryCard` из Figma, учитывает состояния `selected`, `non-empty` и `empty`, а при переполнении заголовок уходит в ellipsis; DOM fallback использует те же class-based состояния, что и React-версия.
 - Старый DOM-пайплайн карточек удалён из [`src/ui.html`](./src/ui.html): активные табы правой колонки рендерятся через React results bridge, а `ui.html` оставляет только placeholder/fallback при сбое bridge.
+- Старый text-node pipeline и таб `textAll` удалены из runtime: аудит больше не собирает неиспользуемые текстовые представления, а `tabDefinitions` больше не хранят legacy `builder`-ключи.
 - После сканирования в карточках доступна кнопка перехода к ноде.
 - UI показывает тосты о загрузке каталогов и завершении сканирования.
 - Состояние основной кнопки задаётся через явную фазу UI (`catalog-loading` / `scanning` / `idle`), чтобы не возникали смешанные состояния вроде `Остановить` с неправильным цветом или `disabled`.
@@ -104,7 +105,6 @@
 
 ## Ограничения и известные проблемы
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
-- UI ожидает `normalized-snapshot-ready`, но `code.ts` это сообщение не отправляет, поэтому выгрузка snapshot из заголовка не активируется.
 - В проекте нет автоматических тестов и нет штатного `type-check`/`lint` скрипта.
 
 Подробный технический отчёт по найденным рискам хранится в [`AUDIT.md`](./AUDIT.md), но перед использованием стоит учитывать, что этот файл частично устарел и не полностью отражает текущее состояние проекта.
@@ -165,6 +165,5 @@ node scripts/prepareReferences.js
 ```bash
 npm run build
 npm run watch
-npm run find-dead-code
 node scripts/prepareReferences.js
 ```

@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "build": "node build.js && node scripts/exportComponentTree.js",
-    "watch": "node build.js --watch",
-    "find-dead-code": "ts-prune -e"
+    "watch": "node build.js --watch"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.82.0",

@@ -121,10 +121,10 @@ export function ResultSubCard({
                 <span>{line.label}</span>
                 <span>:</span>
               </div>
-              <div className={styles.valueBody}>
+                <div className={styles.valueBody}>
                 {line.values.map((part, index) => (
                   <React.Fragment key={`${part}:${index}`}>
-                    {index > 0 ? <span>—</span> : null}
+                    {index > 0 ? <span>→</span> : null}
                     <span className={styles.valuePart}>{part}</span>
                   </React.Fragment>
                 ))}

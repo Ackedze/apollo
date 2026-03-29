@@ -74,7 +74,11 @@ export function CustomizationResultCard({
           onFocus={group.onFocus}
           showFocus={Boolean(group.onFocus)}
           valueLines={group.lines}
-          actions={[{ label: 'Сбросить', onPress: group.onReset, singleIcon: false }]}
+          actions={
+            group.onReset
+              ? [{ label: 'Сбросить', onPress: group.onReset, singleIcon: false }]
+              : []
+          }
         />
       ))}
     </ResultCard>

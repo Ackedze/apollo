@@ -3,6 +3,7 @@ export type ChromeTabItem = {
   title: string;
   count: number;
   active: boolean;
+  counterType: 'empty' | 'error' | 'warning' | 'general';
 };
 
 export type ChromeButtonType = 'primary' | 'secondary';

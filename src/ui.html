@@ -199,6 +199,19 @@
         const resultsBridge = window.ApolloResultsBridge || null;
         let chromeBridgeMounted = false;
         let resultsBridgeMounted = false;
+        const leftSectionOrder = [
+          'deprecated',
+          'update',
+          'themization',
+          'customStyles',
+          '__divider_after_customStyles__',
+          'changes',
+          'local',
+          'detached',
+          '__divider_after_detached__',
+          'presets',
+          'current',
+        ];
 
         if (chromeBridge) {
           try {
@@ -960,7 +973,17 @@
           const section = document.createElement('div');
           section.className = 'chrome-left-section';
 
-          tabs.forEach((tab) => {
+          orderLeftSectionTabs(tabs).forEach((tab) => {
+            if (typeof tab === 'string' && tab.startsWith('__divider_')) {
+              const divider = document.createElement('div');
+              divider.className = 'chrome-divider';
+              const line = document.createElement('div');
+              line.className = 'chrome-divider-line';
+              divider.appendChild(line);
+              section.appendChild(divider);
+              return;
+            }
+
             const card = document.createElement('button');
             card.type = 'button';
             const isEmpty = tab.count === 0;
@@ -982,7 +1005,7 @@
             const badge = document.createElement('span');
             badge.className = [
               'chrome-badge',
-              tab.count > 0 ? 'chrome-badge-active' : 'chrome-badge-muted',
+              `chrome-badge-${tab.counterType}`,
             ].join(' ');
             badge.textContent = String(tab.count);
             card.appendChild(badge);
@@ -996,11 +1019,13 @@
         function syncChromeState() {
           const tabs = tabConfig.map((tab) => {
             const items = tab.source();
+            const count = Array.isArray(items) ? items.length : 0;
             return {
               id: tab.id,
               title: tab.title,
-              count: Array.isArray(items) ? items.length : 0,
+              count,
               active: tab.id === currentTab,
+              counterType: getCounterType(tab.id, count),
             };
           });
 
@@ -1034,6 +1059,42 @@
           }
 
           renderChromeFallback(chromeState);
+        }
+
+        function getCounterType(tabId, count) {
+          if (!count) {
+            return 'empty';
+          }
+
+          if (
+            tabId === 'deprecated' ||
+            tabId === 'update' ||
+            tabId === 'themization' ||
+            tabId === 'customStyles'
+          ) {
+            return 'error';
+          }
+
+          if (
+            tabId === 'changes' ||
+            tabId === 'local' ||
+            tabId === 'detached'
+          ) {
+            return 'warning';
+          }
+
+          return 'general';
+        }
+
+        function orderLeftSectionTabs(tabs) {
+          const byId = new Map(tabs.map((tab) => [tab.id, tab]));
+          return leftSectionOrder.flatMap((entry) => {
+            if (entry.startsWith('__divider_')) {
+              return entry;
+            }
+            const tab = byId.get(entry);
+            return tab ? [tab] : [];
+          });
         }
       })();
     </script>

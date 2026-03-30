@@ -12,7 +12,7 @@ export const tabDefinitions: TabDefinition[] = [
   },
   {
     id: 'changes',
-    title: 'Кастомизация',
+    title: 'Кастомизации',
     emptyMessage: 'Кастомизации не найдены',
     requiresScan: true,
     ignoreComponentFilter: true,
@@ -39,7 +39,7 @@ export const tabDefinitions: TabDefinition[] = [
   },
   {
     id: 'local',
-    title: 'Локальные',
+    title: 'Локальные компоненты',
     emptyMessage: 'Все элементы связаны с библиотекой',
   },
   {

@@ -1,4 +1,5 @@
 import type { CustomStyleEntry } from '../types/audit';
+import { findComponent } from '../reference/library';
 import { clampColorComponent } from '../utils/nodeHelpers';
 
 type CustomStyleFilterRule = {
@@ -10,6 +11,8 @@ type CustomStyleFilterRule = {
 const GLYPH_TECHNICAL_FILL_HEXES = new Set(['#747474']);
 // Technical fill color from JSONS/components/web-core/core/Web _ Core -- IconView.json.
 const ICON_VIEW_BGCOLOR_TECHNICAL_FILL_HEXES = new Set(['#F2F3F5']);
+const PAINT_IGNORED_LIBRARY_SOURCES = new Set(['Icons', 'Logotypes']);
+const paintLibraryIgnoreCache = new Map<string, Promise<boolean>>();
 
 const rules: CustomStyleFilterRule[] = [
   {
@@ -48,6 +51,19 @@ export function applyCustomStyleFilters(
   return current;
 }
 
+export async function shouldIgnorePaintCustomStyle(
+  node: SceneNode,
+): Promise<boolean> {
+  const cached = paintLibraryIgnoreCache.get(node.id);
+  if (cached) {
+    return cached;
+  }
+
+  const pending = resolveIgnoredPaintBoundary(node);
+  paintLibraryIgnoreCache.set(node.id, pending);
+  return pending;
+}
+
 function isGlyphTechnicalIconNode(node: SceneNode): boolean {
   if (node.type !== 'VECTOR' || node.name !== 'icon' || !('fills' in node)) {
     return false;
@@ -67,6 +83,38 @@ function isIconViewBgColorNode(node: SceneNode): boolean {
     node,
     ICON_VIEW_BGCOLOR_TECHNICAL_FILL_HEXES,
   );
+}
+
+async function resolveIgnoredPaintBoundary(node: SceneNode): Promise<boolean> {
+  let current: BaseNode | null = node;
+
+  while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
+    const componentKey = await getNodeComponentKey(current);
+    if (componentKey) {
+      const ref = findComponent(componentKey);
+      const source = String(ref?.source ?? '').trim();
+      if (PAINT_IGNORED_LIBRARY_SOURCES.has(source)) {
+        return true;
+      }
+    }
+
+    current = current.parent ?? null;
+  }
+
+  return false;
+}
+
+async function getNodeComponentKey(node: BaseNode): Promise<string | null> {
+  if (node.type === 'INSTANCE') {
+    const mainComponent = await node.getMainComponentAsync();
+    return mainComponent?.key ?? null;
+  }
+
+  if (node.type === 'COMPONENT') {
+    return node.key ?? null;
+  }
+
+  return null;
 }
 
 function hasOnlyTechnicalSolidFills(

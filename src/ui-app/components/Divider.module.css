@@ -1,0 +1,16 @@
+.root,
+:global(.chrome-divider) {
+  width: 239px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.line,
+:global(.chrome-divider-line) {
+  width: 100%;
+  height: 1px;
+  background: #edeef0;
+}

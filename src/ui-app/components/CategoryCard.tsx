@@ -6,6 +6,7 @@ type CategoryCardProps = {
   id: string;
   title: string;
   count: number;
+  counterType: 'empty' | 'error' | 'warning' | 'general';
   active?: boolean;
   onPress: (id: string) => void;
 };
@@ -14,6 +15,7 @@ export function CategoryCard({
   id,
   title,
   count,
+  counterType,
   active = false,
   onPress,
 }: CategoryCardProps): React.JSX.Element {
@@ -34,7 +36,7 @@ export function CategoryCard({
       aria-pressed={active}
     >
       <span className={styles.title}>{title}</span>
-      <CounterBadge count={count} active={count > 0} />
+      <CounterBadge count={count} type={counterType} />
     </button>
   );
 }

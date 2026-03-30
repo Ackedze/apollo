@@ -8,7 +8,10 @@ import type {
   DetachedEntry,
   PathSegment,
 } from '../types/audit';
-import { applyCustomStyleFilters } from '../filters/customStyleFilters';
+import {
+  applyCustomStyleFilters,
+  shouldIgnorePaintCustomStyle,
+} from '../filters/customStyleFilters';
 import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
 import {
   buildNodePath,
@@ -156,10 +159,11 @@ export async function describeCustomStyleReasons(
   options: CustomStyleCollectionOptions,
 ): Promise<Array<CustomStyleEntry['reason']>> {
   const reasons: Array<CustomStyleEntry['reason']> = [];
-  if (await hasCustomPaints(node, 'fills', 'fillStyleId', options)) {
+  const ignorePaintReason = await shouldIgnorePaintCustomStyle(node);
+  if (!ignorePaintReason && (await hasCustomPaints(node, 'fills', 'fillStyleId', options))) {
     reasons.push('fill');
   }
-  if (await hasCustomPaints(node, 'strokes', 'strokeStyleId', options)) {
+  if (!ignorePaintReason && (await hasCustomPaints(node, 'strokes', 'strokeStyleId', options))) {
     reasons.push('stroke');
   }
   const effectReasons = await describeCustomEffects(node, options);

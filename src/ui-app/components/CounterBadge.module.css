@@ -14,14 +14,26 @@
   box-sizing: border-box;
 }
 
-.muted,
-:global(.chrome-badge-muted) {
+.empty,
+:global(.chrome-badge-empty) {
   background: rgba(30, 43, 68, 0.08);
   color: rgba(9, 12, 37, 0.28);
 }
 
-.active,
-:global(.chrome-badge-active) {
-  background: #212124;
+.error,
+:global(.chrome-badge-error) {
+  background: #ff4837;
   color: rgba(255, 255, 255, 0.94);
+}
+
+.warning,
+:global(.chrome-badge-warning) {
+  background: #fa9313;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.general,
+:global(.chrome-badge-general) {
+  background: rgba(30, 43, 68, 0.08);
+  color: rgba(3, 3, 6, 0.88);
 }

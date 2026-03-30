@@ -570,12 +570,48 @@
       "path": "tokens/003 _ Decorative Dynamic Colors.json"
     },
     {
+      "fileName": "tokens/004 _ Qualitative Charts Colors.json",
+      "path": "tokens/004 _ Qualitative Charts Colors.json"
+    },
+    {
+      "fileName": "tokens/005 _ Sequential Charts Colors.json",
+      "path": "tokens/005 _ Sequential Charts Colors.json"
+    },
+    {
+      "fileName": "tokens/006 _ Interface States Colors.json",
+      "path": "tokens/006 _ Interface States Colors.json"
+    },
+    {
+      "fileName": "tokens/007 _ Interface States Colors.json",
+      "path": "tokens/007 _ Interface States Colors.json"
+    },
+    {
+      "fileName": "tokens/008 _ Decorative States Colors.json",
+      "path": "tokens/008 _ Decorative States Colors.json"
+    },
+    {
+      "fileName": "tokens/032 _ PFM Colors.json",
+      "path": "tokens/032 _ PFM Colors.json"
+    },
+    {
+      "fileName": "tokens/033 _Promo Colors.json",
+      "path": "tokens/033 _Promo Colors.json"
+    },
+    {
       "fileName": "tokens/Icons.json",
       "path": "tokens/Icons.json"
     },
     {
       "fileName": "tokens/Logotypes.json",
       "path": "tokens/Logotypes.json"
+    },
+    {
+      "fileName": "tokens/Monochrome Dynamic.json",
+      "path": "tokens/Monochrome Dynamic.json"
+    },
+    {
+      "fileName": "tokens/Monochrome Static.json",
+      "path": "tokens/Monochrome Static.json"
     },
     {
       "fileName": "tokens/Spacing.json",

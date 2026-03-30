@@ -1,0 +1,1705 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-30T10:21:58.739Z",
+    "fileName": "032 :: PFM Colors",
+    "library": "032 :: PFM Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:2:957",
+      "name": "PFM",
+      "key": "d9ae4872fff5729b4231ba1d7e5fbedee6b1f9dd",
+      "defaultModeId": "2:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "2:0",
+          "name": "Mode 1"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:2:958",
+          "name": "static_pfm-system/vulcan",
+          "description": "Red, Кредиты",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1d5f37e955d3642bac185e15d827bd8acd908f1f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9254902005195618,
+              "g": 0.1764705926179886,
+              "b": 0.125490203499794,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#EC2D20"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "vulcan"
+        },
+        {
+          "id": "VariableID:7:960",
+          "name": "static_pfm-system/mars",
+          "description": "Red, Ипотека, Кэшбэк",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "af420962461bb586b72188e7d1269062aa9a3250",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FE5E48"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "mars"
+        },
+        {
+          "id": "VariableID:7:961",
+          "name": "static_pfm-system/aldebaran",
+          "description": "Red, Техника",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "59281fcc83fdbbc31541c462b7ceb7add7733786",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 1,
+              "g": 0.5529412031173706,
+              "b": 0.4745098054409027,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FF8D79"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "aldebaran"
+        },
+        {
+          "id": "VariableID:7:965",
+          "name": "static_pfm-system/sirius",
+          "description": "Red",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "235be55c0b75c58e6ee99bf69f64892f6631272a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9960784316062927,
+              "g": 0.6274510025978088,
+              "b": 0.5607843399047852,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FEA08F"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "sirius"
+        },
+        {
+          "id": "VariableID:7:966",
+          "name": "static_pfm-system/mercury",
+          "description": "Orange, Табак",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3ffd5376622ff0731cf6150559a015118491ad01",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9176470637321472,
+              "g": 0.5137255191802979,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#EA8313"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "mercury"
+        },
+        {
+          "id": "VariableID:7:967",
+          "name": "static_pfm-system/kepler",
+          "description": "Orange, АЗС, Возмещение расходов от работодателя",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5273a750b8571a678dbf2f5b4264da851e3e43e9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9803921580314636,
+              "g": 0.5764706134796143,
+              "b": 0.07450980693101883,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FA9313"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "kepler"
+        },
+        {
+          "id": "VariableID:7:968",
+          "name": "static_pfm-system/jupiter",
+          "description": "Orange, Цветы",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6459eba056ec6957783607d87dcba2b93a782dc6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6980392336845398,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FDB24D"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "jupiter"
+        },
+        {
+          "id": "VariableID:7:969",
+          "name": "static_pfm-system/capella",
+          "description": "Yellow",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b2e8742fc4e407e1797f9acc33a3e7cbb4cf7e1d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.800000011920929,
+              "g": 0.6470588445663452,
+              "b": 0.01568627543747425,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#CCA504"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "capella"
+        },
+        {
+          "id": "VariableID:7:970",
+          "name": "static_pfm-system/saturn",
+          "description": "Yellow",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e0e65645501a6a40e15c1546d9b72f1e606e6ac4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.8627451062202454,
+              "g": 0.7019608020782471,
+              "b": 0.04313725605607033,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#DCB30B"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "saturn"
+        },
+        {
+          "id": "VariableID:7:971",
+          "name": "static_pfm-system/orion",
+          "description": "Yellow, Путешествия, Отпускные",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7e7c8ceab498f0b8c5df18cd7b4a19c7a3a8925e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9098039269447327,
+              "g": 0.7647058963775635,
+              "b": 0.019607843831181526,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#E8C305"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "orion"
+        },
+        {
+          "id": "VariableID:7:972",
+          "name": "static_pfm-system/sun",
+          "description": "Yellow, Такси",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8b24e78e9e696588140283eeba19a83c437acd64",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9843137264251709,
+              "g": 0.843137264251709,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FBD700"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "sun"
+        },
+        {
+          "id": "VariableID:7:974",
+          "name": "static_pfm-system/kaus",
+          "description": "Pistachio, Животные",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e06b093494d1545843213c71ddfeeecedaccb6b4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.4156862795352936,
+              "g": 0.6196078658103943,
+              "b": 0.007843137718737125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#6A9E02"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "kaus"
+        },
+        {
+          "id": "VariableID:7:975",
+          "name": "static_pfm-system/enif",
+          "description": "Pistachio, Кафе и рестораны",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "34bbe12d13b6c938ede1d615b0840018a17d4cb1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.501960813999176,
+              "g": 0.7529411911964417,
+              "b": 0.007843137718737125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#80C002"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "enif"
+        },
+        {
+          "id": "VariableID:7:976",
+          "name": "static_pfm-system/zwicky",
+          "description": "Pistachio, Продукты, Прочие доходы",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ada306ce989883320e2963598781565b9da00f77",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.6000000238418579,
+              "g": 0.8470588326454163,
+              "b": 0.15294118225574493,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#99D827"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "zwicky"
+        },
+        {
+          "id": "VariableID:7:977",
+          "name": "static_pfm-system/proserpina",
+          "description": "Green, Аренда авто",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dc4da48d22133814f77db0458935e6db104b3451",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.05098039284348488,
+              "g": 0.5764706134796143,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#0D9336"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "proserpina"
+        },
+        {
+          "id": "VariableID:7:978",
+          "name": "static_pfm-system/helix",
+          "description": "Green, Авто, Зарплата",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "109e6c69ec79f344967278f6c64e440bf583f2b9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.01568627543747425,
+              "g": 0.7098039388656616,
+              "b": 0.2705882489681244,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#04B545"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "helix"
+        },
+        {
+          "id": "VariableID:7:979",
+          "name": "static_pfm-system/terra",
+          "description": "Green, Дом и ремонт, Пополнения",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b0888dfb792c5c1ded954bb4efd658f31bfc24f2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#17D055"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "terra"
+        },
+        {
+          "id": "VariableID:7:980",
+          "name": "static_pfm-system/nebula",
+          "description": "Green",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8779f26663130a3b58a9836a5c12eca7589805ad",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.29019609093666077,
+              "g": 0.9058823585510254,
+              "b": 0.46666666865348816,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#4AE777"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "nebula"
+        },
+        {
+          "id": "VariableID:7:981",
+          "name": "static_pfm-system/carmenta",
+          "description": "Jungle, Образование, Вклады",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2b4ba7713f94e15d5ef9ff9a3ea22968e0660de3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.05098039284348488,
+              "g": 0.6274510025978088,
+              "b": 0.49803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#0DA07F"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "carmenta"
+        },
+        {
+          "id": "VariableID:7:982",
+          "name": "static_pfm-system/numa",
+          "description": "Jungle, Строительство и ремонт",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d55ee3eeacdf1d254be018ffe6fd032a6858fdda",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.03921568766236305,
+              "g": 0.7450980544090271,
+              "b": 0.5803921818733215,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#0ABE94"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "numa"
+        },
+        {
+          "id": "VariableID:7:983",
+          "name": "static_pfm-system/mira",
+          "description": "Jungle, Спортивные товары",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bef44478ba2f7759be7b9811a38ad42f97b773ed",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.08235294371843338,
+              "g": 0.8509804010391235,
+              "b": 0.6745098233222961,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#15D9AC"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "mira"
+        },
+        {
+          "id": "VariableID:7:984",
+          "name": "static_pfm-system/triton",
+          "description": "Teal, Алкоголь",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "63ac6c1b7f8baaf03f0c47067432a6f70c76fec5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.019607843831181526,
+              "g": 0.5411764979362488,
+              "b": 0.5607843399047852,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#058A8F"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "triton"
+        },
+        {
+          "id": "VariableID:7:985",
+          "name": "static_pfm-system/acrux",
+          "description": "Teal, Одежда и обувь",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7a0e089b8486243348f64bef9eabb63f500144b8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.03529411926865578,
+              "g": 0.6666666865348816,
+              "b": 0.686274528503418,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#09AAAF"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "acrux"
+        },
+        {
+          "id": "VariableID:7:986",
+          "name": "static_pfm-system/vega",
+          "description": "Teal, Цифровые товары",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "633305f9df1bf3606e422b15db23e978f88bf768",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.03529411926865578,
+              "g": 0.7843137383460999,
+              "b": 0.8156862854957581,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#09C8D0"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "vega"
+        },
+        {
+          "id": "VariableID:7:987",
+          "name": "static_pfm-system/uranus",
+          "description": "Teal, Здоровье",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "27fceb209bc5606158e8e68e07e5d5f874d6f59d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.2862745225429535,
+              "g": 0.8745098114013672,
+              "b": 0.9058823585510254,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#49DFE7"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "uranus"
+        },
+        {
+          "id": "VariableID:7:988",
+          "name": "static_pfm-system/meissa",
+          "description": "Cyan, Связь, интернет и ТВ",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c51bb47e61db90379329a2abf37b004c5c4d5586",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.01568627543747425,
+              "g": 0.5882353186607361,
+              "b": 0.7764706015586853,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#0496C6"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "meissa"
+        },
+        {
+          "id": "VariableID:7:989",
+          "name": "static_pfm-system/concordia",
+          "description": "Cyan, Бизнес, Командировочные",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8ee1b5eea091fb7f9628433f3de720dbf442b4b8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.04313725605607033,
+              "g": 0.6941176652908325,
+              "b": 0.9058823585510254,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#0BB1E7"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "concordia"
+        },
+        {
+          "id": "VariableID:7:990",
+          "name": "static_pfm-system/fides",
+          "description": "Cyan, Маркетплейсы, Переводы",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4b9bb813376dbf46bc65a1d353474f842a7cb567",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.24705882370471954,
+              "g": 0.8039215803146362,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#3FCDFE"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "fides"
+        },
+        {
+          "id": "VariableID:7:991",
+          "name": "static_pfm-system/galaxy",
+          "description": "Blue, Транспорт, Общественный транспорт",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ee24bc9e3a458a03a771866b4789e16ad71bf4cb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.16470588743686676,
+              "g": 0.46666666865348816,
+              "b": 0.9372549057006836,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#2A77EF"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "galaxy"
+        },
+        {
+          "id": "VariableID:7:992",
+          "name": "static_pfm-system/regulus",
+          "description": "Blue, Переводы с карты, Финансовые операции",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "12c5601e761c130baf2456e1689ada8b1a71bcf7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.1921568661928177,
+              "g": 0.5764706134796143,
+              "b": 0.9882352948188782,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#3193FC"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "regulus"
+        },
+        {
+          "id": "VariableID:7:993",
+          "name": "static_pfm-system/rigel",
+          "description": "Blue, Коммунальные услуги",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "96074b8522c3ba3fca6a71bebd246b2ade700c9a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.38823530077934265,
+              "g": 0.6666666865348816,
+              "b": 0.9921568632125854,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#63AAFD"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "rigel"
+        },
+        {
+          "id": "VariableID:7:994",
+          "name": "static_pfm-system/spica",
+          "description": "Blue",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "222cd24f88664eb72dd4425613d730fed311c562",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.5843137502670288,
+              "g": 0.7647058963775635,
+              "b": 0.9921568632125854,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#95C3FD"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "spica"
+        },
+        {
+          "id": "VariableID:7:995",
+          "name": "static_pfm-system/betelgeuse",
+          "description": "Indigo, Выдача наличных, Внесение наличных",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3449e3c88b0d9f3659abc7f257273424028d1808",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.49803921580314636,
+              "g": 0.4431372582912445,
+              "b": 0.9921568632125854,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#7F71FD"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "betelgeuse"
+        },
+        {
+          "id": "VariableID:7:996",
+          "name": "static_pfm-system/orcus",
+          "description": "Indigo, Штрафы и налоги, Инвестиции",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8051d1d6af04450812d218e21488ff3be6374534",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.6000000238418579,
+              "g": 0.545098066329956,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#998BFF"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "orcus"
+        },
+        {
+          "id": "VariableID:7:997",
+          "name": "static_pfm-system/pluto",
+          "description": "Indigo, Прочие расходы, Прочие расходы",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f79e50c820f01b4a20f3bc96775f833bb0677554",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.7019608020782471,
+              "g": 0.6666666865348816,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#B3AAFF"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "pluto"
+        },
+        {
+          "id": "VariableID:7:998",
+          "name": "static_pfm-system/mizar",
+          "description": "Purple, Развлечения",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7335cba09bc4b4195b5a3b2cdb6a62e99c7a23ab",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.729411780834198,
+              "g": 0.239215686917305,
+              "b": 0.8470588326454163,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#BA3DD8"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "mizar"
+        },
+        {
+          "id": "VariableID:7:999",
+          "name": "static_pfm-system/atlas",
+          "description": "Purple, Фастфуд, Премия",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74d8664a08a786e16d8df321c93214e30d6c9b30",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.8078431487083435,
+              "g": 0.3490196168422699,
+              "b": 0.9803921580314636,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#CE59FA"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "atlas"
+        },
+        {
+          "id": "VariableID:7:1000",
+          "name": "static_pfm-system/alcor",
+          "description": "Purple, Книги",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bf47c19d1ac8481aad9b0a20ad7a469b87cf8647",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.8470588326454163,
+              "g": 0.5176470875740051,
+              "b": 0.9960784316062927,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#D884FE"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "alcor"
+        },
+        {
+          "id": "VariableID:7:1001",
+          "name": "static_pfm-system/electra",
+          "description": "Purple,",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3f402ab87aa543c1f54668b10bc1a3931c69f7d1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.886274516582489,
+              "g": 0.6627451181411743,
+              "b": 0.9843137264251709,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#E2A9FB"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "electra"
+        },
+        {
+          "id": "VariableID:7:1002",
+          "name": "static_pfm-system/venus",
+          "description": "Fuchsia, Благотворительность",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8192bd9850afc86e563ef560d760939cfec68905",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9098039269447327,
+              "g": 0.21176470816135406,
+              "b": 0.6509804129600525,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#E836A6"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "venus"
+        },
+        {
+          "id": "VariableID:7:1003",
+          "name": "static_pfm-system/cupid",
+          "description": "Fuchsia, Семья и дети",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "49ec8811516a53a391940f646631dd5970c90e6a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9725490212440491,
+              "g": 0.3490196168422699,
+              "b": 0.772549033164978,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#F859C5"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "cupid"
+        },
+        {
+          "id": "VariableID:7:1004",
+          "name": "static_pfm-system/proxima",
+          "description": "Fuchsia,",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3fd3bb4d21f84eb1b4a6650f121a46d8b01efe8d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9921568632125854,
+              "g": 0.5372549295425415,
+              "b": 0.886274516582489,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FD89E2"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "proxima"
+        },
+        {
+          "id": "VariableID:7:1005",
+          "name": "static_pfm-system/apollo",
+          "description": "Magenta, Я не помню",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "47343c9902891eff3e740f8eb644854e056883f2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.8823529481887817,
+              "g": 0.12941177189350128,
+              "b": 0.4117647111415863,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#E12169"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "apollo"
+        },
+        {
+          "id": "VariableID:7:1006",
+          "name": "static_pfm-system/wezen",
+          "description": "Magenta, Хобби и увлечения, Пособия",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f7e9bad2e55c57fb06aa251f86935c26e7a2a3d6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9882352948188782,
+              "g": 0.23529411852359772,
+              "b": 0.545098066329956,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FC3C8B"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "wezen"
+        },
+        {
+          "id": "VariableID:7:1007",
+          "name": "static_pfm-system/maia",
+          "description": "Magenta, Красота",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0c28c1a571dd1d997821ff10a12ec00a0b7fdeaf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 1,
+              "g": 0.4470588266849518,
+              "b": 0.6352941393852234,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FF72A2"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "maia"
+        },
+        {
+          "id": "VariableID:7:1008",
+          "name": "static_pfm-system/andromeda",
+          "description": "Magenta, Ювелирные изделия",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "94ddff200ef2fb6926d31d193f8c17fea9bd664e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 1,
+              "g": 0.6313725709915161,
+              "b": 0.7372549176216125,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#FFA1BC"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "andromeda"
+        },
+        {
+          "id": "VariableID:7:1010",
+          "name": "static_pfm-system/voyager",
+          "description": "Neutral, Привилегии",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d6bfced812bbf21d3d168a2ac432f14b612c8068",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.37254902720451355,
+              "g": 0.37254902720451355,
+              "b": 0.4000000059604645,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#5F5F66"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "voyager"
+        },
+        {
+          "id": "VariableID:7:1011",
+          "name": "static_pfm-system/hubble",
+          "description": "Neutral,",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "474d804f8c12281e0aa4022a63eabec822c67c41",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.4588235318660736,
+              "g": 0.4588235318660736,
+              "b": 0.4901960790157318,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#75757D"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "hubble"
+        },
+        {
+          "id": "VariableID:7:1012",
+          "name": "static_pfm-system/tars",
+          "description": "Neutral, Остальное",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b855b6fb436d90cd89c3f6ce1b2604279779f587",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.6274510025978088,
+              "g": 0.6313725709915161,
+              "b": 0.6627451181411743,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#A0A1A9"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "tars"
+        },
+        {
+          "id": "VariableID:7:1013",
+          "name": "static_pfm-system/webb",
+          "description": "Neutral,",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "645bed23edf51f74da07f177547c72f4173c7972",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#BABBC2"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-system",
+          "tokenName": "webb"
+        },
+        {
+          "id": "VariableID:7:1014",
+          "name": "static_pfm-custom/red",
+          "description": "Пользовательский 1",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "484fa235890fc0b7a77a4140094886ade4d9f5d2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9254902005195618,
+              "g": 0.34117648005485535,
+              "b": 0.25882354378700256,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#EC5742"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:7:1015",
+          "name": "static_pfm-custom/orange",
+          "description": "Пользовательский 2",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0e9220269c86ac890fbef0384316eb910fa7e614",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9490196108818054,
+              "g": 0.6078431606292725,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#F29B3E"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:7:1016",
+          "name": "static_pfm-custom/yellow",
+          "description": "Пользовательский 3",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "748065a5ae8ee8729828a804ff83389e5d52ee15",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#F6D53D"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:7:1017",
+          "name": "static_pfm-custom/pistachio",
+          "description": "Пользовательский 4",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "07c83f36f28dcf7bd66d04f72c90091470c318f1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.5568627715110779,
+              "g": 0.7058823704719543,
+              "b": 0.23529411852359772,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#8EB43C"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:7:1018",
+          "name": "static_pfm-custom/jungle",
+          "description": "Пользовательский 5",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c7a159c3bc0c2b2ae7209dcda1579e123f50a08c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.250980406999588,
+              "g": 0.729411780834198,
+              "b": 0.5764706134796143,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#40BA93"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "jungle"
+        },
+        {
+          "id": "VariableID:7:1019",
+          "name": "static_pfm-custom/cyan",
+          "description": "Пользовательский 6",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "972b0104fabb3f324af03cd30b4849eefb13ebb4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.3176470696926117,
+              "g": 0.6941176652908325,
+              "b": 0.843137264251709,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#51B1D7"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "cyan"
+        },
+        {
+          "id": "VariableID:7:1020",
+          "name": "static_pfm-custom/blue",
+          "description": "Пользовательский 7",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6e4191f7e13c86982bc27df90a61da05449f559c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.4431372582912445,
+              "g": 0.6470588445663452,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#71A5F2"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:7:1021",
+          "name": "static_pfm-custom/indigo",
+          "description": "Пользовательский 8",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8f7ec37fa20f9b29286fa04c0a610833b646077f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.6078431606292725,
+              "g": 0.5843137502670288,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#9B95F2"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:7:1022",
+          "name": "static_pfm-custom/purple",
+          "description": "Пользовательский 9",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "915a05cca1ee57cfea50d0b737f204462eb7032a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.8156862854957581,
+              "g": 0.5254902243614197,
+              "b": 0.9254902005195618,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#D086EC"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "purple"
+        },
+        {
+          "id": "VariableID:7:1023",
+          "name": "static_pfm-custom/magenta",
+          "description": "Пользовательский 10",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "140530061ed667fe0fcf5ba60ec9c2941ea0e2b1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:957",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:0": {
+              "r": 0.9725490212440491,
+              "g": 0.47058823704719543,
+              "b": 0.6196078658103943,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:0": "#F8789E"
+          },
+          "collectionName": "PFM",
+          "groupName": "static_pfm-custom",
+          "tokenName": "magenta"
+        }
+      ]
+    }
+  ]
+}

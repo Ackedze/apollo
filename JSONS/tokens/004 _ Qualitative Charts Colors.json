@@ -1,0 +1,2269 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-30T10:17:55.819Z",
+    "fileName": "004 :: Qualitative Charts Colors",
+    "library": "004 :: Qualitative Charts Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:1045:786",
+      "name": "Qualitative Charts Dynamic",
+      "key": "89bd1c35fe76f5495560e06fabaed35458b69e68",
+      "defaultModeId": "1045:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "1045:0",
+          "name": "Light"
+        },
+        {
+          "modeId": "1045:1",
+          "name": "Dark"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:1045:787",
+          "name": "qualitative-flexible/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5c18c70049fe134cf63f5587032ec9d6244e4f03",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "1"
+        },
+        {
+          "id": "VariableID:1045:788",
+          "name": "qualitative-flexible/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "821c881cff8388b8917968d0040dc569768c6a52",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.3019607961177826,
+              "g": 0.4588235318660736,
+              "b": 0.8156862854957581,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.32549020648002625,
+              "g": 0.5333333611488342,
+              "b": 0.8784313797950745,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#4D75D0",
+            "1045:1": "#5388E0"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:1045:789",
+          "name": "qualitative-flexible/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "67c2b99d4f54f2ed35dcac11a71eb46482d4500d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9254902005195618,
+              "g": 0.34117648005485535,
+              "b": 0.25882354378700256,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9686274528503418,
+              "g": 0.40392157435417175,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#EC5742",
+            "1045:1": "#F76750"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "3"
+        },
+        {
+          "id": "VariableID:1045:790",
+          "name": "qualitative-flexible/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "77fee1c3d2903645a296243d23187be397019c29",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.13333334028720856,
+              "g": 0.5490196347236633,
+              "b": 0.40784314274787903,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.16470588743686676,
+              "g": 0.615686297416687,
+              "b": 0.45490196347236633,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#228C68",
+            "1045:1": "#2A9D74"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:1045:791",
+          "name": "qualitative-flexible/5",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e0b655977dc0d2a25c2b28a32251418e9c652624",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9490196108818054,
+              "g": 0.6078431606292725,
+              "b": 0.24313725531101227,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.658823549747467,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F29B3E",
+            "1045:1": "#F6A850"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "5"
+        },
+        {
+          "id": "VariableID:1045:792",
+          "name": "qualitative-flexible/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d086bcfe6109440253a0b5e9d2e05e1c803bb53f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6666666865348816,
+              "g": 0.32156863808631897,
+              "b": 0.7568627595901489,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.729411780834198,
+              "g": 0.38823530077934265,
+              "b": 0.8392156958580017,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#AA52C1",
+            "1045:1": "#BA63D6"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:1045:793",
+          "name": "qualitative-flexible/7",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ce8cd1c00bbbee849cca4b9513d1f6300dcdde66",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9725490212440491,
+              "g": 0.47058823704719543,
+              "b": 0.6196078658103943,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9882352948188782,
+              "g": 0.5607843399047852,
+              "b": 0.6901960968971252,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F8789E",
+            "1045:1": "#FC8FB0"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "7"
+        },
+        {
+          "id": "VariableID:1045:794",
+          "name": "qualitative-flexible/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3bc01b7ae475731280d389c79b42b281ee91c0b0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.2078431397676468,
+              "g": 0.5529412031173706,
+              "b": 0.26274511218070984,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.23137255012989044,
+              "g": 0.6196078658103943,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#358D43",
+            "1045:1": "#3B9E4D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:1045:795",
+          "name": "qualitative-flexible/9",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7e089ffd928f5e9490ff4909f70825f94e26c2cf",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.29019609093666077,
+              "g": 0.772549033164978,
+              "b": 0.7803921699523926,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4588235318660736,
+              "g": 0.8666666746139526,
+              "b": 0.8745098114013672,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#4AC5C7",
+            "1045:1": "#75DDDF"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "9"
+        },
+        {
+          "id": "VariableID:1045:796",
+          "name": "qualitative-flexible/10",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7aab032ff0e9235fd3f33947552d9fab907bcf7a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.48235294222831726,
+              "g": 0.3921568691730499,
+              "b": 0.8274509906768799,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#7B64D3",
+            "1045:1": "#8376E3"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "10"
+        },
+        {
+          "id": "VariableID:1045:797",
+          "name": "qualitative-flexible/11",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aec3c2a72bd07ced72ddc6d762049538b01ede9b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.3529411852359772,
+              "g": 0.7411764860153198,
+              "b": 0.4117647111415863,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4156862795352936,
+              "g": 0.7921568751335144,
+              "b": 0.47843137383461,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#5ABD69",
+            "1045:1": "#6ACA7A"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "11"
+        },
+        {
+          "id": "VariableID:1045:798",
+          "name": "qualitative-flexible/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bfa3c90ba435065b52599cfaec99c5fcb07c164e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.1411764770746231,
+              "g": 0.5098039507865906,
+              "b": 0.6352941393852234,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.20392157137393951,
+              "g": 0.572549045085907,
+              "b": 0.7254902124404907,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#2482A2",
+            "1045:1": "#3492B9"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:1045:799",
+          "name": "qualitative-flexible/13",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d22090e2ee75d2aac2d6803e06456e3b4f7c7239",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "13"
+        },
+        {
+          "id": "VariableID:1045:800",
+          "name": "qualitative-flexible/14",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "98ded9b2130867198e88daf6d0b376a0737c91f9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.8549019694328308,
+              "g": 0.3333333432674408,
+              "b": 0.7058823704719543,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9490196108818054,
+              "g": 0.47058823704719543,
+              "b": 0.7921568751335144,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#DA55B4",
+            "1045:1": "#F278CA"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-flexible",
+          "tokenName": "14"
+        },
+        {
+          "id": "VariableID:1045:801",
+          "name": "qualitative-monocolor/red",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c264f3585815efeaa9bf3de538f8eecd628eed6c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FF4837",
+            "1045:1": "#FE5E48"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "red"
+        },
+        {
+          "id": "VariableID:1045:802",
+          "name": "qualitative-monocolor/orange",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "205e68e22ca6eacb6490624bfd77e5c69dad5dc3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "orange"
+        },
+        {
+          "id": "VariableID:1045:803",
+          "name": "qualitative-monocolor/yellow",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0d93cc2bd06f5c2323fd2de38469cc7c75e81657",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "yellow"
+        },
+        {
+          "id": "VariableID:1045:804",
+          "name": "qualitative-monocolor/pistachio",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "73be8dbbb694a4f632f8c7e5bfa5795d53276f7b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "pistachio"
+        },
+        {
+          "id": "VariableID:1045:805",
+          "name": "qualitative-monocolor/green",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ae76be12b19392e617d18d6f00afb9dc4283e193",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#0CC44D",
+            "1045:1": "#17D055"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "green"
+        },
+        {
+          "id": "VariableID:1045:806",
+          "name": "qualitative-monocolor/teal",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "625b2697584524a4ee7fb1136eee85c70d29a1b6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.07450980693101883,
+              "g": 0.6117647290229797,
+              "b": 0.6000000238418579,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.21568627655506134,
+              "g": 0.7254902124404907,
+              "b": 0.7333333492279053,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#139C99",
+            "1045:1": "#37B9BB"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "teal"
+        },
+        {
+          "id": "VariableID:1045:807",
+          "name": "qualitative-monocolor/blue",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8863d8699ae938810697729e386ee47d8daab657",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.32549020648002625,
+              "g": 0.5333333611488342,
+              "b": 0.8784313797950745,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4431372582912445,
+              "g": 0.6470588445663452,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#5388E0",
+            "1045:1": "#71A5F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "blue"
+        },
+        {
+          "id": "VariableID:1045:808",
+          "name": "qualitative-monocolor/indigo",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "356593f1201c0ce3561075f7614770cebc33093b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6078431606292725,
+              "g": 0.5843137502670288,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#8376E3",
+            "1045:1": "#9B95F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "indigo"
+        },
+        {
+          "id": "VariableID:1045:809",
+          "name": "qualitative-monocolor/magenta",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ddc4df9448520699a1acb66f4e3f056e6ff95589",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.8901960849761963,
+              "g": 0.3333333432674408,
+              "b": 0.5137255191802979,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9725490212440491,
+              "g": 0.47058823704719543,
+              "b": 0.6196078658103943,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#E35583",
+            "1045:1": "#F8789E"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-monocolor",
+          "tokenName": "magenta"
+        },
+        {
+          "id": "VariableID:1045:810",
+          "name": "qualitative-duocolor/set-a/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bd8fa6660a924e23528fbac8c7c4f7821efe7c28",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#0CC44D",
+            "1045:1": "#17D055"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-a/1"
+        },
+        {
+          "id": "VariableID:1045:811",
+          "name": "qualitative-duocolor/set-a/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7cb3195e5dc6dfef32552e88b642e2dd7605fb5a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FF4837",
+            "1045:1": "#FE5E48"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-a/2"
+        },
+        {
+          "id": "VariableID:1045:812",
+          "name": "qualitative-duocolor/set-b/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "58664764ba19caa4368a10eeb93c253869fdaf3e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.0470588244497776,
+              "g": 0.7686274647712708,
+              "b": 0.3019607961177826,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.09019608050584793,
+              "g": 0.8156862854957581,
+              "b": 0.3333333432674408,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#0CC44D",
+            "1045:1": "#17D055"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-b/1"
+        },
+        {
+          "id": "VariableID:1045:813",
+          "name": "qualitative-duocolor/set-b/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "18b35db557c24329f27d25f2bba6f6ad5b3bc637",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-b/2"
+        },
+        {
+          "id": "VariableID:1045:814",
+          "name": "qualitative-duocolor/set-c/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7e0ec118d1ad72a53a8c28cd11d01d18b4f1ccfe",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.32549020648002625,
+              "g": 0.5333333611488342,
+              "b": 0.8784313797950745,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4431372582912445,
+              "g": 0.6470588445663452,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#5388E0",
+            "1045:1": "#71A5F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-c/1"
+        },
+        {
+          "id": "VariableID:1045:815",
+          "name": "qualitative-duocolor/set-c/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5bd856dd1ac7a3231f03b63d092f916ca33f10e0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-c/2"
+        },
+        {
+          "id": "VariableID:1045:816",
+          "name": "qualitative-duocolor/set-d/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9ae78c01f1d66a58b22721d555817157a261ae4c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-d/1"
+        },
+        {
+          "id": "VariableID:1045:817",
+          "name": "qualitative-duocolor/set-d/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2a97ca0931b130358a659032eaafe01dd10cef94",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6078431606292725,
+              "g": 0.5843137502670288,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#8376E3",
+            "1045:1": "#9B95F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-d/2"
+        },
+        {
+          "id": "VariableID:1045:818",
+          "name": "qualitative-duocolor/set-e/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2976c6ae63f21747bcc12dbd7c24d6ae47040487",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.07450980693101883,
+              "g": 0.6117647290229797,
+              "b": 0.6000000238418579,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.21568627655506134,
+              "g": 0.7254902124404907,
+              "b": 0.7333333492279053,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#139C99",
+            "1045:1": "#37B9BB"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-e/1"
+        },
+        {
+          "id": "VariableID:1045:819",
+          "name": "qualitative-duocolor/set-e/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "00c05eec36344f84c11885dd5d51ef57ef06ba1f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-e/2"
+        },
+        {
+          "id": "VariableID:1045:820",
+          "name": "qualitative-duocolor/set-f/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9b2677bbc3822b9fdeb1d5fce1858eb86d968c55",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-f/1"
+        },
+        {
+          "id": "VariableID:1045:821",
+          "name": "qualitative-duocolor/set-f/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7cb2872b044f274b150848b21f1a633cd384a258",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6078431606292725,
+              "g": 0.5843137502670288,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#8376E3",
+            "1045:1": "#9B95F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-f/2"
+        },
+        {
+          "id": "VariableID:1045:822",
+          "name": "qualitative-duocolor/set-g/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ceae4e0f121b5f2f539694d76f43d597814d8c69",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-g/1"
+        },
+        {
+          "id": "VariableID:1045:823",
+          "name": "qualitative-duocolor/set-g/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ba8206170c70f702be0a4c8f854c7162d7f66041",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.729411780834198,
+              "g": 0.38823530077934265,
+              "b": 0.8392156958580017,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.8156862854957581,
+              "g": 0.5254902243614197,
+              "b": 0.9254902005195618,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#BA63D6",
+            "1045:1": "#D086EC"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-duocolor",
+          "tokenName": "set-g/2"
+        },
+        {
+          "id": "VariableID:1045:824",
+          "name": "qualitative-tricolor/set-a/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "51742fe7165824977123711b4e42ea6c3a6deff3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-a/1"
+        },
+        {
+          "id": "VariableID:1045:825",
+          "name": "qualitative-tricolor/set-a/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0c36f2c8417f7ea996f1f3f97167d78b37630456",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6078431606292725,
+              "g": 0.5843137502670288,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#8376E3",
+            "1045:1": "#9B95F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-a/2"
+        },
+        {
+          "id": "VariableID:1045:826",
+          "name": "qualitative-tricolor/set-a/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a32fe1517bc1f74fbb1799a3dcd5de79d07676a5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-a/3"
+        },
+        {
+          "id": "VariableID:1045:827",
+          "name": "qualitative-tricolor/set-b/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "92503bfd5e3eeeb4fac78f80008eeb02864c9e3b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.250980406999588,
+              "g": 0.729411780834198,
+              "b": 0.5764706134796143,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#40BA93",
+            "1045:1": "#53C9A4"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-b/1"
+        },
+        {
+          "id": "VariableID:1045:828",
+          "name": "qualitative-tricolor/set-b/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6029e4efadca5d3ae24c3ee4b510dd377453433f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.729411780834198,
+              "g": 0.38823530077934265,
+              "b": 0.8392156958580017,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.8156862854957581,
+              "g": 0.5254902243614197,
+              "b": 0.9254902005195618,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#BA63D6",
+            "1045:1": "#D086EC"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-b/2"
+        },
+        {
+          "id": "VariableID:1045:829",
+          "name": "qualitative-tricolor/set-b/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "975565302c664b82eb18cc51624d23fce8283c50",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-b/3"
+        },
+        {
+          "id": "VariableID:1045:830",
+          "name": "qualitative-tricolor/set-c/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7e1702a367c5691d970bd044c27b2d30a2314503",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FF4837",
+            "1045:1": "#FE5E48"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-c/1"
+        },
+        {
+          "id": "VariableID:1045:831",
+          "name": "qualitative-tricolor/set-c/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4797bced3d51c52c6471448478a1115688b2cdd7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.07450980693101883,
+              "g": 0.6117647290229797,
+              "b": 0.6000000238418579,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.21568627655506134,
+              "g": 0.7254902124404907,
+              "b": 0.7333333492279053,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#139C99",
+            "1045:1": "#37B9BB"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-c/2"
+        },
+        {
+          "id": "VariableID:1045:832",
+          "name": "qualitative-tricolor/set-c/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "afeec3436004fcfa9a58448ad2ae2243da647df2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-c/3"
+        },
+        {
+          "id": "VariableID:1045:833",
+          "name": "qualitative-tricolor/set-d/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d46d17599f209a074b72604eec6177145229f50f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.6117647290229797,
+              "g": 0.7647058963775635,
+              "b": 0.3137255012989044,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#9CC350",
+            "1045:1": "#9CC350"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-d/1"
+        },
+        {
+          "id": "VariableID:1045:834",
+          "name": "qualitative-tricolor/set-d/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e4216bc48d8c13339e2015c6984c509d3ff820a4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.32549020648002625,
+              "g": 0.5333333611488342,
+              "b": 0.8784313797950745,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4431372582912445,
+              "g": 0.6470588445663452,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#5388E0",
+            "1045:1": "#71A5F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-d/2"
+        },
+        {
+          "id": "VariableID:1045:835",
+          "name": "qualitative-tricolor/set-d/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "be805a7d4af2e6ca99370fb2ed35b7b7994c8922",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FF4837",
+            "1045:1": "#FE5E48"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-d/3"
+        },
+        {
+          "id": "VariableID:1045:836",
+          "name": "qualitative-tricolor/set-e/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a4d471ca0f1d544c2d5d36469cd3b98b2d2c6df2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-e/1"
+        },
+        {
+          "id": "VariableID:1045:837",
+          "name": "qualitative-tricolor/set-e/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b2abb47233f904cf0484150d71fb6c52e753b249",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.32549020648002625,
+              "g": 0.5333333611488342,
+              "b": 0.8784313797950745,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.4431372582912445,
+              "g": 0.6470588445663452,
+              "b": 0.9490196108818054,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#5388E0",
+            "1045:1": "#71A5F2"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-e/2"
+        },
+        {
+          "id": "VariableID:1045:838",
+          "name": "qualitative-tricolor/set-e/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8ab1408de2828d38ab15e2e6d314068a4bd9431c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tricolor",
+          "tokenName": "set-e/3"
+        },
+        {
+          "id": "VariableID:1045:839",
+          "name": "qualitative-tetracolor/set-a/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "37e49bb84919bce4f4079970161dbfcd0a06b98e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.1411764770746231,
+              "g": 0.5098039507865906,
+              "b": 0.6352941393852234,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.20392157137393951,
+              "g": 0.572549045085907,
+              "b": 0.7254902124404907,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#2482A2",
+            "1045:1": "#3492B9"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-a/1"
+        },
+        {
+          "id": "VariableID:1045:840",
+          "name": "qualitative-tetracolor/set-a/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9a02a35ce95eeb09d88ab2d0da61ad0dd9f4e8e6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.250980406999588,
+              "g": 0.729411780834198,
+              "b": 0.5764706134796143,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#40BA93",
+            "1045:1": "#53C9A4"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-a/2"
+        },
+        {
+          "id": "VariableID:1045:841",
+          "name": "qualitative-tetracolor/set-a/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "770b2ea803f476f37e0545229576e3e0e4681c14",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6666666865348816,
+              "g": 0.32156863808631897,
+              "b": 0.7568627595901489,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.729411780834198,
+              "g": 0.38823530077934265,
+              "b": 0.8392156958580017,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#AA52C1",
+            "1045:1": "#BA63D6"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-a/3"
+        },
+        {
+          "id": "VariableID:1045:842",
+          "name": "qualitative-tetracolor/set-a/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8cdb78c72076b3d4931c154d8d16b1e8d63af002",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#F6D53D"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-a/4"
+        },
+        {
+          "id": "VariableID:1045:843",
+          "name": "qualitative-tetracolor/set-b/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f49d00986599d7519dd62926a9d547951ba0eaa0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.48235294222831726,
+              "g": 0.3921568691730499,
+              "b": 0.8274509906768799,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.5137255191802979,
+              "g": 0.4627451002597809,
+              "b": 0.8901960849761963,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#7B64D3",
+            "1045:1": "#8376E3"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-b/1"
+        },
+        {
+          "id": "VariableID:1045:844",
+          "name": "qualitative-tetracolor/set-b/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d0ea57dfdb63ac71c033e2fdf9f197661ffcf815",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.250980406999588,
+              "g": 0.729411780834198,
+              "b": 0.5764706134796143,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#40BA93",
+            "1045:1": "#53C9A4"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-b/2"
+        },
+        {
+          "id": "VariableID:1045:845",
+          "name": "qualitative-tetracolor/set-b/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ff259a3975688f1085be209c01100cfc6070a5aa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.1411764770746231,
+              "g": 0.5098039507865906,
+              "b": 0.6352941393852234,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.20392157137393951,
+              "g": 0.572549045085907,
+              "b": 0.7254902124404907,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#2482A2",
+            "1045:1": "#3492B9"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-b/3"
+        },
+        {
+          "id": "VariableID:1045:846",
+          "name": "qualitative-tetracolor/set-b/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ce1a4f57bfc43cbc968e94eef212eac5ff7cc84c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9921568632125854,
+              "g": 0.6313725709915161,
+              "b": 0.21176470816135406,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FDA136",
+            "1045:1": "#FDA136"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-b/4"
+        },
+        {
+          "id": "VariableID:1045:847",
+          "name": "qualitative-tetracolor/set-c/1",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "95d471d0211896379c868946a017ac40be5435cc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.6666666865348816,
+              "g": 0.32156863808631897,
+              "b": 0.7568627595901489,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.729411780834198,
+              "g": 0.38823530077934265,
+              "b": 0.8392156958580017,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#AA52C1",
+            "1045:1": "#BA63D6"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-c/1"
+        },
+        {
+          "id": "VariableID:1045:848",
+          "name": "qualitative-tetracolor/set-c/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c78037b0072082a7a6051bfbc574bab01f36db68",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.250980406999588,
+              "g": 0.729411780834198,
+              "b": 0.5764706134796143,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.32549020648002625,
+              "g": 0.7882353067398071,
+              "b": 0.6431372761726379,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#40BA93",
+            "1045:1": "#53C9A4"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-c/2"
+        },
+        {
+          "id": "VariableID:1045:849",
+          "name": "qualitative-tetracolor/set-c/3",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fda18567814cbffd712cff31fc4258f6646e1d2b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 0.9647058844566345,
+              "g": 0.8352941274642944,
+              "b": 0.239215686917305,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9843137264251709,
+              "g": 0.8745098114013672,
+              "b": 0.3843137323856354,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#F6D53D",
+            "1045:1": "#FBDF62"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-c/3"
+        },
+        {
+          "id": "VariableID:1045:850",
+          "name": "qualitative-tetracolor/set-c/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "050ae7651bcad9cf55e6484d15c9bfb8057985a9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:1045:786",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "1045:0": {
+              "r": 1,
+              "g": 0.2823529541492462,
+              "b": 0.21568627655506134,
+              "a": 1
+            },
+            "1045:1": {
+              "r": 0.9960784316062927,
+              "g": 0.3686274588108063,
+              "b": 0.2823529541492462,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "1045:0": "#FF4837",
+            "1045:1": "#FE5E48"
+          },
+          "collectionName": "Qualitative Charts Dynamic",
+          "groupName": "qualitative-tetracolor",
+          "tokenName": "set-c/4"
+        }
+      ]
+    }
+  ]
+}

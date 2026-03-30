@@ -1,0 +1,2689 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-30T10:28:44.006Z",
+    "fileName": "Monochrome Dynamic",
+    "library": "Monochrome Dynamic"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:2:696",
+      "name": "Monochrome Dynamic",
+      "key": "b2f2f4cdedb71b8e615d014c82a53c2f5341363f",
+      "defaultModeId": "2:1",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "2:1",
+          "name": "Light"
+        },
+        {
+          "modeId": "2:2",
+          "name": "Dark"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:2:697",
+          "name": "monochrome-white/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5731102623dd04a6d8305c996c04214f70912a4c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.019999999552965164
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.019999999552965164
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:2:698",
+          "name": "monochrome-white/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2e8d14ce06c70a479f1dc9be5f3bc93bc207d130",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.03999999910593033
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.03999999910593033
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:2:699",
+          "name": "monochrome-white/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0b5b989a3952f3c3f722bccb178ae3eaaf04c2e1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.05999999865889549
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:2:700",
+          "name": "monochrome-white/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f85a11dd591f70d030646d208b2a475713ea8e80",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.07999999821186066
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:2:701",
+          "name": "monochrome-white/10",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "968a37844fa7ef856862fd71ae363c088600c242",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.10000000149011612
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "10"
+        },
+        {
+          "id": "VariableID:3:53147",
+          "name": "monochrome-white/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "69ea0d9785dfdd6e31ef9569f8e776e6d401769b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.11999999731779099
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.11999999731779099
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:2:702",
+          "name": "monochrome-white/16",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a7f7df3dfac2cf7ab807ac9faf344d4a11595c0d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.1599999964237213
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.1599999964237213
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:2:703",
+          "name": "monochrome-white/20",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5fb8801a1cff7b301e6e4ec4b67809e0bc05726a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.20000000298023224
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.20000000298023224
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:25:6817",
+          "name": "monochrome-white/24",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a68c8f470ee5b989fa60795d1dfc9cb5def77529",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.23999999463558197
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.23999999463558197
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "24"
+        },
+        {
+          "id": "VariableID:3:53146",
+          "name": "monochrome-white/32",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dd8e5457ec9cc3b1d62411190e77b92e2d2fb2db",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.3199999928474426
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3199999928474426
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "32"
+        },
+        {
+          "id": "VariableID:2:705",
+          "name": "monochrome-white/40",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "22b69d2b03aff2d4d45ff3ff9cf616c2d0b9d4f3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4000000059604645
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4000000059604645
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:2:52539",
+          "name": "monochrome-white/44",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b1db53723132ef99c0c2973148c6ad7fbd10d347",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4399999976158142
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4399999976158142
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "44"
+        },
+        {
+          "id": "VariableID:3:53144",
+          "name": "monochrome-white/48",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4d1d8b6f81a75d0c0cd157b78179a314f7aa7b74",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.47999998927116394
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.47999998927116394
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:2:706",
+          "name": "monochrome-white/56",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5fc1f7f4c506a0a26b5e6b3bd473892d44342c19",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.5600000023841858
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.5600000023841858
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "56"
+        },
+        {
+          "id": "VariableID:3:53145",
+          "name": "monochrome-white/64",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "79d7ead5c2addde78a53796b1398ba06a4a9fec9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6399999856948853
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.6399999856948853
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "64"
+        },
+        {
+          "id": "VariableID:2:708",
+          "name": "monochrome-white/72",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "65a74181aaafb4b331c154379478b50757b2e419",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.7200000286102295
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.7200000286102295
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "72"
+        },
+        {
+          "id": "VariableID:2:709",
+          "name": "monochrome-white/80",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7425af775076ed8ed27b3e0d48c2992485271f8f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.800000011920929
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.800000011920929
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "80"
+        },
+        {
+          "id": "VariableID:2:710",
+          "name": "monochrome-white/88",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bdf2b3d8232fd462f1fca91686fa8dfad42cce4c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.8799999952316284
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "88"
+        },
+        {
+          "id": "VariableID:2:711",
+          "name": "monochrome-white/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e80afa8ebdc41160ef014ca11e499ebac2260fcc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:25:6839",
+          "name": "monochrome-white_inverted/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fb6d0f2f2d7ad955c17afb096014e34a74452629",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.019999999552965164
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.019999999552965164
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:25:6840",
+          "name": "monochrome-white_inverted/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6f36530d42b7640d5ecd79ad8343635448c170dc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.03999999910593033
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.03999999910593033
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:25:6841",
+          "name": "monochrome-white_inverted/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2663504c3e8597b1e299dcd5c5c447ec1506c885",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05999999865889549
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:25:6842",
+          "name": "monochrome-white_inverted/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8431910a35bb8ca37a571109d78bc52c30195e2c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.07999999821186066
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:25:6843",
+          "name": "monochrome-white_inverted/10",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c43c933c9044c26d5d9ea7ebf442fc1fd9375c59",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.10000000149011612
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "10"
+        },
+        {
+          "id": "VariableID:25:6844",
+          "name": "monochrome-white_inverted/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dc89dfc03ef9306037a588ec00d1192c08588322",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.11999999731779099
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.11999999731779099
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:25:6845",
+          "name": "monochrome-white_inverted/16",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b0e8f21e3ad2dbdfd05b0882b45d68250333c5ca",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.1599999964237213
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.1599999964237213
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:25:6846",
+          "name": "monochrome-white_inverted/20",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "142e7ea9659c909ef8a507252ca378614a5a82de",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.20000000298023224
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.20000000298023224
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:25:6847",
+          "name": "monochrome-white_inverted/24",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2169e1a087956c38b13eb11c94667741f09df33a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.23999999463558197
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.23999999463558197
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "24"
+        },
+        {
+          "id": "VariableID:25:6848",
+          "name": "monochrome-white_inverted/32",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7c751418eb1be2a4f78738d1c22ba762b3dd2fe7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3199999928474426
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.3199999928474426
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "32"
+        },
+        {
+          "id": "VariableID:25:6849",
+          "name": "monochrome-white_inverted/40",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "55be09d9de2ebb60de035d1b9b4b43749d660fcc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4000000059604645
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4000000059604645
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:25:6850",
+          "name": "monochrome-white_inverted/44",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "81affb55084d592949bf68dbf207bf49be1db1e1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4399999976158142
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4399999976158142
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "44"
+        },
+        {
+          "id": "VariableID:25:6851",
+          "name": "monochrome-white_inverted/48",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "179ee02c19de71982c98a4b896c1da5a4ad95ca5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.47999998927116394
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.47999998927116394
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:25:6852",
+          "name": "monochrome-white_inverted/56",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d5723d33409031346f2543b365f3456179d49fa9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.5600000023841858
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.5600000023841858
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "56"
+        },
+        {
+          "id": "VariableID:25:6853",
+          "name": "monochrome-white_inverted/64",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aead4e663ae27cde89ed731dfdd1031d86685847",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.6399999856948853
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6399999856948853
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "64"
+        },
+        {
+          "id": "VariableID:25:6854",
+          "name": "monochrome-white_inverted/72",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "eeef6e77aebdb07853b48d7fe25cb836855476b2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.7200000286102295
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.7200000286102295
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "72"
+        },
+        {
+          "id": "VariableID:25:6855",
+          "name": "monochrome-white_inverted/80",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "df97cf3113ac8512a7694c10f69a84df7320f7d2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.800000011920929
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.800000011920929
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "80"
+        },
+        {
+          "id": "VariableID:25:6856",
+          "name": "monochrome-white_inverted/88",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "448512fa069ca46623b39cfe5011b206da5afa59",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.8799999952316284
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "88"
+        },
+        {
+          "id": "VariableID:25:6857",
+          "name": "monochrome-white_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "41a2ce1166741a111cd775d88ca04929226e4023",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-white_inverted",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:25:6858",
+          "name": "monochrome-black/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2c3e16788d53a4b7f778ea94e3b9cdac1987a8b9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.019999999552965164
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.019999999552965164
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:25:6859",
+          "name": "monochrome-black/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "971036e064eb1f0f46d19068015aa865a342399b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.03999999910593033
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.03999999910593033
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:25:6860",
+          "name": "monochrome-black/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "288858c4414b61c40104f04744c1b3b6369a3c88",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05999999865889549
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:25:6861",
+          "name": "monochrome-black/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d59f5b94640db579ea2861b7ff9b999c009dab9a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.07999999821186066
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:25:6862",
+          "name": "monochrome-black/10",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e6706c4d13131651b370506f4190e647b0d5958b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.10000000149011612
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "10"
+        },
+        {
+          "id": "VariableID:25:6863",
+          "name": "monochrome-black/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ee5056210ba0d046f48d90f9cfd863c7a801c15e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.11999999731779099
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.11999999731779099
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:25:6864",
+          "name": "monochrome-black/16",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7794c062c5a2bb131d490ae252d3551372a00de0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.1599999964237213
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.1599999964237213
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:25:6865",
+          "name": "monochrome-black/20",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b9facbbb11879d09f8f2773008de0371294bf3f5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.20000000298023224
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.20000000298023224
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:25:6866",
+          "name": "monochrome-black/24",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c427f09349b76e8f2a9afe5e1a0b22b2ef44ebf6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.23999999463558197
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.23999999463558197
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "24"
+        },
+        {
+          "id": "VariableID:25:6867",
+          "name": "monochrome-black/32",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0618b6277ca69d78705fe23f029e4aa34286f7f0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3199999928474426
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.3199999928474426
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "32"
+        },
+        {
+          "id": "VariableID:25:6868",
+          "name": "monochrome-black/40",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "16f72dd8bc77e3e48dcb16667e38e274c8d91552",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4000000059604645
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4000000059604645
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:25:6869",
+          "name": "monochrome-black/44",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0e038a83ec5e3d7fa0763a7e88a2731f470775ba",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4399999976158142
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4399999976158142
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "44"
+        },
+        {
+          "id": "VariableID:25:6870",
+          "name": "monochrome-black/48",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "287fdbb8885e1a6c46ccc52170bb897becdb6c90",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.47999998927116394
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.47999998927116394
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:25:6871",
+          "name": "monochrome-black/56",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "02190ff3809db0f15f0b78956184fa6d5a073e59",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.5600000023841858
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.5600000023841858
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "56"
+        },
+        {
+          "id": "VariableID:25:6872",
+          "name": "monochrome-black/64",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7905d64809f4fc25af5093907f71ba81558d0a7a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.6399999856948853
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6399999856948853
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "64"
+        },
+        {
+          "id": "VariableID:25:6873",
+          "name": "monochrome-black/72",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74c2a1ec8619d6c4646d44cb5ab1fc4a02a45c59",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.7200000286102295
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.7200000286102295
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "72"
+        },
+        {
+          "id": "VariableID:25:6874",
+          "name": "monochrome-black/80",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f9169777e55f1fd78d907b90623fc6e3414ce477",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.800000011920929
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.800000011920929
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "80"
+        },
+        {
+          "id": "VariableID:25:6875",
+          "name": "monochrome-black/88",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "73424df842a641820bb013f6e6217d04cabe4934",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.8799999952316284
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "88"
+        },
+        {
+          "id": "VariableID:25:6876",
+          "name": "monochrome-black/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "11b94a696c8a1f24b67d143c06654a5e731da610",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            },
+            "2:2": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:1": "#000000",
+            "2:2": "#FFFFFF"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black",
+          "tokenName": "100"
+        },
+        {
+          "id": "VariableID:25:6877",
+          "name": "monochrome-black_inverted/2",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "26d9e3340e3e3722d16af823beb263f4f848a623",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.019999999552965164
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.019999999552965164
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "2"
+        },
+        {
+          "id": "VariableID:25:6878",
+          "name": "monochrome-black_inverted/4",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "573ddc9a4242b7ed3118a2f16af0d0110cd3a4bc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.03999999910593033
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.03999999910593033
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "4"
+        },
+        {
+          "id": "VariableID:25:6879",
+          "name": "monochrome-black_inverted/6",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "94ae8b472b1b501785f5d80dd8cc1611f41029eb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.05999999865889549
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "6"
+        },
+        {
+          "id": "VariableID:25:6880",
+          "name": "monochrome-black_inverted/8",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4af6ad1678f40adef80ad3a4cf6d3c935a36d9eb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.07999999821186066
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "8"
+        },
+        {
+          "id": "VariableID:25:6881",
+          "name": "monochrome-black_inverted/10",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0a1ef188b231f0726a51e0592b8c31439e900b89",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.10000000149011612
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "10"
+        },
+        {
+          "id": "VariableID:25:6882",
+          "name": "monochrome-black_inverted/12",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3b575029337a01ad345c844a96a2bfb2a52fb93a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.11999999731779099
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.11999999731779099
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "12"
+        },
+        {
+          "id": "VariableID:25:6883",
+          "name": "monochrome-black_inverted/16",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7f83ddcefb84568febd9899a96734274a334bf41",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.1599999964237213
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.1599999964237213
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "16"
+        },
+        {
+          "id": "VariableID:25:6884",
+          "name": "monochrome-black_inverted/20",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b26ad7b12a9ca36341a9da3ffafc4a7bbea654d9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.20000000298023224
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.20000000298023224
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "20"
+        },
+        {
+          "id": "VariableID:25:6885",
+          "name": "monochrome-black_inverted/24",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c153f46f446e9fed02cf33fcae70037768b19330",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.23999999463558197
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.23999999463558197
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "24"
+        },
+        {
+          "id": "VariableID:25:6886",
+          "name": "monochrome-black_inverted/32",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9addaccb7ac060c65d359ae6b6ac4be46b08f32d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.3199999928474426
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.3199999928474426
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "32"
+        },
+        {
+          "id": "VariableID:25:6887",
+          "name": "monochrome-black_inverted/40",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ed0a6fe7f3306a5e1c76483210c32872705e62ec",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4000000059604645
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4000000059604645
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "40"
+        },
+        {
+          "id": "VariableID:25:6888",
+          "name": "monochrome-black_inverted/44",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aff5b0f111545046989438ceece37629a131c542",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.4399999976158142
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.4399999976158142
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "44"
+        },
+        {
+          "id": "VariableID:25:6889",
+          "name": "monochrome-black_inverted/48",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e21a066a5e3c09596985f949d3d8c4b4afc47c1f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.47999998927116394
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.47999998927116394
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "48"
+        },
+        {
+          "id": "VariableID:25:6890",
+          "name": "monochrome-black_inverted/56",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5a6b9b4f4137edae00d80e3098d48bbf29d6ef3c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.5600000023841858
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.5600000023841858
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "56"
+        },
+        {
+          "id": "VariableID:25:6891",
+          "name": "monochrome-black_inverted/64",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "244c379ea65d4a3feee09d59a76053c06125649c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6399999856948853
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.6399999856948853
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "64"
+        },
+        {
+          "id": "VariableID:25:6892",
+          "name": "monochrome-black_inverted/72",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5cc0dfea19cca2003793a3156082ab4268de9ed8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.7200000286102295
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.7200000286102295
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "72"
+        },
+        {
+          "id": "VariableID:25:6893",
+          "name": "monochrome-black_inverted/80",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0286c7e125545b09467f47a59cb5ee4267cff400",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.800000011920929
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.800000011920929
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "80"
+        },
+        {
+          "id": "VariableID:25:6894",
+          "name": "monochrome-black_inverted/88",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c9dd5754cbf71dd64bd9b1d8bbc84656b9bd7621",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.8799999952316284
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.8799999952316284
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "88"
+        },
+        {
+          "id": "VariableID:25:6895",
+          "name": "monochrome-black_inverted/100",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fdc39e485eebd7285df26c4344f746d132e428b4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:2:696",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "2:1": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 1
+            },
+            "2:2": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "2:1": "#FFFFFF",
+            "2:2": "#000000"
+          },
+          "collectionName": "Monochrome Dynamic",
+          "groupName": "monochrome-black_inverted",
+          "tokenName": "100"
+        }
+      ]
+    }
+  ]
+}

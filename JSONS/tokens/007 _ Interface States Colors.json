@@ -1,0 +1,3049 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-30T10:20:15.377Z",
+    "fileName": "007 :: Interface States Colors",
+    "library": "007 :: Interface States Colors"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:868:9636",
+      "name": "Interface Static States",
+      "key": "5a9839c46a5c2c0733f2c621c9c5c0530be246b7",
+      "defaultModeId": "868:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "868:0",
+          "name": "BlueTint Static"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:1484:13703",
+          "name": "static_text/primary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "21b846fb129b5cc74c70640480990399b35faaa2",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.003921568859368563,
+              "g": 0.003921568859368563,
+              "b": 0.0470588244497776,
+              "a": 0.6299999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#01010C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "primary/hover"
+        },
+        {
+          "id": "VariableID:1484:13704",
+          "name": "static_text/primary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5c4f2743824f55c3be279d4ac87126f85d074beb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040413"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "primary/press"
+        },
+        {
+          "id": "VariableID:1580:19436",
+          "name": "static_text/secondary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "45b2d17a85817ca789dca4f749d7443b5013eb2d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.003921568859368563,
+              "g": 0.003921568859368563,
+              "b": 0.0470588244497776,
+              "a": 0.6299999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#01010C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "secondary/hover"
+        },
+        {
+          "id": "VariableID:1580:19437",
+          "name": "static_text/secondary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "257ed387b1ac258d8cb4e13df2aec4f34bf7664d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0,
+              "g": 0,
+              "b": 0.03921568766236305,
+              "a": 0.7099999785423279
+            }
+          },
+          "hexByMode": {
+            "868:0": "#00000A"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "secondary/press"
+        },
+        {
+          "id": "VariableID:1580:19588",
+          "name": "static_text/tertiary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f05639fddaa097e6c882bd95691c2627907df5f0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.08235294371843338,
+              "a": 0.4699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040415"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "tertiary/hover"
+        },
+        {
+          "id": "VariableID:1580:19589",
+          "name": "static_text/tertiary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b9ca2f793177960b03eac36d45b6e26800881851",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040413"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "tertiary/press"
+        },
+        {
+          "id": "VariableID:1612:16643",
+          "name": "static_text/positive/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "36bd13e7f4d5b846315d442eac4bf3baaaad9610",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.03921568766236305,
+              "g": 0.4901960790157318,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0A7D2C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "positive/hover"
+        },
+        {
+          "id": "VariableID:1612:16644",
+          "name": "static_text/positive/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9da08917534f8c7436c479f120a63f6d45238a73",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.0117647061124444,
+              "g": 0.4000000059604645,
+              "b": 0.14509804546833038,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#036625"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "positive/press"
+        },
+        {
+          "id": "VariableID:1612:16647",
+          "name": "static_text/attention/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bc5ba98dc85efcd98d07c7e434334899419a862c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8352941274642944,
+              "g": 0.4431372582912445,
+              "b": 0.06666667014360428,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D57111"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "attention/hover"
+        },
+        {
+          "id": "VariableID:1612:16648",
+          "name": "static_text/attention/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "451ec6a6d180ef6800aa22a9948d27781526a5fa",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.7058823704719543,
+              "g": 0.3529411852359772,
+              "b": 0.0235294122248888,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#B45A06"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "attention/press"
+        },
+        {
+          "id": "VariableID:1612:16649",
+          "name": "static_text/negative/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4cb088d55415b95d2bf78b232748445155ac395f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.7803921699523926,
+              "g": 0.1411764770746231,
+              "b": 0.12156862765550613,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#C7241F"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "negative/hover"
+        },
+        {
+          "id": "VariableID:1612:16650",
+          "name": "static_text/negative/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a296002dc47d6a49e832388f4d79e1ec5498e631",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.6509804129600525,
+              "g": 0.125490203499794,
+              "b": 0.11764705926179886,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#A6201E"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "negative/press"
+        },
+        {
+          "id": "VariableID:1580:19594",
+          "name": "static_text/info/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "567ad64fd41a95686e1d8fc27aa3cee51524666e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.1725490242242813,
+              "g": 0.3921568691730499,
+              "b": 0.8313725590705872,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2C64D4"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "info/hover"
+        },
+        {
+          "id": "VariableID:1580:19595",
+          "name": "static_text/info/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b5209465379a764aa9c5dd809e19e192ef4503f0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.1411764770746231,
+              "g": 0.32549020648002625,
+              "b": 0.7058823704719543,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2453B4"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text",
+          "tokenName": "info/press"
+        },
+        {
+          "id": "VariableID:1432:12941",
+          "name": "static_neutral/0/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ffb4595ba7e1b115e6bbba024b203d28b80c37f0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E8EB"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "0/hover"
+        },
+        {
+          "id": "VariableID:1432:12947",
+          "name": "static_neutral/0/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "928a81e62792f5b9a5c07f567416050c7a970a9a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8627451062202454,
+              "g": 0.8666666746139526,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DCDDE1"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "0/press"
+        },
+        {
+          "id": "VariableID:1310:17740",
+          "name": "static_neutral/100/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2d89a6f1f35382a45bd014b52115f4bb75bc7878",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E8EB"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "100/hover"
+        },
+        {
+          "id": "VariableID:1310:17741",
+          "name": "static_neutral/100/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "be7fbbebc0cb8ee618d52e0fc5e564fcc468619e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8627451062202454,
+              "g": 0.8666666746139526,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DCDDE1"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "100/press"
+        },
+        {
+          "id": "VariableID:1432:12942",
+          "name": "static_neutral-translucent/0/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "7cf6d933ae5f3bf3cc089576f472eca25cb407cb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.14901961386203766,
+              "g": 0.21568627655506134,
+              "b": 0.3450980484485626,
+              "a": 0.05999999865889549
+            }
+          },
+          "hexByMode": {
+            "868:0": "#263758"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "0/hover"
+        },
+        {
+          "id": "VariableID:1432:12949",
+          "name": "static_neutral-translucent/0/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c0a984f9f8af8341f6be29cf59b4d37f4a9c443b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.11764705926179886,
+              "g": 0.16862745583057404,
+              "b": 0.2666666805744171,
+              "a": 0.07999999821186066
+            }
+          },
+          "hexByMode": {
+            "868:0": "#1E2B44"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "0/press"
+        },
+        {
+          "id": "VariableID:1336:123711",
+          "name": "static_neutral-translucent/100/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "89a33824c4c408e822a3edbdd3d8cbc4b3ca8d3a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.05882352963089943,
+              "g": 0.09803921729326248,
+              "b": 0.21568627655506134,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0F1937"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "100/hover"
+        },
+        {
+          "id": "VariableID:1336:123712",
+          "name": "static_neutral-translucent/100/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f246df212339a905e19b4915da93fe81c8097293",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0470588244497776,
+              "b": 0.16078431904315948,
+              "a": 0.14000000059604645
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050C29"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "100/press"
+        },
+        {
+          "id": "VariableID:1432:12943",
+          "name": "static_neutral-translucent/200/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0adb646bd34263baee4abaa796d7e787e2c5cbe8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.05882352963089943,
+              "g": 0.09803921729326248,
+              "b": 0.21568627655506134,
+              "a": 0.10000000149011612
+            }
+          },
+          "hexByMode": {
+            "868:0": "#0F1937"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "200/hover"
+        },
+        {
+          "id": "VariableID:1432:12951",
+          "name": "static_neutral-translucent/200/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "40c998764c36790a75ceeef6075a5fad9dec06d9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0470588244497776,
+              "b": 0.16078431904315948,
+              "a": 0.14000000059604645
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050C29"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "200/press"
+        },
+        {
+          "id": "VariableID:1336:126968",
+          "name": "static_accent/primary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b6bad191e21dd951c936f3686ecf95228c1043f3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8901960849761963,
+              "g": 0.16470588743686676,
+              "b": 0.09019608050584793,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E32A17"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent",
+          "tokenName": "primary/hover"
+        },
+        {
+          "id": "VariableID:1336:126969",
+          "name": "static_accent/primary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "98b844da989f5d5185d84c3f3cb1567efc335e5d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.843137264251709,
+              "g": 0.14509804546833038,
+              "b": 0.019607843831181526,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D72505"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent",
+          "tokenName": "primary/press"
+        },
+        {
+          "id": "VariableID:868:9719",
+          "name": "static_accent/secondary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "83a4597339d97e9edfc0ef918b5200a81601a89f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.18431372940540314,
+              "g": 0.18431372940540314,
+              "b": 0.19607843458652496,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2F2F32"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent",
+          "tokenName": "secondary/hover"
+        },
+        {
+          "id": "VariableID:868:9720",
+          "name": "static_accent/secondary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e9dece065ef27a2bebfa652a1e2abec6368ee471",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent",
+          "tokenName": "secondary/press"
+        },
+        {
+          "id": "VariableID:2103:1018",
+          "name": "static_neutral-translucent/300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e325f6b785c0d35577a56cfce06aa9c794886a4f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0470588244497776,
+              "b": 0.16078431904315948,
+              "a": 0.14000000059604645
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050C29"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "300/hover"
+        },
+        {
+          "id": "VariableID:2103:1019",
+          "name": "static_neutral-translucent/300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "38462f91014dcb0d442c042f1b004ac89a75a1a7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.04313725605607033,
+              "b": 0.1725490242242813,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#050B2C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "300/press"
+        },
+        {
+          "id": "VariableID:1432:12944",
+          "name": "static_neutral/200/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1aba1e190c10f8eec8609976447a6a11a2df03d9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9098039269447327,
+              "b": 0.9215686321258545,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E8EB"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "200/hover"
+        },
+        {
+          "id": "VariableID:1432:12945",
+          "name": "static_neutral/200/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c817358d9f41d7c6077641b39736b5482175adbe",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8627451062202454,
+              "g": 0.8666666746139526,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DCDDE1"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "200/press"
+        },
+        {
+          "id": "VariableID:2103:1016",
+          "name": "static_neutral/300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ba05b2c9b86e1a86e23250d43e0d6703e9b21f03",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8627451062202454,
+              "g": 0.8666666746139526,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DCDDE1"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "300/hover"
+        },
+        {
+          "id": "VariableID:2103:1017",
+          "name": "static_neutral/300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c0cfea2deba91d043ac695bd259a7d9e0957086b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D2D3D9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "300/press"
+        },
+        {
+          "id": "VariableID:1580:20112",
+          "name": "static_neutral/400/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5f2179410206ccf2550c2b1ac26601a90a3ca842",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#BABBC2"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "400/hover"
+        },
+        {
+          "id": "VariableID:1580:20113",
+          "name": "static_neutral/400/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5c0402123fb2cc31ffb99ba255d29c439698372a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.6274510025978088,
+              "g": 0.6313725709915161,
+              "b": 0.6627451181411743,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#A0A1A9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "400/press"
+        },
+        {
+          "id": "VariableID:1580:20057",
+          "name": "static_neutral/500/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5402b9958ef31e9508901e1e23e7f3e200808ab9",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.6274510025978088,
+              "g": 0.6313725709915161,
+              "b": 0.6627451181411743,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#A0A1A9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "500/hover"
+        },
+        {
+          "id": "VariableID:1580:20058",
+          "name": "static_neutral/500/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fe3cf92497ffd052849ee9249a847a83cda14fde",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.5372549295425415,
+              "g": 0.5372549295425415,
+              "b": 0.5686274766921997,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#898991"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "500/press"
+        },
+        {
+          "id": "VariableID:1580:19876",
+          "name": "static_neutral/700/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "101afaf2dc0adda027e987e5e94d836ddee57ce5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.4588235318660736,
+              "g": 0.4588235318660736,
+              "b": 0.4901960790157318,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#75757D"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "700/hover"
+        },
+        {
+          "id": "VariableID:2299:1105",
+          "name": "static_neutral/1300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "785b1c979d83b0d121aa8ec5e9a44900537ea1c4",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.24705882370471954,
+              "g": 0.24705882370471954,
+              "b": 0.2705882489681244,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#3F3F45"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "1300/hover"
+        },
+        {
+          "id": "VariableID:2299:1106",
+          "name": "static_neutral/1300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6a426c3ad1a8eec4a797f5c9ee544d0ca0b770ca",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.37254902720451355,
+              "g": 0.37254902720451355,
+              "b": 0.4000000059604645,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#5F5F66"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "1300/press"
+        },
+        {
+          "id": "VariableID:1580:19877",
+          "name": "static_neutral/700/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "18588681d57367141e4c15ff1beb1a54a5c11a05",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.37254902720451355,
+              "g": 0.37254902720451355,
+              "b": 0.4000000059604645,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#5F5F66"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "700/press"
+        },
+        {
+          "id": "VariableID:1484:21986",
+          "name": "static_neutral/1500 (deprecated)/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a11fd09656a7fc7c38bb9ff7514eab105388303e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.24705882370471954,
+              "g": 0.24705882370471954,
+              "b": 0.2705882489681244,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#3F3F45"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "1500 (deprecated)/hover"
+        },
+        {
+          "id": "VariableID:1484:21987",
+          "name": "static_neutral/1500 (deprecated)/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "bfb4415d2630ebe2d2ea26ff8b95a744f0eb5407",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.37254902720451355,
+              "g": 0.37254902720451355,
+              "b": 0.4000000059604645,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#5F5F66"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral",
+          "tokenName": "1500 (deprecated)/press"
+        },
+        {
+          "id": "VariableID:1580:20472",
+          "name": "static_neutral-translucent/400/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9aad03c5f5de90013bcc5768e61c6d67fca7a25d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.03529411926865578,
+              "g": 0.0470588244497776,
+              "b": 0.14509804546833038,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#090C25"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "400/hover"
+        },
+        {
+          "id": "VariableID:1580:20473",
+          "name": "static_neutral-translucent/400/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9c88649ae0f0f3387b42359edad9fed9de05993a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0313725508749485,
+              "b": 0.11372549086809158,
+              "a": 0.3799999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#05081D"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "400/press"
+        },
+        {
+          "id": "VariableID:1580:20408",
+          "name": "static_neutral-translucent/500/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d2d36d9e1bccd970959f20e36bdfab4ffd30ad98",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.019607843831181526,
+              "g": 0.0313725508749485,
+              "b": 0.11372549086809158,
+              "a": 0.3799999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#05081D"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "500/hover"
+        },
+        {
+          "id": "VariableID:1580:20409",
+          "name": "static_neutral-translucent/500/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "61d834d74bafb7425b42a6e4e37e38a130827f4a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.08235294371843338,
+              "a": 0.4699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040415"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "500/press"
+        },
+        {
+          "id": "VariableID:1580:20187",
+          "name": "static_neutral-translucent/700/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dfe8dcae10bd0d9d425bb2e6ecd7ca7019ad2fde",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.01568627543747425,
+              "g": 0.01568627543747425,
+              "b": 0.07450980693101883,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#040413"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "700/hover"
+        },
+        {
+          "id": "VariableID:2192:1300",
+          "name": "static_neutral-translucent/1300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "570b658b9e78ede0cb4f7160310591959e83bb83",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.007843137718737125,
+              "g": 0.007843137718737125,
+              "b": 0.03921568766236305,
+              "a": 0.7599999904632568
+            }
+          },
+          "hexByMode": {
+            "868:0": "#02020A"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "1300/hover"
+        },
+        {
+          "id": "VariableID:2192:1301",
+          "name": "static_neutral-translucent/1300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0e453d9e1281e445810abd3b61149a3ef08fb292",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.003921568859368563,
+              "g": 0.003921568859368563,
+              "b": 0.0470588244497776,
+              "a": 0.6299999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#01010C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "1300/press"
+        },
+        {
+          "id": "VariableID:1580:20188",
+          "name": "static_neutral-translucent/700/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "08295186ef5c45ddefee4b829c41614cd99e0e5a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.003921568859368563,
+              "g": 0.003921568859368563,
+              "b": 0.0470588244497776,
+              "a": 0.6299999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#01010C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "700/press"
+        },
+        {
+          "id": "VariableID:1489:22555",
+          "name": "static_neutral-translucent/1500 (deprecated)/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "76cfa1c3e1f9266700a93cd1882f9ac26ee1f6dc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.007843137718737125,
+              "g": 0.007843137718737125,
+              "b": 0.03921568766236305,
+              "a": 0.7599999904632568
+            }
+          },
+          "hexByMode": {
+            "868:0": "#02020A"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "1500 (deprecated)/hover"
+        },
+        {
+          "id": "VariableID:1489:22556",
+          "name": "static_neutral-translucent/1500 (deprecated)/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "12da940c35a0de8aa7a771ff2ecd1b7d74ee633c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.003921568859368563,
+              "g": 0.003921568859368563,
+              "b": 0.0470588244497776,
+              "a": 0.6299999952316284
+            }
+          },
+          "hexByMode": {
+            "868:0": "#01010C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent",
+          "tokenName": "1500 (deprecated)/press"
+        },
+        {
+          "id": "VariableID:1507:23208",
+          "name": "static_text_inverted/primary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5e4ae8d466814f5a0b72a8c6594460688d16fe8f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "primary/hover"
+        },
+        {
+          "id": "VariableID:1507:23209",
+          "name": "static_text_inverted/primary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "19532b5b618bc7f39b17235e92010d45a7127fa5",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6000000238418579
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "primary/press"
+        },
+        {
+          "id": "VariableID:1507:23210",
+          "name": "static_text_inverted/secondary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d6e4522f5bb93d0846ec422eba1b4de5fe98aa98",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9372549057006836,
+              "g": 0.9411764740943909,
+              "b": 0.9882352948188782,
+              "a": 0.6499999761581421
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EFF0FC"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "secondary/hover"
+        },
+        {
+          "id": "VariableID:1507:23211",
+          "name": "static_text_inverted/secondary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6e069da240100b94c36daeee910398a2b0434794",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9529411792755127,
+              "g": 0.9607843160629272,
+              "b": 0.9960784316062927,
+              "a": 0.75
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F3F5FE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "secondary/press"
+        },
+        {
+          "id": "VariableID:1507:23212",
+          "name": "static_text_inverted/tertiary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5b3d9f6d534cc67737f24ebcbebf9b1db6396285",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9960784316062927,
+              "a": 0.46000000834465027
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EEEEFE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "tertiary/hover"
+        },
+        {
+          "id": "VariableID:1507:23213",
+          "name": "static_text_inverted/tertiary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f333b7bbef66817b0f376fd984738e48c93ffc0a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9843137264251709,
+              "a": 0.550000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EEEEFB"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "tertiary/press"
+        },
+        {
+          "id": "VariableID:1612:16756",
+          "name": "static_text_inverted/positive/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "028662f061f36c78f57abe1a9e58472833a2ac44",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.13333334028720856,
+              "g": 0.8784313797950745,
+              "b": 0.40784314274787903,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#22E068"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "positive/hover"
+        },
+        {
+          "id": "VariableID:1612:16757",
+          "name": "static_text_inverted/positive/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e30a2fa54d16b113094dfbfaa149d6d2166e51b1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.29019609093666077,
+              "g": 0.9058823585510254,
+              "b": 0.46666666865348816,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#4AE777"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "positive/press"
+        },
+        {
+          "id": "VariableID:1612:16758",
+          "name": "static_text_inverted/attention/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a84e3650894e2cef8d686709f20749929070b1ac",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9921568632125854,
+              "g": 0.6980392336845398,
+              "b": 0.3019607961177826,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FDB24D"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "attention/hover"
+        },
+        {
+          "id": "VariableID:1612:16759",
+          "name": "static_text_inverted/attention/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "93d6a804a0c0f14f667f2c52e0c5ec44f0cc236a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.7490196228027344,
+              "b": 0.43921568989753723,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFBF70"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "attention/press"
+        },
+        {
+          "id": "VariableID:1612:16760",
+          "name": "static_text_inverted/negative/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c17126ecce9b2baecc2ec8316341e40ccc8723a1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.4588235318660736,
+              "b": 0.3686274588108063,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF755E"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "negative/hover"
+        },
+        {
+          "id": "VariableID:1612:16761",
+          "name": "static_text_inverted/negative/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5a528f3a7a407891f777f86ce697d863194628a1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.5529412031173706,
+              "b": 0.4745098054409027,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF8D79"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "negative/press"
+        },
+        {
+          "id": "VariableID:1507:23214",
+          "name": "static_text_inverted/info/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "93f7951b610e6ff05ef67a99572dcfa8920f4807",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.38823530077934265,
+              "g": 0.6666666865348816,
+              "b": 0.9921568632125854,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#63AAFD"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "info/hover"
+        },
+        {
+          "id": "VariableID:1507:23215",
+          "name": "static_text_inverted/info/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "18abf88c0fa87fee3719b5056c24cebee5bfd8db",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.49803921580314636,
+              "g": 0.7137255072593689,
+              "b": 1,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#7FB6FF"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_text_inverted",
+          "tokenName": "info/press"
+        },
+        {
+          "id": "VariableID:1510:13981",
+          "name": "static_neutral_inverted/0/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9ea48ae7a9926bcf4fff0900ad99b8cc72b69b3e",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.18431372940540314,
+              "g": 0.18431372940540314,
+              "b": 0.19607843458652496,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2F2F32"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "0/hover"
+        },
+        {
+          "id": "VariableID:1510:13982",
+          "name": "static_neutral_inverted/0/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f58741a8cb5f9f2372252de03521b14b149acf04",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "0/press"
+        },
+        {
+          "id": "VariableID:1510:13983",
+          "name": "static_neutral_inverted/100/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9f76fef5ad88f6965ea4796da72a53040e50ca45",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.12941177189350128,
+              "g": 0.12941177189350128,
+              "b": 0.1411764770746231,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#212124"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "100/hover"
+        },
+        {
+          "id": "VariableID:1510:13984",
+          "name": "static_neutral_inverted/100/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "414ca2519fcc0be58fa48e3f9ffd331ac78ce234",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "100/press"
+        },
+        {
+          "id": "VariableID:1510:13985",
+          "name": "static_neutral_inverted/200/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c715e6f5cdbf8cf058e69dc4364e33d85762a621",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.16078431904315948,
+              "g": 0.16078431904315948,
+              "b": 0.1725490242242813,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#29292C"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "200/hover"
+        },
+        {
+          "id": "VariableID:1510:13986",
+          "name": "static_neutral_inverted/200/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e3393eb1338fa4805b8c743bc47b35d3032c810a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.18431372940540314,
+              "g": 0.18431372940540314,
+              "b": 0.19607843458652496,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2F2F32"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "200/press"
+        },
+        {
+          "id": "VariableID:2103:1020",
+          "name": "static_neutral_inverted/300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "dc6970ce6f6f708d4d6b7879f0418400207ee5f6",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.18431372940540314,
+              "g": 0.18431372940540314,
+              "b": 0.19607843458652496,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#2F2F32"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "300/hover"
+        },
+        {
+          "id": "VariableID:2103:1021",
+          "name": "static_neutral_inverted/300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e1eb633d94f9c139029cf2d13935c40c17c10824",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.2078431397676468,
+              "g": 0.2078431397676468,
+              "b": 0.2235294133424759,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#353539"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "300/press"
+        },
+        {
+          "id": "VariableID:1510:13987",
+          "name": "static_neutral_inverted/400/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "4c1a42da1bd07881272a1b2dd9573a7bfa2eef65",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.24705882370471954,
+              "g": 0.24705882370471954,
+              "b": 0.2705882489681244,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#3F3F45"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "400/hover"
+        },
+        {
+          "id": "VariableID:1510:13988",
+          "name": "static_neutral_inverted/400/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c77eba1a46ff4e0ccf81ef0dd8f4fb3b215eb922",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.29019609093666077,
+              "g": 0.29019609093666077,
+              "b": 0.3176470696926117,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#4A4A51"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "400/press"
+        },
+        {
+          "id": "VariableID:1510:13989",
+          "name": "static_neutral_inverted/500/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "603656635fd833c5cc7e98cfa918ed1dedfe061d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.37254902720451355,
+              "g": 0.37254902720451355,
+              "b": 0.4000000059604645,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#5F5F66"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "500/hover"
+        },
+        {
+          "id": "VariableID:1510:13990",
+          "name": "static_neutral_inverted/500/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1efe7cc5f21ee838a57a4b748820dfbffaad1670",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.4588235318660736,
+              "g": 0.4588235318660736,
+              "b": 0.4901960790157318,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#75757D"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "500/press"
+        },
+        {
+          "id": "VariableID:1510:13991",
+          "name": "static_neutral_inverted/700/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "6a4fb822ff582d8fd2264199154854c322848068",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.6274510025978088,
+              "g": 0.6313725709915161,
+              "b": 0.6627451181411743,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#A0A1A9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "700/hover"
+        },
+        {
+          "id": "VariableID:2299:1107",
+          "name": "static_neutral_inverted/1300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e10f4f1684fdeefdd6341fe98aa7d148bafac385",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D2D3D9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1300/hover"
+        },
+        {
+          "id": "VariableID:2299:1108",
+          "name": "static_neutral_inverted/1300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "aebcc981d71be1c17d068fe902c8c86b83318b61",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#BABBC2"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1300/press"
+        },
+        {
+          "id": "VariableID:1510:13992",
+          "name": "static_neutral_inverted/700/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a3ca1dada54de387f79fe4d7bccde5cd9b252a95",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#BABBC2"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "700/press"
+        },
+        {
+          "id": "VariableID:1510:13993",
+          "name": "static_neutral_inverted/1500 (deprecated)/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0157a5ba05e111210219826ddc191bc9f3964ba3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.729411780834198,
+              "g": 0.7333333492279053,
+              "b": 0.7607843279838562,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#BABBC2"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1500 (deprecated)/hover"
+        },
+        {
+          "id": "VariableID:1510:13994",
+          "name": "static_neutral_inverted/1500 (deprecated)/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "85e995a2328763f79e6f3a09398330a3874b2d7b",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.6274510025978088,
+              "g": 0.6313725709915161,
+              "b": 0.6627451181411743,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#A0A1A9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral_inverted",
+          "tokenName": "1500 (deprecated)/press"
+        },
+        {
+          "id": "VariableID:1512:14009",
+          "name": "static_neutral-translucent_inverted/0/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a233d262bc845484e5cc486966784326657a9470",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8823529481887817,
+              "g": 0.8823529481887817,
+              "b": 0.9725490212440491,
+              "a": 0.09000000357627869
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E1E1F8"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "0/hover"
+        },
+        {
+          "id": "VariableID:1512:14010",
+          "name": "static_neutral-translucent_inverted/0/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "00a162d0f8dd01437eddb533a09977505a8ea4c1",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DEDEEE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "0/press"
+        },
+        {
+          "id": "VariableID:1512:14011",
+          "name": "static_neutral-translucent_inverted/100/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "705095857ffe1200635a8d3403483d31bcf96afb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DEDEEE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "100/hover"
+        },
+        {
+          "id": "VariableID:1512:14012",
+          "name": "static_neutral-translucent_inverted/100/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "cdb04d9a419bbf73709bc6b1b78bdf22a8dd4a7c",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9176470637321472,
+              "g": 0.9176470637321472,
+              "b": 0.9725490212440491,
+              "a": 0.15000000596046448
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EAEAF8"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "100/press"
+        },
+        {
+          "id": "VariableID:1512:14013",
+          "name": "static_neutral-translucent_inverted/200/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "00e3f741b65b5db705684e04b95d28552ab8f042",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8705882430076599,
+              "g": 0.8705882430076599,
+              "b": 0.9333333373069763,
+              "a": 0.12999999523162842
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DEDEEE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "200/hover"
+        },
+        {
+          "id": "VariableID:1512:14014",
+          "name": "static_neutral-translucent_inverted/200/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "3f8018ad0249aacc82d58c62ef9545686ecf3987",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9176470637321472,
+              "g": 0.9176470637321472,
+              "b": 0.9725490212440491,
+              "a": 0.15000000596046448
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EAEAF8"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "200/press"
+        },
+        {
+          "id": "VariableID:2103:1022",
+          "name": "static_neutral-translucent_inverted/300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "8e83da5a6eb13ae0beee90484c671c77cae930ea",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9176470637321472,
+              "g": 0.9176470637321472,
+              "b": 0.9725490212440491,
+              "a": 0.15000000596046448
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EAEAF8"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "300/hover"
+        },
+        {
+          "id": "VariableID:2103:1023",
+          "name": "static_neutral-translucent_inverted/300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c30f3a7f78f7ab4a1380b4846c57f552d9ac7cae",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9058823585510254,
+              "g": 0.9058823585510254,
+              "b": 0.9725490212440491,
+              "a": 0.18000000715255737
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E7E7F8"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "300/press"
+        },
+        {
+          "id": "VariableID:1512:14015",
+          "name": "static_neutral-translucent_inverted/400/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b08f9d66685f0622f792eb936b0f8b214d0b4380",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8901960849761963,
+              "g": 0.8901960849761963,
+              "b": 0.9803921580314636,
+              "a": 0.23000000417232513
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E3E3FA"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "400/hover"
+        },
+        {
+          "id": "VariableID:1512:14016",
+          "name": "static_neutral-translucent_inverted/400/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "08875340084d73d1459cd0177a116d95b90e0870",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8941176533699036,
+              "g": 0.8941176533699036,
+              "b": 0.9843137264251709,
+              "a": 0.2800000011920929
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E4E4FB"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "400/press"
+        },
+        {
+          "id": "VariableID:1512:14017",
+          "name": "static_neutral-translucent_inverted/500/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "72bacc59ab587726ce79164998065ff6b01b84eb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9137254953384399,
+              "g": 0.9137254953384399,
+              "b": 0.9803921580314636,
+              "a": 0.3700000047683716
+            }
+          },
+          "hexByMode": {
+            "868:0": "#E9E9FA"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "500/hover"
+        },
+        {
+          "id": "VariableID:1512:14018",
+          "name": "static_neutral-translucent_inverted/500/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "ad6989870123ce03da88ac29730c51c55cd836f8",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9333333373069763,
+              "g": 0.9333333373069763,
+              "b": 0.9960784316062927,
+              "a": 0.46000000834465027
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EEEEFE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "500/press"
+        },
+        {
+          "id": "VariableID:1512:14019",
+          "name": "static_neutral-translucent_inverted/700/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fdf2fec45776cff3a8d47e22f8ea56e1f9818dfb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9372549057006836,
+              "g": 0.9411764740943909,
+              "b": 0.9882352948188782,
+              "a": 0.6499999761581421
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EFF0FC"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "700/hover"
+        },
+        {
+          "id": "VariableID:2192:1302",
+          "name": "static_neutral-translucent_inverted/1300/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "1bd6b0789cf8edd568bf532124e3d2da29ce77ad",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.699999988079071
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "1300/hover"
+        },
+        {
+          "id": "VariableID:2192:1303",
+          "name": "static_neutral-translucent_inverted/1300/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "74dbb2ab4caabb93f1c65146779faba25691fcfc",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 1,
+              "b": 1,
+              "a": 0.6000000238418579
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FFFFFF"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "1300/press"
+        },
+        {
+          "id": "VariableID:1512:14020",
+          "name": "static_neutral-translucent_inverted/700/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b47b4f98ce4ae23e782c1922141f4673b134f80a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9529411792755127,
+              "g": 0.9607843160629272,
+              "b": 0.9960784316062927,
+              "a": 0.75
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F3F5FE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "700/press"
+        },
+        {
+          "id": "VariableID:1512:14021",
+          "name": "static_neutral-translucent_inverted/1500 (deprecated)/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9e38b0cee8fb1ab304983646dd1b0359a128af8d",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9529411792755127,
+              "g": 0.9607843160629272,
+              "b": 0.9960784316062927,
+              "a": 0.75
+            }
+          },
+          "hexByMode": {
+            "868:0": "#F3F5FE"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "1500 (deprecated)/hover"
+        },
+        {
+          "id": "VariableID:1512:14022",
+          "name": "static_neutral-translucent_inverted/1500 (deprecated)/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "899655f76f18ca147273ab7b81462d7e222ab1cb",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9372549057006836,
+              "g": 0.9411764740943909,
+              "b": 0.9882352948188782,
+              "a": 0.6499999761581421
+            }
+          },
+          "hexByMode": {
+            "868:0": "#EFF0FC"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_neutral-translucent_inverted",
+          "tokenName": "1500 (deprecated)/press"
+        },
+        {
+          "id": "VariableID:1514:14037",
+          "name": "static_accent_inverted/primary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d7b4e39ae63e0030c0660d921e6804978e39c541",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 1,
+              "g": 0.3137255012989044,
+              "b": 0.24313725531101227,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FF503E"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent_inverted",
+          "tokenName": "primary/hover"
+        },
+        {
+          "id": "VariableID:1514:14038",
+          "name": "static_accent_inverted/primary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "591c3fd9ab83ebe9a739072b6df93dfd4f633980",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.9921568632125854,
+              "g": 0.3843137323856354,
+              "b": 0.30588236451148987,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#FD624E"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent_inverted",
+          "tokenName": "primary/press"
+        },
+        {
+          "id": "VariableID:1514:14039",
+          "name": "static_accent_inverted/secondary/hover",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "b35cda7f38c00be1e34f8da5c7fc353901a45ed0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8627451062202454,
+              "g": 0.8666666746139526,
+              "b": 0.8823529481887817,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#DCDDE1"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent_inverted",
+          "tokenName": "secondary/hover"
+        },
+        {
+          "id": "VariableID:1514:14040",
+          "name": "static_accent_inverted/secondary/press",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "42b46414757adbd85c4ef7462c90ad4a51f25836",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:868:9636",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "868:0": {
+              "r": 0.8235294222831726,
+              "g": 0.8274509906768799,
+              "b": 0.8509804010391235,
+              "a": 1
+            }
+          },
+          "hexByMode": {
+            "868:0": "#D2D3D9"
+          },
+          "collectionName": "Interface Static States",
+          "groupName": "static_accent_inverted",
+          "tokenName": "secondary/press"
+        }
+      ]
+    }
+  ]
+}

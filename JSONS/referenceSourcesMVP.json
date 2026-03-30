@@ -590,6 +590,10 @@
       "path": "tokens/Web _ Core.json"
     },
     {
+      "fileName": "tokens/Web _ Themization.json",
+      "path": "tokens/Web _ Themization.json"
+    },
+    {
       "fileName": "tokens/Web _ Typography.json",
       "path": "tokens/Web _ Typography.json"
     },

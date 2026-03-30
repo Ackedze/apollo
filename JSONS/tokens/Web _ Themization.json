@@ -1,0 +1,678 @@
+{
+  "meta": {
+    "generatedAt": "2026-03-30T07:16:35.310Z",
+    "fileName": "Web :: Themization",
+    "library": "Web :: Themization"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:3:13",
+      "name": "Theme",
+      "key": "61b12bf95b76b22975fe7c89034f1946788d637d",
+      "defaultModeId": "3:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "3:0",
+          "name": "Default"
+        },
+        {
+          "modeId": "3:1",
+          "name": "Corp"
+        },
+        {
+          "modeId": "3:2",
+          "name": "Click (AO)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:23:3",
+          "name": "Attach/Label",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e07ff5d4bd14dba0b0c3f60d9ae474a2759bf1f0",
+          "resolvedType": "STRING",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": "Выберите файл",
+            "3:1": "Прикрепите файл",
+            "3:2": "Выберите файл"
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Attach",
+          "tokenName": "Label"
+        },
+        {
+          "id": "VariableID:3:14",
+          "name": "Button/Desktop/Accent/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2d3423db5972143518c6f4be83e8bc842d3a9078",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent/bg"
+        },
+        {
+          "id": "VariableID:4:5990",
+          "name": "Button/Desktop/Accent/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0d433a4e7d5d08b57bcb93f4b06f2a5cdc65d0c3",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent/text"
+        },
+        {
+          "id": "VariableID:4:5991",
+          "name": "Button/Desktop/Accent/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d49fd56e4337f7c8fd443577df1dfe4652e77291",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent/hint"
+        },
+        {
+          "id": "VariableID:4:5993",
+          "name": "Button/Desktop/Primary/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f69ee5ae7afe3efb9f9874cdb3eab9ec61722b61",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary/bg"
+        },
+        {
+          "id": "VariableID:4:5994",
+          "name": "Button/Desktop/Primary/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "283f98b54a532429abc402689e3a6448f47a99dd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary/text"
+        },
+        {
+          "id": "VariableID:4:5995",
+          "name": "Button/Desktop/Primary/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "2693fb3b793bfbcab106a29492e52ce50c790b37",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary/hint"
+        },
+        {
+          "id": "VariableID:6:5996",
+          "name": "Button/Desktop/Accent_inverted/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "19e99273630dd61b313ad233a40f68b0cceba539",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bb2320423e10975e525775edfb56939ec102deb7/3541:116"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bb2320423e10975e525775edfb56939ec102deb7/3541:116"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent_inverted/bg"
+        },
+        {
+          "id": "VariableID:6:5997",
+          "name": "Button/Desktop/Accent_inverted/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "778da1cf34e33c7b149c1b7599bcf1f42b4c47c7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent_inverted/text"
+        },
+        {
+          "id": "VariableID:6:5998",
+          "name": "Button/Desktop/Accent_inverted/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "54e0c1b4d3bc3c2ea2043eab332a036f5f8857cd",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Accent_inverted/hint"
+        },
+        {
+          "id": "VariableID:6:5999",
+          "name": "Button/Desktop/Primary_inverted/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "23d854ad43a66a016f77b3cc305f040b7e630373",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bb2320423e10975e525775edfb56939ec102deb7/3541:116"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary_inverted/bg"
+        },
+        {
+          "id": "VariableID:6:6000",
+          "name": "Button/Desktop/Primary_inverted/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "834476828e97b1d87ec2fecef3287ccca97bd101",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary_inverted/text"
+        },
+        {
+          "id": "VariableID:6:6001",
+          "name": "Button/Desktop/Primary_inverted/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "87c0914c60bb97aa2bc0284d592cdb47be10a6e7",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Desktop/Primary_inverted/hint"
+        },
+        {
+          "id": "VariableID:6:8932",
+          "name": "Button/Mobile/Accent/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "0c1052289c756577933d3179a44d5a394a4269af",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent/bg"
+        },
+        {
+          "id": "VariableID:6:8933",
+          "name": "Button/Mobile/Accent/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "e145b7e9a550caa3605275a12a1243c5f5051c9a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent/text"
+        },
+        {
+          "id": "VariableID:6:8934",
+          "name": "Button/Mobile/Accent/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "f2551256f4c0d78dc1091422ac53afbc3eb8975f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent/hint"
+        },
+        {
+          "id": "VariableID:6:11868",
+          "name": "Button/Mobile/Accent_inverted/bg",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "551fb6e0a4abbc360b6da92d19c243db304e8c6a",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bb2320423e10975e525775edfb56939ec102deb7/3541:116"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:89b9a7e1dd7bfb84ae3d5f16897de0b3c2d191b4/3541:123"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:bb2320423e10975e525775edfb56939ec102deb7/3541:116"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent_inverted/bg"
+        },
+        {
+          "id": "VariableID:6:11869",
+          "name": "Button/Mobile/Accent_inverted/text",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "54bbd159431b476c9b2fff267a257959978f7005",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent_inverted/text"
+        },
+        {
+          "id": "VariableID:6:11870",
+          "name": "Button/Mobile/Accent_inverted/hint",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "fbe5c68d970621025394c1225434629707351127",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            },
+            "3:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            },
+            "3:2": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:9d628b4143392a46dacd623e81b3de011d3cc6a1/1930:68"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Button",
+          "tokenName": "Mobile/Accent_inverted/hint"
+        },
+        {
+          "id": "VariableID:33:13",
+          "name": "Modal/Mobile/Body_top_padding",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "d7f260eb141f14724f7d284114feb31a821d5c9d",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": 0,
+            "3:1": 0,
+            "3:2": 16
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Modal",
+          "tokenName": "Mobile/Body_top_padding"
+        },
+        {
+          "id": "VariableID:33:14",
+          "name": "Modal/Mobile/Body_bottom_padding",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "c2b0c0f0f104c0467e212a0173411d2847cf2e53",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:3:13",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "3:0": 0,
+            "3:1": 0,
+            "3:2": 8
+          },
+          "hexByMode": {},
+          "collectionName": "Theme",
+          "groupName": "Modal",
+          "tokenName": "Mobile/Body_bottom_padding"
+        }
+      ]
+    }
+  ]
+}

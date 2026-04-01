@@ -96,7 +96,10 @@
 - [`LeftSection`](./src/ui-app/components/LeftSection.tsx) следует актуальному Figma-порядку категорий, вставляет `Divider` между логическими группами и использует типизированные counters: `general`, `warning`, `error`, `empty`.
 - Старый DOM-пайплайн карточек удалён из [`src/ui.html`](./src/ui.html): активные табы правой колонки рендерятся через React results bridge, а `ui.html` оставляет только placeholder/fallback при сбое bridge.
 - В UI таб `Темизация` проверяет page-level mode `Theme / Corp` и использование `[Corporate]`-компонентов.
-- В табе `Темизация` кнопка `Сменить` теперь выполняет действие: для page-level finding переключает mode `Theme -> Corp`, а для `[Corporate]`-инстанса делает `swapComponent(...)` на базовую версию без `[Corporate]`; при подборе пары игнорируется и технический префикс `🔄`, так что `🔄 [D][Corporate] Tag` заменяется на `[D] Tag`.
+- В табе `Темизация` кнопка `Сменить` теперь выполняет действие: для page-level finding переключает mode `Theme -> Corp`, а для `[Corporate]`-инстанса делает `swapComponent(...)` на базовую версию без `[Corporate]`.
+- Подбор пары для `[Corporate]`-компонента теперь учитывает платформу (`[D]` / `[M]`) и не схлопывает desktop/mobile-версии в один counterpart. Это устраняет кейсы вроде `🔄 [D][Corporate] Button -> [M] Button`.
+- Для corporate/base-компонентов с разными schema variant properties, как у `Tag`, замена теперь сначала пытается найти exact variant, а затем использует детерминированный match по общим variant props с учётом default extra-props target-компонента. Это устраняет кейсы, где `🔄 [D][Corporate] Tag` заменялся на `[D] Tag` с неверными параметрами.
+- Action `Сменить` для `[Corporate]`-инстанса использует сохранённый `replacementComponentKey` из результата аудита и не пересчитывает target-компонент заново по имени в момент клика.
 - В табе `Темизация` page-level finding создаётся только тогда, когда collection `Theme` найдена через `resolvedVariableModes` в дереве текущей страницы и её текущий mode на странице отличается от `Corp`; action `Сменить` использует сохранённые `collectionId/modeId` из результата аудита и не пытается ничего заново искать в момент клика.
 - Поиск `Theme` теперь кэширует `nodeId` якорного узла на страницу: если `Theme` уже была найдена на этой странице, следующая проверка сначала смотрит в этот узел и только при промахе снова обходит дерево страницы.
 - Для collection `Theme` действует простое page-level правило: если текущий явно выбранный mode не `Corp`, Apollo показывает карточку ошибки; отсутствие explicit mode трактуется как `Auto (Default)` и тоже считается ошибкой до тех пор, пока пользователь явно не переключит `Theme` в `Corp`.
@@ -111,7 +114,8 @@
 
 ## Ограничения и известные проблемы
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
-- В проекте нет автоматических тестов и нет штатного `type-check`/`lint` скрипта.
+- В проекте нет полного автоматизированного test-suite и нет штатного `type-check`/`lint` скрипта.
+- Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
 
 Подробный технический отчёт по найденным рискам хранится в [`AUDIT.md`](./AUDIT.md), но перед использованием стоит учитывать, что этот файл частично устарел и не полностью отражает текущее состояние проекта.
 
@@ -152,6 +156,16 @@ npm run build
 npm run watch
 ```
 
+### Точечная проверка themization
+```bash
+npm run test:themization
+```
+
+Скрипт проверяет:
+- что `[D][Corporate]` и `[M][Corporate]` резолвятся в base-компоненты своей платформы;
+- что corporate/base-замена для `Tag` использует корректный base-variant при различии variant schema;
+- что `Button` по-прежнему матчится по exact variant name.
+
 ### Подготовка списка reference-источников вручную
 ```bash
 node scripts/prepareReferences.js
@@ -171,5 +185,6 @@ node scripts/prepareReferences.js
 ```bash
 npm run build
 npm run watch
+npm run test:themization
 node scripts/prepareReferences.js
 ```

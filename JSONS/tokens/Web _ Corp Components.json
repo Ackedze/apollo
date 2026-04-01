@@ -1,768 +1,10 @@
 {
   "meta": {
-    "generatedAt": "2025-12-23T18:40:12.463Z",
+    "generatedAt": "2026-04-01T11:45:58.987Z",
     "fileName": "Web :: Corp Components",
     "library": "Web :: Corp Components"
   },
   "collections": [
-    {
-      "id": "VariableCollectionId:42724:47369",
-      "name": "🔄  [Old] Grid Values",
-      "key": "320b256b19ec86f46b369baecd8c6e91036bd9a8",
-      "defaultModeId": "42724:0",
-      "hiddenFromPublishing": false,
-      "remote": false,
-      "modes": [
-        {
-          "modeId": "42724:0",
-          "name": "Basic"
-        },
-        {
-          "modeId": "42724:1",
-          "name": "Wide"
-        }
-      ],
-      "variables": [
-        {
-          "id": "VariableID:42724:47370",
-          "name": "Paddings/mobile",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "eec1aca27f9c898f06c6fd203e5a2a9ac661e70c",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 20,
-            "42724:1": 20
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "mobile"
-        },
-        {
-          "id": "VariableID:42724:47371",
-          "name": "Paddings/tablet",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "9ad81927ea34b3919bf7b18e1bfbc2d07fd38649",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 32,
-            "42724:1": 32
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "tablet"
-        },
-        {
-          "id": "VariableID:42724:47372",
-          "name": "Paddings/desktop 1024",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "7fb9553edfb528b1ea5cc0c34adcc8a84a6450e4",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 33,
-            "42724:1": 30
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "desktop 1024"
-        },
-        {
-          "id": "VariableID:42724:47373",
-          "name": "Paddings/desktop 1280",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "6083a3e27ad4ca00e63ab89999370f3408ea8f66",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 49,
-            "42724:1": 30
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "desktop 1280"
-        },
-        {
-          "id": "VariableID:42724:47374",
-          "name": "Paddings/desktop 1440",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "baf89fcfd850e931a429499756faabc43d375401",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 50,
-            "42724:1": 50
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "desktop 1440"
-        },
-        {
-          "id": "VariableID:42724:47375",
-          "name": "Paddings/desktop 1600",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "90051d5e163174955c9a2f9e2d81893d912f97cf",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 130,
-            "42724:1": 52
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "desktop 1600"
-        },
-        {
-          "id": "VariableID:42724:47623",
-          "name": "Paddings/desktop 1920",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "c9ecb2831ce464eac31d2d678c01ebc44179c569",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP",
-            "FONT_VARIATIONS"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 290,
-            "42724:1": 212
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "Paddings",
-          "tokenName": "desktop 1920"
-        },
-        {
-          "id": "VariableID:67558:8074",
-          "name": "1600+ Cols/3",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "810937562fea78c62939329c02d82470a8dafddf",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP",
-            "FONT_VARIATIONS"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 255,
-            "42724:1": 294
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1600+ Cols",
-          "tokenName": "3"
-        },
-        {
-          "id": "VariableID:67558:8075",
-          "name": "1600+ Cols/4",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "6cb4902d537310b24cf98f022539045265ae86d0",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "CORNER_RADIUS",
-            "WIDTH_HEIGHT"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 348,
-            "42724:1": 400
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1600+ Cols",
-          "tokenName": "4"
-        },
-        {
-          "id": "VariableID:67558:8076",
-          "name": "1600+ Cols/6",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "0b2bfa0010da79cb3dacde4557bee67c3cbc03d1",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 534,
-            "42724:1": 612
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1600+ Cols",
-          "tokenName": "6"
-        },
-        {
-          "id": "VariableID:67558:8077",
-          "name": "1600+ Cols/8",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "304b097b71d56ca2ca179109d31381a77956ec78",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "CORNER_RADIUS",
-            "WIDTH_HEIGHT"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 720,
-            "42724:1": 824
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1600+ Cols",
-          "tokenName": "8"
-        },
-        {
-          "id": "VariableID:67558:8078",
-          "name": "1600+ Cols/12",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "3fea2c23217a9834772033b44d1762049e82e674",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 1092,
-            "42724:1": 1248
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1600+ Cols",
-          "tokenName": "12"
-        },
-        {
-          "id": "VariableID:67522:58363",
-          "name": "1440 Cols/3",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "61a751560ea94d653fa4d33b5b49dc85fa57d8a2",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 255,
-            "42724:1": 255
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1440 Cols",
-          "tokenName": "3"
-        },
-        {
-          "id": "VariableID:67522:58364",
-          "name": "1440 Cols/4",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "7bce8005ef605df2236a7ae85b4d8b178706dcb1",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 348,
-            "42724:1": 348
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1440 Cols",
-          "tokenName": "4"
-        },
-        {
-          "id": "VariableID:67522:58366",
-          "name": "1440 Cols/6",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "dff488989444c0c10405bd16319f18f4d7fce726",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 534,
-            "42724:1": 534
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1440 Cols",
-          "tokenName": "6"
-        },
-        {
-          "id": "VariableID:67522:58365",
-          "name": "1440 Cols/8",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "612a8b056ffa8d9d4011b28514dadb508304ace0",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 720,
-            "42724:1": 720
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1440 Cols",
-          "tokenName": "8"
-        },
-        {
-          "id": "VariableID:67522:58368",
-          "name": "1440 Cols/12",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "3a1acad8f26a980a04d297e8ada44c404cb5c44e",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 1092,
-            "42724:1": 1092
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1440 Cols",
-          "tokenName": "12"
-        },
-        {
-          "id": "VariableID:67522:59032",
-          "name": "1280 Cols/3",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "56b63b1f01bfaf5c0d858d47396cd7554d781f52",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 215.5,
-            "42724:1": 225
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1280 Cols",
-          "tokenName": "3"
-        },
-        {
-          "id": "VariableID:67522:59033",
-          "name": "1280 Cols/4",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "1ecf474ba42d09ce5aeb428d8e34d51f5ef2a2d8",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 295.3299865722656,
-            "42724:1": 308
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1280 Cols",
-          "tokenName": "4"
-        },
-        {
-          "id": "VariableID:67522:59034",
-          "name": "1280 Cols/6",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "2b86ebcf7c698a2c509fbc7ab0aeb101799ccf83",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 455,
-            "42724:1": 474
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1280 Cols",
-          "tokenName": "6"
-        },
-        {
-          "id": "VariableID:67522:59035",
-          "name": "1280 Cols/8",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "9102968f07a219cea21ef5a8b2d5e4fa84e18fe6",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 614.6699829101562,
-            "42724:1": 640
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1280 Cols",
-          "tokenName": "8"
-        },
-        {
-          "id": "VariableID:67522:59036",
-          "name": "1280 Cols/12",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "f0886aaf81d86675119aea40d4b63dc50c13db57",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 934,
-            "42724:1": 972
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1280 Cols",
-          "tokenName": "12"
-        },
-        {
-          "id": "VariableID:67522:59037",
-          "name": "1024 Cols/3",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "e17c103f1d4621857bf591d640c80af3c3e1652a",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 165.5,
-            "42724:1": 167
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1024 Cols",
-          "tokenName": "3"
-        },
-        {
-          "id": "VariableID:67522:59038",
-          "name": "1024 Cols/4",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "a506e03f7cedc379bfb61ecf362aac1c629b2167",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 226,
-            "42724:1": 228
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1024 Cols",
-          "tokenName": "4"
-        },
-        {
-          "id": "VariableID:67522:59039",
-          "name": "1024 Cols/6",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "7b20049f0879e836a3b520b50e7748eb6b0c277b",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 347,
-            "42724:1": 350
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1024 Cols",
-          "tokenName": "6"
-        },
-        {
-          "id": "VariableID:67522:59040",
-          "name": "1024 Cols/8",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "11076e0067c45ef6bb470dadd646cfdf466fd955",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 468,
-            "42724:1": 472
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1024 Cols",
-          "tokenName": "8"
-        },
-        {
-          "id": "VariableID:67522:59041",
-          "name": "1024 Cols/12",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "75fb2f532875db13ce9c6577825627119e421c8a",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 710,
-            "42724:1": 716
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "1024 Cols",
-          "tokenName": "12"
-        },
-        {
-          "id": "VariableID:67558:8069",
-          "name": "768 Cols/3",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "a75445d2f143d4403c8b669420fb97d9f4788fbf",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 164,
-            "42724:1": 164
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "768 Cols",
-          "tokenName": "3"
-        },
-        {
-          "id": "VariableID:67558:8070",
-          "name": "768 Cols/4",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "9db2fa389c9af8f876a9019ee5ceff76f959b5da",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 224,
-            "42724:1": 224
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "768 Cols",
-          "tokenName": "4"
-        },
-        {
-          "id": "VariableID:67558:8071",
-          "name": "768 Cols/6",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "93770d21cc13418c938035f1c9f81914b95a4a4f",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 344,
-            "42724:1": 344
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "768 Cols",
-          "tokenName": "6"
-        },
-        {
-          "id": "VariableID:67558:8072",
-          "name": "768 Cols/8",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "8a38c37e1ff6283c5b16ef450dc8215f618755b4",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "WIDTH_HEIGHT",
-            "GAP"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 464,
-            "42724:1": 464
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "768 Cols",
-          "tokenName": "8"
-        },
-        {
-          "id": "VariableID:67558:8073",
-          "name": "768 Cols/12",
-          "description": "",
-          "hiddenFromPublishing": false,
-          "remote": false,
-          "key": "b5812d935f20605f1708cb6d1b7b87826b4bbdbf",
-          "resolvedType": "FLOAT",
-          "variableCollectionId": "VariableCollectionId:42724:47369",
-          "scopes": [
-            "CORNER_RADIUS",
-            "WIDTH_HEIGHT"
-          ],
-          "codeSyntax": {},
-          "valuesByMode": {
-            "42724:0": 704,
-            "42724:1": 704
-          },
-          "hexByMode": {},
-          "collectionName": "🔄  [Old] Grid Values",
-          "groupName": "768 Cols",
-          "tokenName": "12"
-        }
-      ]
-    },
     {
       "id": "VariableCollectionId:76532:102337",
       "name": "[D] Grid & Cols",
@@ -786,6 +28,10 @@
         {
           "modeId": "76532:3",
           "name": "1024"
+        },
+        {
+          "modeId": "137499:0",
+          "name": "768"
         }
       ],
       "variables": [
@@ -808,7 +54,8 @@
             "76532:0": 1600,
             "76532:1": 1440,
             "76532:2": 1280,
-            "76532:3": 1024
+            "76532:3": 1024,
+            "137499:0": 768
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -834,12 +81,38 @@
             "76532:0": 900,
             "76532:1": 860,
             "76532:2": 720,
-            "76532:3": 768
+            "76532:3": 768,
+            "137499:0": 1024
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Page H"
+        },
+        {
+          "id": "VariableID:137517:99099",
+          "name": "Grid/SideMenu W",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5772e1d6ef0958f7add090bc35d2cf2c7ba34ccb",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": 248,
+            "76532:1": 248,
+            "76532:2": 248,
+            "76532:3": 248,
+            "137499:0": 0
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Grid",
+          "tokenName": "SideMenu W"
         },
         {
           "id": "VariableID:82268:155710",
@@ -859,7 +132,8 @@
             "76532:0": 40,
             "76532:1": 40,
             "76532:2": 40,
-            "76532:3": 40
+            "76532:3": 40,
+            "137499:0": 40
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -884,7 +158,8 @@
             "76532:0": 64,
             "76532:1": 64,
             "76532:2": 64,
-            "76532:3": 64
+            "76532:3": 64,
+            "137499:0": 64
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -910,7 +185,8 @@
             "76532:0": 1352,
             "76532:1": 1192,
             "76532:2": 1032,
-            "76532:3": 776
+            "76532:3": 776,
+            "137499:0": 768
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -936,7 +212,8 @@
             "76532:0": 52,
             "76532:1": 50,
             "76532:2": 30,
-            "76532:3": 30
+            "76532:3": 30,
+            "137499:0": 32
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -962,7 +239,8 @@
             "76532:0": 24,
             "76532:1": 24,
             "76532:2": 24,
-            "76532:3": 16
+            "76532:3": 16,
+            "137499:0": 16
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -988,7 +266,8 @@
             "76532:0": 294,
             "76532:1": 255,
             "76532:2": 225,
-            "76532:3": 167
+            "76532:3": 167,
+            "137499:0": 164
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -1014,7 +293,8 @@
             "76532:0": 400,
             "76532:1": 348,
             "76532:2": 308,
-            "76532:3": 228
+            "76532:3": 228,
+            "137499:0": 224
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -1040,7 +320,8 @@
             "76532:0": 612,
             "76532:1": 534,
             "76532:2": 474,
-            "76532:3": 350
+            "76532:3": 350,
+            "137499:0": 344
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -1066,7 +347,8 @@
             "76532:0": 824,
             "76532:1": 720,
             "76532:2": 640,
-            "76532:3": 472
+            "76532:3": 472,
+            "137499:0": 464
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -1090,7 +372,8 @@
             "76532:0": 930,
             "76532:1": 813,
             "76532:2": 693,
-            "76532:3": 533
+            "76532:3": 533,
+            "137499:0": 524
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
@@ -1116,18 +399,44 @@
             "76532:0": 1248,
             "76532:1": 1092,
             "76532:2": 972,
-            "76532:3": 716
+            "76532:3": 716,
+            "137499:0": 704
           },
           "hexByMode": {},
           "collectionName": "[D] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "12 Col"
+        },
+        {
+          "id": "VariableID:137512:10202",
+          "name": "TabletHeader",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9b82c324922f529ac0ef6ae532078272bd441c9f",
+          "resolvedType": "BOOLEAN",
+          "variableCollectionId": "VariableCollectionId:76532:102337",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "76532:0": false,
+            "76532:1": false,
+            "76532:2": false,
+            "76532:3": false,
+            "137499:0": true
+          },
+          "hexByMode": {},
+          "collectionName": "[D] Grid & Cols",
+          "groupName": "Без группы",
+          "tokenName": "TabletHeader"
         }
       ]
     },
     {
       "id": "VariableCollectionId:89619:27005",
-      "name": "[T] Grid & Cols",
+      "name": "❌ [T] Grid & Cols",
       "key": "15f600f8a6ef999faa4a8dcddd9957cd69972c38",
       "defaultModeId": "89619:0",
       "hiddenFromPublishing": false,
@@ -1157,7 +466,7 @@
             "89619:0": 768
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Page W"
         },
@@ -1179,7 +488,7 @@
             "89619:0": 1024
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Page H"
         },
@@ -1201,7 +510,7 @@
             "89619:0": 40
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "TopMargin"
         },
@@ -1223,7 +532,7 @@
             "89619:0": 64
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "BottomMargin"
         },
@@ -1245,7 +554,7 @@
             "89619:0": 768
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Content"
         },
@@ -1267,7 +576,7 @@
             "89619:0": 32
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Grid Margin"
         },
@@ -1289,7 +598,7 @@
             "89619:0": 16
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Grid",
           "tokenName": "Gutter"
         },
@@ -1311,7 +620,7 @@
             "89619:0": 164
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "3 Col"
         },
@@ -1333,7 +642,7 @@
             "89619:0": 224
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "4 Col"
         },
@@ -1355,7 +664,7 @@
             "89619:0": 344
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "6 Col"
         },
@@ -1377,7 +686,7 @@
             "89619:0": 464
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "8 Col"
         },
@@ -1399,7 +708,7 @@
             "89619:0": 704
           },
           "hexByMode": {},
-          "collectionName": "[T] Grid & Cols",
+          "collectionName": "❌ [T] Grid & Cols",
           "groupName": "Cols",
           "tokenName": "12 Col"
         }
@@ -1528,6 +837,326 @@
           "collectionName": "[M] Grid & Cols",
           "groupName": "Без группы",
           "tokenName": "Grid Margin"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:136328:43556",
+      "name": "BackgroundPlate Radius",
+      "key": "70aae338764e9bd208c8d243895b523de521a178",
+      "defaultModeId": "136328:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "136328:0",
+          "name": "Level-1 (outer)"
+        },
+        {
+          "modeId": "136328:1",
+          "name": "Level-2 (inner)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:136328:43557",
+          "name": "[D] CornerRadius",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "5baf5a7a181d3ebc9d5f510f9bc7c8c431f46a77",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:136328:43556",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136328:0": 16,
+            "136328:1": 12
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Radius",
+          "groupName": "Без группы",
+          "tokenName": "[D] CornerRadius"
+        },
+        {
+          "id": "VariableID:136941:9105",
+          "name": "[M] CornerRadius",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "9a9326dcd4aabf82f1d0a99a7ba335f737dbfa25",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:136328:43556",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136328:0": 24,
+            "136328:1": 16
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Radius",
+          "groupName": "Без группы",
+          "tokenName": "[M] CornerRadius"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:136846:8873",
+      "name": "BackgroundPlate Level",
+      "key": "ded155c084dd88445e29d4134aad0e9cfb1700d7",
+      "defaultModeId": "136846:5",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "136846:5",
+          "name": "Level-0 (base)"
+        },
+        {
+          "modeId": "136846:3",
+          "name": "Level-1 (outer)"
+        },
+        {
+          "modeId": "136846:4",
+          "name": "Level-2 (outer)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:136853:7710",
+          "name": "BackgroundColor",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "db84ea8cdc3ae910e107478f4b4b3fad114302a0",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:136846:8873",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136846:3": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:136853:7728"
+            },
+            "136846:4": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:136853:7727"
+            },
+            "136846:5": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:136853:7729"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Level",
+          "groupName": "Без группы",
+          "tokenName": "BackgroundColor"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:136853:7720",
+      "name": "BackgroundPlate Color",
+      "key": "22d83aeb0d0d643a5359f63464a2ab81838fbe9f",
+      "defaultModeId": "136853:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "136853:0",
+          "name": "base-bg-alt (grey)"
+        },
+        {
+          "modeId": "136853:1",
+          "name": "base-bg (white)"
+        },
+        {
+          "modeId": "136941:0",
+          "name": "modal-bg-alt (grey)"
+        },
+        {
+          "modeId": "136941:1",
+          "name": "modal-bg (white)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:136853:7729",
+          "name": "Level-0 (base)",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "88dd7ea8641361035fe8ba4f5626d20b317dcd63",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:136853:7720",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136853:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:5ffdfac4b248819bc8fc25adf4a5f74b165af190/3541:139"
+            },
+            "136853:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            },
+            "136941:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:5ffdfac4b248819bc8fc25adf4a5f74b165af190/3541:139"
+            },
+            "136941:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:224167a7a0d8a160932c76a7ef008143801aab08/3541:154"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Color",
+          "groupName": "Без группы",
+          "tokenName": "Level-0 (base)"
+        },
+        {
+          "id": "VariableID:136853:7728",
+          "name": "Level-1 (outer)",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "85cf039ed1958fe6e22977e231983ed191442c01",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:136853:7720",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136853:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:8e2800951104c0afbc2ed28e5331d61aa4214a9a/3541:172"
+            },
+            "136853:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            },
+            "136941:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:6889e07c224263b589ff5c9e0c8d031845c61f9f/3541:117"
+            },
+            "136941:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:be3bf2c65d1f3fd8c66b5d74e95d79a608ee8f72/3541:152"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Color",
+          "groupName": "Без группы",
+          "tokenName": "Level-1 (outer)"
+        },
+        {
+          "id": "VariableID:136853:7727",
+          "name": "Level-2 (inner)",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "a4555a3b6a412869037491cde1cba573bb94295f",
+          "resolvedType": "COLOR",
+          "variableCollectionId": "VariableCollectionId:136853:7720",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136853:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:a21e3cffc40ba5c74514d7204c1999d1d8f5fc0d/3541:132"
+            },
+            "136853:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:3cda68f4518536efebc1e42b5be7bb4549ec1601/3541:142"
+            },
+            "136941:0": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:8f93aef89bd2b440ab3e748ec9e1d0cb19edec22/3541:155"
+            },
+            "136941:1": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:df6537fd1b429bb3c285b551aa8b65717617b33e/3541:108"
+            }
+          },
+          "hexByMode": {},
+          "collectionName": "BackgroundPlate Color",
+          "groupName": "Без группы",
+          "tokenName": "Level-2 (inner)"
+        }
+      ]
+    },
+    {
+      "id": "VariableCollectionId:136950:62729",
+      "name": "[Promo] BackgroundPlate Radius",
+      "key": "8ec8c08c6477f1f656a92b4d42684c8b60befcd5",
+      "defaultModeId": "136950:0",
+      "hiddenFromPublishing": false,
+      "remote": false,
+      "modes": [
+        {
+          "modeId": "136950:0",
+          "name": "Level-1 (outer)"
+        },
+        {
+          "modeId": "136950:1",
+          "name": "Level-2 (inner)"
+        }
+      ],
+      "variables": [
+        {
+          "id": "VariableID:136950:62737",
+          "name": "[D] CornerRadius",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "38a024b60d25fdd7372b18e8a916d33059237668",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:136950:62729",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136950:0": 24,
+            "136950:1": 16
+          },
+          "hexByMode": {},
+          "collectionName": "[Promo] BackgroundPlate Radius",
+          "groupName": "Без группы",
+          "tokenName": "[D] CornerRadius"
+        },
+        {
+          "id": "VariableID:136950:62736",
+          "name": "[M] CornerRadius",
+          "description": "",
+          "hiddenFromPublishing": false,
+          "remote": false,
+          "key": "96da4230abb0853e23ac9aec31d7be8fd66ebcac",
+          "resolvedType": "FLOAT",
+          "variableCollectionId": "VariableCollectionId:136950:62729",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {},
+          "valuesByMode": {
+            "136950:0": 24,
+            "136950:1": 16
+          },
+          "hexByMode": {},
+          "collectionName": "[Promo] BackgroundPlate Radius",
+          "groupName": "Без группы",
+          "tokenName": "[M] CornerRadius"
         }
       ]
     }

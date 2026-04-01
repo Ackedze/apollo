@@ -3,7 +3,7 @@
   "source": {
     "library": "Web :: Corp Components",
     "file": "Web :: Corp Components",
-    "generatedAt": "2025-12-22T10:31:35.558Z",
+    "generatedAt": "2026-04-01T11:40:54.051Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
@@ -21,6 +21,339 @@
       "platform": "universal",
       "category": "PaymentMaskedNumber",
       "defaultVariant": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
+      "variantStructures": {
+        "bd25bbd83bfc28176b42284659f21c8a7cd8e97b": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "PaymentMaskedNumber",
+          "type": "COMPONENT",
+          "name": "PaymentMaskedNumber",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "PaymentMaskedNumber / Major",
+          "type": "INSTANCE",
+          "name": "Major",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "e1f5bf7317b09ffcd37f011dcf88ceb2d346b5eb",
+            "variantProperties": {
+              "Mask Number": "False"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "PaymentMaskedNumber / Major / ✎ Major",
+          "type": "TEXT",
+          "name": "✎ Major",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "40802 810 0 0000 000",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 4,
+          "parentId": 1,
+          "path": "PaymentMaskedNumber / Minor",
+          "type": "INSTANCE",
+          "name": "Minor",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "d4e927d5ad51b45cc2807929a283e1b6857474a4"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "PaymentMaskedNumber / Minor / ✎ Minor",
+          "type": "TEXT",
+          "name": "✎ Minor",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "1234",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "path": "PaymentMaskedNumber / Addon",
+          "type": "INSTANCE",
+          "name": "Addon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 0,
+              "bottom": 2,
+              "left": 6
+            },
+            "itemSpacing": 10,
+            "paddingTokens": {
+              "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+              "right": null,
+              "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+              "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "0ab63538bfd52d7f4a39ea945c1fd87cc65305da",
+            "variantProperties": {
+              "Presets": "StatusBadge"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge",
+          "type": "INSTANCE",
+          "name": "StatusBadge",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 999,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 137,
+                "g": 137,
+                "b": 145,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+              "colorHex": "#898991"
+            }
+          ],
+          "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+          "componentInstance": {
+            "componentKey": "73946d8d0584f03d590e20fad1c9141382962bca",
+            "variantProperties": {
+              "View": "NeutralInformation",
+              "Size": "16"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content",
+          "type": "INSTANCE",
+          "name": "🔩 Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90f926b8dae92180c97b1ea25c9eba66cecff979",
+            "variantProperties": {
+              "Size": "16",
+              "Type": "Icon"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+          "type": "INSTANCE",
+          "name": "information-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "91b60d60ebbfa1b14618fb3022dcd0646350f939",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        }
+      ],
       "variants": [
         {
           "id": "23266:258531",
@@ -37,6 +370,781 @@
       "platform": "universal",
       "category": "RightAddon",
       "defaultVariant": "e386c9fe0ec00124fc8b65b8476d338a4bcf4a81",
+      "variantStructures": {
+        "e386c9fe0ec00124fc8b65b8476d338a4bcf4a81": [],
+        "0ab63538bfd52d7f4a39ea945c1fd87cc65305da": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=StatusBadge",
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 0,
+                  "bottom": 2,
+                  "left": 6
+                },
+                "itemSpacing": 10,
+                "paddingTokens": {
+                  "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "right": null,
+                  "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=StatusBadge / StatusBadge",
+              "type": "INSTANCE",
+              "name": "StatusBadge",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 999,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 137,
+                    "g": 137,
+                    "b": 145,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+                  "colorHex": "#898991"
+                }
+              ],
+              "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+              "componentInstance": {
+                "componentKey": "73946d8d0584f03d590e20fad1c9141382962bca",
+                "variantProperties": {
+                  "View": "NeutralInformation",
+                  "Size": "16"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=StatusBadge / StatusBadge / 🔩 Content",
+              "type": "INSTANCE",
+              "name": "🔩 Content",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "90f926b8dae92180c97b1ea25c9eba66cecff979",
+                "variantProperties": {
+                  "Size": "16",
+                  "Type": "Icon"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=StatusBadge / StatusBadge / 🔩 Content / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Presets=StatusBadge / StatusBadge / 🔩 Content / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.94
+                  },
+                  "visible": true,
+                  "opacity": 0.9399999976158142,
+                  "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Presets=StatusBadge / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+              "type": "INSTANCE",
+              "name": "information-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "91b60d60ebbfa1b14618fb3022dcd0646350f939",
+                "variantProperties": {
+                  "Size": "s"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Presets=StatusBadge / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "e65ffcd8308745a6da1838e3b12f2e602bd1cf98": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=IconPrimary",
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 0,
+                  "bottom": 2,
+                  "left": 6
+                },
+                "itemSpacing": 10,
+                "paddingTokens": {
+                  "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "right": null,
+                  "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=IconPrimary / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=IconPrimary / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=IconPrimary / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+                "variantProperties": {
+                  "Size": "s"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Presets=IconPrimary / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "b3c2546c041c677a300fc49875f31635810cc8ab": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=IconSecondary",
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 0,
+                  "bottom": 2,
+                  "left": 6
+                },
+                "itemSpacing": 10,
+                "paddingTokens": {
+                  "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "right": null,
+                  "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=IconSecondary / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=IconSecondary / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 21,
+                    "a": 0.47
+                  },
+                  "visible": true,
+                  "opacity": 0.4699999988079071,
+                  "tokenKey": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130",
+                  "colorHex": "#040415"
+                }
+              ],
+              "fillToken": "VariableID:faac436b14cc199cfe97243b05af867af9ecb365/3541:130"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=IconSecondary / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+                "variantProperties": {
+                  "Size": "s"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Presets=IconSecondary / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "d16ffb26434e1411a56d41ea11d1240901619290": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=IconTertiary",
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 0,
+                  "bottom": 2,
+                  "left": 6
+                },
+                "itemSpacing": 10,
+                "paddingTokens": {
+                  "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "right": null,
+                  "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=IconTertiary / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=IconTertiary / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 9,
+                    "g": 12,
+                    "b": 37,
+                    "a": 0.28
+                  },
+                  "visible": true,
+                  "opacity": 0.2800000011920929,
+                  "tokenKey": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+                  "colorHex": "#090C25"
+                }
+              ],
+              "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=IconTertiary / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+                "variantProperties": {
+                  "Size": "s"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Presets=IconTertiary / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ],
+        "50049a53c00f61224df2fc05e9462960a66b5e5c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=IconCustom",
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 0,
+                  "bottom": 2,
+                  "left": 6
+                },
+                "itemSpacing": 10,
+                "paddingTokens": {
+                  "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "right": null,
+                  "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+                  "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Presets=IconCustom / Fixer",
+              "type": "FRAME",
+              "name": "Fixer",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Presets=IconCustom / Fixer / PaintMe",
+              "type": "BOOLEAN_OPERATION",
+              "name": "PaintMe",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Presets=IconCustom / Fixer / PaintMe / diamonds",
+              "type": "INSTANCE",
+              "name": "diamonds",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5488b3f6210650ac293d3839debfcb1d97085b00",
+                "variantProperties": {
+                  "Size": "s"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Presets=IconCustom / Fixer / PaintMe / diamonds / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 116,
+                    "g": 116,
+                    "b": 116,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#747474"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Presets=SwapMe",
+          "type": "COMPONENT",
+          "name": "Presets=SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 6
+            },
+            "itemSpacing": 10,
+            "paddingTokens": {
+              "top": null,
+              "right": null,
+              "bottom": null,
+              "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Presets=SwapMe / SwapMe",
+          "type": "INSTANCE",
+          "name": "SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Presets=SwapMe / SwapMe / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "23266:258521",
@@ -78,6 +1186,67 @@
       "platform": "universal",
       "category": "Minor",
       "defaultVariant": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
+      "variantStructures": {
+        "d4e927d5ad51b45cc2807929a283e1b6857474a4": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Minor",
+          "type": "COMPONENT",
+          "name": "Minor",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Minor / ✎ Minor",
+          "type": "TEXT",
+          "name": "✎ Minor",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "1234",
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 14
+          }
+        }
+      ],
       "variants": [
         {
           "id": "23266:258519",
@@ -94,6 +1263,74 @@
       "platform": "universal",
       "category": "SwapMe",
       "defaultVariant": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
+      "variantStructures": {
+        "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "SwapMe",
+          "type": "COMPONENT",
+          "name": "SwapMe",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 8,
+              "bottom": 8,
+              "left": 8
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 216,
+                "g": 234,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+              "colorHex": "#D8EAFF"
+            }
+          ],
+          "fillToken": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "SwapMe / Wrapper",
+          "type": "FRAME",
+          "name": "Wrapper",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
       "variants": [
         {
           "id": "26906:10171",
@@ -110,6 +1347,90 @@
       "platform": "universal",
       "category": "Major",
       "defaultVariant": "e1f5bf7317b09ffcd37f011dcf88ceb2d346b5eb",
+      "variantStructures": {
+        "e1f5bf7317b09ffcd37f011dcf88ceb2d346b5eb": [],
+        "8baa19f6863ddc17643730d2abc0b98371a58111": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Mask Number=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "text": {
+                "characters": "·· ",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Mask Number=False",
+          "type": "COMPONENT",
+          "name": "Mask Number=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Mask Number=False / ✎ Major",
+          "type": "TEXT",
+          "name": "✎ Major",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "40802 810 0 0000 000",
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 14
+          }
+        }
+      ],
       "variants": [
         {
           "id": "23266:258526",
@@ -126,105 +1447,125 @@
   ],
   "elements": [
     {
+      "id": 1,
       "path": "PaymentMaskedNumber",
       "type": "COMPONENT",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 2,
       "path": "PaymentMaskedNumber / Major",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 10,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 3,
       "path": "PaymentMaskedNumber / Major / ✎ Major",
       "type": "TEXT",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
         "color": "rgba(3,3,6,0.88)"
       },
       "text": {
         "value": "40802 810 0 0000 000"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 20,
-        "letterSpacing": 0
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
       }
     },
     {
+      "id": 4,
       "path": "PaymentMaskedNumber / Minor",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 10,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 5,
       "path": "PaymentMaskedNumber / Minor / ✎ Minor",
       "type": "TEXT",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
         "color": "rgba(3,3,6,0.88)"
       },
       "text": {
         "value": "1234"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 20,
-        "letterSpacing": 0
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
       }
     },
     {
+      "id": 6,
       "path": "PaymentMaskedNumber / Addon",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
@@ -237,53 +1578,69 @@
           6
         ],
         "gap": 10,
-        "radius": 0
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+          "right": null,
+          "bottom": "VariableID:bb87c4cc487bde4016ae4c2c586854c28e23dafd/1:31",
+          "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+        }
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 7,
       "path": "PaymentMaskedNumber / Addon / StatusBadge",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 999
       },
-      "stroke": {
-        "weight": 1.25,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
         "color": "rgba(137,137,145,1)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 8,
       "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 9,
       "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer",
       "type": "FRAME",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
@@ -292,15 +1649,14 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 10,
       "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
       "type": "BOOLEAN_OPERATION",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
@@ -309,17 +1665,17 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 11,
       "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
       "type": "INSTANCE",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
@@ -328,15 +1684,14 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 12,
       "path": "PaymentMaskedNumber / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
       "type": "VECTOR",
       "componentKey": "bd25bbd83bfc28176b42284659f21c8a7cd8e97b",
@@ -345,10 +1700,8 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
         "color": "rgba(116,116,116,1)"
       },
@@ -356,6 +1709,7 @@
       "typography": null
     },
     {
+      "id": 1,
       "path": "RightAddon / Presets=SwapMe",
       "type": "COMPONENT",
       "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
@@ -368,17 +1722,22 @@
           6
         ],
         "gap": 10,
-        "radius": 0
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "left": "VariableID:d07b2622ff8b3c1a264bdeb1382dc170ed4a356e/1:33"
+        }
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 2,
       "path": "RightAddon / Presets=SwapMe / SwapMe",
       "type": "INSTANCE",
       "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
@@ -393,17 +1752,22 @@
         "gap": 0,
         "radius": 4
       },
+      "opacity": 1,
       "stroke": {
         "weight": 1,
-        "align": "INSIDE"
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
       },
       "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
         "color": "rgba(216,234,255,1)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 3,
       "path": "RightAddon / Presets=SwapMe / SwapMe / Wrapper",
       "type": "FRAME",
       "componentKey": "eb8009882df50e638b8b6ce42814355546576de7",
@@ -412,42 +1776,45 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 1,
       "path": "Minor",
       "type": "COMPONENT",
       "componentKey": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 10,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 2,
       "path": "Minor / ✎ Minor",
       "type": "TEXT",
       "componentKey": "d4e927d5ad51b45cc2807929a283e1b6857474a4",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
         "color": "rgba(3,3,6,0.88)"
       },
       "text": {
@@ -462,6 +1829,7 @@
       }
     },
     {
+      "id": 1,
       "path": "SwapMe",
       "type": "COMPONENT",
       "componentKey": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
@@ -476,17 +1844,22 @@
         "gap": 0,
         "radius": 4
       },
+      "opacity": 1,
       "stroke": {
         "weight": 1,
-        "align": "INSIDE"
+        "align": "INSIDE",
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
       },
       "fill": {
+        "token": "VariableID:587496c4b18675f26a868d9dd6c8c5589f177de5/3541:144",
         "color": "rgba(216,234,255,1)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 2,
       "path": "SwapMe / Wrapper",
       "type": "FRAME",
       "componentKey": "c9f03ba2dce7b95a5012b0a6c252bf2a8ee4d7ef",
@@ -495,42 +1868,45 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 1,
       "path": "Major / Mask Number=False",
       "type": "COMPONENT",
       "componentKey": "b4b0b34c80492fba153134447c5f0aa1eaccd892",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 10,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 2,
       "path": "Major / Mask Number=False / ✎ Major",
       "type": "TEXT",
       "componentKey": "b4b0b34c80492fba153134447c5f0aa1eaccd892",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
         "color": "rgba(3,3,6,0.88)"
       },
       "text": {

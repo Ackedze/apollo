@@ -3,14 +3,14 @@
   "source": {
     "library": "Web :: Corp Components",
     "file": "Web :: Corp Components",
-    "generatedAt": "2025-12-22T10:32:05.242Z",
+    "generatedAt": "2026-04-01T11:41:31.851Z",
     "exportVersion": "0.1.0",
     "scope": "current-page",
     "files": [
       "ButtonStack [M]"
     ],
-    "componentCount": 5,
-    "elementCount": 73
+    "componentCount": 1,
+    "elementCount": 35
   },
   "components": [
     {
@@ -22,6 +22,2061 @@
       "description": "Вспомогательный компонент Figma, в коде не существует.",
       "category": "M] ButtonStack",
       "defaultVariant": "0946de85408790654221b1af6200989fe8500387",
+      "variantStructures": {
+        "0946de85408790654221b1af6200989fe8500387": [],
+        "aa9b7e5313ef64fdb64b05eee1629e0e3235e5bb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Primary, Background=True",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            }
+          }
+        ],
+        "4e8d1d8140c80e9f7f59ca7463c40a26d71747e4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Secondary, Background=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "77b9c3493e6842486f2f9f2f97a577db2ecca713": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Secondary, Background=True",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "5a53473c3ef78d5084fbfc5860038426dcee8fce": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Group Horizontal, Background=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "5edecf07ccdada4cf92ae6b2e01325cb54ab3ca4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Group Horizontal, Background=True",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "6d3825f219d46dc6f02bc427ccb5bad8494a6c59": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Group Vertical, Background=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "5921a669310abb7590978af61e9da9e4ce49ab72": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Group Vertical, Background=True",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "bfbb50dde5ccd528e32feca07178b0dacff448da",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "False",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 28,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          },
+          {
+            "op": "update",
+            "id": 29,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+            }
+          },
+          {
+            "op": "update",
+            "id": 33,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "135cd8fbc18dec0dc4a080b5f05e522993722d3c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Primary + Icon, Background=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 8,
+                  "bottom": 8,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "0070718603dfef83af82f772ff20b14f1229944c",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "True",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 21,
+            "value": {
+              "visible": true
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ],
+        "43c6ee420fef536ca93c9f95d58716b50a2e9dcd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Presets=Primary + Icon, Background=True",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+            }
+          },
+          {
+            "op": "update",
+            "id": 19,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:01c83f6e3a7dcc11f03eb6e99064b356ba9ac1a9,104:6"
+                  }
+                ]
+              },
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 8,
+                  "bottom": 8,
+                  "left": 8
+                },
+                "itemSpacing": 0
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 80
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "0070718603dfef83af82f772ff20b14f1229944c",
+                "variantProperties": {
+                  "View": "Secondary",
+                  "Size": "56",
+                  "Shape": "Rectangular",
+                  "SingleIcon": "True",
+                  "DisabledState": "False"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 21,
+            "value": {
+              "visible": true
+            }
+          },
+          {
+            "op": "update",
+            "id": 24,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Presets=Primary, Background=False",
+          "type": "COMPONENT",
+          "name": "Presets=Primary, Background=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 20,
+              "bottom": 16,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Presets=Primary, Background=False / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 16
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Presets=Primary, Background=False / Content / Checkbox",
+          "type": "FRAME",
+          "name": "Checkbox",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24",
+          "type": "INSTANCE",
+          "name": "CheckboxLabel_24",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "2a3b098b18b4b0b8901c5a586ee1240412d82b3d",
+            "variantProperties": {
+              "Hint": "False",
+              "ErrorMessage": "False",
+              "DisabledLabel": "False"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox",
+          "type": "INSTANCE",
+          "name": "Checkbox",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 2,
+              "bottom": 2,
+              "left": 2
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "29a5bd3da2b0768d1b6a45bc3fd7a8b760fa4f32",
+            "variantProperties": {
+              "SelectedState": "True",
+              "DisabledState": "False",
+              "IndeterminateState": "False"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Bg",
+          "type": "RECTANGLE",
+          "name": "Bg",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105"
+        },
+        {
+          "id": 8,
+          "parentId": 6,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon",
+          "type": "BOOLEAN_OPERATION",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114"
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 4,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content",
+          "type": "FRAME",
+          "name": "Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": -0.23999999463558197,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89"
+        },
+        {
+          "id": 12,
+          "parentId": 3,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon",
+          "type": "FRAME",
+          "name": "Addon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 0,
+              "bottom": 4,
+              "left": 6
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge",
+          "type": "INSTANCE",
+          "name": "StatusBadge",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 999,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 137,
+                "g": 137,
+                "b": 145,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+              "colorHex": "#898991"
+            }
+          ],
+          "fillToken": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
+          "componentInstance": {
+            "componentKey": "73946d8d0584f03d590e20fad1c9141382962bca",
+            "variantProperties": {
+              "View": "NeutralInformation",
+              "Size": "16"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content",
+          "type": "INSTANCE",
+          "name": "🔩 Content",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90f926b8dae92180c97b1ea25c9eba66cecff979",
+            "variantProperties": {
+              "Size": "16",
+              "Type": "Icon"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44"
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
+          "type": "INSTANCE",
+          "name": "information-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "91b60d60ebbfa1b14618fb3022dcd0646350f939",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "parentId": 2,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack",
+          "type": "FRAME",
+          "name": "MainButtonStack",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button",
+          "type": "INSTANCE",
+          "name": "[M] Button",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 24,
+              "bottom": 4,
+              "left": 24
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 16,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
+          "componentInstance": {
+            "componentKey": "d5c2304aede89a2a8dc7512677bd0a77114a3cdd",
+            "variantProperties": {
+              "View": "Primary",
+              "Size": "56",
+              "Shape": "Rectangular",
+              "SingleIcon": "False",
+              "DisabledState": "False"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon",
+          "type": "FRAME",
+          "name": "LeftAddon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon",
+          "type": "INSTANCE",
+          "name": "LeftAddon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "96f3e268d8fafaa37f71c84d18d722a408f5a8f1",
+            "variantProperties": {
+              "Type": "Icon-24"
+            }
+          }
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+          "type": "INSTANCE",
+          "name": "diamonds",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "parentId": 20,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text",
+          "type": "FRAME",
+          "name": "Text",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 4,
+              "bottom": 0,
+              "left": 4
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0fd87667e8841a94094062af08ade71d47456827,9221:127"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Label",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.05000000074505806,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:b7120271b4e052d8c33cd9d0ef902bbfdaabf060/9221:76"
+        },
+        {
+          "id": 29,
+          "parentId": 27,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text / Hint",
+          "type": "TEXT",
+          "name": "Hint",
+          "visible": false,
+          "styles": {
+            "text": {
+              "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Hint",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 238,
+                "g": 238,
+                "b": 251,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+              "colorHex": "#EEEEFB"
+            }
+          ],
+          "fillToken": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90"
+        },
+        {
+          "id": 30,
+          "parentId": 20,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon",
+          "type": "FRAME",
+          "name": "RightAddon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon",
+          "type": "INSTANCE",
+          "name": "RightAddon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "96f3e268d8fafaa37f71c84d18d722a408f5a8f1",
+            "variantProperties": {
+              "Type": "Icon-24"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer",
+          "type": "FRAME",
+          "name": "Fixer",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe",
+          "type": "BOOLEAN_OPERATION",
+          "name": "PaintMe",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135"
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+          "type": "INSTANCE",
+          "name": "diamonds",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6cef3ffc12e9e4fcb6d1765b9e6eddcf29ce22e0",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        }
+      ],
       "variants": [
         {
           "id": "34796:35425",
@@ -74,107 +2129,11 @@
           "name": "Presets=Primary + Icon, Background=True"
         }
       ]
-    },
-    {
-      "key": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "name": "❌ MainButtonStack ❌",
-      "status": "deprecated",
-      "role": "main",
-      "platform": "mobile-web",
-      "description": "Заменить на актуальный",
-      "category": "MainButtonStack ❌",
-      "defaultVariant": "7fc8e713a68f241c2fae4a4cae7fd07f22599762",
-      "variants": [
-        {
-          "id": "12902:189482",
-          "key": "7fc8e713a68f241c2fae4a4cae7fd07f22599762",
-          "name": "Preset=Only Lable"
-        },
-        {
-          "id": "12902:189487",
-          "key": "e05bba0afe6ac4c885b942105e85784f8b9e784c",
-          "name": "Preset=2 Vertical Button"
-        },
-        {
-          "id": "12902:189493",
-          "key": "afbede2c773579dfe75d740c7638eaaded802a7d",
-          "name": "Preset=2 Horizontal Button"
-        },
-        {
-          "id": "12902:189499",
-          "key": "9187c710e15210919afe15cbe4b36a34d0cd9e23",
-          "name": "Preset=Lable + Icon"
-        }
-      ]
-    },
-    {
-      "key": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "name": "❌ .Details / TextView ❌",
-      "status": "deprecated",
-      "role": "main",
-      "platform": "mobile-web",
-      "description": "Custom",
-      "category": "Details",
-      "defaultVariant": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "variants": [
-        {
-          "id": "12902:212637",
-          "key": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-          "name": "❌ .Details / TextView ❌"
-        }
-      ]
-    },
-    {
-      "key": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "name": "❌ MainButtonStack",
-      "status": "deprecated",
-      "role": "main",
-      "platform": "mobile-web",
-      "category": "MainButtonStack",
-      "defaultVariant": "516b21ef4dcf25c22dcb43346801b4112453d713",
-      "variants": [
-        {
-          "id": "544:94655",
-          "key": "516b21ef4dcf25c22dcb43346801b4112453d713",
-          "name": "Preset=Only Lable"
-        },
-        {
-          "id": "544:94653",
-          "key": "1014126db5ae62ce0957fa277ac656e5eef05db6",
-          "name": "Preset=2 Vertical Button"
-        },
-        {
-          "id": "544:94654",
-          "key": "683a90a1706dd84e2b699edd3ad2ec6d488f6974",
-          "name": "Preset=2 Horizontal Button"
-        },
-        {
-          "id": "544:94652",
-          "key": "fa565a5e51454e15ebc7f9cbcb15cfd083b4af1b",
-          "name": "Preset=Lable + Icon"
-        }
-      ]
-    },
-    {
-      "key": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "name": ".❌ Details / TextView",
-      "status": "deprecated",
-      "role": "main",
-      "platform": "mobile-web",
-      "description": "Custom",
-      "category": "Details",
-      "defaultVariant": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "variants": [
-        {
-          "id": "544:94101",
-          "key": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-          "name": ".❌ Details / TextView"
-        }
-      ]
     }
   ],
   "elements": [
     {
+      "id": 1,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False",
       "type": "COMPONENT",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -182,85 +2141,59 @@
       "layout": {
         "padding": [
           16,
+          20,
           16,
-          16,
-          16
+          20
         ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal",
-      "type": "INSTANCE",
-      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal / Fixer",
-      "type": "FRAME",
-      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
+      "id": 2,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 16,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 3,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": false,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
         "color": "rgba(255,255,255,1)"
       },
@@ -268,23 +2201,29 @@
       "typography": null
     },
     {
+      "id": 4,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 12,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 5,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -299,15 +2238,14 @@
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 6,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -316,15 +2254,14 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 7,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Bg",
       "type": "RECTANGLE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -333,17 +2270,17 @@
         "gap": null,
         "radius": 4
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
         "color": "rgba(33,33,36,1)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 8,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon",
       "type": "BOOLEAN_OPERATION",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -352,17 +2289,17 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:40c66e4914c6bc4528e459831c0fe21731462d9d/3541:114",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 9,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Checkbox / Content / Icon / icon",
       "type": "VECTOR",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -371,56 +2308,62 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 2,
-        "align": "CENTER"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 10,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 4,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 11,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / CheckboxLabel_24 / Content / Label",
       "type": "TEXT",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
         "color": "rgba(3,3,6,0.88)"
       },
       "text": {
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 16,
         "lineHeight": 24,
-        "letterSpacing": 0
+        "letterSpacing": -0.23999999463558197,
+        "token": "VariableID:4a90c3aa1a9718ea38fb757c4676f4d5e2217285/9221:89",
+        "styleKey": "S:f0f0d59f9f92db92901605dd929cfa3b93540058,9221:110"
       }
     },
     {
+      "id": 12,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -435,51 +2378,61 @@
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 13,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 999
       },
-      "stroke": {
-        "weight": 1.25,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:6d79dab22065d6235e925db28794e4ede838d304/3541:171",
         "color": "rgba(137,137,145,1)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 14,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 15,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -488,15 +2441,14 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 16,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe",
       "type": "BOOLEAN_OPERATION",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -505,17 +2457,17 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:3ae8a4cacc6e560441bd23207c4bf16316c166e0/1930:44",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": null,
       "typography": null
     },
     {
+      "id": 17,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -524,15 +2476,14 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
+      "id": 18,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / Checkbox / Addon / StatusBadge / 🔩 Content / Fixer / PaintMe / information-compact / icon",
       "type": "VECTOR",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
@@ -541,10 +2492,8 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
         "color": "rgba(116,116,116,1)"
       },
@@ -552,24 +2501,30 @@
       "typography": null
     },
     {
+      "id": 19,
       "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 10,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button",
+      "id": 20,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -583,52 +2538,62 @@
         "gap": 4,
         "radius": 16
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:d52c0f0fb8cd8562b1314c4bc8318625b466017b/3541:105",
         "color": "rgba(33,33,36,1)"
       },
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon",
+      "id": 21,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": false,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon",
+      "id": 22,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer",
+      "id": 23,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -636,16 +2601,15 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
+      "id": 24,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe",
       "type": "BOOLEAN_OPERATION",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -653,18 +2617,18 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
+      "id": 25,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -672,16 +2636,15 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
+      "id": 26,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / LeftAddon / LeftAddon / Fixer / PaintMe / diamonds / icon",
       "type": "VECTOR",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -689,10 +2652,8 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
         "color": "rgba(116,116,116,1)"
       },
@@ -700,7 +2661,8 @@
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text",
+      "id": 27,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -714,98 +2676,111 @@
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text / Label",
+      "id": 28,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text / Label",
       "type": "TEXT",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": {
         "value": "Label"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Medium",
         "size": 16,
         "lineHeight": 20,
-        "letterSpacing": 0
+        "letterSpacing": -0.05000000074505806,
+        "token": "VariableID:b7120271b4e052d8c33cd9d0ef902bbfdaabf060/9221:76",
+        "styleKey": "S:0fd87667e8841a94094062af08ade71d47456827,9221:127"
       }
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / Text / Hint",
+      "id": 29,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / Text / Hint",
       "type": "TEXT",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": false,
       "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:161225b731874655180c29126e4a344df42cff83/3541:184",
         "color": "rgba(238,238,251,0.55)"
       },
       "text": {
         "value": "Hint"
       },
       "typography": {
-        "family": "SF Pro Text",
+        "family": "Alfa Interface Sans",
         "weight": "Regular",
         "size": 14,
         "lineHeight": 20,
-        "letterSpacing": 0
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:92cf07b9293d13f66c460e3ad17e71b714d44c91/9221:90",
+        "styleKey": "S:6fb5ab6969beee7da9e23dfcbab2f4864b30b665,9221:96"
       }
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon",
+      "id": 30,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": false,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon",
+      "id": 31,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
       "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
         "gap": 0,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer",
+      "id": 32,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer",
       "type": "FRAME",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -813,16 +2788,15 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe",
+      "id": 33,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe",
       "type": "BOOLEAN_OPERATION",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -830,18 +2804,18 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
         "color": "rgba(255,255,255,0.94)"
       },
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
+      "id": 34,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds",
       "type": "INSTANCE",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -849,16 +2823,15 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": null,
       "text": null,
       "typography": null
     },
     {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M][Corporate] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
+      "id": 35,
+      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / Content / MainButtonStack / [M] Button / RightAddon / RightAddon / Fixer / PaintMe / diamonds / icon",
       "type": "VECTOR",
       "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
       "visible": true,
@@ -866,765 +2839,13 @@
         "gap": null,
         "radius": 0
       },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
+      "opacity": 1,
+      "stroke": null,
       "fill": {
         "color": "rgba(116,116,116,1)"
       },
       "text": null,
       "typography": null
-    },
-    {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal",
-      "type": "INSTANCE",
-      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "🔒 [M] ButtonStack / Presets=Primary, Background=False / ↔ SpacingHorizontal / Fixer",
-      "type": "FRAME",
-      "componentKey": "1e9261fa9df082fa82b6ec3b42b429797f906cd9",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable",
-      "type": "COMPONENT",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌",
-      "type": "INSTANCE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": false,
-      "layout": {
-        "padding": [
-          12,
-          24,
-          8,
-          24
-        ],
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap",
-      "type": "FRAME",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap / _text_left",
-      "type": "TEXT",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": {
-        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 14,
-        "lineHeight": 20,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / ❌ .Details / TextView ❌ / content-wrap / _text_right",
-      "type": "TEXT",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": false,
-      "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
-      "fill": {
-        "color": "rgba(3,3,6,0.88)"
-      },
-      "text": {
-        "value": "subtitle"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 17,
-        "lineHeight": 24,
-        "letterSpacing": -0.40799999237060547
-      }
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack",
-      "type": "FRAME",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "padding": [
-          16,
-          20,
-          16,
-          20
-        ],
-        "gap": 10,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile",
-      "type": "INSTANCE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base",
-      "type": "INSTANCE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "padding": [
-          16,
-          28,
-          16,
-          28
-        ],
-        "gap": 0,
-        "radius": 16
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(14,14,14,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / 👻 Fixer",
-      "type": "INSTANCE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / Content",
-      "type": "FRAME",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / MainButtonStack / 🔄 ButtonMobile / 👻 Base / Content / Label",
-      "type": "TEXT",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": {
-        "value": "Label"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Medium",
-        "size": 16,
-        "lineHeight": 24,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / NativeHomeBar",
-      "type": "INSTANCE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": false,
-      "layout": {
-        "padding": [
-          21,
-          120,
-          8,
-          120
-        ],
-        "gap": 10,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack ❌ / Preset=Only Lable / NativeHomeBar / Home Indicator",
-      "type": "RECTANGLE",
-      "componentKey": "978a95ec10aadd6efc50f2c1ae7177cd9dfb32b1",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 100
-      },
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": {
-        "color": "rgba(0,0,0,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ .Details / TextView ❌",
-      "type": "COMPONENT",
-      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "visible": true,
-      "layout": {
-        "padding": [
-          12,
-          24,
-          8,
-          24
-        ],
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ .Details / TextView ❌ / content-wrap",
-      "type": "FRAME",
-      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ .Details / TextView ❌ / content-wrap / _text_left",
-      "type": "TEXT",
-      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": {
-        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 14,
-        "lineHeight": 20,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": "❌ .Details / TextView ❌ / content-wrap / _text_right",
-      "type": "TEXT",
-      "componentKey": "6e792bb106ba3f42528f61816d60ea61072b6a96",
-      "visible": false,
-      "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
-      "fill": {
-        "color": "rgba(3,3,6,0.88)"
-      },
-      "text": {
-        "value": "subtitle"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 17,
-        "lineHeight": 24,
-        "letterSpacing": -0.40799999237060547
-      }
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable",
-      "type": "COMPONENT",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView",
-      "type": "INSTANCE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": false,
-      "layout": {
-        "padding": [
-          12,
-          24,
-          8,
-          24
-        ],
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap",
-      "type": "FRAME",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap / _text_left",
-      "type": "TEXT",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": {
-        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 14,
-        "lineHeight": 20,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / .❌ Details / TextView / content-wrap / _text_right",
-      "type": "TEXT",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": false,
-      "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
-      "fill": {
-        "color": "rgba(3,3,6,0.88)"
-      },
-      "text": {
-        "value": "subtitle"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 17,
-        "lineHeight": 24,
-        "letterSpacing": -0.40799999237060547
-      }
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack",
-      "type": "FRAME",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "padding": [
-          16,
-          20,
-          16,
-          20
-        ],
-        "gap": 10,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button",
-      "type": "INSTANCE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base",
-      "type": "INSTANCE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "padding": [
-          16,
-          28,
-          16,
-          28
-        ],
-        "gap": 0,
-        "radius": 12
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(14,14,14,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / 👻 Fixer",
-      "type": "INSTANCE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / Content",
-      "type": "FRAME",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / MainButtonStack / 🔄 Button / 👻 Base / Content / Label",
-      "type": "TEXT",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": {
-        "value": "Label"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Medium",
-        "size": 16,
-        "lineHeight": 24,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / NativeHomeBar",
-      "type": "INSTANCE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": false,
-      "layout": {
-        "padding": [
-          21,
-          120,
-          8,
-          120
-        ],
-        "gap": 10,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": "❌ MainButtonStack / Preset=Only Lable / NativeHomeBar / Home Indicator",
-      "type": "RECTANGLE",
-      "componentKey": "10d5748e874725ff732867effffcbefeb7a5d02c",
-      "visible": true,
-      "layout": {
-        "gap": null,
-        "radius": 100
-      },
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": {
-        "color": "rgba(255,255,255,1)"
-      },
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": ".❌ Details / TextView",
-      "type": "COMPONENT",
-      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "visible": true,
-      "layout": {
-        "padding": [
-          12,
-          24,
-          8,
-          24
-        ],
-        "gap": 0,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": ".❌ Details / TextView / content-wrap",
-      "type": "FRAME",
-      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "visible": true,
-      "layout": {
-        "gap": 8,
-        "radius": 0
-      },
-      "stroke": {
-        "weight": 1,
-        "align": "INSIDE"
-      },
-      "fill": null,
-      "text": null,
-      "typography": null
-    },
-    {
-      "path": ".❌ Details / TextView / content-wrap / _text_left",
-      "type": "TEXT",
-      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "visible": true,
-      "layout": null,
-      "stroke": {
-        "weight": 0,
-        "align": "CENTER"
-      },
-      "fill": null,
-      "text": {
-        "value": "Нажимая «Подтвердить», я даю согласие на обработку персональных данных"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 14,
-        "lineHeight": 20,
-        "letterSpacing": 0
-      }
-    },
-    {
-      "path": ".❌ Details / TextView / content-wrap / _text_right",
-      "type": "TEXT",
-      "componentKey": "6a50aa80b34e32ef216e8ad546977a760579dd3e",
-      "visible": false,
-      "layout": null,
-      "stroke": {
-        "weight": 1,
-        "align": "OUTSIDE"
-      },
-      "fill": {
-        "color": "rgba(3,3,6,0.88)"
-      },
-      "text": {
-        "value": "subtitle"
-      },
-      "typography": {
-        "family": "SF Pro Text",
-        "weight": "Regular",
-        "size": 17,
-        "lineHeight": 24,
-        "letterSpacing": -0.40799999237060547
-      }
     }
   ]
 }

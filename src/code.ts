@@ -703,12 +703,17 @@ async function applyThemizationAction(payload: {
   nodeId?: string;
   themeCollectionId?: string;
   targetModeId?: string;
+  replacementComponentKey?: string;
 }) {
   const kind = typeof payload?.kind === 'string' ? payload.kind : '';
   const nodeId = typeof payload?.nodeId === 'string' ? payload.nodeId : '';
   const themeCollectionId =
     typeof payload?.themeCollectionId === 'string' ? payload.themeCollectionId : '';
   const targetModeId = typeof payload?.targetModeId === 'string' ? payload.targetModeId : '';
+  const replacementComponentKey =
+    typeof payload?.replacementComponentKey === 'string'
+      ? payload.replacementComponentKey
+      : '';
 
   if (!kind || !nodeId) {
     figma.notify('Недостаточно данных для изменения темизации.');
@@ -724,7 +729,10 @@ async function applyThemizationAction(payload: {
       return;
     }
 
-    const replaced = await replaceCorporateInstance(node);
+    const replaced = await replaceCorporateInstance(
+      node,
+      replacementComponentKey || null,
+    );
     if (!replaced) {
       figma.notify('Не удалось заменить компонент на базовую версию.');
       return;
@@ -768,7 +776,10 @@ async function applyThemizationAction(payload: {
   await rerunLastAuditWithFallback([focusNode]);
 }
 
-async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean> {
+async function replaceCorporateInstance(
+  instance: InstanceNode,
+  replacementComponentKey?: string | null,
+): Promise<boolean> {
   const sourceProperties = snapshotInstanceComponentProperties(instance);
   const componentKey = await getComponentKey(instance);
   const ref = componentKey ? findComponent(componentKey) : null;
@@ -777,8 +788,10 @@ async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean
   }
 
   const currentReferenceName = ref.displayName ?? ref.name ?? ref.names?.[0] ?? '';
-  const pair = getCorporateCounterpart(currentReferenceName);
-  const baseComponent = pair?.base ?? null;
+  const replacementRef =
+    replacementComponentKey ? findComponent(replacementComponentKey) : null;
+  const pair = replacementRef ? null : getCorporateCounterpart(ref);
+  const baseComponent = replacementRef ?? pair?.base ?? null;
   if (!baseComponent) {
     return false;
   }
@@ -787,8 +800,7 @@ async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean
     ref.variants?.find((variant) => variant.key === componentKey)?.name ?? null;
   const candidateVariantKey =
     currentVariantName && baseComponent.variants?.length
-      ? baseComponent.variants.find((variant) => variant.name === currentVariantName)?.key ??
-        null
+      ? findBestCatalogVariantKey(baseComponent, currentVariantName)
       : null;
 
   if (candidateVariantKey) {
@@ -811,12 +823,7 @@ async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean
     return false;
   }
 
-  try {
-    const targetComponent = await figma.importComponentByKeyAsync(baseComponentKey);
-    instance.swapComponent(targetComponent);
-    restoreCompatibleInstanceProperties(instance, sourceProperties);
-    return true;
-  } catch (error) {
+  if (baseComponent.variants?.length) {
     try {
       const componentSet = await figma.importComponentSetByKeyAsync(baseComponentKey);
       const targetVariant = findMatchingVariantInSet(componentSet, instance, currentVariantName);
@@ -843,8 +850,24 @@ async function replaceCorporateInstance(instance: InstanceNode): Promise<boolean
             ? String((fallbackError as { message?: string }).message)
             : String(fallbackError ?? error),
       });
-      return false;
     }
+  }
+
+  try {
+    const targetComponent = await figma.importComponentByKeyAsync(baseComponentKey);
+    instance.swapComponent(targetComponent);
+    restoreCompatibleInstanceProperties(instance, sourceProperties);
+    return true;
+  } catch (error) {
+    console.error('[Apollo] failed to import replacement component', {
+      nodeId: instance.id,
+      baseComponentKey,
+      error:
+        error && typeof error === 'object' && 'message' in error
+          ? String((error as { message?: string }).message)
+          : String(error ?? 'Unknown error'),
+    });
+    return false;
   }
 }
 
@@ -858,6 +881,25 @@ function findMatchingVariantInSet(
   const variants = componentSet.children.filter(
     (child): child is ComponentNode => child.type === 'COMPONENT',
   );
+
+  const exactByName =
+    currentVariantName
+      ? variants.find((variant) => variant.name === currentVariantName) ?? null
+      : null;
+  if (exactByName) {
+    return exactByName;
+  }
+
+  const byCurrentVariantName = currentVariantName
+    ? chooseBestVariantByName(
+        variants,
+        currentVariantName,
+        defaultVariantProperties,
+      )
+    : null;
+  if (byCurrentVariantName) {
+    return byCurrentVariantName;
+  }
 
   const exactByProperties = variants.find((variant) =>
     variantPropertiesEqual(variant.variantProperties ?? {}, instanceVariantProperties),
@@ -888,14 +930,136 @@ function findMatchingVariantInSet(
     return bestByOverlap;
   }
 
-  if (currentVariantName) {
-    const exactByName = variants.find((variant) => variant.name === currentVariantName);
-    if (exactByName) {
-      return exactByName;
-    }
+  return variants[0] ?? null;
+}
+
+function findBestCatalogVariantKey(
+  component: LibraryComponent,
+  sourceVariantName: string,
+): string | null {
+  const variants = component.variants ?? [];
+  if (!variants.length) {
+    return null;
   }
 
-  return variants[0] ?? null;
+  const exactMatch = variants.find((variant) => variant.name === sourceVariantName);
+  if (exactMatch?.key) {
+    return exactMatch.key;
+  }
+
+  const defaultVariantKey =
+    typeof (component as { defaultVariant?: unknown }).defaultVariant === 'string'
+      ? ((component as { defaultVariant?: string }).defaultVariant ?? null)
+      : null;
+  const defaultVariantName =
+    variants.find((variant) => variant.key === defaultVariantKey)?.name ??
+    variants[0]?.name ??
+    '';
+  const defaultVariantProperties = parseVariantName(defaultVariantName);
+  const compatibleVariant = chooseBestVariantByName(
+    variants,
+    sourceVariantName,
+    defaultVariantProperties,
+  );
+
+  return compatibleVariant?.key ?? null;
+}
+
+function chooseBestVariantByName<T extends { name?: string | null }>(
+  variants: T[],
+  sourceVariantName: string,
+  defaultVariantProperties: Record<string, string>,
+): T | null {
+  const sourceVariantProperties = parseVariantName(sourceVariantName);
+  const sourceEntries = Object.entries(sourceVariantProperties);
+
+  if (!sourceEntries.length) {
+    return null;
+  }
+
+  const compatible = variants
+    .map((variant) => {
+      const targetProperties = parseVariantName(variant.name ?? '');
+      const targetEntries = Object.entries(targetProperties);
+
+      if (!targetEntries.length) {
+        return null;
+      }
+
+      for (const [key, value] of sourceEntries) {
+        if (targetProperties[key] !== value) {
+          return null;
+        }
+      }
+
+      let nonDefaultExtraCount = 0;
+      let extraCount = 0;
+      for (const [key, value] of targetEntries) {
+        if (key in sourceVariantProperties) {
+          continue;
+        }
+
+        extraCount += 1;
+        if (defaultVariantProperties[key] !== value) {
+          nonDefaultExtraCount += 1;
+        }
+      }
+
+      return {
+        variant,
+        nonDefaultExtraCount,
+        extraCount,
+        name: String(variant.name ?? ''),
+      };
+    })
+    .filter((entry): entry is {
+      variant: T;
+      nonDefaultExtraCount: number;
+      extraCount: number;
+      name: string;
+    } => Boolean(entry))
+    .sort((left, right) => {
+      if (left.nonDefaultExtraCount !== right.nonDefaultExtraCount) {
+        return left.nonDefaultExtraCount - right.nonDefaultExtraCount;
+      }
+
+      if (left.extraCount !== right.extraCount) {
+        return left.extraCount - right.extraCount;
+      }
+
+      return left.name.localeCompare(right.name);
+    });
+
+  return compatible[0]?.variant ?? null;
+}
+
+function parseVariantName(
+  name: string | null | undefined,
+): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  for (const rawSegment of String(name ?? '').split(',')) {
+    const segment = rawSegment.trim();
+    if (!segment) {
+      continue;
+    }
+
+    const separatorIndex = segment.indexOf('=');
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const key = segment.slice(0, separatorIndex).trim();
+    const value = segment.slice(separatorIndex + 1).trim();
+
+    if (!key || !value) {
+      continue;
+    }
+
+    result[key] = value;
+  }
+
+  return result;
 }
 
 function getDefaultVariantProperties(

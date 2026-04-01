@@ -1071,15 +1071,24 @@ function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {
 
   const canonicalName = normalizeCorporateName(component.name);
   if (canonicalName) {
-    const key = component.name.includes('[Corporate]')
-      ? `${canonicalName}::corp-variant`
-      : `${canonicalName}::base-variant`;
+    const key = buildCorporateIndexKey(
+      canonicalName,
+      libraryComponent.platform,
+      component.name,
+      component.name.includes('[Corporate]') ? 'corp' : 'base',
+      '-variant',
+    );
 
     corporateNameIndex.set(key, libraryComponent);
 
     if (!(component as any).variants) {
       corporateNameIndex.set(
-        `${canonicalName}::${component.name.includes('[Corporate]') ? 'corp' : 'base'}`,
+        buildCorporateIndexKey(
+          canonicalName,
+          libraryComponent.platform,
+          component.name,
+          component.name.includes('[Corporate]') ? 'corp' : 'base',
+        ),
         libraryComponent,
       );
     }
@@ -1262,7 +1271,13 @@ function registerPartUsage(component: LibraryComponent) {
 
       if (canonicalName) {
         corporateNameIndex.set(
-          `${canonicalName}::${component.name.includes('[Corporate]') ? 'corp' : 'base'}-variant-${variantKey}`,
+          buildCorporateIndexKey(
+            canonicalName,
+            component.platform,
+            component.name,
+            component.name.includes('[Corporate]') ? 'corp' : 'base',
+            `-variant-${variantKey}`,
+          ),
           variantEntry,
         );
       }
@@ -1277,27 +1292,134 @@ function normalizeCorporateName(
 
   return name
     .replace(/🔄/g, ' ')
-    .replace(/\[(.+?)\]\s*/g, '')
+    .replace(/\[Corporate\]/gi, ' ')
+    .replace(/\[(?:D|M)\]/gi, ' ')
     .replace(/\s{2,}/g, ' ')
     .trim();
 }
 
-export function getCorporateCounterpart(componentName: string): {
+function normalizeCorporatePlatform(
+  platform: ComponentPlatform | string | null | undefined,
+  name?: string | null,
+): string {
+  const normalizedPlatform = String(platform ?? '')
+    .trim()
+    .toLowerCase();
+
+  if (normalizedPlatform === 'desktop') {
+    return 'desktop';
+  }
+
+  if (
+    normalizedPlatform === 'mobile web' ||
+    normalizedPlatform === 'mobile-web'
+  ) {
+    return 'mobile-web';
+  }
+
+  const normalizedName = String(name ?? '').toLowerCase();
+
+  if (normalizedName.includes('[d]')) {
+    return 'desktop';
+  }
+
+  if (normalizedName.includes('[m]')) {
+    return 'mobile-web';
+  }
+
+  return 'universal';
+}
+
+function buildCorporateIndexKey(
+  canonicalName: string,
+  platform: ComponentPlatform | string | null | undefined,
+  name: string | null | undefined,
+  kind: 'base' | 'corp',
+  suffix?: string,
+): string {
+  const platformKey = normalizeCorporatePlatform(platform, name);
+  return `${canonicalName}::${platformKey}::${kind}${suffix ?? ''}`;
+}
+
+export function getCorporateCounterpart(component: {
+  name?: string | null;
+  platform?: ComponentPlatform | string | null;
+} | string): {
   base?: LibraryComponent | null;
   corporate?: LibraryComponent | null;
 } | null {
+  const componentName =
+    typeof component === 'string' ? component : component?.name ?? '';
+  const componentPlatform =
+    typeof component === 'string' ? null : component?.platform ?? null;
   const canonical = normalizeCorporateName(componentName);
 
   if (!canonical) return null;
 
+  const exactBaseKey = buildCorporateIndexKey(
+    canonical,
+    componentPlatform,
+    componentName,
+    'base',
+  );
+  const exactBaseVariantKey = buildCorporateIndexKey(
+    canonical,
+    componentPlatform,
+    componentName,
+    'base',
+    '-variant',
+  );
+  const universalBaseKey = buildCorporateIndexKey(
+    canonical,
+    'Universal',
+    componentName,
+    'base',
+  );
+  const universalBaseVariantKey = buildCorporateIndexKey(
+    canonical,
+    'Universal',
+    componentName,
+    'base',
+    '-variant',
+  );
   const base =
-    corporateNameIndex.get(`${canonical}::base`) ??
-    corporateNameIndex.get(`${canonical}::base-variant`) ??
+    corporateNameIndex.get(exactBaseKey) ??
+    corporateNameIndex.get(exactBaseVariantKey) ??
+    corporateNameIndex.get(universalBaseKey) ??
+    corporateNameIndex.get(universalBaseVariantKey) ??
     null;
 
+  const exactCorporateKey = buildCorporateIndexKey(
+    canonical,
+    componentPlatform,
+    componentName,
+    'corp',
+  );
+  const exactCorporateVariantKey = buildCorporateIndexKey(
+    canonical,
+    componentPlatform,
+    componentName,
+    'corp',
+    '-variant',
+  );
+  const universalCorporateKey = buildCorporateIndexKey(
+    canonical,
+    'Universal',
+    componentName,
+    'corp',
+  );
+  const universalCorporateVariantKey = buildCorporateIndexKey(
+    canonical,
+    'Universal',
+    componentName,
+    'corp',
+    '-variant',
+  );
   const corporate =
-    corporateNameIndex.get(`${canonical}::corp`) ??
-    corporateNameIndex.get(`${canonical}::corp-variant`) ??
+    corporateNameIndex.get(exactCorporateKey) ??
+    corporateNameIndex.get(exactCorporateVariantKey) ??
+    corporateNameIndex.get(universalCorporateKey) ??
+    corporateNameIndex.get(universalCorporateVariantKey) ??
     null;
     
   return { base, corporate };

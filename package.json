@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "build": "node build.js && node scripts/exportComponentTree.js",
-    "watch": "node build.js --watch"
+    "watch": "node build.js --watch",
+    "test:themization": "node scripts/test-themization.js"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.82.0",

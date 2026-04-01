@@ -81,7 +81,7 @@ export function buildCorporateThemizationEntry(
     return null;
   }
 
-  const counterpart = getCorporateCounterpart(referenceName);
+  const counterpart = getCorporateCounterpart(ref);
   const replacementComponentKey = counterpart?.base?.key ?? null;
 
   return {

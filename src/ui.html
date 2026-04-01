@@ -398,7 +398,13 @@
           );
         }
 
-        function requestThemizationAction(kind, nodeId, themeCollectionId, targetModeId) {
+        function requestThemizationAction(
+          kind,
+          nodeId,
+          themeCollectionId,
+          targetModeId,
+          replacementComponentKey,
+        ) {
           if (!kind || !nodeId) {
             return;
           }
@@ -412,6 +418,7 @@
                   nodeId,
                   themeCollectionId,
                   targetModeId,
+                  replacementComponentKey,
                 },
               },
             },
@@ -541,6 +548,7 @@
                     entry.nodeId,
                     entry.themeCollectionId,
                     entry.targetModeId,
+                    entry.replacementComponentKey,
                   )
               : undefined,
           }));

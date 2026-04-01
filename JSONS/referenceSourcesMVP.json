@@ -238,18 +238,6 @@
       "path": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json"
     },
     {
-      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- Accordion.json",
-      "path": "components/web-core/fileupload/Web _ Core Wrappers -- Accordion.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- PureCell.json",
-      "path": "components/web-core/fileupload/Web _ Core Wrappers -- PureCell.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core Wrappers -- Underlay.json",
-      "path": "components/web-core/fileupload/Web _ Core Wrappers -- Underlay.json"
-    },
-    {
       "fileName": "components/web-core/misc/Web _ Core Misc -- BankCard.json",
       "path": "components/web-core/misc/Web _ Core Misc -- BankCard.json"
     },
@@ -712,6 +700,18 @@
     {
       "fileName": "abm/iOS _ Sheets -- SexyOverlay.json",
       "path": "abm/iOS _ Sheets -- SexyOverlay.json"
+    },
+    {
+      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json",
+      "path": "components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json"
+    },
+    {
+      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json",
+      "path": "components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json"
+    },
+    {
+      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json",
+      "path": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json"
     }
   ]
 }

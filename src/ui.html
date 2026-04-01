@@ -146,12 +146,11 @@
         }
 
         function resolveViewArray(path) {
-          const primary = currentVisibleViews ?? currentResults?.visibleViews;
-          const fallback = currentResults?.views;
-          const primaryValue = getValueFromPath(primary, path);
+          const primaryValue = getValueFromPath(
+            currentResults?.visibleViews,
+            path,
+          );
           if (Array.isArray(primaryValue)) return primaryValue;
-          const fallbackValue = getValueFromPath(fallback, path);
-          if (Array.isArray(fallbackValue)) return fallbackValue;
           return [];
         }
 
@@ -182,7 +181,6 @@
 
         let currentTab = 'current';
         let currentResults = null;
-        let currentVisibleViews = null;
         let isScanning = false;
         let catalogsReady = false;
         let catalogsLoading = true;
@@ -832,7 +830,6 @@
 
           if (msg.type === 'scan-result') {
             currentResults = msg.payload;
-            currentVisibleViews = msg.payload?.visibleViews ?? null;
             scanCompleted = true;
             updateActiveTabClasses();
             renderList();

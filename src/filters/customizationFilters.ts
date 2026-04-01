@@ -2,13 +2,13 @@ import type { DiffEntry } from '../structure/diff';
 
 type CustomizationFilterRule = {
   id: string;
-  apply: (node: SceneNode, diffs: DiffEntry[]) => DiffEntry[];
+  apply: (diffs: DiffEntry[]) => DiffEntry[];
 };
 
 const rules: CustomizationFilterRule[] = [
   {
     id: 'ignore_sandbox_grid_and_dead_template_customization',
-    apply(node, diffs) {
+    apply(diffs) {
       if (!diffs.length) {
         return diffs;
       }
@@ -18,7 +18,7 @@ const rules: CustomizationFilterRule[] = [
   },
   {
     id: 'ignore_icon_view_paintme_fill_customization',
-    apply(node, diffs) {
+    apply(diffs) {
       if (!diffs.length) {
         return diffs;
       }
@@ -34,7 +34,7 @@ const rules: CustomizationFilterRule[] = [
   },
   {
     id: 'ignore_icon_view_bgcolor_and_border_color_customization',
-    apply(node, diffs) {
+    apply(diffs) {
       if (!diffs.length) {
         return diffs;
       }
@@ -50,7 +50,7 @@ const rules: CustomizationFilterRule[] = [
   },
   {
     id: 'ignore_filter_tag_arrow_paintme_fill_customization',
-    apply(node, diffs) {
+    apply(diffs) {
       if (!diffs.length) {
         return diffs;
       }
@@ -66,7 +66,7 @@ const rules: CustomizationFilterRule[] = [
   },
   {
     id: 'ignore_filter_tag_clear_paintme_fill_customization',
-    apply(node, diffs) {
+    apply(diffs) {
       if (!diffs.length) {
         return diffs;
       }
@@ -83,7 +83,6 @@ const rules: CustomizationFilterRule[] = [
 ];
 
 export function applyCustomizationFilters(
-  node: SceneNode,
   diffs: DiffEntry[],
 ): DiffEntry[] {
   let current = Array.isArray(diffs) ? diffs : [];
@@ -92,7 +91,7 @@ export function applyCustomizationFilters(
     if (!current.length) {
       break;
     }
-    current = rule.apply(node, current);
+    current = rule.apply(current);
   }
 
   return current;

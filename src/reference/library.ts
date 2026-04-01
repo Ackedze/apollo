@@ -11,7 +11,6 @@ import type {
   AthenaComponent,
   ComponentPlatform,
   ComponentRole,
-  LibraryCatalog,
   LibraryComponent,
   LibraryStatus,
   NormalizedElement,
@@ -984,12 +983,6 @@ function reportCatalogLoaded(fileName: string, size: number) {
 async function requestCatalogSource(url: string): Promise<string> {
   return fetchDirect(url);
 }
-
-export const primaryCatalog: LibraryCatalog = {
-  id: 'apollo-catalog',
-  name: 'Apollo Catalog',
-  components: [],
-};
 
 function* iterateCatalogComponents(): IterableIterator<LibraryComponent> {
   for (const module of catalogs) {

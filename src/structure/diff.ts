@@ -1,4 +1,4 @@
-import type { DSRadii, DSStructureNode } from '../types/structures';
+import type { DSStructureNode } from '../types/structures';
 
 export type DiffEntry = {
   message: string;

@@ -40,7 +40,7 @@
 - `runAudit` подгружает каталоги, затем собирает состояние проверки через `collectTargets`.
 - `classifyNode` ищет `componentKey`, находит reference через `findComponent`, при необходимости строит snapshot (`snapshotTree`) и считает diff (`diffStructures`).
 - при загрузке style catalogs Apollo пересобирает lookup-карты заново, поэтому новые или только что добавленные paint/effect styles корректно участвуют и в `Кастомизации`, и в `Кастомных стилях`.
-- Результаты складываются в `CheckState`, после чего UI получает `scan-result`.
+- Результаты складываются в `CheckState`, после чего UI получает компактный `scan-result` только с актуальными `visibleViews` и кратким `summary`; legacy-дубли payload из старого bridge-контракта удалены.
 
 ### Сервисы и модели
 - [`src/services/auditViewBuilder.ts`](./src/services/auditViewBuilder.ts) собирает detached-элементы, кастомные стили и текстовые узлы.
@@ -49,6 +49,7 @@
 - [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей.
 - [`src/types/audit.ts`](./src/types/audit.ts) описывает `AuditItem`, `DetachedEntry`, `CustomStyleEntry` и связанные типы.
 - [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts), [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) и [`src/filters/ignoredComponentFilters.ts`](./src/filters/ignoredComponentFilters.ts) содержат управляемые исключения для известных технических кейсов DS, включая технические `PaintMe`-узлы в `IconView` и его вложенном `🔩 Content`, `BgColor` и `Border` в `IconView`, а также fill/stroke-проверки для компонентов и вложенных узлов из библиотек `Icons` и `Logotypes`, которые не должны шуметь в `Кастомных стилях`.
+- Контракт [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) упрощён: фильтры кастомизации больше не получают `node`, так как фактическая фильтрация уже давно выполнялась только по `diff`-записям.
 
 ### Что считается в diff
 Сравнение учитывает:
@@ -80,6 +81,7 @@
 
 ## UI и поведение
 - [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder/fallback-сценарии и маршрутизация табов в React results bridge.
+- Внутренний контракт между runtime и [`src/ui.html`](./src/ui.html) упрощён: правый bridge больше не держит legacy-fallback на дублирующее поле `views`, а читает только актуальные `visibleViews`.
 - React-хром UI вынесен в [`src/ui-app`](./src/ui-app): на первом этапе туда перенесены `topSection`, `leftSection` и базовые компоненты (`Button`, `CategoryCard`, `CounterBadge`).
 - В библиотеку React-компонентов также добавлен [`SmallButton`](./src/ui-app/components/SmallButton.tsx) по Figma-компоненту `smallButton`: он поддерживает компактный `singleIcon`-вариант и текстовый вариант с hover-state.
 - Для пустых экранов правой колонки добавлен отдельный [`Placeholder`](./src/ui-app/components/Placeholder.tsx): он используется для загрузки каталогов и для стартового состояния до первого нажатия `Проверить`.

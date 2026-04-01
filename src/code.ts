@@ -7,12 +7,11 @@ import {
   getCorporateCounterpart,
   getStyleCatalogs,
   getTokenCatalogs,
-  primaryCatalog,
   reportMissingReference,
   resolveStructure,
 } from './reference/library';
-import {LibraryComponent} from './reference/libraryTypes'
-import {  snapshotTree } from './structure/snapshot';
+import { LibraryComponent } from './reference/libraryTypes';
+import { snapshotTree } from './structure/snapshot';
 import { diffStructures } from './structure/diff';
 import type { DSStructureNode } from './types/structures';
 import type { AuditItem, RelevanceStatus } from './types/audit';
@@ -107,8 +106,6 @@ export const getTimestamp = () =>
     : Date.now();
 
 let tokenLabelMap: Map<string, { label: string; library?: string }> | null =
-  null;
-let tokenColorMap: Map<string, { label: string; library?: string }> | null =
   null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
 let styleLabelMap: Map<string, { label: string; library?: string }> | null =
@@ -250,16 +247,6 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       checkState.localLibraryItems,
     );
 
-    const counts = {
-      current: checkState.relevanceBuckets.current.length,
-      deprecated: checkState.relevanceBuckets.deprecated.length,
-      update: checkState.relevanceBuckets.update.length,
-      themization: checkState.themizationEntries.length,
-      local: visibleLocalItems.length,
-      detached: checkState.detachedEntries,
-      changes: changesResults.length,
-    };
-    
     const visibleViews = {
       relevance: checkState.relevanceBuckets,
       themization: checkState.themizationEntries,
@@ -273,17 +260,10 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     figma.ui.postMessage({
       type: 'scan-result',
       payload: {
-        detached: checkState.detachedEntries,
-        counts,
         summary: {
           totalTargets: checkState.totalItems,
-          selectionRoots: selection.length,
-          selectionNames: selection.map((node) => node.name),
-          catalogName: primaryCatalog.name,
         },
-        views: visibleViews,
         visibleViews,
-        changes: changesResults,
       },
     });
     finalize('finished');
@@ -508,7 +488,7 @@ async function classifyNode(
     comparisonIssues.push(...diffResult.issues);
   }
 
-  const diffs = applyCustomizationFilters(node, diffResult.diffs);
+  const diffs = applyCustomizationFilters(diffResult.diffs);
 
   if (comparisonIssues.length) {
     console.warn('[Apollo] comparison issues', {
@@ -787,7 +767,6 @@ async function replaceCorporateInstance(
     return false;
   }
 
-  const currentReferenceName = ref.displayName ?? ref.name ?? ref.names?.[0] ?? '';
   const replacementRef =
     replacementComponentKey ? findComponent(replacementComponentKey) : null;
   const pair = replacementRef ? null : getCorporateCounterpart(ref);
@@ -1812,7 +1791,6 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
       await ensureReferenceCatalogsLoaded();
       const catalogs = getTokenCatalogs();
       const map = new Map<string, { label: string; library?: string }>();
-      const colorMap = new Map<string, { label: string; library?: string }>();
       for (const catalog of catalogs) {
         const catalogLibrary =
           catalog.meta?.library ?? catalog.meta?.fileName ?? '';
@@ -1821,12 +1799,10 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
           if (!collection) continue;
           const collectionName =
             collection.name ?? catalogLibrary ?? catalog.meta?.fileName ?? '';
-          const defaultModeId = collection.defaultModeId ?? null;
           const variables = collection.variables ?? [];
           for (const variable of variables) {
             if (!variable || !variable.key) continue;
             const label = buildTokenLabel(
-              collectionName,
               variable.groupName ?? 'Без группы',
               variable.tokenName ?? variable.name ?? '',
             );
@@ -1834,26 +1810,13 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
               label,
               library: collectionName || catalogLibrary,
             });
-            if (defaultModeId && variable.valuesByMode) {
-              const rgba = toRgbaStringFromToken(
-                variable.valuesByMode[defaultModeId],
-              );
-              if (rgba && !colorMap.has(rgba)) {
-                colorMap.set(rgba, {
-                  label,
-                  library: collectionName || catalogLibrary,
-                });
-              }
-            }
           }
         }
       }
       tokenLabelMap = map;
-      tokenColorMap = colorMap;
     } catch (error) {
       console.warn('[Apollo] failed to load token catalogs', error);
       tokenLabelMap = new Map();
-      tokenColorMap = new Map();
     } finally {
       tokenLabelLoadPromise = null;
     }
@@ -1882,7 +1845,6 @@ async function ensureStyleLabelMapLoaded(): Promise<void> {
         for (const style of styles) {
           if (!style?.key) continue;
           const label = buildStyleLabel(
-            libraryName || '',
             style.group ?? '',
             style.name ?? '',
           );
@@ -1903,7 +1865,6 @@ async function ensureStyleLabelMapLoaded(): Promise<void> {
 }
 
 function buildTokenLabel(
-  collectionName: string,
   groupName: string,
   tokenName: string,
 ): string {
@@ -1918,7 +1879,6 @@ function buildTokenLabel(
 }
 
 function buildStyleLabel(
-  libraryName: string,
   groupName: string,
   styleName: string,
 ): string {

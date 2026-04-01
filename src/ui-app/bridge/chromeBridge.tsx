@@ -1,4 +1,3 @@
-import React from 'react';
 import { flushSync } from 'react-dom';
 import { createRoot, type Root } from 'react-dom/client';
 import { LeftSection } from '../components/LeftSection';

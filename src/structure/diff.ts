@@ -6,12 +6,15 @@ export type DiffEntry = {
   nodeName: string;
   nodeId?: string;
   visible?: boolean;
+  actualComponentKey?: string | null;
+  referenceComponentKey?: string | null;
   referenceOrigin?: 'host' | 'nested-component';
   nestedOwnerComponentKey?: string | null;
   nestedOwnerComponentRole?: 'Main' | 'Part' | null;
   nestedOwnerPath?: string | null;
   nestedOwnerRelativePath?: string | null;
-  suppressAsHostControlledPartPaint?: boolean;
+  suppressAsHostControlledNestedProperty?: boolean;
+  diffKind?: 'paint' | 'text-style' | 'layout' | 'shape' | 'opacity' | 'other';
 };
 
 type DiffResult = {
@@ -137,6 +140,7 @@ function compareNode(
           reference,
           path,
           `Отступ между элементами: ${referenceLayout.itemSpacing ?? '—'} → ${actualLayout.itemSpacing ?? '—'}`,
+          'layout',
         );
       }
     }
@@ -165,6 +169,7 @@ function compareNode(
           reference,
           path,
           `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
+          'layout',
         );
       }
     }
@@ -335,6 +340,7 @@ function comparePadding(
         referenceNode,
         path,
         `Паддинг ${label(side)}: ${b ?? '—'} → ${a ?? '—'}`,
+        'layout',
       );
       continue;
     }
@@ -357,6 +363,7 @@ function comparePadding(
           referenceNode,
           path,
           `Token padding ${label(side)}: ${refToken ?? '—'} → ${actualToken ?? '—'}`,
+          'layout',
         );
       }
     }
@@ -408,6 +415,7 @@ function compareStyle(
     referenceNode,
     path,
     `Стиль ${label}: ${formattedReference} → ${formattedActual}`,
+    label === 'текст' ? 'text-style' : 'paint',
   );
 }
 
@@ -515,6 +523,7 @@ function comparePaint(
     referenceNode,
     path,
     `${label}: ${formattedReference} → ${formattedActual}`,
+    label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
   );
 }
 
@@ -631,6 +640,7 @@ function compareRadius(
         referenceNode,
         path,
         `Token radius: ${referenceToken ?? '—'} → ${actualToken ?? '—'}`,
+        'layout',
       );
     }
   }
@@ -644,6 +654,7 @@ function compareRadius(
     referenceNode,
     path,
     `Скругления: ${formatRadius(reference)} → ${formatRadius(actual)}`,
+    'layout',
   );
 }
 
@@ -718,18 +729,36 @@ function pushDiff(
   referenceNode: DSStructureNode,
   path: string,
   message: string,
+  diffKind: DiffEntry['diffKind'] = 'other',
 ) {
+  const isHostNestedInstanceRoot =
+    (referenceNode.referenceOrigin ?? 'host') === 'host' &&
+    referenceNode.type === 'INSTANCE' &&
+    path.includes(' / ') &&
+    !!referenceNode.componentInstance?.componentKey;
+
   diffs.push({
     message,
     nodePath: path,
     nodeName: node.name ?? path,
     nodeId: node.nodeId,
     visible: node.visible !== false,
+    actualComponentKey: node.componentInstance?.componentKey ?? null,
+    referenceComponentKey: referenceNode.componentInstance?.componentKey ?? null,
     referenceOrigin: referenceNode.referenceOrigin ?? 'host',
-    nestedOwnerComponentKey: referenceNode.referenceOwnerComponentKey ?? null,
+    nestedOwnerComponentKey:
+      referenceNode.referenceOwnerComponentKey ??
+      (isHostNestedInstanceRoot
+        ? referenceNode.componentInstance?.componentKey ?? null
+        : null),
     nestedOwnerComponentRole: referenceNode.referenceOwnerRole ?? null,
-    nestedOwnerPath: referenceNode.referenceOwnerPath ?? null,
-    nestedOwnerRelativePath: referenceNode.referenceOwnerRelativePath ?? null,
+    nestedOwnerPath:
+      referenceNode.referenceOwnerPath ??
+      (isHostNestedInstanceRoot ? path : null),
+    nestedOwnerRelativePath:
+      referenceNode.referenceOwnerRelativePath ??
+      (isHostNestedInstanceRoot ? '' : null),
+    diffKind,
   });
 }
 

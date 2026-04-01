@@ -23,7 +23,7 @@ const rules: CustomizationFilterRule[] = [
         return diffs;
       }
 
-      return diffs.filter((diff) => !diff.suppressAsHostControlledPartPaint);
+      return diffs.filter((diff) => !diff.suppressAsHostControlledNestedProperty);
     },
   },
 ];

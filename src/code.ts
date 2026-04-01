@@ -5,9 +5,11 @@ import {
   ensureReferenceCatalogsLoaded,
   findComponent,
   getCorporateCounterpart,
-  isPartPaintPathHostControlled,
+  isNestedComponentLayoutPathHostControlled,
   getStyleCatalogs,
   getTokenCatalogs,
+  isNestedComponentPaintPathHostControlled,
+  isNestedComponentTextPathHostControlled,
   reportMissingReference,
   resolveStructure,
 } from './reference/library';
@@ -217,6 +219,8 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     }
 
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
+    const componentKeyCache = new Map<string, string | null>();
+    const localComponentContextCache = new Map<string, boolean>();
     const checkedComponentNodesList = new Set<string>();
 
     const customStyleReasonOptions: CustomStyleCollectionOptions = {
@@ -228,6 +232,8 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       selection,
       checkState,
       referenceStructureCache,
+      componentKeyCache,
+      localComponentContextCache,
       customStyleReasonOptions,
       checkedComponentNodesList,
       throwIfCancelled,
@@ -310,6 +316,8 @@ async function collectTargets(
   selection: readonly SceneNode[], 
   checkState: CheckState, 
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
+  componentKeyCache: Map<string, string | null>,
+  localComponentContextCache: Map<string, boolean>,
   customStyleReasonOptions: CustomStyleCollectionOptions,
   checkedComponentNodesList: Set<string>,
   throwIfCancelled: () => void,
@@ -327,6 +335,8 @@ async function collectTargets(
         const item = await classifyNode(
           node,
           referenceStructureCache,
+          componentKeyCache,
+          localComponentContextCache,
           checkedComponentNodesList,
           throwIfCancelled,
         );
@@ -397,6 +407,8 @@ async function collectTargets(
 async function classifyNode(
   node: SceneNode,
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
+  componentKeyCache: Map<string, string | null>,
+  localComponentContextCache: Map<string, boolean>,
   checkedComponentNodesList: Set<string>,
   throwIfCancelled: () => void,
 ): Promise<AuditItem> {
@@ -412,7 +424,7 @@ async function classifyNode(
 
   const pageName = getPageName(node);
   const fullPath = buildNodePath(node);
-  const componentKey = await getComponentKey(node);
+  const componentKey = await getComponentKeyCached(node, componentKeyCache);
   throwIfCancelled();
   const ref = componentKey ? findComponent(componentKey): null;
 
@@ -460,8 +472,14 @@ async function classifyNode(
   const needsDiff = Boolean(referenceStructure) && !checkedComponentNodesList.has(node.id);
   const instanceHasOverrides =
     node.type === 'INSTANCE' && hasInstanceOverrides(node as InstanceNode);
+  const isInheritedFromLocalComponentContext =
+    node.type === 'INSTANCE' &&
+    (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
   const shouldDiff =
-    needsDiff && (ref?.status !== 'current' || instanceHasOverrides);
+    needsDiff &&
+    (ref?.status !== 'current' ||
+      instanceHasOverrides ||
+      isInheritedFromLocalComponentContext);
   const actualStructure =
     shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
   throwIfCancelled();
@@ -489,9 +507,8 @@ async function classifyNode(
     comparisonIssues.push(...diffResult.issues);
   }
 
-  const diffs = applyCustomizationFilters(
-    diffResult.diffs.map(markNestedPartPaintOverrideDiff),
-  );
+  const markedDiffs = diffResult.diffs.map(markNestedHostControlledPropertyDiff);
+  const diffs = applyCustomizationFilters(markedDiffs);
 
   if (comparisonIssues.length) {
     console.warn('[Apollo] comparison issues', {
@@ -533,6 +550,58 @@ async function getComponentKey(node: SceneNode): Promise<string | null> {
   }
 
   return null;
+}
+
+async function getComponentKeyCached(
+  node: SceneNode,
+  cache: Map<string, string | null>,
+): Promise<string | null> {
+  if (cache.has(node.id)) {
+    return cache.get(node.id) ?? null;
+  }
+
+  const key = await getComponentKey(node);
+  cache.set(node.id, key ?? null);
+  return key ?? null;
+}
+
+async function isInsideLocalComponentContext(
+  node: SceneNode,
+  componentKeyCache: Map<string, string | null>,
+  localComponentContextCache: Map<string, boolean>,
+): Promise<boolean> {
+  let current = node.parent as BaseNode | null;
+
+  while (current) {
+    const currentId = current.id;
+    if (localComponentContextCache.has(currentId)) {
+      return localComponentContextCache.get(currentId) === true;
+    }
+
+    let isLocalContext = false;
+
+    if (current.type === 'INSTANCE' || current.type === 'COMPONENT') {
+      const currentKey = await getComponentKeyCached(
+        current as SceneNode,
+        componentKeyCache,
+      );
+      isLocalContext = Boolean(currentKey && !findComponent(currentKey));
+    }
+
+    if (isLocalContext) {
+      localComponentContextCache.set(currentId, true);
+      return true;
+    }
+
+    if (current.type === 'PAGE' || current.type === 'DOCUMENT') {
+      localComponentContextCache.set(currentId, false);
+      return false;
+    }
+
+    current = current.parent as BaseNode | null;
+  }
+
+  return false;
 }
 
 /**
@@ -1807,32 +1876,84 @@ function isPaintCustomizationMessage(message: string): boolean {
   );
 }
 
-function markNestedPartPaintOverrideDiff(diff: {
+function isTextCustomizationMessage(message: string): boolean {
+  return typeof message === 'string' && message.startsWith('Стиль текст:');
+}
+
+function markNestedHostControlledPropertyDiff(diff: {
   message: string;
+  diffKind?: string;
+  actualComponentKey?: string | null;
+  referenceComponentKey?: string | null;
   nestedOwnerComponentKey?: string;
   nestedOwnerComponentRole?: string;
   nestedOwnerRelativePath?: string | null;
   referenceOrigin?: string;
 }) {
-  if (
-    diff.referenceOrigin !== 'nested-component' ||
-    !isPaintCustomizationMessage(diff.message)
-  ) {
+  const componentKey = diff.nestedOwnerComponentKey ?? null;
+  const relativePath = diff.nestedOwnerRelativePath ?? null;
+
+  if (!componentKey || relativePath == null) {
     return diff;
   }
 
+  const shouldSuppressPaint =
+    diff.diffKind === 'paint' &&
+    isPaintCustomizationMessage(diff.message) &&
+    isNestedComponentPaintPathHostControlled(componentKey, relativePath);
+
+  const shouldSuppressText =
+    diff.diffKind === 'text-style' &&
+    isTextCustomizationMessage(diff.message) &&
+    isNestedComponentTextPathHostControlled(componentKey, relativePath);
+
+  const shouldSuppressLayout =
+    diff.diffKind === 'layout' &&
+    isNestedComponentLayoutPathHostControlled(componentKey, relativePath);
+
+  const shouldSuppressNestedVariantRootDiff =
+    relativePath === '' && isNestedVariantRootDiffWithinSameFamily(diff);
+
   if (
-    isPartPaintPathHostControlled(
-      diff.nestedOwnerComponentKey ?? null,
-      diff.nestedOwnerRelativePath ?? null,
-    )
+    shouldSuppressPaint ||
+    shouldSuppressText ||
+    shouldSuppressLayout ||
+    shouldSuppressNestedVariantRootDiff
   ) {
     return Object.assign({}, diff, {
-      suppressAsHostControlledPartPaint: true,
+      suppressAsHostControlledNestedProperty: true,
     });
   }
 
   return diff;
+}
+
+function isNestedVariantRootDiffWithinSameFamily(diff: {
+  actualComponentKey?: string | null;
+  referenceComponentKey?: string | null;
+}) {
+  const actualComponentKey = diff.actualComponentKey ?? null;
+  const referenceComponentKey = diff.referenceComponentKey ?? null;
+
+  if (!actualComponentKey || !referenceComponentKey) {
+    return false;
+  }
+
+  if (actualComponentKey === referenceComponentKey) {
+    return false;
+  }
+
+  const actualComponent = findComponent(actualComponentKey);
+  const referenceComponent = findComponent(referenceComponentKey);
+
+  if (!actualComponent || !referenceComponent) {
+    return false;
+  }
+
+  return (
+    actualComponent.key === referenceComponent.key &&
+    actualComponent.platform === referenceComponent.platform
+  );
 }
 
 function isPresetCandidate(item: AuditItem): boolean {

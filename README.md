@@ -46,16 +46,17 @@
 - [`src/services/auditViewBuilder.ts`](./src/services/auditViewBuilder.ts) собирает detached-элементы, кастомные стили и текстовые узлы.
 - [`src/structure/snapshot.ts`](./src/structure/snapshot.ts) сериализует дерево нод в нормализованный плоский список.
 - [`src/structure/diff.ts`](./src/structure/diff.ts) сравнивает layout, padding, стили, fill/stroke, radius и opacity.
-- [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей.
+- [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей, а также строит policy-карты host-controlled nested property paths по самим reference-каталогам.
 - [`src/types/audit.ts`](./src/types/audit.ts) описывает `AuditItem`, `DetachedEntry`, `CustomStyleEntry` и связанные типы.
-- [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts), [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) и [`src/filters/ignoredComponentFilters.ts`](./src/filters/ignoredComponentFilters.ts) содержат управляемые исключения для известных технических кейсов DS, включая технические `PaintMe`-узлы в `IconView` и его вложенном `🔩 Content`, `BgColor` и `Border` в `IconView`, а также fill/stroke-проверки для компонентов и вложенных узлов из библиотек `Icons` и `Logotypes`, которые не должны шуметь в `Кастомных стилях`.
-- Контракт [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) упрощён: фильтры кастомизации больше не получают `node`, так как фактическая фильтрация уже давно выполнялась только по `diff`-записям.
+- [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts), [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) и [`src/filters/ignoredComponentFilters.ts`](./src/filters/ignoredComponentFilters.ts) содержат управляемые исключения для известных технических кейсов DS. Для `Кастомизации` основной suppression-слой теперь не regex-based, а policy-based: он подавляет host-controlled nested property diff-ы, вычисленные из каталогов, а не из ручного списка path-паттернов, а также гасит root-level diff у вложенного инстанса, если на том же path фактически произошёл variant switch внутри одной component family.
+- Контракт [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) упрощён: фильтры кастомизации больше не получают `node`, так как фактическая фильтрация выполняется только по `diff`-записям и их metadata.
 
 ### Что считается в diff
 Сравнение учитывает:
 - layout и padding;
 - `itemSpacing`;
 - стили заливки, обводки и текста;
+- `typographyToken` и text style overrides;
 - fill/stroke, включая variable token alias, style-binding и raw color values;
 - радиусы;
 - opacity.
@@ -64,9 +65,12 @@
 Важно: для text/fill/stroke style diff в UI используется нормализованный label стиля. Если raw `styleKey` отличаются, но после резолва дают одно и то же имя стиля, такая пара больше не считается кастомизацией.
 Важно: в `paint-diff` Apollo не гадает по совпадению цвета. Если у слоя есть явная привязка к токену или стилю, в UI показывается label по id, а если label не найден — сам id. Только при отсутствии привязки показывается фактический цвет: непрозрачный как `#RRGGBB`, полупрозрачный как `rgba(...)`.
 Важно: скрытые и полностью прозрачные `fill`-paints игнорируются в actual snapshot так же, как и в reference-нормализации. Это убирает ложные кастомизации, когда в компонентных каталогах есть технические `fills` с `"visible": false`.
-Важно: known technical nodes можно исключать из `Кастомизации` и `Кастомных стилей` отдельными фильтрами, не меняя базовую логику diff.
-
 Для nested instances используется сравнение по собственному `componentKey`, чтобы не сравнивать вложенные компоненты с placeholder-структурой родителя.
+Важно: при раскрытии nested instances host reference имеет приоритет над standalone reference вложенного компонента. Standalone-структура nested-компонента используется только для дозаполнения отсутствующих путей.
+Важно: ложные кастомизации для nested overrides теперь подавляются универсально, если reference-каталоги показывают, что хост-компонент управляет свойством вложенного компонента. Сейчас policy покрывает не только `fill/stroke`, `BgColor` и `Border`, но и nested `typographyToken`/`text style`.
+Важно: отдельный suppression введён и для root-level nested variant switch. Если на одном и том же path actual и reference указывают на разные variant keys одной и той же component family, Apollo больше не считает это кастомизацией layout/property самого вложенного узла.
+Важно: current linked instances внутри `instance` локального компонента теперь тоже форсируются в diff, даже если у самого внутреннего инстанса нет direct `overrides`. Это устраняет пропуски кастомизаций, которые раньше были видны только в оригинале локального компонента, но терялись в его инстансах.
+Важно: старые path-based regex-исключения для `PaintMe`, `IconView` и похожих nested color-кейсов удалены; работоспособность suppression теперь определяется именно catalog-derived policy-слоем.
 
 ## Источники данных
 Плагин работает с JSON-справочниками в [`JSONS`](./JSONS), а в рантайме берёт список источников с GitHub Pages:
@@ -118,6 +122,7 @@
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
 - В проекте нет полного автоматизированного test-suite и нет штатного `type-check`/`lint` скрипта.
 - Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
+- Для кастомизаций есть набор точечных regression-check’ов: `npm run test:customization-filters`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют policy-based suppression nested overrides, nested variant-switch suppression и несколько критичных diff-path кейсов, но не заменяют интеграционные проверки в Figma.
 
 Подробный технический отчёт по найденным рискам хранится в [`AUDIT.md`](./AUDIT.md), но перед использованием стоит учитывать, что этот файл частично устарел и не полностью отражает текущее состояние проекта.
 
@@ -168,6 +173,21 @@ npm run test:themization
 - что corporate/base-замена для `Tag` использует корректный base-variant при различии variant schema;
 - что `Button` по-прежнему матчится по exact variant name.
 
+### Точечные проверки кастомизаций и diff
+```bash
+npm run test:customization-filters
+npm run test:item-spacing-diff
+npm run test:variant-structure-paths
+npm run test:snapshot-tree
+```
+
+Скрипты проверяют:
+- policy-based suppression для host-controlled nested color и typography overrides;
+- suppression для root-level nested variant switch внутри одной component family;
+- отсутствие ложных `itemSpacing` diff-ов для проблемных variant-комбинаций;
+- корректную привязку reference-структуры к выбранному variant path;
+- сохранение `id/parentId/visible` в actual snapshot, от которых зависит корректный layout diff.
+
 ### Подготовка списка reference-источников вручную
 ```bash
 node scripts/prepareReferences.js
@@ -188,5 +208,9 @@ node scripts/prepareReferences.js
 npm run build
 npm run watch
 npm run test:themization
+npm run test:customization-filters
+npm run test:item-spacing-diff
+npm run test:variant-structure-paths
+npm run test:snapshot-tree
 node scripts/prepareReferences.js
 ```

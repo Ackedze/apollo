@@ -65,15 +65,27 @@ function main() {
         'заливка: text/info → neutral/700',
       ),
       {
-        suppressAsHostControlledPartPaint: true,
+        suppressAsHostControlledNestedProperty: true,
       },
     ),
+    {
+      nodeName: 'Caption',
+      nodePath: 'Open=true / body / AccordionBody / Row 1 / Content / Caption',
+      message: 'Стиль текст: body/m/regular → body/s/regular',
+      suppressAsHostControlledNestedProperty: true,
+    },
+    {
+      nodeName: '[D] TitleAddonXL',
+      nodePath: '[D] TitleView / View=xLarge, Skeleton=False / MainContent / Heading / [D] TitleAddonXL',
+      message: 'Паддинг left: 8 → 16',
+      suppressAsHostControlledNestedProperty: true,
+    },
   ]);
 
   assert.equal(
     suppressedPartPolicy.length,
     0,
-    'Host-controlled nested part paint diffs must be suppressed by the universal policy flag',
+    'Host-controlled nested property diffs must be suppressed by the universal policy flag',
   );
 
   const preservedWithoutPolicyFlag = applyCustomizationFilters([

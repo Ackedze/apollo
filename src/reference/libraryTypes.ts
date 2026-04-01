@@ -73,9 +73,15 @@ export type NormalizedElement = {
   type?: string;
   componentKey?: string;
   visible?: boolean;
+  styles?: {
+    fill?: { styleKey?: string | null };
+    stroke?: { styleKey?: string | null };
+    text?: { styleKey?: string | null };
+  };
   opacity?: number | null;
   opacityToken?: string | null;
   radiusToken?: string | null;
+  typographyToken?: string | null;
   fill?: {
     color?: string | null;
     token?: string | null;

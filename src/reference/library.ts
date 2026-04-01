@@ -27,8 +27,10 @@ import type {
 let catalogs: AthenaCatalog[] = [];
 const tokenCatalogs: TokenCatalog[] = [];
 const styleCatalogs: StyleCatalog[] = [];
-const partHostMap = new Map<string, Set<string>>();
+const componentIndexByKey = new Map<string, LibraryComponent>();
 const hostControlledPaintPaths = new Map<string, Set<string>>();
+const hostControlledTextPaths = new Map<string, Set<string>>();
+const hostControlledLayoutPaths = new Map<string, Set<string>>();
 const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
 
@@ -259,15 +261,37 @@ export function getStyleCatalogs(): StyleCatalog[] {
   return styleCatalogs.slice();
 }
 
-export function isPartPaintPathHostControlled(
+export function isNestedComponentPaintPathHostControlled(
   componentKey: string | null | undefined,
   relativePath: string | null | undefined,
 ): boolean {
-  if (!componentKey || !relativePath) {
+  if (!componentKey || relativePath == null) {
     return false;
   }
 
   return hostControlledPaintPaths.get(componentKey)?.has(relativePath) === true;
+}
+
+export function isNestedComponentTextPathHostControlled(
+  componentKey: string | null | undefined,
+  relativePath: string | null | undefined,
+): boolean {
+  if (!componentKey || relativePath == null) {
+    return false;
+  }
+
+  return hostControlledTextPaths.get(componentKey)?.has(relativePath) === true;
+}
+
+export function isNestedComponentLayoutPathHostControlled(
+  componentKey: string | null | undefined,
+  relativePath: string | null | undefined,
+): boolean {
+  if (!componentKey || relativePath == null) {
+    return false;
+  }
+
+  return hostControlledLayoutPaths.get(componentKey)?.has(relativePath) === true;
 }
 
 function isAthenaCatalog(payload: unknown): payload is AthenaCatalog {
@@ -520,9 +544,20 @@ function buildStructure(elements: NormalizedElement[]): DSStructureNode[] {
     if (element.type === 'TEXT' && element.text?.value) {
       node.text = { characters: element.text.value };
     }
-    if (element.typography?.styleKey) {
+    const textStyleKey =
+      element.styles?.text?.styleKey ??
+      element.typography?.styleKey ??
+      null;
+    if (textStyleKey) {
       node.styles = node.styles ?? {};
-      node.styles.text = { styleKey: element.typography.styleKey };
+      node.styles.text = { styleKey: textStyleKey };
+    }
+    const typographyToken =
+      element.typographyToken ??
+      element.typography?.token ??
+      null;
+    if (typographyToken) {
+      node.typographyToken = typographyToken;
     }
 
     nodes.push(node);
@@ -850,8 +885,10 @@ function formatRgba(color: { r: number; g: number; b: number; a?: number }) {
 function hydrateCatalogs(modules: AthenaCatalog[]) {
   catalogs = modules;
 
-  partHostMap.clear();
+  componentIndexByKey.clear();
   hostControlledPaintPaths.clear();
+  hostControlledTextPaths.clear();
+  hostControlledLayoutPaths.clear();
 
   corporateNameIndex.clear();
 
@@ -864,11 +901,6 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   const validationWarnings: string[] = [];
 
   for (const module of catalogs) {
-  console.log('[Apollo] catalog loaded summary', {
-      fileName: module.meta?.fileName ?? 'unknown',
-      componentCount: module.components?.length ?? 0,
-    });
-
     for (const component of module.components ?? []) {
       totalComponents += 1;
 
@@ -885,6 +917,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
       }
 
       prepareComponent(component, module);
+      indexComponentByKey(component as unknown as LibraryComponent);
 
       registerPartUsage(component as unknown as LibraryComponent);
 
@@ -1019,18 +1052,7 @@ export function findComponent(
 function findCatalogComponentByKey(
   key: string,
 ): LibraryComponent | null {
-  for (const component of iterateCatalogComponents()) {
-    if (component.key === key) {
-      return component;
-    }
-
-    if (component.variants?.some((variant) => variant.key === key)) {
-      return component;
-    }
-
-  }
-
-  return null;
+  return componentIndexByKey.get(key) ?? null;
 }
 
 export function resolveStructure(
@@ -1123,16 +1145,21 @@ function registerHostControlledPaintPathsForStructure(
         continue;
       }
 
-      if (!doesNodeOverrideNestedPaint(hostNode, partNode)) {
-        continue;
-      }
-
       const relativePath = getRelativeInstancePath(node.path, partNode.path);
-      if (!relativePath) {
+      if (relativePath == null) {
         continue;
       }
 
-      addHostControlledPaintPath(partKey, relativePath);
+      const overrideKinds = getNestedOverrideKinds(hostNode, partNode);
+      if (overrideKinds.paint) {
+        addHostControlledPaintPath(partKey, relativePath);
+      }
+      if (overrideKinds.text) {
+        addHostControlledTextPath(partKey, relativePath);
+      }
+      if (overrideKinds.layout) {
+        addHostControlledLayoutPath(partKey, relativePath);
+      }
     }
   }
 }
@@ -1192,16 +1219,75 @@ function replaceStructurePathPrefix(path: string, from: string, to: string): str
   return path;
 }
 
-function doesNodeOverrideNestedPaint(
+function getNestedOverrideKinds(
   hostNode: DSStructureNode,
   partNode: DSStructureNode,
-): boolean {
-  return (
+): { paint: boolean; text: boolean; layout: boolean } {
+  const paint =
     !arePaintDescriptorsEqual(hostNode.fill, partNode.fill) ||
     !arePaintDescriptorsEqual(hostNode.stroke, partNode.stroke) ||
-    (hostNode.styles?.fill?.styleKey ?? null) !== (partNode.styles?.fill?.styleKey ?? null) ||
-    (hostNode.styles?.stroke?.styleKey ?? null) !== (partNode.styles?.stroke?.styleKey ?? null)
+    (hostNode.styles?.fill?.styleKey ?? null) !==
+      (partNode.styles?.fill?.styleKey ?? null) ||
+    (hostNode.styles?.stroke?.styleKey ?? null) !==
+      (partNode.styles?.stroke?.styleKey ?? null);
+
+  const text =
+    (hostNode.styles?.text?.styleKey ?? null) !==
+      (partNode.styles?.text?.styleKey ?? null) ||
+    (hostNode.typographyToken ?? null) !== (partNode.typographyToken ?? null);
+
+  const layout =
+    !areLayoutDescriptorsEqual(hostNode.layout ?? null, partNode.layout ?? null) ||
+    !areRadiusDescriptorsEqual(hostNode.radius ?? null, partNode.radius ?? null) ||
+    (hostNode.radiusToken ?? null) !== (partNode.radiusToken ?? null);
+
+  return { paint, text, layout };
+}
+
+function areLayoutDescriptorsEqual(
+  left: DSStructureNode['layout'] | null | undefined,
+  right: DSStructureNode['layout'] | null | undefined,
+): boolean {
+  return (
+    arePaddingDescriptorsEqual(left?.padding ?? null, right?.padding ?? null) &&
+    arePaddingTokenDescriptorsEqual(
+      left?.paddingTokens ?? null,
+      right?.paddingTokens ?? null,
+    ) &&
+    (left?.itemSpacing ?? null) === (right?.itemSpacing ?? null) &&
+    (left?.itemSpacingToken ?? null) === (right?.itemSpacingToken ?? null)
   );
+}
+
+function arePaddingDescriptorsEqual(
+  left: DSStructureNode['layout'] extends { padding?: infer T } ? T : never,
+  right: DSStructureNode['layout'] extends { padding?: infer T } ? T : never,
+): boolean {
+  return (
+    (left?.top ?? null) === (right?.top ?? null) &&
+    (left?.right ?? null) === (right?.right ?? null) &&
+    (left?.bottom ?? null) === (right?.bottom ?? null) &&
+    (left?.left ?? null) === (right?.left ?? null)
+  );
+}
+
+function arePaddingTokenDescriptorsEqual(
+  left: DSStructureNode['layout'] extends { paddingTokens?: infer T } ? T : never,
+  right: DSStructureNode['layout'] extends { paddingTokens?: infer T } ? T : never,
+): boolean {
+  return (
+    (left?.top ?? null) === (right?.top ?? null) &&
+    (left?.right ?? null) === (right?.right ?? null) &&
+    (left?.bottom ?? null) === (right?.bottom ?? null) &&
+    (left?.left ?? null) === (right?.left ?? null)
+  );
+}
+
+function areRadiusDescriptorsEqual(
+  left: DSStructureNode['radius'] | null | undefined,
+  right: DSStructureNode['radius'] | null | undefined,
+): boolean {
+  return JSON.stringify(left ?? null) === JSON.stringify(right ?? null);
 }
 
 function arePaintDescriptorsEqual(
@@ -1247,6 +1333,22 @@ function addHostControlledPaintPath(partKey: string, relativePath: string) {
   }
 
   hostControlledPaintPaths.get(partKey)!.add(relativePath);
+}
+
+function addHostControlledTextPath(partKey: string, relativePath: string) {
+  if (!hostControlledTextPaths.has(partKey)) {
+    hostControlledTextPaths.set(partKey, new Set());
+  }
+
+  hostControlledTextPaths.get(partKey)!.add(relativePath);
+}
+
+function addHostControlledLayoutPath(partKey: string, relativePath: string) {
+  if (!hostControlledLayoutPaths.has(partKey)) {
+    hostControlledLayoutPaths.set(partKey, new Set());
+  }
+
+  hostControlledLayoutPaths.get(partKey)!.add(relativePath);
 }
 
 function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {
@@ -1479,35 +1581,21 @@ function cloneNode(node: DSStructureNode): DSStructureNode {
   return JSON.parse(JSON.stringify(node));
 }
 
-function registerPartUsage(component: LibraryComponent) {
-  const registerFromNodes = (nodes?: DSStructureNode[] | null) => {
-    if (!nodes) return;
+function indexComponentByKey(component: LibraryComponent) {
+  if (component.key) {
+    componentIndexByKey.set(component.key, component);
+  }
 
-    for (const node of nodes) {
-      const partKey = node.componentInstance?.componentKey;
-
-      if (!partKey) continue;
-
-      if (!partHostMap.has(partKey)) {
-        partHostMap.set(partKey, new Set());
-      }
-
-      const bucket = partHostMap.get(partKey)!;
-
-      if (component.key) {
-        bucket.add(component.key);
-      } else if (component.displayName) {
-        bucket.add(component.displayName);
-      }
+  for (const variant of component.variants ?? []) {
+    if (variant?.key) {
+      componentIndexByKey.set(variant.key, component);
     }
-  };
+  }
+}
 
-  registerFromNodes(component.structure);
-
+function registerPartUsage(component: LibraryComponent) {
   if ((component as any).variantStructures) {
     for (const variantKey of Object.keys(component.variantStructures ?? {})) {
-      registerFromNodes(resolveStructure(component, variantKey));
-
       const variantEntry = Object.assign({}, component, { name: variantKey }) as LibraryComponent;
       
       const canonicalName = normalizeCorporateName(component.name);

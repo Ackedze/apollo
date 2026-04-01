@@ -90,6 +90,7 @@ export interface DSStructureNode {
   layout?: DSNodeLayout;
   opacity?: number | null;
   opacityToken?: string | null;
+  typographyToken?: string | null;
   radius: DSRadii | null;
   radiusToken?: string | null;
   effects?: DSEffect[] | null;
@@ -107,6 +108,11 @@ export interface DSNormalizedElement {
   type?: string;
   componentKey?: string;
   visible?: boolean;
+  styles?: {
+    fill?: { styleKey?: string | null };
+    stroke?: { styleKey?: string | null };
+    text?: { styleKey?: string | null };
+  };
   layout?: {
     padding?: [number, number, number, number];
     gap?: number;
@@ -120,6 +126,7 @@ export interface DSNormalizedElement {
     gapToken?: string | null;
   };
   text?: { value?: string };
+  typographyToken?: string | null;
   typography?: {
     styleKey?: string | null;
     token?: string | null;

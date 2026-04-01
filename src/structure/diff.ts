@@ -55,6 +55,7 @@ export function diffStructures(
   const issueSet = new Set<string>();
   const actualMap = new Map(actual.map((node) => [node.path, node]));
   const referenceMap = new Map(reference.map((node) => [node.path, node]));
+  const actualVisibleChildCount = buildVisibleChildCountMap(actual);
   const strict = options?.strict ?? false;
   const resolveTokenLabel = options?.resolveTokenLabel;
   const resolveStyleLabel = options?.resolveStyleLabel;
@@ -70,6 +71,7 @@ export function diffStructures(
       diffs,
       issueSet,
       strict,
+      actualVisibleChildCount,
       resolveTokenLabel,
       resolveStyleLabel,
     );
@@ -85,6 +87,7 @@ function compareNode(
   diffs: DiffEntry[],
   issueSet: Set<string>,
   strict: boolean,
+  actualVisibleChildCount: Map<number, number>,
   resolveTokenLabel?: (token: string) => string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
 ) {
@@ -103,50 +106,58 @@ function compareNode(
     strict,
   );
 
-  if (
-    referenceLayout.itemSpacing !== undefined &&
-    referenceLayout.itemSpacing !== null &&
-    (actualLayout.itemSpacing ?? null) !==
-      (referenceLayout.itemSpacing ?? null)
-  ) {
-    if (strict && (actualLayout.itemSpacing ?? null) === null) {
-      addIssue(
-        issueSet,
-        `Нет данных для itemSpacing в снапшоте для «${path}»`,
-      );
-    } else {
-    pushDiff(
-      diffs,
-      actual,
-      path,
-      `Отступ между элементами: ${referenceLayout.itemSpacing ?? '—'} → ${actualLayout.itemSpacing ?? '—'}`,
-    );
+  const shouldCompareItemSpacing = hasMeaningfulItemSpacing(
+    actual,
+    actualVisibleChildCount,
+  );
+
+  if (shouldCompareItemSpacing) {
+    if (
+      referenceLayout.itemSpacing !== undefined &&
+      referenceLayout.itemSpacing !== null &&
+      (actualLayout.itemSpacing ?? null) !==
+        (referenceLayout.itemSpacing ?? null)
+    ) {
+      if (strict && (actualLayout.itemSpacing ?? null) === null) {
+        addIssue(
+          issueSet,
+          `Нет данных для itemSpacing в снапшоте для «${path}»`,
+        );
+      } else {
+        pushDiff(
+          diffs,
+          actual,
+          path,
+          `Отступ между элементами: ${referenceLayout.itemSpacing ?? '—'} → ${actualLayout.itemSpacing ?? '—'}`,
+        );
+      }
     }
-  }
-  if (referenceLayout.itemSpacingToken) {
-    const actualToken = actualLayout.itemSpacingToken ?? null;
-    
-    if (strict && !actualToken) {
-      addIssue(
-        issueSet,
-        `Нет данных для token itemSpacing в снапшоте для «${path}»`,
-      );
-    } else if (actualToken !== referenceLayout.itemSpacingToken) {
-      const formattedReferenceToken = resolveTokenLabel
-        ? resolveTokenLabel(referenceLayout.itemSpacingToken) ||
-          referenceLayout.itemSpacingToken
-        : referenceLayout.itemSpacingToken;
-      const formattedActualToken = actualToken
-        ? resolveTokenLabel
-          ? resolveTokenLabel(actualToken) || actualToken
-          : actualToken
-        : '—';
-      pushDiff(
-        diffs,
-        actual,
-        path,
-        `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
-      );
+
+    if (referenceLayout.itemSpacingToken) {
+      const actualToken = actualLayout.itemSpacingToken ?? null;
+
+      if (strict && !actualToken) {
+        addIssue(
+          issueSet,
+          `Нет данных для token itemSpacing в снапшоте для «${path}»`,
+        );
+      } else if (actualToken !== referenceLayout.itemSpacingToken) {
+        const formattedReferenceToken = resolveTokenLabel
+          ? resolveTokenLabel(referenceLayout.itemSpacingToken) ||
+            referenceLayout.itemSpacingToken
+          : referenceLayout.itemSpacingToken;
+        const formattedActualToken = actualToken
+          ? resolveTokenLabel
+            ? resolveTokenLabel(actualToken) || actualToken
+            : actualToken
+          : '—';
+        pushDiff(
+          diffs,
+          actual,
+          path,
+          `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
+        );
+      }
     }
   }
 
@@ -682,4 +693,31 @@ function pushDiff(
     nodeId: node.nodeId,
     visible: node.visible !== false,
   });
+}
+
+function buildVisibleChildCountMap(nodes: DSStructureNode[]): Map<number, number> {
+  const childCount = new Map<number, number>();
+
+  for (const node of nodes) {
+    if (node.visible === false) {
+      continue;
+    }
+
+    const parentId = node.parentId;
+    if (typeof parentId !== 'number') {
+      continue;
+    }
+
+    childCount.set(parentId, (childCount.get(parentId) ?? 0) + 1);
+  }
+
+  return childCount;
+}
+
+function hasMeaningfulItemSpacing(
+  actual: DSStructureNode,
+  actualVisibleChildCount: Map<number, number>,
+): boolean {
+  const actualCount = actualVisibleChildCount.get(actual.id) ?? 0;
+  return actualCount > 1;
 }

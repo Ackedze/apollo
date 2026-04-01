@@ -178,14 +178,20 @@ export async function snapshotNormalizedContext(
 export async function snapshotNode(
   node: SceneNode,
   parentPath: string,
+  parentId?: number | null,
+  id?: number,
+  visible?: boolean,
 ): Promise<DSStructureNode> {
   const path = makePath(parentPath, node.name);
 
   const snap: DSStructureNode = {
+    id: typeof id === 'number' ? id : 0,
+    parentId: typeof parentId === 'number' ? parentId : null,
     nodeId: node.id,
     path,
     type: node.type,
     name: node.name,
+    visible: visible !== false,
     styles: extractStyles(node),
     fill: extractFillInfo(node),
     stroke: extractStrokeInfo(node),

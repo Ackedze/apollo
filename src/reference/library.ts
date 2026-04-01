@@ -1028,9 +1028,13 @@ export function resolveStructure(
     component.variantStructures &&
     component.variantStructures[variantKey]
   ) {
-    return buildStructureFromPatches(
+    return normalizeVariantStructureRootPath(
+      component,
+      variantKey,
+      buildStructureFromPatches(
       component.structure ?? [],
       component.variantStructures[variantKey],
+      ),
     );
   }
 
@@ -1215,6 +1219,48 @@ function buildStructureFromPatches(
         nodeMap.set(copy.id, copy);
         break;
       }
+    }
+  }
+
+  return nodes;
+}
+
+function normalizeVariantStructureRootPath(
+  component: LibraryComponent,
+  variantKey: string,
+  nodes: DSStructureNode[],
+): DSStructureNode[] {
+  if (!nodes.length) {
+    return nodes;
+  }
+
+  const variantName =
+    component.variants?.find((variant) => variant.key === variantKey)?.name?.trim() ??
+    '';
+
+  if (!variantName) {
+    return nodes;
+  }
+
+  const rootNode =
+    nodes.find((node) => !node.path.includes(' / ')) ??
+    nodes[0];
+  const rootPath = rootNode?.path?.trim() ?? '';
+
+  if (!rootPath || rootPath === variantName) {
+    return nodes;
+  }
+
+  const rootPrefix = `${rootPath} /`;
+
+  for (const node of nodes) {
+    if (node.path === rootPath) {
+      node.path = variantName;
+      continue;
+    }
+
+    if (node.path.startsWith(rootPrefix)) {
+      node.path = `${variantName}${node.path.slice(rootPath.length)}`;
     }
   }
 

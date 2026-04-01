@@ -17,6 +17,22 @@ const rules: CustomizationFilterRule[] = [
     },
   },
   {
+    id: 'ignore_nested_accessory_paintme_fill_customization',
+    apply(diffs) {
+      if (!diffs.length) {
+        return diffs;
+      }
+
+      return diffs.filter((diff) => {
+        if (!isNestedAccessoryPaintMeDiff(diff)) {
+          return true;
+        }
+
+        return !isFillCustomizationMessage(diff.message);
+      });
+    },
+  },
+  {
     id: 'ignore_icon_view_paintme_fill_customization',
     apply(diffs) {
       if (!diffs.length) {
@@ -114,6 +130,16 @@ function isIconViewPaintMeDiff(diff: DiffEntry): boolean {
   );
 }
 
+function isNestedAccessoryPaintMeDiff(diff: DiffEntry): boolean {
+  if (!hasPaintMeNodeName(diff)) {
+    return false;
+  }
+
+  const path = diff.nodePath ?? '';
+
+  return NESTED_ACCESSORY_PAINTME_PATTERNS.some((pattern) => pattern.test(path));
+}
+
 function isFilterTagArrowPaintMeDiff(diff: DiffEntry): boolean {
   if (!hasPaintMeNodeName(diff)) {
     return false;
@@ -186,3 +212,12 @@ function isPaintCustomizationMessage(message: string): boolean {
       message.startsWith('Стиль обводка:'))
   );
 }
+
+const NESTED_ACCESSORY_PAINTME_PATTERNS = [
+  / \/ \[(?:D|M)\] IconButton(?:_[A-Za-z]+)? \/ (?:🔩 )?Icon \/ Fixer \/ PaintMe(?: \/|$)/,
+  / \/ PickerButton \/ 🔩 Icon \/ Fixer \/ PaintMe(?: \/|$)/,
+  / \/ StatusBadge \/ 🔩 Content \/ Fixer \/ PaintMe(?: \/|$)/,
+  / \/ Arrow_[A-Za-z]+ \/ PaintMe(?: \/|$)/,
+  / \/ Lock \/ Lock \/ PaintMe(?: \/|$)/,
+  / \/ Chevron \/ container \/ Fixer \/ PaintMe(?: \/|$)/,
+];

@@ -4,7 +4,11 @@
   "scripts": {
     "build": "node build.js && node scripts/exportComponentTree.js",
     "watch": "node build.js --watch",
-    "test:themization": "node scripts/test-themization.js"
+    "test:themization": "node scripts/test-themization.js",
+    "test:customization-filters": "node scripts/test-customization-filters.js",
+    "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
+    "test:variant-structure-paths": "node scripts/test-variant-structure-paths.js",
+    "test:snapshot-tree": "node scripts/test-snapshot-tree.js"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.82.0",

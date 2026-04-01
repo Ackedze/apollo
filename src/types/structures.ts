@@ -95,6 +95,11 @@ export interface DSStructureNode {
   effects?: DSEffect[] | null;
   componentInstance?: DSInstanceInfo | null;
   text?: DSTextContent;
+  referenceOrigin?: 'host' | 'nested-component';
+  referenceOwnerComponentKey?: string | null;
+  referenceOwnerRole?: 'Main' | 'Part' | null;
+  referenceOwnerPath?: string | null;
+  referenceOwnerRelativePath?: string | null;
 }
 
 export interface DSNormalizedElement {

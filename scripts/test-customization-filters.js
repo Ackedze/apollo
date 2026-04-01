@@ -39,63 +39,54 @@ function makeDiff(nodePath, message) {
 function main() {
   const { applyCustomizationFilters } = loadCustomizationFilters();
 
-  const filtered = applyCustomizationFilters([
-    makeDiff(
-      '[D] HeadCellWeb / Text / RightAddon / RightAddon / StatusBadge / 🔩 Content / Fixer / PaintMe',
-      'заливка: status/info → neutral-translucent/500',
-    ),
-    makeDiff(
-      '[D] Select / Size=56 / Field / RightAddons / Arrow_Down / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
-    makeDiff(
-      '[D] SliderInput / Size=56 / Field / Lock / Lock / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
-    makeDiff(
-      '[D] Table / ColumnControl / [D] IconButton / 🔩 Icon / Fixer / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
-    makeDiff(
-      '[D] Dropdown / Content / Chevron / container / Fixer / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
-    makeDiff(
-      '[D] BodyActionCell :: Wide / Presets=PickerButton, Skeleton=False / PickerButton / 🔩 Icon / Fixer / PaintMe',
-      'заливка: status/info → text/primary',
-    ),
-  ]);
-
-  assert.equal(filtered.length, 0, 'Nested accessory PaintMe fill diffs must be suppressed');
-
-  const preservedStandalone = applyCustomizationFilters([
-    makeDiff(
-      '[D] IconButton / 🔩 Icon / Fixer / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
-    makeDiff(
-      'Chevron / Open=False / container / Fixer / PaintMe',
-      'заливка: text/info → neutral-translucent/700',
-    ),
+  const filteredSandbox = applyCustomizationFilters([
+    {
+      nodeName: '.Grid',
+      nodePath: '[D] Sandbox / .Grid',
+      message: 'заливка: token/a → token/b',
+    },
+    {
+      nodeName: '❌template',
+      nodePath: '[D] Sandbox / ❌template',
+      message: 'заливка: token/a → token/b',
+    },
   ]);
 
   assert.equal(
-    preservedStandalone.length,
-    2,
-    'Standalone accessory components must remain visible as real customizations',
+    filteredSandbox.length,
+    0,
+    'Sandbox template diffs must remain suppressed',
   );
 
-  const preservedStroke = applyCustomizationFilters([
-    makeDiff(
-      '[D] Select / Size=56 / Field / RightAddons / Arrow_Down / PaintMe',
-      'обводка: text/info → neutral-translucent/700',
+  const suppressedPartPolicy = applyCustomizationFilters([
+    Object.assign(
+      makeDiff(
+        '[D] UniversalDateInput / Field / RightAddons / Picker / PaintMe',
+        'заливка: text/info → neutral/700',
+      ),
+      {
+        suppressAsHostControlledPartPaint: true,
+      },
     ),
   ]);
 
   assert.equal(
-    preservedStroke.length,
+    suppressedPartPolicy.length,
+    0,
+    'Host-controlled nested part paint diffs must be suppressed by the universal policy flag',
+  );
+
+  const preservedWithoutPolicyFlag = applyCustomizationFilters([
+    makeDiff(
+      '[D] UniversalDateInput / Field / RightAddons / Picker / PaintMe',
+      'заливка: text/info → neutral/700',
+    ),
+  ]);
+
+  assert.equal(
+    preservedWithoutPolicyFlag.length,
     1,
-    'Nested accessory suppression must not hide non-fill paint differences',
+    'Path-based regex suppression must no longer hide diffs without the universal policy flag',
   );
 
   console.log('Customization filter regression checks passed');

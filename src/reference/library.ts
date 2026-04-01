@@ -28,6 +28,7 @@ let catalogs: AthenaCatalog[] = [];
 const tokenCatalogs: TokenCatalog[] = [];
 const styleCatalogs: StyleCatalog[] = [];
 const partHostMap = new Map<string, Set<string>>();
+const hostControlledPaintPaths = new Map<string, Set<string>>();
 const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
 
@@ -256,6 +257,17 @@ export function getTokenCatalogs(): TokenCatalog[] {
 
 export function getStyleCatalogs(): StyleCatalog[] {
   return styleCatalogs.slice();
+}
+
+export function isPartPaintPathHostControlled(
+  componentKey: string | null | undefined,
+  relativePath: string | null | undefined,
+): boolean {
+  if (!componentKey || !relativePath) {
+    return false;
+  }
+
+  return hostControlledPaintPaths.get(componentKey)?.has(relativePath) === true;
 }
 
 function isAthenaCatalog(payload: unknown): payload is AthenaCatalog {
@@ -839,6 +851,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   catalogs = modules;
 
   partHostMap.clear();
+  hostControlledPaintPaths.clear();
 
   corporateNameIndex.clear();
 
@@ -883,6 +896,9 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
       );
     }
   }
+
+  buildPartHostControlledPaintPaths();
+
   console.log('[Apollo] catalog merge summary', {
     catalogCount: catalogs.length,
     componentCount: totalComponents,
@@ -1043,6 +1059,194 @@ export function resolveStructure(
   }
 
   return null;
+}
+
+function buildPartHostControlledPaintPaths() {
+  const structureCache = new Map<string, DSStructureNode[] | null>();
+
+  for (const component of iterateCatalogComponents()) {
+    registerHostControlledPaintPathsForStructure(
+      component,
+      resolveStructureCachedForPartPolicy(component, component.key ?? null, structureCache),
+      structureCache,
+    );
+
+    for (const variant of component.variants ?? []) {
+      if (!variant?.key) {
+        continue;
+      }
+
+      registerHostControlledPaintPathsForStructure(
+        component,
+        resolveStructureCachedForPartPolicy(component, variant.key, structureCache),
+        structureCache,
+      );
+    }
+  }
+}
+
+function registerHostControlledPaintPathsForStructure(
+  hostComponent: LibraryComponent,
+  hostStructure: DSStructureNode[] | null,
+  structureCache: Map<string, DSStructureNode[] | null>,
+) {
+  if (!hostStructure || !hostStructure.length) {
+    return;
+  }
+
+  const hostMap = new Map(hostStructure.map((node) => [node.path, node]));
+
+  for (const node of hostStructure) {
+    const partKey = node.componentInstance?.componentKey;
+    if (!partKey) {
+      continue;
+    }
+
+    const partComponent = findCatalogComponentByKey(partKey);
+    if (!partComponent) {
+      continue;
+    }
+
+    const partStructure = resolveStructureCachedForPartPolicy(
+      partComponent,
+      partKey,
+      structureCache,
+    );
+    if (!partStructure || !partStructure.length) {
+      continue;
+    }
+
+    const alignedPartStructure = alignStructureToInstancePath(partStructure, node.path);
+    for (const partNode of alignedPartStructure) {
+      const hostNode = hostMap.get(partNode.path);
+      if (!hostNode) {
+        continue;
+      }
+
+      if (!doesNodeOverrideNestedPaint(hostNode, partNode)) {
+        continue;
+      }
+
+      const relativePath = getRelativeInstancePath(node.path, partNode.path);
+      if (!relativePath) {
+        continue;
+      }
+
+      addHostControlledPaintPath(partKey, relativePath);
+    }
+  }
+}
+
+function resolveStructureCachedForPartPolicy(
+  component: LibraryComponent | null | undefined,
+  variantKey: string | null,
+  cache: Map<string, DSStructureNode[] | null>,
+): DSStructureNode[] | null {
+  if (!component) {
+    return null;
+  }
+
+  const cacheKey = `${component.key ?? component.displayName ?? 'unknown'}:${variantKey ?? 'default'}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey) ?? null;
+  }
+
+  const structure = resolveStructure(component, variantKey);
+  cache.set(cacheKey, structure);
+  return structure;
+}
+
+function alignStructureToInstancePath(
+  structure: DSStructureNode[],
+  instancePath: string,
+): DSStructureNode[] {
+  if (!structure.length) {
+    return [];
+  }
+
+  const instanceRoot =
+    structure.find((item) => !item.path.includes(' / '))?.path ??
+    structure[0].path;
+
+  if (!instanceRoot || instanceRoot === instancePath) {
+    return structure;
+  }
+
+  return structure.map((node) => {
+    const cloned = cloneNode(node);
+    cloned.path = replaceStructurePathPrefix(node.path, instanceRoot, instancePath);
+    return cloned;
+  });
+}
+
+function replaceStructurePathPrefix(path: string, from: string, to: string): string {
+  if (path === from) {
+    return to;
+  }
+
+  const needle = `${from} / `;
+  if (path.startsWith(needle)) {
+    return `${to} / ${path.slice(needle.length)}`;
+  }
+
+  return path;
+}
+
+function doesNodeOverrideNestedPaint(
+  hostNode: DSStructureNode,
+  partNode: DSStructureNode,
+): boolean {
+  return (
+    !arePaintDescriptorsEqual(hostNode.fill, partNode.fill) ||
+    !arePaintDescriptorsEqual(hostNode.stroke, partNode.stroke) ||
+    (hostNode.styles?.fill?.styleKey ?? null) !== (partNode.styles?.fill?.styleKey ?? null) ||
+    (hostNode.styles?.stroke?.styleKey ?? null) !== (partNode.styles?.stroke?.styleKey ?? null)
+  );
+}
+
+function arePaintDescriptorsEqual(
+  left: DSStructureNode['fill'] | DSStructureNode['stroke'] | null | undefined,
+  right: DSStructureNode['fill'] | DSStructureNode['stroke'] | null | undefined,
+): boolean {
+  const leftColor = left?.color ?? null;
+  const leftToken = left?.token ?? null;
+  const leftWeight = 'weight' in (left ?? {}) ? (left as any)?.weight ?? null : null;
+  const leftAlign = 'align' in (left ?? {}) ? (left as any)?.align ?? null : null;
+  const rightColor = right?.color ?? null;
+  const rightToken = right?.token ?? null;
+  const rightWeight = 'weight' in (right ?? {}) ? (right as any)?.weight ?? null : null;
+  const rightAlign = 'align' in (right ?? {}) ? (right as any)?.align ?? null : null;
+
+  return (
+    leftColor === rightColor &&
+    leftToken === rightToken &&
+    leftWeight === rightWeight &&
+    leftAlign === rightAlign
+  );
+}
+
+function getRelativeInstancePath(
+  instancePath: string,
+  fullPath: string,
+): string | null {
+  if (fullPath === instancePath) {
+    return '';
+  }
+
+  const prefix = `${instancePath} / `;
+  if (!fullPath.startsWith(prefix)) {
+    return null;
+  }
+
+  return fullPath.slice(prefix.length);
+}
+
+function addHostControlledPaintPath(partKey: string, relativePath: string) {
+  if (!hostControlledPaintPaths.has(partKey)) {
+    hostControlledPaintPaths.set(partKey, new Set());
+  }
+
+  hostControlledPaintPaths.get(partKey)!.add(relativePath);
 }
 
 function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {

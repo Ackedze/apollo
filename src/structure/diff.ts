@@ -6,6 +6,12 @@ export type DiffEntry = {
   nodeName: string;
   nodeId?: string;
   visible?: boolean;
+  referenceOrigin?: 'host' | 'nested-component';
+  nestedOwnerComponentKey?: string | null;
+  nestedOwnerComponentRole?: 'Main' | 'Part' | null;
+  nestedOwnerPath?: string | null;
+  nestedOwnerRelativePath?: string | null;
+  suppressAsHostControlledPartPaint?: boolean;
 };
 
 type DiffResult = {
@@ -97,6 +103,7 @@ function compareNode(
   comparePadding(
     path,
     actual,
+    reference,
     actualLayout.padding,
     referenceLayout.padding,
     actualLayout.paddingTokens ?? null,
@@ -127,6 +134,7 @@ function compareNode(
         pushDiff(
           diffs,
           actual,
+          reference,
           path,
           `Отступ между элементами: ${referenceLayout.itemSpacing ?? '—'} → ${actualLayout.itemSpacing ?? '—'}`,
         );
@@ -154,6 +162,7 @@ function compareNode(
         pushDiff(
           diffs,
           actual,
+          reference,
           path,
           `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
         );
@@ -165,6 +174,7 @@ function compareNode(
     'заливка',
     path,
     actual,
+    reference,
     actual.styles?.fill?.styleKey,
     reference.styles?.fill?.styleKey,
     diffs,
@@ -175,6 +185,7 @@ function compareNode(
     'обводка',
     path,
     actual,
+    reference,
     actual.styles?.stroke?.styleKey,
     reference.styles?.stroke?.styleKey,
     diffs,
@@ -185,6 +196,7 @@ function compareNode(
     'текст',
     path,
     actual,
+    reference,
     actual.styles?.text?.styleKey,
     reference.styles?.text?.styleKey,
     diffs,
@@ -195,6 +207,7 @@ function compareNode(
     'заливка',
     path,
     actual,
+    reference,
     actual.fill,
     reference.fill,
     diffs,
@@ -209,6 +222,7 @@ function compareNode(
   compareStroke(
     path,
     actual,
+    reference,
     actual.stroke,
     reference.stroke,
     diffs,
@@ -223,6 +237,7 @@ function compareNode(
   compareRadius(
     path,
     actual,
+    reference,
     actual.radius ?? null,
     reference.radius ?? null,
     actual.radiusToken ?? null,
@@ -235,6 +250,7 @@ function compareNode(
   compareOpacity(
     path,
     actual,
+    reference,
     actual.opacity ?? null,
     reference.opacity ?? null,
     actual.opacityToken ?? null,
@@ -248,6 +264,7 @@ function compareNode(
 function comparePadding(
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual:
     | {
         top: number | null;
@@ -315,6 +332,7 @@ function comparePadding(
       pushDiff(
         diffs,
         actualNode,
+        referenceNode,
         path,
         `Паддинг ${label(side)}: ${b ?? '—'} → ${a ?? '—'}`,
       );
@@ -336,6 +354,7 @@ function comparePadding(
         pushDiff(
           diffs,
           actualNode,
+          referenceNode,
           path,
           `Token padding ${label(side)}: ${refToken ?? '—'} → ${actualToken ?? '—'}`,
         );
@@ -358,6 +377,7 @@ function compareStyle(
   label: string,
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual: string | undefined,
   reference: string | undefined,
   diffs: DiffEntry[],
@@ -385,6 +405,7 @@ function compareStyle(
   pushDiff(
     diffs,
     actualNode,
+    referenceNode,
     path,
     `Стиль ${label}: ${formattedReference} → ${formattedActual}`,
   );
@@ -429,6 +450,7 @@ function comparePaint(
   label: string,
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual: { color?: string | null; token?: string | null } | null | undefined,
   reference: { color?: string | null; token?: string | null } | null | undefined,
   diffs: DiffEntry[],
@@ -490,6 +512,7 @@ function comparePaint(
   pushDiff(
     diffs,
     actualNode,
+    referenceNode,
     path,
     `${label}: ${formattedReference} → ${formattedActual}`,
   );
@@ -498,6 +521,7 @@ function comparePaint(
 function compareStroke(
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual:
     | { color?: string | null; token?: string | null; weight?: number | null; align?: string | null }
     | null
@@ -527,7 +551,7 @@ function compareStroke(
       typeof actualWeight === 'number' &&
       actualWeight > 0;
     if (hasActualStroke) {
-      pushDiff(diffs, actualNode, path, `Обводка: — → ${actualValue?.text ?? '—'}`);
+      pushDiff(diffs, actualNode, referenceNode, path, `Обводка: — → ${actualValue?.text ?? '—'}`);
     }
     return;
   }
@@ -536,6 +560,7 @@ function compareStroke(
     'обводка',
     path,
     actualNode,
+    referenceNode,
     actual,
     reference,
     diffs,
@@ -563,6 +588,7 @@ function compareStroke(
       pushDiff(
         diffs,
         actualNode,
+        referenceNode,
         path,
         `Толщина обводки: ${reference.weight ?? '—'} → ${actualWeight ?? '—'}`,
       );
@@ -573,6 +599,7 @@ function compareStroke(
 function compareRadius(
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual: DSRadii | null,
   reference: DSRadii | null,
   actualToken: string | null,
@@ -601,6 +628,7 @@ function compareRadius(
       pushDiff(
         diffs,
         actualNode,
+        referenceNode,
         path,
         `Token radius: ${referenceToken ?? '—'} → ${actualToken ?? '—'}`,
       );
@@ -613,6 +641,7 @@ function compareRadius(
   pushDiff(
     diffs,
     actualNode,
+    referenceNode,
     path,
     `Скругления: ${formatRadius(reference)} → ${formatRadius(actual)}`,
   );
@@ -627,6 +656,7 @@ function formatRadius(value: DSRadii | null): string {
 function compareOpacity(
   path: string,
   actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
   actual: number | null,
   reference: number | null,
   actualToken: string | null,
@@ -659,6 +689,7 @@ function compareOpacity(
       pushDiff(
         diffs,
         actualNode,
+        referenceNode,
         path,
         `Token opacity: ${referenceToken ?? '—'} → ${actualToken ?? '—'}`,
       );
@@ -668,6 +699,7 @@ function compareOpacity(
   pushDiff(
     diffs,
     actualNode,
+    referenceNode,
     path,
     `Прозрачность: ${normalizedReference ?? '—'} → ${normalizedActual ?? '—'}`,
   );
@@ -683,6 +715,7 @@ function addIssue(
 function pushDiff(
   diffs: DiffEntry[],
   node: DSStructureNode,
+  referenceNode: DSStructureNode,
   path: string,
   message: string,
 ) {
@@ -692,6 +725,11 @@ function pushDiff(
     nodeName: node.name ?? path,
     nodeId: node.nodeId,
     visible: node.visible !== false,
+    referenceOrigin: referenceNode.referenceOrigin ?? 'host',
+    nestedOwnerComponentKey: referenceNode.referenceOwnerComponentKey ?? null,
+    nestedOwnerComponentRole: referenceNode.referenceOwnerRole ?? null,
+    nestedOwnerPath: referenceNode.referenceOwnerPath ?? null,
+    nestedOwnerRelativePath: referenceNode.referenceOwnerRelativePath ?? null,
   });
 }
 

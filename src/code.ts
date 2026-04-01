@@ -5,6 +5,7 @@ import {
   ensureReferenceCatalogsLoaded,
   findComponent,
   getCorporateCounterpart,
+  isPartPaintPathHostControlled,
   getStyleCatalogs,
   getTokenCatalogs,
   reportMissingReference,
@@ -488,7 +489,9 @@ async function classifyNode(
     comparisonIssues.push(...diffResult.issues);
   }
 
-  const diffs = applyCustomizationFilters(diffResult.diffs);
+  const diffs = applyCustomizationFilters(
+    diffResult.diffs.map(markNestedPartPaintOverrideDiff),
+  );
 
   if (comparisonIssues.length) {
     console.warn('[Apollo] comparison issues', {
@@ -1709,7 +1712,14 @@ function expandReferenceWithInstanceComponents(
 ): DSStructureNode[] {
   if (!reference.length || !actual.length) return reference;
 
-  const referenceMap = new Map(reference.map((node) => [node.path, node]));
+  const referenceMap = new Map(
+    reference.map((node) => [
+      node.path,
+      Object.assign({}, node, {
+        referenceOrigin: node.referenceOrigin ?? 'host',
+      }),
+    ]),
+  );
   const actualRootPath = actual[0]?.path ?? '';
   const visited = new Set<string>();
 
@@ -1726,6 +1736,7 @@ function expandReferenceWithInstanceComponents(
     const componentRef = findComponent(componentKey);
     const instanceStructure = resolveStructure(componentRef, componentKey);
     if (!instanceStructure || instanceStructure.length === 0) continue;
+    const ownerRole = componentRef?.role ?? null;
 
     const instanceRoot =
       instanceStructure.find((item) => !item.path.includes(' / '))?.path ??
@@ -1736,17 +1747,92 @@ function expandReferenceWithInstanceComponents(
         ? instanceStructure.map((refNode) => {
             const cloned = Object.assign({}, refNode);
             cloned.path = replacePathPrefix(refNode.path, instanceRoot, node.path);
+            cloned.referenceOrigin = 'nested-component';
+            cloned.referenceOwnerComponentKey = componentKey;
+            cloned.referenceOwnerRole = ownerRole;
+            cloned.referenceOwnerPath = node.path;
+            cloned.referenceOwnerRelativePath = getRelativeReferenceOwnerPath(
+              node.path,
+              cloned.path,
+            );
             return cloned;
           })
-        : instanceStructure;
+        : instanceStructure.map((refNode) =>
+            Object.assign({}, refNode, {
+              referenceOrigin: 'nested-component',
+              referenceOwnerComponentKey: componentKey,
+              referenceOwnerRole: ownerRole,
+              referenceOwnerPath: node.path,
+              referenceOwnerRelativePath: getRelativeReferenceOwnerPath(
+                node.path,
+                refNode.path,
+              ),
+            }),
+          );
 
-    // Override placeholder nodes with the nested component's own reference structure.
     for (const refNode of aligned) {
+      if (referenceMap.has(refNode.path)) {
+        continue;
+      }
       referenceMap.set(refNode.path, refNode);
     }
   }
 
   return Array.from(referenceMap.values());
+}
+
+function getRelativeReferenceOwnerPath(
+  ownerPath: string,
+  fullPath: string,
+): string | null {
+  if (fullPath === ownerPath) {
+    return '';
+  }
+
+  const prefix = `${ownerPath} / `;
+  if (!fullPath.startsWith(prefix)) {
+    return null;
+  }
+
+  return fullPath.slice(prefix.length);
+}
+
+function isPaintCustomizationMessage(message: string): boolean {
+  return (
+    typeof message === 'string' &&
+    (message.startsWith('заливка:') ||
+      message.startsWith('Стиль заливка:') ||
+      message.startsWith('обводка:') ||
+      message.startsWith('Стиль обводка:'))
+  );
+}
+
+function markNestedPartPaintOverrideDiff(diff: {
+  message: string;
+  nestedOwnerComponentKey?: string;
+  nestedOwnerComponentRole?: string;
+  nestedOwnerRelativePath?: string | null;
+  referenceOrigin?: string;
+}) {
+  if (
+    diff.referenceOrigin !== 'nested-component' ||
+    !isPaintCustomizationMessage(diff.message)
+  ) {
+    return diff;
+  }
+
+  if (
+    isPartPaintPathHostControlled(
+      diff.nestedOwnerComponentKey ?? null,
+      diff.nestedOwnerRelativePath ?? null,
+    )
+  ) {
+    return Object.assign({}, diff, {
+      suppressAsHostControlledPartPaint: true,
+    });
+  }
+
+  return diff;
 }
 
 function isPresetCandidate(item: AuditItem): boolean {

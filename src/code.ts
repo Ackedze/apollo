@@ -5,7 +5,6 @@ import {
   ensureReferenceCatalogsLoaded,
   findComponent,
   getCorporateCounterpart,
-  getStyleCatalogs,
   getTokenCatalogs,
   isNestedComponentLayoutPathHostControlled,
   isNestedComponentPaintPathHostControlled,
@@ -27,7 +26,6 @@ import {
 import type { DSStructureNode } from './types/structures';
 import type { AuditItem, RelevanceStatus } from './types/audit';
 import { tabDefinitions } from './config/tabs';
-import { deprecatedStyleSourceFileSet } from './config/deprecatedStyleSources';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
   collectCustomStyles,
@@ -38,8 +36,13 @@ import {
 import {
   collectDeprecatedStyleUsages,
   type DeprecatedStyleCollectionOptions,
-  type DeprecatedStyleMetadata,
 } from './services/deprecatedStyleAudit';
+import {
+  ensureStyleMetadataLoaded,
+  isKnownStyleId,
+  resolveStyleLabelForDiff,
+  resolveStyleMetadata,
+} from './services/styleMetadata';
 import { CheckState, createCheckState } from './create-check-state';
 import { applyCustomizationFilters } from './filters/customizationFilters';
 import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
@@ -153,13 +156,8 @@ type TokenLabelEntry = {
   resolvedType?: string;
 };
 
-type StyleLabelEntry = DeprecatedStyleMetadata;
-
 let tokenLabelMap: Map<string, TokenLabelEntry> | null = null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
-let styleLabelMap: Map<string, StyleLabelEntry> | null = null;
-let styleLabelLoadPromise: Promise<void> | null = null;
-const styleLookupCache = new Map<string, string>();
 
 const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
   isNestedComponentPaintPathHostControlled,
@@ -221,7 +219,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     const preloadStartedAt = getTimestamp();
     await ensureReferenceCatalogsLoaded();
     await ensureTokenLabelMapLoaded();
-    await ensureStyleLabelMapLoaded();
+    await ensureStyleMetadataLoaded();
     logAuditMetric('audit-reference-ready', {
       totalMs: Number((getTimestamp() - preloadStartedAt).toFixed(1)),
     });
@@ -2075,53 +2073,6 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
   return tokenLabelLoadPromise;
 }
 
-/**
- * Подготавливает карту стилей, привязанную к их библиотекам и группам,
- * для доступного отображения ссылок на стили при сравнении.
- */
-async function ensureStyleLabelMapLoaded(): Promise<void> {
-  if (styleLabelMap) return;
-  if (styleLabelLoadPromise) {
-    return styleLabelLoadPromise;
-  }
-  styleLabelLoadPromise = (async () => {
-    try {
-      await ensureReferenceCatalogsLoaded();
-      const catalogs = getStyleCatalogs();
-      const map = new Map<string, StyleLabelEntry>();
-      for (const catalog of catalogs) {
-        const libraryName =
-          catalog.meta?.library || catalog.meta?.fileName || '';
-        const sourceFile = catalog.meta?.fileName || '';
-        const isDeprecated = deprecatedStyleSourceFileSet.has(sourceFile);
-        const styles = catalog.styles ?? [];
-        for (const style of styles) {
-          if (!style?.key) continue;
-          const label = buildStyleLabel(
-            style.group ?? '',
-            style.name ?? '',
-          );
-          map.set(style.key, {
-            label,
-            library: libraryName || undefined,
-            sourceFile: sourceFile || undefined,
-            isDeprecated,
-          });
-        }
-      }
-      styleLookupCache.clear();
-      styleLabelMap = map;
-    } catch (error) {
-      console.warn('[Apollo] failed to load style catalogs', error);
-      styleLookupCache.clear();
-      styleLabelMap = new Map();
-    } finally {
-      styleLabelLoadPromise = null;
-    }
-  })();
-  return styleLabelLoadPromise;
-}
-
 function buildTokenLabel(
   groupName: string,
   tokenName: string,
@@ -2134,28 +2085,6 @@ function buildTokenLabel(
     segments.push(tokenName);
   }
   return segments.join('/');
-}
-
-function buildStyleLabel(
-  groupName: string,
-  styleName: string,
-): string {
-  const normalizedStyleName = stripStyleSuffix(styleName);
-  const segments: string[] = [];
-  if (groupName && groupName !== 'Без группы') {
-    segments.push(groupName);
-  }
-  if (normalizedStyleName) {
-    segments.push(normalizedStyleName);
-  }
-  return segments.join('/');
-}
-
-function stripStyleSuffix(value: string): string {
-  if (!value) return value;
-  const index = value.indexOf(' (');
-  if (index === -1) return value;
-  return value.slice(0, index).trim();
 }
 
 function resolveTokenLabelForDiff(token: string): string | null {
@@ -2178,109 +2107,6 @@ function isColorTokenForPaintDiff(token: string): boolean {
 
   return tokenEntry.resolvedType === 'COLOR';
 }
-
-function resolveStyleLabelForDiff(styleKey: string): string | null {
-  const direct = getStyleMetadataFromKnownKey(styleKey);
-  if (direct?.label) return direct.label;
-  if (styleKey.startsWith('S:')) {
-    const extracted = styleKey.slice(2).split(',')[0];
-    if (extracted) {
-      const byKey = getStyleMetadataFromKnownKey(extracted);
-      if (byKey?.label) return byKey.label;
-    }
-  }
-  return styleKey;
-}
-
-async function resolveStyleMetadata(
-  styleId: string | null | undefined,
-): Promise<StyleLabelEntry | null> {
-  const normalized = normalizeStyleId(styleId);
-  if (!normalized) {
-    return null;
-  }
-
-  const directKey = extractStyleKey(normalized);
-  if (directKey) {
-    const direct = getStyleMetadataFromKnownKey(directKey);
-    if (direct) {
-      return direct;
-    }
-  }
-
-  if (styleLookupCache.has(normalized)) {
-    const cachedKey = styleLookupCache.get(normalized) ?? null;
-    if (cachedKey) {
-      const cached = getStyleMetadataFromKnownKey(cachedKey);
-      if (cached) {
-        return cached;
-      }
-    }
-  }
-
-  const figmaApi = figma as PluginAPI & {
-    getStyleById?: (id: string) => BaseStyle | null;
-    getStyleByIdAsync?: (id: string) => Promise<BaseStyle | null>;
-  };
-
-  try {
-    const style =
-      typeof figmaApi.getStyleByIdAsync === 'function'
-        ? await figmaApi.getStyleByIdAsync(normalized)
-        : typeof figmaApi.getStyleById === 'function'
-          ? figmaApi.getStyleById(normalized)
-          : null;
-
-    const resolvedKey =
-      style && typeof style.key === 'string' && style.key
-        ? style.key
-        : null;
-
-    if (!resolvedKey) {
-      return null;
-    }
-
-    styleLookupCache.set(normalized, resolvedKey);
-    return getStyleMetadataFromKnownKey(resolvedKey);
-  } catch (error) {
-    console.warn('[Apollo] failed to resolve style metadata by id', {
-      styleId: normalized,
-      error,
-    });
-    return null;
-  }
-}
-
-async function isKnownStyleId(
-  styleId: string | null | undefined,
-): Promise<boolean> {
-  return Boolean(await resolveStyleMetadata(styleId));
-}
-
-function normalizeStyleId(
-  styleId: string | null | undefined,
-): string | null {
-  if (!styleId || typeof styleId !== 'string' || styleId === figma.mixed) {
-    return null;
-  }
-  return styleId.trim() || null;
-}
-
-function extractStyleKey(styleId: string): string | null {
-  if (styleLabelMap?.has(styleId)) {
-    return styleId;
-  }
-  if (!styleId.startsWith('S:')) {
-    return null;
-  }
-  const extracted = styleId.slice(2).split(',')[0];
-  return extracted || null;
-}
-
-function getStyleMetadataFromKnownKey(styleKey: string): StyleLabelEntry | null {
-  return styleLabelMap?.get(styleKey) ?? null;
-}
-
 function normalizeRgba(value: string): string {
   const compact = value.replace(/\s+/g, '');
   const match = compact.match(

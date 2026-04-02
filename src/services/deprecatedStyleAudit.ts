@@ -1,20 +1,14 @@
 import type { DeprecatedStyleEntry } from '../types/audit';
+import type { StyleMetadataEntry } from './styleMetadata';
 import {
   getPageName,
   isNodeVisible,
 } from '../utils/nodeHelpers';
 
-export type DeprecatedStyleMetadata = {
-  label: string;
-  library?: string;
-  sourceFile?: string;
-  isDeprecated?: boolean;
-};
-
 export interface DeprecatedStyleCollectionOptions {
   resolveStyleMetadata: (
     styleId: string | null | undefined,
-  ) => Promise<DeprecatedStyleMetadata | null>;
+  ) => Promise<StyleMetadataEntry | null>;
 }
 
 type DeprecatedStyleReason = DeprecatedStyleEntry['reason'];

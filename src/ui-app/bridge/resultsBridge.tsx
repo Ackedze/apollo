@@ -5,6 +5,7 @@ import { Placeholder } from '../components/Placeholder';
 import {
   AuditResultCard,
   CustomizationResultCard,
+  DeprecatedStyleResultCard,
   DetachedResultCard,
   ThemeErrorResultCard,
 } from '../components/ResultCardPresets';
@@ -20,6 +21,8 @@ function getResultItemKey(item: ResultsItem, index: number): string {
   switch (item.kind) {
     case 'customization':
       return `${item.kind}:${item.id}:${item.title}:${item.groups.length}:${index}`;
+    case 'deprecatedStyle':
+      return `${item.kind}:${item.id}:${item.title}:${item.usages.length}:${index}`;
     case 'detached':
     case 'themization':
       return `${item.kind}:${item.id}:${item.title}:${item.targetName}:${index}`;
@@ -67,6 +70,17 @@ function ResultsPane({
               onFocus={() => onFocusItem(item.id)}
               onReplace={item.onReplace}
               actionLabel="Сменить"
+            />
+          );
+        }
+
+        if (item.kind === 'deprecatedStyle') {
+          return (
+            <DeprecatedStyleResultCard
+              key={itemKey}
+              title={item.title}
+              caption={item.caption}
+              usages={item.usages}
             />
           );
         }

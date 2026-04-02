@@ -44,6 +44,7 @@ const LEFT_SECTION_ORDER: Array<ChromeTabItem['id'] | LeftSectionItem> = [
   'deprecated',
   'update',
   'themization',
+  'deprecatedStyles',
   'customStyles',
   '__divider_after_customStyles__',
   'changes',

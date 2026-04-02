@@ -170,6 +170,8 @@
               return () => resolveViewArray(['themization']);
             case 'local':
               return () => resolveViewArray(['local']);
+            case 'deprecatedStyles':
+              return () => resolveViewArray(['deprecatedStyles']);
             case 'customStyles':
               return () => resolveViewArray(['customStyles']);
             case 'presets':
@@ -201,6 +203,7 @@
           'deprecated',
           'update',
           'themization',
+          'deprecatedStyles',
           'customStyles',
           '__divider_after_customStyles__',
           'changes',
@@ -311,6 +314,13 @@
           }
 
           if (tab.id === 'changes' && renderCustomizationReactResults(items)) {
+            return;
+          }
+
+          if (
+            tab.id === 'deprecatedStyles' &&
+            renderDeprecatedStylesReactResults(items)
+          ) {
             return;
           }
 
@@ -484,6 +494,36 @@
             id: entry.id,
             title: entry.name || entry.pageName || 'Слой',
             caption: formatCustomStyleReason(entry.reason || '') || undefined,
+          }));
+
+          try {
+            resultsBridge.showItems(reactItems);
+            showReactResults();
+            return true;
+          } catch (error) {
+            resultsBridgeMounted = false;
+            console.error('[Apollo] results bridge update failed', error);
+            hideReactResults();
+            return false;
+          }
+        }
+
+        function renderDeprecatedStylesReactResults(items) {
+          if (!resultsBridge || !resultsBridgeMounted || !items.length) {
+            return false;
+          }
+
+          const groupedEntries = groupDeprecatedStyleEntries(items);
+          const reactItems = groupedEntries.map((group) => ({
+            kind: 'deprecatedStyle',
+            id: group.id,
+            title: '❌ ' + (group.styleLabel || 'Unknown style'),
+            caption: group.sourceLibrary || formatDeprecatedStyleSource(group.sourceFile),
+            usages: group.usages.map((usage) => ({
+              id: usage.id,
+              name: formatDeprecatedStyleReason(usage.reason || ''),
+              onFocus: usage.id ? () => focusNodeById(usage.id) : undefined,
+            })),
           }));
 
           try {
@@ -796,6 +836,55 @@
           }
         }
 
+        function formatDeprecatedStyleReason(reason) {
+          switch (reason) {
+            case 'fill':
+              return 'Заливка';
+            case 'stroke':
+              return 'Обводка';
+            default:
+              return 'Стиль';
+          }
+        }
+
+        function formatDeprecatedStyleSource(sourceFile) {
+          if (!sourceFile) {
+            return 'Unknown style catalog';
+          }
+
+          return sourceFile
+            .replace(/^styles\//i, '')
+            .replace(/\.json$/i, '');
+        }
+
+        function groupDeprecatedStyleEntries(items) {
+          const groups = new Map();
+
+          for (const entry of items) {
+            const key = [
+              entry.styleLabel || '',
+              entry.sourceFile || '',
+            ].join('|');
+
+            if (!groups.has(key)) {
+              groups.set(key, {
+                id: key || entry.id,
+                styleLabel: entry.styleLabel || 'Unknown style',
+                sourceFile: entry.sourceFile || 'Unknown style catalog',
+                sourceLibrary:
+                  entry.sourceLibrary ||
+                  entry.sourceFile ||
+                  'Unknown style catalog',
+                usages: [],
+              });
+            }
+
+            groups.get(key).usages.push(entry);
+          }
+
+          return Array.from(groups.values());
+        }
+
         window.onmessage = (event) => {
           const msg = event.data?.pluginMessage;
           if (!msg) return;
@@ -1074,6 +1163,7 @@
             tabId === 'deprecated' ||
             tabId === 'update' ||
             tabId === 'themization' ||
+            tabId === 'deprecatedStyles' ||
             tabId === 'customStyles'
           ) {
             return 'error';

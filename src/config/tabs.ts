@@ -43,6 +43,12 @@ export const tabDefinitions: TabDefinition[] = [
     emptyMessage: 'Все элементы связаны с библиотекой',
   },
   {
+    id: 'deprecatedStyles',
+    title: 'Устаревшие стили',
+    emptyMessage: 'Устаревших стилей не найдено',
+    ignoreComponentFilter: true,
+  },
+  {
     id: 'customStyles',
     title: 'Кастомные стили',
     emptyMessage: 'Кастомных стилей не найдено',
@@ -59,7 +65,8 @@ type TabId =
   | 'themization'
   | 'presets'
   | 'local'
-  | 'customStyles';
+  | 'customStyles'
+  | 'deprecatedStyles';
 
 interface TabDefinition {
   id: TabId;

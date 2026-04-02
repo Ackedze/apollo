@@ -48,6 +48,18 @@ export interface CustomStyleEntry {
   reason: string;
 }
 
+export interface DeprecatedStyleEntry {
+  id: string;
+  name: string;
+  nodeType: SceneNode['type'] | null;
+  pageName: string;
+  visible: boolean;
+  reason: 'fill' | 'stroke';
+  styleLabel: string;
+  sourceFile: string;
+  sourceLibrary?: string;
+}
+
 export interface ThemeAuditEntry {
   id: string;
   kind: ThemeAuditKind;

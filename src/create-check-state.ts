@@ -2,6 +2,7 @@ import type {
   RelevanceStatus,
   AuditItem,
   CustomStyleEntry,
+  DeprecatedStyleEntry,
   DetachedEntry,
   ThemeAuditEntry,
 } from './types/audit'
@@ -13,6 +14,7 @@ export interface CheckState {
     presetItems: AuditItem[]
     detachedEntries: DetachedEntry[]
     customStyleEntries : CustomStyleEntry[]
+    deprecatedStyleEntries: DeprecatedStyleEntry[]
     totalItems: number;
 }
 
@@ -29,6 +31,7 @@ export const createCheckState = (): CheckState => {
           presetItems: [],
           detachedEntries: [],
           customStyleEntries: [],
+          deprecatedStyleEntries: [],
           totalItems: 0,
     }
 }

@@ -262,7 +262,13 @@ async function loadStyleCatalogs(
       const data = JSON.parse(raw);
 
       styleCatalogs.push({
-        meta: data.meta,
+        meta: {
+          fileName: source.fileName,
+          library:
+            data?.meta?.library ??
+            data?.meta?.fileName ??
+            source.fileName,
+        },
         styles: Array.isArray(data.styles) ? data.styles : [],
       });
 

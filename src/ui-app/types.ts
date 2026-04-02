@@ -48,6 +48,20 @@ export type ThemizationResultItem = {
   onReplace?: () => void;
 };
 
+export type DeprecatedStyleUsageItem = {
+  id: string;
+  name: string;
+  onFocus?: () => void;
+};
+
+export type DeprecatedStyleResultItem = {
+  kind: 'deprecatedStyle';
+  id: string;
+  title: string;
+  caption?: string;
+  usages: DeprecatedStyleUsageItem[];
+};
+
 export type CustomValueLine = {
   label: string;
   values: string[];
@@ -73,6 +87,7 @@ export type ResultsItem =
   | AuditResultItem
   | DetachedResultItem
   | ThemizationResultItem
+  | DeprecatedStyleResultItem
   | CustomizationResultItem;
 
 export type ResultsBridgeOptions = {

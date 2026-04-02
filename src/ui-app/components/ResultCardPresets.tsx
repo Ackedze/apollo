@@ -115,6 +115,33 @@ export function ThemeErrorResultCard({
   );
 }
 
+export function DeprecatedStyleResultCard({
+  title,
+  caption,
+  hovered = false,
+  usages,
+}: BasePresetProps & {
+  usages: Array<{ id: string; name: string; onFocus?: () => void }>;
+}): React.JSX.Element {
+  return (
+    <ResultCard
+      title={title}
+      caption={caption}
+      hovered={hovered}
+      showFocus={false}
+    >
+      {usages.map((usage, index) => (
+        <ResultSubCard
+          key={`${usage.id}:${usage.name}:${index}`}
+          name={usage.name}
+          onFocus={usage.onFocus}
+          showFocus={Boolean(usage.onFocus)}
+        />
+      ))}
+    </ResultCard>
+  );
+}
+
 export function CustomStyleResultCard({
   title,
   caption,

@@ -27,6 +27,7 @@ import {
 import type { DSStructureNode } from './types/structures';
 import type { AuditItem, RelevanceStatus } from './types/audit';
 import { tabDefinitions } from './config/tabs';
+import { deprecatedStyleSourceFileSet } from './config/deprecatedStyleSources';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
   collectCustomStyles,
@@ -34,6 +35,11 @@ import {
   computeChangesResults,
   type CustomStyleCollectionOptions,
 } from './services/auditViewBuilder';
+import {
+  collectDeprecatedStyleUsages,
+  type DeprecatedStyleCollectionOptions,
+  type DeprecatedStyleMetadata,
+} from './services/deprecatedStyleAudit';
 import { CheckState, createCheckState } from './create-check-state';
 import { applyCustomizationFilters } from './filters/customizationFilters';
 import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
@@ -147,10 +153,11 @@ type TokenLabelEntry = {
   resolvedType?: string;
 };
 
+type StyleLabelEntry = DeprecatedStyleMetadata;
+
 let tokenLabelMap: Map<string, TokenLabelEntry> | null = null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
-let styleLabelMap: Map<string, { label: string; library?: string }> | null =
-  null;
+let styleLabelMap: Map<string, StyleLabelEntry> | null = null;
 let styleLabelLoadPromise: Promise<void> | null = null;
 const styleLookupCache = new Map<string, string>();
 
@@ -275,6 +282,9 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       tokenLabelMap: tokenLabelMap ?? new Map(),
       isKnownStyleId,
     };
+    const deprecatedStyleOptions: DeprecatedStyleCollectionOptions = {
+      resolveStyleMetadata,
+    };
 
     const collectStartedAt = getTimestamp();
     await collectTargets(
@@ -284,6 +294,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       componentKeyCache,
       localComponentContextCache,
       customStyleReasonOptions,
+      deprecatedStyleOptions,
       checkedComponentNodesList,
       throwIfCancelled,
     );
@@ -311,6 +322,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
       relevance: checkState.relevanceBuckets,
       themization: checkState.themizationEntries,
       local: visibleLocalItems,
+      deprecatedStyles: checkState.deprecatedStyleEntries,
       customStyles: checkState.customStyleEntries,
       detached: checkState.detachedEntries,
       presets: checkState.presetItems,
@@ -372,6 +384,7 @@ async function collectTargets(
   componentKeyCache: Map<string, string | null>,
   localComponentContextCache: Map<string, boolean>,
   customStyleReasonOptions: CustomStyleCollectionOptions,
+  deprecatedStyleOptions: DeprecatedStyleCollectionOptions,
   checkedComponentNodesList: Set<string>,
   throwIfCancelled: () => void,
 ) {
@@ -438,11 +451,22 @@ async function collectTargets(
 
       if (node.type !== 'SECTION') {
           const customStyleReasons = await collectCustomStyles(node, customStyleReasonOptions);
+          const deprecatedStyleEntries = await collectDeprecatedStyleUsages(
+            node,
+            deprecatedStyleOptions,
+          );
 
           if (customStyleReasons.length) {
             checkState.customStyleEntries = [
               ...checkState.customStyleEntries, 
               ...customStyleReasons
+            ];
+          }
+
+          if (deprecatedStyleEntries.length) {
+            checkState.deprecatedStyleEntries = [
+              ...checkState.deprecatedStyleEntries,
+              ...deprecatedStyleEntries,
             ];
           }
       }
@@ -2064,10 +2088,12 @@ async function ensureStyleLabelMapLoaded(): Promise<void> {
     try {
       await ensureReferenceCatalogsLoaded();
       const catalogs = getStyleCatalogs();
-      const map = new Map<string, { label: string; library?: string }>();
+      const map = new Map<string, StyleLabelEntry>();
       for (const catalog of catalogs) {
         const libraryName =
           catalog.meta?.library || catalog.meta?.fileName || '';
+        const sourceFile = catalog.meta?.fileName || '';
+        const isDeprecated = deprecatedStyleSourceFileSet.has(sourceFile);
         const styles = catalog.styles ?? [];
         for (const style of styles) {
           if (!style?.key) continue;
@@ -2075,7 +2101,12 @@ async function ensureStyleLabelMapLoaded(): Promise<void> {
             style.group ?? '',
             style.name ?? '',
           );
-          map.set(style.key, { label, library: libraryName || undefined });
+          map.set(style.key, {
+            label,
+            library: libraryName || undefined,
+            sourceFile: sourceFile || undefined,
+            isDeprecated,
+          });
         }
       }
       styleLookupCache.clear();
@@ -2149,34 +2180,42 @@ function isColorTokenForPaintDiff(token: string): boolean {
 }
 
 function resolveStyleLabelForDiff(styleKey: string): string | null {
-  const direct = styleLabelMap?.get(styleKey);
+  const direct = getStyleMetadataFromKnownKey(styleKey);
   if (direct?.label) return direct.label;
   if (styleKey.startsWith('S:')) {
     const extracted = styleKey.slice(2).split(',')[0];
     if (extracted) {
-      const byKey = styleLabelMap?.get(extracted);
+      const byKey = getStyleMetadataFromKnownKey(extracted);
       if (byKey?.label) return byKey.label;
     }
   }
   return styleKey;
 }
 
-async function isKnownStyleId(
+async function resolveStyleMetadata(
   styleId: string | null | undefined,
-): Promise<boolean> {
+): Promise<StyleLabelEntry | null> {
   const normalized = normalizeStyleId(styleId);
   if (!normalized) {
-    return false;
+    return null;
   }
 
   const directKey = extractStyleKey(normalized);
-  if (directKey && styleLabelMap?.has(directKey)) {
-    return true;
+  if (directKey) {
+    const direct = getStyleMetadataFromKnownKey(directKey);
+    if (direct) {
+      return direct;
+    }
   }
 
   if (styleLookupCache.has(normalized)) {
-    const cached = styleLookupCache.get(normalized);
-    return Boolean(cached && styleLabelMap?.has(cached));
+    const cachedKey = styleLookupCache.get(normalized) ?? null;
+    if (cachedKey) {
+      const cached = getStyleMetadataFromKnownKey(cachedKey);
+      if (cached) {
+        return cached;
+      }
+    }
   }
 
   const figmaApi = figma as PluginAPI & {
@@ -2197,19 +2236,25 @@ async function isKnownStyleId(
         ? style.key
         : null;
 
-    if (resolvedKey) {
-      styleLookupCache.set(normalized, resolvedKey);
-      return Boolean(styleLabelMap?.has(resolvedKey));
+    if (!resolvedKey) {
+      return null;
     }
 
-    return false;
+    styleLookupCache.set(normalized, resolvedKey);
+    return getStyleMetadataFromKnownKey(resolvedKey);
   } catch (error) {
-    console.warn('[Apollo] failed to resolve style by id', {
+    console.warn('[Apollo] failed to resolve style metadata by id', {
       styleId: normalized,
       error,
     });
-    return false;
+    return null;
   }
+}
+
+async function isKnownStyleId(
+  styleId: string | null | undefined,
+): Promise<boolean> {
+  return Boolean(await resolveStyleMetadata(styleId));
 }
 
 function normalizeStyleId(
@@ -2230,6 +2275,10 @@ function extractStyleKey(styleId: string): string | null {
   }
   const extracted = styleId.slice(2).split(',')[0];
   return extracted || null;
+}
+
+function getStyleMetadataFromKnownKey(styleKey: string): StyleLabelEntry | null {
+  return styleLabelMap?.get(styleKey) ?? null;
 }
 
 function normalizeRgba(value: string): string {

@@ -67,6 +67,8 @@ import {
 } from './utils/variantProperties';
 
 figma.showUI(__html__, { width: 800, height: 860 });
+const EXPANDED_UI_SIZE = { width: 800, height: 860 };
+const COMPACT_UI_SIZE = { width: 263, height: 860 };
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -90,6 +92,13 @@ figma.ui.onmessage = (msg) => {
     if (scanInProgress) {
       cancelRequested = true;
     }
+    return;
+  }
+
+  if (msg.type === 'set-ui-compact') {
+    const compact = msg.payload?.compact === true;
+    const targetSize = compact ? COMPACT_UI_SIZE : EXPANDED_UI_SIZE;
+    figma.ui.resize(targetSize.width, targetSize.height);
     return;
   }
 

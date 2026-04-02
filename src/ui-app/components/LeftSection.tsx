@@ -6,7 +6,7 @@ import styles from './LeftSection.module.css';
 
 type LeftSectionProps = {
   tabs: ChromeTabItem[];
-  onTabSelect: (tabId: string) => void;
+  onTabSelect: (tabId: string, count: number) => void;
 };
 
 export function LeftSection({

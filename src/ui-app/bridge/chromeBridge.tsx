@@ -10,6 +10,7 @@ const defaultState: ChromeState = {
   actionDisabled: true,
   actionLoading: true,
   actionType: 'secondary',
+  compact: false,
   tabs: [],
 };
 
@@ -54,7 +55,9 @@ class ApolloChromeBridge {
           actionDisabled={this.state.actionDisabled}
           actionLoading={this.state.actionLoading}
           actionType={this.state.actionType}
+          compact={this.state.compact}
           onActionPress={this.options.onActionPress}
+          onToggleCompact={this.options.onToggleCompact}
         />,
       );
 

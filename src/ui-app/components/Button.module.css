@@ -23,6 +23,13 @@
     box-shadow 0.15s ease;
 }
 
+.singleIcon {
+  min-width: 40px;
+  width: 40px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .button:disabled,
 :global(.chrome-action-button:disabled) {
   cursor: default;
@@ -76,6 +83,21 @@
 
 .text {
   padding: 0 4px;
+}
+
+.iconWrap {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconWrap :global(svg) {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .primary .loader,

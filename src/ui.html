@@ -22,12 +22,41 @@
         display: flex;
         flex-direction: column;
       }
+      .shell.compact {
+        width: 263px;
+      }
 
       /* Стили заголовка */
 
       .header {
         padding: 0;
         border-bottom: 1px solid #ececf2;
+      }
+      .chrome-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-right: 28px;
+        min-width: 0;
+      }
+      .chrome-compact-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        min-height: 20px;
+        padding: 2px;
+        border: none;
+        border-radius: 999px;
+        background: transparent;
+        color: rgba(3, 3, 6, 0.88);
+        cursor: pointer;
+      }
+      .chrome-action-button-icon {
+        min-width: 40px;
+        width: 40px;
       }
       /* Стили боковой панели */
 
@@ -50,23 +79,34 @@
       }
       .workspace {
         display: grid;
-        grid-template-columns: 264px 1fr;
+        grid-template-columns: 263px 1fr;
         gap: 8px;
         flex: 1;
         min-width: 0;
         min-height: 0;
       }
+      .workspace.compact {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
       .sidebar {
-        padding: 12px 12px 12px;
+        width: 263px;
+        padding: 12px;
         overflow-y: auto;
         max-height: 100%;
-        padding-right: 4px;
+        box-sizing: border-box;
+      }
+      .workspace.compact .sidebar {
+        padding-right: 12px;
       }
       .main {
         display: flex;
         flex-direction: column;
         min-width: 0;
         min-height: 0;
+      }
+      .workspace.compact .main {
+        display: none;
       }
       .placeholder {
         padding: 24px;
@@ -188,7 +228,10 @@
         let catalogsLoading = true;
         let actionPhase = 'catalog-loading';
         let scanCompleted = false;
+        let isCompact = false;
 
+        const shellEl = document.querySelector('.shell');
+        const workspaceEl = document.querySelector('.workspace');
         const listContainer = document.getElementById('results');
         const reactResultsContainer = document.getElementById('react-results');
         const toastEl = document.getElementById('toast');
@@ -221,7 +264,8 @@
                 topRootId: 'react-top-section',
                 leftRootId: 'react-left-section',
                 onActionPress: handleScanActionPress,
-                onTabSelect: setActiveTab,
+                onTabSelect: handleTabSelection,
+                onToggleCompact: toggleCompactMode,
               }),
             );
           } catch (error) {
@@ -243,6 +287,8 @@
             console.error('[Apollo] results bridge mount failed', error);
           }
         }
+
+        applyCompactMode();
         setScanningState(false);
 
         /* ====== Рендер шапки табов ====== */
@@ -1016,6 +1062,51 @@
           });
         }
 
+        function applyCompactMode() {
+          if (shellEl) {
+            shellEl.classList.toggle('compact', isCompact);
+          }
+          if (workspaceEl) {
+            workspaceEl.classList.toggle('compact', isCompact);
+          }
+          syncChromeState();
+        }
+
+        function toggleCompactMode() {
+          setCompactMode(!isCompact);
+        }
+
+        function setCompactMode(nextCompact) {
+          if (isCompact === nextCompact) {
+            syncChromeState();
+            return;
+          }
+
+          isCompact = nextCompact;
+          applyCompactMode();
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'set-ui-compact',
+                payload: { compact: nextCompact },
+              },
+            },
+            '*',
+          );
+        }
+
+        function handleTabSelection(tabId, count) {
+          if (!count) {
+            return;
+          }
+
+          if (isCompact) {
+            setCompactMode(false);
+          }
+
+          setActiveTab(tabId);
+        }
+
         function renderChromeFallback(state) {
           renderTopSectionFallback(state);
           renderLeftSectionFallback(state.tabs);
@@ -1026,12 +1117,28 @@
           topChromeContainer.innerHTML = '';
 
           const section = document.createElement('div');
-          section.className = 'chrome-top-section';
+          section.className = [
+            'chrome-top-section',
+            state.compact ? 'chrome-top-section-compact' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
+
+          const titleWrap = document.createElement('div');
+          titleWrap.className = 'chrome-title-wrap';
 
           const titleButton = document.createElement('div');
           titleButton.className = 'chrome-title-button';
           titleButton.textContent = state.title;
-          section.appendChild(titleButton);
+          titleWrap.appendChild(titleButton);
+
+          const compactButton = document.createElement('button');
+          compactButton.type = 'button';
+          compactButton.className = 'chrome-compact-button';
+          compactButton.textContent = state.compact ? '↗' : '↙';
+          compactButton.addEventListener('click', toggleCompactMode);
+          titleWrap.appendChild(compactButton);
+          section.appendChild(titleWrap);
 
           const actionButton = document.createElement('button');
           actionButton.type = 'button';
@@ -1051,9 +1158,16 @@
             actionButton.appendChild(loader);
           }
 
-          const label = document.createElement('span');
-          label.textContent = state.actionLabel;
-          actionButton.appendChild(label);
+          if (state.compact) {
+            const icon = document.createElement('span');
+            icon.textContent = '↯';
+            actionButton.appendChild(icon);
+            actionButton.classList.add('chrome-action-button-icon');
+          } else {
+            const label = document.createElement('span');
+            label.textContent = state.actionLabel;
+            actionButton.appendChild(label);
+          }
           section.appendChild(actionButton);
 
           topChromeContainer.appendChild(section);
@@ -1088,7 +1202,9 @@
               .filter(Boolean)
               .join(' ');
             card.setAttribute('aria-pressed', tab.active ? 'true' : 'false');
-            card.addEventListener('click', () => setActiveTab(tab.id));
+            card.addEventListener('click', () =>
+              handleTabSelection(tab.id, tab.count),
+            );
 
             const title = document.createElement('span');
             title.className = 'chrome-tab-title';
@@ -1117,7 +1233,7 @@
               id: tab.id,
               title: tab.title,
               count,
-              active: tab.id === currentTab,
+              active: !isCompact && tab.id === currentTab,
               counterType: getCounterType(tab.id, count),
             };
           });
@@ -1138,6 +1254,7 @@
               isActionScanning || isActionCatalogLoading
                 ? 'secondary'
                 : 'primary',
+            compact: isCompact,
             tabs,
           };
 

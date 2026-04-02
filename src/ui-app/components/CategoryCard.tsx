@@ -8,7 +8,7 @@ type CategoryCardProps = {
   count: number;
   counterType: 'empty' | 'error' | 'warning' | 'general';
   active?: boolean;
-  onPress: (id: string) => void;
+  onPress: (id: string, count: number) => void;
 };
 
 export function CategoryCard({
@@ -32,7 +32,7 @@ export function CategoryCard({
     <button
       type="button"
       className={className}
-      onClick={() => onPress(id)}
+      onClick={() => onPress(id, count)}
       aria-pressed={active}
     >
       <span className={styles.title}>{title}</span>

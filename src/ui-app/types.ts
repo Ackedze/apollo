@@ -14,6 +14,7 @@ export type ChromeState = {
   actionDisabled: boolean;
   actionLoading: boolean;
   actionType: ChromeButtonType;
+  compact: boolean;
   tabs: ChromeTabItem[];
 };
 
@@ -21,7 +22,8 @@ export type ChromeBridgeOptions = {
   topRootId: string;
   leftRootId: string;
   onActionPress: () => void;
-  onTabSelect: (tabId: string) => void;
+  onTabSelect: (tabId: string, count: number) => void;
+  onToggleCompact: () => void;
 };
 
 export type AuditResultItem = {

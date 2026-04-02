@@ -1,4 +1,15 @@
 import type { DSStructureNode } from '../types/structures';
+import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
+
+export type DiffContext = {
+  actualComponentKey: string | null;
+  referenceComponentKey: string | null;
+  referenceOrigin: 'host' | 'nested-component';
+  nestedOwnerComponentKey: string | null;
+  nestedOwnerComponentRole: 'Main' | 'Part' | null;
+  nestedOwnerPath: string | null;
+  nestedOwnerRelativePath: string | null;
+};
 
 export type DiffEntry = {
   message: string;
@@ -6,14 +17,9 @@ export type DiffEntry = {
   nodeName: string;
   nodeId?: string;
   visible?: boolean;
-  actualComponentKey?: string | null;
-  referenceComponentKey?: string | null;
-  referenceOrigin?: 'host' | 'nested-component';
-  nestedOwnerComponentKey?: string | null;
-  nestedOwnerComponentRole?: 'Main' | 'Part' | null;
-  nestedOwnerPath?: string | null;
-  nestedOwnerRelativePath?: string | null;
+  context: DiffContext;
   suppressAsHostControlledNestedProperty?: boolean;
+  suppressionReason?: string | null;
   diffKind?: 'paint' | 'text-style' | 'layout' | 'shape' | 'opacity' | 'other';
 };
 
@@ -62,8 +68,15 @@ export function diffStructures(
 ): DiffResult {
   const diffs: DiffEntry[] = [];
   const issueSet = new Set<string>();
-  const actualMap = new Map(actual.map((node) => [node.path, node]));
-  const referenceMap = new Map(reference.map((node) => [node.path, node]));
+  const normalizedReference = attachImplicitReferenceOwners(reference);
+  const actualKeyMap = buildOccurrenceKeyMap(actual);
+  const referenceKeyMap = buildOccurrenceKeyMap(normalizedReference);
+  const actualMap = new Map(
+    actual.map((node) => [actualKeyMap.get(node) ?? node.path, node]),
+  );
+  const referenceMap = new Map(
+    normalizedReference.map((node) => [referenceKeyMap.get(node) ?? node.path, node]),
+  );
   const actualVisibleChildCount = buildVisibleChildCountMap(actual);
   const strict = options?.strict ?? false;
   const resolveTokenLabel = options?.resolveTokenLabel;
@@ -87,6 +100,127 @@ export function diffStructures(
   }
 
   return { diffs, issues: Array.from(issueSet.values()) };
+}
+
+function attachImplicitReferenceOwners(
+  reference: DSStructureNode[],
+): DSStructureNode[] {
+  if (!reference.length) {
+    return reference;
+  }
+
+  const cloned = reference.map((node) => Object.assign({}, node));
+  const idMap = new Map<number, DSStructureNode>();
+  const occurrenceKeyMap = buildOccurrenceKeyMap(cloned);
+  const occurrenceKeyToNode = new Map<string, DSStructureNode>();
+
+  for (const node of cloned) {
+    idMap.set(node.id, node);
+    occurrenceKeyToNode.set(occurrenceKeyMap.get(node) ?? node.path, node);
+  }
+
+  for (const node of cloned) {
+    if (node.referenceOwnerComponentKey && node.referenceOwnerPath != null) {
+      continue;
+    }
+
+    if ((node.referenceOrigin ?? 'host') !== 'host') {
+      continue;
+    }
+
+    let parentId = typeof node.parentId === 'number' ? node.parentId : null;
+      while (typeof parentId === 'number') {
+        const parent = idMap.get(parentId) ?? null;
+        if (!parent) {
+          break;
+        }
+
+      if (
+        parent.type === 'INSTANCE' &&
+        parent.componentInstance?.componentKey &&
+        parent.path.includes(' / ')
+      ) {
+        node.referenceOwnerComponentKey = parent.componentInstance.componentKey;
+        node.referenceOwnerRole = parent.referenceOwnerRole ?? null;
+        node.referenceOwnerPath = parent.path;
+        node.referenceOwnerRelativePath =
+          getRelativeOwnerPath(parent.path, node.path) ?? null;
+        break;
+      }
+
+        parentId = typeof parent.parentId === 'number' ? parent.parentId : null;
+      }
+
+      if (!node.referenceOwnerComponentKey || !node.referenceOwnerPath) {
+        attachImplicitOwnerByPathPrefix(
+          node,
+          occurrenceKeyMap.get(node) ?? node.path,
+          occurrenceKeyToNode,
+        );
+      }
+  }
+
+  return cloned;
+}
+
+function attachImplicitOwnerByPathPrefix(
+  node: DSStructureNode,
+  occurrenceKey: string,
+  occurrenceKeyToNode: Map<string, DSStructureNode>,
+) {
+  const occurrence = extractOccurrenceIndex(occurrenceKey);
+  const segments = node.path.split(' / ');
+
+  for (let index = segments.length - 1; index > 0; index -= 1) {
+    const ancestorPath = segments.slice(0, index).join(' / ');
+    const ancestorOccurrenceKey = makeOccurrenceKey(ancestorPath, occurrence);
+    const ancestor =
+      occurrenceKeyToNode.get(ancestorOccurrenceKey) ??
+      occurrenceKeyToNode.get(ancestorPath) ??
+      null;
+
+    if (
+      !ancestor ||
+      ancestor.type !== 'INSTANCE' ||
+      !ancestor.componentInstance?.componentKey
+    ) {
+      continue;
+    }
+
+    node.referenceOwnerComponentKey = ancestor.componentInstance.componentKey;
+    node.referenceOwnerRole = ancestor.referenceOwnerRole ?? null;
+    node.referenceOwnerPath = ancestor.path;
+    node.referenceOwnerRelativePath =
+      getRelativeOwnerPath(ancestor.path, node.path) ?? null;
+    return;
+  }
+}
+
+function extractOccurrenceIndex(occurrenceKey: string): number {
+  const hiddenMatch = occurrenceKey.match(/@@hidden(\d+)$/);
+  if (hiddenMatch) {
+    return -(Number.parseInt(hiddenMatch[1] ?? '1', 10) || 1);
+  }
+
+  const visibleMatch = occurrenceKey.match(/@@(\d+)$/);
+  if (visibleMatch) {
+    return Number.parseInt(visibleMatch[1] ?? '1', 10) || 1;
+  }
+
+  return 1;
+}
+
+function getRelativeOwnerPath(ownerPath: string, nodePath: string): string | null {
+  if (ownerPath === nodePath) {
+    return '';
+  }
+
+  const prefix = `${ownerPath} / `;
+  if (!nodePath.startsWith(prefix)) {
+    return null;
+  }
+
+  return nodePath.slice(prefix.length);
 }
 
 function compareNode(
@@ -743,21 +877,23 @@ function pushDiff(
     nodeName: node.name ?? path,
     nodeId: node.nodeId,
     visible: node.visible !== false,
-    actualComponentKey: node.componentInstance?.componentKey ?? null,
-    referenceComponentKey: referenceNode.componentInstance?.componentKey ?? null,
-    referenceOrigin: referenceNode.referenceOrigin ?? 'host',
-    nestedOwnerComponentKey:
-      referenceNode.referenceOwnerComponentKey ??
-      (isHostNestedInstanceRoot
-        ? referenceNode.componentInstance?.componentKey ?? null
-        : null),
-    nestedOwnerComponentRole: referenceNode.referenceOwnerRole ?? null,
-    nestedOwnerPath:
-      referenceNode.referenceOwnerPath ??
-      (isHostNestedInstanceRoot ? path : null),
-    nestedOwnerRelativePath:
-      referenceNode.referenceOwnerRelativePath ??
-      (isHostNestedInstanceRoot ? '' : null),
+    context: {
+      actualComponentKey: node.componentInstance?.componentKey ?? null,
+      referenceComponentKey: referenceNode.componentInstance?.componentKey ?? null,
+      referenceOrigin: referenceNode.referenceOrigin ?? 'host',
+      nestedOwnerComponentKey:
+        referenceNode.referenceOwnerComponentKey ??
+        (isHostNestedInstanceRoot
+          ? referenceNode.componentInstance?.componentKey ?? null
+          : null),
+      nestedOwnerComponentRole: referenceNode.referenceOwnerRole ?? null,
+      nestedOwnerPath:
+        referenceNode.referenceOwnerPath ??
+        (isHostNestedInstanceRoot ? path : null),
+      nestedOwnerRelativePath:
+        referenceNode.referenceOwnerRelativePath ??
+        (isHostNestedInstanceRoot ? '' : null),
+    },
     diffKind,
   });
 }

@@ -10,6 +10,7 @@ type LibraryComponentVariant = {
   key: string;
   id: string;
   name: string;
+  properties?: Record<string, string>;
 }
 
 export interface LibraryComponent {

@@ -21,8 +21,15 @@ import type {
 } from './libraryTypes';
 import type {
   DSStructureNode,
+  DSInstanceInfo,
   DSVariantStructurePatch,
 } from '../types/structures';
+import {
+  countVariantPropertyMatches,
+  parseVariantName,
+  variantPropertiesEqual,
+} from '../utils/variantProperties';
+import { getTimestamp, logAuditMetric } from '../utils/auditInstrumentation';
 
 let catalogs: AthenaCatalog[] = [];
 const tokenCatalogs: TokenCatalog[] = [];
@@ -62,20 +69,37 @@ export async function ensureReferenceCatalogsLoaded(): Promise<void> {
 }
 
 async function loadAllCatalogs(): Promise<void> {
+  const loadStartedAt = getTimestamp();
   const sources = await ensureCatalogSourceList();
 
   const componentSources = sources.filter(
     (source) => !isTokenCatalogSource(source) && !isStyleCatalogSource(source),
   );
 
+  const componentFetchStartedAt = getTimestamp();
   const modules = await Promise.all(componentSources.map(fetchCatalogModule));
+  const componentFetchDurationMs = getTimestamp() - componentFetchStartedAt;
 
+  const hydrateStartedAt = getTimestamp();
   hydrateCatalogs(modules);
+  const hydrateDurationMs = getTimestamp() - hydrateStartedAt;
 
+  const tokenLoadStartedAt = getTimestamp();
   await loadTokenCatalogs(sources.filter(isTokenCatalogSource));
+  const tokenLoadDurationMs = getTimestamp() - tokenLoadStartedAt;
+  const styleLoadStartedAt = getTimestamp();
   await loadStyleCatalogs(sources.filter(isStyleCatalogSource));
+  const styleLoadDurationMs = getTimestamp() - styleLoadStartedAt;
 
   catalogLoadState.ready = true;
+  logAuditMetric('reference-preload', {
+    totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
+    componentFetchMs: Number(componentFetchDurationMs.toFixed(1)),
+    hydrateMs: Number(hydrateDurationMs.toFixed(1)),
+    tokenLoadMs: Number(tokenLoadDurationMs.toFixed(1)),
+    styleLoadMs: Number(styleLoadDurationMs.toFixed(1)),
+    catalogCount: modules.length,
+  });
 }
 
 async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
@@ -434,6 +458,10 @@ function mergeNormalizedComponents(
           id: variant.id ?? '',
           key: variant.key ?? '',
           name: variant.name ?? '',
+          properties:
+            variant.properties && typeof variant.properties === 'object'
+              ? Object.assign({}, variant.properties)
+              : undefined,
         }));
     }
     if (match.variantStructures && !component.variantStructures) {
@@ -1083,8 +1111,84 @@ export function resolveStructure(
   return null;
 }
 
+export function resolveStructureForInstance(
+  component: LibraryComponent | null | undefined,
+  instance: DSInstanceInfo | null | undefined,
+): DSStructureNode[] | null {
+  if (!component) {
+    return null;
+  }
+
+  const resolvedVariantKey = resolveVariantKeyForInstance(
+    component,
+    instance?.componentKey ?? null,
+    instance?.variantProperties ?? null,
+  );
+
+  return resolveStructure(
+    component,
+    resolvedVariantKey ?? instance?.componentKey ?? null,
+  );
+}
+
+export function resolveVariantKeyForInstance(
+  component: LibraryComponent | null | undefined,
+  componentKey: string | null | undefined,
+  variantProperties: Record<string, string> | null | undefined,
+): string | null {
+  if (!component) {
+    return null;
+  }
+
+  const variants = component.variants ?? [];
+  if (!variants.length) {
+    return componentKey ?? null;
+  }
+
+  const directByKey =
+    componentKey && variants.find((variant) => variant.key === componentKey);
+  if (directByKey) {
+    return directByKey.key;
+  }
+
+  const desiredProperties = variantProperties ?? null;
+  if (!desiredProperties || !Object.keys(desiredProperties).length) {
+    return componentKey ?? null;
+  }
+
+  const exactByProperties = variants.find((variant) =>
+    variantPropertiesEqual(
+      getVariantPropertiesForLookup(variant),
+      desiredProperties,
+    ),
+  );
+  if (exactByProperties?.key) {
+    return exactByProperties.key;
+  }
+
+  const bestByOverlap = variants
+    .map((variant) => ({
+      variant,
+      score: countVariantPropertyMatches(
+        getVariantPropertiesForLookup(variant),
+        desiredProperties,
+      ),
+    }))
+    .filter((entry) => entry.score > 0)
+    .sort((left, right) => {
+      if (right.score !== left.score) {
+        return right.score - left.score;
+      }
+
+      return left.variant.name.localeCompare(right.variant.name);
+    })[0]?.variant;
+
+  return bestByOverlap?.key ?? componentKey ?? null;
+}
+
 function buildPartHostControlledPaintPaths() {
   const structureCache = new Map<string, DSStructureNode[] | null>();
+  const startedAt = getTimestamp();
 
   for (const component of iterateCatalogComponents()) {
     registerHostControlledPaintPathsForStructure(
@@ -1105,6 +1209,13 @@ function buildPartHostControlledPaintPaths() {
       );
     }
   }
+
+  logAuditMetric('host-controlled-policy-build', {
+    totalMs: Number((getTimestamp() - startedAt).toFixed(1)),
+    paintOwners: hostControlledPaintPaths.size,
+    textOwners: hostControlledTextPaths.size,
+    layoutOwners: hostControlledLayoutPaths.size,
+  });
 }
 
 function registerHostControlledPaintPathsForStructure(
@@ -1125,15 +1236,19 @@ function registerHostControlledPaintPathsForStructure(
     }
 
     const partComponent = findCatalogComponentByKey(partKey);
-    if (!partComponent) {
-      continue;
-    }
+      if (!partComponent) {
+        continue;
+      }
 
-    const partStructure = resolveStructureCachedForPartPolicy(
-      partComponent,
-      partKey,
-      structureCache,
-    );
+      const partStructure = resolveStructureCachedForPartPolicy(
+        partComponent,
+        resolveVariantKeyForInstance(
+          partComponent,
+          partKey,
+          node.componentInstance?.variantProperties ?? null,
+        ),
+        structureCache,
+      );
     if (!partStructure || !partStructure.length) {
       continue;
     }
@@ -1579,6 +1694,16 @@ function cloneStructure(nodes: DSStructureNode[]): DSStructureNode[] {
 
 function cloneNode(node: DSStructureNode): DSStructureNode {
   return JSON.parse(JSON.stringify(node));
+}
+
+function getVariantPropertiesForLookup(
+  variant: { name?: string | null; properties?: Record<string, string> | null },
+): Record<string, string> {
+  if (variant.properties && Object.keys(variant.properties).length) {
+    return variant.properties;
+  }
+
+  return parseVariantName(variant.name ?? '');
 }
 
 function indexComponentByKey(component: LibraryComponent) {

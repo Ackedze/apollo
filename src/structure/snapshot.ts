@@ -15,7 +15,11 @@ import type {
  * Возвращает флаг видимости узла без учёта родителей (наследование обрабатывает walk).
  */
 function getNodeSelfVisible(node: SceneNode): boolean {
-  return 'visible' in node ? (node as any).visible !== false : true;
+  try {
+    return 'visible' in node ? (node as any).visible !== false : true;
+  } catch (_error) {
+    return false;
+  }
 }
 
 function makePath(parent: string, name: string): string {
@@ -36,8 +40,8 @@ export async function snapshotTree(root: SceneNode, checkedComponentNodesList: S
     parentId: number | null,
     parentVisible: boolean,
   ) {
-    if (!node.visible) {
-      return
+    if (!getNodeSelfVisible(node)) {
+      return;
     }
 
     checkedComponentNodesList.add(node.id);
@@ -57,11 +61,9 @@ export async function snapshotTree(root: SceneNode, checkedComponentNodesList: S
     if ('children' in node) {
       const children = node.children as SceneNode[];
       if (children.length) {
-        await Promise.all(
-          children.map((child) =>
-            walk(child, snap.path, id, snap.visible !== false),
-          ),
-        );
+        for (const child of children) {
+          await walk(child, snap.path, id, snap.visible !== false);
+        }
       }
     }
   }
@@ -88,7 +90,7 @@ export async function snapshotNormalizedContext(
     const nodeVisible = getNodeSelfVisible(node);
 
     if (!nodeVisible) {
-      return 
+      return;
     }
 
     let nextComponentKey = activeComponentKey;

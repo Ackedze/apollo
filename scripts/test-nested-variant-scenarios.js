@@ -363,6 +363,96 @@ function main() {
     'Only the actual differing duplicate instance should surface as customization',
   );
 
+  const nonColorPaintTokenDiff = diff.diffStructures(
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: 'ChatBubbleView',
+        type: 'FRAME',
+        name: 'ChatBubbleView',
+        visible: true,
+        radius: null,
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: 'ChatBubbleView / Message Text',
+        type: 'TEXT',
+        name: 'Message Text',
+        visible: true,
+        radius: null,
+        fill: {
+          color: 'rgba(3,3,6,0.88)',
+          token: 'token-typography-float',
+        },
+      },
+    ],
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: 'ChatBubbleView',
+        type: 'FRAME',
+        name: 'ChatBubbleView',
+        visible: true,
+        radius: null,
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: 'ChatBubbleView / Message Text',
+        type: 'TEXT',
+        name: 'Message Text',
+        visible: true,
+        radius: null,
+        styles: {
+          fill: {
+            styleKey: 'S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1',
+          },
+        },
+      },
+    ],
+    {
+      resolveTokenLabel: (token) =>
+        token === 'token-typography-float' ? 'regular_letter_spacing/16' : token,
+      resolveStyleLabel: (styleKey) =>
+        styleKey === 'S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1'
+          ? 'text/primary'
+          : styleKey,
+      isPaintToken: (token) => token !== 'token-typography-float',
+    },
+  );
+
+  assert.equal(
+    nonColorPaintTokenDiff.diffs.some(
+      (diffEntry) =>
+        diffEntry.message === 'Стиль заливка: text/primary → rgba(3,3,6,0.88)',
+    ),
+    true,
+    'Missing paint style binding must reuse the actual paint value inside the style diff',
+  );
+  assert.equal(
+    nonColorPaintTokenDiff.diffs.some(
+      (diffEntry) =>
+        diffEntry.message === 'заливка: text/primary → rgba(3,3,6,0.88)',
+    ),
+    false,
+    'Paint diff must not duplicate the same style-binding loss',
+  );
+  assert.equal(
+    nonColorPaintTokenDiff.diffs.some((diffEntry) =>
+      diffEntry.message.includes('regular_letter_spacing/16'),
+    ),
+    false,
+    'Typography FLOAT variables must never be rendered as paint token diffs',
+  );
+  assert.equal(
+    nonColorPaintTokenDiff.diffs.length,
+    1,
+    'Style-binding loss must surface as a single customization entry',
+  );
+
   const hostNestedOwnerDiff = diff.diffStructures(
     [
       {

@@ -28,6 +28,12 @@ type DiffResult = {
   issues: string[];
 };
 
+type PaintValueDescription = {
+  kind: 'token' | 'style' | 'color';
+  id: string | null;
+  text: string;
+};
+
 function formatRawColor(value: string): string {
   const compact = value.replace(/\s+/g, '');
   const match = compact.match(
@@ -64,6 +70,7 @@ export function diffStructures(
     strict?: boolean;
     resolveTokenLabel?: (token: string) => string | null;
     resolveStyleLabel?: (styleKey: string) => string | null;
+    isPaintToken?: (token: string) => boolean;
   },
 ): DiffResult {
   const diffs: DiffEntry[] = [];
@@ -81,6 +88,7 @@ export function diffStructures(
   const strict = options?.strict ?? false;
   const resolveTokenLabel = options?.resolveTokenLabel;
   const resolveStyleLabel = options?.resolveStyleLabel;
+  const isPaintToken = options?.isPaintToken;
 
   for (const [path, ref] of referenceMap.entries()) {
     const node = actualMap.get(path);
@@ -96,6 +104,7 @@ export function diffStructures(
       actualVisibleChildCount,
       resolveTokenLabel,
       resolveStyleLabel,
+      isPaintToken,
     );
   }
 
@@ -233,6 +242,7 @@ function compareNode(
   actualVisibleChildCount: Map<number, number>,
   resolveTokenLabel?: (token: string) => string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
+  isPaintToken?: (token: string) => boolean,
 ) {
   const actualLayout = actual.layout ?? {};
   const referenceLayout = reference.layout ?? {};
@@ -309,7 +319,7 @@ function compareNode(
     }
   }
 
-  compareStyle(
+  const hasFillStyleDiff = compareStyle(
     'заливка',
     path,
     actual,
@@ -318,9 +328,12 @@ function compareNode(
     reference.styles?.fill?.styleKey,
     diffs,
     resolveStyleLabel,
+    resolveTokenLabel,
+    isPaintToken,
+    actual.fill,
   );
 
-  compareStyle(
+  const hasStrokeStyleDiff = compareStyle(
     'обводка',
     path,
     actual,
@@ -329,6 +342,9 @@ function compareNode(
     reference.styles?.stroke?.styleKey,
     diffs,
     resolveStyleLabel,
+    resolveTokenLabel,
+    isPaintToken,
+    actual.stroke,
   );
 
   compareStyle(
@@ -353,9 +369,11 @@ function compareNode(
     issueSet,
     strict,
     resolveTokenLabel,
+    isPaintToken,
     actual.styles?.fill?.styleKey,
     reference.styles?.fill?.styleKey,
     resolveStyleLabel,
+    hasFillStyleDiff,
   );
 
   compareStroke(
@@ -368,9 +386,11 @@ function compareNode(
     issueSet,
     strict,
     resolveTokenLabel,
+    isPaintToken,
     actual.styles?.stroke?.styleKey,
     reference.styles?.stroke?.styleKey,
     resolveStyleLabel,
+    hasStrokeStyleDiff,
   );
 
   compareRadius(
@@ -523,10 +543,13 @@ function compareStyle(
   reference: string | undefined,
   diffs: DiffEntry[],
   resolveStyleLabel?: (styleKey: string) => string | null,
-) {
-  if (reference === undefined) return;
+  resolveTokenLabel?: (token: string) => string | null,
+  isPaintToken?: (token: string) => boolean,
+  actualPaint?: { color?: string | null; token?: string | null } | null,
+): boolean {
+  if (reference === undefined) return false;
 
-  if ((actual ?? null) === (reference ?? null)) return;
+  if ((actual ?? null) === (reference ?? null)) return false;
 
   const formatStyle = (styleKey: string | null | undefined) => {
     if (!styleKey) return '—';
@@ -534,13 +557,27 @@ function compareStyle(
   };
 
   const formattedReference = formatStyle(reference);
-  const formattedActual = formatStyle(actual);
+  let formattedActual = formatStyle(actual);
+
+  if ((label === 'заливка' || label === 'обводка') && !actual) {
+    const fallbackActual = describePaintValue(
+      actualPaint,
+      normalizePaintToken(actualPaint?.token ?? null, isPaintToken),
+      null,
+      resolveTokenLabel,
+      resolveStyleLabel,
+    );
+
+    if (fallbackActual?.text) {
+      formattedActual = fallbackActual.text;
+    }
+  }
 
   // Different raw style ids can resolve to the same DS typography label.
   // In that case the user-facing style is effectively unchanged and should
   // not create a customization entry.
   if (formattedReference === formattedActual) {
-    return;
+    return false;
   }
 
   pushDiff(
@@ -551,15 +588,18 @@ function compareStyle(
     `Стиль ${label}: ${formattedReference} → ${formattedActual}`,
     label === 'текст' ? 'text-style' : 'paint',
   );
+
+  return true;
 }
 
 function describePaintValue(
   paint: { color?: string | null; token?: string | null } | null | undefined,
+  normalizedTokenId: string | null,
   styleKey: string | null | undefined,
   resolveTokenLabel?: (token: string) => string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
-): { kind: 'token' | 'style' | 'color'; id: string | null; text: string } | null {
-  const tokenId = paint?.token ?? null;
+): PaintValueDescription | null {
+  const tokenId = normalizedTokenId;
   if (tokenId) {
     return {
       kind: 'token',
@@ -599,14 +639,24 @@ function comparePaint(
   issueSet: Set<string>,
   strict: boolean,
   resolveTokenLabel?: (token: string) => string | null,
+  isPaintToken?: (token: string) => boolean,
   actualStyleKey?: string | null,
   referenceStyleKey?: string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
+  skipBecauseStyleDiff = false,
 ) {
   if (!reference && !referenceStyleKey) return;
+  if (skipBecauseStyleDiff) return;
+
+  const normalizedActualToken = normalizePaintToken(actual?.token ?? null, isPaintToken);
+  const normalizedReferenceToken = normalizePaintToken(
+    reference?.token ?? null,
+    isPaintToken,
+  );
 
   const referenceValue = describePaintValue(
     reference,
+    normalizedReferenceToken,
     referenceStyleKey,
     resolveTokenLabel,
     resolveStyleLabel,
@@ -616,6 +666,7 @@ function comparePaint(
 
   const actualValue = describePaintValue(
     actual,
+    normalizedActualToken,
     actualStyleKey,
     resolveTokenLabel,
     resolveStyleLabel,
@@ -629,8 +680,8 @@ function comparePaint(
     return;
   }
 
-  const actualToken = actual?.token ?? null;
-  const referenceToken = reference.token ?? null;
+  const actualToken = normalizedActualToken;
+  const referenceToken = normalizedReferenceToken;
   const normalizedActualStyleKey = actualStyleKey ?? null;
   const normalizedReferenceStyleKey = referenceStyleKey ?? null;
 
@@ -677,14 +728,17 @@ function compareStroke(
   issueSet: Set<string>,
   strict: boolean,
   resolveTokenLabel?: (token: string) => string | null,
+  isPaintToken?: (token: string) => boolean,
   actualStyleKey?: string | null,
   referenceStyleKey?: string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
+  skipPaintDiff = false,
 ) {
   if (!reference) {
     const actualWeight = actual?.weight ?? null;
     const actualValue = describePaintValue(
       actual,
+      normalizePaintToken(actual?.token ?? null, isPaintToken),
       actualStyleKey,
       resolveTokenLabel,
       resolveStyleLabel,
@@ -699,21 +753,24 @@ function compareStroke(
     return;
   }
 
-  comparePaint(
-    'обводка',
-    path,
-    actualNode,
-    referenceNode,
-    actual,
-    reference,
-    diffs,
-    issueSet,
-    strict,
-    resolveTokenLabel,
-    actualStyleKey,
-    referenceStyleKey,
-    resolveStyleLabel,
-  );
+  if (!skipPaintDiff) {
+    comparePaint(
+      'обводка',
+      path,
+      actualNode,
+      referenceNode,
+      actual,
+      reference,
+      diffs,
+      issueSet,
+      strict,
+      resolveTokenLabel,
+      isPaintToken,
+      actualStyleKey,
+      referenceStyleKey,
+      resolveStyleLabel,
+    );
+  }
   
   if (reference.weight !== undefined && reference.weight !== null) {
     const actualWeight =
@@ -737,6 +794,21 @@ function compareStroke(
       );
     }
   }
+}
+
+function normalizePaintToken(
+  token: string | null | undefined,
+  isPaintToken?: (token: string) => boolean,
+): string | null {
+  if (!token) {
+    return null;
+  }
+
+  if (typeof isPaintToken === 'function' && !isPaintToken(token)) {
+    return null;
+  }
+
+  return token;
 }
 
 function compareRadius(

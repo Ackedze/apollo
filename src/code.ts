@@ -141,8 +141,13 @@ class AuditCancelledError extends Error {
   }
 }
 
-let tokenLabelMap: Map<string, { label: string; library?: string }> | null =
-  null;
+type TokenLabelEntry = {
+  label: string;
+  library?: string;
+  resolvedType?: string;
+};
+
+let tokenLabelMap: Map<string, TokenLabelEntry> | null = null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
 let styleLabelMap: Map<string, { label: string; library?: string }> | null =
   null;
@@ -565,6 +570,7 @@ async function classifyNode(
           strict: STRICT_COMPARISON,
           resolveTokenLabel: resolveTokenLabelForDiff,
           resolveStyleLabel: resolveStyleLabelForDiff,
+          isPaintToken: isColorTokenForPaintDiff,
         })
       : { diffs: [], issues: [] };
   if (diffResult.issues.length) {
@@ -2007,7 +2013,7 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
     try {
       await ensureReferenceCatalogsLoaded();
       const catalogs = getTokenCatalogs();
-      const map = new Map<string, { label: string; library?: string }>();
+      const map = new Map<string, TokenLabelEntry>();
       for (const catalog of catalogs) {
         const catalogLibrary =
           catalog.meta?.library ?? catalog.meta?.fileName ?? '';
@@ -2026,6 +2032,10 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
             map.set(variable.key, {
               label,
               library: collectionName || catalogLibrary,
+              resolvedType:
+                typeof variable.resolvedType === 'string'
+                  ? variable.resolvedType
+                  : undefined,
             });
           }
         }
@@ -2122,6 +2132,20 @@ function resolveTokenLabelForDiff(token: string): string | null {
   if (!aliasKey) return token;
   const label = tokenLabelMap?.get(aliasKey);
   return label?.label ?? token;
+}
+
+function isColorTokenForPaintDiff(token: string): boolean {
+  const aliasKey = extractAliasKey(token);
+  if (!aliasKey) {
+    return true;
+  }
+
+  const tokenEntry = tokenLabelMap?.get(aliasKey);
+  if (!tokenEntry?.resolvedType) {
+    return true;
+  }
+
+  return tokenEntry.resolvedType === 'COLOR';
 }
 
 function resolveStyleLabelForDiff(styleKey: string): string | null {

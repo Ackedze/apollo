@@ -57,7 +57,7 @@ const common = {
   outdir: 'dist',
   format: 'iife',
   platform: 'browser',
-  sourcemap: true,
+  sourcemap: isWatch ? 'inline' : false,
   target: ['es2019'],
   loader: {
     '.json': 'json',

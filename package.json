@@ -8,6 +8,7 @@
     "test:customization-filters": "node scripts/test-customization-filters.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
     "test:nested-variants": "node scripts/test-nested-variant-scenarios.js",
+    "test:audit-view-builder": "node scripts/test-audit-view-builder.js",
     "test:variant-structure-paths": "node scripts/test-variant-structure-paths.js",
     "test:snapshot-tree": "node scripts/test-snapshot-tree.js",
     "report:nested-overrides": "node scripts/report-nested-overrides.js"

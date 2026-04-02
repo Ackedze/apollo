@@ -712,6 +712,14 @@
     {
       "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json",
       "path": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json"
+    },
+    {
+      "fileName": "styles/020 _ Colors BlueTint Light.json",
+      "path": "styles/020 _ Colors BlueTint Light.json"
+    },
+    {
+      "fileName": "styles/022 _ Colors BlueTint Static.json",
+      "path": "styles/022 _ Colors BlueTint Static.json"
     }
   ]
 }

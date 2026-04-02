@@ -645,7 +645,27 @@ function comparePaint(
   resolveStyleLabel?: (styleKey: string) => string | null,
   skipBecauseStyleDiff = false,
 ) {
-  if (!reference && !referenceStyleKey) return;
+  if (!reference && !referenceStyleKey) {
+    const actualValue = describePaintValue(
+      actual,
+      normalizePaintToken(actual?.token ?? null, isPaintToken),
+      actualStyleKey,
+      resolveTokenLabel,
+      resolveStyleLabel,
+    );
+
+    if (actualValue) {
+      pushDiff(
+        diffs,
+        actualNode,
+        referenceNode,
+        path,
+        `${label}: — → ${actualValue.text}`,
+        label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
+      );
+    }
+    return;
+  }
   if (skipBecauseStyleDiff) return;
 
   const normalizedActualToken = normalizePaintToken(actual?.token ?? null, isPaintToken);

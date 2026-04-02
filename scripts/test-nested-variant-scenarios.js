@@ -453,6 +453,48 @@ function main() {
     'Style-binding loss must surface as a single customization entry',
   );
 
+  const addedFillWithoutReferenceDiff = diff.diffStructures(
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: 'Position=Level 1 (outer)',
+        type: 'INSTANCE',
+        name: 'Position=Level 1 (outer)',
+        visible: true,
+        radius: null,
+        fill: {
+          color: 'rgba(255,0,0,1)',
+        },
+      },
+    ],
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: 'Position=Level 1 (outer)',
+        type: 'COMPONENT',
+        name: 'Position=Level 1 (outer)',
+        visible: true,
+        radius: null,
+      },
+    ],
+    {
+      strict: true,
+    },
+  );
+
+  assert.equal(
+    addedFillWithoutReferenceDiff.diffs.length,
+    1,
+    'Added fill on a node without reference fill must still be treated as customization',
+  );
+  assert.equal(
+    addedFillWithoutReferenceDiff.diffs[0].message,
+    'заливка: — → #FF0000',
+    'Added fill must be rendered as a paint addition diff',
+  );
+
   const hostNestedOwnerDiff = diff.diffStructures(
     [
       {

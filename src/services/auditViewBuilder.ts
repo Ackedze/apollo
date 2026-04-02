@@ -138,14 +138,16 @@ function prepareChangeDiffs(
 }
 
 /**
- * Определяет список инстансов, у которых остаются meaningful diff-ы;
+ * Определяет список компонентных узлов, у которых остаются meaningful diff-ы;
  * принимает флаг visibleOnly для синхронизации с UI-фильтром.
  */
 export function computeChangesResults(
   items: AuditItem[],
 ): AuditItem[] {
-  const instanceItems = items.filter((item) => item.nodeType === 'INSTANCE');
-  return instanceItems.filter((item) => {
+  const componentItems = items.filter(
+    (item) => item.nodeType === 'INSTANCE' || item.nodeType === 'COMPONENT',
+  );
+  return componentItems.filter((item) => {
     if (!isEntryVisible(item)) {
       return false;
     }

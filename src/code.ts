@@ -39,7 +39,9 @@ import {
 } from './services/deprecatedStyleAudit';
 import {
   ensureStyleMetadataLoaded,
+  extractStyleKey,
   isKnownStyleId,
+  normalizeStyleId,
   resolveStyleLabelForDiff,
   resolveStyleMetadata,
 } from './services/styleMetadata';

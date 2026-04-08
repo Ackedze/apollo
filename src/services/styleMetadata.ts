@@ -166,7 +166,7 @@ function stripStyleSuffix(value: string): string {
   return value.slice(0, index).trim();
 }
 
-function normalizeStyleId(
+export function normalizeStyleId(
   styleId: string | null | undefined,
 ): string | null {
   if (!styleId || typeof styleId !== 'string' || styleId === figma.mixed) {
@@ -175,7 +175,7 @@ function normalizeStyleId(
   return styleId.trim() || null;
 }
 
-function extractStyleKey(styleId: string): string | null {
+export function extractStyleKey(styleId: string): string | null {
   if (styleMetadataMap?.has(styleId)) {
     return styleId;
   }

@@ -11,6 +11,11 @@ export const tabDefinitions: TabDefinition[] = [
     ignoreComponentFilter: true,
   },
   {
+    id: 'update',
+    title: 'Пора обновить',
+    emptyMessage: 'Все компоненты обновлены',
+  },
+  {
     id: 'changes',
     title: 'Кастомизации',
     emptyMessage: 'Кастомизации не найдены',
@@ -18,19 +23,14 @@ export const tabDefinitions: TabDefinition[] = [
     ignoreComponentFilter: true,
   },
   {
-    id: 'deprecated',
-    title: 'Устаревшие',
-    emptyMessage: 'Устаревшие компоненты не найдены',
-  },
-  {
-    id: 'update',
-    title: 'Пора обновить',
-    emptyMessage: 'Все компоненты обновлены',
-  },
-  {
     id: 'themization',
     title: 'Темизация',
     emptyMessage: 'Проблем темизации не обнаружено',
+  },
+  {
+    id: 'deprecated',
+    title: 'Устаревшие',
+    emptyMessage: 'Устаревшие компоненты не найдены',
   },
   {
     id: 'presets',

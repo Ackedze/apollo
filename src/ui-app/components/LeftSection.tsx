@@ -41,12 +41,12 @@ export function LeftSection({
 type LeftSectionItem = ChromeTabItem | '__divider_after_customStyles__' | '__divider_after_detached__';
 
 const LEFT_SECTION_ORDER: Array<ChromeTabItem['id'] | LeftSectionItem> = [
-  'deprecated',
-  'update',
   'themization',
+  'deprecated',
   'deprecatedStyles',
   'customStyles',
   '__divider_after_customStyles__',
+  'update',
   'changes',
   'local',
   'detached',

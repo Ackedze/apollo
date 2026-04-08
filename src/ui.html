@@ -243,12 +243,12 @@
         let chromeBridgeMounted = false;
         let resultsBridgeMounted = false;
         const leftSectionOrder = [
-          'deprecated',
-          'update',
           'themization',
+          'deprecated',
           'deprecatedStyles',
           'customStyles',
           '__divider_after_customStyles__',
+          'update',
           'changes',
           'local',
           'detached',
@@ -1278,7 +1278,6 @@
 
           if (
             tabId === 'deprecated' ||
-            tabId === 'update' ||
             tabId === 'themization' ||
             tabId === 'deprecatedStyles' ||
             tabId === 'customStyles'
@@ -1287,6 +1286,7 @@
           }
 
           if (
+            tabId === 'update' ||
             tabId === 'changes' ||
             tabId === 'local' ||
             tabId === 'detached'

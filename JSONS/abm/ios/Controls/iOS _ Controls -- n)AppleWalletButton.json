@@ -1,0 +1,479 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Controls",
+    "file": "iOS :: Controls",
+    "generatedAt": "2026-04-16T07:59:40.037Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)AppleWalletButton"
+    ],
+    "componentCount": 1,
+    "elementCount": 4
+  },
+  "components": [
+    {
+      "key": "bbc4340ed5d0c627ce2be3c3e5f31da4ca5777ef",
+      "name": "(n)AppleWalletButton",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "n)AppleWalletButton",
+      "defaultVariant": "d86faf1ec426c9bb40d45998e6357a64a05d5226",
+      "variantStructures": {
+        "d86faf1ec426c9bb40d45998e6357a64a05d5226": [],
+        "245b1f2b560223130b87bd82e1e0f82bfe3c2b38": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Type=Two-line button, Size=Large",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 8,
+                  "bottom": 2,
+                  "left": 12
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Type=Two-line button, Size=Large / .Button / TextView",
+              "type": "FRAME",
+              "name": "TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Type=Two-line button, Size=Large / .Button / TextView / Добавить",
+              "type": "TEXT",
+              "name": "Добавить",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Добавить",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 12,
+                "lineHeight": 18,
+                "letterSpacing": -0.07800000160932541,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 12
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 4,
+              "path": "Type=Two-line button, Size=Large / .Button / TextView / в Apple Wallet",
+              "type": "TEXT",
+              "name": "в Apple Wallet",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "в Apple Wallet",
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 15,
+                "lineHeight": 18,
+                "letterSpacing": -0.07800000160932541,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Regular",
+                "fontSize": 15
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 4
+          }
+        ],
+        "f091cc2d7b52a65a575e11e3d183ff9ae29275a2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Type=Button, Size=Medium",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 2,
+                  "right": 8,
+                  "bottom": 2,
+                  "left": 8
+                },
+                "itemSpacing": 8
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "radius": 3
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:8559f3427b0ebfda98879cfe9e4f8dd6f60b890a,2485:3"
+                },
+                "text": {
+                  "styleKey": "S:bb1fd99c32d057714f49f10ac28701cf43021d0e,1234:26"
+                }
+              },
+              "text": {
+                "characters": "Добавить в Apple Wallet",
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 15,
+                "lineHeight": 20,
+                "letterSpacing": -0.23999999463558197,
+                "paragraphSpacing": 0
+              },
+              "typography": {
+                "fontName": "SF Pro Text Semibold",
+                "fontSize": 15
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=One-line button, Size=Large",
+          "type": "COMPONENT",
+          "name": "Type=One-line button, Size=Large",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 11.5,
+              "right": 23,
+              "bottom": 11.5,
+              "left": 23
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=One-line button, Size=Large / .Button",
+          "type": "FRAME",
+          "name": ".Button",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 8,
+              "bottom": 2,
+              "left": 8
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 12
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Type=One-line button, Size=Large / .Button / Icon",
+          "type": "RECTANGLE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "Type=One-line button, Size=Large / .Button / Добавить в Apple Wallet",
+          "type": "TEXT",
+          "name": "Добавить в Apple Wallet",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8559f3427b0ebfda98879cfe9e4f8dd6f60b890a,2485:3"
+            },
+            "text": {
+              "styleKey": "S:a3e18a943fc5ed951e706510eab9600c501e2ce5,1234:25"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Добавить в Apple Wallet",
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": -0.40799999237060547,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 17
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "5007:191854",
+          "key": "d86faf1ec426c9bb40d45998e6357a64a05d5226",
+          "name": "Type=One-line button, Size=Large"
+        },
+        {
+          "id": "5007:191858",
+          "key": "245b1f2b560223130b87bd82e1e0f82bfe3c2b38",
+          "name": "Type=Two-line button, Size=Large"
+        },
+        {
+          "id": "5007:191864",
+          "key": "f091cc2d7b52a65a575e11e3d183ff9ae29275a2",
+          "name": "Type=Button, Size=Medium"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)AppleWalletButton / Type=One-line button, Size=Large",
+      "type": "COMPONENT",
+      "componentKey": "bbc4340ed5d0c627ce2be3c3e5f31da4ca5777ef",
+      "visible": true,
+      "layout": {
+        "padding": [
+          11.5,
+          23,
+          11.5,
+          23
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)AppleWalletButton / Type=One-line button, Size=Large / .Button",
+      "type": "FRAME",
+      "componentKey": "bbc4340ed5d0c627ce2be3c3e5f31da4ca5777ef",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 10,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "(n)AppleWalletButton / Type=One-line button, Size=Large / .Button / Icon",
+      "type": "RECTANGLE",
+      "componentKey": "bbc4340ed5d0c627ce2be3c3e5f31da4ca5777ef",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "(n)AppleWalletButton / Type=One-line button, Size=Large / .Button / Добавить в Apple Wallet",
+      "type": "TEXT",
+      "componentKey": "bbc4340ed5d0c627ce2be3c3e5f31da4ca5777ef",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8559f3427b0ebfda98879cfe9e4f8dd6f60b890a,2485:3",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "Добавить в Apple Wallet"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547,
+        "styleKey": "S:a3e18a943fc5ed951e706510eab9600c501e2ce5,1234:25"
+      }
+    }
+  ]
+}

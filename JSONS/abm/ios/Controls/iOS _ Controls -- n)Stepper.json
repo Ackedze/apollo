@@ -1,0 +1,370 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Controls",
+    "file": "iOS :: Controls",
+    "generatedAt": "2026-04-16T08:02:17.207Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)Stepper"
+    ],
+    "componentCount": 1,
+    "elementCount": 8
+  },
+  "components": [
+    {
+      "key": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "name": "(n)Stepper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "n)Stepper",
+      "defaultVariant": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "variantStructures": {
+        "fe48b76ae5014edf9f7804c5986a1c089218db3a": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "(n)Stepper",
+          "type": "COMPONENT",
+          "name": "(n)Stepper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 5,
+              "bottom": 8,
+              "left": 5
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "(n)Stepper / Main Body",
+          "type": "FRAME",
+          "name": "Main Body",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:faf1ecb692eb6f46ae6572ef3d8571a97c5159ac,4180:17"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 5,
+              "bottom": 0,
+              "left": 5
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 7.920000076293945,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 237,
+                "g": 237,
+                "b": 237,
+                "a": 0.8
+              },
+              "visible": true,
+              "opacity": 0.800000011920929,
+              "tokenKey": null,
+              "colorHex": "#EDEDED"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "(n)Stepper / Main Body / Main Body",
+          "type": "FRAME",
+          "name": "Main Body",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "(n)Stepper / Main Body / Main Body / remove",
+          "type": "FRAME",
+          "name": "remove",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "(n)Stepper / Main Body / Main Body / remove / -",
+          "type": "VECTOR",
+          "name": "-",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "parentId": 3,
+          "path": "(n)Stepper / Main Body / Main Body / Separator",
+          "type": "RECTANGLE",
+          "name": "Separator",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:13577bac430a888b169b0d8b642d1dd29967d0ca,4190:55"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0.5,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 199,
+                "g": 199,
+                "b": 204,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#C7C7CC"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "parentId": 3,
+          "path": "(n)Stepper / Main Body / Main Body / add",
+          "type": "FRAME",
+          "name": "add",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "(n)Stepper / Main Body / Main Body / add / +",
+          "type": "VECTOR",
+          "name": "+",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "5007:191872",
+          "key": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+          "name": "(n)Stepper"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)Stepper",
+      "type": "COMPONENT",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          5,
+          8,
+          5
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)Stepper / Main Body",
+      "type": "FRAME",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          5,
+          0,
+          5
+        ],
+        "gap": 10,
+        "radius": 7.920000076293945
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:faf1ecb692eb6f46ae6572ef3d8571a97c5159ac,4180:17",
+        "color": "rgba(237,237,237,0.8)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "(n)Stepper / Main Body / Main Body",
+      "type": "FRAME",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "(n)Stepper / Main Body / Main Body / remove",
+      "type": "FRAME",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "(n)Stepper / Main Body / Main Body / remove / -",
+      "type": "VECTOR",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "(n)Stepper / Main Body / Main Body / Separator",
+      "type": "RECTANGLE",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0.5
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:13577bac430a888b169b0d8b642d1dd29967d0ca,4190:55",
+        "color": "rgba(199,199,204,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "(n)Stepper / Main Body / Main Body / add",
+      "type": "FRAME",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "(n)Stepper / Main Body / Main Body / add / +",
+      "type": "VECTOR",
+      "componentKey": "fe48b76ae5014edf9f7804c5986a1c089218db3a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

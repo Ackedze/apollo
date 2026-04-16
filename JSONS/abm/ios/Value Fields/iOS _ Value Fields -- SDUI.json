@@ -1,0 +1,472 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Value Fields",
+    "file": "iOS :: Value Fields",
+    "generatedAt": "2026-04-16T07:55:47.585Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "SDUI"
+    ],
+    "componentCount": 2,
+    "elementCount": 7
+  },
+  "components": [
+    {
+      "key": "02ce1cf9da78096fe8448767944c50871c644331",
+      "name": "❌ SDUI (🍏12.22)",
+      "status": "deprecated",
+      "role": "main",
+      "platform": "universal",
+      "category": "SDUI (🍏12.22)",
+      "defaultVariant": "02ce1cf9da78096fe8448767944c50871c644331",
+      "variantStructures": {
+        "02ce1cf9da78096fe8448767944c50871c644331": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "❌ SDUI (🍏12.22)",
+          "type": "COMPONENT",
+          "name": "❌ SDUI (🍏12.22)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "❌ SDUI (🍏12.22) / LayoutElement",
+          "type": "INSTANCE",
+          "name": "LayoutElement",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "componentInstance": {
+            "componentKey": "45ac0874b44b0017bc1fd63b5acdcbd58a2b527b",
+            "variantProperties": {
+              "Style": "rectangle: s 24"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "❌ SDUI (🍏12.22) / LayoutElement / DummyContentGroup",
+          "type": "FRAME",
+          "name": "DummyContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        }
+      ],
+      "variants": [
+        {
+          "id": "98867:302027",
+          "key": "02ce1cf9da78096fe8448767944c50871c644331",
+          "name": "❌ SDUI (🍏12.22)"
+        }
+      ]
+    },
+    {
+      "key": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "name": "SDUI (🍏12.22)",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "SDUI (🍏12.22)",
+      "defaultVariant": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "variantStructures": {
+        "1883f2560044ee85763df9de20eb020f952d9d11": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "SDUI (🍏12.22)",
+          "type": "COMPONENT",
+          "name": "SDUI (🍏12.22)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "SDUI (🍏12.22) / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "SDUI (🍏12.22) / 🎨 ContentGroup / LayoutElement",
+          "type": "INSTANCE",
+          "name": "LayoutElement",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "2a5b4e7aa1d2c2fa3300e7482a56edd083a0ceb9"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "SDUI (🍏12.22) / 🎨 ContentGroup / LayoutElement / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "136292:10253",
+          "key": "1883f2560044ee85763df9de20eb020f952d9d11",
+          "name": "SDUI (🍏12.22)"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "❌ SDUI (🍏12.22)",
+      "type": "COMPONENT",
+      "componentKey": "02ce1cf9da78096fe8448767944c50871c644331",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "❌ SDUI (🍏12.22) / LayoutElement",
+      "type": "INSTANCE",
+      "componentKey": "02ce1cf9da78096fe8448767944c50871c644331",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "❌ SDUI (🍏12.22) / LayoutElement / DummyContentGroup",
+      "type": "FRAME",
+      "componentKey": "02ce1cf9da78096fe8448767944c50871c644331",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "SDUI (🍏12.22)",
+      "type": "COMPONENT",
+      "componentKey": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/41:1"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "SDUI (🍏12.22) / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "SDUI (🍏12.22) / 🎨 ContentGroup / LayoutElement",
+      "type": "INSTANCE",
+      "componentKey": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "SDUI (🍏12.22) / 🎨 ContentGroup / LayoutElement / ⊕",
+      "type": "TEXT",
+      "componentKey": "1883f2560044ee85763df9de20eb020f952d9d11",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    }
+  ]
+}

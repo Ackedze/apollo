@@ -1,0 +1,389 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Controls",
+    "file": "iOS :: Controls",
+    "generatedAt": "2026-04-16T07:59:37.568Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)ApplePayButton"
+    ],
+    "componentCount": 1,
+    "elementCount": 3
+  },
+  "components": [
+    {
+      "key": "0fcecb2ef1c26e4994f8e1f1a5a0f12767b60580",
+      "name": "(n)ApplePayButton",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Нативная кнопка ApplePay",
+      "category": "n)ApplePayButton",
+      "defaultVariant": "36f3595109d359aa40ed563c5cff9426560ed756",
+      "variantStructures": {
+        "36f3595109d359aa40ed563c5cff9426560ed756": [],
+        "39677706596e40702d401b176f25dc6e5986b0d7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Outlined",
+              "styles": {
+                "stroke": {
+                  "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+                }
+              },
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ]
+            }
+          }
+        ],
+        "426ab14d6d0be635b4227d6bf53a0f41b817d993": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "View=Text"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#000000"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "View=Solid",
+          "type": "COMPONENT",
+          "name": "View=Solid",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 6
+          },
+          "opacity": 1,
+          "radius": 6,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "View=Solid / _title",
+          "type": "TEXT",
+          "name": "_title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Ваш заголовок",
+            "fontName": "SF Pro Display Semibold",
+            "fontSize": 20,
+            "lineHeight": 24,
+            "letterSpacing": 0.3799999952316284,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Display Semibold",
+            "fontSize": 20
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "View=Solid / ApplePay Symbol",
+          "type": "TEXT",
+          "name": "ApplePay Symbol",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Pay",
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 23,
+            "lineHeight": "AUTO(undefined)",
+            "letterSpacing": -1.223181962966919,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 23
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "5007:191842",
+          "key": "36f3595109d359aa40ed563c5cff9426560ed756",
+          "name": "View=Solid"
+        },
+        {
+          "id": "5007:191845",
+          "key": "39677706596e40702d401b176f25dc6e5986b0d7",
+          "name": "View=Outlined"
+        },
+        {
+          "id": "5007:191848",
+          "key": "426ab14d6d0be635b4227d6bf53a0f41b817d993",
+          "name": "View=Text"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)ApplePayButton / View=Solid",
+      "type": "COMPONENT",
+      "componentKey": "0fcecb2ef1c26e4994f8e1f1a5a0f12767b60580",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 6,
+        "radius": 6
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:03d7c2e9ada5d30540d778b0606a9b9ec44a8982,4195:153",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)ApplePayButton / View=Solid / _title",
+      "type": "TEXT",
+      "componentKey": "0fcecb2ef1c26e4994f8e1f1a5a0f12767b60580",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "Ваш заголовок"
+      },
+      "typography": {
+        "family": "SF Pro Display",
+        "weight": "Semibold",
+        "size": 20,
+        "lineHeight": 24,
+        "letterSpacing": 0.3799999952316284
+      }
+    },
+    {
+      "id": 3,
+      "path": "(n)ApplePayButton / View=Solid / ApplePay Symbol",
+      "type": "TEXT",
+      "componentKey": "0fcecb2ef1c26e4994f8e1f1a5a0f12767b60580",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "Pay"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 23,
+        "lineHeight": "AUTO(undefined)",
+        "letterSpacing": -1.223181962966919
+      }
+    }
+  ]
+}

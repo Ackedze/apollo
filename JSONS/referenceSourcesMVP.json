@@ -2,550 +2,6 @@
   "baseUrl": "https://ackedze.github.io/apollo/JSONS/",
   "catalogs": [
     {
-      "fileName": "components/web-core/core/Web _ Core -- ActionButton.json",
-      "path": "components/web-core/core/Web _ Core -- ActionButton.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Amount.json",
-      "path": "components/web-core/core/Web _ Core -- Amount.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- AmountInput.json",
-      "path": "components/web-core/core/Web _ Core -- AmountInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- BottomSheet.json",
-      "path": "components/web-core/core/Web _ Core -- BottomSheet.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Button.json",
-      "path": "components/web-core/core/Web _ Core -- Button.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Checkbox.json",
-      "path": "components/web-core/core/Web _ Core -- Checkbox.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- CheckboxGroup.json",
-      "path": "components/web-core/core/Web _ Core -- CheckboxGroup.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- CodeInput.json",
-      "path": "components/web-core/core/Web _ Core -- CodeInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- CustomButton.json",
-      "path": "components/web-core/core/Web _ Core -- CustomButton.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Divider.json",
-      "path": "components/web-core/core/Web _ Core -- Divider.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- FilterButton.json",
-      "path": "components/web-core/core/Web _ Core -- FilterButton.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- FilterTag.json",
-      "path": "components/web-core/core/Web _ Core -- FilterTag.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- IconButton.json",
-      "path": "components/web-core/core/Web _ Core -- IconButton.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- IconView.json",
-      "path": "components/web-core/core/Web _ Core -- IconView.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Indicator.json",
-      "path": "components/web-core/core/Web _ Core -- Indicator.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Input.json",
-      "path": "components/web-core/core/Web _ Core -- Input.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- InternationalPhoneInput.json",
-      "path": "components/web-core/core/Web _ Core -- InternationalPhoneInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Link.json",
-      "path": "components/web-core/core/Web _ Core -- Link.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- List.json",
-      "path": "components/web-core/core/Web _ Core -- List.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Markdown.json",
-      "path": "components/web-core/core/Web _ Core -- Markdown.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- MasterInput.json",
-      "path": "components/web-core/core/Web _ Core -- MasterInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Modal.json",
-      "path": "components/web-core/core/Web _ Core -- Modal.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- NumberInput.json",
-      "path": "components/web-core/core/Web _ Core -- NumberInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- OptionsList.json",
-      "path": "components/web-core/core/Web _ Core -- OptionsList.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- PopupSheet.json",
-      "path": "components/web-core/core/Web _ Core -- PopupSheet.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- ProductCover.json",
-      "path": "components/web-core/core/Web _ Core -- ProductCover.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Radio.json",
-      "path": "components/web-core/core/Web _ Core -- Radio.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- RadioGroup.json",
-      "path": "components/web-core/core/Web _ Core -- RadioGroup.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- ScrollBar.json",
-      "path": "components/web-core/core/Web _ Core -- ScrollBar.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- SegmentedControl.json",
-      "path": "components/web-core/core/Web _ Core -- SegmentedControl.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Select.json",
-      "path": "components/web-core/core/Web _ Core -- Select.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- SelectWithTags.json",
-      "path": "components/web-core/core/Web _ Core -- SelectWithTags.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- SidePanel.json",
-      "path": "components/web-core/core/Web _ Core -- SidePanel.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Skeleton.json",
-      "path": "components/web-core/core/Web _ Core -- Skeleton.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Slider.json",
-      "path": "components/web-core/core/Web _ Core -- Slider.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- SliderInput.json",
-      "path": "components/web-core/core/Web _ Core -- SliderInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Spinner.json",
-      "path": "components/web-core/core/Web _ Core -- Spinner.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Status.json",
-      "path": "components/web-core/core/Web _ Core -- Status.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- StatusBadge.json",
-      "path": "components/web-core/core/Web _ Core -- StatusBadge.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Switch.json",
-      "path": "components/web-core/core/Web _ Core -- Switch.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Tag.json",
-      "path": "components/web-core/core/Web _ Core -- Tag.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- TagGroup.json",
-      "path": "components/web-core/core/Web _ Core -- TagGroup.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Text.json",
-      "path": "components/web-core/core/Web _ Core -- Text.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- Tooltip.json",
-      "path": "components/web-core/core/Web _ Core -- Tooltip.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- UniversalDateInput.json",
-      "path": "components/web-core/core/Web _ Core -- UniversalDateInput.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- UniversalModal.json",
-      "path": "components/web-core/core/Web _ Core -- UniversalModal.json"
-    },
-    {
-      "fileName": "components/web-core/core/Web _ Core -- WebView.json",
-      "path": "components/web-core/core/Web _ Core -- WebView.json"
-    },
-    {
-      "fileName": "components/web-core/navigation/Web _ Core Navigation -- NavigationBar.json",
-      "path": "components/web-core/navigation/Web _ Core Navigation -- NavigationBar.json"
-    },
-    {
-      "fileName": "components/web-core/navigation/Web _ Core Navigation -- PageIndicator.json",
-      "path": "components/web-core/navigation/Web _ Core Navigation -- PageIndicator.json"
-    },
-    {
-      "fileName": "components/web-core/navigation/Web _ Core Navigation -- Pagination.json",
-      "path": "components/web-core/navigation/Web _ Core Navigation -- Pagination.json"
-    },
-    {
-      "fileName": "components/web-core/navigation/Web _ Core Navigation -- Tabbar.json",
-      "path": "components/web-core/navigation/Web _ Core Navigation -- Tabbar.json"
-    },
-    {
-      "fileName": "components/web-core/navigation/Web _ Core Navigation -- Tabs.json",
-      "path": "components/web-core/navigation/Web _ Core Navigation -- Tabs.json"
-    },
-    {
-      "fileName": "components/web-core/authentication/Web _ Core Authentication -- Confirmation.json",
-      "path": "components/web-core/authentication/Web _ Core Authentication -- Confirmation.json"
-    },
-    {
-      "fileName": "components/web-core/authentication/Web _ Core Authentication -- PassCode.json",
-      "path": "components/web-core/authentication/Web _ Core Authentication -- PassCode.json"
-    },
-    {
-      "fileName": "components/web-core/authentication/Web _ Core Authentication -- PatternLock.json",
-      "path": "components/web-core/authentication/Web _ Core Authentication -- PatternLock.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- Attach.json",
-      "path": "components/web-core/fileupload/Web _ Core File Upload -- Attach.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json",
-      "path": "components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json",
-      "path": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json"
-    },
-    {
-      "fileName": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json",
-      "path": "components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json"
-    },
-    {
-      "fileName": "components/web-core/misc/Web _ Core Misc -- BankCard.json",
-      "path": "components/web-core/misc/Web _ Core Misc -- BankCard.json"
-    },
-    {
-      "fileName": "components/web-core/misc/Web _ Core Misc -- Comment.json",
-      "path": "components/web-core/misc/Web _ Core Misc -- Comment.json"
-    },
-    {
-      "fileName": "components/web-core/misc/Web _ Core Misc -- Gallery.json",
-      "path": "components/web-core/misc/Web _ Core Misc -- Gallery.json"
-    },
-    {
-      "fileName": "components/web-core/misc/Web _ Core Misc -- SortableList.json",
-      "path": "components/web-core/misc/Web _ Core Misc -- SortableList.json"
-    },
-    {
-      "fileName": "components/web-core/misc/Web _ Core Misc -- Steps.json",
-      "path": "components/web-core/misc/Web _ Core Misc -- Steps.json"
-    },
-    {
-      "fileName": "components/web-core/notification/Web _ Core Notification -- Notification.json",
-      "path": "components/web-core/notification/Web _ Core Notification -- Notification.json"
-    },
-    {
-      "fileName": "components/web-core/notification/Web _ Core Notification -- Plate.json",
-      "path": "components/web-core/notification/Web _ Core Notification -- Plate.json"
-    },
-    {
-      "fileName": "components/web-core/notification/Web _ Core Notification -- SystemMessage.json",
-      "path": "components/web-core/notification/Web _ Core Notification -- SystemMessage.json"
-    },
-    {
-      "fileName": "components/web-core/notification/Web _ Core Notification -- Toast.json",
-      "path": "components/web-core/notification/Web _ Core Notification -- Toast.json"
-    },
-    {
-      "fileName": "components/web-core/pickers/Web _ Core Pickers -- Calendar.json",
-      "path": "components/web-core/pickers/Web _ Core Pickers -- Calendar.json"
-    },
-    {
-      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json",
-      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json"
-    },
-    {
-      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json",
-      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json"
-    },
-    {
-      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json",
-      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json"
-    },
-    {
-      "fileName": "components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json",
-      "path": "components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- AccountSelect.json",
-      "path": "components/web-corp/Web _ Corp Components -- AccountSelect.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- AmountStyles.json",
-      "path": "components/web-corp/Web _ Corp Components -- AmountStyles.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- BackgroundPlate.json",
-      "path": "components/web-corp/Web _ Corp Components -- BackgroundPlate.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- BannerWrapperMobile [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- BannerWrapperMobile [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- BodyHeader.json",
-      "path": "components/web-corp/Web _ Corp Components -- BodyHeader.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ButtonGroup [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- ButtonGroup [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ButtonStack [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- ButtonStack [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CardImage.json",
-      "path": "components/web-corp/Web _ Corp Components -- CardImage.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CardSwiperMobile [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- CardSwiperMobile [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ContentCardWrapper.json",
-      "path": "components/web-corp/Web _ Corp Components -- ContentCardWrapper.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CorporateAppHeaderMobile [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- CorporateAppHeaderMobile [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CorporateAppHeaderNew [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- CorporateAppHeaderNew [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CorporatePage.json",
-      "path": "components/web-corp/Web _ Corp Components -- CorporatePage.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CorporateSystemMessage.json",
-      "path": "components/web-corp/Web _ Corp Components -- CorporateSystemMessage.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- CorporateTopbar [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- CorporateTopbar [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- D] FilterCompanySelect_UniversalModal.json",
-      "path": "components/web-corp/Web _ Corp Components -- D] FilterCompanySelect_UniversalModal.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- DataRangePicker [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- DataRangePicker [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- FAQ.json",
-      "path": "components/web-corp/Web _ Corp Components -- FAQ.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- FileUpload.json",
-      "path": "components/web-corp/Web _ Corp Components -- FileUpload.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- FilterCompanySelect.json",
-      "path": "components/web-corp/Web _ Corp Components -- FilterCompanySelect.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- FiltersBlock.json",
-      "path": "components/web-corp/Web _ Corp Components -- FiltersBlock.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Forms.json",
-      "path": "components/web-corp/Web _ Corp Components -- Forms.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- HELPERS.json",
-      "path": "components/web-corp/Web _ Corp Components -- HELPERS.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- HoldingPlate.json",
-      "path": "components/web-corp/Web _ Corp Components -- HoldingPlate.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- LandingPage.json",
-      "path": "components/web-corp/Web _ Corp Components -- LandingPage.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- IsleBlock.json",
-      "path": "components/web-corp/Web _ Corp Components -- IsleBlock.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- NavigationCardView.json",
-      "path": "components/web-corp/Web _ Corp Components -- NavigationCardView.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Neurohelper.json",
-      "path": "components/web-corp/Web _ Corp Components -- Neurohelper.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Onboarding Hint [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- Onboarding Hint [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Onboarding Tooltip [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- Onboarding Tooltip [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Pagination [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- Pagination [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- PaymentControl [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- PaymentControl [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- PaymentMaskedNumber.json",
-      "path": "components/web-corp/Web _ Corp Components -- PaymentMaskedNumber.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ProgressBar.json",
-      "path": "components/web-corp/Web _ Corp Components -- ProgressBar.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ResultScreen.json",
-      "path": "components/web-corp/Web _ Corp Components -- ResultScreen.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- ScenarioModel ! interruption.json",
-      "path": "components/web-corp/Web _ Corp Components -- ScenarioModel ! interruption.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Status & Property.json",
-      "path": "components/web-corp/Web _ Corp Components -- Status & Property.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Subscription.json",
-      "path": "components/web-corp/Web _ Corp Components -- Subscription.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Table _ Wide [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- Table _ Wide [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- TableBulkActions.json",
-      "path": "components/web-corp/Web _ Corp Components -- TableBulkActions.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- TableView.json",
-      "path": "components/web-corp/Web _ Corp Components -- TableView.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Table_ Basic [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- Table_ Basic [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- TabsView.json",
-      "path": "components/web-corp/Web _ Corp Components -- TabsView.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- TitleView.json",
-      "path": "components/web-corp/Web _ Corp Components -- TitleView.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- TitleViewMobile [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- TitleViewMobile [M].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- VOC.json",
-      "path": "components/web-corp/Web _ Corp Components -- VOC.json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- WidgetPlate [D].json",
-      "path": "components/web-corp/Web _ Corp Components -- WidgetPlate [D].json"
-    },
-    {
-      "fileName": "components/web-corp/Web _ Corp Components -- Сhat [M].json",
-      "path": "components/web-corp/Web _ Corp Components -- Сhat [M].json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- BodyHeader.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- BodyHeader.json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- Header.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- Header.json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- Helpbook.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- Helpbook.json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- Neurohelper.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- Neurohelper.json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- ProgressBar.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- ProgressBar.json"
-    },
-    {
-      "fileName": "components/web-corp-presets/Web _ Corp Presets -- Subscription.json",
-      "path": "components/web-corp-presets/Web _ Corp Presets -- Subscription.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitCard.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitCard.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- ContentBlock.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- ContentBlock.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoMainBlock.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoMainBlock.json"
-    },
-    {
-      "fileName": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoTableView.json",
-      "path": "components/web-corp-promo/Web _ Сorp Promo Components -- PromoTableView.json"
-    },
-    {
       "fileName": "icons/Icons -- corp.json",
       "path": "icons/Icons -- corp.json"
     },
@@ -572,10 +28,6 @@
     {
       "fileName": "logotypes/Logotypes -- logo-corp.json",
       "path": "logotypes/Logotypes -- logo-corp.json"
-    },
-    {
-      "fileName": "components/Spacing -- Spacing component.json",
-      "path": "components/Spacing -- Spacing component.json"
     },
     {
       "fileName": "tokens/001 _ Interface Dynamic Colors.json",
@@ -702,24 +154,868 @@
       "path": "images/Сorp _ Image Library -- Продуктовые имиджи.json"
     },
     {
-      "fileName": "abm/iOS _ Sheets -- SexyOverlay.json",
-      "path": "abm/iOS _ Sheets -- SexyOverlay.json"
-    },
-    {
-      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json",
-      "path": "components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json"
-    },
-    {
-      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json",
-      "path": "components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json"
-    },
-    {
-      "fileName": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json",
-      "path": "components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json"
-    },
-    {
       "fileName": "styles/022 _ Colors BlueTint Static.json",
       "path": "styles/022 _ Colors BlueTint Static.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- ActionButton.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- ActionButton.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- AttachmentIconView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- AttachmentIconView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- AttachmentView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- AttachmentView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- ButtonView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- ButtonView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- CalendarView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- CalendarView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- CallendarCollapse.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- CallendarCollapse.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- CardIconView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- CardIconView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- FinancialHistogram.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- FinancialHistogram.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- HelperActionsView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- HelperActionsView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- KeyPadView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- KeyPadView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- NavigationBar.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- NavigationBar.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- PaymentControl (отмечен, как локальный компонент).json",
+      "path": "abm/ios/Controls/iOS _ Controls -- PaymentControl (отмечен, как локальный компонент).json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- RangeSliderView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- RangeSliderView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- RatingView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- RatingView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- ScrollableTabBar.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- ScrollableTabBar.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- SegmentedTextField.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- SegmentedTextField.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- TabBar.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- TabBar.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- TextArea.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- TextArea.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- TextField.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- TextField.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- TransferContent.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- TransferContent.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- TransferSourcesView.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- TransferSourcesView.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)AppleIDButton.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)AppleIDButton.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)ApplePayButton.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)ApplePayButton.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)AppleWalletButton.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)AppleWalletButton.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)SegmentedСontrol.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)SegmentedСontrol.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)Stepper.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)Stepper.json"
+    },
+    {
+      "fileName": "abm/ios/Controls/iOS _ Controls -- n)Toggle.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- n)Toggle.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- ACCOUNT_SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- ACCOUNT_SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- ACHIEVEMENT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- ACHIEVEMENT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- ATTACHMENT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- ATTACHMENT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- ATTACHMENT_V2.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- ATTACHMENT_V2.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- CARD.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- CARD.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- CHECKBOX.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- CHECKBOX.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DATA_VIEW.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DATA_VIEW.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DATE (→ DATA_VIEW).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DATE (→ DATA_VIEW).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DATE_INPUT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DATE_INPUT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DEEPLINK_BUTTON.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DEEPLINK_BUTTON.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DETAILED_AMOUNT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DETAILED_AMOUNT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- DOCUMENT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- DOCUMENT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- EMAIL.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- EMAIL.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- ERROR_RESPONSE (Multistep).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- ERROR_RESPONSE (Multistep).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- FEEDBACK.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- FEEDBACK.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- FOOTER_INFO (Multistep).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- FOOTER_INFO (Multistep).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- GEO_MAP_PREVIEW.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- GEO_MAP_PREVIEW.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- IMAGE.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- IMAGE.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- IMAGE_BASE64.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- IMAGE_BASE64.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- INPUT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- INPUT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- INPUT_MONEY.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- INPUT_MONEY.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- INVOICE_COLORED_STATUS.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- INVOICE_COLORED_STATUS.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- LIST_ITEM.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- LIST_ITEM.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- MAP_VIEW.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- MAP_VIEW.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- MARKDOWN.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- MARKDOWN.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- MULTIPLE_SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- MULTIPLE_SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- NAVIGATION_BAR (Multistep).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- NAVIGATION_BAR (Multistep).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- NOTICE.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- NOTICE.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- PHONE_INPUT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- PHONE_INPUT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- POPUP_STRING.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- POPUP_STRING.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- PROGRESS.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- PROGRESS.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- QR_CODE.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- QR_CODE.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- RADIO_GROUP.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- RADIO_GROUP.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- REPLACE_INPUT_SUGGEST (RIS).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- REPLACE_INPUT_SUGGEST (RIS).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SCHEDULE_SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SCHEDULE_SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_CHECKBOX.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_CHECKBOX.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_MULTIPLE_SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_MULTIPLE_SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SDUI_SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SEGMENTED_INPUT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SEGMENTED_INPUT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SELECT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SELECT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SPACING.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SPACING.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- SWIFT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- SWIFT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- TAB (Multistep).json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- TAB (Multistep).json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- TITLE.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- TITLE.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- TRANSFER_PURPOSE_INPUT.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- TRANSFER_PURPOSE_INPUT.json"
+    },
+    {
+      "fileName": "abm/ios/Value Fields/iOS _ Value Fields -- Шаблоны экранов многошага разного типа 🚧.json",
+      "path": "abm/ios/Value Fields/iOS _ Value Fields -- Шаблоны экранов многошага разного типа 🚧.json"
+    },
+    {
+      "fileName": "abm/ios/iOS _ Sheets -- SexyOverlay.json",
+      "path": "abm/ios/iOS _ Sheets -- SexyOverlay.json"
+    },
+    {
+      "fileName": "web/components/Spacing -- Spacing component.json",
+      "path": "web/components/Spacing -- Spacing component.json"
+    },
+    {
+      "fileName": "web/components/web-core/authentication/Web _ Core Authentication -- Confirmation.json",
+      "path": "web/components/web-core/authentication/Web _ Core Authentication -- Confirmation.json"
+    },
+    {
+      "fileName": "web/components/web-core/authentication/Web _ Core Authentication -- PassCode.json",
+      "path": "web/components/web-core/authentication/Web _ Core Authentication -- PassCode.json"
+    },
+    {
+      "fileName": "web/components/web-core/authentication/Web _ Core Authentication -- PatternLock.json",
+      "path": "web/components/web-core/authentication/Web _ Core Authentication -- PatternLock.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- ActionButton.json",
+      "path": "web/components/web-core/core/Web _ Core -- ActionButton.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Amount.json",
+      "path": "web/components/web-core/core/Web _ Core -- Amount.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- AmountInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- AmountInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- BottomSheet.json",
+      "path": "web/components/web-core/core/Web _ Core -- BottomSheet.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Button.json",
+      "path": "web/components/web-core/core/Web _ Core -- Button.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Checkbox.json",
+      "path": "web/components/web-core/core/Web _ Core -- Checkbox.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- CheckboxGroup.json",
+      "path": "web/components/web-core/core/Web _ Core -- CheckboxGroup.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- CodeInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- CodeInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- CustomButton.json",
+      "path": "web/components/web-core/core/Web _ Core -- CustomButton.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Divider.json",
+      "path": "web/components/web-core/core/Web _ Core -- Divider.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- FilterButton.json",
+      "path": "web/components/web-core/core/Web _ Core -- FilterButton.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- FilterTag.json",
+      "path": "web/components/web-core/core/Web _ Core -- FilterTag.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- IconButton.json",
+      "path": "web/components/web-core/core/Web _ Core -- IconButton.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- IconView.json",
+      "path": "web/components/web-core/core/Web _ Core -- IconView.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Indicator.json",
+      "path": "web/components/web-core/core/Web _ Core -- Indicator.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Input.json",
+      "path": "web/components/web-core/core/Web _ Core -- Input.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- InternationalPhoneInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- InternationalPhoneInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Link.json",
+      "path": "web/components/web-core/core/Web _ Core -- Link.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- List.json",
+      "path": "web/components/web-core/core/Web _ Core -- List.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Markdown.json",
+      "path": "web/components/web-core/core/Web _ Core -- Markdown.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- MasterInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- MasterInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Modal.json",
+      "path": "web/components/web-core/core/Web _ Core -- Modal.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- NumberInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- NumberInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- OptionsList.json",
+      "path": "web/components/web-core/core/Web _ Core -- OptionsList.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- PopupSheet.json",
+      "path": "web/components/web-core/core/Web _ Core -- PopupSheet.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- ProductCover.json",
+      "path": "web/components/web-core/core/Web _ Core -- ProductCover.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Radio.json",
+      "path": "web/components/web-core/core/Web _ Core -- Radio.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- RadioGroup.json",
+      "path": "web/components/web-core/core/Web _ Core -- RadioGroup.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- ScrollBar.json",
+      "path": "web/components/web-core/core/Web _ Core -- ScrollBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- SegmentedControl.json",
+      "path": "web/components/web-core/core/Web _ Core -- SegmentedControl.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Select.json",
+      "path": "web/components/web-core/core/Web _ Core -- Select.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- SelectWithTags.json",
+      "path": "web/components/web-core/core/Web _ Core -- SelectWithTags.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- SidePanel.json",
+      "path": "web/components/web-core/core/Web _ Core -- SidePanel.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Skeleton.json",
+      "path": "web/components/web-core/core/Web _ Core -- Skeleton.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Slider.json",
+      "path": "web/components/web-core/core/Web _ Core -- Slider.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- SliderInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- SliderInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Spinner.json",
+      "path": "web/components/web-core/core/Web _ Core -- Spinner.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Status.json",
+      "path": "web/components/web-core/core/Web _ Core -- Status.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- StatusBadge.json",
+      "path": "web/components/web-core/core/Web _ Core -- StatusBadge.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Switch.json",
+      "path": "web/components/web-core/core/Web _ Core -- Switch.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Tag.json",
+      "path": "web/components/web-core/core/Web _ Core -- Tag.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- TagGroup.json",
+      "path": "web/components/web-core/core/Web _ Core -- TagGroup.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Text.json",
+      "path": "web/components/web-core/core/Web _ Core -- Text.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- Tooltip.json",
+      "path": "web/components/web-core/core/Web _ Core -- Tooltip.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- UniversalDateInput.json",
+      "path": "web/components/web-core/core/Web _ Core -- UniversalDateInput.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- UniversalModal.json",
+      "path": "web/components/web-core/core/Web _ Core -- UniversalModal.json"
+    },
+    {
+      "fileName": "web/components/web-core/core/Web _ Core -- WebView.json",
+      "path": "web/components/web-core/core/Web _ Core -- WebView.json"
+    },
+    {
+      "fileName": "web/components/web-core/fileupload/Web _ Core File Upload -- Attach.json",
+      "path": "web/components/web-core/fileupload/Web _ Core File Upload -- Attach.json"
+    },
+    {
+      "fileName": "web/components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json",
+      "path": "web/components/web-core/fileupload/Web _ Core File Upload -- Dropzone.json"
+    },
+    {
+      "fileName": "web/components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json",
+      "path": "web/components/web-core/fileupload/Web _ Core File Upload -- FileUploadItem.json"
+    },
+    {
+      "fileName": "web/components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json",
+      "path": "web/components/web-core/fileupload/Web _ Core File Upload -- FileUploadItemV1.json"
+    },
+    {
+      "fileName": "web/components/web-core/misc/Web _ Core Misc -- BankCard.json",
+      "path": "web/components/web-core/misc/Web _ Core Misc -- BankCard.json"
+    },
+    {
+      "fileName": "web/components/web-core/misc/Web _ Core Misc -- Comment.json",
+      "path": "web/components/web-core/misc/Web _ Core Misc -- Comment.json"
+    },
+    {
+      "fileName": "web/components/web-core/misc/Web _ Core Misc -- Gallery.json",
+      "path": "web/components/web-core/misc/Web _ Core Misc -- Gallery.json"
+    },
+    {
+      "fileName": "web/components/web-core/misc/Web _ Core Misc -- SortableList.json",
+      "path": "web/components/web-core/misc/Web _ Core Misc -- SortableList.json"
+    },
+    {
+      "fileName": "web/components/web-core/misc/Web _ Core Misc -- Steps.json",
+      "path": "web/components/web-core/misc/Web _ Core Misc -- Steps.json"
+    },
+    {
+      "fileName": "web/components/web-core/navigation/Web _ Core Navigation -- NavigationBar.json",
+      "path": "web/components/web-core/navigation/Web _ Core Navigation -- NavigationBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/navigation/Web _ Core Navigation -- PageIndicator.json",
+      "path": "web/components/web-core/navigation/Web _ Core Navigation -- PageIndicator.json"
+    },
+    {
+      "fileName": "web/components/web-core/navigation/Web _ Core Navigation -- Pagination.json",
+      "path": "web/components/web-core/navigation/Web _ Core Navigation -- Pagination.json"
+    },
+    {
+      "fileName": "web/components/web-core/navigation/Web _ Core Navigation -- Tabbar.json",
+      "path": "web/components/web-core/navigation/Web _ Core Navigation -- Tabbar.json"
+    },
+    {
+      "fileName": "web/components/web-core/navigation/Web _ Core Navigation -- Tabs.json",
+      "path": "web/components/web-core/navigation/Web _ Core Navigation -- Tabs.json"
+    },
+    {
+      "fileName": "web/components/web-core/notification/Web _ Core Notification -- Notification.json",
+      "path": "web/components/web-core/notification/Web _ Core Notification -- Notification.json"
+    },
+    {
+      "fileName": "web/components/web-core/notification/Web _ Core Notification -- Plate.json",
+      "path": "web/components/web-core/notification/Web _ Core Notification -- Plate.json"
+    },
+    {
+      "fileName": "web/components/web-core/notification/Web _ Core Notification -- SystemMessage.json",
+      "path": "web/components/web-core/notification/Web _ Core Notification -- SystemMessage.json"
+    },
+    {
+      "fileName": "web/components/web-core/notification/Web _ Core Notification -- Toast.json",
+      "path": "web/components/web-core/notification/Web _ Core Notification -- Toast.json"
+    },
+    {
+      "fileName": "web/components/web-core/pickers/Web _ Core Pickers -- Calendar.json",
+      "path": "web/components/web-core/pickers/Web _ Core Pickers -- Calendar.json"
+    },
+    {
+      "fileName": "web/components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json",
+      "path": "web/components/web-core/progressbars/Web _ Core ProgressBars -- CircularProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json",
+      "path": "web/components/web-core/progressbars/Web _ Core ProgressBars -- HatchingProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json",
+      "path": "web/components/web-core/progressbars/Web _ Core ProgressBars -- ProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json",
+      "path": "web/components/web-core/progressbars/Web _ Core ProgressBars -- SteppedProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json",
+      "path": "web/components/web-core/wrappers/Web _ Core Wrappers -- Accordion.json"
+    },
+    {
+      "fileName": "web/components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json",
+      "path": "web/components/web-core/wrappers/Web _ Core Wrappers -- PureCell.json"
+    },
+    {
+      "fileName": "web/components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json",
+      "path": "web/components/web-core/wrappers/Web _ Core Wrappers -- Underlay.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- BodyHeader.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- BodyHeader.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- Header.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- Header.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- Helpbook.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- Helpbook.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- Neurohelper.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- Neurohelper.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- ProgressBar.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- ProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-corp-presets/Web _ Corp Presets -- Subscription.json",
+      "path": "web/components/web-corp-presets/Web _ Corp Presets -- Subscription.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BenefitCard.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BenefitCard.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- Benefits.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BenefitsBlock.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- BentoGrid.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- ContentBlock.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- ContentBlock.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- Footer.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoCard.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoMainBlock.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoMainBlock.json"
+    },
+    {
+      "fileName": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoTableView.json",
+      "path": "web/components/web-corp-promo/Web _ Сorp Promo Components -- PromoTableView.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- AccountSelect.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- AccountSelect.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- AmountStyles.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- AmountStyles.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- BannerWrapperMobile [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- BannerWrapperMobile [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- BodyHeader.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- BodyHeader.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ButtonGroup [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ButtonGroup [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ButtonStack [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ButtonStack [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CardImage.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CardImage.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CardSwiperMobile [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CardSwiperMobile [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ContentCardWrapper.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ContentCardWrapper.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CorporateAppHeaderMobile [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CorporateAppHeaderMobile [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CorporateAppHeaderNew [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CorporateAppHeaderNew [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CorporatePage.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CorporatePage.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CorporateSystemMessage.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CorporateSystemMessage.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- CorporateTopbar [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- CorporateTopbar [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- D] FilterCompanySelect_UniversalModal.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- D] FilterCompanySelect_UniversalModal.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- DataRangePicker [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- DataRangePicker [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- FAQ.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- FAQ.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- FileUpload.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- FileUpload.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- FilterCompanySelect.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- FilterCompanySelect.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- FiltersBlock.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- FiltersBlock.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Forms.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Forms.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- HELPERS.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- HELPERS.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- HoldingPlate.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- HoldingPlate.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- IsleBlock.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- IsleBlock.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- LandingPage.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- LandingPage.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- NavigationCardView.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- NavigationCardView.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Neurohelper.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Neurohelper.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Onboarding Hint [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Onboarding Hint [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Onboarding Tooltip [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Onboarding Tooltip [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Pagination [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Pagination [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- PaymentControl [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- PaymentControl [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- PaymentMaskedNumber.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- PaymentMaskedNumber.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ProgressBar.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ProgressBar.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ResultScreen.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ResultScreen.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- ScenarioModel ! interruption.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- ScenarioModel ! interruption.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Status & Property.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Status & Property.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Subscription.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Subscription.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Table _ Wide [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Table _ Wide [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- TableBulkActions.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- TableBulkActions.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- TableView.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- TableView.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Table_ Basic [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Table_ Basic [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- TabsView.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- TabsView.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- TitleView.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- TitleView.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- TitleViewMobile [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- TitleViewMobile [M].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- VOC.json",
+      "path": "web/components/web-corp/Web _ Corp Components -- VOC.json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- WidgetPlate [D].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- WidgetPlate [D].json"
+    },
+    {
+      "fileName": "web/components/web-corp/Web _ Corp Components -- Сhat [M].json",
+      "path": "web/components/web-corp/Web _ Corp Components -- Сhat [M].json"
     }
   ]
 }

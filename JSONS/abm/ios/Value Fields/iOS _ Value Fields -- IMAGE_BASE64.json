@@ -1,0 +1,713 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Value Fields",
+    "file": "iOS :: Value Fields",
+    "generatedAt": "2026-04-16T07:53:14.137Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "IMAGE_BASE64"
+    ],
+    "componentCount": 1,
+    "elementCount": 14
+  },
+  "components": [
+    {
+      "key": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "name": "IMAGE_BASE64",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "IMAGE_BASE64",
+      "defaultVariant": "76d2fbd24329401b5e1b26dbe314ea6326cfc8f5",
+      "variantStructures": {
+        "76d2fbd24329401b5e1b26dbe314ea6326cfc8f5": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Type=imagebase64",
+          "type": "COMPONENT",
+          "name": "Type=imagebase64",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Type=imagebase64 / TextView",
+          "type": "INSTANCE",
+          "name": "TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "06d79885c8330c0006e8d3a153e9fc32e4ee7bd3",
+            "variantProperties": {
+              "🎨Style": "MD / H3",
+              "❌Addons": "None",
+              "❌Horizontal Margin": "None"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Type=imagebase64 / TextView / .TextView",
+          "type": "INSTANCE",
+          "name": ".TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f904f4ea972dc3756dc12f04ea87da79852e53b3",
+            "variantProperties": {
+              "Horizontal Margin": "None",
+              "Skeleton": "No",
+              "Multiline": "No",
+              "Style": "Text"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Type=imagebase64 / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "997daf97a4166ed980da0a3dea10283ccc98e620",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Type=imagebase64 / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 3,
+          "path": "Type=imagebase64 / TextView / .TextView / content-wrap",
+          "type": "FRAME",
+          "name": "content-wrap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Type=imagebase64 / TextView / .TextView / content-wrap / _text_left",
+          "type": "TEXT",
+          "name": "_text_left",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57"
+            },
+            "text": {
+              "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,33774:3"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Фото нарушения",
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 17,
+            "lineHeight": 20,
+            "letterSpacing": -0.40799999237060547,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Semibold",
+            "fontSize": 17
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 6,
+          "path": "Type=imagebase64 / TextView / .TextView / content-wrap / _text_right",
+          "type": "TEXT",
+          "name": "_text_right",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57"
+            },
+            "text": {
+              "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,1234:16"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "750 ₽",
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": -0.40799999237060547,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Regular",
+            "fontSize": 17
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 3,
+          "path": "Type=imagebase64 / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+            "variantProperties": {
+              "Size": "s [12]"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Type=imagebase64 / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 1,
+          "path": "Type=imagebase64 / image",
+          "type": "FRAME",
+          "name": "image",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "Type=imagebase64 / image / ❌ ImageView",
+          "type": "INSTANCE",
+          "name": "❌ ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 16,
+          "componentInstance": {
+            "componentKey": "f8d9874483a24a90f8d16d7d0d909f7f2cfeff42",
+            "variantProperties": {
+              "Scale": "FixedHeightWidth 168*156",
+              "hasRoundedCorners": "on"
+            }
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 11,
+          "path": "Type=imagebase64 / image / ❌ ImageView",
+          "type": "INSTANCE",
+          "name": "❌ ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 16,
+          "componentInstance": {
+            "componentKey": "f8d9874483a24a90f8d16d7d0d909f7f2cfeff42",
+            "variantProperties": {
+              "Scale": "FixedHeightWidth 168*156",
+              "hasRoundedCorners": "on"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 11,
+          "path": "Type=imagebase64 / image / ❌ ImageView",
+          "type": "INSTANCE",
+          "name": "❌ ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 16,
+          "componentInstance": {
+            "componentKey": "f8d9874483a24a90f8d16d7d0d909f7f2cfeff42",
+            "variantProperties": {
+              "Scale": "FixedHeightWidth 168*156",
+              "hasRoundedCorners": "on"
+            }
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "92374:79873",
+          "key": "76d2fbd24329401b5e1b26dbe314ea6326cfc8f5",
+          "name": "Type=imagebase64"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "IMAGE_BASE64 / Type=imagebase64",
+      "type": "COMPONENT",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "Фото нарушения"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Semibold",
+        "size": 17,
+        "lineHeight": 20,
+        "letterSpacing": -0.40799999237060547,
+        "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,33774:3"
+      }
+    },
+    {
+      "id": 8,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "750 ₽"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.40799999237060547,
+        "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,1234:16"
+      }
+    },
+    {
+      "id": 9,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / image",
+      "type": "FRAME",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / image / ❌ ImageView",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / image / ❌ ImageView",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "IMAGE_BASE64 / Type=imagebase64 / image / ❌ ImageView",
+      "type": "INSTANCE",
+      "componentKey": "58d5b15a83bab7393df277c4fd71658dbcb63e06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ChromeTabItem } from '../types';
+import { LEFT_SECTION_ORDER, type LeftSectionOrderItem } from '../../config/tabs';
 import { CategoryCard } from './CategoryCard';
 import { Divider } from './Divider';
 import styles from './LeftSection.module.css';
@@ -40,28 +41,13 @@ export function LeftSection({
 
 type LeftSectionItem = ChromeTabItem | '__divider_after_customStyles__' | '__divider_after_detached__';
 
-const LEFT_SECTION_ORDER: Array<ChromeTabItem['id'] | LeftSectionItem> = [
-  'themization',
-  'deprecated',
-  'deprecatedStyles',
-  'customStyles',
-  '__divider_after_customStyles__',
-  'update',
-  'changes',
-  'local',
-  'detached',
-  '__divider_after_detached__',
-  'presets',
-  'current',
-];
-
 function reorderTabs(tabs: ChromeTabItem[]): LeftSectionItem[] {
   const byId = new Map(tabs.map((tab) => [tab.id, tab]));
   return LEFT_SECTION_ORDER.flatMap((entry) => {
     if (entry.startsWith('__divider_')) {
       return entry as LeftSectionItem;
     }
-    const tab = byId.get(entry);
+    const tab = byId.get(entry as LeftSectionOrderItem);
     return tab ? [tab] : [];
   });
 }

@@ -60,6 +60,7 @@ class ApolloChromeBridge {
           compact={this.state.compact}
           onActionPress={this.options.onActionPress}
           onToggleCompact={this.options.onToggleCompact}
+          onPickerChange={this.options.onPickerChange}
         />,
       );
 

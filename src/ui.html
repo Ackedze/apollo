@@ -196,8 +196,34 @@
     <script>
       (function () {
         let tabConfig = [];
-        function initializeTabConfig(definitions) {
-          if (!Array.isArray(definitions)) return;
+        let leftSectionOrder = [
+          'themization',
+          'wrongChannel',
+          'deprecated',
+          'deprecatedStyles',
+          'customStyles',
+          '__divider_after_customStyles__',
+          'update',
+          'changes',
+          'local',
+          'detached',
+          '__divider_after_detached__',
+          'presets',
+          'current',
+        ];
+
+        function initializeTabConfig(payload) {
+          const definitions = Array.isArray(payload)
+            ? payload
+            : Array.isArray(payload?.definitions)
+              ? payload.definitions
+              : null;
+          if (!definitions) return;
+
+          if (Array.isArray(payload?.leftSectionOrder)) {
+            leftSectionOrder = payload.leftSectionOrder.slice();
+          }
+
           tabConfig = definitions
             .map((definition) => {
               const source = getTabSource(definition.id);
@@ -251,6 +277,8 @@
               return () => resolveViewArray(['relevance', 'update']);
             case 'themization':
               return () => resolveViewArray(['themization']);
+            case 'wrongChannel':
+              return () => resolveViewArray(['wrongChannel']);
             case 'local':
               return () => resolveViewArray(['local']);
             case 'deprecatedStyles':
@@ -272,6 +300,7 @@
         let actionPhase = 'catalog-loading';
         let scanCompleted = false;
         let isCompact = false;
+        let currentPickerLabel = 'Desktop';
 
         const shellEl = document.querySelector('.shell');
         const workspaceEl = document.querySelector('.workspace');
@@ -285,20 +314,6 @@
         const resultsBridge = window.ApolloResultsBridge || null;
         let chromeBridgeMounted = false;
         let resultsBridgeMounted = false;
-        const leftSectionOrder = [
-          'themization',
-          'deprecated',
-          'deprecatedStyles',
-          'customStyles',
-          '__divider_after_customStyles__',
-          'update',
-          'changes',
-          'local',
-          'detached',
-          '__divider_after_detached__',
-          'presets',
-          'current',
-        ];
 
         if (chromeBridge) {
           try {
@@ -309,6 +324,7 @@
                 onActionPress: handleScanActionPress,
                 onTabSelect: handleTabSelection,
                 onToggleCompact: toggleCompactMode,
+                onPickerChange: handlePickerChange,
               }),
             );
           } catch (error) {
@@ -825,6 +841,7 @@
           return (
             tabId === 'current' ||
             tabId === 'deprecated' ||
+            tabId === 'wrongChannel' ||
             tabId === 'update' ||
             tabId === 'presets' ||
             tabId === 'local'
@@ -1099,10 +1116,29 @@
 
           window.requestAnimationFrame(() => {
             parent.postMessage(
-              { pluginMessage: { type: 'scan-selection' } },
+              {
+                pluginMessage: {
+                  type: 'scan-selection',
+                  payload: { pickerLabel: currentPickerLabel },
+                },
+              },
               '*',
             );
           });
+        }
+
+        function handlePickerChange(nextPickerLabel) {
+          if (typeof nextPickerLabel !== 'string') {
+            return;
+          }
+
+          const normalizedPickerLabel = nextPickerLabel.trim();
+          if (!normalizedPickerLabel) {
+            return;
+          }
+
+          currentPickerLabel = normalizedPickerLabel;
+          syncChromeState();
         }
 
         function applyCompactMode() {
@@ -1316,7 +1352,7 @@
 
           const chromeState = {
             title: 'Apollo',
-            pickerLabel: 'Desktop',
+            pickerLabel: currentPickerLabel,
             actionLabel: isActionScanning
               ? 'Остановить'
               : isActionCatalogLoading
@@ -1353,6 +1389,7 @@
           if (
             tabId === 'deprecated' ||
             tabId === 'themization' ||
+            tabId === 'wrongChannel' ||
             tabId === 'deprecatedStyles' ||
             tabId === 'customStyles'
           ) {

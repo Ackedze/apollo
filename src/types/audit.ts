@@ -20,6 +20,7 @@ export interface AuditItem {
   fullPath: string;
   relevance: RelevanceStatus;
   librarySource: string | null;
+  librarySourceFile?: string | null;
   isLocal: boolean;
   reference?: LibraryComponent | null;
   componentKey: string | null;

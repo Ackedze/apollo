@@ -25,6 +25,7 @@ export type ChromeBridgeOptions = {
   onActionPress: () => void;
   onTabSelect: (tabId: string, count: number) => void;
   onToggleCompact: () => void;
+  onPickerChange: (pickerLabel: string) => void;
 };
 
 export type AuditResultItem = {

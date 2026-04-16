@@ -21,6 +21,7 @@ export interface LibraryComponent {
   platform?: ComponentPlatform;
   role?: ComponentRole;
   source?: string;
+  sourceFile?: string;
   displayName: string;
   variantOf?: string;
   parentComponent?: { key: string | null; name: string | null } | null;

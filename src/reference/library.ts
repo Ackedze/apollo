@@ -1489,6 +1489,7 @@ function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {
   libraryComponent.role = role;
   libraryComponent.source =
     module.meta?.library ?? module.meta?.fileName ?? 'Неизвестная библиотека';
+  libraryComponent.sourceFile = module.meta?.fileName ?? undefined;
   libraryComponent.displayName = component.name;
   libraryComponent.variantOf = role === 'Part' ? parentName : undefined;
   libraryComponent.notes = component.description?.trim() || undefined;
@@ -1576,6 +1577,16 @@ function mapStatus(component: AthenaComponent): LibraryStatus {
 }
 
 function detectPlatform(component: AthenaComponent): ComponentPlatform {
+  const explicitPlatform = String(component.platform ?? '')
+    .trim()
+    .toLowerCase();
+
+  if (explicitPlatform === 'desktop') return 'Desktop';
+  if (explicitPlatform === 'mobile-web' || explicitPlatform === 'mobile web') {
+    return 'Mobile Web';
+  }
+  if (explicitPlatform === 'universal') return 'Universal';
+
   const sources = [
     component.name,
     component.meta?.pageName ?? '',

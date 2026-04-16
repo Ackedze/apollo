@@ -26,6 +26,7 @@ type TopSectionProps = {
   compact: boolean;
   onActionPress: () => void;
   onToggleCompact: () => void;
+  onPickerChange?: (pickerLabel: string) => void;
 };
 
 type PickerOption = {
@@ -72,6 +73,7 @@ export function TopSection({
   compact,
   onActionPress,
   onToggleCompact,
+  onPickerChange,
 }: TopSectionProps): React.JSX.Element {
   const pickerRootRef = useRef<HTMLDivElement | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -168,6 +170,7 @@ export function TopSection({
                   leadingIcon={<PickerDisplayIcon />}
                   onPress={() => {
                     setSelectedPickerLabel('Desktop');
+                    onPickerChange?.('Desktop');
                     setPickerOpen(false);
                   }}
                 />
@@ -177,6 +180,7 @@ export function TopSection({
                   leadingIcon={<PickerMobilePhoneIcon />}
                   onPress={() => {
                     setSelectedPickerLabel('MobileWeb');
+                    onPickerChange?.('MobileWeb');
                     setPickerOpen(false);
                   }}
                 />
@@ -187,6 +191,7 @@ export function TopSection({
                   leadingIcon={<PickerAppleIcon />}
                   onPress={() => {
                     setSelectedPickerLabel('iOS');
+                    onPickerChange?.('iOS');
                     setPickerOpen(false);
                   }}
                 />
@@ -196,6 +201,7 @@ export function TopSection({
                   leadingIcon={<PickerAndroidIcon />}
                   onPress={() => {
                     setSelectedPickerLabel('Android');
+                    onPickerChange?.('Android');
                     setPickerOpen(false);
                   }}
                 />

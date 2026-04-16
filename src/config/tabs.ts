@@ -1,3 +1,21 @@
+export type TabId =
+  | 'current'
+  | 'detached'
+  | 'changes'
+  | 'deprecated'
+  | 'update'
+  | 'themization'
+  | 'wrongChannel'
+  | 'presets'
+  | 'local'
+  | 'customStyles'
+  | 'deprecatedStyles';
+
+export type LeftSectionOrderItem =
+  | TabId
+  | '__divider_after_customStyles__'
+  | '__divider_after_detached__';
+
 export const tabDefinitions: TabDefinition[] = [
   {
     id: 'current',
@@ -28,6 +46,11 @@ export const tabDefinitions: TabDefinition[] = [
     emptyMessage: 'Проблем темизации не обнаружено',
   },
   {
+    id: 'wrongChannel',
+    title: 'Не тот канал',
+    emptyMessage: 'Компонентов не того канала не найдено',
+  },
+  {
     id: 'deprecated',
     title: 'Устаревшие',
     emptyMessage: 'Устаревшие компоненты не найдены',
@@ -56,17 +79,21 @@ export const tabDefinitions: TabDefinition[] = [
   },
 ];
 
-type TabId =
-  | 'current'
-  | 'detached'
-  | 'changes'
-  | 'deprecated'
-  | 'update'
-  | 'themization'
-  | 'presets'
-  | 'local'
-  | 'customStyles'
-  | 'deprecatedStyles';
+export const LEFT_SECTION_ORDER: LeftSectionOrderItem[] = [
+  'themization',
+  'wrongChannel',
+  'deprecated',
+  'deprecatedStyles',
+  'customStyles',
+  '__divider_after_customStyles__',
+  'update',
+  'changes',
+  'local',
+  'detached',
+  '__divider_after_detached__',
+  'presets',
+  'current',
+];
 
 interface TabDefinition {
   id: TabId;

@@ -25,7 +25,7 @@ import {
 } from './structure/occurrenceKeys';
 import type { DSStructureNode } from './types/structures';
 import type { AuditItem, RelevanceStatus } from './types/audit';
-import { tabDefinitions } from './config/tabs';
+import { LEFT_SECTION_ORDER, tabDefinitions } from './config/tabs';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
   collectCustomStyles,
@@ -55,6 +55,11 @@ import {
   getContainingPage,
 } from './services/themeAudit';
 import {
+  isWrongChannelComponent,
+  parseAuditChannel,
+  type AuditChannel,
+} from './services/channelAudit';
+import {
   getTimestamp,
   isAuditTraceEnabled,
   logAuditMetric,
@@ -74,7 +79,10 @@ const COMPACT_UI_SIZE = { width: 263, height: 860 };
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
-  payload: tabDefinitions,
+  payload: {
+    definitions: tabDefinitions,
+    leftSectionOrder: LEFT_SECTION_ORDER,
+  },
 });
 
 startCatalogPreload();
@@ -86,7 +94,7 @@ figma.ui.onmessage = (msg) => {
   }
 
   if (msg.type === 'scan-selection') {
-    void runAudit();
+    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel));
     return;
   }
 
@@ -150,6 +158,7 @@ let scanInProgress = false;
 let cancelRequested = false;
 let catalogPreloadStarted = false;
 let lastAuditSelectionIds: string[] = [];
+let lastAuditChannel: AuditChannel = 'Desktop';
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
@@ -180,7 +189,10 @@ const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
  * Запускает полный аудит текущего выделения: проверяет готовность справочников,
  * снимает snapshоты, классифицирует узлы и формирует структуры для табов UI.
  */
-async function runAudit(selectionOverride?: readonly SceneNode[]) {
+async function runAudit(
+  selectionOverride?: readonly SceneNode[],
+  selectedChannel: AuditChannel = 'Desktop',
+) {
   if (scanInProgress) {
     figma.notify('Проверка уже выполняется.');
     return;
@@ -274,6 +286,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     }
 
     lastAuditSelectionIds = selection.map((node) => node.id);
+    lastAuditChannel = selectedChannel;
 
     const checkState = createCheckState()
 
@@ -299,6 +312,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     await collectTargets(
       selection,
       checkState,
+      selectedChannel,
       referenceStructureCache,
       componentKeyCache,
       localComponentContextCache,
@@ -330,6 +344,7 @@ async function runAudit(selectionOverride?: readonly SceneNode[]) {
     const visibleViews = {
       relevance: checkState.relevanceBuckets,
       themization: checkState.themizationEntries,
+      wrongChannel: checkState.wrongChannelEntries,
       local: visibleLocalItems,
       deprecatedStyles: checkState.deprecatedStyleEntries,
       customStyles: checkState.customStyleEntries,
@@ -389,6 +404,7 @@ function startCatalogPreload() {
 async function collectTargets(
   selection: readonly SceneNode[], 
   checkState: CheckState, 
+  selectedChannel: AuditChannel,
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
   componentKeyCache: Map<string, string | null>,
   localComponentContextCache: Map<string, boolean>,
@@ -438,6 +454,10 @@ async function collectTargets(
           );
           if (themizationEntry) {
             checkState.themizationEntries.push(themizationEntry);
+          }
+
+          if (isWrongChannelComponent(item.reference, selectedChannel)) {
+            checkState.wrongChannelEntries.push(item);
           }
         }
 
@@ -535,6 +555,7 @@ async function classifyNode(
       pathSegments,
       fullPath,
       librarySource: null,
+      librarySourceFile: null,
       componentKey,
       comparisonIssues: [],
       diffs: []
@@ -652,6 +673,7 @@ async function classifyNode(
     fullPath,
     relevance,
     librarySource: ref?.source ?? null,
+    librarySourceFile: ref?.sourceFile ?? null,
     isLocal: false,
     reference: ref,
     componentKey,
@@ -854,9 +876,9 @@ async function resetCustomizationGroup(payload: {
 
   const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
   if (rerunSelection.length) {
-    void runAudit(rerunSelection);
+    void runAudit(rerunSelection, lastAuditChannel);
   } else {
-    void runAudit([rootNode]);
+    void runAudit([rootNode], lastAuditChannel);
   }
 }
 
@@ -876,9 +898,9 @@ async function resolveSceneNodesByIds(nodeIds: string[]): Promise<SceneNode[]> {
 async function rerunLastAuditWithFallback(fallbackSelection: SceneNode[]) {
   const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
   if (rerunSelection.length) {
-    void runAudit(rerunSelection);
+    void runAudit(rerunSelection, lastAuditChannel);
   } else if (fallbackSelection.length) {
-    void runAudit(fallbackSelection);
+    void runAudit(fallbackSelection, lastAuditChannel);
   }
 }
 

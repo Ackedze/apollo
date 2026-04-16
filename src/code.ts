@@ -443,7 +443,11 @@ async function collectTargets(
 
         checkState.totalItems++;
 
-        if (item.relevance) {
+        const wrongChannel =
+          item.reference != null &&
+          isWrongChannelComponent(item.reference, selectedChannel);
+
+        if (item.relevance && !(wrongChannel && item.relevance === 'current')) {
           checkState.relevanceBuckets[item.relevance].push(item);
         }
 
@@ -456,7 +460,7 @@ async function collectTargets(
             checkState.themizationEntries.push(themizationEntry);
           }
 
-          if (isWrongChannelComponent(item.reference, selectedChannel)) {
+          if (wrongChannel) {
             checkState.wrongChannelEntries.push(item);
           }
         }

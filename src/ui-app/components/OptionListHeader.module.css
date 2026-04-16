@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 12px 8px 4px;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.label {
+  display: block;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.08px;
+  font-weight: 400;
+  color: rgba(4, 4, 19, 0.55);
+  white-space: nowrap;
+}

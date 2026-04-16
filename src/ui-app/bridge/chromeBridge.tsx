@@ -6,6 +6,7 @@ import type { ChromeBridgeOptions, ChromeState } from '../types';
 
 const defaultState: ChromeState = {
   title: 'Apollo',
+  pickerLabel: 'Desktop',
   actionLabel: 'Загрузка каталогов...',
   actionDisabled: true,
   actionLoading: true,
@@ -51,6 +52,7 @@ class ApolloChromeBridge {
       this.topRoot?.render(
         <TopSection
           title={this.state.title}
+          pickerLabel={this.state.pickerLabel}
           actionLabel={this.state.actionLabel}
           actionDisabled={this.state.actionDisabled}
           actionLoading={this.state.actionLoading}

@@ -85,21 +85,6 @@
   padding: 0 4px;
 }
 
-.iconWrap {
-  width: 16px;
-  height: 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.iconWrap :global(svg) {
-  width: 16px;
-  height: 16px;
-  display: block;
-}
-
 .primary .loader,
 :global(.chrome-action-button-primary) :global(.chrome-inline-loader) {
   border-color: rgba(255, 255, 255, 0.28);

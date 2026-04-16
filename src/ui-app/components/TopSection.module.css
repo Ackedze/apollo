@@ -22,11 +22,14 @@
   gap: 12px;
   padding-right: 28px;
   flex-shrink: 0;
+  width: 244px;
+  box-sizing: border-box;
 }
 
 .titleWrapCompact {
   flex: 1 1 auto;
   min-width: 0;
+  width: auto;
 }
 
 .titleButton,
@@ -46,4 +49,23 @@
 .titleButton:hover,
 :global(.chrome-title-button:hover) {
   opacity: 0.82;
+}
+
+.rightSide {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pickerWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pickerMenu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
 }

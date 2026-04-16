@@ -10,6 +10,7 @@ export type ChromeButtonType = 'primary' | 'secondary';
 
 export type ChromeState = {
   title: string;
+  pickerLabel: string;
   actionLabel: string;
   actionDisabled: boolean;
   actionLoading: boolean;

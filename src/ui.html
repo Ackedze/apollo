@@ -38,6 +38,8 @@
         gap: 12px;
         padding-right: 28px;
         min-width: 0;
+        width: 244px;
+        box-sizing: border-box;
       }
       .chrome-compact-button {
         display: inline-flex;
@@ -57,6 +59,47 @@
       .chrome-action-button-icon {
         min-width: 40px;
         width: 40px;
+      }
+      .chrome-top-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .chrome-picker-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        min-height: 40px;
+        min-width: 88px;
+        padding: 4px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.04);
+        color: rgba(3, 3, 6, 0.88);
+        font-family: inherit;
+        box-sizing: border-box;
+      }
+      .chrome-picker-button:disabled {
+        color: rgba(5, 8, 29, 0.38);
+      }
+      .chrome-picker-label {
+        padding: 0 4px;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: -0.08px;
+        white-space: nowrap;
+      }
+      .chrome-picker-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 13px;
+        line-height: 1;
       }
       /* Стили боковой панели */
 
@@ -1140,6 +1183,36 @@
           titleWrap.appendChild(compactButton);
           section.appendChild(titleWrap);
 
+          let actionContainer = section;
+          if (!state.compact) {
+            const rightSide = document.createElement('div');
+            rightSide.className = 'chrome-top-right';
+
+            const pickerButton = document.createElement('button');
+            pickerButton.type = 'button';
+            pickerButton.className = 'chrome-picker-button';
+            pickerButton.disabled = Boolean(state.actionLoading);
+
+            const pickerLead = document.createElement('span');
+            pickerLead.className = 'chrome-picker-icon';
+            pickerLead.textContent = '▣';
+            pickerButton.appendChild(pickerLead);
+
+            const pickerLabel = document.createElement('span');
+            pickerLabel.className = 'chrome-picker-label';
+            pickerLabel.textContent = state.pickerLabel;
+            pickerButton.appendChild(pickerLabel);
+
+            const pickerChevron = document.createElement('span');
+            pickerChevron.className = 'chrome-picker-icon';
+            pickerChevron.textContent = '⌄';
+            pickerButton.appendChild(pickerChevron);
+
+            rightSide.appendChild(pickerButton);
+            section.appendChild(rightSide);
+            actionContainer = rightSide;
+          }
+
           const actionButton = document.createElement('button');
           actionButton.type = 'button';
           actionButton.className = [
@@ -1168,7 +1241,7 @@
             label.textContent = state.actionLabel;
             actionButton.appendChild(label);
           }
-          section.appendChild(actionButton);
+          actionContainer.appendChild(actionButton);
 
           topChromeContainer.appendChild(section);
         }
@@ -1243,6 +1316,7 @@
 
           const chromeState = {
             title: 'Apollo',
+            pickerLabel: 'Desktop',
             actionLabel: isActionScanning
               ? 'Остановить'
               : isActionCatalogLoading

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconSlot } from './IconSlot';
 import styles from './Button.module.css';
 
 type ButtonProps = {
@@ -34,7 +35,7 @@ export function Button({
       onClick={onPress}
     >
       {loading ? <span className={styles.loader} aria-hidden="true" /> : null}
-      {singleIcon ? (!loading ? <span className={styles.iconWrap}>{icon}</span> : null) : <span className={styles.text}>{label}</span>}
+      {singleIcon ? (!loading ? <IconSlot size={16}>{icon}</IconSlot> : null) : <span className={styles.text}>{label}</span>}
     </button>
   );
 }

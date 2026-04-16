@@ -202,8 +202,8 @@
       "path": "abm/ios/Controls/iOS _ Controls -- NavigationBar.json"
     },
     {
-      "fileName": "abm/ios/Controls/iOS _ Controls -- PaymentControl (отмечен, как локальный компонент).json",
-      "path": "abm/ios/Controls/iOS _ Controls -- PaymentControl (отмечен, как локальный компонент).json"
+      "fileName": "abm/ios/Controls/iOS _ Controls -- PaymentControl.json",
+      "path": "abm/ios/Controls/iOS _ Controls -- PaymentControl.json"
     },
     {
       "fileName": "abm/ios/Controls/iOS _ Controls -- RangeSliderView.json",

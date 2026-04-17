@@ -20,18 +20,24 @@
 5. Для связанных компонентов собирает snapshot структуры и считает diff относительно reference.
 6. Отправляет в UI готовые списки для табов и позволяет перейти к нужному слою через `focus-node`.
 
+Если запрос списка reference-источников целиком не удался, Apollo использует встроенный fallback из [`src/reference/referenceSources.json`](./src/reference/referenceSources.json). Если же сам список загрузился, но внутри него есть битые URL отдельных каталогов, per-catalog fallback сейчас не применяется.
+
 ## Табы аудита
 Конфигурация табов хранится в [`src/config/tabs.ts`](./src/config/tabs.ts).
 
-- `Актуальные компоненты` — компоненты со статусом `current`.
-- `Детач` — `FRAME`/`GROUP`, у которых есть `detachedInfo` из библиотеки.
-- `Кастомизация` — инстансы со значимыми diff-ами относительно reference.
-- `Устаревшие` — компоненты со статусом `deprecated`.
-- `Пора обновить` — компоненты со статусом `update`/`changed`.
 - `Темизация` — page-level mode `Theme / Corp` и случаи использования `[Corporate]`-компонентов.
-- `Пресеты` — инстансы компонентов, помеченных через `🔒`.
-- `Локальные` — узлы, которые не удалось связать с reference-каталогом.
+- `Не тот канал` — компоненты, не соответствующие каналу, выбранному в channel picker (`Desktop`, `MobileWeb`, `iOS`, `Android`).
+- `Устаревшие` — компоненты со статусом `deprecated`.
+- `Устаревшие стили` — style findings, собранные отдельно от component relevance.
 - `Кастомные стили` — узлы с локальными fill/stroke/effect без корректной токенизации или style-binding.
+- `Пора обновить` — компоненты со статусом `update`/`changed`.
+- `Кастомизации` — инстансы со значимыми diff-ами относительно reference.
+- `Локальные компоненты` — узлы, которые не удалось связать с reference-каталогом.
+- `Детач` — `FRAME`/`GROUP`, у которых есть `detachedInfo` из библиотеки.
+- `Пресеты` — инстансы компонентов, помеченных через `🔒`.
+- `Актуальные компоненты` — компоненты со статусом `current`.
+
+Важно: если компонент попал в `Не тот канал`, он не показывается в `Актуальных компонентах`, даже если его reference-статус сам по себе `current`.
 
 ## Как устроен аудит
 
@@ -91,9 +97,11 @@
 
 - основной URL: `https://ackedze.github.io/apollo/JSONS/referenceSourcesMVP.json`;
 - component/style/token каталоги: пути из этого списка;
+- bundled fallback-список для runtime хранится в [`src/reference/referenceSources.json`](./src/reference/referenceSources.json);
+- локальный исходник для пересборки reference-списка хранится в [`JSONS/referenceSourcesMVP.json`](./JSONS/referenceSourcesMVP.json);
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
 
-Важно: текущий runtime-аудит зависит от доступности GitHub Pages. `npm run build` не скачивает каталоги автоматически, а только собирает плагин.
+Важно: текущий runtime-аудит зависит не только от доступности GitHub Pages, но и от актуальности опубликованного содержимого `ackedze.github.io/apollo`. Обновление git-репозитория и обновление `Pages` могут расходиться по времени. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
 
@@ -101,7 +109,10 @@
 - [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder/fallback-сценарии и маршрутизация табов в React results bridge.
 - Внутренний контракт между runtime и [`src/ui.html`](./src/ui.html) упрощён: правый bridge больше не держит legacy-fallback на дублирующее поле `views`, а читает только актуальные `visibleViews`.
 - React-хром UI вынесен в [`src/ui-app`](./src/ui-app): на первом этапе туда перенесены `topSection`, `leftSection` и базовые компоненты (`Button`, `CategoryCard`, `CounterBadge`).
+- В шапке [`TopSection`](./src/ui-app/components/TopSection.tsx) появился channel picker на базе [`PickerButton`](./src/ui-app/components/PickerButton.tsx), [`OptionList`](./src/ui-app/components/OptionList.tsx), [`OptionListCell`](./src/ui-app/components/OptionListCell.tsx) и [`OptionListHeader`](./src/ui-app/components/OptionListHeader.tsx).
+- Channel picker поддерживает `Desktop`, `MobileWeb`, `iOS`, `Android`, а выбранное значение уходит в backend через `scan-selection` и влияет на аудит `Не тот канал`.
 - В библиотеку React-компонентов также добавлен [`SmallButton`](./src/ui-app/components/SmallButton.tsx) по Figma-компоненту `smallButton`: он поддерживает компактный `singleIcon`-вариант и текстовый вариант с hover-state.
+- Для единообразной интеграции иконок в React UI добавлен [`IconSlot`](./src/ui-app/components/IconSlot.tsx) с фиксированными размерами `24 | 20 | 16`; picker-иконки рендерятся как inline SVG-компоненты из [`PickerIcons.tsx`](./src/ui-app/components/PickerIcons.tsx).
 - Для пустых экранов правой колонки добавлен отдельный [`Placeholder`](./src/ui-app/components/Placeholder.tsx): он используется для загрузки каталогов и для стартового состояния до первого нажатия `Проверить`.
 - Для правой колонки подготовлены базовые React-компоненты карточек результата: [`ResultCard`](./src/ui-app/components/ResultCard.tsx), [`ResultSubCard`](./src/ui-app/components/ResultSubCard.tsx) и preset-обёртки в [`ResultCardPresets.tsx`](./src/ui-app/components/ResultCardPresets.tsx).
 - Интеграция правой колонки начата для audit-like категорий: `Актуальные компоненты`, `Устаревшие`, `Пора обновить`, `Пресеты`, `Локальные`, `Детач`, `Темизация`, `Кастомные стили` и `Кастомизация` уже используют React-bridge и React-карточки.
@@ -113,7 +124,7 @@
 - Внутренние отступы [`TopSection`](./src/ui-app/components/TopSection.tsx) задаются самим компонентом, а `.header` в [`src/ui.html`](./src/ui.html) отвечает только за разделитель и оболочку.
 - Базовый [`Button`](./src/ui-app/components/Button.tsx) выровнен по Figma component set `Button`: поддерживает `type="primary" | "secondary"` и отдельные состояния `hover`/`disabled` через CSS, включая загрузочные варианты с addon-spinner.
 - [`CategoryCard`](./src/ui-app/components/CategoryCard.tsx) соответствует `categoryCard` из Figma, учитывает состояния `selected`, `non-empty` и `empty`, а при переполнении заголовок уходит в ellipsis; DOM fallback использует те же class-based состояния, что и React-версия.
-- [`LeftSection`](./src/ui-app/components/LeftSection.tsx) следует актуальному Figma-порядку категорий, вставляет `Divider` между логическими группами и использует типизированные counters: `general`, `warning`, `error`, `empty`.
+- [`LeftSection`](./src/ui-app/components/LeftSection.tsx) следует актуальному Figma-порядку категорий, вставляет `Divider` между логическими группами и использует типизированные counters: `general`, `warning`, `error`, `empty`. Источник истины для порядка категорий один: [`src/config/tabs.ts`](./src/config/tabs.ts).
 - Старый DOM-пайплайн карточек удалён из [`src/ui.html`](./src/ui.html): активные табы правой колонки рендерятся через React results bridge, а `ui.html` оставляет только placeholder/fallback при сбое bridge.
 - В UI таб `Темизация` проверяет page-level mode `Theme / Corp` и использование `[Corporate]`-компонентов.
 - В табе `Темизация` кнопка `Сменить` теперь выполняет действие: для page-level finding переключает mode `Theme -> Corp`, а для `[Corporate]`-инстанса делает `swapComponent(...)` на базовую версию без `[Corporate]`.
@@ -123,6 +134,11 @@
 - В табе `Темизация` page-level finding создаётся только тогда, когда collection `Theme` найдена через `resolvedVariableModes` в дереве текущей страницы и её текущий mode на странице отличается от `Corp`; action `Сменить` использует сохранённые `collectionId/modeId` из результата аудита и не пытается ничего заново искать в момент клика.
 - Поиск `Theme` теперь кэширует `nodeId` якорного узла на страницу: если `Theme` уже была найдена на этой странице, следующая проверка сначала смотрит в этот узел и только при промахе снова обходит дерево страницы.
 - Для collection `Theme` действует простое page-level правило: если текущий явно выбранный mode не `Corp`, Apollo показывает карточку ошибки; отсутствие explicit mode трактуется как `Auto (Default)` и тоже считается ошибкой до тех пор, пока пользователь явно не переключит `Theme` в `Corp`.
+- Таб `Не тот канал` проверяет reference-компоненты относительно выбранного channel picker:
+  - `Desktop`: ошибкой считаются `abm/*` и web-компоненты с `platform = mobile-web`;
+  - `MobileWeb`: ошибкой считаются `abm/*` и web-компоненты с `platform = desktop`;
+  - `iOS`: ошибкой считаются `web/*` и `abm/android/*`;
+  - `Android`: ошибкой считаются `web/*` и `abm/ios/*`.
 - Старый text-node pipeline и таб `textAll` удалены из runtime: аудит больше не собирает неиспользуемые текстовые представления, а `tabDefinitions` больше не хранят legacy `builder`-ключи.
 - После сканирования в карточках доступна кнопка перехода к ноде.
 - UI показывает тосты о загрузке каталогов и завершении сканирования.
@@ -134,6 +150,8 @@
 
 ## Ограничения и известные проблемы
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
+- Если remote reference list с GitHub Pages загрузился успешно, но внутри него есть устаревшие или битые пути до каталогов, Apollo сейчас падает на `404` и не переключается на bundled per-catalog fallback.
+- Репозиторий `Ackedze/apollo` и опубликованный `GitHub Pages`-слой `ackedze.github.io/apollo` могут быть временно рассинхронизированы после push.
 - В проекте нет полного автоматизированного test-suite и нет штатного `type-check`/`lint` скрипта.
 - Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
 - Для кастомизаций и nested reference-resolution есть набор точечных regression-check’ов: `npm run test:customization-filters`, `npm run test:nested-variants`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют policy-based suppression nested overrides, nested variant-switch suppression, variant-aware reference resolution и несколько критичных diff-path кейсов, но не заменяют интеграционные проверки в Figma.

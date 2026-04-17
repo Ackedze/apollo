@@ -1098,10 +1098,6 @@
       "path": "abm/android/Controls/Android _ Controls -- TextField.json"
     },
     {
-      "fileName": "abm/android/Controls/Android _ Controls -- TopAppBar (сейчас реализован через ToolBar).json",
-      "path": "abm/android/Controls/Android _ Controls -- TopAppBar (сейчас реализован через ToolBar).json"
-    },
-    {
       "fileName": "abm/android/Controls/Android _ Controls -- TransferContent 🚧.json",
       "path": "abm/android/Controls/Android _ Controls -- TransferContent 🚧.json"
     },
@@ -1432,6 +1428,10 @@
     {
       "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- StackWrapper (StackView).json",
       "path": "abm/ios/Wrappers/iOS _ Wrappers -- StackWrapper (StackView).json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TopAppBar.json",
+      "path": "abm/android/Controls/Android _ Controls -- TopAppBar.json"
     }
   ]
 }

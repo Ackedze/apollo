@@ -3,7 +3,12 @@
   "catalogs": [
     {
       "fileName": "icons/Icons -- corp.json",
-      "path": "icons/Icons -- corp.json"
+      "path": "icons/Icons -- corp.json",
+      "source": {
+        "kind": "components",
+        "figmaLink": "https://www.figma.com/design/ZcdUPebEhHfSZ91zgmv2cK/Icons?node-id=54513-8686",
+        "pageName": "corp"
+      }
     },
     {
       "fileName": "icons/Icons -- general (glyph).json",

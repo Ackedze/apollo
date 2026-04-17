@@ -1,0 +1,1322 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:11:18.893Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)Browser"
+    ],
+    "componentCount": 1,
+    "elementCount": 29
+  },
+  "components": [
+    {
+      "key": "a165cf77737afde48ad9396150be595d845cc030",
+      "name": "(n)Browser",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "n)Browser",
+      "defaultVariant": "a165cf77737afde48ad9396150be595d845cc030",
+      "variantStructures": {
+        "a165cf77737afde48ad9396150be595d845cc030": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "(n)Browser",
+          "type": "COMPONENT",
+          "name": "(n)Browser",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:0e3491ad4d12bccf6d228ec747ab1a60a2f05da2/35:39",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:0e3491ad4d12bccf6d228ec747ab1a60a2f05da2/35:39"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "(n)Browser / (n)SystemBar",
+          "type": "INSTANCE",
+          "name": "(n)SystemBar",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 14,
+              "right": 20,
+              "bottom": 14,
+              "left": 20
+            },
+            "itemSpacing": 245
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "0acfad99fd462f38a3ef600206d0e50f700a91e0"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "(n)Browser / (n)SystemBar / LeftContentGroup",
+          "type": "FRAME",
+          "name": "LeftContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "(n)Browser / (n)SystemBar / LeftContentGroup / time",
+          "type": "TEXT",
+          "name": "time",
+          "visible": true,
+          "opacity": 0.75,
+          "text": {
+            "characters": "9:30",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 1,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup",
+          "type": "FRAME",
+          "name": "RightContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / wifi",
+          "type": "VECTOR",
+          "name": "wifi",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 8,
+          "parentId": 5,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / data",
+          "type": "VECTOR",
+          "name": "data",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 10,
+          "parentId": 5,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / Union",
+          "type": "VECTOR",
+          "name": "Union",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 12,
+          "parentId": 1,
+          "path": "(n)Browser / AddressBarGroup",
+          "type": "FRAME",
+          "name": "AddressBarGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 10,
+              "left": 16
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "(n)Browser / AddressBarGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 4,
+              "bottom": 4,
+              "left": 4
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "(n)Browser / AddressBarGroup / Icon / fill",
+          "type": "VECTOR",
+          "name": "fill",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36"
+        },
+        {
+          "id": 15,
+          "parentId": 12,
+          "path": "(n)Browser / AddressBarGroup / SearchBar",
+          "type": "FRAME",
+          "name": "SearchBar",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 6,
+              "bottom": 10,
+              "left": 6
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 23,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 210,
+                "g": 232,
+                "b": 211,
+                "a": 0.5
+              },
+              "visible": true,
+              "opacity": 0.5,
+              "tokenKey": "VariableID:a4bd1ad4dc0665d8ba4c58d9d7e05db6af056a18/35:38",
+              "colorHex": "#D2E8D3"
+            }
+          ],
+          "fillToken": "VariableID:a4bd1ad4dc0665d8ba4c58d9d7e05db6af056a18/35:38"
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "(n)Browser / AddressBarGroup / SearchBar / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 3,
+              "right": 3,
+              "bottom": 3,
+              "left": 3
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "(n)Browser / AddressBarGroup / SearchBar / Icon / Vector",
+          "type": "VECTOR",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36"
+        },
+        {
+          "id": 18,
+          "parentId": 15,
+          "path": "(n)Browser / AddressBarGroup / SearchBar / Address",
+          "type": "FRAME",
+          "name": "Address",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "(n)Browser / AddressBarGroup / SearchBar / Address / DomainAddress",
+          "type": "TEXT",
+          "name": "DomainAddress",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "alfabank.ru",
+            "fontName": "Roboto Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.1599999964237213,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 18,
+          "path": "(n)Browser / AddressBarGroup / SearchBar / Address / Path",
+          "type": "TEXT",
+          "name": "Path",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "/everyday/payments-and-transfers/utility-bills/",
+            "fontName": "Roboto Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.1599999964237213,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 111,
+                "g": 118,
+                "b": 111,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:ae3b41c8be21742eea3cde60369c09c1d28c42f1/35:37",
+              "colorHex": "#6F766F"
+            }
+          ],
+          "fillToken": "VariableID:ae3b41c8be21742eea3cde60369c09c1d28c42f1/35:37",
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 12,
+          "path": "(n)Browser / AddressBarGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 4,
+              "bottom": 4,
+              "left": 4
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+          "type": "VECTOR",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36"
+        },
+        {
+          "id": 23,
+          "parentId": 12,
+          "path": "(n)Browser / AddressBarGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 4,
+              "bottom": 4,
+              "left": 4
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+          "type": "GROUP",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "(n)Browser / AddressBarGroup / Icon / Vector / Vector",
+          "type": "VECTOR",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36"
+        },
+        {
+          "id": 26,
+          "parentId": 24,
+          "path": "(n)Browser / AddressBarGroup / Icon / Vector / 1",
+          "type": "TEXT",
+          "name": "1",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "1",
+            "fontName": "Roboto Bold",
+            "fontSize": 11,
+            "lineHeight": "AUTO(undefined)",
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 11
+          }
+        },
+        {
+          "id": 27,
+          "parentId": 12,
+          "path": "(n)Browser / AddressBarGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 4,
+              "bottom": 4,
+              "left": 4
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+          "type": "VECTOR",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 24,
+                "g": 29,
+                "b": 24,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+              "colorHex": "#181D18"
+            }
+          ],
+          "fillToken": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36"
+        },
+        {
+          "id": 29,
+          "parentId": 1,
+          "path": "(n)Browser / Vector",
+          "type": "VECTOR",
+          "name": "Vector",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0.15
+              },
+              "visible": true,
+              "opacity": 0.15000000596046448,
+              "tokenKey": "VariableID:73cbca692fa321da38c26514cef2ff1b12a564b8/74:0",
+              "colorHex": "#000000"
+            }
+          ],
+          "fillToken": "VariableID:73cbca692fa321da38c26514cef2ff1b12a564b8/74:0"
+        }
+      ],
+      "variants": [
+        {
+          "id": "23417:1871",
+          "key": "a165cf77737afde48ad9396150be595d845cc030",
+          "name": "(n)Browser"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)Browser",
+      "type": "COMPONENT",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:0e3491ad4d12bccf6d228ec747ab1a60a2f05da2/35:39",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)Browser / (n)SystemBar",
+      "type": "INSTANCE",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          14,
+          20,
+          14,
+          20
+        ],
+        "gap": 245,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "(n)Browser / (n)SystemBar / LeftContentGroup",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "(n)Browser / (n)SystemBar / LeftContentGroup / time",
+      "type": "TEXT",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": null,
+      "opacity": 0.75,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": {
+        "value": "9:30"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 1
+      }
+    },
+    {
+      "id": 5,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / wifi",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / data",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "(n)Browser / (n)SystemBar / RightContentGroup / Icon / Union",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "(n)Browser / AddressBarGroup",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          10,
+          16
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "(n)Browser / AddressBarGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "(n)Browser / AddressBarGroup / Icon / fill",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "(n)Browser / AddressBarGroup / SearchBar",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          6,
+          10,
+          6
+        ],
+        "gap": 4,
+        "radius": 23
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a4bd1ad4dc0665d8ba4c58d9d7e05db6af056a18/35:38",
+        "color": "rgba(210,232,211,0.5)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "(n)Browser / AddressBarGroup / SearchBar / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "(n)Browser / AddressBarGroup / SearchBar / Icon / Vector",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "(n)Browser / AddressBarGroup / SearchBar / Address",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "(n)Browser / AddressBarGroup / SearchBar / Address / DomainAddress",
+      "type": "TEXT",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": {
+        "value": "alfabank.ru"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.1599999964237213
+      }
+    },
+    {
+      "id": 20,
+      "path": "(n)Browser / AddressBarGroup / SearchBar / Address / Path",
+      "type": "TEXT",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:ae3b41c8be21742eea3cde60369c09c1d28c42f1/35:37",
+        "color": "rgba(111,118,111,1)"
+      },
+      "text": {
+        "value": "/everyday/payments-and-transfers/utility-bills/"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.1599999964237213
+      }
+    },
+    {
+      "id": 21,
+      "path": "(n)Browser / AddressBarGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "(n)Browser / AddressBarGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+      "type": "GROUP",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "(n)Browser / AddressBarGroup / Icon / Vector / Vector",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "(n)Browser / AddressBarGroup / Icon / Vector / 1",
+      "type": "TEXT",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 11,
+        "lineHeight": "AUTO(undefined)",
+        "letterSpacing": 0
+      }
+    },
+    {
+      "id": 27,
+      "path": "(n)Browser / AddressBarGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "(n)Browser / AddressBarGroup / Icon / Vector",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:984fd3970f61917482be8b56fe67a47ab0537f8c/35:36",
+        "color": "rgba(24,29,24,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "(n)Browser / Vector",
+      "type": "VECTOR",
+      "componentKey": "a165cf77737afde48ad9396150be595d845cc030",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:73cbca692fa321da38c26514cef2ff1b12a564b8/74:0",
+        "color": "rgba(0,0,0,0.15)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

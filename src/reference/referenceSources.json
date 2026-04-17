@@ -1016,6 +1016,422 @@
     {
       "fileName": "web/components/web-corp/Web _ Corp Components -- Сhat [M].json",
       "path": "web/components/web-corp/Web _ Corp Components -- Сhat [M].json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- ActionButton.json",
+      "path": "abm/android/Controls/Android _ Controls -- ActionButton.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- AttachmentView.json",
+      "path": "abm/android/Controls/Android _ Controls -- AttachmentView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- BottomNavigationBar.json",
+      "path": "abm/android/Controls/Android _ Controls -- BottomNavigationBar.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- ButtonView.json",
+      "path": "abm/android/Controls/Android _ Controls -- ButtonView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- CalendarView.json",
+      "path": "abm/android/Controls/Android _ Controls -- CalendarView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- CallendarCollapse.json",
+      "path": "abm/android/Controls/Android _ Controls -- CallendarCollapse.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- CardIconView.json",
+      "path": "abm/android/Controls/Android _ Controls -- CardIconView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- ControlButton.json",
+      "path": "abm/android/Controls/Android _ Controls -- ControlButton.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- FinancialHistogramView.json",
+      "path": "abm/android/Controls/Android _ Controls -- FinancialHistogramView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- KeyPadView.json",
+      "path": "abm/android/Controls/Android _ Controls -- KeyPadView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- PaymentControl.json",
+      "path": "abm/android/Controls/Android _ Controls -- PaymentControl.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- RangeSliderView.json",
+      "path": "abm/android/Controls/Android _ Controls -- RangeSliderView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- RatingView.json",
+      "path": "abm/android/Controls/Android _ Controls -- RatingView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- ScrollableTab.json",
+      "path": "abm/android/Controls/Android _ Controls -- ScrollableTab.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- SegmentedTextField.json",
+      "path": "abm/android/Controls/Android _ Controls -- SegmentedTextField.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- SelectionProgressButton.json",
+      "path": "abm/android/Controls/Android _ Controls -- SelectionProgressButton.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- Switch 🚧.json",
+      "path": "abm/android/Controls/Android _ Controls -- Switch 🚧.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TabBar.json",
+      "path": "abm/android/Controls/Android _ Controls -- TabBar.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TextArea.json",
+      "path": "abm/android/Controls/Android _ Controls -- TextArea.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TextField.json",
+      "path": "abm/android/Controls/Android _ Controls -- TextField.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TopAppBar (сейчас реализован через ToolBar).json",
+      "path": "abm/android/Controls/Android _ Controls -- TopAppBar (сейчас реализован через ToolBar).json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TransferContent 🚧.json",
+      "path": "abm/android/Controls/Android _ Controls -- TransferContent 🚧.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- TransferSourcesView.json",
+      "path": "abm/android/Controls/Android _ Controls -- TransferSourcesView.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- n)Checkbox.json",
+      "path": "abm/android/Controls/Android _ Controls -- n)Checkbox.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- n)Keyboard.json",
+      "path": "abm/android/Controls/Android _ Controls -- n)Keyboard.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- n)RadioButton.json",
+      "path": "abm/android/Controls/Android _ Controls -- n)RadioButton.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- n)SystemNavigation.json",
+      "path": "abm/android/Controls/Android _ Controls -- n)SystemNavigation.json"
+    },
+    {
+      "fileName": "abm/android/Controls/Android _ Controls -- n)TabsFeed.json",
+      "path": "abm/android/Controls/Android _ Controls -- n)TabsFeed.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- AccountContent.json",
+      "path": "abm/android/Views/Android _ Views -- AccountContent.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- AdCardView.json",
+      "path": "abm/android/Views/Android _ Views -- AdCardView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- AdviceBannerView.json",
+      "path": "abm/android/Views/Android _ Views -- AdviceBannerView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- AlertView.json",
+      "path": "abm/android/Views/Android _ Views -- AlertView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ArticleView.json",
+      "path": "abm/android/Views/Android _ Views -- ArticleView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- CardIconStackView.json",
+      "path": "abm/android/Views/Android _ Views -- CardIconStackView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- CardIconView.json",
+      "path": "abm/android/Views/Android _ Views -- CardIconView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ChatPreviewContent.json",
+      "path": "abm/android/Views/Android _ Views -- ChatPreviewContent.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ChipElement.json",
+      "path": "abm/android/Views/Android _ Views -- ChipElement.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ChipElementGroup.json",
+      "path": "abm/android/Views/Android _ Views -- ChipElementGroup.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ChipsStackView 💬.json",
+      "path": "abm/android/Views/Android _ Views -- ChipsStackView 💬.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- CircleProgressIconView.json",
+      "path": "abm/android/Views/Android _ Views -- CircleProgressIconView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- DataContent.json",
+      "path": "abm/android/Views/Android _ Views -- DataContent.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ExpandableTextElementView.json",
+      "path": "abm/android/Views/Android _ Views -- ExpandableTextElementView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- FeedbackView.json",
+      "path": "abm/android/Views/Android _ Views -- FeedbackView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- HistogramView.json",
+      "path": "abm/android/Views/Android _ Views -- HistogramView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- HorizontalHistogramView.json",
+      "path": "abm/android/Views/Android _ Views -- HorizontalHistogramView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- IconElementView.json",
+      "path": "abm/android/Views/Android _ Views -- IconElementView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ImageView.json",
+      "path": "abm/android/Views/Android _ Views -- ImageView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- IndicatorView.json",
+      "path": "abm/android/Views/Android _ Views -- IndicatorView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- MapIconElementView.json",
+      "path": "abm/android/Views/Android _ Views -- MapIconElementView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- MapView.json",
+      "path": "abm/android/Views/Android _ Views -- MapView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- MarkdownView.json",
+      "path": "abm/android/Views/Android _ Views -- MarkdownView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- MultiLinearGraphView.json",
+      "path": "abm/android/Views/Android _ Views -- MultiLinearGraphView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- NotificationView 💬.json",
+      "path": "abm/android/Views/Android _ Views -- NotificationView 💬.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- OfferBannerView.json",
+      "path": "abm/android/Views/Android _ Views -- OfferBannerView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- PageIndicatiorView.json",
+      "path": "abm/android/Views/Android _ Views -- PageIndicatiorView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- PriceGraph.json",
+      "path": "abm/android/Views/Android _ Views -- PriceGraph.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ProductView.json",
+      "path": "abm/android/Views/Android _ Views -- ProductView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- RectangleView.json",
+      "path": "abm/android/Views/Android _ Views -- RectangleView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- SeparatorView.json",
+      "path": "abm/android/Views/Android _ Views -- SeparatorView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- ServiceNotificationView.json",
+      "path": "abm/android/Views/Android _ Views -- ServiceNotificationView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- SnackBar.json",
+      "path": "abm/android/Views/Android _ Views -- SnackBar.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- StoryView.json",
+      "path": "abm/android/Views/Android _ Views -- StoryView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TagView.json",
+      "path": "abm/android/Views/Android _ Views -- TagView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TextBubbleView.json",
+      "path": "abm/android/Views/Android _ Views -- TextBubbleView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TextLabel.json",
+      "path": "abm/android/Views/Android _ Views -- TextLabel.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TextView.json",
+      "path": "abm/android/Views/Android _ Views -- TextView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TileView.json",
+      "path": "abm/android/Views/Android _ Views -- TileView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TimelapsePageControlView.json",
+      "path": "abm/android/Views/Android _ Views -- TimelapsePageControlView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- TransactionalContent.json",
+      "path": "abm/android/Views/Android _ Views -- TransactionalContent.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- VerticalStepsView.json",
+      "path": "abm/android/Views/Android _ Views -- VerticalStepsView.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- VideoBannerView 💬.json",
+      "path": "abm/android/Views/Android _ Views -- VideoBannerView 💬.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)Browser.json",
+      "path": "abm/android/Views/Android _ Views -- n)Browser.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)DatePicker.json",
+      "path": "abm/android/Views/Android _ Views -- n)DatePicker.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)Dialog.json",
+      "path": "abm/android/Views/Android _ Views -- n)Dialog.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)DropdownMenu.json",
+      "path": "abm/android/Views/Android _ Views -- n)DropdownMenu.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)ProgressBar.json",
+      "path": "abm/android/Views/Android _ Views -- n)ProgressBar.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)PushNotification.json",
+      "path": "abm/android/Views/Android _ Views -- n)PushNotification.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)SystemBar.json",
+      "path": "abm/android/Views/Android _ Views -- n)SystemBar.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)Toast.json",
+      "path": "abm/android/Views/Android _ Views -- n)Toast.json"
+    },
+    {
+      "fileName": "abm/android/Views/Android _ Views -- n)Tooltip.json",
+      "path": "abm/android/Views/Android _ Views -- n)Tooltip.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- BannerWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- BannerWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- CarouselWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- CarouselWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- ChevronWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- ChevronWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- Constraint.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- Constraint.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- IndexContainerWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- IndexContainerWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- InfoBannerWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- InfoBannerWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- LabelWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- LabelWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- RightIconWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- RightIconWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- SelectionProgressWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- SelectionProgressWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- SelectionWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- SelectionWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- SquareWrapper.json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- SquareWrapper.json"
+    },
+    {
+      "fileName": "abm/android/Wrappers/Android _ Wrappers -- StackView (StackWrapper).json",
+      "path": "abm/android/Wrappers/Android _ Wrappers -- StackView (StackWrapper).json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- BannerWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- BannerWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- CarouselWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- CarouselWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- ChevronWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- ChevronWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- HeaderWrapper (→ BlurWrapper).json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- HeaderWrapper (→ BlurWrapper).json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- IndexContainerWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- IndexContainerWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- InfoBannerWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- InfoBannerWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- LabelWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- LabelWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- RightIconWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- RightIconWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- ScrollWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- ScrollWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- SelectionWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- SelectionWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- SquareWrapper.json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- SquareWrapper.json"
+    },
+    {
+      "fileName": "abm/ios/Wrappers/iOS _ Wrappers -- StackWrapper (StackView).json",
+      "path": "abm/ios/Wrappers/iOS _ Wrappers -- StackWrapper (StackView).json"
     }
   ]
 }

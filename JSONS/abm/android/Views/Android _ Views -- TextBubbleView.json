@@ -1,0 +1,5225 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:19:21.726Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "TextBubbleView"
+    ],
+    "componentCount": 5,
+    "elementCount": 57
+  },
+  "components": [
+    {
+      "key": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "name": "TextBubbleView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "TextBubbleView",
+      "defaultVariant": "575c2e5236c911d9f1a383d49688873e936d7937",
+      "variantStructures": {
+        "575c2e5236c911d9f1a383d49688873e936d7937": [],
+        "7792e0a9e38b5b7671fd09583e4e9bccc77e0708": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "2eccd1da7f1fe609da9fbf2868c45eba34f6f78c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=Single, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "077000191bf5fddbe1a6e33c8c7ddf99d189ee46": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=FirstGroup, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          }
+        ],
+        "46e9362ae398faf355ebaee84375c6fa70820afe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=FirstGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 20,
+                "bottomLeft": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "dce72a79c8f6c33597c16d6bbc69aa50f7cf3a84": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=FirstGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "5d4e9996734263a42675008c50425c3df1498c60": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=MiddleGroup, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          }
+        ],
+        "cfda600f72a553f585c7bf7ddb508cbe8750d11f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=MiddleGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 8,
+                "topRight": 20,
+                "bottomRight": 20,
+                "bottomLeft": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "39e46617778af1ea56dfc030f38fde07eac48991": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=MiddleGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "c65e6d3f96df6911b412471d3c0bea5f01af35b8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=LastGroup, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          }
+        ],
+        "75f672885544d83c3c72c962ef31ece294405b46": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=LastGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 8,
+                "topRight": 20,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "f64c1a821de50a7a6b46452b5c63e6885eff913f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=LastGroup, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "a24ca1400a233fc106664734616b51a30f3b2d7f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfComposite, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 8,
+                "bottomLeft": 8
+              }
+            }
+          }
+        ],
+        "c1b037993a6f7f2493d2bed25ff77ac3cda2ab5f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 0,
+                "bottomLeft": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "f99768bbe1c291f8e2f9705b9d675dc22d4898d1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=TopOfComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 20,
+                "bottomRight": 8,
+                "bottomLeft": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "d3cc508b36f2c5588b9613095f059cac8388a4d6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfComposite, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          }
+        ],
+        "9a9f6a76b5f192d9a15c8a85957ecd0c5899299f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 20,
+                "bottomLeft": 8
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "25ee6d10f6eaa8011ea62101095674566f72e011": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=BottomOfComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 8,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "9532eb31bda6d33ce28dbf467202f5229af21dcf": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfLastComposite, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 0,
+                "bottomLeft": 0
+              }
+            }
+          }
+        ],
+        "9755a606ccedeeccc37ebb4aa66d78bf03ea404a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfLastComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 0,
+                "bottomLeft": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "02a7fad151d704f2c04c4536e999a5a70f5c4f04": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=TopOfLastComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 20,
+                "topRight": 8,
+                "bottomRight": 0,
+                "bottomLeft": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "50896f93938bd9a3d5f7fae02b04220775c98b31": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          }
+        ],
+        "3b8616d76aa283c421fccf203707cdfa146d390a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ],
+        "384a667bb22b69c3aec73cfbd71580e5785b7b48": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BubbleStyle=Incomming, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=False",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 8
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "radius": {
+                "topLeft": 0,
+                "topRight": 0,
+                "bottomRight": 20,
+                "bottomLeft": 20
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 5
+          },
+          {
+            "op": "remove",
+            "id": 6
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True",
+          "type": "COMPONENT",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton",
+          "type": "FRAME",
+          "name": "BubbleRetryButton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 16,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8012330d4be02aa938e3c18ca5e165a8ee9c98de",
+            "variantProperties": {
+              "Size": "Small",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon / arrows-cw",
+          "type": "INSTANCE",
+          "name": "arrows-cw",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "04a5cf6e11ff64ed663e31581cc4ffa3ccf02d0a",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon / arrows-cw / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:07e514fb6f6387b9be35f334c0451313c377d8b7,8745:1"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 84,
+                "b": 49,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FF5431"
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "parentId": 1,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance",
+          "type": "INSTANCE",
+          "name": "PreviousBubbleDistance",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "62dda4986f3f1c9726828cc02e1b60b883f90722",
+            "variantProperties": {
+              "Size": "short"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9397ca3513f03bac3b80d85fd98ee6d1658122cb",
+            "variantProperties": {
+              "Size": "xs2 [4]"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance / Spacing / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 7,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / SenderName",
+          "type": "FRAME",
+          "name": "SenderName",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / SenderName / SenderName",
+          "type": "TEXT",
+          "name": "SenderName",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "senderName",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        },
+        {
+          "id": 13,
+          "parentId": 7,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent",
+          "type": "INSTANCE",
+          "name": "TextBubbleContent",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:4ebfb8f1d236d6a150a43b63b8d2f518e1a0c277,7820:39"
+            },
+            "stroke": {
+              "styleKey": "S:5d7ac7a867328d2e0eb882c2e7fe3a30bcee215b,7820:5"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 20,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "be0cfc71ca2016699af409dd9db2d278825a8b29",
+            "variantProperties": {
+              "👻 showHeader": "true"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation",
+          "type": "INSTANCE",
+          "name": "TextBubbleQuotation",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / QuotationIndicator",
+          "type": "RECTANGLE",
+          "name": "QuotationIndicator",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16"
+            }
+          },
+          "opacity": 1,
+          "radius": 2,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "parentId": 15,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView",
+          "type": "FRAME",
+          "name": "StackView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView / Name",
+          "type": "TEXT",
+          "name": "Name",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "name",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+        },
+        {
+          "id": 19,
+          "parentId": 17,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "text",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        },
+        {
+          "id": 20,
+          "parentId": 13,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header",
+          "type": "FRAME",
+          "name": "Header",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 12,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "header",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 22,
+          "parentId": 20,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 1
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "011e23487d29c840bda69a6ebe73ded1e4c923d0"
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:a9f2817a61c18b42d7aad7270cbaa4db6567a65b,7820:14"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#2288FA"
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "parentId": 13,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Message",
+          "type": "FRAME",
+          "name": "Message",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 10,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Message / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "message",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 27,
+          "parentId": 7,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent",
+          "type": "INSTANCE",
+          "name": "AdditionalContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a7543a5ea3c36757cc5fbfee100b78561bd5b9cd",
+            "variantProperties": {
+              "👻 CountOfItems": "one"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent / ItemA",
+          "type": "INSTANCE",
+          "name": "ItemA",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+          }
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent / ItemA / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 7,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / Status",
+          "type": "FRAME",
+          "name": "Status",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 20,
+              "bottom": 4,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / Status / Status",
+          "type": "TEXT",
+          "name": "Status",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "status",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        }
+      ],
+      "variants": [
+        {
+          "id": "163:59850",
+          "key": "575c2e5236c911d9f1a383d49688873e936d7937",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True"
+        },
+        {
+          "id": "163:59130",
+          "key": "7792e0a9e38b5b7671fd09583e4e9bccc77e0708",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=False"
+        },
+        {
+          "id": "163:59868",
+          "key": "2eccd1da7f1fe609da9fbf2868c45eba34f6f78c",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=Single, NeedRetry=False"
+        },
+        {
+          "id": "163:59882",
+          "key": "077000191bf5fddbe1a6e33c8c7ddf99d189ee46",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=FirstGroup, NeedRetry=True"
+        },
+        {
+          "id": "163:59148",
+          "key": "46e9362ae398faf355ebaee84375c6fa70820afe",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=FirstGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59900",
+          "key": "dce72a79c8f6c33597c16d6bbc69aa50f7cf3a84",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=FirstGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59914",
+          "key": "5d4e9996734263a42675008c50425c3df1498c60",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=MiddleGroup, NeedRetry=True"
+        },
+        {
+          "id": "163:59166",
+          "key": "cfda600f72a553f585c7bf7ddb508cbe8750d11f",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=MiddleGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59932",
+          "key": "39e46617778af1ea56dfc030f38fde07eac48991",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=MiddleGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59946",
+          "key": "c65e6d3f96df6911b412471d3c0bea5f01af35b8",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=LastGroup, NeedRetry=True"
+        },
+        {
+          "id": "163:59184",
+          "key": "75f672885544d83c3c72c962ef31ece294405b46",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=LastGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59964",
+          "key": "f64c1a821de50a7a6b46452b5c63e6885eff913f",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=LastGroup, NeedRetry=False"
+        },
+        {
+          "id": "163:59978",
+          "key": "a24ca1400a233fc106664734616b51a30f3b2d7f",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfComposite, NeedRetry=True"
+        },
+        {
+          "id": "163:59202",
+          "key": "c1b037993a6f7f2493d2bed25ff77ac3cda2ab5f",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:59996",
+          "key": "f99768bbe1c291f8e2f9705b9d675dc22d4898d1",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=TopOfComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60010",
+          "key": "d3cc508b36f2c5588b9613095f059cac8388a4d6",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfComposite, NeedRetry=True"
+        },
+        {
+          "id": "163:59220",
+          "key": "9a9f6a76b5f192d9a15c8a85957ecd0c5899299f",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60028",
+          "key": "25ee6d10f6eaa8011ea62101095674566f72e011",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=BottomOfComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60042",
+          "key": "9532eb31bda6d33ce28dbf467202f5229af21dcf",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfLastComposite, NeedRetry=True"
+        },
+        {
+          "id": "163:59238",
+          "key": "9755a606ccedeeccc37ebb4aa66d78bf03ea404a",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=TopOfLastComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60060",
+          "key": "02a7fad151d704f2c04c4536e999a5a70f5c4f04",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=TopOfLastComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60074",
+          "key": "50896f93938bd9a3d5f7fae02b04220775c98b31",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=True"
+        },
+        {
+          "id": "163:59256",
+          "key": "3b8616d76aa283c421fccf203707cdfa146d390a",
+          "name": "BubbleStyle=Outgoing, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=False"
+        },
+        {
+          "id": "163:60092",
+          "key": "384a667bb22b69c3aec73cfbd71580e5785b7b48",
+          "name": "BubbleStyle=Incomming, BubbleShapeStyle=BottomOfLastComposite, NeedRetry=False"
+        }
+      ]
+    },
+    {
+      "key": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "name": "TextBubbleContent",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "TextBubbleContent",
+      "defaultVariant": "be0cfc71ca2016699af409dd9db2d278825a8b29",
+      "variantStructures": {
+        "be0cfc71ca2016699af409dd9db2d278825a8b29": [],
+        "90c419ea05db1ddc60a03eb2936dc20e255594fd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 showHeader=false"
+            }
+          },
+          {
+            "op": "update",
+            "id": 13,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 10,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 showHeader=true",
+          "type": "COMPONENT",
+          "name": "👻 showHeader=true",
+          "visible": true,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:5d7ac7a867328d2e0eb882c2e7fe3a30bcee215b,7820:5"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 20,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 showHeader=true / TextBubbleQuotation",
+          "type": "INSTANCE",
+          "name": "TextBubbleQuotation",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 showHeader=true / TextBubbleQuotation / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "👻 showHeader=true / TextBubbleQuotation / ContentGroup / QuotationIndicator",
+          "type": "RECTANGLE",
+          "name": "QuotationIndicator",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16"
+            }
+          },
+          "opacity": 1,
+          "radius": 2,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "parentId": 3,
+          "path": "👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView",
+          "type": "FRAME",
+          "name": "StackView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView / Name",
+          "type": "TEXT",
+          "name": "Name",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "name",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+        },
+        {
+          "id": 7,
+          "parentId": 5,
+          "path": "👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "text",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        },
+        {
+          "id": 8,
+          "parentId": 1,
+          "path": "👻 showHeader=true / Header",
+          "type": "FRAME",
+          "name": "Header",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 12,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "👻 showHeader=true / Header / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "header",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 10,
+          "parentId": 8,
+          "path": "👻 showHeader=true / Header / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 1
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "👻 showHeader=true / Header / Icon / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "011e23487d29c840bda69a6ebe73ded1e4c923d0"
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "👻 showHeader=true / Header / Icon / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:a9f2817a61c18b42d7aad7270cbaa4db6567a65b,7820:14"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#2288FA"
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "parentId": 1,
+          "path": "👻 showHeader=true / Message",
+          "type": "FRAME",
+          "name": "Message",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 10,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "👻 showHeader=true / Message / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "message",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        }
+      ],
+      "variants": [
+        {
+          "id": "163:62812",
+          "key": "be0cfc71ca2016699af409dd9db2d278825a8b29",
+          "name": "👻 showHeader=true"
+        },
+        {
+          "id": "163:62814",
+          "key": "90c419ea05db1ddc60a03eb2936dc20e255594fd",
+          "name": "👻 showHeader=false"
+        }
+      ]
+    },
+    {
+      "key": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "name": "TextBubbleQuotation",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "TextBubbleQuotation",
+      "defaultVariant": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "variantStructures": {
+        "7fe45a6d299ae8c8135c1780109705a6b1a6337e": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "TextBubbleQuotation",
+          "type": "COMPONENT",
+          "name": "TextBubbleQuotation",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 10,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "TextBubbleQuotation / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "TextBubbleQuotation / ContentGroup / QuotationIndicator",
+          "type": "RECTANGLE",
+          "name": "QuotationIndicator",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16"
+            }
+          },
+          "opacity": 1,
+          "radius": 2,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "parentId": 2,
+          "path": "TextBubbleQuotation / ContentGroup / StackView",
+          "type": "FRAME",
+          "name": "StackView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "TextBubbleQuotation / ContentGroup / StackView / Name",
+          "type": "TEXT",
+          "name": "Name",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "name",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+        },
+        {
+          "id": 6,
+          "parentId": 4,
+          "path": "TextBubbleQuotation / ContentGroup / StackView / Text",
+          "type": "TEXT",
+          "name": "Text",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "text",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        }
+      ],
+      "variants": [
+        {
+          "id": "137:60783",
+          "key": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+          "name": "TextBubbleQuotation"
+        }
+      ]
+    },
+    {
+      "key": "0d9cb3b2d3edfffd4ebf928cafaab389e8abdab5",
+      "name": "AdditionalContent",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "AdditionalContent",
+      "defaultVariant": "a7543a5ea3c36757cc5fbfee100b78561bd5b9cd",
+      "variantStructures": {
+        "a7543a5ea3c36757cc5fbfee100b78561bd5b9cd": [],
+        "79fd974f92cd21cb82306452708b780dbdbbb06b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 CountOfItems=two"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "👻 CountOfItems=two / ItemB",
+              "type": "INSTANCE",
+              "name": "ItemB",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "👻 CountOfItems=two / ItemB / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          }
+        ],
+        "e210ed8b1361c530e5cf6c2fd2bd98ad694134af": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 CountOfItems=three"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "👻 CountOfItems=three / ItemB",
+              "type": "INSTANCE",
+              "name": "ItemB",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "👻 CountOfItems=three / ItemB / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "👻 CountOfItems=three / ItemC",
+              "type": "INSTANCE",
+              "name": "ItemC",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "👻 CountOfItems=three / ItemC / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          }
+        ],
+        "acbb1363d0500342cb1cb00f47382d5b5c7da694": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 CountOfItems=four"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "👻 CountOfItems=four / ItemB",
+              "type": "INSTANCE",
+              "name": "ItemB",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "👻 CountOfItems=four / ItemB / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "👻 CountOfItems=four / ItemC",
+              "type": "INSTANCE",
+              "name": "ItemC",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "👻 CountOfItems=four / ItemC / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "👻 CountOfItems=four / ItemD",
+              "type": "INSTANCE",
+              "name": "ItemD",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "👻 CountOfItems=four / ItemD / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          }
+        ],
+        "6aeb60fb7d543cf08310bbededd801401c464361": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 CountOfItems=five"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "👻 CountOfItems=five / ItemB",
+              "type": "INSTANCE",
+              "name": "ItemB",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "👻 CountOfItems=five / ItemB / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "👻 CountOfItems=five / ItemC",
+              "type": "INSTANCE",
+              "name": "ItemC",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "👻 CountOfItems=five / ItemC / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "👻 CountOfItems=five / ItemD",
+              "type": "INSTANCE",
+              "name": "ItemD",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "👻 CountOfItems=five / ItemD / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 1,
+              "path": "👻 CountOfItems=five / ItemE",
+              "type": "INSTANCE",
+              "name": "ItemE",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "👻 CountOfItems=five / ItemE / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 CountOfItems=one",
+          "type": "COMPONENT",
+          "name": "👻 CountOfItems=one",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 CountOfItems=one / ItemA",
+          "type": "INSTANCE",
+          "name": "ItemA",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 CountOfItems=one / ItemA / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "153:58402",
+          "key": "a7543a5ea3c36757cc5fbfee100b78561bd5b9cd",
+          "name": "👻 CountOfItems=one"
+        },
+        {
+          "id": "163:60611",
+          "key": "79fd974f92cd21cb82306452708b780dbdbbb06b",
+          "name": "👻 CountOfItems=two"
+        },
+        {
+          "id": "163:60942",
+          "key": "e210ed8b1361c530e5cf6c2fd2bd98ad694134af",
+          "name": "👻 CountOfItems=three"
+        },
+        {
+          "id": "163:60949",
+          "key": "acbb1363d0500342cb1cb00f47382d5b5c7da694",
+          "name": "👻 CountOfItems=four"
+        },
+        {
+          "id": "163:60958",
+          "key": "6aeb60fb7d543cf08310bbededd801401c464361",
+          "name": "👻 CountOfItems=five"
+        }
+      ]
+    },
+    {
+      "key": "bcb76982abbf0531dd5cfec9dd098417bf1bdb99",
+      "name": "BubbleTopPadding",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "BubbleTopPadding",
+      "defaultVariant": "62dda4986f3f1c9726828cc02e1b60b883f90722",
+      "variantStructures": {
+        "62dda4986f3f1c9726828cc02e1b60b883f90722": [],
+        "03ffb8568fc4f946203afe23572d8cd61b717020": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=long"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "ed2bc8e38fe8d22b89f9604feccf712f0af02e31",
+                "variantProperties": {
+                  "Size": "s [12]"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=short",
+          "type": "COMPONENT",
+          "name": "Size=short",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=short / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9397ca3513f03bac3b80d85fd98ee6d1658122cb",
+            "variantProperties": {
+              "Size": "xs2 [4]"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=short / Spacing / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "146:58362",
+          "key": "62dda4986f3f1c9726828cc02e1b60b883f90722",
+          "name": "Size=short"
+        },
+        {
+          "id": "146:58367",
+          "key": "03ffb8568fc4f946203afe23572d8cd61b717020",
+          "name": "Size=long"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True",
+      "type": "COMPONENT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          16,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon / arrows-cw",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / BubbleRetryButton / IconElementView / Icon / arrows-cw / icon",
+      "type": "VECTOR",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:07e514fb6f6387b9be35f334c0451313c377d8b7,8745:1",
+        "color": "rgba(255,84,49,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / PreviousBubbleDistance / Spacing / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / SenderName",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / SenderName / SenderName",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "senderName"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 13,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE",
+        "styleKey": "S:5d7ac7a867328d2e0eb882c2e7fe3a30bcee215b,7820:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "fill": {
+        "styleKey": "S:4ebfb8f1d236d6a150a43b63b8d2f518e1a0c277,7820:39",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          0,
+          16
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / QuotationIndicator",
+      "type": "RECTANGLE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView / Name",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "name"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+      }
+    },
+    {
+      "id": 19,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / TextBubbleQuotation / ContentGroup / StackView / Text",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "text"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 20,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Text",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "header"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+      }
+    },
+    {
+      "id": 22,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon / Icon",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Header / Icon / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:a9f2817a61c18b42d7aad7270cbaa4db6567a65b,7820:14",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Message",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          10,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / TextBubbleContent / Message / Text",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "message"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+      }
+    },
+    {
+      "id": 27,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent / ItemA",
+      "type": "INSTANCE",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / AdditionalContent / ItemA / ⊕",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 30,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / Status",
+      "type": "FRAME",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          20,
+          4,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "TextBubbleView / BubbleStyle=Outgoing, BubbleShapeStyle=Single, NeedRetry=True / ContentGroup / Status / Status",
+      "type": "TEXT",
+      "componentKey": "226eaadce2e6bb133dd89672d8eeea8c65de698c",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "status"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 1,
+      "path": "TextBubbleContent / 👻 showHeader=true",
+      "type": "COMPONENT",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "INSIDE",
+        "styleKey": "S:5d7ac7a867328d2e0eb882c2e7fe3a30bcee215b,7820:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation",
+      "type": "INSTANCE",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          0,
+          16
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation / ContentGroup / QuotationIndicator",
+      "type": "RECTANGLE",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView",
+      "type": "FRAME",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView / Name",
+      "type": "TEXT",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "name"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+      }
+    },
+    {
+      "id": 7,
+      "path": "TextBubbleContent / 👻 showHeader=true / TextBubbleQuotation / ContentGroup / StackView / Text",
+      "type": "TEXT",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "text"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 8,
+      "path": "TextBubbleContent / 👻 showHeader=true / Header",
+      "type": "FRAME",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          12,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "TextBubbleContent / 👻 showHeader=true / Header / Text",
+      "type": "TEXT",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "header"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+      }
+    },
+    {
+      "id": 10,
+      "path": "TextBubbleContent / 👻 showHeader=true / Header / Icon",
+      "type": "FRAME",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "TextBubbleContent / 👻 showHeader=true / Header / Icon / Icon",
+      "type": "INSTANCE",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "TextBubbleContent / 👻 showHeader=true / Header / Icon / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:a9f2817a61c18b42d7aad7270cbaa4db6567a65b,7820:14",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "TextBubbleContent / 👻 showHeader=true / Message",
+      "type": "FRAME",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          10,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "TextBubbleContent / 👻 showHeader=true / Message / Text",
+      "type": "TEXT",
+      "componentKey": "d2871dbad0b5ba87b01a874200012b39bd33d998",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "message"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:4ca3f5cb98009b3ea05fb2a4e9fd0a0492f2c1e7,4541:427"
+      }
+    },
+    {
+      "id": 1,
+      "path": "TextBubbleQuotation",
+      "type": "COMPONENT",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          10,
+          16,
+          0,
+          16
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "TextBubbleQuotation / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "TextBubbleQuotation / ContentGroup / QuotationIndicator",
+      "type": "RECTANGLE",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,7820:16",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "TextBubbleQuotation / ContentGroup / StackView",
+      "type": "FRAME",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "TextBubbleQuotation / ContentGroup / StackView / Name",
+      "type": "TEXT",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "name"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,4541:448"
+      }
+    },
+    {
+      "id": 6,
+      "path": "TextBubbleQuotation / ContentGroup / StackView / Text",
+      "type": "TEXT",
+      "componentKey": "7fe45a6d299ae8c8135c1780109705a6b1a6337e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "text"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 1,
+      "path": "AdditionalContent / 👻 CountOfItems=one",
+      "type": "COMPONENT",
+      "componentKey": "0d9cb3b2d3edfffd4ebf928cafaab389e8abdab5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "AdditionalContent / 👻 CountOfItems=one / ItemA",
+      "type": "INSTANCE",
+      "componentKey": "0d9cb3b2d3edfffd4ebf928cafaab389e8abdab5",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "AdditionalContent / 👻 CountOfItems=one / ItemA / ⊕",
+      "type": "TEXT",
+      "componentKey": "0d9cb3b2d3edfffd4ebf928cafaab389e8abdab5",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 1,
+      "path": "BubbleTopPadding / Size=short",
+      "type": "COMPONENT",
+      "componentKey": "bcb76982abbf0531dd5cfec9dd098417bf1bdb99",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "BubbleTopPadding / Size=short / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "bcb76982abbf0531dd5cfec9dd098417bf1bdb99",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "BubbleTopPadding / Size=short / Spacing / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "bcb76982abbf0531dd5cfec9dd098417bf1bdb99",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

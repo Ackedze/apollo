@@ -1,0 +1,3632 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:13:39.199Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)Dialog"
+    ],
+    "componentCount": 3,
+    "elementCount": 19
+  },
+  "components": [
+    {
+      "key": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "name": "(n)Dialog",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Dialog или alert (ios) для сообщений. Можно переключать выключку по центру или по левому краю, изменять стиль кнопок",
+      "category": "n)Dialog",
+      "defaultVariant": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "variantStructures": {
+        "1a3488e6b3aa622a184cd4a9f84a4014be960de9": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "(n)Dialog",
+          "type": "COMPONENT",
+          "name": "(n)Dialog",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 21,
+                "a": 0.47
+              },
+              "visible": true,
+              "opacity": 0.4699999988079071,
+              "tokenKey": "VariableID:968d67c62bf431169b5aa6216fa2148aefd4680a/1930:36",
+              "colorHex": "#040415"
+            }
+          ],
+          "fillToken": "VariableID:968d67c62bf431169b5aa6216fa2148aefd4680a/1930:36"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "(n)Dialog / (n)DialogContent",
+          "type": "FRAME",
+          "name": "(n)DialogContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 24,
+              "bottom": 0,
+              "left": 24
+            },
+            "itemSpacing": 16
+          },
+          "opacity": 1,
+          "radius": 28,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "(n)Dialog / (n)DialogContent / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "30e456158663276808a90f08e3a3a5a84deb7ffd",
+            "variantProperties": {
+              "Icon": "notifications"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "(n)Dialog / (n)DialogContent / Icon / notifications_active",
+          "type": "VECTOR",
+          "name": "notifications_active",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "(n)Dialog / (n)DialogContent / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "Разрешить приложению Альфа-Банк присылать оповещения?",
+            "fontSize": 24,
+            "lineHeight": 28,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208"
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "(n)Dialog / (n)DialogContent / Actions",
+          "type": "INSTANCE",
+          "name": "Actions",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 24,
+              "bottom": 24,
+              "left": 24
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 16,
+          "componentInstance": {
+            "componentKey": "587bced7ec26f622f81fcbb0c84535a34ee71b4b",
+            "variantProperties": {
+              "Buttons": "two"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList",
+          "type": "FRAME",
+          "name": "ActionsList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 16
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action",
+          "type": "FRAME",
+          "name": "Action",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 16,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "action",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 7,
+          "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action",
+          "type": "FRAME",
+          "name": "Action",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 16,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "action",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "28686:43517",
+          "key": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+          "name": "(n)Dialog"
+        }
+      ]
+    },
+    {
+      "key": "db6d9ff38a7cdc1ea179fde180d1f0dbb6ec74a1",
+      "name": "DialogIcon",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "DialogIcon",
+      "defaultVariant": "30e456158663276808a90f08e3a3a5a84deb7ffd",
+      "variantStructures": {
+        "30e456158663276808a90f08e3a3a5a84deb7ffd": [],
+        "065d3431a018e3dda451cb3859c222c524df2c30": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Icon=mic"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Icon=mic / icon/av/mic_none_24px",
+              "type": "BOOLEAN_OPERATION",
+              "name": "icon/av/mic_none_24px",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Icon=mic / icon/av/mic_none_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Icon=mic / icon/av/mic_none_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Icon=mic / icon/av/mic_none_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "e15b68c5beaf8e46e06fa4fd3c31b808f9bc56cd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Icon=contacts"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Icon=contacts / icon/communication/contacts_24px",
+              "type": "BOOLEAN_OPERATION",
+              "name": "icon/communication/contacts_24px",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 2,
+              "path": "Icon=contacts / icon/communication/contacts_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "bfa5aae2bcddcb37ef8f570a5334c7064a57954d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Icon=gallery",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Icon=gallery / Vector",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Icon=gallery / Vector / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Icon=gallery / Vector / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Icon=gallery / Vector / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 2,
+              "path": "Icon=gallery / Vector / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "e914b6f9df5dbefa57c287328536c06c1e7f0abe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Icon=calendar"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Icon=calendar / icon/action/calendar_today_24px",
+              "type": "BOOLEAN_OPERATION",
+              "name": "icon/action/calendar_today_24px",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Icon=calendar / icon/action/calendar_today_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Icon=calendar / icon/action/calendar_today_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ],
+        "604e1f87599aa8de547cd6ad7acf0e0fe8f91300": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Icon=geo"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 2,
+              "parentId": 1,
+              "path": "Icon=geo / icon/communication/location_on_24px",
+              "type": "BOOLEAN_OPERATION",
+              "name": "icon/communication/location_on_24px",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Icon=geo / icon/communication/location_on_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Icon=geo / icon/communication/location_on_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 2,
+              "path": "Icon=geo / icon/communication/location_on_24px / Path",
+              "type": "VECTOR",
+              "name": "Path",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 218,
+                    "b": 218,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADADA"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 2
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Icon=notifications",
+          "type": "COMPONENT",
+          "name": "Icon=notifications",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Icon=notifications / notifications_active",
+          "type": "VECTOR",
+          "name": "notifications_active",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 34,
+                "g": 136,
+                "b": 250,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "colorHex": "#2288FA"
+            }
+          ],
+          "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+        }
+      ],
+      "variants": [
+        {
+          "id": "28686:43615",
+          "key": "30e456158663276808a90f08e3a3a5a84deb7ffd",
+          "name": "Icon=notifications"
+        },
+        {
+          "id": "28686:43647",
+          "key": "065d3431a018e3dda451cb3859c222c524df2c30",
+          "name": "Icon=mic"
+        },
+        {
+          "id": "28686:43648",
+          "key": "e15b68c5beaf8e46e06fa4fd3c31b808f9bc56cd",
+          "name": "Icon=contacts"
+        },
+        {
+          "id": "28686:43649",
+          "key": "bfa5aae2bcddcb37ef8f570a5334c7064a57954d",
+          "name": "Icon=gallery"
+        },
+        {
+          "id": "28686:43650",
+          "key": "e914b6f9df5dbefa57c287328536c06c1e7f0abe",
+          "name": "Icon=calendar"
+        },
+        {
+          "id": "28686:43651",
+          "key": "604e1f87599aa8de547cd6ad7acf0e0fe8f91300",
+          "name": "Icon=geo"
+        }
+      ]
+    },
+    {
+      "key": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "name": "ActionsList",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ActionsList",
+      "defaultVariant": "587bced7ec26f622f81fcbb0c84535a34ee71b4b",
+      "variantStructures": {
+        "587bced7ec26f622f81fcbb0c84535a34ee71b4b": [],
+        "dc12bd4600361e3fdc4cf0c1c17d23ccfb379563": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Buttons=twoWithAdditional",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 16
+              },
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Buttons=twoWithAdditional / AdditionalAction",
+              "type": "FRAME",
+              "name": "AdditionalAction",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 16,
+                  "right": 16,
+                  "bottom": 16,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 16,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 5,
+                    "g": 11,
+                    "b": 44,
+                    "a": 0.18
+                  },
+                  "visible": true,
+                  "opacity": 0.18000000715255737,
+                  "tokenKey": "VariableID:87bb2e45a3a8802ee00fa824bdafe8d088f1f94f/3541:174",
+                  "colorHex": "#050B2C"
+                }
+              ],
+              "strokeToken": "VariableID:87bb2e45a3a8802ee00fa824bdafe8d088f1f94f/3541:174",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Buttons=twoWithAdditional / AdditionalAction / Label",
+              "type": "TEXT",
+              "name": "Label",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "action",
+                "fontName": "Roboto Medium",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "Roboto Medium",
+                "fontSize": 14
+              }
+            }
+          }
+        ],
+        "e0be0ea390b84d94b04a21327d731e7115c55f05": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Buttons=three"
+            }
+          }
+        ],
+        "683b48b85cbc2f5dbb7a4b0924eff396075a3c6f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Buttons=threeWithMap"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Buttons=threeWithMap / ActionsList / location",
+              "type": "FRAME",
+              "name": "location",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 16,
+                  "left": 0
+                },
+                "itemSpacing": 16
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message",
+              "type": "FRAME",
+              "name": "Message",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 12
+              },
+              "opacity": 1,
+              "radius": 16,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 15,
+                    "g": 25,
+                    "b": 55,
+                    "a": 0.1
+                  },
+                  "visible": true,
+                  "opacity": 0.10000000149011612,
+                  "tokenKey": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+                  "colorHex": "#0F1937"
+                }
+              ],
+              "strokeToken": "VariableID:6d3b509ca2f8ade8d1b395979d94c6b9268b7fbb/1930:11",
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message / LeftIcon",
+              "type": "FRAME",
+              "name": "LeftIcon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message / LeftIcon / vector",
+              "type": "VECTOR",
+              "name": "vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 4,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message / Это приложение может передавать данные...",
+              "type": "TEXT",
+              "name": "Это приложение может передавать данные...",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:7b3082240147096d3288a5d6f5c5e65624e845c4,9623:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Это приложение может передавать данные...",
+                "fontName": "Roboto Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+              "typography": {
+                "fontName": "Roboto Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 4,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message / RightIcon",
+              "type": "FRAME",
+              "name": "RightIcon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "Buttons=threeWithMap / ActionsList / location / Message / RightIcon / vector",
+              "type": "VECTOR",
+              "name": "vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 3,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location",
+              "type": "FRAME",
+              "name": "Location",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 8,
+                  "right": 16,
+                  "bottom": 8,
+                  "left": 16
+                },
+                "itemSpacing": 32
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise",
+              "type": "FRAME",
+              "name": "Precise",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 16
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 11,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview",
+              "type": "FRAME",
+              "name": "Preview",
+              "visible": true,
+              "opacity": 1,
+              "radius": 999,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "strokeToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+              "strokeWeight": 4,
+              "strokeAlign": "OUTSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group",
+              "type": "GROUP",
+              "name": "Group",
+              "visible": true,
+              "opacity": 1
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 13,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 241,
+                    "g": 243,
+                    "b": 244,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#F1F3F4"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 13,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Union",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 20,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 21,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 22,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 23,
+              "parentId": 15,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Group / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 24,
+              "parentId": 12,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Pin",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Pin",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 34,
+                    "g": 136,
+                    "b": 250,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+                  "colorHex": "#2288FA"
+                }
+              ],
+              "fillToken": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 25,
+              "parentId": 24,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Pin / Pin",
+              "type": "VECTOR",
+              "name": "Pin",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 28,
+                    "g": 27,
+                    "b": 31,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#1C1B1F"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 26,
+              "parentId": 24,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Preview / Pin / Hole",
+              "type": "ELLIPSE",
+              "name": "Hole",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 217,
+                    "g": 217,
+                    "b": 217,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#D9D9D9"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 27,
+              "parentId": 11,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Precise / Точное",
+              "type": "TEXT",
+              "name": "Точное",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Точное",
+                "fontName": "Roboto Medium",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+              "typography": {
+                "fontName": "Roboto Medium",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 28,
+              "parentId": 10,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate",
+              "type": "FRAME",
+              "name": "Approximate",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 16
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 29,
+              "parentId": 28,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview",
+              "type": "FRAME",
+              "name": "Preview",
+              "visible": true,
+              "opacity": 1,
+              "radius": 999
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 30,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 127,
+                    "g": 207,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#7FCFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 31,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 241,
+                    "g": 243,
+                    "b": 244,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#F1F3F4"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 32,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 152,
+                    "g": 220,
+                    "b": 171,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#98DCAB"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 33,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Union",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 152,
+                    "g": 220,
+                    "b": 171,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#98DCAB"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 34,
+              "parentId": 33,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 152,
+                    "g": 220,
+                    "b": 171,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#98DCAB"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 35,
+              "parentId": 33,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 152,
+                    "g": 220,
+                    "b": 171,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#98DCAB"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 36,
+              "parentId": 33,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector",
+              "type": "VECTOR",
+              "name": "Vector",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 152,
+                    "g": 220,
+                    "b": 171,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#98DCAB"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 37,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Union",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 38,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 39,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 40,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 41,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 42,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 43,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 44,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 45,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 46,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 47,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 48,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 49,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 50,
+              "parentId": 37,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 218,
+                    "g": 220,
+                    "b": 224,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#DADCE0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 51,
+              "parentId": 29,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union",
+              "type": "BOOLEAN_OPERATION",
+              "name": "Union",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 52,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 53,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 54,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 55,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 56,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 57,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 58,
+              "parentId": 51,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Preview / Union / Vector (Stroke)",
+              "type": "VECTOR",
+              "name": "Vector (Stroke)",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 252,
+                    "g": 201,
+                    "b": 52,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FCC934"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 59,
+              "parentId": 28,
+              "path": "Buttons=threeWithMap / ActionsList / location / Location / Approximate / Приблизительное",
+              "type": "TEXT",
+              "name": "Приблизительное",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:7b3082240147096d3288a5d6f5c5e65624e845c4,9623:3"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Приблизительное",
+                "fontName": "Roboto Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:35ea1ba98cfbbc081b766a140740e82ab3e01c92/1930:77",
+              "typography": {
+                "fontName": "Roboto Regular",
+                "fontSize": 14
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "radius": {
+                "topLeft": 16,
+                "topRight": 16,
+                "bottomRight": 4,
+                "bottomLeft": 4
+              }
+            }
+          }
+        ],
+        "329ee2c06a1ad43654e23cf6a684a2f24a06a623": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Buttons=four"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Buttons=two",
+          "type": "COMPONENT",
+          "name": "Buttons=two",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 16
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Buttons=two / ActionsList",
+          "type": "FRAME",
+          "name": "ActionsList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 16
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Buttons=two / ActionsList / Action",
+          "type": "FRAME",
+          "name": "Action",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 16,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Buttons=two / ActionsList / Action / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "action",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 2,
+          "path": "Buttons=two / ActionsList / Action",
+          "type": "FRAME",
+          "name": "Action",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 16,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Buttons=two / ActionsList / Action / Label",
+          "type": "TEXT",
+          "name": "Label",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "action",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "28686:30119",
+          "key": "587bced7ec26f622f81fcbb0c84535a34ee71b4b",
+          "name": "Buttons=two"
+        },
+        {
+          "id": "28686:30122",
+          "key": "dc12bd4600361e3fdc4cf0c1c17d23ccfb379563",
+          "name": "Buttons=twoWithAdditional"
+        },
+        {
+          "id": "28686:30120",
+          "key": "e0be0ea390b84d94b04a21327d731e7115c55f05",
+          "name": "Buttons=three"
+        },
+        {
+          "id": "38246:846",
+          "key": "683b48b85cbc2f5dbb7a4b0924eff396075a3c6f",
+          "name": "Buttons=threeWithMap"
+        },
+        {
+          "id": "28686:30121",
+          "key": "329ee2c06a1ad43654e23cf6a684a2f24a06a623",
+          "name": "Buttons=four"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)Dialog",
+      "type": "COMPONENT",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:968d67c62bf431169b5aa6216fa2148aefd4680a/1930:36",
+        "color": "rgba(4,4,21,0.47)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)Dialog / (n)DialogContent",
+      "type": "FRAME",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          24,
+          0,
+          24
+        ],
+        "gap": 16,
+        "radius": 28
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:14ac29210fc546f67acfa8e0dfd252c210d0c78b/3541:157",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "(n)Dialog / (n)DialogContent / Icon",
+      "type": "INSTANCE",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "(n)Dialog / (n)DialogContent / Icon / notifications_active",
+      "type": "VECTOR",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "(n)Dialog / (n)DialogContent / Label",
+      "type": "TEXT",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Разрешить приложению Альфа-Банк присылать оповещения?"
+      },
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "(n)Dialog / (n)DialogContent / Actions",
+      "type": "INSTANCE",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          24,
+          24,
+          24
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList",
+      "type": "FRAME",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action",
+      "type": "FRAME",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action / Label",
+      "type": "TEXT",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "action"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+      }
+    },
+    {
+      "id": 10,
+      "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action",
+      "type": "FRAME",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "(n)Dialog / (n)DialogContent / Actions / ActionsList / Action / Label",
+      "type": "TEXT",
+      "componentKey": "1a3488e6b3aa622a184cd4a9f84a4014be960de9",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "action"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+      }
+    },
+    {
+      "id": 1,
+      "path": "DialogIcon / Icon=notifications",
+      "type": "COMPONENT",
+      "componentKey": "db6d9ff38a7cdc1ea179fde180d1f0dbb6ec74a1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "DialogIcon / Icon=notifications / notifications_active",
+      "type": "VECTOR",
+      "componentKey": "db6d9ff38a7cdc1ea179fde180d1f0dbb6ec74a1",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:b10db1879590531b56541f549df1687fe4a23efb/3541:190",
+        "color": "rgba(34,136,250,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "ActionsList / Buttons=two",
+      "type": "COMPONENT",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ActionsList / Buttons=two / ActionsList",
+      "type": "FRAME",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ActionsList / Buttons=two / ActionsList / Action",
+      "type": "FRAME",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ActionsList / Buttons=two / ActionsList / Action / Label",
+      "type": "TEXT",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "action"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+      }
+    },
+    {
+      "id": 5,
+      "path": "ActionsList / Buttons=two / ActionsList / Action",
+      "type": "FRAME",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "ActionsList / Buttons=two / ActionsList / Action / Label",
+      "type": "TEXT",
+      "componentKey": "59272b41fe4d405db2502ed9cb9fdc3c577f2399",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "action"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "styleKey": "S:b1535b5f8c7ea1f325025d62223d8c78df63a103,9623:1"
+      }
+    }
+  ]
+}

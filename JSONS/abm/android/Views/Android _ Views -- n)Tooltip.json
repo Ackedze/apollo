@@ -1,0 +1,173 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:19:43.597Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)Tooltip"
+    ],
+    "componentCount": 1,
+    "elementCount": 2
+  },
+  "components": [
+    {
+      "key": "8a8d8ab541800621b73721c56c443ead093ba244",
+      "name": "(n)Tooltip",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "n)Tooltip",
+      "defaultVariant": "8a8d8ab541800621b73721c56c443ead093ba244",
+      "variantStructures": {
+        "8a8d8ab541800621b73721c56c443ead093ba244": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "(n)Tooltip",
+          "type": "COMPONENT",
+          "name": "(n)Tooltip",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:fac48b3d4360e0c90ee2a904b9ac75dad0d12da2,7820:47"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 16,
+              "bottom": 8,
+              "left": 16
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0.65
+              },
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "(n)Tooltip / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3"
+            },
+            "text": {
+              "styleKey": "S:3fdcf85648a9c1dbcadec7ccd17db3c343fae0c0,1015:5"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Текст подсказки для пользователя",
+            "fontName": "Roboto Regular",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 0.4000000059604645,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 12
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "2474:89396",
+          "key": "8a8d8ab541800621b73721c56c443ead093ba244",
+          "name": "(n)Tooltip"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)Tooltip",
+      "type": "COMPONENT",
+      "componentKey": "8a8d8ab541800621b73721c56c443ead093ba244",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          16,
+          8,
+          16
+        ],
+        "gap": 10,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:fac48b3d4360e0c90ee2a904b9ac75dad0d12da2,7820:47",
+        "color": "rgba(0,0,0,0.65)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)Tooltip / title",
+      "type": "TEXT",
+      "componentKey": "8a8d8ab541800621b73721c56c443ead093ba244",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Текст подсказки для пользователя"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0.4000000059604645,
+        "styleKey": "S:3fdcf85648a9c1dbcadec7ccd17db3c343fae0c0,1015:5"
+      }
+    }
+  ]
+}

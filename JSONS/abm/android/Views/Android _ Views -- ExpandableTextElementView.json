@@ -1,0 +1,1392 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:13:46.797Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ExpandableTextElementView"
+    ],
+    "componentCount": 1,
+    "elementCount": 28
+  },
+  "components": [
+    {
+      "key": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "name": "ExpandableTextElementView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "⛔ В SDUI не поддерживается",
+      "category": "ExpandableTextElementView",
+      "defaultVariant": "5d5aa51aec81c3e63b979a58fe7efd55baf434f6",
+      "variantStructures": {
+        "5d5aa51aec81c3e63b979a58fe7efd55baf434f6": [],
+        "38fb72ea4185f500167edc54baadc34b0038fdd8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "IsExpand=True"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "IsExpand=False",
+          "type": "COMPONENT",
+          "name": "IsExpand=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "IsExpand=False / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "IsExpand=False / ContentGroup / ExpandLabel",
+          "type": "INSTANCE",
+          "name": "ExpandLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5195af3f5b03d4d1b482afc57509763a0345fec9",
+            "variantProperties": {
+              "👻 ResizingType": "fill"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "IsExpand=False / ContentGroup / ExpandLabel / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "IsExpand=False / ContentGroup / ExpandLabel / ContentGroup / Title",
+          "type": "INSTANCE",
+          "name": "Title",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 0,
+              "bottom": 4,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c860ad24a474a9379a20e0eaa21b8fa4f65c5f00",
+            "variantProperties": {
+              "👻 Syntax": "#### [h4]"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "IsExpand=False / ContentGroup / ExpandLabel / ContentGroup / Title / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "label",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": -0.07999999821186066,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+        },
+        {
+          "id": 7,
+          "parentId": 2,
+          "path": "IsExpand=False / ContentGroup / ExpandText",
+          "type": "INSTANCE",
+          "name": "ExpandText",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5195af3f5b03d4d1b482afc57509763a0345fec9",
+            "variantProperties": {
+              "👻 ResizingType": "fill"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "IsExpand=False / ContentGroup / ExpandText / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "IsExpand=False / ContentGroup / ExpandText / ContentGroup / Title",
+          "type": "INSTANCE",
+          "name": "Title",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 12,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "29abcdc2e97ec0ed4d886880c2aae8c27b5f905c",
+            "variantProperties": {
+              "👻 Syntax": "p [paragraph]"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "IsExpand=False / ContentGroup / ExpandText / ContentGroup / Title / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Этот текст изначально свернут для упрощения восприятия. Что помогает сделать блок более читаемым, предоставляя пользователю по желанию возможность раскрыть или свернуть его для доступа к дополнительной информации",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 11,
+          "parentId": 2,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton",
+          "type": "INSTANCE",
+          "name": "ExpandeButton",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5195af3f5b03d4d1b482afc57509763a0345fec9",
+            "variantProperties": {
+              "👻 ResizingType": "fill"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title",
+          "type": "INSTANCE",
+          "name": "Title",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1a9903f2832cbff3158e7292f0030cb2a59ea8d6"
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper",
+          "type": "INSTANCE",
+          "name": "👻 🔒 SizeKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "86ee4df4d5dd8b3a13e4185ab39685bd14ae69ca",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b8dbd285811def43d88e035c4bdc055f00b7e237",
+            "variantProperties": {
+              "Aspect ratio": "1:1"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 19,
+          "parentId": 14,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 21,
+          "parentId": 13,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:182feecc4124025888d1b3a12e64b2fff6dfd481,7820:54"
+            },
+            "text": {
+              "styleKey": "S:318ec868c79ef2d914d828f5bce02b3407b846c3,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "title",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 42,
+                "g": 119,
+                "b": 239,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#2A77EF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 13,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup",
+          "type": "FRAME",
+          "name": "RightIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper",
+          "type": "INSTANCE",
+          "name": "👻 🔒 SizeKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "86ee4df4d5dd8b3a13e4185ab39685bd14ae69ca",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b8dbd285811def43d88e035c4bdc055f00b7e237",
+            "variantProperties": {
+              "Aspect ratio": "1:1"
+            }
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 27,
+          "parentId": 22,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "11933:181160",
+          "key": "5d5aa51aec81c3e63b979a58fe7efd55baf434f6",
+          "name": "IsExpand=False"
+        },
+        {
+          "id": "11933:181180",
+          "key": "38fb72ea4185f500167edc54baadc34b0038fdd8",
+          "name": "IsExpand=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ExpandableTextElementView / IsExpand=False",
+      "type": "COMPONENT",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandLabel",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandLabel / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandLabel / ContentGroup / Title",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          0,
+          4,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandLabel / ContentGroup / Title / title",
+      "type": "TEXT",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "label"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": -0.07999999821186066,
+        "token": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+        "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+      }
+    },
+    {
+      "id": 7,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandText",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandText / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandText / ContentGroup / Title",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          12,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandText / ContentGroup / Title / title",
+      "type": "TEXT",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Этот текст изначально свернут для упрощения восприятия. Что помогает сделать блок более читаемым, предоставляя пользователю по желанию возможность раскрыть или свернуть его для доступа к дополнительной информации"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+      }
+    },
+    {
+      "id": 11,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / star",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / LeftIconGroup / star / icon",
+      "type": "VECTOR",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / title",
+      "type": "TEXT",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:182feecc4124025888d1b3a12e64b2fff6dfd481,7820:54",
+        "color": "rgba(42,119,239,1)"
+      },
+      "text": {
+        "value": "title"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:318ec868c79ef2d914d828f5bce02b3407b846c3,1015:11"
+      }
+    },
+    {
+      "id": 22,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / 👻 🔒 SizeKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / star",
+      "type": "INSTANCE",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "ExpandableTextElementView / IsExpand=False / ContentGroup / ExpandeButton / ContentGroup / Title / RightIconGroup / star / icon",
+      "type": "VECTOR",
+      "componentKey": "4cf334ab91f733ba173f67c66f1bb9a6dc9a741b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

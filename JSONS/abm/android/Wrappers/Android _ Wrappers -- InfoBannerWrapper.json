@@ -1,0 +1,5297 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Wrappers",
+    "file": "Android :: Wrappers",
+    "generatedAt": "2026-04-16T14:07:37.259Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "InfoBannerWrapper"
+    ],
+    "componentCount": 2,
+    "elementCount": 103
+  },
+  "components": [
+    {
+      "key": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "name": "🔄️ InfoBannerWrapper",
+      "status": "scheduled",
+      "role": "main",
+      "platform": "universal",
+      "category": "InfoBannerWrapper",
+      "defaultVariant": "2b3400b7c0b3c486cc6baec0bc0fb9b9b5c96e0c",
+      "variantStructures": {
+        "2b3400b7c0b3c486cc6baec0bc0fb9b9b5c96e0c": [],
+        "aef8f1df6516861aedb3353a03f9fb48827e5a24": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "State=loading"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 5,
+              "path": "State=loading / SpacingGroup / ContentWrapper",
+              "type": "FRAME",
+              "name": "ContentWrapper",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,7820:37"
+                }
+              },
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 28,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#F2F3F5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "State=loading / SpacingGroup / ContentWrapper / ContentWrapper",
+              "type": "FRAME",
+              "name": "ContentWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 47
+          },
+          {
+            "op": "remove",
+            "id": 48
+          },
+          {
+            "op": "remove",
+            "id": 22
+          },
+          {
+            "op": "remove",
+            "id": 23
+          },
+          {
+            "op": "remove",
+            "id": 29
+          },
+          {
+            "op": "remove",
+            "id": 30
+          },
+          {
+            "op": "remove",
+            "id": 26
+          },
+          {
+            "op": "remove",
+            "id": 27
+          },
+          {
+            "op": "remove",
+            "id": 28
+          },
+          {
+            "op": "remove",
+            "id": 25
+          },
+          {
+            "op": "remove",
+            "id": 33
+          },
+          {
+            "op": "remove",
+            "id": 44
+          },
+          {
+            "op": "remove",
+            "id": 45
+          },
+          {
+            "op": "remove",
+            "id": 46
+          },
+          {
+            "op": "remove",
+            "id": 43
+          },
+          {
+            "op": "remove",
+            "id": 41
+          },
+          {
+            "op": "remove",
+            "id": 42
+          },
+          {
+            "op": "remove",
+            "id": 49
+          },
+          {
+            "op": "remove",
+            "id": 50
+          },
+          {
+            "op": "remove",
+            "id": 51
+          },
+          {
+            "op": "remove",
+            "id": 52
+          },
+          {
+            "op": "remove",
+            "id": 53
+          },
+          {
+            "op": "remove",
+            "id": 54
+          },
+          {
+            "op": "remove",
+            "id": 55
+          },
+          {
+            "op": "remove",
+            "id": 56
+          },
+          {
+            "op": "remove",
+            "id": 57
+          },
+          {
+            "op": "remove",
+            "id": 58
+          },
+          {
+            "op": "remove",
+            "id": 59
+          },
+          {
+            "op": "remove",
+            "id": 60
+          },
+          {
+            "op": "remove",
+            "id": 61
+          },
+          {
+            "op": "remove",
+            "id": 62
+          },
+          {
+            "op": "remove",
+            "id": 63
+          },
+          {
+            "op": "remove",
+            "id": 64
+          },
+          {
+            "op": "remove",
+            "id": 65
+          },
+          {
+            "op": "remove",
+            "id": 66
+          },
+          {
+            "op": "remove",
+            "id": 67
+          },
+          {
+            "op": "remove",
+            "id": 68
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "State=default",
+          "type": "COMPONENT",
+          "name": "State=default",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 28
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "State=default / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "7f2759dc61177d153da19e13916919c85d508821",
+            "variantProperties": {
+              "Value": "extended"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "State=default / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "861b1838c3e547b603acc883dbb1008d9de9cd4c",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "State=default / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "State=default / SpacingGroup",
+          "type": "FRAME",
+          "name": "SpacingGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "State=default / SpacingGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cba6d24cec060a581cfad0aa61e285b4babf449f",
+            "variantProperties": {
+              "Size": "xl3 [40]"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "State=default / SpacingGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 5,
+          "path": "State=default / SpacingGroup / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,7820:37"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 28,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F2F3F5"
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cba6d24cec060a581cfad0aa61e285b4babf449f",
+            "variantProperties": {
+              "Size": "xl3 [40]"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9801826ad403e1bf526cccd8461102d8d3ccb62a",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView",
+          "type": "INSTANCE",
+          "name": "TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cac04fa96fe022250c9581643d59cb7ea923f505",
+            "variantProperties": {
+              "Style": "Custom",
+              "Addons": "None",
+              "Horizontal Margin": "Both"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView",
+          "type": "INSTANCE",
+          "name": "x / TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "ba0c450401adbff64ea3216d446ba1035cd1dc28",
+            "variantProperties": {
+              "Horizontal Margin": "Extended",
+              "Type": "Text"
+            }
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "861b1838c3e547b603acc883dbb1008d9de9cd4c",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 14,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap",
+          "type": "FRAME",
+          "name": "content-wrap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_left",
+          "type": "TEXT",
+          "name": "_text_left",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57"
+            },
+            "text": {
+              "styleKey": "S:c7db75c3a5b7f67d271d1e98c7fd198275cf1892,1015:21"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Roboto Medium",
+            "fontSize": 18,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 18
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 17,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_right",
+          "type": "TEXT",
+          "name": "_text_right",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 14,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a52acbe6f1cf66ff5522f405816ff9fa574a7cfc",
+            "variantProperties": {
+              "Size": "s [12]"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView",
+          "type": "INSTANCE",
+          "name": "TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cac04fa96fe022250c9581643d59cb7ea923f505",
+            "variantProperties": {
+              "Style": "Custom",
+              "Addons": "None",
+              "Horizontal Margin": "Both"
+            }
+          }
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView",
+          "type": "INSTANCE",
+          "name": "x / TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "ba0c450401adbff64ea3216d446ba1035cd1dc28",
+            "variantProperties": {
+              "Horizontal Margin": "Extended",
+              "Type": "Text"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be3991fa28cbc640a4a16ce2d85f3ee70c3c43cf",
+            "variantProperties": {
+              "Size": "2xs (x0.5 — 4dp)"
+            }
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Spacing",
+          "type": "INSTANCE",
+          "name": ".Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "0584d8ed324702ad379b49bebb597921a0c4984b"
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 23,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap",
+          "type": "FRAME",
+          "name": "content-wrap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_left",
+          "type": "TEXT",
+          "name": "_text_left",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": null,
+              "colorHex": "#040413"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 26,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_right",
+          "type": "TEXT",
+          "name": "_text_right",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 29,
+          "parentId": 23,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a52acbe6f1cf66ff5522f405816ff9fa574a7cfc",
+            "variantProperties": {
+              "Size": "s [12]"
+            }
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 29,
+          "path": "State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9801826ad403e1bf526cccd8461102d8d3ccb62a",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 33,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup",
+          "type": "FRAME",
+          "name": "DummyContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "7f2759dc61177d153da19e13916919c85d508821",
+            "variantProperties": {
+              "Value": "extended"
+            }
+          }
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "861b1838c3e547b603acc883dbb1008d9de9cd4c",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 36,
+          "parentId": 35,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 37,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+          "type": "INSTANCE",
+          "name": "🎨DummyContent",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "6349378402becb6bd4aebd7e859af45056db94a0",
+            "variantProperties": {
+              "Style": "rectangle: s 24"
+            }
+          }
+        },
+        {
+          "id": 38,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9801826ad403e1bf526cccd8461102d8d3ccb62a",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 39,
+          "parentId": 38,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+          "type": "INSTANCE",
+          "name": "🎨DummyContent",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "6349378402becb6bd4aebd7e859af45056db94a0",
+            "variantProperties": {
+              "Style": "rectangle: s 24"
+            }
+          }
+        },
+        {
+          "id": 41,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9801826ad403e1bf526cccd8461102d8d3ccb62a",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 42,
+          "parentId": 41,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 43,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+          "type": "INSTANCE",
+          "name": "🎨DummyContent",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "6349378402becb6bd4aebd7e859af45056db94a0",
+            "variantProperties": {
+              "Style": "rectangle: s 24"
+            }
+          }
+        },
+        {
+          "id": 44,
+          "parentId": 33,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "7f2759dc61177d153da19e13916919c85d508821",
+            "variantProperties": {
+              "Value": "extended"
+            }
+          }
+        },
+        {
+          "id": 45,
+          "parentId": 44,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "861b1838c3e547b603acc883dbb1008d9de9cd4c",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 46,
+          "parentId": 45,
+          "path": "State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 47,
+          "parentId": 8,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9801826ad403e1bf526cccd8461102d8d3ccb62a",
+            "variantProperties": {
+              "Size": "xl [24]"
+            }
+          }
+        },
+        {
+          "id": 48,
+          "parentId": 47,
+          "path": "State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        },
+        {
+          "id": 49,
+          "parentId": 1,
+          "path": "State=default / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b902ebeca23bde30dca218bb2de474ccfe1e201c",
+            "variantProperties": {
+              "Size": "Large",
+              "Shape": "Super Ellipse",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 50,
+          "parentId": 49,
+          "path": "State=default / IconElementView / .Icon",
+          "type": "INSTANCE",
+          "name": ".Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5cc967e1885ccd572b07b26efdfc8c3347fce197",
+            "variantProperties": {
+              "Size": "Large"
+            }
+          }
+        },
+        {
+          "id": 51,
+          "parentId": 50,
+          "path": "State=default / IconElementView / .Icon / Subtract",
+          "type": "BOOLEAN_OPERATION",
+          "name": "Subtract",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,4431:11"
+            }
+          },
+          "opacity": 1,
+          "radius": 50,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ]
+        },
+        {
+          "id": 52,
+          "parentId": 51,
+          "path": "State=default / IconElementView / .Icon / Subtract / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 53,
+          "parentId": 51,
+          "path": "State=default / IconElementView / .Icon / Subtract / Rectangle",
+          "type": "RECTANGLE",
+          "name": "Rectangle",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42"
+            }
+          },
+          "opacity": 1,
+          "radius": 4,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ]
+        },
+        {
+          "id": 54,
+          "parentId": 51,
+          "path": "State=default / IconElementView / .Icon / Subtract / Superellipse",
+          "type": "VECTOR",
+          "name": "Superellipse",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24"
+            }
+          },
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 182,
+                "g": 188,
+                "b": 195,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#B6BCC3"
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "parentId": 51,
+          "path": "State=default / IconElementView / .Icon / Subtract / bottom",
+          "type": "ELLIPSE",
+          "name": "bottom",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 182,
+                "g": 188,
+                "b": 195,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#B6BCC3"
+            }
+          ]
+        },
+        {
+          "id": 56,
+          "parentId": 51,
+          "path": "State=default / IconElementView / .Icon / Subtract / top",
+          "type": "ELLIPSE",
+          "name": "top",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 182,
+                "g": 188,
+                "b": 195,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#B6BCC3"
+            }
+          ]
+        },
+        {
+          "id": 57,
+          "parentId": 50,
+          "path": "State=default / IconElementView / .Icon / Bottom Subicon",
+          "type": "INSTANCE",
+          "name": "Bottom Subicon",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fe730485723a1319f10cef268e8bedda66cbb813",
+            "variantProperties": {
+              "Size": "Medium"
+            }
+          }
+        },
+        {
+          "id": 58,
+          "parentId": 57,
+          "path": "State=default / IconElementView / .Icon / Bottom Subicon / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ]
+        },
+        {
+          "id": 59,
+          "parentId": 57,
+          "path": "State=default / IconElementView / .Icon / Bottom Subicon / users",
+          "type": "INSTANCE",
+          "name": "users",
+          "visible": true,
+          "opacity": 1,
+          "radius": 20,
+          "componentInstance": {
+            "componentKey": "2ac827a9f173f6fdf9a7e6b211594826240adca5",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 60,
+          "parentId": 59,
+          "path": "State=default / IconElementView / .Icon / Bottom Subicon / users / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,4431:48"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 61,
+          "parentId": 50,
+          "path": "State=default / IconElementView / .Icon / Top Subicon",
+          "type": "INSTANCE",
+          "name": "Top Subicon",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fe730485723a1319f10cef268e8bedda66cbb813",
+            "variantProperties": {
+              "Size": "Medium"
+            }
+          }
+        },
+        {
+          "id": 62,
+          "parentId": 61,
+          "path": "State=default / IconElementView / .Icon / Top Subicon / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "parentId": 61,
+          "path": "State=default / IconElementView / .Icon / Top Subicon / users",
+          "type": "INSTANCE",
+          "name": "users",
+          "visible": true,
+          "opacity": 1,
+          "radius": 20,
+          "componentInstance": {
+            "componentKey": "2ac827a9f173f6fdf9a7e6b211594826240adca5",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 64,
+          "parentId": 63,
+          "path": "State=default / IconElementView / .Icon / Top Subicon / users / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,4431:48"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#000000"
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "parentId": 50,
+          "path": "State=default / IconElementView / .Icon / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 66,
+          "parentId": 65,
+          "path": "State=default / IconElementView / .Icon / Icon / car",
+          "type": "INSTANCE",
+          "name": "car",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f15f9f8580a2605e7d4ac3f4b9a8b6a1e8968669",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 67,
+          "parentId": 66,
+          "path": "State=default / IconElementView / .Icon / Icon / car / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "parentId": 50,
+          "path": "State=default / IconElementView / .Icon / _initials",
+          "type": "TEXT",
+          "name": "_initials",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40"
+            },
+            "text": {
+              "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,1015:43"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "ХЙ",
+            "fontName": "Roboto Medium",
+            "fontSize": 20,
+            "lineHeight": 28,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 60,
+                "g": 60,
+                "b": 67,
+                "a": 0.6
+              },
+              "visible": true,
+              "opacity": 0.6000000238418579,
+              "tokenKey": null,
+              "colorHex": "#3C3C43"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 20
+          }
+        },
+        {
+          "id": 69,
+          "parentId": 1,
+          "path": "State=default / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "7f2759dc61177d153da19e13916919c85d508821",
+            "variantProperties": {
+              "Value": "extended"
+            }
+          }
+        },
+        {
+          "id": 70,
+          "parentId": 69,
+          "path": "State=default / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "861b1838c3e547b603acc883dbb1008d9de9cd4c",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 71,
+          "parentId": 70,
+          "path": "State=default / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "62e8f46e4a6d49e352bb0a5273b514eb66368398"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "708:68091",
+          "key": "2b3400b7c0b3c486cc6baec0bc0fb9b9b5c96e0c",
+          "name": "State=default"
+        },
+        {
+          "id": "708:68107",
+          "key": "aef8f1df6516861aedb3353a03f9fb48827e5a24",
+          "name": "State=loading"
+        }
+      ]
+    },
+    {
+      "key": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "name": "InfoBannerWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "InfoBannerWrapper",
+      "defaultVariant": "00ad5e5bed1cf0cf4f2b52586f5ddfe71ed8d182",
+      "variantStructures": {
+        "00ad5e5bed1cf0cf4f2b52586f5ddfe71ed8d182": [],
+        "a44c52c206376fecb4e90118f830d8066bb52555": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "State=Loading"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          },
+          {
+            "op": "remove",
+            "id": 22
+          },
+          {
+            "op": "remove",
+            "id": 23
+          },
+          {
+            "op": "remove",
+            "id": 24
+          },
+          {
+            "op": "remove",
+            "id": 25
+          },
+          {
+            "op": "remove",
+            "id": 26
+          },
+          {
+            "op": "remove",
+            "id": 27
+          },
+          {
+            "op": "remove",
+            "id": 28
+          },
+          {
+            "op": "remove",
+            "id": 29
+          },
+          {
+            "op": "remove",
+            "id": 30
+          },
+          {
+            "op": "remove",
+            "id": 31
+          },
+          {
+            "op": "remove",
+            "id": 32
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "State=Default",
+          "type": "COMPONENT",
+          "name": "State=Default",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/1:89",
+              "bottom": null,
+              "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/1:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "State=Default / SpacingGroup",
+          "type": "FRAME",
+          "name": "SpacingGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 40,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:354b8a9d32c1cb7c78fc722f6c0a25bad62eb472/1:97",
+              "right": null,
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "State=Default / SpacingGroup / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 64,
+              "right": 0,
+              "bottom": 24,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:eb3522c341f152cd5942faaeba8a0bd124c3afe6/1:103",
+              "right": null,
+              "bottom": "VariableID:cbe7bd24d2504b1a50d3334495ce36781e30a7e2/1:91",
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 28,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "TextLabel (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f1718f52f08ffbdfedabf753396f6e833f47ff62",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Center",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:c7db75c3a5b7f67d271d1e98c7fd198275cf1892,1015:21"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "title",
+            "fontName": "Roboto Medium",
+            "fontSize": 18,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 18
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 3,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "TextLabel (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 4,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:6559a107938d62bce78e4003e4146f7b0495e589/1:77",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f1718f52f08ffbdfedabf753396f6e833f47ff62",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Center",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "subtitle",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 10,
+          "parentId": 3,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53)",
+          "type": "INSTANCE",
+          "name": "StackWrapper (🤖 11.53)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 20,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+              "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9d86b898cb5b23d257c26d97f53d1a1043d17cba",
+            "variantProperties": {
+              "Axis": "Horizontal",
+              "Alignment": "Leading"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup",
+          "type": "SLOT",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 24
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+          "type": "INSTANCE",
+          "name": "LayoutElement (Dummy)",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "2a5b4e7aa1d2c2fa3300e7482a56edd083a0ceb9"
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 11,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+          "type": "INSTANCE",
+          "name": "LayoutElement (Dummy)",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "2a5b4e7aa1d2c2fa3300e7482a56edd083a0ceb9"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 11,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+          "type": "INSTANCE",
+          "name": "LayoutElement (Dummy)",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "2a5b4e7aa1d2c2fa3300e7482a56edd083a0ceb9"
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        },
+        {
+          "id": 18,
+          "parentId": 1,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "IconElementViewV1 (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fc027b5510c72f3448f2e53dec1ba25bcc990cf9",
+            "variantProperties": {
+              "Size": "Large",
+              "Shape": "Superellipse",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract",
+          "type": "BOOLEAN_OPERATION",
+          "name": "Subtract",
+          "visible": true,
+          "opacity": 1,
+          "radius": 50,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 72,
+                "b": 55,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+              "colorHex": "#FF4837"
+            }
+          ],
+          "fillToken": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204"
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / SuperellipseShape",
+          "type": "VECTOR",
+          "name": "SuperellipseShape",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 22,
+          "parentId": 20,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / BottomReccess",
+          "type": "ELLIPSE",
+          "name": "BottomReccess",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 20,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / TopReccess",
+          "type": "ELLIPSE",
+          "name": "TopReccess",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 24,
+          "parentId": 19,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView / car",
+          "type": "INSTANCE",
+          "name": "car",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "f15f9f8580a2605e7d4ac3f4b9a8b6a1e8968669",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView / car / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 27,
+          "parentId": 19,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator",
+          "type": "INSTANCE",
+          "name": "BottomRightIndicator",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 3,
+              "right": 3,
+              "bottom": 3,
+              "left": 3
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 20,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+          "componentInstance": {
+            "componentKey": "8dc32562998925c34f6bcdc166eaf480f8a13de4",
+            "variantProperties": {
+              "🔒 Size": "Large [24]"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator / two-users_s",
+          "type": "INSTANCE",
+          "name": "two-users_s",
+          "visible": true,
+          "opacity": 1,
+          "radius": 20,
+          "componentInstance": {
+            "componentKey": "d2a864a71679cce6af66dc45f847bae04efdb7a0"
+          }
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator / two-users_s / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 30,
+          "parentId": 19,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator",
+          "type": "INSTANCE",
+          "name": "TopRightIndicator",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 20,
+          "componentInstance": {
+            "componentKey": "fa9c1fadfc71eca4c0825c4da9ae55ecf34164c7",
+            "variantProperties": {
+              "Size": "Large [24]"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 8,
+              "bottom": 2,
+              "left": 8
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 20,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator / ContentGroup / value",
+          "type": "TEXT",
+          "name": "value",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "1",
+            "fontName": "Roboto Bold",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47",
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 14
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "29875:1623",
+          "key": "00ad5e5bed1cf0cf4f2b52586f5ddfe71ed8d182",
+          "name": "State=Default"
+        },
+        {
+          "id": "29875:1644",
+          "key": "a44c52c206376fecb4e90118f830d8066bb52555",
+          "name": "State=Loading"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "🔄️ InfoBannerWrapper / State=default",
+      "type": "COMPONENT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 28
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup",
+      "type": "FRAME",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 28
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,7820:37",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:c7db75c3a5b7f67d271d1e98c7fd198275cf1892,1015:21"
+      }
+    },
+    {
+      "id": 19,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+      }
+    },
+    {
+      "id": 20,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+      }
+    },
+    {
+      "id": 28,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,4431:57",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+      }
+    },
+    {
+      "id": 29,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / TextView / x / TextView / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup",
+      "type": "FRAME",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 43,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / 🎨DummyContent",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 44,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 45,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / DummyContentGroup / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 48,
+      "path": "🔄️ InfoBannerWrapper / State=default / SpacingGroup / ContentGroup / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 49,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 50,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 51,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:14af24fa8c549b89a7b439d8c4806770696e58b1,4431:11",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 52,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 53,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract / Rectangle",
+      "type": "RECTANGLE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42",
+        "color": "rgba(243,244,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 54,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract / Superellipse",
+      "type": "VECTOR",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24",
+        "color": "rgba(182,188,195,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 55,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract / bottom",
+      "type": "ELLIPSE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24",
+        "color": "rgba(182,188,195,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 56,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Subtract / top",
+      "type": "ELLIPSE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ea039963016048b12d10beeae19199b20ec780da,17:24",
+        "color": "rgba(182,188,195,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 57,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Bottom Subicon",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 58,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Bottom Subicon / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42",
+        "color": "rgba(243,244,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 59,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Bottom Subicon / users",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 60,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Bottom Subicon / users / icon",
+      "type": "VECTOR",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,4431:48",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 61,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Top Subicon",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 62,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Top Subicon / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:005ccc3dbfacc14b33cca9d819568715b908500b,4431:42",
+        "color": "rgba(243,244,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 63,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Top Subicon / users",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 64,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Top Subicon / users / icon",
+      "type": "VECTOR",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,4431:48",
+        "color": "rgba(0,0,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 65,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Icon",
+      "type": "GROUP",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 66,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Icon / car",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 67,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / Icon / car / icon",
+      "type": "VECTOR",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 68,
+      "path": "🔄️ InfoBannerWrapper / State=default / IconElementView / .Icon / _initials",
+      "type": "TEXT",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40",
+        "color": "rgba(60,60,67,0.6)"
+      },
+      "text": {
+        "value": "ХЙ"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 20,
+        "lineHeight": 28,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,1015:43"
+      }
+    },
+    {
+      "id": 69,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 70,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 71,
+      "path": "🔄️ InfoBannerWrapper / State=default / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "16709b537d1f3c7f6c55e08afbd54b359faa13f6",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "InfoBannerWrapper / State=Default",
+      "type": "COMPONENT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/1:89",
+          "bottom": null,
+          "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/1:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          40,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:354b8a9d32c1cb7c78fc722f6c0a25bad62eb472/1:97",
+          "right": null,
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          64,
+          0,
+          24,
+          0
+        ],
+        "gap": 0,
+        "radius": 28,
+        "paddingTokens": {
+          "top": "VariableID:eb3522c341f152cd5942faaeba8a0bd124c3afe6/1:103",
+          "right": null,
+          "bottom": "VariableID:cbe7bd24d2504b1a50d3334495ce36781e30a7e2/1:91",
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "title"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 18,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:c7db75c3a5b7f67d271d1e98c7fd198275cf1892,1015:21"
+      }
+    },
+    {
+      "id": 7,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          4,
+          16,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:6559a107938d62bce78e4003e4146f7b0495e589/1:77",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+      }
+    },
+    {
+      "id": 10,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          20,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+          "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup",
+      "type": "SLOT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 24,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 14,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 16,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "InfoBannerWrapper / State=Default / SpacingGroup / ContentGroup / StackWrapper (🤖 11.53) / 🎨 ContentGroup / LayoutElement (Dummy) / ⊕",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 18,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 50
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c00af0030dca573ab6bfdc1a6c47bc162e36090d/3541:204",
+        "color": "rgba(255,72,55,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / SuperellipseShape",
+      "type": "VECTOR",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / BottomReccess",
+      "type": "ELLIPSE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / Subtract / TopReccess",
+      "type": "ELLIPSE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView / car",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / ImageView / car / icon",
+      "type": "VECTOR",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": false,
+      "layout": {
+        "padding": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "gap": 10,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator / two-users_s",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / BottomRightIndicator / two-users_s / icon",
+      "type": "VECTOR",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator",
+      "type": "INSTANCE",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          8,
+          2,
+          8
+        ],
+        "gap": 10,
+        "radius": 20
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "InfoBannerWrapper / State=Default / IconElementViewV1 (🤖 12.11) / ContentGroup / TopRightIndicator / ContentGroup / value",
+      "type": "TEXT",
+      "componentKey": "d2705baa37de142cf04a1771429a8f682f9b2736",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:301d7bbf1c36b77ee22fa00b2008e56228859595/1930:47",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.25
+      }
+    }
+  ]
+}

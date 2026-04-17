@@ -1,0 +1,2674 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:19:28.978Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "TextView"
+    ],
+    "componentCount": 1,
+    "elementCount": 3
+  },
+  "components": [
+    {
+      "key": "e8efd4dbe0ef54b9b67d380ee073fe02b2bdd428",
+      "name": "TextView (🤖 11.52)",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "🔁 Вместо данного компонента воспользуйся пресетом TextView на GenericWrapper или TextLabel компонеентом",
+      "category": "TextView (🤖 11.52)",
+      "defaultVariant": "6436d64f4a1e4e7977ce1e8b65cf09471a78ef2c",
+      "variantStructures": {
+        "6436d64f4a1e4e7977ce1e8b65cf09471a78ef2c": [],
+        "4f99c081db56983554a00fa62a079e09ccd1023b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H1, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "2071ff25d247bce2ac1a63441fdb10b0d6790c56": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H1, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "1bed8ca33ea637fbaa342753c55ef9192f5de54b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H1, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          }
+        ],
+        "bdac5d6b70b372046d0f77b487043f91055408a3": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H2, HorizontalPadding=None"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,4541:419"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": -0.15000000596046448,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20
+              },
+              "typographyToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402"
+            }
+          }
+        ],
+        "72e7dbcaf262c7f0c6a2faed9dc8df05c13ac3ad": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H2, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,4541:419"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": -0.15000000596046448,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20
+              },
+              "typographyToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402"
+            }
+          }
+        ],
+        "1acd50858b01a3888ddd0785e6f451600542f1f5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H2, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,4541:419"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": -0.15000000596046448,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20
+              },
+              "typographyToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402"
+            }
+          }
+        ],
+        "d2384f989cf67ea443fe5e773ee3bcb7e93e1b17": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H2, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:39ce31750b5528592f342f2f1cc40c8a3e1b70a1,4541:419"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20,
+                "lineHeight": 28,
+                "letterSpacing": -0.15000000596046448,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 20
+              },
+              "typographyToken": "VariableID:12064704561b7abdeb9e7e5870517db261dca668/4541:402"
+            }
+          }
+        ],
+        "a90d7906ed30b661f167a9012035a5d056c4a512": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H3, HorizontalPadding=None"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "282414d62676fdb84e4dee83ab3fda85455e3ce5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H3, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "67555a0713f9a3323025c8f6594c449bad33ade5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H3, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "33ba3a7e140c470376c0ae283b3d446f8d229097": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H3, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "77699eef987f91a6f5b770e02b172c7e0b63f59d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H4, HorizontalPadding=None",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "ae323cb4570ec788f635a71dcb5bfca67e0818a7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H4, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 4,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "f749021b28244c5d2865751bc2b4dfef5acce840": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H4, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 4,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "c0637e28ff234a62b6f26a4faa1b71a1aa59e415": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=H4, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 4,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "069ac9773dc830ec6abb81d74346279ab19c2b8d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Section, HorizontalPadding=None"
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "217831e8e083647489ab1225d570ce680ddae40d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Section, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "fea02e884fcddea80142ba213059dafa0c55376f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Section, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "2f59f264e64b854a9b33f97172001678ad7c9ab5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Section, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 24,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:34dc70ffb1f2f2625e33bc0cafe4a4d256def2bd,4541:420"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16,
+                "lineHeight": 20,
+                "letterSpacing": -0.07999999821186066,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:44e748b84e4913dac8f5573bd2007a12ae043746/4541:397"
+            }
+          }
+        ],
+        "7d1f25d0acb27ebb4b48e712103d2252adcdb97c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Paragraph, HorizontalPadding=None",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Paragraph, HorizontalPadding=None / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "16355b29851f727f0d4d11ffe754d13efc8fdb39": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Paragraph, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Paragraph, HorizontalPadding=OnlyLeft / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "c7e8656e2919eae905daf370266d2e2f823db3b2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Paragraph, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Paragraph, HorizontalPadding=OnlyRight / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "f6066fb1c8435274104f8923e53a737d95dc9260": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Paragraph, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Paragraph, HorizontalPadding=Both / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "2b7bc91688c00c7937369f693e301a6b995183f6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Quote, HorizontalPadding=None",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+                },
+                "text": {
+                  "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14
+              },
+              "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Quote, HorizontalPadding=None / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "bc58d4297bdfc9e667ae057746b696d3c08698fe": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Quote, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+                },
+                "text": {
+                  "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14
+              },
+              "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Quote, HorizontalPadding=OnlyLeft / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "8b9e574faa533ac717cba9b7149523e005c5eaa6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Quote, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+                },
+                "text": {
+                  "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14
+              },
+              "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Quote, HorizontalPadding=OnlyRight / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "6649657f0f1fd0b78f51fa7149b43e77228a3256": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Quote, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 12,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:ab4b1fccce920cdd000d57d17a62ca54630cc922,7820:61"
+                },
+                "text": {
+                  "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14,
+                "lineHeight": 20,
+                "letterSpacing": 0,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 4,
+                    "g": 4,
+                    "b": 19,
+                    "a": 0.55
+                  },
+                  "visible": true,
+                  "opacity": 0.550000011920929,
+                  "tokenKey": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+                  "colorHex": "#040413"
+                }
+              ],
+              "fillToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 14
+              },
+              "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Quote, HorizontalPadding=Both / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "306d2ba1129d74773742e8ccea1ab7684367fe68": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Custom, HorizontalPadding=None",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Custom, HorizontalPadding=None / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "816b567a4f391150d3d404e9e11a9d681e2e0573": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Custom, HorizontalPadding=OnlyLeft",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Custom, HorizontalPadding=OnlyLeft / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "7384c78fc54f462e7cd6745edddccd191e563c5b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Custom, HorizontalPadding=OnlyRight",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Custom, HorizontalPadding=OnlyRight / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ],
+        "8bd599c798290eada7355d9da894591eab5d798e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Style=Custom, HorizontalPadding=Both",
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 16,
+                  "bottom": 0,
+                  "left": 16
+                },
+                "itemSpacing": 0
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "text": {
+                "characters": "title",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 2,
+              "path": "Style=Custom, HorizontalPadding=Both / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Style=H1, HorizontalPadding=None",
+          "type": "COMPONENT",
+          "name": "Style=H1, HorizontalPadding=None",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 0,
+              "bottom": 12,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Style=H1, HorizontalPadding=None / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Style=H1, HorizontalPadding=None / ContentGroup / Title",
+          "type": "TEXT",
+          "name": "Title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:65db8277e14cab5eb97889a54550fdb2a08c09c3,4541:418"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "title",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 26,
+            "lineHeight": 32,
+            "letterSpacing": -0.3799999952316284,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 26
+          },
+          "typographyToken": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403"
+        }
+      ],
+      "variants": [
+        {
+          "id": "49:41571",
+          "key": "6436d64f4a1e4e7977ce1e8b65cf09471a78ef2c",
+          "name": "Style=H1, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41850",
+          "key": "4f99c081db56983554a00fa62a079e09ccd1023b",
+          "name": "Style=H1, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41914",
+          "key": "2071ff25d247bce2ac1a63441fdb10b0d6790c56",
+          "name": "Style=H1, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41978",
+          "key": "1bed8ca33ea637fbaa342753c55ef9192f5de54b",
+          "name": "Style=H1, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41726",
+          "key": "bdac5d6b70b372046d0f77b487043f91055408a3",
+          "name": "Style=H2, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41854",
+          "key": "72e7dbcaf262c7f0c6a2faed9dc8df05c13ac3ad",
+          "name": "Style=H2, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41918",
+          "key": "1acd50858b01a3888ddd0785e6f451600542f1f5",
+          "name": "Style=H2, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41982",
+          "key": "d2384f989cf67ea443fe5e773ee3bcb7e93e1b17",
+          "name": "Style=H2, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41730",
+          "key": "a90d7906ed30b661f167a9012035a5d056c4a512",
+          "name": "Style=H3, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41858",
+          "key": "282414d62676fdb84e4dee83ab3fda85455e3ce5",
+          "name": "Style=H3, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41922",
+          "key": "67555a0713f9a3323025c8f6594c449bad33ade5",
+          "name": "Style=H3, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41986",
+          "key": "33ba3a7e140c470376c0ae283b3d446f8d229097",
+          "name": "Style=H3, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41734",
+          "key": "77699eef987f91a6f5b770e02b172c7e0b63f59d",
+          "name": "Style=H4, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41862",
+          "key": "ae323cb4570ec788f635a71dcb5bfca67e0818a7",
+          "name": "Style=H4, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41926",
+          "key": "f749021b28244c5d2865751bc2b4dfef5acce840",
+          "name": "Style=H4, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41990",
+          "key": "c0637e28ff234a62b6f26a4faa1b71a1aa59e415",
+          "name": "Style=H4, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41738",
+          "key": "069ac9773dc830ec6abb81d74346279ab19c2b8d",
+          "name": "Style=Section, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41866",
+          "key": "217831e8e083647489ab1225d570ce680ddae40d",
+          "name": "Style=Section, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41930",
+          "key": "fea02e884fcddea80142ba213059dafa0c55376f",
+          "name": "Style=Section, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41994",
+          "key": "2f59f264e64b854a9b33f97172001678ad7c9ab5",
+          "name": "Style=Section, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41742",
+          "key": "7d1f25d0acb27ebb4b48e712103d2252adcdb97c",
+          "name": "Style=Paragraph, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41870",
+          "key": "16355b29851f727f0d4d11ffe754d13efc8fdb39",
+          "name": "Style=Paragraph, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41934",
+          "key": "c7e8656e2919eae905daf370266d2e2f823db3b2",
+          "name": "Style=Paragraph, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:41998",
+          "key": "f6066fb1c8435274104f8923e53a737d95dc9260",
+          "name": "Style=Paragraph, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41746",
+          "key": "2b7bc91688c00c7937369f693e301a6b995183f6",
+          "name": "Style=Quote, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41874",
+          "key": "bc58d4297bdfc9e667ae057746b696d3c08698fe",
+          "name": "Style=Quote, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41938",
+          "key": "8b9e574faa533ac717cba9b7149523e005c5eaa6",
+          "name": "Style=Quote, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:42002",
+          "key": "6649657f0f1fd0b78f51fa7149b43e77228a3256",
+          "name": "Style=Quote, HorizontalPadding=Both"
+        },
+        {
+          "id": "49:41750",
+          "key": "306d2ba1129d74773742e8ccea1ab7684367fe68",
+          "name": "Style=Custom, HorizontalPadding=None"
+        },
+        {
+          "id": "49:41878",
+          "key": "816b567a4f391150d3d404e9e11a9d681e2e0573",
+          "name": "Style=Custom, HorizontalPadding=OnlyLeft"
+        },
+        {
+          "id": "49:41942",
+          "key": "7384c78fc54f462e7cd6745edddccd191e563c5b",
+          "name": "Style=Custom, HorizontalPadding=OnlyRight"
+        },
+        {
+          "id": "49:42006",
+          "key": "8bd599c798290eada7355d9da894591eab5d798e",
+          "name": "Style=Custom, HorizontalPadding=Both"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "TextView (🤖 11.52) / Style=H1, HorizontalPadding=None",
+      "type": "COMPONENT",
+      "componentKey": "e8efd4dbe0ef54b9b67d380ee073fe02b2bdd428",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          0,
+          12,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "TextView (🤖 11.52) / Style=H1, HorizontalPadding=None / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "e8efd4dbe0ef54b9b67d380ee073fe02b2bdd428",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "TextView (🤖 11.52) / Style=H1, HorizontalPadding=None / ContentGroup / Title",
+      "type": "TEXT",
+      "componentKey": "e8efd4dbe0ef54b9b67d380ee073fe02b2bdd428",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "title"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": -0.3799999952316284,
+        "token": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+        "styleKey": "S:65db8277e14cab5eb97889a54550fdb2a08c09c3,4541:418"
+      }
+    }
+  ]
+}

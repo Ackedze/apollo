@@ -1,0 +1,4636 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Wrappers",
+    "file": "Android :: Wrappers",
+    "generatedAt": "2026-04-16T14:07:10.276Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "CarouselWrapper"
+    ],
+    "componentCount": 2,
+    "elementCount": 51
+  },
+  "components": [
+    {
+      "key": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "name": "CarouselWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CarouselWrapper",
+      "defaultVariant": "fda4131596cbf377f864158295f380128489fc96",
+      "variantStructures": {
+        "fda4131596cbf377f864158295f380128489fc96": [],
+        "a0417923d9ab592689b944e14cd8e1f8eb9d51a8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=true, Transparency=true, PageControlPosition=bottom"
+            }
+          }
+        ],
+        "b1e992accc0da2e9567c990ba1f79c33303bb51f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=true, Transparency=true, PageControlPosition=none"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 5,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList",
+              "type": "FRAME",
+              "name": "ItemCollectionList",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 8,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup",
+              "type": "FRAME",
+              "name": "ItemGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / SideElementPlacement",
+              "type": "INSTANCE",
+              "name": "SideElementPlacement",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "28793d9b1f81127c3e69844671a45ffc23c1ae01",
+                "variantProperties": {
+                  "Size": "xl3 [40]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / SideElementPlacement / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 9,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+              "type": "FRAME",
+              "name": "ItemContnetGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+              "type": "INSTANCE",
+              "name": "Item",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 4,
+              "componentInstance": {
+                "componentKey": "d3c093b310f3a6f1a0aa6ff351323b3b7d1720ed"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 13,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+              "type": "FRAME",
+              "name": "DummyContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 12,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterElementSpacing",
+              "type": "INSTANCE",
+              "name": "InterElementSpacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "c5712f447a065613a62f31b411e726d3215198d0",
+                "variantProperties": {
+                  "Size": "xs [8]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterElementSpacing / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 8,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / Item",
+              "type": "INSTANCE",
+              "name": "Item",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 4,
+              "componentInstance": {
+                "componentKey": "d3c093b310f3a6f1a0aa6ff351323b3b7d1720ed"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / Item / DummyContentGroup",
+              "type": "FRAME",
+              "name": "DummyContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 8,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup",
+              "type": "FRAME",
+              "name": "ItemGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 20,
+              "parentId": 19,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / SideElementPlacement",
+              "type": "INSTANCE",
+              "name": "SideElementPlacement",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "28793d9b1f81127c3e69844671a45ffc23c1ae01",
+                "variantProperties": {
+                  "Size": "xl3 [40]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 21,
+              "parentId": 20,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / SideElementPlacement / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 22,
+              "parentId": 19,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+              "type": "FRAME",
+              "name": "ItemContnetGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 23,
+              "parentId": 22,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterElementSpacing",
+              "type": "INSTANCE",
+              "name": "InterElementSpacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "c5712f447a065613a62f31b411e726d3215198d0",
+                "variantProperties": {
+                  "Size": "xs [8]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 24,
+              "parentId": 23,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterElementSpacing / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 25,
+              "parentId": 22,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+              "type": "INSTANCE",
+              "name": "Item",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 4,
+              "componentInstance": {
+                "componentKey": "d3c093b310f3a6f1a0aa6ff351323b3b7d1720ed"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 26,
+              "parentId": 25,
+              "path": "Scaling=true, Transparency=true, PageControlPosition=none / VerticalPaddingsGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+              "type": "FRAME",
+              "name": "DummyContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          },
+          {
+            "op": "remove",
+            "id": 22
+          },
+          {
+            "op": "remove",
+            "id": 35
+          },
+          {
+            "op": "remove",
+            "id": 36
+          },
+          {
+            "op": "remove",
+            "id": 37
+          },
+          {
+            "op": "remove",
+            "id": 38
+          },
+          {
+            "op": "remove",
+            "id": 41
+          },
+          {
+            "op": "remove",
+            "id": 42
+          },
+          {
+            "op": "remove",
+            "id": 43
+          },
+          {
+            "op": "remove",
+            "id": 39
+          },
+          {
+            "op": "remove",
+            "id": 40
+          },
+          {
+            "op": "remove",
+            "id": 32
+          },
+          {
+            "op": "remove",
+            "id": 33
+          },
+          {
+            "op": "remove",
+            "id": 34
+          }
+        ],
+        "9099dbe5f4ff88bea30ada3a87e83c4c0c804b3c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=true, Transparency=false, PageControlPosition=top"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          }
+        ],
+        "db7933baab588555e7ac9c61b0a1114975fea7e4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=true, Transparency=false, PageControlPosition=bottom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          }
+        ],
+        "7d877a6985d05de8af77bab03d08e941b0cc8203": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=true, Transparency=false, PageControlPosition=none"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          }
+        ],
+        "a68a73442d0e45da5d45f6b5ac04a85f0a18341b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=true, PageControlPosition=top"
+            }
+          }
+        ],
+        "e971582c45eb30676f3fb5977ef1ba2bc996d511": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=true, PageControlPosition=bottom"
+            }
+          }
+        ],
+        "e6b9e14719f9bc40ff826f151030cb366c8d7549": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=true, PageControlPosition=none"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          }
+        ],
+        "9515a963a790b4b8b4cac09575d054e2e98f2b39": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=false, PageControlPosition=top"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          }
+        ],
+        "48f8c6fc2d52f9e42d93597d66e83c801dcf03b7": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=false, PageControlPosition=bottom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          }
+        ],
+        "8ac3e3f4b59e28deccfe9088a1fb238371a75c5b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Scaling=false, Transparency=false, PageControlPosition=none"
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "update",
+            "id": 41,
+            "value": {
+              "opacity": 1
+            }
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top",
+          "type": "COMPONENT",
+          "name": "Scaling=true, Transparency=true, PageControlPosition=top",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding",
+          "type": "INSTANCE",
+          "name": "LeftPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup",
+          "type": "FRAME",
+          "name": "VerticalPaddingsGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / TopPadding",
+          "type": "INSTANCE",
+          "name": "TopPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 5,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup",
+          "type": "FRAME",
+          "name": "CarouselWrapperContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl",
+          "type": "INSTANCE",
+          "name": "PageControl",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8.5,
+              "right": 0,
+              "bottom": 8.5,
+              "left": 0
+            },
+            "itemSpacing": 9
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "05780185f6cde7655f0a3e1c7de16fa2cc039ccd",
+            "variantProperties": {
+              "Count of Values": ">9 Values"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 2",
+          "type": "VECTOR",
+          "name": "Dot 2",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 9",
+          "type": "VECTOR",
+          "name": "Dot 9",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 1",
+          "type": "VECTOR",
+          "name": "Dot 1",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 3",
+          "type": "VECTOR",
+          "name": "Dot 3",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 4",
+          "type": "VECTOR",
+          "name": "Dot 4",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 5",
+          "type": "VECTOR",
+          "name": "Dot 5",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 6",
+          "type": "VECTOR",
+          "name": "Dot 6",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 7",
+          "type": "VECTOR",
+          "name": "Dot 7",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 8",
+          "type": "VECTOR",
+          "name": "Dot 8",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "parentId": 9,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 10",
+          "type": "VECTOR",
+          "name": "Dot 10",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "parentId": 8,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / Gap",
+          "type": "INSTANCE",
+          "name": "Gap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / Gap / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 22,
+          "parentId": 8,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList",
+          "type": "FRAME",
+          "name": "ItemCollectionList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup",
+          "type": "FRAME",
+          "name": "ItemGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement",
+          "type": "INSTANCE",
+          "name": "SideItemPlacement",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fcb24373483ea1c08db23a964a2789d3f742a5f0"
+          }
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 23,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+          "type": "FRAME",
+          "name": "ItemContnetGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 4,
+          "componentInstance": {
+            "componentKey": "7a8d0ef2da79cdf578f88b6933208a7a030f0428"
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+          "type": "FRAME",
+          "name": "DummyContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "замени меня",
+            "fontName": "Roboto Italic",
+            "fontSize": 13,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Italic",
+            "fontSize": 13
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 26,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing",
+          "type": "INSTANCE",
+          "name": "InterItemSpacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8ed59d8f87adc59473e48acf4ccaec77f4575b54"
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 32,
+          "parentId": 22,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 4,
+          "componentInstance": {
+            "componentKey": "7a8d0ef2da79cdf578f88b6933208a7a030f0428"
+          }
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item / DummyContentGroup",
+          "type": "FRAME",
+          "name": "DummyContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item / DummyContentGroup / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "замени меня",
+            "fontName": "Roboto Italic",
+            "fontSize": 13,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Italic",
+            "fontSize": 13
+          }
+        },
+        {
+          "id": 35,
+          "parentId": 22,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup",
+          "type": "FRAME",
+          "name": "ItemGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 36,
+          "parentId": 35,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement",
+          "type": "INSTANCE",
+          "name": "SideItemPlacement",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fcb24373483ea1c08db23a964a2789d3f742a5f0"
+          }
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 38,
+          "parentId": 35,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+          "type": "FRAME",
+          "name": "ItemContnetGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 39,
+          "parentId": 38,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing",
+          "type": "INSTANCE",
+          "name": "InterItemSpacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8ed59d8f87adc59473e48acf4ccaec77f4575b54"
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 39,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 41,
+          "parentId": 38,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+          "type": "INSTANCE",
+          "name": "Item",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 4,
+          "componentInstance": {
+            "componentKey": "7a8d0ef2da79cdf578f88b6933208a7a030f0428"
+          }
+        },
+        {
+          "id": 42,
+          "parentId": 41,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+          "type": "FRAME",
+          "name": "DummyContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 43,
+          "parentId": 42,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup / title",
+          "type": "TEXT",
+          "name": "title",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "замени меня",
+            "fontName": "Roboto Italic",
+            "fontSize": 13,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Italic",
+            "fontSize": 13
+          }
+        },
+        {
+          "id": 44,
+          "parentId": 5,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / BottomPadding",
+          "type": "INSTANCE",
+          "name": "BottomPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 45,
+          "parentId": 44,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 46,
+          "parentId": 1,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / RightPadding",
+          "type": "INSTANCE",
+          "name": "RightPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 47,
+          "parentId": 46,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / RightPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 48,
+          "parentId": 47,
+          "path": "Scaling=true, Transparency=true, PageControlPosition=top / RightPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "7431:94101",
+          "key": "fda4131596cbf377f864158295f380128489fc96",
+          "name": "Scaling=true, Transparency=true, PageControlPosition=top"
+        },
+        {
+          "id": "7431:94122",
+          "key": "a0417923d9ab592689b944e14cd8e1f8eb9d51a8",
+          "name": "Scaling=true, Transparency=true, PageControlPosition=bottom"
+        },
+        {
+          "id": "7431:94143",
+          "key": "b1e992accc0da2e9567c990ba1f79c33303bb51f",
+          "name": "Scaling=true, Transparency=true, PageControlPosition=none"
+        },
+        {
+          "id": "7431:94161",
+          "key": "9099dbe5f4ff88bea30ada3a87e83c4c0c804b3c",
+          "name": "Scaling=true, Transparency=false, PageControlPosition=top"
+        },
+        {
+          "id": "7431:94182",
+          "key": "db7933baab588555e7ac9c61b0a1114975fea7e4",
+          "name": "Scaling=true, Transparency=false, PageControlPosition=bottom"
+        },
+        {
+          "id": "7431:94203",
+          "key": "7d877a6985d05de8af77bab03d08e941b0cc8203",
+          "name": "Scaling=true, Transparency=false, PageControlPosition=none"
+        },
+        {
+          "id": "7431:94222",
+          "key": "a68a73442d0e45da5d45f6b5ac04a85f0a18341b",
+          "name": "Scaling=false, Transparency=true, PageControlPosition=top"
+        },
+        {
+          "id": "7431:94243",
+          "key": "e971582c45eb30676f3fb5977ef1ba2bc996d511",
+          "name": "Scaling=false, Transparency=true, PageControlPosition=bottom"
+        },
+        {
+          "id": "7431:94264",
+          "key": "e6b9e14719f9bc40ff826f151030cb366c8d7549",
+          "name": "Scaling=false, Transparency=true, PageControlPosition=none"
+        },
+        {
+          "id": "7431:94283",
+          "key": "9515a963a790b4b8b4cac09575d054e2e98f2b39",
+          "name": "Scaling=false, Transparency=false, PageControlPosition=top"
+        },
+        {
+          "id": "7431:94304",
+          "key": "48f8c6fc2d52f9e42d93597d66e83c801dcf03b7",
+          "name": "Scaling=false, Transparency=false, PageControlPosition=bottom"
+        },
+        {
+          "id": "7431:94325",
+          "key": "8ac3e3f4b59e28deccfe9088a1fb238371a75c5b",
+          "name": "Scaling=false, Transparency=false, PageControlPosition=none"
+        }
+      ]
+    },
+    {
+      "key": "52e7298f9b95bbad0d110add18bf27745d35602b",
+      "name": "PageControl",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "PageControl",
+      "defaultVariant": "1da4f926300d1030adc0b898cb4cbab340b9a195",
+      "variantStructures": {
+        "1da4f926300d1030adc0b898cb4cbab340b9a195": [],
+        "dd3972d79ba2579627c767d43e569f962f3104ee": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=3 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=3 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "c108326a0ab1d351b6fa5a8c371eaaaa14281195": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=4 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=4 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=4 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "b4d584a1b1da92813ada3526ca2d867c415c79d6": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=5 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=5 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=5 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=5 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "48d8a810db356da314fec5417fb4d06d820fa214": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=6 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=6 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=6 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=6 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Count of Values=6 Values / Dot 6",
+              "type": "VECTOR",
+              "name": "Dot 6",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "55c7f3f4d52aaaaa3aaee9a53398016733aa22b1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=7 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=7 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=7 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=7 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Count of Values=7 Values / Dot 6",
+              "type": "VECTOR",
+              "name": "Dot 6",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "Count of Values=7 Values / Dot 7",
+              "type": "VECTOR",
+              "name": "Dot 7",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "9f4c4d3a15e760c227ccb1fbe91ec8ffe2ccc2d1": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=8 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 6",
+              "type": "VECTOR",
+              "name": "Dot 6",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 7",
+              "type": "VECTOR",
+              "name": "Dot 7",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 1,
+              "path": "Count of Values=8 Values / Dot 8",
+              "type": "VECTOR",
+              "name": "Dot 8",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "54b53a7cd068ee46b087bca4d3cc63fbabea69f0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=9 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 6",
+              "type": "VECTOR",
+              "name": "Dot 6",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 7",
+              "type": "VECTOR",
+              "name": "Dot 7",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 9",
+              "type": "VECTOR",
+              "name": "Dot 9",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 1,
+              "path": "Count of Values=9 Values / Dot 8",
+              "type": "VECTOR",
+              "name": "Dot 8",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ],
+        "05780185f6cde7655f0a3e1c7de16fa2cc039ccd": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Count of Values=>9 Values"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 9",
+              "type": "VECTOR",
+              "name": "Dot 9",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 3",
+              "type": "VECTOR",
+              "name": "Dot 3",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 4",
+              "type": "VECTOR",
+              "name": "Dot 4",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 5",
+              "type": "VECTOR",
+              "name": "Dot 5",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 6",
+              "type": "VECTOR",
+              "name": "Dot 6",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 7",
+              "type": "VECTOR",
+              "name": "Dot 7",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 8",
+              "type": "VECTOR",
+              "name": "Dot 8",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 1,
+              "path": "Count of Values=>9 Values / Dot 10",
+              "type": "VECTOR",
+              "name": "Dot 10",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+                }
+              },
+              "opacity": 0.30000001192092896,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Count of Values=2 Values",
+          "type": "COMPONENT",
+          "name": "Count of Values=2 Values",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8.5,
+              "right": 0,
+              "bottom": 8.5,
+              "left": 0
+            },
+            "itemSpacing": 9
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Count of Values=2 Values / Dot 1",
+          "type": "VECTOR",
+          "name": "Dot 1",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "Count of Values=2 Values / Dot 2",
+          "type": "VECTOR",
+          "name": "Dot 2",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "7448:104005",
+          "key": "1da4f926300d1030adc0b898cb4cbab340b9a195",
+          "name": "Count of Values=2 Values"
+        },
+        {
+          "id": "7448:104008",
+          "key": "dd3972d79ba2579627c767d43e569f962f3104ee",
+          "name": "Count of Values=3 Values"
+        },
+        {
+          "id": "7448:104012",
+          "key": "c108326a0ab1d351b6fa5a8c371eaaaa14281195",
+          "name": "Count of Values=4 Values"
+        },
+        {
+          "id": "7448:104017",
+          "key": "b4d584a1b1da92813ada3526ca2d867c415c79d6",
+          "name": "Count of Values=5 Values"
+        },
+        {
+          "id": "7448:104023",
+          "key": "48d8a810db356da314fec5417fb4d06d820fa214",
+          "name": "Count of Values=6 Values"
+        },
+        {
+          "id": "7448:104030",
+          "key": "55c7f3f4d52aaaaa3aaee9a53398016733aa22b1",
+          "name": "Count of Values=7 Values"
+        },
+        {
+          "id": "7448:104038",
+          "key": "9f4c4d3a15e760c227ccb1fbe91ec8ffe2ccc2d1",
+          "name": "Count of Values=8 Values"
+        },
+        {
+          "id": "7448:104047",
+          "key": "54b53a7cd068ee46b087bca4d3cc63fbabea69f0",
+          "name": "Count of Values=9 Values"
+        },
+        {
+          "id": "7448:104057",
+          "key": "05780185f6cde7655f0a3e1c7de16fa2cc039ccd",
+          "name": "Count of Values=>9 Values"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top",
+      "type": "COMPONENT",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / LeftPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / TopPadding",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8.5,
+          0,
+          8.5,
+          0
+        ],
+        "gap": 9,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 2",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 9",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 1",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 3",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 4",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 5",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 6",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 7",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 8",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / PageControl / Dot 10",
+      "type": "VECTOR",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / Gap",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / Gap / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup / title",
+      "type": "TEXT",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "замени меня"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Italic",
+        "size": 13,
+        "lineHeight": 20,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 30,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item / DummyContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / Item / DummyContentGroup / title",
+      "type": "TEXT",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "замени меня"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Italic",
+        "size": 13,
+        "lineHeight": 20,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 35,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / SideItemPlacement / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / InterItemSpacing / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 4
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 43,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / CarouselWrapperContentGroup / ItemCollectionList / ItemGroup / ItemContnetGroup / Item / DummyContentGroup / title",
+      "type": "TEXT",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "замени меня"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Italic",
+        "size": 13,
+        "lineHeight": 20,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 44,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / BottomPadding",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 45,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / RightPadding",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / RightPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 48,
+      "path": "CarouselWrapper / Scaling=true, Transparency=true, PageControlPosition=top / RightPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "318f4eeedb7503459c3cb2818ff0f547c778fd98",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "PageControl / Count of Values=2 Values",
+      "type": "COMPONENT",
+      "componentKey": "52e7298f9b95bbad0d110add18bf27745d35602b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8.5,
+          0,
+          8.5,
+          0
+        ],
+        "gap": 9,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "PageControl / Count of Values=2 Values / Dot 1",
+      "type": "VECTOR",
+      "componentKey": "52e7298f9b95bbad0d110add18bf27745d35602b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "PageControl / Count of Values=2 Values / Dot 2",
+      "type": "VECTOR",
+      "componentKey": "52e7298f9b95bbad0d110add18bf27745d35602b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b28556ccd9e04c87fee42d427e3af9d102ef051,4195:152",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

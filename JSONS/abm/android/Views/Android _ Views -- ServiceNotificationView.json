@@ -1,0 +1,1830 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:18:56.788Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ServiceNotificationView"
+    ],
+    "componentCount": 1,
+    "elementCount": 37
+  },
+  "components": [
+    {
+      "key": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "name": "ServiceNotificationView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ServiceNotificationView",
+      "defaultVariant": "53be63eb9147a93fd06aa4c85a51d2365d7d08c5",
+      "variantStructures": {
+        "53be63eb9147a93fd06aa4c85a51d2365d7d08c5": [],
+        "6d6b81d5612d1ef26aa07a3744467d69e47d8a80": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 Skeleton=True",
+              "layout": {
+                "padding": {
+                  "top": 12,
+                  "right": 16,
+                  "bottom": 4,
+                  "left": 16
+                },
+                "itemSpacing": 0,
+                "paddingTokens": {
+                  "top": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+                  "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+                  "bottom": "VariableID:6559a107938d62bce78e4003e4146f7b0495e589/244:91",
+                  "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 3,
+            "value": {
+              "visible": false
+            }
+          },
+          {
+            "op": "update",
+            "id": 17,
+            "value": {
+              "styles": {
+                "fill": {
+                  "styleKey": "S:7d3f8c3bbacd4b66fa1c6dc346d14088cc86f800,5692:13"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 26
+          },
+          {
+            "op": "remove",
+            "id": 27
+          },
+          {
+            "op": "remove",
+            "id": 28
+          },
+          {
+            "op": "remove",
+            "id": 29
+          },
+          {
+            "op": "remove",
+            "id": 30
+          },
+          {
+            "op": "remove",
+            "id": 37
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 Skeleton=False",
+          "type": "COMPONENT",
+          "name": "👻 Skeleton=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 12,
+              "right": 16,
+              "bottom": 12,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+              "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 18,
+                "g": 18,
+                "b": 19,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1fe43a2b34ea630d11029ff69e14d5cc7559b860/3541:126",
+              "colorHex": "#121213"
+            }
+          ],
+          "fillToken": "VariableID:1fe43a2b34ea630d11029ff69e14d5cc7559b860/3541:126"
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 Skeleton=False / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8,
+            "itemSpacingToken": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95"
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent",
+          "type": "FRAME",
+          "name": "MainContent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            },
+            "itemSpacingToken": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95"
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "TextLabel (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 0,
+              "bottom": 2,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "89b9cf2a71b07155b947abc241e70530a456985d",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 10,
+          "parentId": 6,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "parentId": 5,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:a292730a1ef0d21190ee040761af2ae5c5775361,4541:431"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "title",
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": -0.07000000029802322,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+          "typography": {
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:cceb214a70fa9c6b6d9530c8ee1e707ed8467430/4541:392"
+        },
+        {
+          "id": 13,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView",
+          "type": "INSTANCE",
+          "name": "🔄️ IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "20e2d0e890aece8a8e923330cc1fe0c9c89dab92",
+            "variantProperties": {
+              "Size": "XSmall",
+              "Shape": "NoShape",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView / chevron-right-shift-right",
+          "type": "INSTANCE",
+          "name": "chevron-right-shift-right",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8c141d4f61bd4dfe3c428c80e3285dc9335adf80",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView / chevron-right-shift-right / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 18,
+          "parentId": 2,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView",
+          "type": "INSTANCE",
+          "name": "TimelapsePageControlView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "29402c62f950b370f07c6846f22593dfb7431c41"
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages",
+          "type": "FRAME",
+          "name": "LeftSideVisiblePages",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 21,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 22,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 23,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 24,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 25,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 26,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 27,
+          "parentId": 18,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView",
+          "type": "FRAME",
+          "name": "ProgressBarView",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView / Track",
+          "type": "RECTANGLE",
+          "name": "Track",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 29,
+          "parentId": 27,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView / ActiveTrack",
+          "type": "RECTANGLE",
+          "name": "ActiveTrack",
+          "visible": true,
+          "opacity": 1,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 30,
+          "parentId": 18,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages",
+          "type": "FRAME",
+          "name": "RightSideVisiblePages",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 32,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 33,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 34,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167"
+        },
+        {
+          "id": 35,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F1F1F1"
+            }
+          ]
+        },
+        {
+          "id": 36,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F1F1F1"
+            }
+          ]
+        },
+        {
+          "id": 37,
+          "parentId": 30,
+          "path": "👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F1F1F1"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "50578:56873",
+          "key": "53be63eb9147a93fd06aa4c85a51d2365d7d08c5",
+          "name": "👻 Skeleton=False"
+        },
+        {
+          "id": "50596:65702",
+          "key": "6d6b81d5612d1ef26aa07a3744467d69e47d8a80",
+          "name": "👻 Skeleton=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ServiceNotificationView / 👻 Skeleton=False",
+      "type": "COMPONENT",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          12,
+          16,
+          12,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+          "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1fe43a2b34ea630d11029ff69e14d5cc7559b860/3541:126",
+        "color": "rgba(18,18,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0,
+        "gapToken": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        },
+        "gapToken": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95"
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / TextLabel (🤖 12.11) / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "title"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Bold",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": -0.07000000029802322,
+        "token": "VariableID:cceb214a70fa9c6b6d9530c8ee1e707ed8467430/4541:392",
+        "styleKey": "S:a292730a1ef0d21190ee040761af2ae5c5775361,4541:431"
+      }
+    },
+    {
+      "id": 13,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView / chevron-right-shift-right",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / MainContent / 🔄️ IconElementView / ContentGroup / ImageView / chevron-right-shift-right / icon",
+      "type": "VECTOR",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView",
+      "type": "INSTANCE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / LeftSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView / Track",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / ProgressBarView / ActiveTrack",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages",
+      "type": "FRAME",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1dbf4d56a942745335ed8230dfe5b594c0f71841/3541:167",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4",
+        "color": "rgba(241,241,241,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4",
+        "color": "rgba(241,241,241,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "ServiceNotificationView / 👻 Skeleton=False / ContentGroup / TimelapsePageControlView / RightSideVisiblePages / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1263ed0fb4d53a62e8d24bf7629f2d194c4d3a3b",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,5858:4",
+        "color": "rgba(241,241,241,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

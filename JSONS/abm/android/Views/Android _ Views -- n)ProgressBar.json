@@ -1,0 +1,115 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:18:27.353Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "n)ProgressBar"
+    ],
+    "componentCount": 1,
+    "elementCount": 2
+  },
+  "components": [
+    {
+      "key": "90c630c0c3c90bd753745b981cc1bb5cf6873fea",
+      "name": "(n)ProgressBar",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "n)ProgressBar",
+      "defaultVariant": "90c630c0c3c90bd753745b981cc1bb5cf6873fea",
+      "variantStructures": {
+        "90c630c0c3c90bd753745b981cc1bb5cf6873fea": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "(n)ProgressBar",
+          "type": "COMPONENT",
+          "name": "(n)ProgressBar",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "(n)ProgressBar / ProgressBar",
+          "type": "ELLIPSE",
+          "name": "ProgressBar",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "1127:56699",
+          "key": "90c630c0c3c90bd753745b981cc1bb5cf6873fea",
+          "name": "(n)ProgressBar"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "(n)ProgressBar",
+      "type": "COMPONENT",
+      "componentKey": "90c630c0c3c90bd753745b981cc1bb5cf6873fea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "(n)ProgressBar / ProgressBar",
+      "type": "ELLIPSE",
+      "componentKey": "90c630c0c3c90bd753745b981cc1bb5cf6873fea",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

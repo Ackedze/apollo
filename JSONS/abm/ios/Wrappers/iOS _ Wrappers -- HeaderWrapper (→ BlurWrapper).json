@@ -1,0 +1,3777 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Wrappers",
+    "file": "iOS :: Wrappers",
+    "generatedAt": "2026-04-16T14:11:11.967Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "HeaderWrapper (→ BlurWrapper)"
+    ],
+    "componentCount": 2,
+    "elementCount": 21
+  },
+  "components": [
+    {
+      "key": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "name": "HeaderWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HeaderWrapper",
+      "defaultVariant": "be708a041f02647485e6d026d51ceae19b2ad72c",
+      "variantStructures": {
+        "be708a041f02647485e6d026d51ceae19b2ad72c": [],
+        "1b732e3c7a7cbcbd343c351e6cd1a3ac2b5ac053": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=TextView, BgColor=Primary"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "1482b9b416fccb1cb05853d948a763d40c7f0d2f",
+                "variantProperties": {
+                  "BgColor": "Primary"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 10,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ],
+        "9ac683d4dad721e66d9b5037563b4742904cd28d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=TextView, BgColor=PrimaryGrouped"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "2e8151341099a41ec848fa3746c4dc2abfae9c93",
+                "variantProperties": {
+                  "BgColor": "PrimaryGrouped"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 243,
+                    "g": 244,
+                    "b": 245,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#F3F4F5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 10,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ],
+        "491a707c017d0ab0e07f89374945839d436858b4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=TextView, BgColor=Custom"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "4aa06dd1852c565a8d972159675c9145a65f7638",
+                "variantProperties": {
+                  "BgColor": "Custom"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 206,
+                    "g": 229,
+                    "b": 229,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#CEE5E5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 10,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ],
+        "d68e91c513c971ebaa7baae74713a07e8ccbffd4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=ChevronWrapper, BgColor=Transparent"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "🔄 ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 24,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "d6ab13a9ba255afea823e04d884a9efa21d23511",
+                "variantProperties": {
+                  "View": "TextView",
+                  "State": "Contracted",
+                  "Horizontal Padding": "Both"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84afeb1551e2495f6c9c14f701f4ccab4c5ac4fd",
+                "variantProperties": {
+                  "Vertical Align": "Top"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView",
+              "type": "INSTANCE",
+              "name": "TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "06d79885c8330c0006e8d3a153e9fc32e4ee7bd3",
+                "variantProperties": {
+                  "🎨Style": "MD / H3",
+                  "❌Addons": "None",
+                  "❌Horizontal Margin": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView",
+              "type": "INSTANCE",
+              "name": ".TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f904f4ea972dc3756dc12f04ea87da79852e53b3",
+                "variantProperties": {
+                  "Horizontal Margin": "None",
+                  "Skeleton": "No",
+                  "Multiline": "No",
+                  "Style": "Text"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap",
+              "type": "FRAME",
+              "name": "content-wrap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_left",
+              "type": "TEXT",
+              "name": "_text_left",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Заголовок",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17,
+                "lineHeight": 20,
+                "letterSpacing": 0.10000000149011612,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_right",
+              "type": "TEXT",
+              "name": "_text_right",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "subtitle",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17,
+                "lineHeight": 24,
+                "letterSpacing": -0.3499999940395355,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+                "variantProperties": {
+                  "Size": "s [12]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView",
+              "type": "INSTANCE",
+              "name": "IconView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 6,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "345c927568cfed2352ec839ba3cf6d4eb9c359c9",
+                "variantProperties": {
+                  "Size": "Small",
+                  "Shape": "No Shape",
+                  "Inner": "Icon",
+                  "Top Subicon": "None",
+                  "Bottom Subicon": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon",
+              "type": "INSTANCE",
+              "name": ".icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "8f6177232189e1084a6825a99c45abdadd1acedf",
+                "variantProperties": {
+                  "Size": "Custom"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon",
+              "type": "GROUP",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact",
+              "type": "INSTANCE",
+              "name": "chevron-down-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "857eadf4541c688ccc1095b49ca2f8f31dd507b0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 184,
+                    "g": 185,
+                    "b": 192,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#B8B9C0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Transparent / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / _initials",
+              "type": "TEXT",
+              "name": "_initials",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:63b2c6e8678fc1fdf8aa05fc70f38e199fb5be56,4458:1"
+                },
+                "text": {
+                  "styleKey": "S:862dfc5b94dbd4a98e0c15d206804a941981c208,35910:189"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "ХЙ",
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15,
+                "lineHeight": 20,
+                "letterSpacing": 0.4300000071525574,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 11,
+                    "g": 31,
+                    "b": 53,
+                    "a": 0.7
+                  },
+                  "visible": true,
+                  "opacity": 0.699999988079071,
+                  "tokenKey": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+                  "colorHex": "#0B1F35"
+                }
+              ],
+              "fillToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+              "typography": {
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15
+              },
+              "typographyToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          }
+        ],
+        "90f7ab665eb605d6a073f4d1cacdcb72a8e74289": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=ChevronWrapper, BgColor=Primary",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "1482b9b416fccb1cb05853d948a763d40c7f0d2f",
+                "variantProperties": {
+                  "BgColor": "Primary"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "🔄 ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 24,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "d6ab13a9ba255afea823e04d884a9efa21d23511",
+                "variantProperties": {
+                  "View": "TextView",
+                  "State": "Contracted",
+                  "Horizontal Padding": "Both"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84afeb1551e2495f6c9c14f701f4ccab4c5ac4fd",
+                "variantProperties": {
+                  "Vertical Align": "Top"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView",
+              "type": "INSTANCE",
+              "name": "TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "06d79885c8330c0006e8d3a153e9fc32e4ee7bd3",
+                "variantProperties": {
+                  "🎨Style": "MD / H3",
+                  "❌Addons": "None",
+                  "❌Horizontal Margin": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView",
+              "type": "INSTANCE",
+              "name": ".TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f904f4ea972dc3756dc12f04ea87da79852e53b3",
+                "variantProperties": {
+                  "Horizontal Margin": "None",
+                  "Skeleton": "No",
+                  "Multiline": "No",
+                  "Style": "Text"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap",
+              "type": "FRAME",
+              "name": "content-wrap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_left",
+              "type": "TEXT",
+              "name": "_text_left",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Заголовок",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17,
+                "lineHeight": 20,
+                "letterSpacing": 0.10000000149011612,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_right",
+              "type": "TEXT",
+              "name": "_text_right",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "subtitle",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17,
+                "lineHeight": 24,
+                "letterSpacing": -0.3499999940395355,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+                "variantProperties": {
+                  "Size": "s [12]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView",
+              "type": "INSTANCE",
+              "name": "IconView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 6,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "345c927568cfed2352ec839ba3cf6d4eb9c359c9",
+                "variantProperties": {
+                  "Size": "Small",
+                  "Shape": "No Shape",
+                  "Inner": "Icon",
+                  "Top Subicon": "None",
+                  "Bottom Subicon": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon",
+              "type": "INSTANCE",
+              "name": ".icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "8f6177232189e1084a6825a99c45abdadd1acedf",
+                "variantProperties": {
+                  "Size": "Custom"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon",
+              "type": "GROUP",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact",
+              "type": "INSTANCE",
+              "name": "chevron-down-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "857eadf4541c688ccc1095b49ca2f8f31dd507b0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 184,
+                    "g": 185,
+                    "b": 192,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#B8B9C0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Primary / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / _initials",
+              "type": "TEXT",
+              "name": "_initials",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:63b2c6e8678fc1fdf8aa05fc70f38e199fb5be56,4458:1"
+                },
+                "text": {
+                  "styleKey": "S:862dfc5b94dbd4a98e0c15d206804a941981c208,35910:189"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "ХЙ",
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15,
+                "lineHeight": 20,
+                "letterSpacing": 0.4300000071525574,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 11,
+                    "g": 31,
+                    "b": 53,
+                    "a": 0.7
+                  },
+                  "visible": true,
+                  "opacity": 0.699999988079071,
+                  "tokenKey": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+                  "colorHex": "#0B1F35"
+                }
+              ],
+              "fillToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+              "typography": {
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15
+              },
+              "typographyToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          }
+        ],
+        "12bf1d3b9584760412d6a4203ea9f3f51854b368": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=ChevronWrapper, BgColor=PrimaryGrouped",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "2e8151341099a41ec848fa3746c4dc2abfae9c93",
+                "variantProperties": {
+                  "BgColor": "PrimaryGrouped"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 243,
+                    "g": 244,
+                    "b": 245,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#F3F4F5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "🔄 ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 24,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "d6ab13a9ba255afea823e04d884a9efa21d23511",
+                "variantProperties": {
+                  "View": "TextView",
+                  "State": "Contracted",
+                  "Horizontal Padding": "Both"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84afeb1551e2495f6c9c14f701f4ccab4c5ac4fd",
+                "variantProperties": {
+                  "Vertical Align": "Top"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView",
+              "type": "INSTANCE",
+              "name": "TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "06d79885c8330c0006e8d3a153e9fc32e4ee7bd3",
+                "variantProperties": {
+                  "🎨Style": "MD / H3",
+                  "❌Addons": "None",
+                  "❌Horizontal Margin": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView",
+              "type": "INSTANCE",
+              "name": ".TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f904f4ea972dc3756dc12f04ea87da79852e53b3",
+                "variantProperties": {
+                  "Horizontal Margin": "None",
+                  "Skeleton": "No",
+                  "Multiline": "No",
+                  "Style": "Text"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap",
+              "type": "FRAME",
+              "name": "content-wrap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_left",
+              "type": "TEXT",
+              "name": "_text_left",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Заголовок",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17,
+                "lineHeight": 20,
+                "letterSpacing": 0.10000000149011612,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_right",
+              "type": "TEXT",
+              "name": "_text_right",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "subtitle",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17,
+                "lineHeight": 24,
+                "letterSpacing": -0.3499999940395355,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+                "variantProperties": {
+                  "Size": "s [12]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView",
+              "type": "INSTANCE",
+              "name": "IconView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 6,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "345c927568cfed2352ec839ba3cf6d4eb9c359c9",
+                "variantProperties": {
+                  "Size": "Small",
+                  "Shape": "No Shape",
+                  "Inner": "Icon",
+                  "Top Subicon": "None",
+                  "Bottom Subicon": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon",
+              "type": "INSTANCE",
+              "name": ".icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "8f6177232189e1084a6825a99c45abdadd1acedf",
+                "variantProperties": {
+                  "Size": "Custom"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon",
+              "type": "GROUP",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact",
+              "type": "INSTANCE",
+              "name": "chevron-down-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "857eadf4541c688ccc1095b49ca2f8f31dd507b0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 184,
+                    "g": 185,
+                    "b": 192,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#B8B9C0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=PrimaryGrouped / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / _initials",
+              "type": "TEXT",
+              "name": "_initials",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:63b2c6e8678fc1fdf8aa05fc70f38e199fb5be56,4458:1"
+                },
+                "text": {
+                  "styleKey": "S:862dfc5b94dbd4a98e0c15d206804a941981c208,35910:189"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "ХЙ",
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15,
+                "lineHeight": 20,
+                "letterSpacing": 0.4300000071525574,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 11,
+                    "g": 31,
+                    "b": 53,
+                    "a": 0.7
+                  },
+                  "visible": true,
+                  "opacity": 0.699999988079071,
+                  "tokenKey": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+                  "colorHex": "#0B1F35"
+                }
+              ],
+              "fillToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+              "typography": {
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15
+              },
+              "typographyToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          }
+        ],
+        "ebfb653e4c1e6034d6411b32d1bd2a492cc3fe6c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Preset=ChevronWrapper, BgColor=Custom",
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": false,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "componentInstance": {
+                "componentKey": "4aa06dd1852c565a8d972159675c9145a65f7638",
+                "variantProperties": {
+                  "BgColor": "Custom"
+                }
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 206,
+                    "g": 229,
+                    "b": 229,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#CEE5E5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "🔄 ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 24,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "d6ab13a9ba255afea823e04d884a9efa21d23511",
+                "variantProperties": {
+                  "View": "TextView",
+                  "State": "Contracted",
+                  "Horizontal Padding": "Both"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper",
+              "type": "INSTANCE",
+              "name": "ChevronWrapper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 4
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84afeb1551e2495f6c9c14f701f4ccab4c5ac4fd",
+                "variantProperties": {
+                  "Vertical Align": "Top"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView",
+              "type": "INSTANCE",
+              "name": "TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "06d79885c8330c0006e8d3a153e9fc32e4ee7bd3",
+                "variantProperties": {
+                  "🎨Style": "MD / H3",
+                  "❌Addons": "None",
+                  "❌Horizontal Margin": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView",
+              "type": "INSTANCE",
+              "name": ".TextView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f904f4ea972dc3756dc12f04ea87da79852e53b3",
+                "variantProperties": {
+                  "Horizontal Margin": "None",
+                  "Skeleton": "No",
+                  "Multiline": "No",
+                  "Style": "Text"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap",
+              "type": "FRAME",
+              "name": "content-wrap",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 8
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_left",
+              "type": "TEXT",
+              "name": "_text_left",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "Заголовок",
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17,
+                "lineHeight": 20,
+                "letterSpacing": 0.10000000149011612,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "typography": {
+                "fontName": "Alfa Interface Sans Medium",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 9,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / content-wrap / _text_right",
+              "type": "TEXT",
+              "name": "_text_right",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+                },
+                "text": {
+                  "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "subtitle",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17,
+                "lineHeight": 24,
+                "letterSpacing": -0.3499999940395355,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 17
+              },
+              "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 6,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing",
+              "type": "INSTANCE",
+              "name": "Spacing",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+                "variantProperties": {
+                  "Size": "s [12]"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 13,
+              "parentId": 12,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / TextView / .TextView / Spacing / .x / Spacing",
+              "type": "INSTANCE",
+              "name": ".x / Spacing",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 14,
+              "parentId": 4,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView",
+              "type": "INSTANCE",
+              "name": "IconView",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 6,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "345c927568cfed2352ec839ba3cf6d4eb9c359c9",
+                "variantProperties": {
+                  "Size": "Small",
+                  "Shape": "No Shape",
+                  "Inner": "Icon",
+                  "Top Subicon": "None",
+                  "Bottom Subicon": "None"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 15,
+              "parentId": 14,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon",
+              "type": "INSTANCE",
+              "name": ".icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "8f6177232189e1084a6825a99c45abdadd1acedf",
+                "variantProperties": {
+                  "Size": "Custom"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 16,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon",
+              "type": "GROUP",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 17,
+              "parentId": 16,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact",
+              "type": "INSTANCE",
+              "name": "chevron-down-compact",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "857eadf4541c688ccc1095b49ca2f8f31dd507b0",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / Icon / chevron-down-compact / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 184,
+                    "g": 185,
+                    "b": 192,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#B8B9C0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 15,
+              "path": "Preset=ChevronWrapper, BgColor=Custom / .HeaderWrapper / 🔄 ChevronWrapper / ChevronWrapper / IconView / .icon / _initials",
+              "type": "TEXT",
+              "name": "_initials",
+              "visible": false,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:63b2c6e8678fc1fdf8aa05fc70f38e199fb5be56,4458:1"
+                },
+                "text": {
+                  "styleKey": "S:862dfc5b94dbd4a98e0c15d206804a941981c208,35910:189"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "ХЙ",
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15,
+                "lineHeight": 20,
+                "letterSpacing": 0.4300000071525574,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 11,
+                    "g": 31,
+                    "b": 53,
+                    "a": 0.7
+                  },
+                  "visible": true,
+                  "opacity": 0.699999988079071,
+                  "tokenKey": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+                  "colorHex": "#0B1F35"
+                }
+              ],
+              "fillToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147",
+              "typography": {
+                "fontName": "Alfa Interface Sans Bold",
+                "fontSize": 15
+              },
+              "typographyToken": "VariableID:44ae55ebadf4e07b9c4f29fb056d8ec01bf978be/35910:147"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 3
+          },
+          {
+            "op": "remove",
+            "id": 4
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Preset=TextView, BgColor=Transparent",
+          "type": "COMPONENT",
+          "name": "Preset=TextView, BgColor=Transparent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper",
+          "type": "INSTANCE",
+          "name": ".HeaderWrapper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "2a5edc95e98a3e8b0d22d6f99d9d83aa6b817552",
+            "variantProperties": {
+              "BgColor": "Transparent"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView",
+          "type": "INSTANCE",
+          "name": "TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7e131a0816a0d5a6ee33879cc31589eade25d2d3",
+            "variantProperties": {
+              "🎨Style": "Section",
+              "❌Addons": "None",
+              "❌Horizontal Margin": "Both"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView",
+          "type": "INSTANCE",
+          "name": ".TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 24,
+              "bottom": 0,
+              "left": 24
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1e74c574adc633ea543e11f0a34602daaba76f8e",
+            "variantProperties": {
+              "Horizontal Margin": "Extended",
+              "Skeleton": "No",
+              "Multiline": "No",
+              "Style": "Text"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+            "variantProperties": {
+              "Size": "xl2 [32]"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 4,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap",
+          "type": "FRAME",
+          "name": "content-wrap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap / _text_left",
+          "type": "TEXT",
+          "name": "_text_left",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 20,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 9,
+          "parentId": 7,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap / _text_right",
+          "type": "TEXT",
+          "name": "_text_right",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "subtitle",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": -0.3499999940395355,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+        },
+        {
+          "id": 10,
+          "parentId": 4,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+            "variantProperties": {
+              "Size": "s [12]"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "90398:102847",
+          "key": "be708a041f02647485e6d026d51ceae19b2ad72c",
+          "name": "Preset=TextView, BgColor=Transparent"
+        },
+        {
+          "id": "90398:102849",
+          "key": "1b732e3c7a7cbcbd343c351e6cd1a3ac2b5ac053",
+          "name": "Preset=TextView, BgColor=Primary"
+        },
+        {
+          "id": "90398:102851",
+          "key": "9ac683d4dad721e66d9b5037563b4742904cd28d",
+          "name": "Preset=TextView, BgColor=PrimaryGrouped"
+        },
+        {
+          "id": "90398:102853",
+          "key": "491a707c017d0ab0e07f89374945839d436858b4",
+          "name": "Preset=TextView, BgColor=Custom"
+        },
+        {
+          "id": "90398:102855",
+          "key": "d68e91c513c971ebaa7baae74713a07e8ccbffd4",
+          "name": "Preset=ChevronWrapper, BgColor=Transparent"
+        },
+        {
+          "id": "90398:102857",
+          "key": "90f7ab665eb605d6a073f4d1cacdcb72a8e74289",
+          "name": "Preset=ChevronWrapper, BgColor=Primary"
+        },
+        {
+          "id": "90398:102859",
+          "key": "12bf1d3b9584760412d6a4203ea9f3f51854b368",
+          "name": "Preset=ChevronWrapper, BgColor=PrimaryGrouped"
+        },
+        {
+          "id": "90398:102861",
+          "key": "ebfb653e4c1e6034d6411b32d1bd2a492cc3fe6c",
+          "name": "Preset=ChevronWrapper, BgColor=Custom"
+        }
+      ]
+    },
+    {
+      "key": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "name": ".HeaderWrapper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HeaderWrapper",
+      "defaultVariant": "2a5edc95e98a3e8b0d22d6f99d9d83aa6b817552",
+      "variantStructures": {
+        "2a5edc95e98a3e8b0d22d6f99d9d83aa6b817552": [],
+        "1482b9b416fccb1cb05853d948a763d40c7f0d2f": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BgColor=Primary",
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ],
+        "2e8151341099a41ec848fa3746c4dc2abfae9c93": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BgColor=PrimaryGrouped",
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 243,
+                    "g": 244,
+                    "b": 245,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#F3F4F5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ],
+        "4aa06dd1852c565a8d972159675c9145a65f7638": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "BgColor=Custom",
+              "styles": {
+                "effects": [
+                  {
+                    "styleKey": "S:0c0af467e91ac581b1a425a12b4f5377209560d7,97:1"
+                  }
+                ]
+              },
+              "effects": [
+                {
+                  "type": "BACKGROUND_BLUR",
+                  "radius": 100
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 206,
+                    "g": 229,
+                    "b": 229,
+                    "a": 0.8
+                  },
+                  "visible": true,
+                  "opacity": 0.800000011920929,
+                  "tokenKey": null,
+                  "colorHex": "#CEE5E5"
+                }
+              ]
+            }
+          },
+          {
+            "op": "update",
+            "id": 9,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 10
+              },
+              "componentInstance": {
+                "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+                "variantProperties": {
+                  "Size": "xl2 [32]"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "BgColor=Transparent",
+          "type": "COMPONENT",
+          "name": "BgColor=Transparent",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "BgColor=Transparent / TextView",
+          "type": "INSTANCE",
+          "name": "TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7e131a0816a0d5a6ee33879cc31589eade25d2d3",
+            "variantProperties": {
+              "🎨Style": "Section",
+              "❌Addons": "None",
+              "❌Horizontal Margin": "Both"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "BgColor=Transparent / TextView / .TextView",
+          "type": "INSTANCE",
+          "name": ".TextView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 24,
+              "bottom": 0,
+              "left": 24
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1e74c574adc633ea543e11f0a34602daaba76f8e",
+            "variantProperties": {
+              "Horizontal Margin": "Extended",
+              "Skeleton": "No",
+              "Multiline": "No",
+              "Style": "Text"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "BgColor=Transparent / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "60af762fa637714bcc4aceaca5a7475d775849d1",
+            "variantProperties": {
+              "Size": "xl2 [32]"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "BgColor=Transparent / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 3,
+          "path": "BgColor=Transparent / TextView / .TextView / content-wrap",
+          "type": "FRAME",
+          "name": "content-wrap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "BgColor=Transparent / TextView / .TextView / content-wrap / _text_left",
+          "type": "TEXT",
+          "name": "_text_left",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Typography style",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 20,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 8,
+          "parentId": 6,
+          "path": "BgColor=Transparent / TextView / .TextView / content-wrap / _text_right",
+          "type": "TEXT",
+          "name": "_text_right",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1"
+            },
+            "text": {
+              "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "subtitle",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": -0.3499999940395355,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166"
+        },
+        {
+          "id": 9,
+          "parentId": 3,
+          "path": "BgColor=Transparent / TextView / .TextView / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6ae6d943a9a27c0dc70ef9e0ec267c91c41765bf",
+            "variantProperties": {
+              "Size": "s [12]"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "BgColor=Transparent / TextView / .TextView / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "90398:102834",
+          "key": "2a5edc95e98a3e8b0d22d6f99d9d83aa6b817552",
+          "name": "BgColor=Transparent"
+        },
+        {
+          "id": "90398:102836",
+          "key": "1482b9b416fccb1cb05853d948a763d40c7f0d2f",
+          "name": "BgColor=Primary"
+        },
+        {
+          "id": "90398:102838",
+          "key": "2e8151341099a41ec848fa3746c4dc2abfae9c93",
+          "name": "BgColor=PrimaryGrouped"
+        },
+        {
+          "id": "90398:102840",
+          "key": "4aa06dd1852c565a8d972159675c9145a65f7638",
+          "name": "BgColor=Custom"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent",
+      "type": "COMPONENT",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          24,
+          0,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 20,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+      }
+    },
+    {
+      "id": 9,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.3499999940395355,
+        "token": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+        "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+      }
+    },
+    {
+      "id": 10,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "HeaderWrapper / Preset=TextView, BgColor=Transparent / .HeaderWrapper / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "1ffa2eed4cbca50c382da6cc9799d1a044c6416e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": ".HeaderWrapper / BgColor=Transparent",
+      "type": "COMPONENT",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          24,
+          0,
+          24
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / content-wrap",
+      "type": "FRAME",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / content-wrap / _text_left",
+      "type": "TEXT",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "Typography style"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 20,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:75ee54def2dfcdd85e8fa944e469617d99f0aced,35910:178"
+      }
+    },
+    {
+      "id": 8,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / content-wrap / _text_right",
+      "type": "TEXT",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,8790:1",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": -0.3499999940395355,
+        "token": "VariableID:6c9dc9dd3e2f425b47a08d9d19e12bf577cbbb90/35910:166",
+        "styleKey": "S:ab7630079680c2501af6c5275dd1a1260450193c,35910:180"
+      }
+    },
+    {
+      "id": 9,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": ".HeaderWrapper / BgColor=Transparent / TextView / .TextView / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "a9cb1f53ccdf6885d9c7cdb0116bf68f3c117d68",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

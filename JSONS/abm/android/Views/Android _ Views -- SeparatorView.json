@@ -1,0 +1,153 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:19:04.596Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "SeparatorView"
+    ],
+    "componentCount": 1,
+    "elementCount": 2
+  },
+  "components": [
+    {
+      "key": "3f93fbe15547992f0fe5adea822e01b52e2dcd88",
+      "name": "SeparatorView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "SeparatorView",
+      "defaultVariant": "3f93fbe15547992f0fe5adea822e01b52e2dcd88",
+      "variantStructures": {
+        "3f93fbe15547992f0fe5adea822e01b52e2dcd88": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "SeparatorView",
+          "type": "COMPONENT",
+          "name": "SeparatorView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "SeparatorView / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 5,
+                "g": 11,
+                "b": 44,
+                "a": 0.18
+              },
+              "visible": true,
+              "opacity": 0.18000000715255737,
+              "tokenKey": "VariableID:87bb2e45a3a8802ee00fa824bdafe8d088f1f94f/3541:174",
+              "colorHex": "#050B2C"
+            }
+          ],
+          "fillToken": "VariableID:87bb2e45a3a8802ee00fa824bdafe8d088f1f94f/3541:174"
+        }
+      ],
+      "variants": [
+        {
+          "id": "49563:73704",
+          "key": "3f93fbe15547992f0fe5adea822e01b52e2dcd88",
+          "name": "SeparatorView"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "SeparatorView",
+      "type": "COMPONENT",
+      "componentKey": "3f93fbe15547992f0fe5adea822e01b52e2dcd88",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "SeparatorView / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "3f93fbe15547992f0fe5adea822e01b52e2dcd88",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:87bb2e45a3a8802ee00fa824bdafe8d088f1f94f/3541:174",
+        "color": "rgba(5,11,44,0.18)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

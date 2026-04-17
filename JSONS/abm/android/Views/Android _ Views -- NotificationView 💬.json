@@ -1,0 +1,5156 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:16:11.492Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "NotificationView 💬"
+    ],
+    "componentCount": 1,
+    "elementCount": 94
+  },
+  "components": [
+    {
+      "key": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "name": "NotificationView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "NotificationView",
+      "defaultVariant": "5efbbb7ea9c3c6dcd2efb011b2ad896f657b6d67",
+      "variantStructures": {
+        "5efbbb7ea9c3c6dcd2efb011b2ad896f657b6d67": [],
+        "670eeb99bdaa4cc1407609331b13fe8e4ff41f67": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 CloseButton=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 5,
+            "value": {
+              "componentInstance": {
+                "componentKey": "0174fd8046a495e8ec7e0e8f676fa2c114295354",
+                "variantProperties": {
+                  "Alignment": "center",
+                  "AddonSide": "start",
+                  "Axis": "horizontal",
+                  "isFillEqual": "false"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 18,
+              "parentId": 17,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon",
+              "type": "INSTANCE",
+              "name": "Icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 19,
+              "parentId": 18,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+                  "colorHex": "#212124"
+                }
+              ],
+              "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 22,
+              "parentId": 12,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel",
+              "type": "INSTANCE",
+              "name": "🔁 TextLabel",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "8345cc252e82208d12e1e1c27fdbbd4c9d8fa508",
+                "variantProperties": {
+                  "TextAlignment": "left",
+                  "👻 HorizontalSize": "hug"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 23,
+              "parentId": 22,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding",
+              "type": "INSTANCE",
+              "name": "LeftPadding",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 24,
+              "parentId": 23,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0]",
+              "type": "INSTANCE",
+              "name": "zero [0]",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 25,
+              "parentId": 24,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0] / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 26,
+              "parentId": 22,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup",
+              "type": "FRAME",
+              "name": "VerticalPaddingsGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 27,
+              "parentId": 26,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding",
+              "type": "INSTANCE",
+              "name": "TopPadding",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 28,
+              "parentId": 27,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 29,
+              "parentId": 26,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup",
+              "type": "FRAME",
+              "name": "ContentGroup",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 30,
+              "parentId": 29,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon",
+              "type": "FRAME",
+              "name": "👻 LeftIcon",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 31,
+              "parentId": 30,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper",
+              "type": "INSTANCE",
+              "name": "🔒 AspectRatioAxisKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+                "variantProperties": {
+                  "🔒 AspectRatioKeeper": "vertical"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 32,
+              "parentId": 31,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+              "type": "INSTANCE",
+              "name": "👻 AspectRatioKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+                "variantProperties": {
+                  "Aspect ratio": "3:2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 33,
+              "parentId": 32,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+              "type": "FRAME",
+              "name": "Aspect ratio keeper # Rotated Auto Layout",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.4
+                  },
+                  "visible": false,
+                  "opacity": 0.4000000059604645,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "CENTER"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 34,
+              "parentId": 30,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon",
+              "type": "INSTANCE",
+              "name": "LeftIcon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 35,
+              "parentId": 34,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#212124"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 36,
+              "parentId": 29,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / Value",
+              "type": "TEXT",
+              "name": "Value",
+              "visible": true,
+              "styles": {
+                "text": {
+                  "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+                }
+              },
+              "opacity": 1,
+              "text": {
+                "characters": "value",
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16,
+                "lineHeight": 24,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "typography": {
+                "fontName": "Alfa Interface Sans Regular",
+                "fontSize": 16
+              },
+              "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 37,
+              "parentId": 29,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon",
+              "type": "FRAME",
+              "name": "👻 RightIcon",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 38,
+              "parentId": 37,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper",
+              "type": "INSTANCE",
+              "name": "🔒 AspectRatioAxisKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+                "variantProperties": {
+                  "🔒 AspectRatioKeeper": "vertical"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 39,
+              "parentId": 38,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+              "type": "INSTANCE",
+              "name": "👻 AspectRatioKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+                "variantProperties": {
+                  "Aspect ratio": "3:2"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 40,
+              "parentId": 39,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+              "type": "FRAME",
+              "name": "Aspect ratio keeper # Rotated Auto Layout",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 255,
+                    "g": 255,
+                    "b": 255,
+                    "a": 0.4
+                  },
+                  "visible": false,
+                  "opacity": 0.4000000059604645,
+                  "tokenKey": null,
+                  "colorHex": "#FFFFFF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "CENTER"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 41,
+              "parentId": 37,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon",
+              "type": "INSTANCE",
+              "name": "RightIcon",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 42,
+              "parentId": 41,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 33,
+                    "g": 33,
+                    "b": 36,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#212124"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 43,
+              "parentId": 29,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup",
+              "type": "FRAME",
+              "name": "FadeEllipsizeGroup",
+              "visible": false,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 44,
+              "parentId": 43,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup / FadeShape",
+              "type": "RECTANGLE",
+              "name": "FadeShape",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 45,
+              "parentId": 26,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding",
+              "type": "INSTANCE",
+              "name": "BottomPadding",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 46,
+              "parentId": 45,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 47,
+              "parentId": 22,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding",
+              "type": "INSTANCE",
+              "name": "RightPadding",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 48,
+              "parentId": 47,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0]",
+              "type": "INSTANCE",
+              "name": "zero [0]",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 49,
+              "parentId": 48,
+              "path": "👻 CloseButton=False / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0] / SpacingContentGroup",
+              "type": "FRAME",
+              "name": "SpacingContentGroup",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          },
+          {
+            "op": "update",
+            "id": 92,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0,
+                "paddingTokens": {
+                  "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+                  "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 94,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 3,
+                    "g": 3,
+                    "b": 6,
+                    "a": 0.88
+                  },
+                  "visible": true,
+                  "opacity": 0.8799999952316284,
+                  "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+                  "colorHex": "#030306"
+                }
+              ],
+              "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+            }
+          },
+          {
+            "op": "update",
+            "id": 92,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0,
+                "paddingTokens": {
+                  "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+                  "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 92,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0,
+                "paddingTokens": {
+                  "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+                  "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+                }
+              }
+            }
+          },
+          {
+            "op": "update",
+            "id": 92,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 8,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0,
+                "paddingTokens": {
+                  "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+                  "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+                  "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+                }
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          },
+          {
+            "op": "remove",
+            "id": 22
+          },
+          {
+            "op": "remove",
+            "id": 23
+          },
+          {
+            "op": "remove",
+            "id": 24
+          },
+          {
+            "op": "remove",
+            "id": 25
+          },
+          {
+            "op": "remove",
+            "id": 26
+          },
+          {
+            "op": "remove",
+            "id": 27
+          },
+          {
+            "op": "remove",
+            "id": 28
+          },
+          {
+            "op": "remove",
+            "id": 29
+          },
+          {
+            "op": "remove",
+            "id": 30
+          },
+          {
+            "op": "remove",
+            "id": 31
+          },
+          {
+            "op": "remove",
+            "id": 32
+          },
+          {
+            "op": "remove",
+            "id": 33
+          },
+          {
+            "op": "remove",
+            "id": 34
+          },
+          {
+            "op": "remove",
+            "id": 35
+          },
+          {
+            "op": "remove",
+            "id": 36
+          },
+          {
+            "op": "remove",
+            "id": 37
+          },
+          {
+            "op": "remove",
+            "id": 38
+          },
+          {
+            "op": "remove",
+            "id": 39
+          },
+          {
+            "op": "remove",
+            "id": 40
+          },
+          {
+            "op": "remove",
+            "id": 41
+          },
+          {
+            "op": "remove",
+            "id": 42
+          },
+          {
+            "op": "remove",
+            "id": 43
+          },
+          {
+            "op": "remove",
+            "id": 44
+          },
+          {
+            "op": "remove",
+            "id": 45
+          },
+          {
+            "op": "remove",
+            "id": 46
+          },
+          {
+            "op": "remove",
+            "id": 47
+          },
+          {
+            "op": "remove",
+            "id": 48
+          },
+          {
+            "op": "remove",
+            "id": 49
+          },
+          {
+            "op": "remove",
+            "id": 50
+          },
+          {
+            "op": "remove",
+            "id": 51
+          },
+          {
+            "op": "remove",
+            "id": 52
+          },
+          {
+            "op": "remove",
+            "id": 53
+          },
+          {
+            "op": "remove",
+            "id": 54
+          },
+          {
+            "op": "remove",
+            "id": 55
+          },
+          {
+            "op": "remove",
+            "id": 56
+          },
+          {
+            "op": "remove",
+            "id": 57
+          },
+          {
+            "op": "remove",
+            "id": 58
+          },
+          {
+            "op": "remove",
+            "id": 59
+          },
+          {
+            "op": "remove",
+            "id": 60
+          },
+          {
+            "op": "remove",
+            "id": 61
+          },
+          {
+            "op": "remove",
+            "id": 62
+          },
+          {
+            "op": "remove",
+            "id": 70
+          },
+          {
+            "op": "remove",
+            "id": 71
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 CloseButton=True",
+          "type": "COMPONENT",
+          "name": "👻 CloseButton=True",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 0,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 CloseButton=True / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1",
+          "type": "INSTANCE",
+          "name": "BannerWrapperV1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 16,
+              "right": 16,
+              "bottom": 16,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+              "bottom": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a546195d1e3cd39b25e366b62c267a3f4b32cc8d",
+            "variantProperties": {
+              "Style": "Fill"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 16,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper",
+          "type": "INSTANCE",
+          "name": "GenericWrapper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "094c37fc1553b2184f716abd0652f9ec596a34c9",
+            "variantProperties": {
+              "Alignment": "center",
+              "AddonSide": "end",
+              "Axis": "horizontal",
+              "isFillEqual": "false"
+            }
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding",
+          "type": "INSTANCE",
+          "name": "LeftPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "192a16f3bf4ad8d97b8e07dccb78cfb8b4230301"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding / m [16]",
+          "type": "INSTANCE",
+          "name": "m [16]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding / m [16] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 5,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup",
+          "type": "FRAME",
+          "name": "VerticalPaddingsGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / TopPadding",
+          "type": "INSTANCE",
+          "name": "TopPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 9,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper",
+          "type": "INSTANCE",
+          "name": "⚙ GenericWrapper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "65cacdc813ac20f37cd39bfed9eea628473690b0",
+            "variantProperties": {
+              "Alignment": "center",
+              "AddonSide": "start",
+              "Axis": "horizontal",
+              "isFillEqual": "false"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding",
+          "type": "INSTANCE",
+          "name": "LeftPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 17,
+          "parentId": 13,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup",
+          "type": "FRAME",
+          "name": "VerticalPaddingsGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / TopPadding",
+          "type": "INSTANCE",
+          "name": "TopPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 20,
+          "parentId": 17,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView",
+          "type": "INSTANCE",
+          "name": "🔄️ IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c5622ac461040b23036730a9bdd29944e1a2d9bb",
+            "variantProperties": {
+              "Size": "X3Small",
+              "Shape": "Superellipse",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract",
+          "type": "BOOLEAN_OPERATION",
+          "name": "Subtract",
+          "visible": true,
+          "opacity": 1,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract / SuperellipseShape",
+          "type": "VECTOR",
+          "name": "SuperellipseShape",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 25,
+          "parentId": 22,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 28,
+          "parentId": 20,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap",
+          "type": "INSTANCE",
+          "name": "Gap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 30,
+          "parentId": 20,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel",
+          "type": "INSTANCE",
+          "name": "🔁 TextLabel",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8345cc252e82208d12e1e1c27fdbbd4c9d8fa508",
+            "variantProperties": {
+              "TextAlignment": "left",
+              "👻 HorizontalSize": "hug"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding",
+          "type": "INSTANCE",
+          "name": "LeftPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 34,
+          "parentId": 30,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup",
+          "type": "FRAME",
+          "name": "VerticalPaddingsGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding",
+          "type": "INSTANCE",
+          "name": "TopPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 36,
+          "parentId": 35,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 37,
+          "parentId": 34,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 38,
+          "parentId": 37,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon",
+          "type": "FRAME",
+          "name": "👻 LeftIcon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 39,
+          "parentId": 38,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 39,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 41,
+          "parentId": 40,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 42,
+          "parentId": 38,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon",
+          "type": "INSTANCE",
+          "name": "LeftIcon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 43,
+          "parentId": 42,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 44,
+          "parentId": 37,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "value",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 45,
+          "parentId": 37,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon",
+          "type": "FRAME",
+          "name": "👻 RightIcon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 46,
+          "parentId": 45,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 47,
+          "parentId": 46,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 48,
+          "parentId": 47,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 49,
+          "parentId": 45,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon",
+          "type": "INSTANCE",
+          "name": "RightIcon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 50,
+          "parentId": 49,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 51,
+          "parentId": 37,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup",
+          "type": "FRAME",
+          "name": "FadeEllipsizeGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 52,
+          "parentId": 51,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup / FadeShape",
+          "type": "RECTANGLE",
+          "name": "FadeShape",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 53,
+          "parentId": 34,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding",
+          "type": "INSTANCE",
+          "name": "BottomPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 54,
+          "parentId": 53,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 55,
+          "parentId": 30,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding",
+          "type": "INSTANCE",
+          "name": "RightPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 56,
+          "parentId": 55,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 57,
+          "parentId": 56,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 58,
+          "parentId": 17,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / BottomPadding",
+          "type": "INSTANCE",
+          "name": "BottomPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 59,
+          "parentId": 58,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 60,
+          "parentId": 13,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding",
+          "type": "INSTANCE",
+          "name": "RightPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "be1480a642e5028d4af301d871fbd71cf340d390"
+          }
+        },
+        {
+          "id": 61,
+          "parentId": 60,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding / zero [0]",
+          "type": "INSTANCE",
+          "name": "zero [0]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "806a614f86ef98981f72774c37c022e9f18e771d"
+          }
+        },
+        {
+          "id": 62,
+          "parentId": 61,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding / zero [0] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 63,
+          "parentId": 12,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap",
+          "type": "INSTANCE",
+          "name": "Gap",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 64,
+          "parentId": 63,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 65,
+          "parentId": 12,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView",
+          "type": "INSTANCE",
+          "name": "🔄️ IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c5622ac461040b23036730a9bdd29944e1a2d9bb",
+            "variantProperties": {
+              "Size": "X3Small",
+              "Shape": "Superellipse",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 66,
+          "parentId": 65,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 67,
+          "parentId": 66,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract",
+          "type": "BOOLEAN_OPERATION",
+          "name": "Subtract",
+          "visible": true,
+          "opacity": 1,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 38,
+                "g": 55,
+                "b": 88,
+                "a": 0.06
+              },
+              "visible": true,
+              "opacity": 0.05999999865889549,
+              "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+              "colorHex": "#263758"
+            }
+          ],
+          "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+        },
+        {
+          "id": 68,
+          "parentId": 67,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract / SuperellipseShape",
+          "type": "VECTOR",
+          "name": "SuperellipseShape",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 69,
+          "parentId": 66,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 10
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 70,
+          "parentId": 69,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / cross-compact",
+          "type": "INSTANCE",
+          "name": "cross-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "46f19466589b9c99e9d643ae3dddc212f32558be",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 71,
+          "parentId": 70,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / cross-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205"
+        },
+        {
+          "id": 72,
+          "parentId": 9,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / BottomPadding",
+          "type": "INSTANCE",
+          "name": "BottomPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 73,
+          "parentId": 72,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 74,
+          "parentId": 5,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding",
+          "type": "INSTANCE",
+          "name": "RightPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "192a16f3bf4ad8d97b8e07dccb78cfb8b4230301"
+          }
+        },
+        {
+          "id": 75,
+          "parentId": 74,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding / m [16]",
+          "type": "INSTANCE",
+          "name": "m [16]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "886cef4d2bce82f3b3bcd0e5d8d5b34df33112ff"
+          }
+        },
+        {
+          "id": 76,
+          "parentId": 75,
+          "path": "👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding / m [16] / SpacingContentGroup",
+          "type": "FRAME",
+          "name": "SpacingContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 77,
+          "parentId": 2,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1",
+          "type": "INSTANCE",
+          "name": "PageIndicatorViewV1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 8,
+              "right": 0,
+              "bottom": 8,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7a8ce35f7aacbf365aa9dd12320cd8462d657748",
+            "variantProperties": {
+              "👻 CountOfElement": "5",
+              "👻 ActiveElement": "1",
+              "ActionType": "Scroll"
+            }
+          }
+        },
+        {
+          "id": 78,
+          "parentId": 77,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 79,
+          "parentId": 78,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList",
+          "type": "FRAME",
+          "name": "IndicatorsList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 80,
+          "parentId": 79,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "78f551956d7eafb544b96aa7cf2088f5aa140b28",
+            "variantProperties": {
+              "isActive": "true",
+              "👻 Height": "8"
+            }
+          }
+        },
+        {
+          "id": 81,
+          "parentId": 80,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 82,
+          "parentId": 81,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+          "type": "VECTOR",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128"
+        },
+        {
+          "id": 83,
+          "parentId": 79,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "78f551956d7eafb544b96aa7cf2088f5aa140b28",
+            "variantProperties": {
+              "isActive": "true",
+              "👻 Height": "8"
+            }
+          }
+        },
+        {
+          "id": 84,
+          "parentId": 83,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 85,
+          "parentId": 84,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+          "type": "VECTOR",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 9,
+                "g": 12,
+                "b": 37,
+                "a": 0.28
+              },
+              "visible": true,
+              "opacity": 0.2800000011920929,
+              "tokenKey": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+              "colorHex": "#090C25"
+            }
+          ],
+          "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+        },
+        {
+          "id": 86,
+          "parentId": 79,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "78f551956d7eafb544b96aa7cf2088f5aa140b28",
+            "variantProperties": {
+              "isActive": "true",
+              "👻 Height": "8"
+            }
+          }
+        },
+        {
+          "id": 87,
+          "parentId": 86,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 88,
+          "parentId": 87,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+          "type": "VECTOR",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 9,
+                "g": 12,
+                "b": 37,
+                "a": 0.28
+              },
+              "visible": true,
+              "opacity": 0.2800000011920929,
+              "tokenKey": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+              "colorHex": "#090C25"
+            }
+          ],
+          "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+        },
+        {
+          "id": 89,
+          "parentId": 79,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 8,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "78f551956d7eafb544b96aa7cf2088f5aa140b28",
+            "variantProperties": {
+              "isActive": "true",
+              "👻 Height": "8"
+            }
+          }
+        },
+        {
+          "id": 90,
+          "parentId": 89,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 91,
+          "parentId": 90,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+          "type": "VECTOR",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 9,
+                "g": 12,
+                "b": 37,
+                "a": 0.28
+              },
+              "visible": true,
+              "opacity": 0.2800000011920929,
+              "tokenKey": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+              "colorHex": "#090C25"
+            }
+          ],
+          "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+        },
+        {
+          "id": 92,
+          "parentId": 79,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "78f551956d7eafb544b96aa7cf2088f5aa140b28",
+            "variantProperties": {
+              "isActive": "true",
+              "👻 Height": "8"
+            }
+          }
+        },
+        {
+          "id": 93,
+          "parentId": 92,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0"
+        },
+        {
+          "id": 94,
+          "parentId": 93,
+          "path": "👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+          "type": "VECTOR",
+          "name": "Ellipse",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 9,
+                "g": 12,
+                "b": 37,
+                "a": 0.28
+              },
+              "visible": true,
+              "opacity": 0.2800000011920929,
+              "tokenKey": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+              "colorHex": "#090C25"
+            }
+          ],
+          "fillToken": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112"
+        }
+      ],
+      "variants": [
+        {
+          "id": "49517:64848",
+          "key": "5efbbb7ea9c3c6dcd2efb011b2ad896f657b6d67",
+          "name": "👻 CloseButton=True"
+        },
+        {
+          "id": "49517:64857",
+          "key": "670eeb99bdaa4cc1407609331b13fe8e4ff41f67",
+          "name": "👻 CloseButton=False"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "NotificationView / 👻 CloseButton=True",
+      "type": "COMPONENT",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          0,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          16,
+          16,
+          16,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+          "bottom": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/1:87"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 16
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding / m [16]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / LeftPadding / m [16] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / TopPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / LeftPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / TopPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract / SuperellipseShape",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / LeftPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / TopPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 43,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 LeftIcon / LeftIcon / icon",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 44,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "value"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+      }
+    },
+    {
+      "id": 45,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 48,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 49,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 50,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / 👻 RightIcon / RightIcon / icon",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 51,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 52,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / ContentGroup / FadeEllipsizeGroup / FadeShape",
+      "type": "RECTANGLE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 53,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 54,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 55,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 56,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 57,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔁 TextLabel / RightPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 58,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / BottomPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 59,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 60,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 61,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding / zero [0]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 62,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / ⚙ GenericWrapper / RightPadding / zero [0] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 63,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 64,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / Gap / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 65,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 66,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 67,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract",
+      "type": "BOOLEAN_OPERATION",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+        "color": "rgba(38,55,88,0.06)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 68,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / Subtract / SuperellipseShape",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 69,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 10,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 70,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / cross-compact",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 71,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / ContentGroup / 🔄️ IconElementView / ContentGroup / ImageView / cross-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 72,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / BottomPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 73,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / VerticalPaddingsGroup / BottomPadding / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 74,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 75,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding / m [16]",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 76,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / BannerWrapperV1 / 🎨 ContentGroup / GenericWrapper / RightPadding / m [16] / SpacingContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 77,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          8,
+          0,
+          8,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 78,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 79,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 80,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 81,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 82,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:e86a96753bbf5affba4ec9ebf5bc294c4b824a97/3541:128",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 83,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 84,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 85,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 86,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 87,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 88,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 89,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          8,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:565c2babab1c38e8b16e16a7a9224db2a8d588b7/244:95",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 90,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 91,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 92,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 93,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 94,
+      "path": "NotificationView / 👻 CloseButton=True / ContentGroup / PageIndicatorViewV1 / 🎨 ContentGroup / IndicatorsList / Indicator / 🎨 ContentGroup / Ellipse",
+      "type": "VECTOR",
+      "componentKey": "239ce8c5dfde654e5d71d2b6d92071d75962d5cf",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:8e44b1c2e5a90ce2fea643e2e5be2c6e838feaef/3541:112",
+        "color": "rgba(9,12,37,0.28)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

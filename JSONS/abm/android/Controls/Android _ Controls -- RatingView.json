@@ -1,0 +1,1669 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Controls",
+    "file": "Android :: Controls",
+    "generatedAt": "2026-04-16T14:18:29.215Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "RatingView"
+    ],
+    "componentCount": 1,
+    "elementCount": 41
+  },
+  "components": [
+    {
+      "key": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "name": "RatingView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "RatingView",
+      "defaultVariant": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "variantStructures": {
+        "9c6a00c224ea759615e3083afb2fbffe5c8b028a": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "RatingView",
+          "type": "COMPONENT",
+          "name": "RatingView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "RatingView / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "6f19580c4b2b243f9f01ed5c34fff797a73a416a",
+            "variantProperties": {
+              "Value": "normal"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "RatingView / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6b70f5ae9098dd506df01a41d72cb84ac02e8442",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "RatingView / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "path": "RatingView / RatingViewContentGroup",
+          "type": "FRAME",
+          "name": "RatingViewContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "RatingView / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8065d2e012d7cdac9959603d1d145c18d2ffdda4",
+            "variantProperties": {
+              "Size": "xs [8]"
+            }
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "RatingView / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 5,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup",
+          "type": "FRAME",
+          "name": "RatingViewContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "3864432459f8867a9748b68cbbbb0612fd02b745",
+            "variantProperties": {
+              "Size": "Medium",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1122308f6578b5df18a3cfcf90f0cd3db67bec2f",
+            "variantProperties": {
+              "Size": "xs3 [2]"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 15,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "3864432459f8867a9748b68cbbbb0612fd02b745",
+            "variantProperties": {
+              "Size": "Medium",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1122308f6578b5df18a3cfcf90f0cd3db67bec2f",
+            "variantProperties": {
+              "Size": "xs3 [2]"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "3864432459f8867a9748b68cbbbb0612fd02b745",
+            "variantProperties": {
+              "Size": "Medium",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1122308f6578b5df18a3cfcf90f0cd3db67bec2f",
+            "variantProperties": {
+              "Size": "xs3 [2]"
+            }
+          }
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 27,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "3864432459f8867a9748b68cbbbb0612fd02b745",
+            "variantProperties": {
+              "Size": "Medium",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 29,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "1122308f6578b5df18a3cfcf90f0cd3db67bec2f",
+            "variantProperties": {
+              "Size": "xs3 [2]"
+            }
+          }
+        },
+        {
+          "id": 32,
+          "parentId": 31,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 33,
+          "parentId": 8,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+          "type": "INSTANCE",
+          "name": "IconElementView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "3864432459f8867a9748b68cbbbb0612fd02b745",
+            "variantProperties": {
+              "Size": "Medium",
+              "Shape": "No Shape",
+              "Inner": "Icon",
+              "Top Subicon": "None",
+              "Bottom Subicon": "None"
+            }
+          }
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+          "type": "INSTANCE",
+          "name": "star",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 36,
+          "parentId": 35,
+          "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:b96498652c368ab170b2ee0660026e80417d08a6,7820:24"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 0.07
+              },
+              "visible": true,
+              "opacity": 0.07000000029802322,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 37,
+          "parentId": 5,
+          "path": "RatingView / RatingViewContentGroup / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "8065d2e012d7cdac9959603d1d145c18d2ffdda4",
+            "variantProperties": {
+              "Size": "xs [8]"
+            }
+          }
+        },
+        {
+          "id": 38,
+          "parentId": 37,
+          "path": "RatingView / RatingViewContentGroup / Spacing / .x / Spacing",
+          "type": "INSTANCE",
+          "name": ".x / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        },
+        {
+          "id": 39,
+          "parentId": 1,
+          "path": "RatingView / HorizontalPadding",
+          "type": "INSTANCE",
+          "name": "HorizontalPadding",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "6f19580c4b2b243f9f01ed5c34fff797a73a416a",
+            "variantProperties": {
+              "Value": "normal"
+            }
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 39,
+          "path": "RatingView / HorizontalPadding / Spacing",
+          "type": "INSTANCE",
+          "name": "Spacing",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6b70f5ae9098dd506df01a41d72cb84ac02e8442",
+            "variantProperties": {
+              "Size": "l [20]"
+            }
+          }
+        },
+        {
+          "id": 41,
+          "parentId": 40,
+          "path": "RatingView / HorizontalPadding / Spacing / .Accessory / Spacing",
+          "type": "INSTANCE",
+          "name": ".Accessory / Spacing",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "912343c25f5fadffebb56051ee0649b3fbec6b68"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "11:199595",
+          "key": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+          "name": "RatingView"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "RatingView",
+      "type": "COMPONENT",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "RatingView / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "RatingView / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "RatingView / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "RatingView / RatingViewContentGroup",
+      "type": "FRAME",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "RatingView / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "RatingView / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup",
+      "type": "FRAME",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+      "type": "VECTOR",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+      "type": "VECTOR",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+      "type": "VECTOR",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+      "type": "VECTOR",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon",
+      "type": "GROUP",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "RatingView / RatingViewContentGroup / RatingViewContentGroup / IconElementView / Icon / star / icon",
+      "type": "VECTOR",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:b96498652c368ab170b2ee0660026e80417d08a6,7820:24",
+        "color": "rgba(11,31,53,0.07)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "RatingView / RatingViewContentGroup / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "RatingView / RatingViewContentGroup / Spacing / .x / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "RatingView / HorizontalPadding",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "RatingView / HorizontalPadding / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "RatingView / HorizontalPadding / Spacing / .Accessory / Spacing",
+      "type": "INSTANCE",
+      "componentKey": "9c6a00c224ea759615e3083afb2fbffe5c8b028a",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

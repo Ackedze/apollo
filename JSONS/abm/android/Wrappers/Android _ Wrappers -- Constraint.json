@@ -1,0 +1,14 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Wrappers",
+    "file": "Android :: Wrappers",
+    "generatedAt": "2026-04-16T14:07:18.202Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "componentCount": 0,
+    "elementCount": 0
+  },
+  "components": [],
+  "elements": []
+}

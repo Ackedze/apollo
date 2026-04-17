@@ -1,0 +1,607 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Wrappers",
+    "file": "Android :: Wrappers",
+    "generatedAt": "2026-04-16T14:07:14.536Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ChevronWrapper"
+    ],
+    "componentCount": 1,
+    "elementCount": 8
+  },
+  "components": [
+    {
+      "key": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "name": "ChevronWrapperV1 (🤖 12.06)",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Доступен в SDUI с версии 12.06",
+      "category": "ChevronWrapperV1 (🤖 12.06)",
+      "defaultVariant": "2987d9bef389b7b201407ce0c085c9d82843ddcc",
+      "variantStructures": {
+        "2987d9bef389b7b201407ce0c085c9d82843ddcc": [],
+        "7958a126bd6a56f60b6ef1d783021e2774ddfdad": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Collapsed=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "Collapsed=True / ContentGroup / TitleViewGroup / ImageView / chevron-up",
+              "type": "INSTANCE",
+              "name": "chevron-up",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "65e88a3fa2372dd06e2c70c9fd9a345f4aebb1cf",
+                "variantProperties": {
+                  "Size": "m"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 8,
+              "parentId": 7,
+              "path": "Collapsed=True / ContentGroup / TitleViewGroup / ImageView / chevron-up / icon",
+              "type": "VECTOR",
+              "name": "icon",
+              "visible": true,
+              "styles": {
+                "fill": {
+                  "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+                }
+              },
+              "opacity": 1,
+              "radius": 0,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 184,
+                    "g": 185,
+                    "b": 192,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#B8B9C0"
+                }
+              ]
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 9,
+              "parentId": 2,
+              "path": "Collapsed=True / ContentGroup / CollapsibleView",
+              "type": "INSTANCE",
+              "name": "CollapsibleView",
+              "visible": true,
+              "opacity": 1,
+              "radius": 4,
+              "effects": [
+                {
+                  "type": "DROP_SHADOW",
+                  "radius": 0,
+                  "color": "rgba(151, 71, 255, 1.00)",
+                  "offset": {
+                    "x": 2,
+                    "y": 2
+                  }
+                }
+              ],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 0.08
+                  },
+                  "visible": true,
+                  "opacity": 0.07999999821186066,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "componentInstance": {
+                "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 10,
+              "parentId": 9,
+              "path": "Collapsed=True / ContentGroup / CollapsibleView / ⊕",
+              "type": "TEXT",
+              "name": "⊕",
+              "visible": true,
+              "opacity": 1,
+              "text": {
+                "characters": "⊕",
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24,
+                "lineHeight": 40,
+                "letterSpacing": 0.25,
+                "paragraphSpacing": 0
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 151,
+                    "g": 71,
+                    "b": 255,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": null,
+                  "colorHex": "#9747FF"
+                }
+              ],
+              "typography": {
+                "fontName": "SF Pro Text Light",
+                "fontSize": 24
+              }
+            }
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Collapsed=False",
+          "type": "COMPONENT",
+          "name": "Collapsed=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 20,
+              "bottom": 0,
+              "left": 20
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Collapsed=False / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup",
+          "type": "FRAME",
+          "name": "TitleViewGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup / TitleView",
+          "type": "INSTANCE",
+          "name": "TitleView",
+          "visible": true,
+          "opacity": 1,
+          "radius": 4,
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "radius": 0,
+              "color": "rgba(151, 71, 255, 1.00)",
+              "offset": {
+                "x": 2,
+                "y": 2
+              }
+            }
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 0.08
+              },
+              "visible": true,
+              "opacity": 0.07999999821186066,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "componentInstance": {
+            "componentKey": "c27532cbe710b5cc7d03fe325b3d75297d839b39"
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup / TitleView / ⊕",
+          "type": "TEXT",
+          "name": "⊕",
+          "visible": true,
+          "opacity": 1,
+          "text": {
+            "characters": "⊕",
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24,
+            "lineHeight": 40,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 151,
+                "g": 71,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#9747FF"
+            }
+          ],
+          "typography": {
+            "fontName": "SF Pro Text Light",
+            "fontSize": 24
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 3,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup / ImageView / chevron-down",
+          "type": "INSTANCE",
+          "name": "chevron-down",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "6db8da427cb8c193cfff2727c12abc17e3eb9896",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "Collapsed=False / ContentGroup / TitleViewGroup / ImageView / chevron-down / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 184,
+                "g": 185,
+                "b": 192,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#B8B9C0"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "28105:44520",
+          "key": "2987d9bef389b7b201407ce0c085c9d82843ddcc",
+          "name": "Collapsed=False"
+        },
+        {
+          "id": "28105:44522",
+          "key": "7958a126bd6a56f60b6ef1d783021e2774ddfdad",
+          "name": "Collapsed=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False",
+      "type": "COMPONENT",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          20,
+          0,
+          20
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:4e43cbd51accce4987391983636f02dbded2b492/244:99"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup",
+      "type": "FRAME",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup / TitleView",
+      "type": "INSTANCE",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 4
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "INSIDE",
+        "color": "rgba(151,71,255,1)"
+      },
+      "fill": {
+        "color": "rgba(151,71,255,0.08)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup / TitleView / ⊕",
+      "type": "TEXT",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(151,71,255,1)"
+      },
+      "text": {
+        "value": "⊕"
+      },
+      "typography": {
+        "family": "SF Pro Text",
+        "weight": "Light",
+        "size": 24,
+        "lineHeight": 40,
+        "letterSpacing": 0.25
+      }
+    },
+    {
+      "id": 6,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup / ImageView / chevron-down",
+      "type": "INSTANCE",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "ChevronWrapperV1 (🤖 12.06) / Collapsed=False / ContentGroup / TitleViewGroup / ImageView / chevron-down / icon",
+      "type": "VECTOR",
+      "componentKey": "dfd2cadda995670864d7a7a42505ee4dd6d7c3a2",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1c713987d3c1f38150c5fc293d5a437cfe0acaae,7820:62",
+        "color": "rgba(184,185,192,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

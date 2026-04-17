@@ -1,0 +1,14 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "iOS :: Wrappers",
+    "file": "iOS :: Wrappers",
+    "generatedAt": "2026-04-16T14:11:37.888Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "componentCount": 0,
+    "elementCount": 0
+  },
+  "components": [],
+  "elements": []
+}

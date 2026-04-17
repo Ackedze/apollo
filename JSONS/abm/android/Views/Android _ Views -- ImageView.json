@@ -1,0 +1,4447 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:14:04.908Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ImageView"
+    ],
+    "componentCount": 43,
+    "elementCount": 73
+  },
+  "components": [
+    {
+      "key": "24b8c8a3e974ac83a9e1dab4fb58ab14157cfd22",
+      "name": "ImageViewV1",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "Соответствие SDUI контракту\nImageView\nДоступен с версии 11.59\n\n\n✴️ Shape (в фигме называется hasRoundedCorners)\nНа фронте прокидывается маска, в фигме настраивается активируется параметром hasRoundedCorners\n\n✴️ Preset (в фигме называется fixedScale)\nДоступен с версии: 11.67,Живёт в пропсе Scale – fixedScale, и имеет 4 значения (Fixed Dimension) аналогично контракту: FixedWidthHeight, FixedHeight128, FixedHeight160, FixedWidthHeightS\n\n✴️ Ratio (в фигме называется aspectRatio)\nНа фронте прокидываются отношения в формате 0.5; 1; 1.5 и тд, в фигме 1:1; 1:2; 2:3 и тд из свойства aspectRatio\n\n⛔ Все прочие пропсы, доступные в фигме, недоступны в SDUI\n\n\nЛегенда\n✅ Пропса в SDUI контракте полностью совпадает\n✴️ Есть различия\n( ) Название в фигме",
+      "category": "ImageViewV1",
+      "defaultVariant": "3f7cc2c3e9fc30caaf780c37a73a518af62a480d",
+      "variantStructures": {
+        "3f7cc2c3e9fc30caaf780c37a73a518af62a480d": [],
+        "499998e99a481e23d6c5a94bcef8563274fc4329": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=True"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=True / 🎨 ContentGroup / 👻 Распорка",
+              "type": "INSTANCE",
+              "name": "👻 Распорка",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "07945c8a6c2a2ad1ab74983907b263e83e6a413b"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=True / 🎨 ContentGroup / 👻 Распорка / W200H96",
+              "type": "RECTANGLE",
+              "name": "W200H96",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "332c72214b954149855e236cf1e608567858728a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=False, Scale=AspectRatio (↓), 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=False, Scale=AspectRatio (↓), 👻 Распорка=False / 🎨 ContentGroup / AspectRatio",
+              "type": "INSTANCE",
+              "name": "AspectRatio",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f58f40d5c26afedd352900be41e8f475cc20ccdb"
+              }
+            }
+          }
+        ],
+        "0ee12f7b0a7d23d8c779eb573e75ef76c088dcf8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=False, Scale=AspectRatio (→), 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=False, Scale=AspectRatio (→), 👻 Распорка=False / 🎨 ContentGroup / AspectRatio",
+              "type": "INSTANCE",
+              "name": "AspectRatio",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f58f40d5c26afedd352900be41e8f475cc20ccdb"
+              }
+            }
+          }
+        ],
+        "4ccbf664c1d0377c50ec285c42b883d12dc2368d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=False, Scale=CoverImageHeight, 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=False, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper",
+              "type": "INSTANCE",
+              "name": "👻 SizeKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "HasRoundedCorners=False, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper / l [H280]",
+              "type": "INSTANCE",
+              "name": "l [H280]",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "HasRoundedCorners=False, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper / l [H280] / ImageResource",
+              "type": "FRAME",
+              "name": "ImageResource",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "53cb9728bb18d02dc40c24ae9e95822b9b74210e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 16
+            }
+          }
+        ],
+        "5270989c43461fca6b293371fae8e3e3a94794ee": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 16
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=True / 🎨 ContentGroup / 👻 Распорка",
+              "type": "INSTANCE",
+              "name": "👻 Распорка",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "07945c8a6c2a2ad1ab74983907b263e83e6a413b"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=True / 🎨 ContentGroup / 👻 Распорка / W200H96",
+              "type": "RECTANGLE",
+              "name": "W200H96",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ],
+        "a6f38a0d58515cb4aaa7ade89650829c5abcd0b8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=True, Scale=AspectRatio (↓), 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 16
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=True, Scale=AspectRatio (↓), 👻 Распорка=False / 🎨 ContentGroup / AspectRatio",
+              "type": "INSTANCE",
+              "name": "AspectRatio",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f58f40d5c26afedd352900be41e8f475cc20ccdb"
+              }
+            }
+          }
+        ],
+        "f99d5fea3c3b1a06261b1ebd8238f774a5c737e9": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=True, Scale=AspectRatio (→), 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 16
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=True, Scale=AspectRatio (→), 👻 Распорка=False / 🎨 ContentGroup / AspectRatio",
+              "type": "INSTANCE",
+              "name": "AspectRatio",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "f58f40d5c26afedd352900be41e8f475cc20ccdb"
+              }
+            }
+          }
+        ],
+        "b44d156e9e26c8f308d9fa083db5cb08e5290641": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "HasRoundedCorners=True, Scale=CoverImageHeight, 👻 Распорка=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "radius": 16
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 3,
+              "parentId": 2,
+              "path": "HasRoundedCorners=True, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper",
+              "type": "INSTANCE",
+              "name": "👻 SizeKeeper",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 4,
+              "parentId": 3,
+              "path": "HasRoundedCorners=True, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper / l [H280]",
+              "type": "INSTANCE",
+              "name": "l [H280]",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f"
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 5,
+              "parentId": 4,
+              "path": "HasRoundedCorners=True, Scale=CoverImageHeight, 👻 Распорка=False / 🎨 ContentGroup / 👻 SizeKeeper / l [H280] / ImageResource",
+              "type": "FRAME",
+              "name": "ImageResource",
+              "visible": true,
+              "opacity": 1,
+              "radius": 0
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False",
+          "type": "COMPONENT",
+          "name": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+          "strokeWeight": 0,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False / 🎨 ContentGroup / ImageSource",
+          "type": "INSTANCE",
+          "name": "ImageSource",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "28078833054e4ff41701faac9d5b00033c22a47b"
+          }
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624913",
+          "key": "3f7cc2c3e9fc30caaf780c37a73a518af62a480d",
+          "name": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False"
+        },
+        {
+          "id": "51898:10556",
+          "key": "499998e99a481e23d6c5a94bcef8563274fc4329",
+          "name": "HasRoundedCorners=False, Scale=Custom, 👻 Распорка=True"
+        },
+        {
+          "id": "51116:624916",
+          "key": "332c72214b954149855e236cf1e608567858728a",
+          "name": "HasRoundedCorners=False, Scale=AspectRatio (↓), 👻 Распорка=False"
+        },
+        {
+          "id": "51116:624920",
+          "key": "0ee12f7b0a7d23d8c779eb573e75ef76c088dcf8",
+          "name": "HasRoundedCorners=False, Scale=AspectRatio (→), 👻 Распорка=False"
+        },
+        {
+          "id": "51116:624924",
+          "key": "4ccbf664c1d0377c50ec285c42b883d12dc2368d",
+          "name": "HasRoundedCorners=False, Scale=CoverImageHeight, 👻 Распорка=False"
+        },
+        {
+          "id": "51116:624928",
+          "key": "53cb9728bb18d02dc40c24ae9e95822b9b74210e",
+          "name": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=False"
+        },
+        {
+          "id": "51898:10559",
+          "key": "5270989c43461fca6b293371fae8e3e3a94794ee",
+          "name": "HasRoundedCorners=True, Scale=Custom, 👻 Распорка=True"
+        },
+        {
+          "id": "51116:624931",
+          "key": "a6f38a0d58515cb4aaa7ade89650829c5abcd0b8",
+          "name": "HasRoundedCorners=True, Scale=AspectRatio (↓), 👻 Распорка=False"
+        },
+        {
+          "id": "51116:624935",
+          "key": "f99d5fea3c3b1a06261b1ebd8238f774a5c737e9",
+          "name": "HasRoundedCorners=True, Scale=AspectRatio (→), 👻 Распорка=False"
+        },
+        {
+          "id": "51116:624939",
+          "key": "b44d156e9e26c8f308d9fa083db5cb08e5290641",
+          "name": "HasRoundedCorners=True, Scale=CoverImageHeight, 👻 Распорка=False"
+        }
+      ]
+    },
+    {
+      "key": "d1716cf1a4e7647546fd4cfd8d51b50507b4562c",
+      "name": "6:7",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "6:7",
+      "defaultVariant": "d1716cf1a4e7647546fd4cfd8d51b50507b4562c",
+      "variantStructures": {
+        "d1716cf1a4e7647546fd4cfd8d51b50507b4562c": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "6:7",
+          "type": "COMPONENT",
+          "name": "6:7",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624904",
+          "key": "d1716cf1a4e7647546fd4cfd8d51b50507b4562c",
+          "name": "6:7"
+        }
+      ]
+    },
+    {
+      "key": "5e4e31e0f239349d39e91da0dde35dd0bb9e1dce",
+      "name": "9:8",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "9:8",
+      "defaultVariant": "5e4e31e0f239349d39e91da0dde35dd0bb9e1dce",
+      "variantStructures": {
+        "5e4e31e0f239349d39e91da0dde35dd0bb9e1dce": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "9:8",
+          "type": "COMPONENT",
+          "name": "9:8",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624903",
+          "key": "5e4e31e0f239349d39e91da0dde35dd0bb9e1dce",
+          "name": "9:8"
+        }
+      ]
+    },
+    {
+      "key": "57a99789856481236adb4e1c6bc161da8705636c",
+      "name": "8:5",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "8:5",
+      "defaultVariant": "57a99789856481236adb4e1c6bc161da8705636c",
+      "variantStructures": {
+        "57a99789856481236adb4e1c6bc161da8705636c": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "8:5",
+          "type": "COMPONENT",
+          "name": "8:5",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624902",
+          "key": "57a99789856481236adb4e1c6bc161da8705636c",
+          "name": "8:5"
+        }
+      ]
+    },
+    {
+      "key": "56567fcd8265bf493fe6a0ab7c0e2979f4fc0f70",
+      "name": "9:16",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "9:16",
+      "defaultVariant": "56567fcd8265bf493fe6a0ab7c0e2979f4fc0f70",
+      "variantStructures": {
+        "56567fcd8265bf493fe6a0ab7c0e2979f4fc0f70": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "9:16",
+          "type": "COMPONENT",
+          "name": "9:16",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624901",
+          "key": "56567fcd8265bf493fe6a0ab7c0e2979f4fc0f70",
+          "name": "9:16"
+        }
+      ]
+    },
+    {
+      "key": "3d8ed459f528cdbde2681bc7acad199ac77eb4f4",
+      "name": "10:16",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "10:16",
+      "defaultVariant": "3d8ed459f528cdbde2681bc7acad199ac77eb4f4",
+      "variantStructures": {
+        "3d8ed459f528cdbde2681bc7acad199ac77eb4f4": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "10:16",
+          "type": "COMPONENT",
+          "name": "10:16",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624900",
+          "key": "3d8ed459f528cdbde2681bc7acad199ac77eb4f4",
+          "name": "10:16"
+        }
+      ]
+    },
+    {
+      "key": "c3c60e09daed7059616ec99079a1196c7a2a275f",
+      "name": "2:3",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "2:3",
+      "defaultVariant": "c3c60e09daed7059616ec99079a1196c7a2a275f",
+      "variantStructures": {
+        "c3c60e09daed7059616ec99079a1196c7a2a275f": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "2:3",
+          "type": "COMPONENT",
+          "name": "2:3",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624899",
+          "key": "c3c60e09daed7059616ec99079a1196c7a2a275f",
+          "name": "2:3"
+        }
+      ]
+    },
+    {
+      "key": "342a39b310e2c3a4d3bd22f514f74d0ad8f36c75",
+      "name": "3:4",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "3:4",
+      "defaultVariant": "342a39b310e2c3a4d3bd22f514f74d0ad8f36c75",
+      "variantStructures": {
+        "342a39b310e2c3a4d3bd22f514f74d0ad8f36c75": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "3:4",
+          "type": "COMPONENT",
+          "name": "3:4",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624898",
+          "key": "342a39b310e2c3a4d3bd22f514f74d0ad8f36c75",
+          "name": "3:4"
+        }
+      ]
+    },
+    {
+      "key": "c6a5484d070f596b1cdd1048a45ac5b85c77cf3f",
+      "name": "4:5",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "4:5",
+      "defaultVariant": "c6a5484d070f596b1cdd1048a45ac5b85c77cf3f",
+      "variantStructures": {
+        "c6a5484d070f596b1cdd1048a45ac5b85c77cf3f": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "4:5",
+          "type": "COMPONENT",
+          "name": "4:5",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624897",
+          "key": "c6a5484d070f596b1cdd1048a45ac5b85c77cf3f",
+          "name": "4:5"
+        }
+      ]
+    },
+    {
+      "key": "42255f6f18c5779bbdccd911241c6ee3e276c764",
+      "name": "9:21",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "9:21",
+      "defaultVariant": "42255f6f18c5779bbdccd911241c6ee3e276c764",
+      "variantStructures": {
+        "42255f6f18c5779bbdccd911241c6ee3e276c764": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "9:21",
+          "type": "COMPONENT",
+          "name": "9:21",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624896",
+          "key": "42255f6f18c5779bbdccd911241c6ee3e276c764",
+          "name": "9:21"
+        }
+      ]
+    },
+    {
+      "key": "14548493587b634b3c1452b85856ba0e92746e97",
+      "name": "1:2",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "1:2",
+      "defaultVariant": "14548493587b634b3c1452b85856ba0e92746e97",
+      "variantStructures": {
+        "14548493587b634b3c1452b85856ba0e92746e97": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "1:2",
+          "type": "COMPONENT",
+          "name": "1:2",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624895",
+          "key": "14548493587b634b3c1452b85856ba0e92746e97",
+          "name": "1:2"
+        }
+      ]
+    },
+    {
+      "key": "96a51994053f0fe500f636de257dd554e3b69c8c",
+      "name": "3:1",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "3:1",
+      "defaultVariant": "96a51994053f0fe500f636de257dd554e3b69c8c",
+      "variantStructures": {
+        "96a51994053f0fe500f636de257dd554e3b69c8c": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "3:1",
+          "type": "COMPONENT",
+          "name": "3:1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624894",
+          "key": "96a51994053f0fe500f636de257dd554e3b69c8c",
+          "name": "3:1"
+        }
+      ]
+    },
+    {
+      "key": "721144df22cfb58df00534cf0f1c99f664bab1dd",
+      "name": "8:3",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "8:3",
+      "defaultVariant": "721144df22cfb58df00534cf0f1c99f664bab1dd",
+      "variantStructures": {
+        "721144df22cfb58df00534cf0f1c99f664bab1dd": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "8:3",
+          "type": "COMPONENT",
+          "name": "8:3",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624893",
+          "key": "721144df22cfb58df00534cf0f1c99f664bab1dd",
+          "name": "8:3"
+        }
+      ]
+    },
+    {
+      "key": "e31b2c513074aeb7ac07d45f92cf3300727b9cd8",
+      "name": "5:2",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "5:2",
+      "defaultVariant": "e31b2c513074aeb7ac07d45f92cf3300727b9cd8",
+      "variantStructures": {
+        "e31b2c513074aeb7ac07d45f92cf3300727b9cd8": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "5:2",
+          "type": "COMPONENT",
+          "name": "5:2",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624892",
+          "key": "e31b2c513074aeb7ac07d45f92cf3300727b9cd8",
+          "name": "5:2"
+        }
+      ]
+    },
+    {
+      "key": "01b155e00f23b3b2c55997e56a03bff29b2fbb56",
+      "name": "14:3",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "14:3",
+      "defaultVariant": "01b155e00f23b3b2c55997e56a03bff29b2fbb56",
+      "variantStructures": {
+        "01b155e00f23b3b2c55997e56a03bff29b2fbb56": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "14:3",
+          "type": "COMPONENT",
+          "name": "14:3",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624891",
+          "key": "01b155e00f23b3b2c55997e56a03bff29b2fbb56",
+          "name": "14:3"
+        }
+      ]
+    },
+    {
+      "key": "557084376ab3033ada806e6aef2dff3015eccafb",
+      "name": "4:1",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "4:1",
+      "defaultVariant": "557084376ab3033ada806e6aef2dff3015eccafb",
+      "variantStructures": {
+        "557084376ab3033ada806e6aef2dff3015eccafb": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "4:1",
+          "type": "COMPONENT",
+          "name": "4:1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624890",
+          "key": "557084376ab3033ada806e6aef2dff3015eccafb",
+          "name": "4:1"
+        }
+      ]
+    },
+    {
+      "key": "e71311ed8b4682414bdccaadefce69b1fe38b671",
+      "name": "32:9",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "32:9",
+      "defaultVariant": "e71311ed8b4682414bdccaadefce69b1fe38b671",
+      "variantStructures": {
+        "e71311ed8b4682414bdccaadefce69b1fe38b671": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "32:9",
+          "type": "COMPONENT",
+          "name": "32:9",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624889",
+          "key": "e71311ed8b4682414bdccaadefce69b1fe38b671",
+          "name": "32:9"
+        }
+      ]
+    },
+    {
+      "key": "e4a29f48e395b11ce3d37aabd199a51b798eaa4d",
+      "name": "16:5",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "16:5",
+      "defaultVariant": "e4a29f48e395b11ce3d37aabd199a51b798eaa4d",
+      "variantStructures": {
+        "e4a29f48e395b11ce3d37aabd199a51b798eaa4d": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "16:5",
+          "type": "COMPONENT",
+          "name": "16:5",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624888",
+          "key": "e4a29f48e395b11ce3d37aabd199a51b798eaa4d",
+          "name": "16:5"
+        }
+      ]
+    },
+    {
+      "key": "608c2f20fa049186b2eab649566e6888018250f0",
+      "name": "21:9",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "21:9",
+      "defaultVariant": "608c2f20fa049186b2eab649566e6888018250f0",
+      "variantStructures": {
+        "608c2f20fa049186b2eab649566e6888018250f0": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "21:9",
+          "type": "COMPONENT",
+          "name": "21:9",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624887",
+          "key": "608c2f20fa049186b2eab649566e6888018250f0",
+          "name": "21:9"
+        }
+      ]
+    },
+    {
+      "key": "ec5205f0bcdcbc3c7b46b9eef77068bfcfd04699",
+      "name": "2:1",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "2:1",
+      "defaultVariant": "ec5205f0bcdcbc3c7b46b9eef77068bfcfd04699",
+      "variantStructures": {
+        "ec5205f0bcdcbc3c7b46b9eef77068bfcfd04699": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "2:1",
+          "type": "COMPONENT",
+          "name": "2:1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624886",
+          "key": "ec5205f0bcdcbc3c7b46b9eef77068bfcfd04699",
+          "name": "2:1"
+        }
+      ]
+    },
+    {
+      "key": "2bf77b0d8f245c0f964679f0db9c52a5594234e5",
+      "name": "16:9",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "16:9",
+      "defaultVariant": "2bf77b0d8f245c0f964679f0db9c52a5594234e5",
+      "variantStructures": {
+        "2bf77b0d8f245c0f964679f0db9c52a5594234e5": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "16:9",
+          "type": "COMPONENT",
+          "name": "16:9",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624885",
+          "key": "2bf77b0d8f245c0f964679f0db9c52a5594234e5",
+          "name": "16:9"
+        }
+      ]
+    },
+    {
+      "key": "9635adeb2836aa1624b17ff1ae507358d54982e3",
+      "name": "16:10",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "16:10",
+      "defaultVariant": "9635adeb2836aa1624b17ff1ae507358d54982e3",
+      "variantStructures": {
+        "9635adeb2836aa1624b17ff1ae507358d54982e3": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "16:10",
+          "type": "COMPONENT",
+          "name": "16:10",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624884",
+          "key": "9635adeb2836aa1624b17ff1ae507358d54982e3",
+          "name": "16:10"
+        }
+      ]
+    },
+    {
+      "key": "41ad57bd0a73ad0b81384700465b9b930ba05fc2",
+      "name": "3:2",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "3:2",
+      "defaultVariant": "41ad57bd0a73ad0b81384700465b9b930ba05fc2",
+      "variantStructures": {
+        "41ad57bd0a73ad0b81384700465b9b930ba05fc2": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "3:2",
+          "type": "COMPONENT",
+          "name": "3:2",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624883",
+          "key": "41ad57bd0a73ad0b81384700465b9b930ba05fc2",
+          "name": "3:2"
+        }
+      ]
+    },
+    {
+      "key": "da0de98ce7f76397cddf795e924ed646e05ab5b1",
+      "name": "4:3",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "4:3",
+      "defaultVariant": "da0de98ce7f76397cddf795e924ed646e05ab5b1",
+      "variantStructures": {
+        "da0de98ce7f76397cddf795e924ed646e05ab5b1": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "4:3",
+          "type": "COMPONENT",
+          "name": "4:3",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624882",
+          "key": "da0de98ce7f76397cddf795e924ed646e05ab5b1",
+          "name": "4:3"
+        }
+      ]
+    },
+    {
+      "key": "63d214f40877671cd9262be6d9ce46ae96d03e95",
+      "name": "5:4",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "5:4",
+      "defaultVariant": "63d214f40877671cd9262be6d9ce46ae96d03e95",
+      "variantStructures": {
+        "63d214f40877671cd9262be6d9ce46ae96d03e95": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "5:4",
+          "type": "COMPONENT",
+          "name": "5:4",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624881",
+          "key": "63d214f40877671cd9262be6d9ce46ae96d03e95",
+          "name": "5:4"
+        }
+      ]
+    },
+    {
+      "key": "f58f40d5c26afedd352900be41e8f475cc20ccdb",
+      "name": "1:1",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "1:1",
+      "defaultVariant": "f58f40d5c26afedd352900be41e8f475cc20ccdb",
+      "variantStructures": {
+        "f58f40d5c26afedd352900be41e8f475cc20ccdb": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "1:1",
+          "type": "COMPONENT",
+          "name": "1:1",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51116:624880",
+          "key": "f58f40d5c26afedd352900be41e8f475cc20ccdb",
+          "name": "1:1"
+        }
+      ]
+    },
+    {
+      "key": "28078833054e4ff41701faac9d5b00033c22a47b",
+      "name": "ImageSource",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "ImageSource",
+      "defaultVariant": "28078833054e4ff41701faac9d5b00033c22a47b",
+      "variantStructures": {
+        "28078833054e4ff41701faac9d5b00033c22a47b": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "ImageSource",
+          "type": "COMPONENT",
+          "name": "ImageSource",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49135:75700",
+          "key": "28078833054e4ff41701faac9d5b00033c22a47b",
+          "name": "ImageSource"
+        }
+      ]
+    },
+    {
+      "key": "724e0438e7e290842b943858b045b1aa915aa19b",
+      "name": "👻 Распорка с фиксированным значением высоты",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Распорка с фиксированным значением высоты",
+      "defaultVariant": "724e0438e7e290842b943858b045b1aa915aa19b",
+      "variantStructures": {
+        "724e0438e7e290842b943858b045b1aa915aa19b": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 Распорка с фиксированным значением высоты",
+          "type": "COMPONENT",
+          "name": "👻 Распорка с фиксированным значением высоты",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 Распорка с фиксированным значением высоты / H100",
+          "type": "FRAME",
+          "name": "H100",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "25478:2865",
+          "key": "724e0438e7e290842b943858b045b1aa915aa19b",
+          "name": "👻 Распорка с фиксированным значением высоты"
+        }
+      ]
+    },
+    {
+      "key": "07945c8a6c2a2ad1ab74983907b263e83e6a413b",
+      "name": "W200H96",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "W200H96",
+      "defaultVariant": "07945c8a6c2a2ad1ab74983907b263e83e6a413b",
+      "variantStructures": {
+        "07945c8a6c2a2ad1ab74983907b263e83e6a413b": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "W200H96",
+          "type": "COMPONENT",
+          "name": "W200H96",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "W200H96 / W200H96",
+          "type": "RECTANGLE",
+          "name": "W200H96",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "51898:10572",
+          "key": "07945c8a6c2a2ad1ab74983907b263e83e6a413b",
+          "name": "W200H96"
+        }
+      ]
+    },
+    {
+      "key": "b005b2ecfcd15ca0a740bb6832a863e11345e513",
+      "name": "👻 Распорка с фиксированными значениями высоты и ширины",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Распорка с фиксированными значениями высоты и ширины",
+      "defaultVariant": "b005b2ecfcd15ca0a740bb6832a863e11345e513",
+      "variantStructures": {
+        "b005b2ecfcd15ca0a740bb6832a863e11345e513": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 Распорка с фиксированными значениями высоты и ширины",
+          "type": "COMPONENT",
+          "name": "👻 Распорка с фиксированными значениями высоты и ширины",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 Распорка с фиксированными значениями высоты и ширины / W200H96",
+          "type": "FRAME",
+          "name": "W200H96",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "25478:2863",
+          "key": "b005b2ecfcd15ca0a740bb6832a863e11345e513",
+          "name": "👻 Распорка с фиксированными значениями высоты и ширины"
+        }
+      ]
+    },
+    {
+      "key": "0a79643cbc50331651197585cef52d2665ba6078",
+      "name": "👻 Распорка с AspectRatio",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Распорка с AspectRatio",
+      "defaultVariant": "0a79643cbc50331651197585cef52d2665ba6078",
+      "variantStructures": {
+        "0a79643cbc50331651197585cef52d2665ba6078": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 Распорка с AspectRatio",
+          "type": "COMPONENT",
+          "name": "👻 Распорка с AspectRatio",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "⚙ AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "componentInstance": {
+            "componentKey": "3532b85c4d8750faa9d0617969a4ef5bde85baf5"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "43bf9e194531f843b476849695a8448dc1dc6dca",
+            "variantProperties": {
+              "Aspect ratio": "2:3"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Additionally rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        }
+      ],
+      "variants": [
+        {
+          "id": "25478:2861",
+          "key": "0a79643cbc50331651197585cef52d2665ba6078",
+          "name": "👻 Распорка с AspectRatio"
+        }
+      ]
+    },
+    {
+      "key": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "name": "⚙ AspectRatioKeeper",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "AspectRatioKeeper",
+      "defaultVariant": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "variantStructures": {
+        "f76ef232e895e13c2ebd468e53289d8031446787": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "⚙ AspectRatioKeeper",
+          "type": "COMPONENT",
+          "name": "⚙ AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b8dbd285811def43d88e035c4bdc055f00b7e237",
+            "variantProperties": {
+              "Aspect ratio": "1:1"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        }
+      ],
+      "variants": [
+        {
+          "id": "14117:11235",
+          "key": "f76ef232e895e13c2ebd468e53289d8031446787",
+          "name": "⚙ AspectRatioKeeper"
+        }
+      ]
+    },
+    {
+      "key": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "name": "⚙ AspectRatio",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "AspectRatio",
+      "defaultVariant": "eb3f58b7a4c29f09cd82636756c85ae00ee69cd2",
+      "variantStructures": {
+        "eb3f58b7a4c29f09cd82636756c85ae00ee69cd2": [],
+        "d507bbbea401fe3421b657d063676dfc6ae94d0c": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "🔒👻 AspectRatioKeeper=vertical"
+            }
+          },
+          {
+            "op": "update",
+            "id": 2,
+            "value": {
+              "componentInstance": {
+                "componentKey": "86ee4df4d5dd8b3a13e4185ab39685bd14ae69ca",
+                "variantProperties": {
+                  "🔒 AspectRatioKeeper": "vertical"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "🔒👻 AspectRatioKeeper=horizontal",
+          "type": "COMPONENT",
+          "name": "🔒👻 AspectRatioKeeper=horizontal",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": false,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "4eb27774a0b6591909941b54976907f5c6216b3d",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "horizontal"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b8dbd285811def43d88e035c4bdc055f00b7e237",
+            "variantProperties": {
+              "Aspect ratio": "1:1"
+            }
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        }
+      ],
+      "variants": [
+        {
+          "id": "3823:16627",
+          "key": "eb3f58b7a4c29f09cd82636756c85ae00ee69cd2",
+          "name": "🔒👻 AspectRatioKeeper=horizontal"
+        },
+        {
+          "id": "3827:54826",
+          "key": "d507bbbea401fe3421b657d063676dfc6ae94d0c",
+          "name": "🔒👻 AspectRatioKeeper=vertical"
+        }
+      ]
+    },
+    {
+      "key": "ca18c1a2670d71607115612f8e0cd18f53b5b569",
+      "name": "s [W160H130]",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "s [W160H130]",
+      "defaultVariant": "ca18c1a2670d71607115612f8e0cd18f53b5b569",
+      "variantStructures": {
+        "ca18c1a2670d71607115612f8e0cd18f53b5b569": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "s [W160H130]",
+          "type": "COMPONENT",
+          "name": "s [W160H130]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "s [W160H130] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3907:62843",
+          "key": "ca18c1a2670d71607115612f8e0cd18f53b5b569",
+          "name": "s [W160H130]"
+        }
+      ]
+    },
+    {
+      "key": "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9",
+      "name": "W128H128",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "W128H128",
+      "defaultVariant": "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9",
+      "variantStructures": {
+        "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "W128H128",
+          "type": "COMPONENT",
+          "name": "W128H128",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "W128H128 / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3907:62832",
+          "key": "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9",
+          "name": "W128H128"
+        }
+      ]
+    },
+    {
+      "key": "c85869b5220d7ed67462e48a7c8efbb2e9f52813",
+      "name": "W160H160",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "W160H160",
+      "defaultVariant": "c85869b5220d7ed67462e48a7c8efbb2e9f52813",
+      "variantStructures": {
+        "c85869b5220d7ed67462e48a7c8efbb2e9f52813": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "W160H160",
+          "type": "COMPONENT",
+          "name": "W160H160",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "W160H160 / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3907:62835",
+          "key": "c85869b5220d7ed67462e48a7c8efbb2e9f52813",
+          "name": "W160H160"
+        }
+      ]
+    },
+    {
+      "key": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f",
+      "name": "l [H280]",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "l [H280]",
+      "defaultVariant": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f",
+      "variantStructures": {
+        "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "l [H280]",
+          "type": "COMPONENT",
+          "name": "l [H280]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "l [H280] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49143:76089",
+          "key": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f",
+          "name": "l [H280]"
+        }
+      ]
+    },
+    {
+      "key": "13e6ba8b3bf0c42fe153d99441aca8f023b63177",
+      "name": "m [H160]",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "m [H160]",
+      "defaultVariant": "13e6ba8b3bf0c42fe153d99441aca8f023b63177",
+      "variantStructures": {
+        "13e6ba8b3bf0c42fe153d99441aca8f023b63177": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "m [H160]",
+          "type": "COMPONENT",
+          "name": "m [H160]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "m [H160] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49143:76084",
+          "key": "13e6ba8b3bf0c42fe153d99441aca8f023b63177",
+          "name": "m [H160]"
+        }
+      ]
+    },
+    {
+      "key": "c1c9896e2c5486e1d4877e40a1ea31df8188a590",
+      "name": "s [H128]",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "s [H128]",
+      "defaultVariant": "c1c9896e2c5486e1d4877e40a1ea31df8188a590",
+      "variantStructures": {
+        "c1c9896e2c5486e1d4877e40a1ea31df8188a590": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "s [H128]",
+          "type": "COMPONENT",
+          "name": "s [H128]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "s [H128] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49143:76079",
+          "key": "c1c9896e2c5486e1d4877e40a1ea31df8188a590",
+          "name": "s [H128]"
+        }
+      ]
+    },
+    {
+      "key": "c7814b8899947c469f1324b7108204d925283a87",
+      "name": "xs [W96H96]",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "xs [W96H96]",
+      "defaultVariant": "c7814b8899947c469f1324b7108204d925283a87",
+      "variantStructures": {
+        "c7814b8899947c469f1324b7108204d925283a87": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "xs [W96H96]",
+          "type": "COMPONENT",
+          "name": "xs [W96H96]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "xs [W96H96] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3823:16618",
+          "key": "c7814b8899947c469f1324b7108204d925283a87",
+          "name": "xs [W96H96]"
+        }
+      ]
+    },
+    {
+      "key": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+      "name": "CoverImageHeight",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "CoverImageHeight",
+      "defaultVariant": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+      "variantStructures": {
+        "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "CoverImageHeight",
+          "type": "COMPONENT",
+          "name": "CoverImageHeight",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "CoverImageHeight / l [H280]",
+          "type": "INSTANCE",
+          "name": "l [H280]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "CoverImageHeight / l [H280] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49143:76105",
+          "key": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+          "name": "CoverImageHeight"
+        }
+      ]
+    },
+    {
+      "key": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+      "name": "Height",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Height",
+      "defaultVariant": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+      "variantStructures": {
+        "ec18516cab90f36c9f15154c5f04302c3063c1da": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Height",
+          "type": "COMPONENT",
+          "name": "Height",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Height / s [H128]",
+          "type": "INSTANCE",
+          "name": "s [H128]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c1c9896e2c5486e1d4877e40a1ea31df8188a590"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Height / s [H128] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "49143:76096",
+          "key": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+          "name": "Height"
+        }
+      ]
+    },
+    {
+      "key": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+      "name": "FixHeightWidth",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "FixHeightWidth",
+      "defaultVariant": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+      "variantStructures": {
+        "129dc1df082554a4dc66001d2fd9b947bace5dba": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "FixHeightWidth",
+          "type": "COMPONENT",
+          "name": "FixHeightWidth",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "FixHeightWidth / xs [W96H96]",
+          "type": "INSTANCE",
+          "name": "xs [W96H96]",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7814b8899947c469f1324b7108204d925283a87"
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "FixHeightWidth / xs [W96H96] / ImageResource",
+          "type": "FRAME",
+          "name": "ImageResource",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        }
+      ],
+      "variants": [
+        {
+          "id": "3823:16609",
+          "key": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+          "name": "FixHeightWidth"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ImageViewV1 / HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False",
+      "type": "COMPONENT",
+      "componentKey": "24b8c8a3e974ac83a9e1dab4fb58ab14157cfd22",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ImageViewV1 / HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "24b8c8a3e974ac83a9e1dab4fb58ab14157cfd22",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 0,
+        "align": "INSIDE",
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ImageViewV1 / HasRoundedCorners=False, Scale=Custom, 👻 Распорка=False / 🎨 ContentGroup / ImageSource",
+      "type": "INSTANCE",
+      "componentKey": "24b8c8a3e974ac83a9e1dab4fb58ab14157cfd22",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "6:7",
+      "type": "COMPONENT",
+      "componentKey": "d1716cf1a4e7647546fd4cfd8d51b50507b4562c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "9:8",
+      "type": "COMPONENT",
+      "componentKey": "5e4e31e0f239349d39e91da0dde35dd0bb9e1dce",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "8:5",
+      "type": "COMPONENT",
+      "componentKey": "57a99789856481236adb4e1c6bc161da8705636c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "9:16",
+      "type": "COMPONENT",
+      "componentKey": "56567fcd8265bf493fe6a0ab7c0e2979f4fc0f70",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "10:16",
+      "type": "COMPONENT",
+      "componentKey": "3d8ed459f528cdbde2681bc7acad199ac77eb4f4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "2:3",
+      "type": "COMPONENT",
+      "componentKey": "c3c60e09daed7059616ec99079a1196c7a2a275f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "3:4",
+      "type": "COMPONENT",
+      "componentKey": "342a39b310e2c3a4d3bd22f514f74d0ad8f36c75",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "4:5",
+      "type": "COMPONENT",
+      "componentKey": "c6a5484d070f596b1cdd1048a45ac5b85c77cf3f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "9:21",
+      "type": "COMPONENT",
+      "componentKey": "42255f6f18c5779bbdccd911241c6ee3e276c764",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "1:2",
+      "type": "COMPONENT",
+      "componentKey": "14548493587b634b3c1452b85856ba0e92746e97",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "3:1",
+      "type": "COMPONENT",
+      "componentKey": "96a51994053f0fe500f636de257dd554e3b69c8c",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "8:3",
+      "type": "COMPONENT",
+      "componentKey": "721144df22cfb58df00534cf0f1c99f664bab1dd",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "5:2",
+      "type": "COMPONENT",
+      "componentKey": "e31b2c513074aeb7ac07d45f92cf3300727b9cd8",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "14:3",
+      "type": "COMPONENT",
+      "componentKey": "01b155e00f23b3b2c55997e56a03bff29b2fbb56",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "4:1",
+      "type": "COMPONENT",
+      "componentKey": "557084376ab3033ada806e6aef2dff3015eccafb",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "32:9",
+      "type": "COMPONENT",
+      "componentKey": "e71311ed8b4682414bdccaadefce69b1fe38b671",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "16:5",
+      "type": "COMPONENT",
+      "componentKey": "e4a29f48e395b11ce3d37aabd199a51b798eaa4d",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "21:9",
+      "type": "COMPONENT",
+      "componentKey": "608c2f20fa049186b2eab649566e6888018250f0",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "2:1",
+      "type": "COMPONENT",
+      "componentKey": "ec5205f0bcdcbc3c7b46b9eef77068bfcfd04699",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "16:9",
+      "type": "COMPONENT",
+      "componentKey": "2bf77b0d8f245c0f964679f0db9c52a5594234e5",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "16:10",
+      "type": "COMPONENT",
+      "componentKey": "9635adeb2836aa1624b17ff1ae507358d54982e3",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "3:2",
+      "type": "COMPONENT",
+      "componentKey": "41ad57bd0a73ad0b81384700465b9b930ba05fc2",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "4:3",
+      "type": "COMPONENT",
+      "componentKey": "da0de98ce7f76397cddf795e924ed646e05ab5b1",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "5:4",
+      "type": "COMPONENT",
+      "componentKey": "63d214f40877671cd9262be6d9ce46ae96d03e95",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "1:1",
+      "type": "COMPONENT",
+      "componentKey": "f58f40d5c26afedd352900be41e8f475cc20ccdb",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "ImageSource",
+      "type": "COMPONENT",
+      "componentKey": "28078833054e4ff41701faac9d5b00033c22a47b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "👻 Распорка с фиксированным значением высоты",
+      "type": "COMPONENT",
+      "componentKey": "724e0438e7e290842b943858b045b1aa915aa19b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "👻 Распорка с фиксированным значением высоты / H100",
+      "type": "FRAME",
+      "componentKey": "724e0438e7e290842b943858b045b1aa915aa19b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "W200H96",
+      "type": "COMPONENT",
+      "componentKey": "07945c8a6c2a2ad1ab74983907b263e83e6a413b",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "W200H96 / W200H96",
+      "type": "RECTANGLE",
+      "componentKey": "07945c8a6c2a2ad1ab74983907b263e83e6a413b",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "👻 Распорка с фиксированными значениями высоты и ширины",
+      "type": "COMPONENT",
+      "componentKey": "b005b2ecfcd15ca0a740bb6832a863e11345e513",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "👻 Распорка с фиксированными значениями высоты и ширины / W200H96",
+      "type": "FRAME",
+      "componentKey": "b005b2ecfcd15ca0a740bb6832a863e11345e513",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "👻 Распорка с AspectRatio",
+      "type": "COMPONENT",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Additionally rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "👻 Распорка с AspectRatio / ⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Additionally rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "0a79643cbc50331651197585cef52d2665ba6078",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "⚙ AspectRatioKeeper",
+      "type": "COMPONENT",
+      "componentKey": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "⚙ AspectRatioKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "f76ef232e895e13c2ebd468e53289d8031446787",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "⚙ AspectRatio / 🔒👻 AspectRatioKeeper=horizontal",
+      "type": "COMPONENT",
+      "componentKey": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "⚙ AspectRatio / 🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "⚙ AspectRatio / 🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "⚙ AspectRatio / 🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "⚙ AspectRatio / 🔒👻 AspectRatioKeeper=horizontal / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Additionally 45º rotated Auto Layout / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "05409413409fdf324e9fa853370c78444a84f6b4",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "s [W160H130]",
+      "type": "COMPONENT",
+      "componentKey": "ca18c1a2670d71607115612f8e0cd18f53b5b569",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "s [W160H130] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "ca18c1a2670d71607115612f8e0cd18f53b5b569",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "W128H128",
+      "type": "COMPONENT",
+      "componentKey": "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "W128H128 / ImageResource",
+      "type": "FRAME",
+      "componentKey": "72abcc9d69f0e29f32aa78744ec51c62e0fa84b9",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "W160H160",
+      "type": "COMPONENT",
+      "componentKey": "c85869b5220d7ed67462e48a7c8efbb2e9f52813",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "W160H160 / ImageResource",
+      "type": "FRAME",
+      "componentKey": "c85869b5220d7ed67462e48a7c8efbb2e9f52813",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "l [H280]",
+      "type": "COMPONENT",
+      "componentKey": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "l [H280] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "2b3bf9daef972d9ca14565f7fa366d8f6cdabf5f",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "m [H160]",
+      "type": "COMPONENT",
+      "componentKey": "13e6ba8b3bf0c42fe153d99441aca8f023b63177",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "m [H160] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "13e6ba8b3bf0c42fe153d99441aca8f023b63177",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "s [H128]",
+      "type": "COMPONENT",
+      "componentKey": "c1c9896e2c5486e1d4877e40a1ea31df8188a590",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "s [H128] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "c1c9896e2c5486e1d4877e40a1ea31df8188a590",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "xs [W96H96]",
+      "type": "COMPONENT",
+      "componentKey": "c7814b8899947c469f1324b7108204d925283a87",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "xs [W96H96] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "c7814b8899947c469f1324b7108204d925283a87",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "CoverImageHeight",
+      "type": "COMPONENT",
+      "componentKey": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "CoverImageHeight / l [H280]",
+      "type": "INSTANCE",
+      "componentKey": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "CoverImageHeight / l [H280] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "84071bb287f7779d5a4d81f8d82e01f2ba8f4d60",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Height",
+      "type": "COMPONENT",
+      "componentKey": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Height / s [H128]",
+      "type": "INSTANCE",
+      "componentKey": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "Height / s [H128] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "ec18516cab90f36c9f15154c5f04302c3063c1da",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "FixHeightWidth",
+      "type": "COMPONENT",
+      "componentKey": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "FixHeightWidth / xs [W96H96]",
+      "type": "INSTANCE",
+      "componentKey": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "FixHeightWidth / xs [W96H96] / ImageResource",
+      "type": "FRAME",
+      "componentKey": "129dc1df082554a4dc66001d2fd9b947bace5dba",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    }
+  ]
+}

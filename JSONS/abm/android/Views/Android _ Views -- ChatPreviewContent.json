@@ -1,0 +1,2810 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:12:21.737Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "ChatPreviewContent"
+    ],
+    "componentCount": 1,
+    "elementCount": 50
+  },
+  "components": [
+    {
+      "key": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "name": "ChatPreviewContent",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "description": "⛔ В SDUI не поддерживается",
+      "category": "ChatPreviewContent",
+      "defaultVariant": "05f8c4ae295c023d7b711fdfe033a9f0905a24aa",
+      "variantStructures": {
+        "05f8c4ae295c023d7b711fdfe033a9f0905a24aa": [],
+        "32257e53322968e4b2f2bdd954433fa53ceba2e0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "👻 Skeleton=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 4,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "4552da926a5543d3442a12acf72e36af686b6d42",
+                "variantProperties": {
+                  "👻 Skeleton": "True",
+                  "TextAlignment": "Left",
+                  "👻 HorizontalSize": "Fixed / Fill"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 6,
+              "parentId": 5,
+              "path": "👻 Skeleton=True / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / 👻 Skeleton",
+              "type": "INSTANCE",
+              "name": "👻 Skeleton",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 6.5,
+                  "right": 0,
+                  "bottom": 6.5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "52c7b672d20a868d140dc6d8afb0714165aa8faf",
+                "variantProperties": {
+                  "Width": "width164",
+                  "👻 chooseFontSize-LineHeight": "16-24"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 7,
+              "parentId": 6,
+              "path": "👻 Skeleton=True / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / 👻 Skeleton / Skeleton",
+              "type": "RECTANGLE",
+              "name": "Skeleton",
+              "visible": true,
+              "opacity": 1,
+              "radius": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "update",
+            "id": 39,
+            "value": {
+              "layout": {
+                "padding": {
+                  "top": 0,
+                  "right": 0,
+                  "bottom": 0,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "componentInstance": {
+                "componentKey": "4552da926a5543d3442a12acf72e36af686b6d42",
+                "variantProperties": {
+                  "👻 Skeleton": "True",
+                  "TextAlignment": "Left",
+                  "👻 HorizontalSize": "Fixed / Fill"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 11,
+              "parentId": 10,
+              "path": "👻 Skeleton=True / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / 👻 Skeleton",
+              "type": "INSTANCE",
+              "name": "👻 Skeleton",
+              "visible": true,
+              "layout": {
+                "padding": {
+                  "top": 5,
+                  "right": 0,
+                  "bottom": 5,
+                  "left": 0
+                },
+                "itemSpacing": 0
+              },
+              "opacity": 1,
+              "radius": 0,
+              "componentInstance": {
+                "componentKey": "ff35e1f7b82145ca94ac8eb28300353a7936fa2c",
+                "variantProperties": {
+                  "Width": "fullWidth",
+                  "👻 chooseFontSize-LineHeight": "14-20"
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "node": {
+              "id": 12,
+              "parentId": 11,
+              "path": "👻 Skeleton=True / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / 👻 Skeleton / Skeleton",
+              "type": "RECTANGLE",
+              "name": "Skeleton",
+              "visible": true,
+              "opacity": 1,
+              "radius": 40,
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          },
+          {
+            "op": "remove",
+            "id": 6
+          },
+          {
+            "op": "remove",
+            "id": 7
+          },
+          {
+            "op": "remove",
+            "id": 8
+          },
+          {
+            "op": "remove",
+            "id": 9
+          },
+          {
+            "op": "remove",
+            "id": 10
+          },
+          {
+            "op": "remove",
+            "id": 11
+          },
+          {
+            "op": "remove",
+            "id": 12
+          },
+          {
+            "op": "remove",
+            "id": 13
+          },
+          {
+            "op": "remove",
+            "id": 14
+          },
+          {
+            "op": "remove",
+            "id": 15
+          },
+          {
+            "op": "remove",
+            "id": 16
+          },
+          {
+            "op": "remove",
+            "id": 17
+          },
+          {
+            "op": "remove",
+            "id": 18
+          },
+          {
+            "op": "remove",
+            "id": 19
+          },
+          {
+            "op": "remove",
+            "id": 20
+          },
+          {
+            "op": "remove",
+            "id": 21
+          },
+          {
+            "op": "remove",
+            "id": 22
+          },
+          {
+            "op": "remove",
+            "id": 23
+          },
+          {
+            "op": "remove",
+            "id": 24
+          },
+          {
+            "op": "remove",
+            "id": 25
+          },
+          {
+            "op": "remove",
+            "id": 26
+          },
+          {
+            "op": "remove",
+            "id": 27
+          },
+          {
+            "op": "remove",
+            "id": 28
+          },
+          {
+            "op": "remove",
+            "id": 29
+          },
+          {
+            "op": "remove",
+            "id": 30
+          },
+          {
+            "op": "remove",
+            "id": 31
+          },
+          {
+            "op": "remove",
+            "id": 32
+          },
+          {
+            "op": "remove",
+            "id": 33
+          },
+          {
+            "op": "remove",
+            "id": 34
+          },
+          {
+            "op": "remove",
+            "id": 35
+          },
+          {
+            "op": "remove",
+            "id": 36
+          },
+          {
+            "op": "remove",
+            "id": 37
+          },
+          {
+            "op": "remove",
+            "id": 41
+          },
+          {
+            "op": "remove",
+            "id": 42
+          },
+          {
+            "op": "remove",
+            "id": 43
+          },
+          {
+            "op": "remove",
+            "id": 44
+          },
+          {
+            "op": "remove",
+            "id": 45
+          },
+          {
+            "op": "remove",
+            "id": 46
+          },
+          {
+            "op": "remove",
+            "id": 47
+          },
+          {
+            "op": "remove",
+            "id": 48
+          },
+          {
+            "op": "remove",
+            "id": 49
+          },
+          {
+            "op": "remove",
+            "id": 50
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "👻 Skeleton=False",
+          "type": "COMPONENT",
+          "name": "👻 Skeleton=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup",
+          "type": "FRAME",
+          "name": "🎨 ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0
+              },
+              "visible": true,
+              "opacity": 0,
+              "tokenKey": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeToken": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+          "strokeWeight": 0,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack",
+          "type": "FRAME",
+          "name": "FirstLineStack",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title",
+          "type": "INSTANCE",
+          "name": "Title",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "89b9cf2a71b07155b947abc241e70530a456985d",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 6,
+          "parentId": 5,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 9,
+          "parentId": 8,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 10,
+          "parentId": 6,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 11,
+          "parentId": 10,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "parentId": 5,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "title",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 3,
+                "g": 3,
+                "b": 6,
+                "a": 0.88
+              },
+              "visible": true,
+              "opacity": 0.8799999952316284,
+              "tokenKey": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+              "colorHex": "#030306"
+            }
+          ],
+          "fillToken": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 13,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon",
+          "type": "INSTANCE",
+          "name": "FirstIcon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7a958c5586b166751d5f6826de604c0ae63303cc",
+            "variantProperties": {
+              "Size": "🚧 X05Small",
+              "Shape": "NoShape",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 15,
+          "parentId": 14,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 18,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon",
+          "type": "INSTANCE",
+          "name": "SecondIcon",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "7a958c5586b166751d5f6826de604c0ae63303cc",
+            "variantProperties": {
+              "Size": "🚧 X05Small",
+              "Shape": "NoShape",
+              "Inner": "Icon"
+            }
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView",
+          "type": "FRAME",
+          "name": "ImageView",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 21,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+              "colorHex": "#212124"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169"
+        },
+        {
+          "id": 23,
+          "parentId": 3,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value",
+          "type": "INSTANCE",
+          "name": "Value",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 2,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "aea5d979e3eb5fe0bf3f62e995b8adffc382f4e4",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Hug"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 25,
+          "parentId": 24,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 27,
+          "parentId": 26,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 27,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 29,
+          "parentId": 25,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 29,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 31,
+          "parentId": 24,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "value",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        },
+        {
+          "id": 32,
+          "parentId": 24,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup",
+          "type": "FRAME",
+          "name": "RightIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 35,
+          "parentId": 34,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 36,
+          "parentId": 32,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "parentId": 2,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack",
+          "type": "FRAME",
+          "name": "SecondLineStack",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 39,
+          "parentId": 38,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle",
+          "type": "INSTANCE",
+          "name": "Subtitle",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 2,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:81cd1577d106f7f653964c2a0f318a59793c754f/2286:56",
+              "right": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+              "bottom": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+              "left": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "89b9cf2a71b07155b947abc241e70530a456985d",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 39,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 41,
+          "parentId": 40,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 42,
+          "parentId": 41,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 43,
+          "parentId": 42,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 44,
+          "parentId": 43,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 45,
+          "parentId": 41,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 46,
+          "parentId": 45,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "parentId": 40,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "subtitle",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 4,
+                "g": 4,
+                "b": 19,
+                "a": 0.55
+              },
+              "visible": true,
+              "opacity": 0.550000011920929,
+              "tokenKey": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+              "colorHex": "#040413"
+            }
+          ],
+          "fillToken": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 14
+          },
+          "typographyToken": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458"
+        },
+        {
+          "id": 48,
+          "parentId": 38,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator",
+          "type": "INSTANCE",
+          "name": "Indicator",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 180,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+          "componentInstance": {
+            "componentKey": "3d0bb43b2fcbf3895a3fdc1cf15c709b95f9879c",
+            "variantProperties": {
+              "Size": "S [20]",
+              "Stroke": "False"
+            }
+          }
+        },
+        {
+          "id": 49,
+          "parentId": 48,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 6.5,
+              "bottom": 0,
+              "left": 6.5
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 180,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+              "colorHex": "#EF3124"
+            }
+          ],
+          "fillToken": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203"
+        },
+        {
+          "id": 50,
+          "parentId": 49,
+          "path": "👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:8271074d9b87948fe8044c887fe559422e9e61b9,4541:433"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "1",
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 0.3499999940395355,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+          "typography": {
+            "fontName": "Alfa Interface Sans Bold",
+            "fontSize": 12
+          },
+          "typographyToken": "VariableID:8dd0b222ab52ce9693945f4d4b904a68e54206c8/4541:394"
+        }
+      ],
+      "variants": [
+        {
+          "id": "49758:64037",
+          "key": "05f8c4ae295c023d7b711fdfe033a9f0905a24aa",
+          "name": "👻 Skeleton=False"
+        },
+        {
+          "id": "49758:64050",
+          "key": "32257e53322968e4b2f2bdd954433fa53ceba2e0",
+          "name": "👻 Skeleton=True"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "ChatPreviewContent / 👻 Skeleton=False",
+      "type": "COMPONENT",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 0,
+        "align": "INSIDE",
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "fill": {
+        "token": "VariableID:c52bca1d1a94f5d75adbada37c98813cd1b4f9ef/5538:0",
+        "color": "rgba(255,255,255,0)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Title / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208",
+        "color": "rgba(3,3,6,0.88)"
+      },
+      "text": {
+        "value": "title"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+      }
+    },
+    {
+      "id": 13,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / FirstIcon / ContentGroup / ImageView / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 22,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / SecondIcon / ContentGroup / ImageView / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/3541:169",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          2,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:399d1b614d98e08f3dc116a76184f842cbde312f/244:92",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 28,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "value"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 32,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 35,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / FirstLineStack / Value / ContentGroup / RightIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          2,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:81cd1577d106f7f653964c2a0f318a59793c754f/2286:56",
+          "right": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+          "bottom": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51",
+          "left": "VariableID:b2c0828884629e4d2ed2781a5bcac00df46d57a1/2286:51"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 43,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 44,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 45,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Subtitle / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d9d26239617e3ab9e69d7ed378d811a3c4561063/3541:205",
+        "color": "rgba(4,4,19,0.55)"
+      },
+      "text": {
+        "value": "subtitle"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0,
+        "token": "VariableID:27fce718b064a70c9b87588219d7ee1596759cf6/4587:458",
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,4587:456"
+      }
+    },
+    {
+      "id": 48,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator",
+      "type": "INSTANCE",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 180
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 49,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          6.5,
+          0,
+          6.5
+        ],
+        "gap": 0,
+        "radius": 180
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:15bff314b7c8001f28f69bab9b6234c4e0050b43/3541:203",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 50,
+      "path": "ChatPreviewContent / 👻 Skeleton=False / 🎨 ContentGroup / SecondLineStack / Indicator / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "47c11016c21c7f03bf5bda754e05b0fcd9e4cd17",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:de53e1056e003a1b3aedbb9e81b2d767e4c85fa2/3541:135",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "1"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 0.3499999940395355,
+        "token": "VariableID:8dd0b222ab52ce9693945f4d4b904a68e54206c8/4541:394",
+        "styleKey": "S:8271074d9b87948fe8044c887fe559422e9e61b9,4541:433"
+      }
+    }
+  ]
+}

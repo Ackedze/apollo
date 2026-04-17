@@ -1,0 +1,5227 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:19:12.434Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "StoryView"
+    ],
+    "componentCount": 1,
+    "elementCount": 111
+  },
+  "components": [
+    {
+      "key": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "name": "StoryView",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "StoryView",
+      "defaultVariant": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "variantStructures": {
+        "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "StoryView",
+          "type": "COMPONENT",
+          "name": "StoryView",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "StoryView / TopAppBar / PageHeader",
+          "type": "INSTANCE",
+          "name": "TopAppBar / PageHeader",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "9d5a9b3285407066843dad1c1328cdc17c348825",
+            "variantProperties": {
+              "Type": "Stories",
+              "Actions": "Empty",
+              "Theme": "Static"
+            }
+          }
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar",
+          "type": "INSTANCE",
+          "name": "StatusBar",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 14,
+              "right": 20,
+              "bottom": 14,
+              "left": 20
+            },
+            "itemSpacing": 245
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "0acfad99fd462f38a3ef600206d0e50f700a91e0"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / LeftContentGroup",
+          "type": "FRAME",
+          "name": "LeftContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 5,
+          "parentId": 4,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / LeftContentGroup / time",
+          "type": "TEXT",
+          "name": "time",
+          "visible": true,
+          "opacity": 0.75,
+          "text": {
+            "characters": "9:30",
+            "fontName": "Roboto Medium",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 1,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 6,
+          "parentId": 3,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup",
+          "type": "FRAME",
+          "name": "RightContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 8,
+          "parentId": 7,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / wifi",
+          "type": "VECTOR",
+          "name": "wifi",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5"
+        },
+        {
+          "id": 9,
+          "parentId": 6,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / data",
+          "type": "VECTOR",
+          "name": "data",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5"
+        },
+        {
+          "id": 11,
+          "parentId": 6,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+          "type": "FRAME",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 12,
+          "parentId": 11,
+          "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / Union",
+          "type": "VECTOR",
+          "name": "Union",
+          "visible": true,
+          "opacity": 0.699999988079071,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 242,
+                "g": 243,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+              "colorHex": "#F2F3F5"
+            }
+          ],
+          "fillToken": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5"
+        },
+        {
+          "id": 13,
+          "parentId": 2,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New",
+          "type": "INSTANCE",
+          "name": ".RegularTopAppBar_New",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "009bd1d5a69529aea80b1f3ac619fd9993380fc2",
+            "variantProperties": {
+              "Type": "Default"
+            }
+          }
+        },
+        {
+          "id": 14,
+          "parentId": 13,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Separator",
+          "type": "LINE",
+          "name": "Separator",
+          "visible": false,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:45d5ed832219fbe1e79a260363d24176aa6385ed,4431:26"
+            }
+          },
+          "opacity": 1,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 220,
+                "g": 220,
+                "b": 221,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#DCDCDD"
+            }
+          ],
+          "strokeWeight": 0.5,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 15,
+          "parentId": 13,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set",
+          "type": "FRAME",
+          "name": "Set",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph",
+          "type": "INSTANCE",
+          "name": "❌.Glyph",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "670d5ec8e95c6e7151c69427aef2332141c16e30"
+          }
+        },
+        {
+          "id": 17,
+          "parentId": 16,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / arrow-left",
+          "type": "INSTANCE",
+          "name": "arrow-left",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5ab091296b350aee10f79edc6659b1d78e1aa693",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 18,
+          "parentId": 17,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / arrow-left / Shape",
+          "type": "VECTOR",
+          "name": "Shape",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 19,
+          "parentId": 16,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView",
+          "type": "INSTANCE",
+          "name": "IndicatorView",
+          "visible": false,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "1dcb03368ca6f0f3a2b0d03a7456b43e25500560",
+            "variantProperties": {
+              "Size": "Medium",
+              "Stroke": "On",
+              "Truncation": "Truncated",
+              "Preset": "Accent"
+            }
+          }
+        },
+        {
+          "id": 20,
+          "parentId": 19,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView",
+          "type": "INSTANCE",
+          "name": ".IndicatorView",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67"
+            },
+            "stroke": {
+              "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "45283c3dc07f6a8f267428bcf7149934011c5b10",
+            "variantProperties": {
+              "Size": "Medium",
+              "Truncation": "Truncated"
+            }
+          }
+        },
+        {
+          "id": 21,
+          "parentId": 20,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+          "type": "TEXT",
+          "name": "_count",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51"
+            },
+            "text": {
+              "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "2",
+            "fontName": "Roboto Bold",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 1.25,
+            "paragraphSpacing": 0,
+            "case": "UPPER"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 12
+          }
+        },
+        {
+          "id": 22,
+          "parentId": 20,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": false,
+          "opacity": 1
+        },
+        {
+          "id": 23,
+          "parentId": 22,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+          "type": "INSTANCE",
+          "name": "dots-horizontal",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cefa0f3fe7061a35b88e9ca6b5678f77c71641fd",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 24,
+          "parentId": 23,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "parentId": 15,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search",
+          "type": "FRAME",
+          "name": "Search",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 12,
+              "right": 12,
+              "bottom": 12,
+              "left": 0
+            },
+            "itemSpacing": 2
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 26,
+          "parentId": 25,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search / Cursor",
+          "type": "RECTANGLE",
+          "name": "Cursor",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:0f6b5281e9669b1bcde43b08b9f6de60724f42fb,10:51"
+            }
+          },
+          "opacity": 1,
+          "radius": 2,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 122,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#007AFF"
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "parentId": 25,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search / Placeholder",
+          "type": "TEXT",
+          "name": "Placeholder",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Search...",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 60,
+                "g": 60,
+                "b": 67,
+                "a": 0.6
+              },
+              "visible": true,
+              "opacity": 0.6000000238418579,
+              "tokenKey": null,
+              "colorHex": "#3C3C43"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 28,
+          "parentId": 15,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs",
+          "type": "FRAME",
+          "name": "Glyphs",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 29,
+          "parentId": 28,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+          "type": "INSTANCE",
+          "name": "❌.Glyph",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "670d5ec8e95c6e7151c69427aef2332141c16e30"
+          }
+        },
+        {
+          "id": 30,
+          "parentId": 29,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+          "type": "INSTANCE",
+          "name": "Dummy",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "da471cb687e0bdb84a4bc2522913084464b915d0",
+            "variantProperties": {
+              "Shape": "Circle"
+            }
+          }
+        },
+        {
+          "id": 31,
+          "parentId": 30,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 14,
+                "g": 14,
+                "b": 14,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0E0E0E"
+            }
+          ],
+          "strokeWeight": 6,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 32,
+          "parentId": 29,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+          "type": "INSTANCE",
+          "name": "IndicatorView",
+          "visible": false,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "1dcb03368ca6f0f3a2b0d03a7456b43e25500560",
+            "variantProperties": {
+              "Size": "Medium",
+              "Stroke": "On",
+              "Truncation": "Truncated",
+              "Preset": "Accent"
+            }
+          }
+        },
+        {
+          "id": 33,
+          "parentId": 32,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+          "type": "INSTANCE",
+          "name": ".IndicatorView",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67"
+            },
+            "stroke": {
+              "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "45283c3dc07f6a8f267428bcf7149934011c5b10",
+            "variantProperties": {
+              "Size": "Medium",
+              "Truncation": "Truncated"
+            }
+          }
+        },
+        {
+          "id": 34,
+          "parentId": 33,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+          "type": "TEXT",
+          "name": "_count",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51"
+            },
+            "text": {
+              "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "2",
+            "fontName": "Roboto Bold",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 1.25,
+            "paragraphSpacing": 0,
+            "case": "UPPER"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 12
+          }
+        },
+        {
+          "id": 35,
+          "parentId": 33,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": false,
+          "opacity": 1
+        },
+        {
+          "id": 36,
+          "parentId": 35,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+          "type": "INSTANCE",
+          "name": "dots-horizontal",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cefa0f3fe7061a35b88e9ca6b5678f77c71641fd",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 37,
+          "parentId": 36,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "parentId": 28,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+          "type": "INSTANCE",
+          "name": "❌.Glyph",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "670d5ec8e95c6e7151c69427aef2332141c16e30"
+          }
+        },
+        {
+          "id": 39,
+          "parentId": 38,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+          "type": "INSTANCE",
+          "name": "Dummy",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "da471cb687e0bdb84a4bc2522913084464b915d0",
+            "variantProperties": {
+              "Shape": "Circle"
+            }
+          }
+        },
+        {
+          "id": 40,
+          "parentId": 39,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 14,
+                "g": 14,
+                "b": 14,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0E0E0E"
+            }
+          ],
+          "strokeWeight": 6,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 41,
+          "parentId": 38,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+          "type": "INSTANCE",
+          "name": "IndicatorView",
+          "visible": false,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "1dcb03368ca6f0f3a2b0d03a7456b43e25500560",
+            "variantProperties": {
+              "Size": "Medium",
+              "Stroke": "On",
+              "Truncation": "Truncated",
+              "Preset": "Accent"
+            }
+          }
+        },
+        {
+          "id": 42,
+          "parentId": 41,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+          "type": "INSTANCE",
+          "name": ".IndicatorView",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67"
+            },
+            "stroke": {
+              "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "45283c3dc07f6a8f267428bcf7149934011c5b10",
+            "variantProperties": {
+              "Size": "Medium",
+              "Truncation": "Truncated"
+            }
+          }
+        },
+        {
+          "id": 43,
+          "parentId": 42,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+          "type": "TEXT",
+          "name": "_count",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51"
+            },
+            "text": {
+              "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "2",
+            "fontName": "Roboto Bold",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 1.25,
+            "paragraphSpacing": 0,
+            "case": "UPPER"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 12
+          }
+        },
+        {
+          "id": 44,
+          "parentId": 42,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": false,
+          "opacity": 1
+        },
+        {
+          "id": 45,
+          "parentId": 44,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+          "type": "INSTANCE",
+          "name": "dots-horizontal",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cefa0f3fe7061a35b88e9ca6b5678f77c71641fd",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 46,
+          "parentId": 45,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "parentId": 28,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+          "type": "INSTANCE",
+          "name": "❌.Glyph",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "670d5ec8e95c6e7151c69427aef2332141c16e30"
+          }
+        },
+        {
+          "id": 48,
+          "parentId": 47,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+          "type": "INSTANCE",
+          "name": "Dummy",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "da471cb687e0bdb84a4bc2522913084464b915d0",
+            "variantProperties": {
+              "Shape": "Circle"
+            }
+          }
+        },
+        {
+          "id": 49,
+          "parentId": 48,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+          "type": "ELLIPSE",
+          "name": "Ellipse",
+          "visible": true,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 14,
+                "g": 14,
+                "b": 14,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0E0E0E"
+            }
+          ],
+          "strokeWeight": 6,
+          "strokeAlign": "INSIDE"
+        },
+        {
+          "id": 50,
+          "parentId": 47,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+          "type": "INSTANCE",
+          "name": "IndicatorView",
+          "visible": false,
+          "styles": {
+            "stroke": {
+              "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 243,
+                "g": 244,
+                "b": 245,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F3F4F5"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "1dcb03368ca6f0f3a2b0d03a7456b43e25500560",
+            "variantProperties": {
+              "Size": "Medium",
+              "Stroke": "On",
+              "Truncation": "Truncated",
+              "Preset": "Accent"
+            }
+          }
+        },
+        {
+          "id": 51,
+          "parentId": 50,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+          "type": "INSTANCE",
+          "name": ".IndicatorView",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67"
+            },
+            "stroke": {
+              "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 1,
+              "right": 1,
+              "bottom": 1,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 12,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 239,
+                "g": 49,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#EF3124"
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "componentInstance": {
+            "componentKey": "45283c3dc07f6a8f267428bcf7149934011c5b10",
+            "variantProperties": {
+              "Size": "Medium",
+              "Truncation": "Truncated"
+            }
+          }
+        },
+        {
+          "id": 52,
+          "parentId": 51,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+          "type": "TEXT",
+          "name": "_count",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51"
+            },
+            "text": {
+              "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "2",
+            "fontName": "Roboto Bold",
+            "fontSize": 12,
+            "lineHeight": 16,
+            "letterSpacing": 1.25,
+            "paragraphSpacing": 0,
+            "case": "UPPER"
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Bold",
+            "fontSize": 12
+          }
+        },
+        {
+          "id": 53,
+          "parentId": 51,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+          "type": "GROUP",
+          "name": "Icon",
+          "visible": false,
+          "opacity": 1
+        },
+        {
+          "id": 54,
+          "parentId": 53,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+          "type": "INSTANCE",
+          "name": "dots-horizontal",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "cefa0f3fe7061a35b88e9ca6b5678f77c71641fd",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 55,
+          "parentId": 54,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 56,
+          "parentId": 13,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client",
+          "type": "INSTANCE",
+          "name": "❌.Client",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 12
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "b9a2184080345da6e1eee80f290aa63f89780701"
+          }
+        },
+        {
+          "id": 57,
+          "parentId": 56,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / ❌.Userpic",
+          "type": "INSTANCE",
+          "name": "❌.Userpic",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a21dee5cb716735c2e0b1240f94520080c9a396f"
+          }
+        },
+        {
+          "id": 58,
+          "parentId": 57,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / ❌.Userpic / Userpic",
+          "type": "ELLIPSE",
+          "name": "Userpic",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 59,
+          "parentId": 56,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name",
+          "type": "FRAME",
+          "name": "Name",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 60,
+          "parentId": 59,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / _person_name",
+          "type": "TEXT",
+          "name": "_person_name",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,7820:10"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Вячеслав",
+            "fontName": "Roboto Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 14,
+                "g": 14,
+                "b": 14,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0E0E0E"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 61,
+          "parentId": 59,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / chevron-right-compact",
+          "type": "INSTANCE",
+          "name": "chevron-right-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "fa022beec98a411a66790a6a7fade95b4035d9ce",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 62,
+          "parentId": 61,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / chevron-right-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "parentId": 13,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header",
+          "type": "FRAME",
+          "name": "Header",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 64,
+          "parentId": 63,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / _title",
+          "type": "TEXT",
+          "name": "_title",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,7820:10"
+            },
+            "text": {
+              "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,3309:1"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Title",
+            "fontName": "Roboto Medium",
+            "fontSize": 16,
+            "lineHeight": 20,
+            "letterSpacing": 0.15000000596046448,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 14,
+                "g": 14,
+                "b": 14,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0E0E0E"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Medium",
+            "fontSize": 16
+          }
+        },
+        {
+          "id": 65,
+          "parentId": 63,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper",
+          "type": "FRAME",
+          "name": "Subtitle_wrapper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 4
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 66,
+          "parentId": 65,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon",
+          "type": "FRAME",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 67,
+          "parentId": 66,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact",
+          "type": "INSTANCE",
+          "name": "chevron-down-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a953ff5112189ab9c0364f86b245bee758604ce0",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 68,
+          "parentId": 67,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 69,
+          "parentId": 65,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / _subtitle",
+          "type": "TEXT",
+          "name": "_subtitle",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40"
+            },
+            "text": {
+              "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,1015:3"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Subtitle",
+            "fontName": "Roboto Regular",
+            "fontSize": 14,
+            "lineHeight": 20,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 60,
+                "g": 60,
+                "b": 67,
+                "a": 0.6
+              },
+              "visible": true,
+              "opacity": 0.6000000238418579,
+              "tokenKey": null,
+              "colorHex": "#3C3C43"
+            }
+          ],
+          "typography": {
+            "fontName": "Roboto Regular",
+            "fontSize": 14
+          }
+        },
+        {
+          "id": 70,
+          "parentId": 65,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon",
+          "type": "FRAME",
+          "name": "icon",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 71,
+          "parentId": 70,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact",
+          "type": "INSTANCE",
+          "name": "chevron-down-compact",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "a953ff5112189ab9c0364f86b245bee758604ce0",
+            "variantProperties": {
+              "Size": "s"
+            }
+          }
+        },
+        {
+          "id": 72,
+          "parentId": 71,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 116,
+                "g": 116,
+                "b": 116,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#747474"
+            }
+          ]
+        },
+        {
+          "id": 73,
+          "parentId": 13,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView",
+          "type": "INSTANCE",
+          "name": ".TimelapsePageControlView",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c887b01e054b5b2928192ea4d20b19ddef17e412"
+          }
+        },
+        {
+          "id": 74,
+          "parentId": 73,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left",
+          "type": "FRAME",
+          "name": "left",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 75,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 76,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 77,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 78,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 79,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "parentId": 74,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 81,
+          "parentId": 73,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video",
+          "type": "FRAME",
+          "name": "Video",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 82,
+          "parentId": 81,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video / Video",
+          "type": "RECTANGLE",
+          "name": "Video",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 83,
+          "parentId": 81,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video / Video",
+          "type": "RECTANGLE",
+          "name": "Video",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 1,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 84,
+          "parentId": 73,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right",
+          "type": "FRAME",
+          "name": "right",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 8
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 85,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 86,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 87,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 88,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        },
+        {
+          "id": 89,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 90,
+          "parentId": 84,
+          "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+          "type": "RECTANGLE",
+          "name": "Dot",
+          "visible": false,
+          "styles": {
+            "fill": {
+              "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0"
+            }
+          },
+          "opacity": 0.30000001192092896,
+          "radius": 3,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 11,
+                "g": 31,
+                "b": 53,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#0B1F35"
+            }
+          ]
+        },
+        {
+          "id": 91,
+          "parentId": 1,
+          "path": "StoryView / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 92,
+          "parentId": 91,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "TextLabel (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 24,
+              "right": 16,
+              "bottom": 12,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:cbe7bd24d2504b1a50d3334495ce36781e30a7e2/244:98",
+              "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+              "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "89b9cf2a71b07155b947abc241e70530a456985d",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 93,
+          "parentId": 92,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 94,
+          "parentId": 93,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 95,
+          "parentId": 94,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 96,
+          "parentId": 95,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 97,
+          "parentId": 96,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 98,
+          "parentId": 94,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 99,
+          "parentId": 98,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 100,
+          "parentId": 93,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3"
+            },
+            "text": {
+              "styleKey": "S:65db8277e14cab5eb97889a54550fdb2a08c09c3,4541:418"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Не волнуйтесь о безопасности ваших денежных средств",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 26,
+            "lineHeight": 32,
+            "letterSpacing": -0.3799999952316284,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 26
+          },
+          "typographyToken": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403"
+        },
+        {
+          "id": 101,
+          "parentId": 91,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11)",
+          "type": "INSTANCE",
+          "name": "TextLabel (🤖 12.11)",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 16,
+              "bottom": 12,
+              "left": 16
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": null,
+              "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+              "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "89b9cf2a71b07155b947abc241e70530a456985d",
+            "variantProperties": {
+              "👻 Skeleton": "False",
+              "TextAlignment": "Left",
+              "👻 HorizontalSize": "Fixed / Fill"
+            }
+          }
+        },
+        {
+          "id": 102,
+          "parentId": 101,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+          "type": "FRAME",
+          "name": "ContentGroup",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 103,
+          "parentId": 102,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+          "type": "FRAME",
+          "name": "LeftIconGroup",
+          "visible": false,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 104,
+          "parentId": 103,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+          "type": "INSTANCE",
+          "name": "🔒 AspectRatioAxisKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "c7d049aacf8cd1d870037aedb3bd25cdf2cff030",
+            "variantProperties": {
+              "🔒 AspectRatioKeeper": "vertical"
+            }
+          }
+        },
+        {
+          "id": 105,
+          "parentId": 104,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+          "type": "INSTANCE",
+          "name": "👻 AspectRatioKeeper",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "5fe9e393313ce7f3d299bca32525851a3fcd4c04",
+            "variantProperties": {
+              "Aspect ratio": "3:2"
+            }
+          }
+        },
+        {
+          "id": 106,
+          "parentId": 105,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+          "type": "FRAME",
+          "name": "Aspect ratio keeper # Rotated Auto Layout",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.4
+              },
+              "visible": false,
+              "opacity": 0.4000000059604645,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "CENTER"
+        },
+        {
+          "id": 107,
+          "parentId": 103,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+          "type": "INSTANCE",
+          "name": "Icon",
+          "visible": true,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90ee4c5bc13018cdfccb7afb8e1d5d010b4c2860",
+            "variantProperties": {
+              "Size": "m"
+            }
+          }
+        },
+        {
+          "id": 108,
+          "parentId": 107,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+          "type": "VECTOR",
+          "name": "icon",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 33,
+                "g": 33,
+                "b": 36,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#212124"
+            }
+          ]
+        },
+        {
+          "id": 109,
+          "parentId": 102,
+          "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+          "type": "TEXT",
+          "name": "Value",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3"
+            },
+            "text": {
+              "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "Создайте биометрический профиль  за минуту с помощью смартфона. Это обеспечит дополнительную защиту  при совершении операций в отделении  и при обращении в контакт-центр.",
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16,
+            "lineHeight": 24,
+            "letterSpacing": 0.25,
+            "paragraphSpacing": 0
+          },
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 0.94
+              },
+              "visible": true,
+              "opacity": 0.9399999976158142,
+              "tokenKey": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+              "colorHex": "#FFFFFF"
+            }
+          ],
+          "fillToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+          "typography": {
+            "fontName": "Alfa Interface Sans Regular",
+            "fontSize": 16
+          },
+          "typographyToken": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411"
+        },
+        {
+          "id": 110,
+          "parentId": 91,
+          "path": "StoryView / ContentGroup / (n)ProgressBar",
+          "type": "INSTANCE",
+          "name": "(n)ProgressBar",
+          "visible": false,
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "90c630c0c3c90bd753745b981cc1bb5cf6873fea"
+          }
+        },
+        {
+          "id": 111,
+          "parentId": 110,
+          "path": "StoryView / ContentGroup / (n)ProgressBar / ProgressBar",
+          "type": "ELLIPSE",
+          "name": "ProgressBar",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:bc6800ff2f220ad59ef9c843e0d64b9cc886154d,8745:3"
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 241,
+                "g": 241,
+                "b": 241,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#F1F1F1"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "11935:242713",
+          "key": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+          "name": "StoryView"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "StoryView",
+      "type": "COMPONENT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "StoryView / TopAppBar / PageHeader",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          14,
+          20,
+          14,
+          20
+        ],
+        "gap": 245,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / LeftContentGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 5,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / LeftContentGroup / time",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 0.75,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": {
+        "value": "9:30"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 1
+      }
+    },
+    {
+      "id": 6,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 8,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / wifi",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / data",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 11,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "StoryView / TopAppBar / PageHeader / StatusBar / RightContentGroup / Icon / Union",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 0.699999988079071,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:d8fdd2d33bde75b054a497055e53d61a7553c3e3/2771:5",
+        "color": "rgba(242,243,245,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 14,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Separator",
+      "type": "LINE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": {
+        "weight": 0.5,
+        "align": "CENTER",
+        "styleKey": "S:45d5ed832219fbe1e79a260363d24176aa6385ed,4431:26",
+        "color": "rgba(220,220,221,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 17,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / arrow-left",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / arrow-left / Shape",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52",
+        "color": "rgba(243,244,245,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 20,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 21,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+      }
+    },
+    {
+      "id": 22,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+      "type": "GROUP",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 23,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 24,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 25,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          12,
+          12,
+          12,
+          0
+        ],
+        "gap": 2,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 26,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search / Cursor",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 2
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:0f6b5281e9669b1bcde43b08b9f6de60724f42fb,10:51",
+        "color": "rgba(0,122,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 27,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Search / Placeholder",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40",
+        "color": "rgba(60,60,67,0.6)"
+      },
+      "text": {
+        "value": "Search..."
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+      }
+    },
+    {
+      "id": 28,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 29,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 30,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 31,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 6,
+        "align": "INSIDE",
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52",
+        "color": "rgba(14,14,14,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 32,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52",
+        "color": "rgba(243,244,245,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 33,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 34,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+      }
+    },
+    {
+      "id": 35,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+      "type": "GROUP",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 36,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 37,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 38,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 39,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 40,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 6,
+        "align": "INSIDE",
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52",
+        "color": "rgba(14,14,14,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 41,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52",
+        "color": "rgba(243,244,245,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 42,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 43,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+      }
+    },
+    {
+      "id": 44,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+      "type": "GROUP",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 45,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 46,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 47,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 48,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 49,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / Dummy / Ellipse",
+      "type": "ELLIPSE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 6,
+        "align": "INSIDE",
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,7820:52",
+        "color": "rgba(14,14,14,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 50,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:a9f86f98ccca4076d61966719407dd40faf6f690,1837:52",
+        "color": "rgba(243,244,245,1)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 51,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "gap": 0,
+        "radius": 12
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 2,
+        "align": "OUTSIDE",
+        "styleKey": "S:92272145b9ade646c755f98376f472a73d644b78,4431:15",
+        "color": "rgba(255,255,255,1)"
+      },
+      "fill": {
+        "styleKey": "S:aed3136a4d824636178d561aab47ebfb98154d6c,4431:67",
+        "color": "rgba(239,49,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 52,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / _count",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:ba4948593f38810a2f2288a5232b1abb1bb75b16,2616:51",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": {
+        "value": "2"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Bold",
+        "size": 12,
+        "lineHeight": 16,
+        "letterSpacing": 1.25,
+        "styleKey": "S:a0fbc0d5dab0f375f8c72865b56ece435f2c4805,1015:20"
+      }
+    },
+    {
+      "id": 53,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon",
+      "type": "GROUP",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 54,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 55,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Set / Glyphs / ❌.Glyph / IndicatorView / .IndicatorView / Icon / dots-horizontal / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 56,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 12,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 57,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / ❌.Userpic",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 58,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / ❌.Userpic / Userpic",
+      "type": "ELLIPSE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 59,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 60,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / _person_name",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,7820:10",
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Вячеслав"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,1015:11"
+      }
+    },
+    {
+      "id": 61,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / chevron-right-compact",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 62,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / ❌.Client / Name / chevron-right-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 63,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 64,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / _title",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:6313f5ef73de1fb787861cd6e0408c77214b7898,7820:10",
+        "color": "rgba(14,14,14,1)"
+      },
+      "text": {
+        "value": "Title"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Medium",
+        "size": 16,
+        "lineHeight": 20,
+        "letterSpacing": 0.15000000596046448,
+        "styleKey": "S:7a524e3282e63d7e5898f37aeb6fc08a6cf5534b,3309:1"
+      }
+    },
+    {
+      "id": 65,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 4,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 66,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 67,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 68,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 69,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / _subtitle",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:1b8613640628a40784bed99b53d734a767511eb0,4431:40",
+        "color": "rgba(60,60,67,0.6)"
+      },
+      "text": {
+        "value": "Subtitle"
+      },
+      "typography": {
+        "family": "Roboto",
+        "weight": "Regular",
+        "size": 14,
+        "lineHeight": 20,
+        "letterSpacing": 0.25,
+        "styleKey": "S:9572e4b0a606616771c7bef63da9397e2229bc8f,1015:3"
+      }
+    },
+    {
+      "id": 70,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 71,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 72,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / Header / Subtitle_wrapper / icon / chevron-down-compact / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "color": "rgba(116,116,116,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 73,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 74,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 75,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 76,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 77,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 78,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 79,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 80,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / left / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 81,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 82,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video / Video",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 83,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / Video / Video",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 84,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 8,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 85,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 86,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 87,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 88,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:d71698c006afd04dcebe19069f1ded8b7c88ffec,2617:178",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 89,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 90,
+      "path": "StoryView / TopAppBar / PageHeader / .RegularTopAppBar_New / .TimelapsePageControlView / right / Dot",
+      "type": "RECTANGLE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 3
+      },
+      "opacity": 0.30000001192092896,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:7aa29cb41231f3fde186334636203df3f84fb5b9,1247:0",
+        "color": "rgba(11,31,53,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 91,
+      "path": "StoryView / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 92,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          24,
+          16,
+          12,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:cbe7bd24d2504b1a50d3334495ce36781e30a7e2/244:98",
+          "right": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100",
+          "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 93,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 94,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 95,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 96,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 97,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 98,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 99,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 100,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+        "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Не волнуйтесь о безопасности ваших денежных средств"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 26,
+        "lineHeight": 32,
+        "letterSpacing": -0.3799999952316284,
+        "token": "VariableID:c5e73c1f0f60198358f2b83a73ed633bfc7f4030/4541:403",
+        "styleKey": "S:65db8277e14cab5eb97889a54550fdb2a08c09c3,4541:418"
+      }
+    },
+    {
+      "id": 101,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11)",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          16,
+          12,
+          16
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": null,
+          "bottom": "VariableID:e40eeddf352ca5ac7176eaac80730e27de509187/244:93",
+          "left": "VariableID:25a6426b5bcce690152c0469316ee7e233de04f5/244:100"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 102,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 103,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 104,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 105,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 106,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / 🔒 AspectRatioAxisKeeper / 👻 AspectRatioKeeper / Aspect ratio keeper # Rotated Auto Layout",
+      "type": "FRAME",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": {
+        "weight": 1,
+        "align": "CENTER",
+        "color": "rgba(255,255,255,0.4)"
+      },
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 107,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 108,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / LeftIconGroup / Icon / icon",
+      "type": "VECTOR",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:8c5ec1a5d6949a0d8d6535d6446095e35485ad36,8745:4",
+        "color": "rgba(33,33,36,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 109,
+      "path": "StoryView / ContentGroup / TextLabel (🤖 12.11) / ContentGroup / Value",
+      "type": "TEXT",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:4d887eb40d1e82ef72d8f3e04126283035d85339,8790:3",
+        "color": "rgba(255,255,255,0.94)"
+      },
+      "text": {
+        "value": "Создайте биометрический профиль  за минуту с помощью смартфона. Это обеспечит дополнительную защиту  при совершении операций в отделении  и при обращении в контакт-центр."
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Regular",
+        "size": 16,
+        "lineHeight": 24,
+        "letterSpacing": 0.25,
+        "token": "VariableID:41eb5437d06045af050e8737d88f7f1e614d6af9/4541:411",
+        "styleKey": "S:a56326db7289c3d768daef34c723111114cc96a6,4541:422"
+      }
+    },
+    {
+      "id": 110,
+      "path": "StoryView / ContentGroup / (n)ProgressBar",
+      "type": "INSTANCE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": false,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 111,
+      "path": "StoryView / ContentGroup / (n)ProgressBar / ProgressBar",
+      "type": "ELLIPSE",
+      "componentKey": "1041a0c3ab225b820e57e1aa14f131f9d00d6a9e",
+      "visible": true,
+      "layout": {
+        "gap": null,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:bc6800ff2f220ad59ef9c843e0d64b9cc886154d,8745:3",
+        "color": "rgba(241,241,241,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

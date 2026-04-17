@@ -1,0 +1,5004 @@
+{
+  "kind": "catalog",
+  "source": {
+    "library": "Android :: Views",
+    "file": "Android :: Views",
+    "generatedAt": "2026-04-17T08:13:57.262Z",
+    "exportVersion": "0.1.0",
+    "scope": "current-page",
+    "files": [
+      "HorizontalHistogramView"
+    ],
+    "componentCount": 3,
+    "elementCount": 43
+  },
+  "components": [
+    {
+      "key": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "name": "HorizontalHistogramViewV1 (🤖 12.11)",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HorizontalHistogramViewV1 (🤖 12.11)",
+      "defaultVariant": "939ff5086ae044c16e97c378297251188ad044a7",
+      "variantStructures": {
+        "939ff5086ae044c16e97c378297251188ad044a7": [],
+        "5922181ad5c02f5f1b4ebf4dfdf1ca1aaeb49ae4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "bf82568690724b806ce0ce878f21e2703b24e32a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "0c2bd6bc7ab13c357b2dc8faec7fa3cb6792b565": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "d43c8759890d677efc9815f4b6091226517d8825": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "eb17880392ef5be3e13c05b8d2d4db1ae2586ab8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "be684e5fd26e9645bc74a937a74a60155d1fe5ef": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "de4454d4d5844199c08def7828b257cff410bf8d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "d5685c7d543edd39e3a5df608a4e3ffa6d0fc75b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "fe12a4a59a55b31bd5afef4cc9974bed9aa4648e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "43ed12199c6d58f0467e92d4daf7afd28c450dba": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "1cd34e3fcc4e42802176e80185a1ba4a36060b83": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "8efbc1f40392e751c5aa77480761bf8325cce8d4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "d1661248de1dda058155477f3d9da6032caffbae": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "8483fe87a3d01e3c5c7132f4169ae3f923afefe5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "5bff50fff6408736188366b6136146edb3901cc2": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "7543735acfdcbd67679be3a789d3a78407c38126": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "5f28c94ba8292fc3b8673ed9b9203d5089c1618b": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "2a4d62b96a0e7c3c03f598dc3b80949d77177fd5": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "a8c677dfb40a9b680b30b485b63531c8e99c8b48": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "89f26df154ac33e0a1446fcfe37575d500cdaedc": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "41fb263624ce41576e0dbe869493f538fcb8d346": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "591dde8c6683b06e1ecc652ff56b94c8088bf54d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "0c1fc85c562f5914c3920acef2c33ab178303112": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+          "type": "COMPONENT",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 6
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList",
+          "type": "FRAME",
+          "name": "SegmentsList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 6
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 5,
+          "parentId": 3,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 254,
+                "g": 94,
+                "b": 72,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+              "colorHex": "#FE5E48"
+            }
+          ],
+          "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 8,
+          "parentId": 6,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 250,
+                "g": 147,
+                "b": 19,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+              "colorHex": "#FA9313"
+            }
+          ],
+          "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+        },
+        {
+          "id": 9,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 11,
+          "parentId": 9,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 251,
+                "g": 215,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+              "colorHex": "#FBD700"
+            }
+          ],
+          "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+        },
+        {
+          "id": 12,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 14,
+          "parentId": 12,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 128,
+                "g": 192,
+                "b": 2,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+              "colorHex": "#80C002"
+            }
+          ],
+          "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+        },
+        {
+          "id": 15,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 17,
+          "parentId": 15,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 12,
+                "g": 196,
+                "b": 77,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+              "colorHex": "#0CC44D"
+            }
+          ],
+          "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+        },
+        {
+          "id": 18,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 20,
+          "parentId": 18,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 10,
+                "g": 190,
+                "b": 148,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139",
+              "colorHex": "#0ABE94"
+            }
+          ],
+          "fillToken": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139"
+        }
+      ],
+      "variants": [
+        {
+          "id": "65131:9014",
+          "key": "939ff5086ae044c16e97c378297251188ad044a7",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9022",
+          "key": "5922181ad5c02f5f1b4ebf4dfdf1ca1aaeb49ae4",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9025",
+          "key": "bf82568690724b806ce0ce878f21e2703b24e32a",
+          "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9028",
+          "key": "0c2bd6bc7ab13c357b2dc8faec7fa3cb6792b565",
+          "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9031",
+          "key": "d43c8759890d677efc9815f4b6091226517d8825",
+          "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9039",
+          "key": "eb17880392ef5be3e13c05b8d2d4db1ae2586ab8",
+          "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9042",
+          "key": "be684e5fd26e9645bc74a937a74a60155d1fe5ef",
+          "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9045",
+          "key": "de4454d4d5844199c08def7828b257cff410bf8d",
+          "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9048",
+          "key": "d5685c7d543edd39e3a5df608a4e3ffa6d0fc75b",
+          "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9056",
+          "key": "fe12a4a59a55b31bd5afef4cc9974bed9aa4648e",
+          "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9059",
+          "key": "43ed12199c6d58f0467e92d4daf7afd28c450dba",
+          "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9062",
+          "key": "1cd34e3fcc4e42802176e80185a1ba4a36060b83",
+          "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9065",
+          "key": "8efbc1f40392e751c5aa77480761bf8325cce8d4",
+          "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9073",
+          "key": "d1661248de1dda058155477f3d9da6032caffbae",
+          "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9076",
+          "key": "8483fe87a3d01e3c5c7132f4169ae3f923afefe5",
+          "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9079",
+          "key": "5bff50fff6408736188366b6136146edb3901cc2",
+          "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9082",
+          "key": "7543735acfdcbd67679be3a789d3a78407c38126",
+          "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9090",
+          "key": "5f28c94ba8292fc3b8673ed9b9203d5089c1618b",
+          "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9093",
+          "key": "2a4d62b96a0e7c3c03f598dc3b80949d77177fd5",
+          "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9096",
+          "key": "a8c677dfb40a9b680b30b485b63531c8e99c8b48",
+          "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9099",
+          "key": "89f26df154ac33e0a1446fcfe37575d500cdaedc",
+          "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "65131:9107",
+          "key": "41fb263624ce41576e0dbe869493f538fcb8d346",
+          "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9110",
+          "key": "591dde8c6683b06e1ecc652ff56b94c8088bf54d",
+          "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "65131:9113",
+          "key": "0c1fc85c562f5914c3920acef2c33ab178303112",
+          "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=False"
+        }
+      ]
+    },
+    {
+      "key": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "name": "HorizontalHistogramViewV1 (🤖 11.59)",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "HorizontalHistogramViewV1 (🤖 11.59)",
+      "defaultVariant": "63bf1584532b74590b731f7f4decdcc439ac72af",
+      "variantStructures": {
+        "63bf1584532b74590b731f7f4decdcc439ac72af": [],
+        "f15f7aad9432fc3abac8a277d350aa5e46f99388": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "a347f58221bfa700829d2eb517c4a34d1db166cb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "5364c778c9c6590038daca9a20a0e2e057d99c98": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "4431eedbbe0289b52acad3f8dc181ff6e17b2846": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "f4118224d8334bd08c22ab0b0d493d8118366e11": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "c95bfc21cb2c4571d93d912b95c4a7e4894aa0ad": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "0f26398b3fa806796ee3a29670a799cd39d71c18": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "71329070a88123e5b853aa8430e0ddf72a65c048": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "ef46e119c9c70aa2bce5badd0b6fa931c63b6419": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "03edb51db7912d6f2d29e2af939d7116ccd642b0": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "688e8186517731789b4259566f7dbc7eeb01c9cb": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "b259a7e9180381ca431409ba49ac521e5b00bfd4": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "4faf8894f1dc551f4f89fecc99bd6d5d991f54c8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "62b1e94b35b01d2f56b6f4ea04198c5507237779": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "f4511c395bfb3f40233681b6b300ce46ffe78a89": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "d090c596940d4bfec3ff666060335ff1df59a43a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "6cad7a390b6e275d2dce067745e247c027144e65": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "d738dc33cca7d81304b8378e3e76e1ab54563298": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "3b1db9e911f33dc36e1198ceb0809df4e15f414e": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "c9a25c3f2b9417b41ae296f7746519c695e26875": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 254,
+                    "g": 94,
+                    "b": 72,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+                  "colorHex": "#FE5E48"
+                }
+              ],
+              "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 250,
+                    "g": 147,
+                    "b": 19,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+                  "colorHex": "#FA9313"
+                }
+              ],
+              "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 251,
+                    "g": 215,
+                    "b": 0,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+                  "colorHex": "#FBD700"
+                }
+              ],
+              "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 128,
+                    "g": 192,
+                    "b": 2,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+                  "colorHex": "#80C002"
+                }
+              ],
+              "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 12,
+                    "g": 196,
+                    "b": 77,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+                  "colorHex": "#0CC44D"
+                }
+              ],
+              "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+            }
+          }
+        ],
+        "e19bfe4b06af5004039fae690fd04f4dbee9565d": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 242,
+                    "g": 243,
+                    "b": 245,
+                    "a": 1
+                  },
+                  "visible": true,
+                  "opacity": 1,
+                  "tokenKey": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173",
+                  "colorHex": "#F2F3F5"
+                }
+              ],
+              "fillToken": "VariableID:aa26b8f4b0aa0245c30526f8217f804393c953b7/3541:173"
+            }
+          }
+        ],
+        "61a1862452b1d3dd522357159937f33ffaae2c1a": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=True"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ],
+        "454612943cedfeeec30bbc86a00a5af97d3c90a8": [
+          {
+            "op": "update",
+            "id": 1,
+            "value": {
+              "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=False"
+            }
+          },
+          {
+            "op": "update",
+            "id": 20,
+            "value": {
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 38,
+                    "g": 55,
+                    "b": 88,
+                    "a": 0.06
+                  },
+                  "visible": true,
+                  "opacity": 0.05999999865889549,
+                  "tokenKey": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131",
+                  "colorHex": "#263758"
+                }
+              ],
+              "fillToken": "VariableID:8981b6bfc89935b939b249245e60158b88ca252e/3541:131"
+            }
+          }
+        ]
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+          "type": "COMPONENT",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+            }
+          },
+          "opacity": 1,
+          "radius": 6
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList",
+          "type": "FRAME",
+          "name": "SegmentsList",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 6
+        },
+        {
+          "id": 3,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 4,
+          "parentId": 3,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 5,
+          "parentId": 3,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 254,
+                "g": 94,
+                "b": 72,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+              "colorHex": "#FE5E48"
+            }
+          ],
+          "fillToken": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137"
+        },
+        {
+          "id": 6,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 7,
+          "parentId": 6,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 8,
+          "parentId": 6,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 250,
+                "g": 147,
+                "b": 19,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+              "colorHex": "#FA9313"
+            }
+          ],
+          "fillToken": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151"
+        },
+        {
+          "id": 9,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 10,
+          "parentId": 9,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 11,
+          "parentId": 9,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 251,
+                "g": 215,
+                "b": 0,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+              "colorHex": "#FBD700"
+            }
+          ],
+          "fillToken": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123"
+        },
+        {
+          "id": 12,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 13,
+          "parentId": 12,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 14,
+          "parentId": 12,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 128,
+                "g": 192,
+                "b": 2,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+              "colorHex": "#80C002"
+            }
+          ],
+          "fillToken": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148"
+        },
+        {
+          "id": 15,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 16,
+          "parentId": 15,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 17,
+          "parentId": 15,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 12,
+                "g": 196,
+                "b": 77,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+              "colorHex": "#0CC44D"
+            }
+          ],
+          "fillToken": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146"
+        },
+        {
+          "id": 18,
+          "parentId": 2,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+          "type": "INSTANCE",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0,
+          "componentInstance": {
+            "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7"
+          }
+        },
+        {
+          "id": 19,
+          "parentId": 18,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 20,
+          "parentId": 18,
+          "path": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 10,
+                "g": 190,
+                "b": 148,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139",
+              "colorHex": "#0ABE94"
+            }
+          ],
+          "fillToken": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139"
+        }
+      ],
+      "variants": [
+        {
+          "id": "51319:173623",
+          "key": "63bf1584532b74590b731f7f4decdcc439ac72af",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173636",
+          "key": "f15f7aad9432fc3abac8a277d350aa5e46f99388",
+          "name": "Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173644",
+          "key": "a347f58221bfa700829d2eb517c4a34d1db166cb",
+          "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173652",
+          "key": "5364c778c9c6590038daca9a20a0e2e057d99c98",
+          "name": "Size=XS (4), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173660",
+          "key": "4431eedbbe0289b52acad3f8dc181ff6e17b2846",
+          "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173673",
+          "key": "f4118224d8334bd08c22ab0b0d493d8118366e11",
+          "name": "Size=S (80, 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173681",
+          "key": "c95bfc21cb2c4571d93d912b95c4a7e4894aa0ad",
+          "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173689",
+          "key": "0f26398b3fa806796ee3a29670a799cd39d71c18",
+          "name": "Size=S (80, 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173697",
+          "key": "71329070a88123e5b853aa8430e0ddf72a65c048",
+          "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173710",
+          "key": "ef46e119c9c70aa2bce5badd0b6fa931c63b6419",
+          "name": "Size=M (16), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173718",
+          "key": "03edb51db7912d6f2d29e2af939d7116ccd642b0",
+          "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173726",
+          "key": "688e8186517731789b4259566f7dbc7eeb01c9cb",
+          "name": "Size=M (16), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173734",
+          "key": "b259a7e9180381ca431409ba49ac521e5b00bfd4",
+          "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173747",
+          "key": "4faf8894f1dc551f4f89fecc99bd6d5d991f54c8",
+          "name": "Size=L (20), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173755",
+          "key": "62b1e94b35b01d2f56b6f4ea04198c5507237779",
+          "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173763",
+          "key": "f4511c395bfb3f40233681b6b300ce46ffe78a89",
+          "name": "Size=L (20), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173771",
+          "key": "d090c596940d4bfec3ff666060335ff1df59a43a",
+          "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173784",
+          "key": "6cad7a390b6e275d2dce067745e247c027144e65",
+          "name": "Size=XL (24), 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173792",
+          "key": "d738dc33cca7d81304b8378e3e76e1ab54563298",
+          "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173800",
+          "key": "3b1db9e911f33dc36e1198ceb0809df4e15f414e",
+          "name": "Size=XL (24), 👻 Skeleton=True, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173808",
+          "key": "c9a25c3f2b9417b41ae296f7746519c695e26875",
+          "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=False"
+        },
+        {
+          "id": "51319:173821",
+          "key": "e19bfe4b06af5004039fae690fd04f4dbee9565d",
+          "name": "Size=Custom, 👻 Skeleton=False, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173829",
+          "key": "61a1862452b1d3dd522357159937f33ffaae2c1a",
+          "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=True"
+        },
+        {
+          "id": "51319:173837",
+          "key": "454612943cedfeeec30bbc86a00a5af97d3c90a8",
+          "name": "Size=Custom, 👻 Skeleton=True, 👻 IsEmpty=False"
+        }
+      ]
+    },
+    {
+      "key": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+      "name": "Segment",
+      "status": "active",
+      "role": "main",
+      "platform": "universal",
+      "category": "Segment",
+      "defaultVariant": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+      "variantStructures": {
+        "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7": []
+      },
+      "structure": [
+        {
+          "id": 1,
+          "parentId": null,
+          "path": "Segment",
+          "type": "COMPONENT",
+          "name": "Segment",
+          "visible": true,
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0,
+            "paddingTokens": {
+              "top": null,
+              "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+              "bottom": null,
+              "left": null
+            }
+          },
+          "opacity": 1,
+          "radius": 0
+        },
+        {
+          "id": 2,
+          "parentId": 1,
+          "path": "Segment / 👻 <float>",
+          "type": "TEXT",
+          "name": "👻 <float>",
+          "visible": true,
+          "styles": {
+            "text": {
+              "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+            }
+          },
+          "opacity": 1,
+          "text": {
+            "characters": "<float>",
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17,
+            "lineHeight": 24,
+            "letterSpacing": 0.10000000149011612,
+            "paragraphSpacing": 0
+          },
+          "fillToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+          "typography": {
+            "fontName": "Alfa Interface Sans Medium",
+            "fontSize": 17
+          },
+          "typographyToken": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+        },
+        {
+          "id": 3,
+          "parentId": 1,
+          "path": "Segment / Canvas",
+          "type": "FRAME",
+          "name": "Canvas",
+          "visible": true,
+          "styles": {
+            "fill": {
+              "styleKey": "S:4ebfb8f1d236d6a150a43b63b8d2f518e1a0c277,7820:39"
+            }
+          },
+          "layout": {
+            "padding": {
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            },
+            "itemSpacing": 0
+          },
+          "opacity": 1,
+          "radius": 0,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 255,
+                "g": 255,
+                "b": 255,
+                "a": 1
+              },
+              "visible": true,
+              "opacity": 1,
+              "tokenKey": null,
+              "colorHex": "#FFFFFF"
+            }
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "51319:174043",
+          "key": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+          "name": "Segment"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": 1,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+      "type": "COMPONENT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 6,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 6
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 5,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+        "color": "rgba(254,94,72,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 8,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+        "color": "rgba(250,147,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 11,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+        "color": "rgba(251,215,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 14,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+        "color": "rgba(128,192,2,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 17,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 20,
+      "path": "HorizontalHistogramViewV1 (🤖 12.11) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "226ef23e125bca8cb753386315f743cec01ffa06",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139",
+        "color": "rgba(10,190,148,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False",
+      "type": "COMPONENT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 6,
+        "paddingTokens": {
+          "top": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "left": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89"
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 6
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 3,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 4,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 5,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:597a81128823004864d92c979f176546367bcf66/1816:137",
+        "color": "rgba(254,94,72,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 6,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 7,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 8,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:1ed16e7c7c35df1accad554a4d459513eae89a06/1816:151",
+        "color": "rgba(250,147,19,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 9,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 10,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 11,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:719280f4d66f70abee2bc93e9acb2ace8ccb4838/1816:123",
+        "color": "rgba(251,215,0,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 12,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 13,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 14,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:312e6cb286cb85c6498db19410954d99844238df/1816:148",
+        "color": "rgba(128,192,2,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 15,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 16,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 17,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:bb8ea0bd3df0adc26d161951b941888f14a0e6eb/1816:146",
+        "color": "rgba(12,196,77,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 18,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment",
+      "type": "INSTANCE",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 19,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 20,
+      "path": "HorizontalHistogramViewV1 (🤖 11.59) / Size=XS (4), 👻 Skeleton=False, 👻 IsEmpty=False / SegmentsList / Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "125aeb12876486b71cf88c64040ba5c201be4286",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:a47e114c7dc39b0d65b422d1e5c350f8cea32a00/1816:139",
+        "color": "rgba(10,190,148,1)"
+      },
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 1,
+      "path": "Segment",
+      "type": "COMPONENT",
+      "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0,
+        "paddingTokens": {
+          "top": null,
+          "right": "VariableID:0fd10413513b23b01d3887e8f933ea0ef0f8c970/244:89",
+          "bottom": null,
+          "left": null
+        }
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": null,
+      "text": null,
+      "typography": null
+    },
+    {
+      "id": 2,
+      "path": "Segment / 👻 <float>",
+      "type": "TEXT",
+      "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+      "visible": true,
+      "layout": null,
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152"
+      },
+      "text": {
+        "value": "<float>"
+      },
+      "typography": {
+        "family": "Alfa Interface Sans",
+        "weight": "Medium",
+        "size": 17,
+        "lineHeight": 24,
+        "letterSpacing": 0.10000000149011612,
+        "token": "VariableID:67323c526e0aea34f5201b0547d48c107d718fb4/35910:152",
+        "styleKey": "S:0f35de4b0f453f6bf092b92f6d4862a0531a5dbf,35910:201"
+      }
+    },
+    {
+      "id": 3,
+      "path": "Segment / Canvas",
+      "type": "FRAME",
+      "componentKey": "bbfcbd178df7c3ce7a13c3f3ee870099e0d1e6a7",
+      "visible": true,
+      "layout": {
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "radius": 0
+      },
+      "opacity": 1,
+      "stroke": null,
+      "fill": {
+        "styleKey": "S:4ebfb8f1d236d6a150a43b63b8d2f518e1a0c277,7820:39",
+        "color": "rgba(255,255,255,1)"
+      },
+      "text": null,
+      "typography": null
+    }
+  ]
+}

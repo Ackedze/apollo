@@ -6,7 +6,8 @@
       "path": "icons/Icons -- corp.json",
       "source": {
         "kind": "components",
-        "figmaLink": "https://www.figma.com/design/ZcdUPebEhHfSZ91zgmv2cK/Icons?node-id=54513-8686",
+        "figmaLibLink": "https://www.figma.com/design/ZcdUPebEhHfSZ91zgmv2cK/Icons?m=auto",
+        "figmaPageLink": "https://www.figma.com/design/ZcdUPebEhHfSZ91zgmv2cK/Icons?node-id=54513-8686",
         "pageName": "Icons -- corp"
       }
     },

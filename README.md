@@ -14,13 +14,16 @@
 ## Что реально умеет сейчас
 После нажатия `Проверить` плагин:
 1. Загружает список reference-каталогов с GitHub Pages.
-2. Скачивает component-, token- и style-справочники.
-3. Обходит всё видимое поддерево внутри текущего выделения.
-4. Классифицирует найденные `COMPONENT` и `INSTANCE`.
-5. Для связанных компонентов собирает snapshot структуры и считает diff относительно reference.
-6. Отправляет в UI готовые списки для табов и позволяет перейти к нужному слою через `focus-node`.
+2. Загружает базовые token- и style-справочники.
+3. Обходит всё видимое поддерево внутри текущего выделения и собирает `componentKey`.
+4. По component indexes определяет только нужные component-каталоги и скачивает их лениво.
+5. Классифицирует найденные `COMPONENT` и `INSTANCE`.
+6. Для связанных компонентов собирает snapshot структуры и считает diff относительно reference.
+7. Отправляет в UI готовые списки для табов и позволяет перейти к нужному слою через `focus-node`.
 
 Если запрос списка reference-источников целиком не удался, Apollo использует встроенный fallback из [`src/reference/referenceSources.json`](./src/reference/referenceSources.json). Если же сам список загрузился, но внутри него есть битые URL отдельных каталогов, per-catalog fallback сейчас не применяется.
+
+Важно: Apollo работает с component-каталогами через index-only lazy loading. После первой проверки он не должен скачивать все component-каталоги подряд; отсутствующий ключ в index логируется как диагностическая проблема данных.
 
 ## Табы аудита
 Конфигурация табов хранится в [`src/config/tabs.ts`](./src/config/tabs.ts).
@@ -95,8 +98,9 @@
 ## Источники данных
 Плагин работает с JSON-справочниками в [`JSONS`](./JSONS), а в рантайме берёт список источников с GitHub Pages:
 
-- основной URL: `https://ackedze.github.io/apollo/JSONS/referenceSourcesMVP.json`;
-- component/style/token каталоги: пути из этого списка;
+- основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
+- token/style каталоги: пути из этого списка;
+- component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
 - bundled fallback-список для runtime хранится в [`src/reference/referenceSources.json`](./src/reference/referenceSources.json);
 - локальный исходник для пересборки reference-списка хранится в [`JSONS/referenceSourcesMVP.json`](./JSONS/referenceSourcesMVP.json);
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
@@ -104,6 +108,10 @@
 Важно: текущий runtime-аудит зависит не только от доступности GitHub Pages, но и от актуальности опубликованного содержимого `ackedze.github.io/apollo`. Обновление git-репозитория и обновление `Pages` могут расходиться по времени. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
+
+## Правило публикации
+
+При публикации изменений Apollo обновляйте этот README вместе с кодом, если меняется runtime-поведение, источники данных, сборка, контракты UI/backend или workflow проверки. Если изменение влияет на общий workspace-процесс, дополнительно обновляйте root `README.md` и `WORKSPACE.md`.
 
 ## UI и поведение
 - [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder/fallback-сценарии и маршрутизация табов в React results bridge.

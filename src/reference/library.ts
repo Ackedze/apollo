@@ -1,6 +1,7 @@
 import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
+  normalizePath,
   type RemoteReferenceCatalogList,
   type ReferenceCatalogSource,
 } from './referenceList';
@@ -40,6 +41,12 @@ const hostControlledTextPaths = new Map<string, Set<string>>();
 const hostControlledLayoutPaths = new Map<string, Set<string>>();
 const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
+const componentCatalogSourcesByPath = new Map<string, ReferenceCatalogSource>();
+const componentCatalogPathByKey = new Map<string, string>();
+const loadedComponentCatalogPaths = new Set<string>();
+const componentCatalogLoadPromises = new Map<string, Promise<void>>();
+let componentIndexesLoaded = false;
+let componentIndexLoadPromise: Promise<void> | null = null;
 
 const catalogLoadState: {
   ready: boolean;
@@ -50,6 +57,7 @@ const catalogLoadState: {
 };
 
 const missingReferenceLog = new Set<string>();
+const missingIndexLog = new Set<string>();
 
 export function areReferenceCatalogsReady(): boolean {
   return catalogLoadState.ready;
@@ -73,15 +81,25 @@ async function loadAllCatalogs(): Promise<void> {
   const sources = await ensureCatalogSourceList();
 
   const componentSources = sources.filter(
-    (source) => !isTokenCatalogSource(source) && !isStyleCatalogSource(source),
+    isComponentCatalogSource,
   );
+  componentCatalogSourcesByPath.clear();
+  for (const source of componentSources) {
+    componentCatalogSourcesByPath.set(normalizePath(source.path), source);
+  }
 
   const componentFetchStartedAt = getTimestamp();
-  const modules = await Promise.all(componentSources.map(fetchCatalogModule));
+  const baseComponentSources = componentSources.filter(isBaseComponentCatalogSource);
+  const modules = (
+    await Promise.all(baseComponentSources.map(fetchCatalogModuleOptional))
+  ).filter((module): module is AthenaCatalog => Boolean(module));
   const componentFetchDurationMs = getTimestamp() - componentFetchStartedAt;
 
   const hydrateStartedAt = getTimestamp();
   hydrateCatalogs(modules);
+  for (const source of baseComponentSources) {
+    loadedComponentCatalogPaths.add(normalizePath(source.path));
+  }
   const hydrateDurationMs = getTimestamp() - hydrateStartedAt;
 
   const tokenLoadStartedAt = getTimestamp();
@@ -91,6 +109,14 @@ async function loadAllCatalogs(): Promise<void> {
   await loadStyleCatalogs(sources.filter(isStyleCatalogSource));
   const styleLoadDurationMs = getTimestamp() - styleLoadStartedAt;
 
+  componentIndexLoadPromise = loadComponentIndexes(componentSources)
+    .catch((error) => {
+      console.warn('[Apollo] component index preload failed', error);
+    })
+    .finally(() => {
+      componentIndexLoadPromise = null;
+    });
+
   catalogLoadState.ready = true;
   logAuditMetric('reference-preload', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
@@ -99,7 +125,85 @@ async function loadAllCatalogs(): Promise<void> {
     tokenLoadMs: Number(tokenLoadDurationMs.toFixed(1)),
     styleLoadMs: Number(styleLoadDurationMs.toFixed(1)),
     catalogCount: modules.length,
+    indexPreload: 'background',
   });
+}
+
+export async function ensureReferenceCatalogsForKeys(
+  keys: Iterable<string | null | undefined>,
+): Promise<void> {
+  await ensureReferenceCatalogsLoaded();
+  await ensureComponentIndexesLoaded();
+
+  const requestedKeys = Array.from(new Set(
+    Array.from(keys).filter((key): key is string => typeof key === 'string' && key.length > 0),
+  ));
+  const catalogPaths = new Set<string>();
+  const unresolvedKeys: string[] = [];
+
+  for (const key of requestedKeys) {
+    if (findCatalogComponentByKey(key)) {
+      continue;
+    }
+    const catalogPath = componentCatalogPathByKey.get(key);
+    if (catalogPath) {
+      catalogPaths.add(catalogPath);
+    } else {
+      unresolvedKeys.push(key);
+    }
+  }
+
+  if (unresolvedKeys.length) {
+    reportMissingIndexKeys(unresolvedKeys);
+  }
+
+  if (!catalogPaths.size) {
+    logAuditMetric('reference-lazy-load', {
+      totalMs: 0,
+      requestedKeys: requestedKeys.length,
+      catalogCount: 0,
+      unresolvedKeys: unresolvedKeys.length,
+      mode: 'index-only',
+    });
+    return;
+  }
+
+  const loadStartedAt = getTimestamp();
+  await Promise.all(Array.from(catalogPaths).map(loadComponentCatalogByPath));
+  logAuditMetric('reference-lazy-load', {
+    totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
+    requestedKeys: requestedKeys.length,
+    catalogCount: catalogPaths.size,
+    unresolvedKeys: unresolvedKeys.length,
+    mode: 'index-only',
+  });
+}
+
+function reportMissingIndexKeys(keys: string[]): void {
+  for (const key of keys.slice(0, 20)) {
+    if (missingIndexLog.has(key)) {
+      continue;
+    }
+    missingIndexLog.add(key);
+    console.warn('[Apollo::catalog] Component key is missing from index', { key });
+  }
+}
+
+async function ensureComponentIndexesLoaded(): Promise<void> {
+  if (componentIndexLoadPromise) {
+    return componentIndexLoadPromise;
+  }
+
+  if (componentIndexesLoaded) {
+    return;
+  }
+
+  const sources = await ensureCatalogSourceList();
+  componentIndexLoadPromise = loadComponentIndexes(sources.filter(isComponentCatalogSource))
+    .finally(() => {
+      componentIndexLoadPromise = null;
+    });
+  return componentIndexLoadPromise;
 }
 
 async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
@@ -110,14 +214,15 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
   try {
     const response = await requestCatalogSource(apolloReferenceCatalogListUrl);
     const payload = JSON.parse(response);
+    const sources = buildReferenceCatalogSources(payload);
 
     console.log('[Apollo] reference sources list loaded', {
       url: apolloReferenceCatalogListUrl,
       baseUrl: payload?.baseUrl ?? '',
-      count: payload?.catalogs?.length ?? 0,
+      count: sources.length,
     });
 
-    catalogSources = buildReferenceCatalogSources(payload);
+    catalogSources = sources;
     return catalogSources;
   } catch (error) {
     console.warn('[Apollo] failed to load reference sources list', {
@@ -168,12 +273,31 @@ async function fetchCatalogModule(
   }
 }
 
+async function fetchCatalogModuleOptional(
+  source: ReferenceCatalogSource,
+): Promise<AthenaCatalog | null> {
+  try {
+    return await fetchCatalogModule(source);
+  } catch (error) {
+    return null;
+  }
+}
+
 function isTokenCatalogSource(source: ReferenceCatalogSource): boolean {
-  return /\/tokens\//i.test(source.url);
+  return source.kind === 'tokens' || /\/tokens\//i.test(source.url);
 }
 
 function isStyleCatalogSource(source: ReferenceCatalogSource): boolean {
-  return /\/styles\//i.test(source.url);
+  return source.kind === 'styles' || /\/styles\//i.test(source.url);
+}
+
+function isComponentCatalogSource(source: ReferenceCatalogSource): boolean {
+  return !isTokenCatalogSource(source) && !isStyleCatalogSource(source);
+}
+
+function isBaseComponentCatalogSource(source: ReferenceCatalogSource): boolean {
+  void source;
+  return false;
 }
 
 function parseCatalogPayload(raw: string, fileName: string): AthenaCatalog {
@@ -281,6 +405,132 @@ async function loadStyleCatalogs(
       logCatalogEvent(source, `failed: ${message}`);
     }
   }
+}
+
+type ComponentIndexPayload = {
+  catalogPath?: string;
+  components?: Array<{
+    key?: string;
+    variants?: Array<{ key?: string | null } | null>;
+    catalogPath?: string;
+  } | null>;
+  entries?: Array<{
+    key?: string;
+    catalogPath?: string;
+  } | null>;
+};
+
+async function loadComponentIndexes(
+  sources: ReferenceCatalogSource[],
+): Promise<void> {
+  if (componentIndexesLoaded) {
+    return;
+  }
+
+  const startedAt = getTimestamp();
+  componentIndexesLoaded = true;
+  componentCatalogPathByKey.clear();
+  let loadedIndexes = 0;
+  let failedIndexes = 0;
+  const indexSourceCount = sources.filter((source) => Boolean(source.indexUrl)).length;
+
+  await Promise.all(
+    sources.map(async (source) => {
+      if (!source.indexUrl) {
+        return;
+      }
+
+      try {
+        const raw = await requestCatalogSource(source.indexUrl);
+        const payload = JSON.parse(raw) as ComponentIndexPayload;
+        const fallbackCatalogPath = normalizePath(payload.catalogPath || source.path);
+
+        if (Array.isArray(payload.entries)) {
+          for (const entry of payload.entries) {
+            registerComponentIndexKey(entry?.key, entry?.catalogPath || fallbackCatalogPath);
+          }
+        }
+
+        if (Array.isArray(payload.components)) {
+          for (const component of payload.components) {
+            const catalogPath = component?.catalogPath || fallbackCatalogPath;
+            registerComponentIndexKey(component?.key, catalogPath);
+            for (const variant of component?.variants ?? []) {
+              registerComponentIndexKey(variant?.key, catalogPath);
+            }
+          }
+        }
+
+        loadedIndexes += 1;
+        reportCatalogLoaded(source.fileName.replace(/\.json$/i, '.index.json'), raw.length);
+      } catch (error) {
+        failedIndexes += 1;
+        const message =
+          error && typeof error === 'object' && 'message' in error
+            ? String((error as any).message)
+            : String(error ?? 'Unknown error');
+
+        if (!/^HTTP 404\b/.test(message)) {
+          logCatalogEvent(source, `index failed: ${message}`);
+        }
+      }
+    }),
+  );
+
+  logAuditMetric('reference-index-load', {
+    totalMs: Number((getTimestamp() - startedAt).toFixed(1)),
+    loadedIndexes,
+    failedIndexes,
+    indexedKeys: componentCatalogPathByKey.size,
+    indexSources: indexSourceCount,
+  });
+}
+
+function registerComponentIndexKey(
+  key: string | null | undefined,
+  catalogPath: string | null | undefined,
+): void {
+  if (!key || !catalogPath) {
+    return;
+  }
+
+  const normalizedPath = normalizePath(catalogPath);
+  if (!normalizedPath) {
+    return;
+  }
+
+  componentCatalogPathByKey.set(key, normalizedPath);
+}
+
+async function loadComponentCatalogByPath(path: string): Promise<void> {
+  const normalizedPath = normalizePath(path);
+  if (!normalizedPath || loadedComponentCatalogPaths.has(normalizedPath)) {
+    return;
+  }
+
+  const existingPromise = componentCatalogLoadPromises.get(normalizedPath);
+  if (existingPromise) {
+    return existingPromise;
+  }
+
+  const source = componentCatalogSourcesByPath.get(normalizedPath);
+  if (!source) {
+    return;
+  }
+
+  const promise = (async () => {
+    const module = await fetchCatalogModuleOptional(source);
+    if (!module) {
+      return;
+    }
+    hydrateAdditionalCatalogs([module]);
+    loadedComponentCatalogPaths.add(normalizedPath);
+  })().finally(() => {
+    componentCatalogLoadPromises.delete(normalizedPath);
+  });
+
+  componentCatalogLoadPromises.set(normalizedPath, promise);
+  return promise;
 }
 
 export function getTokenCatalogs(): TokenCatalog[] {
@@ -983,6 +1233,24 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
       );
     }
   }
+}
+
+function hydrateAdditionalCatalogs(modules: AthenaCatalog[]) {
+  if (!modules.length) {
+    return;
+  }
+
+  catalogs = catalogs.concat(modules);
+
+  for (const module of modules) {
+    for (const component of module.components ?? []) {
+      prepareComponent(component, module);
+      indexComponentByKey(component as unknown as LibraryComponent);
+      registerPartUsage(component as unknown as LibraryComponent);
+    }
+  }
+
+  buildPartHostControlledPaintPaths();
 }
 
 function validateCatalogComponent(

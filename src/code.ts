@@ -2,6 +2,7 @@
 
 import {
   areReferenceCatalogsReady,
+  ensureReferenceCatalogsForKeys,
   ensureReferenceCatalogsLoaded,
   findComponent,
   getCorporateCounterpart,
@@ -288,6 +289,20 @@ async function runAudit(
     lastAuditSelectionIds = selection.map((node) => node.id);
     lastAuditChannel = selectedChannel;
 
+    const componentKeyCache = new Map<string, string | null>();
+    const keyCollectStartedAt = getTimestamp();
+    const selectionComponentKeys = await collectComponentKeys(
+      selection,
+      componentKeyCache,
+      throwIfCancelled,
+    );
+    await ensureReferenceCatalogsForKeys(selectionComponentKeys);
+    logAuditMetric('audit-component-reference-ready', {
+      totalMs: Number((getTimestamp() - keyCollectStartedAt).toFixed(1)),
+      componentKeyCount: selectionComponentKeys.size,
+    });
+    throwIfCancelled();
+
     const checkState = createCheckState()
 
     const pageThemizationEntry = await buildPageThemizationEntry(selection);
@@ -296,7 +311,6 @@ async function runAudit(
     }
 
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
-    const componentKeyCache = new Map<string, string | null>();
     const localComponentContextCache = new Map<string, boolean>();
     const checkedComponentNodesList = new Set<string>();
 
@@ -400,6 +414,50 @@ function startCatalogPreload() {
     });
 }
 
+async function collectComponentKeys(
+  selection: readonly SceneNode[],
+  componentKeyCache: Map<string, string | null>,
+  throwIfCancelled: () => void,
+): Promise<Set<string>> {
+  const keys = new Set<string>();
+
+  const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
+    try {
+      return 'visible' in candidate
+        ? (candidate as SceneNode & { visible: boolean }).visible !== false
+        : true;
+    } catch (_error) {
+      return false;
+    }
+  };
+
+  const visit = async (node: SceneNode): Promise<void> => {
+    throwIfCancelled();
+
+    if (!isNodeVisibleSafe(node)) {
+      return;
+    }
+
+    if (node.type === 'INSTANCE' || node.type === 'COMPONENT') {
+      const key = await getComponentKeyCached(node, componentKeyCache);
+      if (key) {
+        keys.add(key);
+      }
+    }
+
+    if ('children' in node && node.children.length > 0) {
+      for (const child of node.children) {
+        await visit(child as SceneNode);
+      }
+    }
+  };
+
+  for (const node of selection) {
+    await visit(node);
+  }
+
+  return keys;
+}
 
 async function collectTargets(
   selection: readonly SceneNode[], 
@@ -833,6 +891,7 @@ async function resetCustomizationGroup(payload: {
   }
 
   const componentKey = await getComponentKey(rootNode);
+  await ensureReferenceCatalogsForKeys([componentKey]);
   const ref = componentKey ? findComponent(componentKey) : null;
   const instanceVariantProperties =
     rootNode.type === 'INSTANCE' ? (rootNode.variantProperties ?? null) : null;
@@ -992,6 +1051,7 @@ async function replaceCorporateInstance(
 ): Promise<boolean> {
   const sourceProperties = snapshotInstanceComponentProperties(instance);
   const componentKey = await getComponentKey(instance);
+  await ensureReferenceCatalogsForKeys([componentKey, replacementComponentKey]);
   const ref = componentKey ? findComponent(componentKey) : null;
   if (!ref) {
     return false;

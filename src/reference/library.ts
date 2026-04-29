@@ -1239,14 +1239,14 @@ export function resolveVariantKeyForInstance(
     return componentKey ?? null;
   }
 
-  const directByKey =
-    componentKey && variants.find((variant) => variant.key === componentKey);
-  if (directByKey) {
-    return directByKey.key;
-  }
-
   const desiredProperties = variantProperties ?? null;
   if (!desiredProperties || !Object.keys(desiredProperties).length) {
+    const directByKey = componentKey
+      ? variants.find((variant) => variant.key === componentKey)
+      : null;
+    if (directByKey) {
+      return directByKey.key;
+    }
     return componentKey ?? null;
   }
 
@@ -1259,6 +1259,10 @@ export function resolveVariantKeyForInstance(
   if (exactByProperties?.key) {
     return exactByProperties.key;
   }
+
+  const directByKey = componentKey
+    ? variants.find((variant) => variant.key === componentKey)
+    : null;
 
   const bestByOverlap = variants
     .map((variant) => ({
@@ -1277,7 +1281,7 @@ export function resolveVariantKeyForInstance(
       return left.variant.name.localeCompare(right.variant.name);
     })[0]?.variant;
 
-  return bestByOverlap?.key ?? componentKey ?? null;
+  return bestByOverlap?.key ?? directByKey?.key ?? componentKey ?? null;
 }
 
 function buildPartHostControlledPaintPaths() {

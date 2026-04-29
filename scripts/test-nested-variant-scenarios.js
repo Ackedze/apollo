@@ -96,7 +96,18 @@ function main() {
   assert.equal(
     library.resolveVariantKeyForInstance(component, 'radio-selected', null),
     'radio-selected',
-    'Direct variant key must remain the highest-priority match',
+    'Direct variant key must remain the highest-priority match when no variantProperties are available',
+  );
+
+  assert.equal(
+    library.resolveVariantKeyForInstance(component, 'radio-default', {
+      SelectedState: 'True',
+      Type: 'Radio',
+      View: 'Desktop',
+      Preset: 'Default',
+    }),
+    'radio-selected',
+    'Variant properties must override stale direct variant keys from slot instances',
   );
 
   assert.equal(

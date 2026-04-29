@@ -1433,7 +1433,7 @@ async function applyReferenceResetByMessages(
     }
 
     if (
-      trimmed.startsWith('Отступ между элементами:') ||
+      trimmed.startsWith('Отступ между элементами') ||
       trimmed.startsWith('Token itemSpacing:')
     ) {
       await resetItemSpacing(node, referenceNode);
@@ -1470,14 +1470,14 @@ async function applyReferenceResetByMessages(
       continue;
     }
 
-    if (trimmed.startsWith('Token radius:') || trimmed.startsWith('Скругления:')) {
+    if (trimmed.startsWith('Token radius:') || trimmed.startsWith('Скругления')) {
       await resetRadius(node, referenceNode);
       continue;
     }
 
     if (
       trimmed.startsWith('Token opacity:') ||
-      trimmed.startsWith('Прозрачность:')
+      trimmed.startsWith('Прозрачность')
     ) {
       await resetOpacity(node, referenceNode);
     }
@@ -1682,12 +1682,64 @@ async function bindNodeVariable(
   field: string,
   tokenId: string | null,
 ) {
-  const mutableNode = node as any;
+  const bindingNode = await resolveBindableNode(node);
+  if (!bindingNode) {
+    console.warn('[Apollo] skip variable binding for missing node', {
+      nodeId: node.id,
+      field,
+      tokenId,
+    });
+    return;
+  }
+
+  const mutableNode = bindingNode as any;
   if (typeof mutableNode.setBoundVariable !== 'function') {
     return;
   }
   const variable = tokenId ? await importVariableByToken(tokenId) : null;
-  mutableNode.setBoundVariable(field, variable);
+  try {
+    mutableNode.setBoundVariable(field, variable);
+  } catch (error) {
+    if (isMissingNodeMutationError(error)) {
+      console.warn('[Apollo] skip variable binding for stale node', {
+        nodeId: bindingNode.id,
+        field,
+        tokenId,
+        error,
+      });
+      return;
+    }
+    throw error;
+  }
+}
+
+async function resolveBindableNode(node: SceneNode): Promise<SceneNode | null> {
+  if (isRemovedNode(node)) {
+    return null;
+  }
+
+  try {
+    const freshNode = await getSceneNodeById(node.id);
+    return freshNode && !isRemovedNode(freshNode) ? freshNode : null;
+  } catch (error) {
+    console.warn('[Apollo] failed to refresh node before variable binding', {
+      nodeId: node.id,
+      error,
+    });
+    return null;
+  }
+}
+
+function isRemovedNode(node: SceneNode): boolean {
+  return (node as any).removed === true;
+}
+
+function isMissingNodeMutationError(error: unknown): boolean {
+  const message =
+    error && typeof error === 'object' && 'message' in error
+      ? String((error as { message?: string }).message)
+      : String(error ?? '');
+  return /does not exist|not found|removed/i.test(message);
 }
 
 async function importVariableByToken(tokenId: string): Promise<Variable | null> {

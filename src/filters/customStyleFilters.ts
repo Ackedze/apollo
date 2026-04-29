@@ -9,7 +9,7 @@ type CustomStyleFilterRule = {
 
 // Technical fill color from JSONS/icons/Icons -- general (glyph).json.
 const GLYPH_TECHNICAL_FILL_HEXES = new Set(['#747474']);
-// Technical fill color from JSONS/components/web-core/core/Web _ Core -- IconView.json.
+// Technical fill color from JSONS/web/components/web-core/core/Web _ Core -- IconView.json.
 const ICON_VIEW_BGCOLOR_TECHNICAL_FILL_HEXES = new Set(['#F2F3F5']);
 const PAINT_IGNORED_LIBRARY_SOURCES = new Set(['Icons', 'Logotypes']);
 const paintLibraryIgnoreCache = new Map<string, Promise<boolean>>();

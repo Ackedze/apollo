@@ -26,84 +26,10 @@
         width: 263px;
       }
 
-      /* Стили заголовка */
-
       .header {
         padding: 0;
         border-bottom: 1px solid #ececf2;
       }
-      .chrome-title-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding-right: 28px;
-        min-width: 0;
-        width: 244px;
-        box-sizing: border-box;
-      }
-      .chrome-compact-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 20px;
-        height: 20px;
-        min-width: 20px;
-        min-height: 20px;
-        padding: 2px;
-        border: none;
-        border-radius: 999px;
-        background: transparent;
-        color: rgba(3, 3, 6, 0.88);
-        cursor: pointer;
-      }
-      .chrome-action-button-icon {
-        min-width: 40px;
-        width: 40px;
-      }
-      .chrome-top-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-shrink: 0;
-      }
-      .chrome-picker-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        min-height: 40px;
-        min-width: 88px;
-        padding: 4px 12px;
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        border-radius: 999px;
-        background: rgba(0, 0, 0, 0.04);
-        color: rgba(3, 3, 6, 0.88);
-        font-family: inherit;
-        box-sizing: border-box;
-      }
-      .chrome-picker-button:disabled {
-        color: rgba(5, 8, 29, 0.38);
-      }
-      .chrome-picker-label {
-        padding: 0 4px;
-        font-size: 14px;
-        line-height: 20px;
-        letter-spacing: -0.08px;
-        white-space: nowrap;
-      }
-      .chrome-picker-icon {
-        width: 16px;
-        height: 16px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        font-size: 13px;
-        line-height: 1;
-      }
-      /* Стили боковой панели */
-
-      /*Стили рабочей области*/
 
       .results-pane {
         flex: 1;
@@ -1186,154 +1112,6 @@
           setActiveTab(tabId);
         }
 
-        function renderChromeFallback(state) {
-          renderTopSectionFallback(state);
-          renderLeftSectionFallback(state.tabs);
-        }
-
-        function renderTopSectionFallback(state) {
-          if (!topChromeContainer) return;
-          topChromeContainer.innerHTML = '';
-
-          const section = document.createElement('div');
-          section.className = [
-            'chrome-top-section',
-            state.compact ? 'chrome-top-section-compact' : '',
-          ]
-            .filter(Boolean)
-            .join(' ');
-
-          const titleWrap = document.createElement('div');
-          titleWrap.className = 'chrome-title-wrap';
-
-          const titleButton = document.createElement('div');
-          titleButton.className = 'chrome-title-button';
-          titleButton.textContent = state.title;
-          titleWrap.appendChild(titleButton);
-
-          const compactButton = document.createElement('button');
-          compactButton.type = 'button';
-          compactButton.className = 'chrome-compact-button';
-          compactButton.textContent = state.compact ? '↗' : '↙';
-          compactButton.addEventListener('click', toggleCompactMode);
-          titleWrap.appendChild(compactButton);
-          section.appendChild(titleWrap);
-
-          let actionContainer = section;
-          if (!state.compact) {
-            const rightSide = document.createElement('div');
-            rightSide.className = 'chrome-top-right';
-
-            const pickerButton = document.createElement('button');
-            pickerButton.type = 'button';
-            pickerButton.className = 'chrome-picker-button';
-            pickerButton.disabled = Boolean(state.actionLoading);
-
-            const pickerLead = document.createElement('span');
-            pickerLead.className = 'chrome-picker-icon';
-            pickerLead.textContent = '▣';
-            pickerButton.appendChild(pickerLead);
-
-            const pickerLabel = document.createElement('span');
-            pickerLabel.className = 'chrome-picker-label';
-            pickerLabel.textContent = state.pickerLabel;
-            pickerButton.appendChild(pickerLabel);
-
-            const pickerChevron = document.createElement('span');
-            pickerChevron.className = 'chrome-picker-icon';
-            pickerChevron.textContent = '⌄';
-            pickerButton.appendChild(pickerChevron);
-
-            rightSide.appendChild(pickerButton);
-            section.appendChild(rightSide);
-            actionContainer = rightSide;
-          }
-
-          const actionButton = document.createElement('button');
-          actionButton.type = 'button';
-          actionButton.className = [
-            'chrome-action-button',
-            state.actionType === 'secondary'
-              ? 'chrome-action-button-secondary'
-              : 'chrome-action-button-primary',
-          ].join(' ');
-          actionButton.disabled = Boolean(state.actionDisabled);
-          actionButton.addEventListener('click', handleScanActionPress);
-
-          if (state.actionLoading) {
-            const loader = document.createElement('span');
-            loader.className = 'chrome-inline-loader';
-            loader.setAttribute('aria-hidden', 'true');
-            actionButton.appendChild(loader);
-          }
-
-          if (state.compact) {
-            const icon = document.createElement('span');
-            icon.textContent = '↯';
-            actionButton.appendChild(icon);
-            actionButton.classList.add('chrome-action-button-icon');
-          } else {
-            const label = document.createElement('span');
-            label.textContent = state.actionLabel;
-            actionButton.appendChild(label);
-          }
-          actionContainer.appendChild(actionButton);
-
-          topChromeContainer.appendChild(section);
-        }
-
-        function renderLeftSectionFallback(tabs) {
-          if (!leftChromeContainer) return;
-          leftChromeContainer.innerHTML = '';
-
-          const section = document.createElement('div');
-          section.className = 'chrome-left-section';
-
-          orderLeftSectionTabs(tabs).forEach((tab) => {
-            if (typeof tab === 'string' && tab.startsWith('__divider_')) {
-              const divider = document.createElement('div');
-              divider.className = 'chrome-divider';
-              const line = document.createElement('div');
-              line.className = 'chrome-divider-line';
-              divider.appendChild(line);
-              section.appendChild(divider);
-              return;
-            }
-
-            const card = document.createElement('button');
-            card.type = 'button';
-            const isEmpty = tab.count === 0;
-            card.className = [
-              'chrome-tab-card',
-              tab.active ? 'chrome-tab-card-active' : '',
-              isEmpty ? 'chrome-tab-card-empty' : '',
-            ]
-              .filter(Boolean)
-              .join(' ');
-            card.setAttribute('aria-pressed', tab.active ? 'true' : 'false');
-            card.addEventListener('click', () =>
-              handleTabSelection(tab.id, tab.count),
-            );
-
-            const title = document.createElement('span');
-            title.className = 'chrome-tab-title';
-            title.textContent = tab.title;
-            card.appendChild(title);
-
-            const badge = document.createElement('span');
-            badge.className = [
-              'chrome-badge',
-              `chrome-badge-${tab.counterType}`,
-            ].join(' ');
-            badge.textContent = String(tab.count);
-            card.appendChild(badge);
-
-            section.appendChild(card);
-          });
-
-          leftChromeContainer.appendChild(section);
-        }
-
         function syncChromeState() {
           const tabs = tabConfig.map((tab) => {
             const items = tab.source();
@@ -1378,7 +1156,7 @@
             }
           }
 
-          renderChromeFallback(chromeState);
+          console.error('[Apollo] chrome bridge is unavailable');
         }
 
         function getCounterType(tabId, count) {
@@ -1406,17 +1184,6 @@
           }
 
           return 'general';
-        }
-
-        function orderLeftSectionTabs(tabs) {
-          const byId = new Map(tabs.map((tab) => [tab.id, tab]));
-          return leftSectionOrder.flatMap((entry) => {
-            if (entry.startsWith('__divider_')) {
-              return entry;
-            }
-            const tab = byId.get(entry);
-            return tab ? [tab] : [];
-          });
         }
       })();
     </script>

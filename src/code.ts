@@ -25,7 +25,7 @@ import {
   makeOccurrenceKey,
 } from './structure/occurrenceKeys';
 import type { DSStructureNode } from './types/structures';
-import type { AuditItem, RelevanceStatus } from './types/audit';
+import type { AuditItem, PathSegment, RelevanceStatus } from './types/audit';
 import { LEFT_SECTION_ORDER, tabDefinitions } from './config/tabs';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
@@ -596,7 +596,7 @@ async function classifyNode(
       ? nodeSegments.slice(1)
       : nodeSegments.length
         ? nodeSegments
-        : [{ id: node.id, label: node.name }];
+        : [{ id: node.id, label: node.name, nodeType: node.type, visible: true }];
 
   const pageName = getPageName(node);
   const fullPath = buildNodePath(node);
@@ -1117,7 +1117,7 @@ async function replaceCorporateInstance(
         error:
           fallbackError && typeof fallbackError === 'object' && 'message' in fallbackError
             ? String((fallbackError as { message?: string }).message)
-            : String(fallbackError ?? error),
+            : String(fallbackError ?? 'Unknown error'),
       });
     }
   }
@@ -1329,11 +1329,13 @@ type InstanceComponentPropertySnapshot = {
   value: string | boolean | VariableAlias;
 };
 
+type InstanceComponentPropertyDefinition = ComponentProperties[string];
+
 function snapshotInstanceComponentProperties(
   instance: InstanceNode,
 ): InstanceComponentPropertySnapshot[] {
   return Object.entries(instance.componentProperties ?? {})
-    .map(([key, definition]) => {
+    .map(([key, definition]): InstanceComponentPropertySnapshot | null => {
       const value = definition?.value;
       if (value === undefined) {
         return null;
@@ -1395,7 +1397,7 @@ function canonicalComponentPropertyName(propertyName: string): string {
 
 function isCompatibleComponentPropertyValue(
   value: string | boolean | VariableAlias,
-  definition: ComponentPropertyDefinition,
+  definition: InstanceComponentPropertyDefinition,
 ): boolean {
   switch (definition.type) {
     case 'BOOLEAN':
@@ -1405,11 +1407,7 @@ function isCompatibleComponentPropertyValue(
     case 'INSTANCE_SWAP':
       return typeof value === 'string';
     case 'VARIANT':
-      return (
-        typeof value === 'string' &&
-        Array.isArray(definition.variantOptions) &&
-        definition.variantOptions.includes(value)
-      );
+      return typeof value === 'string';
     default:
       return false;
   }
@@ -1928,7 +1926,7 @@ function expandReferenceWithInstanceComponents(
 ): DSStructureNode[] {
   if (!reference.length || !actual.length) return reference;
 
-  const referenceEntries = reference.map((node) =>
+  const referenceEntries: DSStructureNode[] = reference.map((node) =>
     Object.assign({}, node, {
       referenceOrigin: node.referenceOrigin ?? 'host',
     }),
@@ -2023,6 +2021,7 @@ function expandReferenceWithInstanceComponents(
         typeof existingIndex === 'number' ? referenceEntries[existingIndex] : null;
       if (
         existingNode &&
+        typeof existingIndex === 'number' &&
         shouldPreferMaterializedInstanceReference(
           existingNode,
           refNode,
@@ -2143,19 +2142,21 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
             collection.name ?? catalogLibrary ?? catalog.meta?.fileName ?? '';
           const variables = collection.variables ?? [];
           for (const variable of variables) {
-            if (!variable || !variable.key) continue;
+            if (!variable || (!variable.key && !variable.id)) continue;
             const label = buildTokenLabel(
               variable.groupName ?? 'Без группы',
               variable.tokenName ?? variable.name ?? '',
             );
-            map.set(variable.key, {
+            const entry: TokenLabelEntry = {
               label,
               library: collectionName || catalogLibrary,
               resolvedType:
                 typeof variable.resolvedType === 'string'
                   ? variable.resolvedType
                   : undefined,
-            });
+            };
+            registerTokenLabelKey(map, variable.key, entry);
+            registerTokenLabelKey(map, variable.id, entry);
           }
         }
       }
@@ -2184,7 +2185,22 @@ function buildTokenLabel(
   return segments.join('/');
 }
 
+function registerTokenLabelKey(
+  map: Map<string, TokenLabelEntry>,
+  rawKey: string | null | undefined,
+  entry: TokenLabelEntry,
+) {
+  if (!rawKey) return;
+  map.set(rawKey, entry);
+  const aliasKey = extractAliasKey(rawKey);
+  if (aliasKey) {
+    map.set(aliasKey, entry);
+  }
+}
+
 function resolveTokenLabelForDiff(token: string): string | null {
+  const directLabel = tokenLabelMap?.get(token);
+  if (directLabel) return directLabel.label;
   const aliasKey = extractAliasKey(token);
   if (!aliasKey) return token;
   const label = tokenLabelMap?.get(aliasKey);
@@ -2192,6 +2208,11 @@ function resolveTokenLabelForDiff(token: string): string | null {
 }
 
 function isColorTokenForPaintDiff(token: string): boolean {
+  const directEntry = tokenLabelMap?.get(token);
+  if (directEntry?.resolvedType) {
+    return directEntry.resolvedType === 'COLOR';
+  }
+
   const aliasKey = extractAliasKey(token);
   if (!aliasKey) {
     return true;

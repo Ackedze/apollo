@@ -1,4 +1,4 @@
-import type { DSStructureNode } from '../types/structures';
+import type { DSRadii, DSStructureNode } from '../types/structures';
 import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
 
 export type DiffContext = {
@@ -258,6 +258,7 @@ function compareNode(
     diffs,
     issueSet,
     strict,
+    resolveTokenLabel,
   );
 
   const shouldCompareItemSpacing = hasMeaningfulItemSpacing(
@@ -298,23 +299,21 @@ function compareNode(
           `Нет данных для token itemSpacing в снапшоте для «${path}»`,
         );
       } else if (actualToken !== referenceLayout.itemSpacingToken) {
-        const formattedReferenceToken = resolveTokenLabel
-          ? resolveTokenLabel(referenceLayout.itemSpacingToken) ||
-            referenceLayout.itemSpacingToken
-          : referenceLayout.itemSpacingToken;
-        const formattedActualToken = actualToken
-          ? resolveTokenLabel
-            ? resolveTokenLabel(actualToken) || actualToken
-            : actualToken
-          : '—';
-        pushDiff(
-          diffs,
-          actual,
-          reference,
-          path,
-          `Token itemSpacing: ${formattedReferenceToken} → ${formattedActualToken}`,
-          'layout',
+        const formattedReferenceToken = formatTokenLabel(
+          referenceLayout.itemSpacingToken,
+          resolveTokenLabel,
         );
+        const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
+        if (formattedActualToken !== formattedReferenceToken) {
+          pushDiff(
+            diffs,
+            actual,
+            reference,
+            path,
+            `Отступ между элементами (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+            'layout',
+          );
+        }
       }
     }
   }
@@ -404,6 +403,7 @@ function compareNode(
     diffs,
     issueSet,
     strict,
+    resolveTokenLabel,
   );
 
   compareOpacity(
@@ -417,6 +417,7 @@ function compareNode(
     diffs,
     issueSet,
     strict,
+    resolveTokenLabel,
   );
 }
 
@@ -463,6 +464,7 @@ function comparePadding(
   diffs: DiffEntry[],
   issueSet: Set<string>,
   strict: boolean,
+  resolveTokenLabel?: (token: string) => string | null,
 ) {
   const sides: Array<keyof NonNullable<typeof actual>> = [
     'top',
@@ -507,16 +509,20 @@ function comparePadding(
       if (strict && !actualToken) {
         addIssue(
           issueSet,
-          
           `Нет данных для token padding ${label(side)} в снапшоте для «${path}»`,
         );
       } else if (actualToken !== refToken) {
+        const formattedReferenceToken = formatPaddingTokenLabel(refToken, resolveTokenLabel);
+        const formattedActualToken = formatPaddingTokenLabel(actualToken, resolveTokenLabel);
+        if (formattedActualToken === formattedReferenceToken) {
+          continue;
+        }
         pushDiff(
           diffs,
           actualNode,
           referenceNode,
           path,
-          `Token padding ${label(side)}: ${refToken ?? '—'} → ${actualToken ?? '—'}`,
+          `Паддинг ${label(side)} (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
           'layout',
         );
       }
@@ -842,6 +848,7 @@ function compareRadius(
   diffs: DiffEntry[],
   issueSet: Set<string>,
   strict: boolean,
+  resolveTokenLabel?: (token: string) => string | null,
 ) {
   if (reference === null) return;
 
@@ -860,14 +867,18 @@ function compareRadius(
         `Нет данных для token radius в снапшоте для «${path}»`,
       );
     } else if (actualToken !== referenceToken) {
-      pushDiff(
-        diffs,
-        actualNode,
-        referenceNode,
-        path,
-        `Token radius: ${referenceToken ?? '—'} → ${actualToken ?? '—'}`,
-        'layout',
-      );
+      const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
+      const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
+      if (formattedActualToken !== formattedReferenceToken) {
+        pushDiff(
+          diffs,
+          actualNode,
+          referenceNode,
+          path,
+          `Скругления (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+          'layout',
+        );
+      }
     }
   }
 
@@ -901,6 +912,7 @@ function compareOpacity(
   diffs: DiffEntry[],
   issueSet: Set<string>,
   strict: boolean,
+  resolveTokenLabel?: (token: string) => string | null,
 ) {
   if (reference === null) return;
 
@@ -915,7 +927,7 @@ function compareOpacity(
 
   const normalizedReference =
     reference === null ? null : Number(reference.toFixed(2));
-    
+
   if (referenceToken) {
     if (strict && !actualToken) {
       addIssue(
@@ -923,13 +935,17 @@ function compareOpacity(
         `Нет данных для token opacity в снапшоте для «${path}»`,
       );
     } else if (actualToken !== referenceToken) {
-      pushDiff(
-        diffs,
-        actualNode,
-        referenceNode,
-        path,
-        `Token opacity: ${referenceToken ?? '—'} → ${actualToken ?? '—'}`,
-      );
+      const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
+      const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
+      if (formattedActualToken !== formattedReferenceToken) {
+        pushDiff(
+          diffs,
+          actualNode,
+          referenceNode,
+          path,
+          `Прозрачность (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+        );
+      }
     }
   }
   if (normalizedActual === normalizedReference) return;
@@ -940,6 +956,25 @@ function compareOpacity(
     path,
     `Прозрачность: ${normalizedReference ?? '—'} → ${normalizedActual ?? '—'}`,
   );
+}
+
+function formatTokenLabel(
+  token: string | null | undefined,
+  resolveTokenLabel?: (token: string) => string | null,
+): string {
+  if (!token) return '—';
+  return resolveTokenLabel ? resolveTokenLabel(token) || token : token;
+}
+
+function formatPaddingTokenLabel(
+  token: string | null | undefined,
+  resolveTokenLabel?: (token: string) => string | null,
+): string {
+  return stripPaddingTokenNamespace(formatTokenLabel(token, resolveTokenLabel));
+}
+
+function stripPaddingTokenNamespace(label: string): string {
+  return label.replace(/^(Vertical|Horizontal)\s+Paddings\//i, '');
 }
 
 function addIssue(

@@ -115,17 +115,17 @@ function collectTextRangeFillStyleCandidates(
   try {
     const segments = textNode.getStyledTextSegments(['fillStyleId']);
     for (const segment of segments) {
+      const fillStyleId = segment?.fillStyleId;
       if (
-        !segment?.fillStyleId ||
-        segment.fillStyleId === figma.mixed ||
-        typeof segment.fillStyleId !== 'string'
+        typeof fillStyleId !== 'string' ||
+        !fillStyleId
       ) {
         continue;
       }
 
       candidates.push({
         reason: 'fill',
-        styleId: segment.fillStyleId,
+        styleId: fillStyleId,
       });
     }
   } catch (_error) {

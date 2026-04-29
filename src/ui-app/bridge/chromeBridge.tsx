@@ -48,8 +48,12 @@ class ApolloChromeBridge {
       return;
     }
 
+    const options = this.options;
+    const topRoot = this.topRoot;
+    const leftRoot = this.leftRoot;
+
     flushSync(() => {
-      this.topRoot?.render(
+      topRoot.render(
         <TopSection
           title={this.state.title}
           pickerLabel={this.state.pickerLabel}
@@ -58,14 +62,14 @@ class ApolloChromeBridge {
           actionLoading={this.state.actionLoading}
           actionType={this.state.actionType}
           compact={this.state.compact}
-          onActionPress={this.options.onActionPress}
-          onToggleCompact={this.options.onToggleCompact}
-          onPickerChange={this.options.onPickerChange}
+          onActionPress={options.onActionPress}
+          onToggleCompact={options.onToggleCompact}
+          onPickerChange={options.onPickerChange}
         />,
       );
 
-      this.leftRoot?.render(
-        <LeftSection tabs={this.state.tabs} onTabSelect={this.options.onTabSelect} />,
+      leftRoot.render(
+        <LeftSection tabs={this.state.tabs} onTabSelect={options.onTabSelect} />,
       );
     });
   }

@@ -212,11 +212,13 @@ export async function snapshotNode(
 
 function extractStyles(node: SceneNode): DSNodeStyles | undefined {
   const styles: DSNodeStyles = {};
-  if ('fillStyleId' in node && node.fillStyleId && node.fillStyleId !== figma.mixed) {
-    styles.fill = { styleKey: String(node.fillStyleId) };
+  const fillStyleId = 'fillStyleId' in node ? node.fillStyleId : null;
+  if (typeof fillStyleId === 'string' && fillStyleId) {
+    styles.fill = { styleKey: fillStyleId };
   }
-  if ('strokeStyleId' in node && node.strokeStyleId && node.strokeStyleId !== figma.mixed) {
-    styles.stroke = { styleKey: String(node.strokeStyleId) };
+  const strokeStyleId = 'strokeStyleId' in node ? node.strokeStyleId : null;
+  if (typeof strokeStyleId === 'string' && strokeStyleId) {
+    styles.stroke = { styleKey: strokeStyleId };
   }
   if (
     node.type === 'TEXT' &&
@@ -232,7 +234,10 @@ function extractLayout(node: SceneNode): DSNodeLayout | undefined {
   const layout: DSNodeLayout = {};
   const source = node as any;
 
-  const assign = (key: keyof DSNodeLayout, value: number | null | typeof figma.mixed | undefined) => {
+  const assign = (
+    key: 'width' | 'height' | 'minWidth' | 'maxWidth' | 'minHeight' | 'maxHeight',
+    value: number | null | typeof figma.mixed | undefined,
+  ) => {
     if (value === null || typeof value === 'undefined' || value === figma.mixed) return;
     layout[key] = value;
   };

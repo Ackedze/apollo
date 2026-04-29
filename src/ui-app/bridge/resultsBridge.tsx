@@ -30,7 +30,7 @@ function getResultItemKey(item: ResultsItem, index: number): string {
     case 'customStyle':
       return `${item.kind}:${item.id}:${item.title}:${item.caption ?? ''}:${index}`;
     default:
-      return `${item.kind}:${item.id}:${index}`;
+      return `result:${index}`;
   }
 }
 

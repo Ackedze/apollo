@@ -1,10 +1,14 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const COMPONENTS_ROOT = path.resolve(__dirname, '../JSONS/components');
+const COMPONENTS_ROOT = path.resolve(__dirname, '../JSONS');
 
 function walkJsonFiles(rootDir) {
   const files = [];
+  if (!fs.existsSync(rootDir)) {
+    return files;
+  }
+
   const queue = [rootDir];
 
   while (queue.length) {

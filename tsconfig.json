@@ -9,6 +9,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "react-jsx",
     "strict": true,
     "types": [

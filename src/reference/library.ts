@@ -2,11 +2,9 @@ import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
   normalizePath,
-  type RemoteReferenceCatalogList,
   type ReferenceCatalogSource,
 } from './referenceList';
 import { fetchDirect } from '../utils/networkFetch';
-import fallbackCatalogList from './referenceSources.json';
 import type {
   AthenaCatalog,
   AthenaComponent,
@@ -21,6 +19,7 @@ import type {
   TokenCatalog,
 } from './libraryTypes';
 import type {
+  DSPadding,
   DSStructureNode,
   DSInstanceInfo,
   DSVariantStructurePatch,
@@ -88,18 +87,8 @@ async function loadAllCatalogs(): Promise<void> {
     componentCatalogSourcesByPath.set(normalizePath(source.path), source);
   }
 
-  const componentFetchStartedAt = getTimestamp();
-  const baseComponentSources = componentSources.filter(isBaseComponentCatalogSource);
-  const modules = (
-    await Promise.all(baseComponentSources.map(fetchCatalogModuleOptional))
-  ).filter((module): module is AthenaCatalog => Boolean(module));
-  const componentFetchDurationMs = getTimestamp() - componentFetchStartedAt;
-
   const hydrateStartedAt = getTimestamp();
-  hydrateCatalogs(modules);
-  for (const source of baseComponentSources) {
-    loadedComponentCatalogPaths.add(normalizePath(source.path));
-  }
+  hydrateCatalogs([]);
   const hydrateDurationMs = getTimestamp() - hydrateStartedAt;
 
   const tokenLoadStartedAt = getTimestamp();
@@ -120,11 +109,11 @@ async function loadAllCatalogs(): Promise<void> {
   catalogLoadState.ready = true;
   logAuditMetric('reference-preload', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
-    componentFetchMs: Number(componentFetchDurationMs.toFixed(1)),
+    componentFetchMs: 0,
     hydrateMs: Number(hydrateDurationMs.toFixed(1)),
     tokenLoadMs: Number(tokenLoadDurationMs.toFixed(1)),
     styleLoadMs: Number(styleLoadDurationMs.toFixed(1)),
-    catalogCount: modules.length,
+    catalogCount: 0,
     indexPreload: 'background',
   });
 }
@@ -234,13 +223,7 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     });
   }
 
-  console.error('Failed to load reference catalog list from Apollo Pages');
-
-  const fallback = fallbackCatalogList as RemoteReferenceCatalogList;
-
-  catalogSources = buildReferenceCatalogSources(fallback);
-
-  return catalogSources;
+  throw new Error('Failed to load reference catalog list from GitHub Pages');
 }
 
 async function fetchCatalogModule(
@@ -295,11 +278,6 @@ function isComponentCatalogSource(source: ReferenceCatalogSource): boolean {
   return !isTokenCatalogSource(source) && !isStyleCatalogSource(source);
 }
 
-function isBaseComponentCatalogSource(source: ReferenceCatalogSource): boolean {
-  void source;
-  return false;
-}
-
 function parseCatalogPayload(raw: string, fileName: string): AthenaCatalog {
   const trimmed = raw.trim();
 
@@ -319,17 +297,10 @@ function parseCatalogPayload(raw: string, fileName: string): AthenaCatalog {
     }
 
   } catch (error) {
-    if (!trimmed.startsWith('DS_CONTEXT:')) {
-      throw error;
-    }
+    throw error;
   }
 
-  const parsed = parseNormalizedCatalog(trimmed, fileName);
-
-  if (!parsed) {
-    throw new Error('Unsupported normalized catalog format');
-  }
-  return parsed;
+  throw new Error('Unsupported catalog JSON format');
 }
 
 async function loadTokenCatalogs(
@@ -590,18 +561,6 @@ function isNormalizedJsonCatalog(
   const catalog = payload as NormalizedJsonCatalog;
 
   return catalog.kind === 'catalog' && Array.isArray(catalog.elements);
-}
-
-function parseNormalizedCatalog(
-  raw: string,
-  fileName: string,
-): AthenaCatalog | null {
-  const elements = parseNormalizedElements(raw);
-
-  if (!elements.length) {
-    return null;
-  }
-  return parseNormalizedCatalogFromElements(elements, fileName);
 }
 
 function parseNormalizedJsonCatalog(
@@ -918,145 +877,6 @@ function getParentPath(path: string): string | null {
 function getLastSegment(path: string): string {
   const parts = path.split(' / ');
   return parts[parts.length - 1] ?? path;
-}
-
-function parseNormalizedElements(raw: string): NormalizedElement[] {
-  const elements: NormalizedElement[] = [];
-  let current: NormalizedElement | null = null;
-  let section: string | null = null;
-
-  const lines = raw.split('\n');
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    if (!trimmed) continue;
-
-    if (trimmed.startsWith('- path:')) {
-      if (current) elements.push(current);
-
-      current = { path: extractValue(trimmed) };
-
-      section = null;
-
-      continue;
-    }
-    if (!current) continue;
-
-    if (
-      trimmed === 'layout:' ||
-      trimmed === 'stroke:' ||
-      trimmed === 'fill:' ||
-      trimmed === 'text:' ||
-      trimmed === 'typography:'
-    ) {
-      section = trimmed.replace(':', '');
-
-      if (section === 'layout') {
-        current.layout = {};
-      }
-
-      if (section === 'text') {
-        current.text = {};
-      }
-
-      continue;
-    }
-
-    if (trimmed.startsWith('type:')) {
-      current.type = trimmed.slice(5).trim();
-      continue;
-    }
-
-    if (trimmed.startsWith('id:')) {
-      const parsedId = parseInt(trimmed.slice(3).trim(), 10);
-
-      if (!Number.isNaN(parsedId)) {
-        current.id = parsedId;
-      }
-
-      continue;
-    }
-
-    if (trimmed.startsWith('componentKey:')) {
-      current.componentKey = stripQuotes(trimmed.slice(13).trim());
-
-      continue;
-    }
-
-    if (trimmed.startsWith('visible:')) {
-      current.visible = trimmed.slice(8).trim() === 'true';
-
-      continue;
-    }
-
-    if (section === 'layout' && current.layout) {
-      
-      if (trimmed.startsWith('padding:')) {
-        current.layout.padding = parseNumberArray(trimmed);
-      } else if (trimmed.startsWith('gap:')) {
-        current.layout.gap = parseFloat(trimmed.slice(4).trim());
-      } else if (trimmed.startsWith('radius:')) {
-        current.layout.radius = parseNumberOrArray(trimmed.slice(7).trim());
-      }
-
-      continue;
-    }
-
-    if (section === 'text' && current.text) {
-      if (trimmed.startsWith('value:')) {
-        current.text.value = stripQuotes(trimmed.slice(6).trim());
-      }
-
-      continue;
-    }
-  }
-
-  if (current) elements.push(current);
-  return elements;
-}
-
-function extractValue(line: string): string {
-  const idx = line.indexOf(':');
-
-  if (idx === -1) return line.trim();
-
-  return stripQuotes(line.slice(idx + 1).trim());
-}
-
-function stripQuotes(value: string): string {
-  if (value.startsWith('"') && value.endsWith('"')) {
-    return value.slice(1, -1);
-  }
-
-  return value;
-}
-
-function parseNumberArray(line: string): number[] {
-  const match = line.match(/\[(.*)\]/);
-
-  if (!match) return [];
-
-  return match[1]
-    .split(',')
-    .map((item) => parseFloat(item.trim()))
-    .filter((num) => !Number.isNaN(num));
-}
-
-function parseNumberOrArray(value: string): number | number[] | undefined {
-  if (!value) return undefined;
-
-  if (value.startsWith('[')) {
-    const arr = value
-      .replace(/^\[/, '')
-      .replace(/\]$/, '')
-      .split(',')
-      .map((item) => parseFloat(item.trim()))
-      .filter((num) => !Number.isNaN(num));
-    return arr;
-  }
-  const num = parseFloat(value);
-
-  return Number.isNaN(num) ? undefined : num;
 }
 
 // Normalize Athena-like paint fields to the runtime shape used by diff.
@@ -1649,8 +1469,8 @@ function areLayoutDescriptorsEqual(
 }
 
 function arePaddingDescriptorsEqual(
-  left: DSStructureNode['layout'] extends { padding?: infer T } ? T : never,
-  right: DSStructureNode['layout'] extends { padding?: infer T } ? T : never,
+  left: DSPadding | null | undefined,
+  right: DSPadding | null | undefined,
 ): boolean {
   return (
     (left?.top ?? null) === (right?.top ?? null) &&
@@ -1661,8 +1481,8 @@ function arePaddingDescriptorsEqual(
 }
 
 function arePaddingTokenDescriptorsEqual(
-  left: DSStructureNode['layout'] extends { paddingTokens?: infer T } ? T : never,
-  right: DSStructureNode['layout'] extends { paddingTokens?: infer T } ? T : never,
+  left: NonNullable<DSStructureNode['layout']>['paddingTokens'] | null | undefined,
+  right: NonNullable<DSStructureNode['layout']>['paddingTokens'] | null | undefined,
 ): boolean {
   return (
     (left?.top ?? null) === (right?.top ?? null) &&
@@ -2016,7 +1836,7 @@ function registerPartUsage(component: LibraryComponent) {
             canonicalName,
             component.platform,
             component.name,
-            component.name.includes('[Corporate]') ? 'corp' : 'base',
+            (component.name ?? '').includes('[Corporate]') ? 'corp' : 'base',
             `-variant-${variantKey}`,
           ),
           variantEntry,

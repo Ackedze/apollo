@@ -128,8 +128,8 @@ function chooseBestVariantByName(variants, sourceVariantName, defaultVariantName
 }
 
 function testPlatformAwareCounterparts() {
-  const buttonCatalog = readCatalog('JSONS/components/web-core/core/Web _ Core -- Button.json');
-  const tagCatalog = readCatalog('JSONS/components/web-core/core/Web _ Core -- Tag.json');
+  const buttonCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Button.json');
+  const tagCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Tag.json');
   const index = new Map();
 
   for (const component of [...buttonCatalog.components, ...tagCatalog.components]) {
@@ -163,8 +163,8 @@ function testPlatformAwareCounterparts() {
 }
 
 function testVariantResolution() {
-  const buttonCatalog = readCatalog('JSONS/components/web-core/core/Web _ Core -- Button.json');
-  const tagCatalog = readCatalog('JSONS/components/web-core/core/Web _ Core -- Tag.json');
+  const buttonCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Button.json');
+  const tagCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Tag.json');
 
   const desktopCorporateButton = buttonCatalog.components.find(
     (component) => component.name === '🔄 [D][Corporate] Button',

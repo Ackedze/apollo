@@ -130,10 +130,12 @@ export type TokenCatalog = {
     name?: string;
     defaultModeId?: string | null;
     variables?: Array<{
+      id?: string;
       key?: string;
       name?: string;
       tokenName?: string;
       groupName?: string;
+      resolvedType?: string;
       valuesByMode?: Record<string, any>;
     }>;
   } | null>;
@@ -161,5 +163,8 @@ export type NormalizedJsonComponent = {
     id?: string;
     key?: string;
     name?: string;
+    properties?: Record<string, string>;
   }>;
+  structure?: DSStructureNode[];
+  variantStructures?: Record<string, DSVariantStructurePatch[]>;
 };

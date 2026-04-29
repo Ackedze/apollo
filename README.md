@@ -21,7 +21,7 @@
 6. Для связанных компонентов собирает snapshot структуры и считает diff относительно reference.
 7. Отправляет в UI готовые списки для табов и позволяет перейти к нужному слою через `focus-node`.
 
-Если запрос списка reference-источников целиком не удался, Apollo использует встроенный fallback из [`src/reference/referenceSources.json`](./src/reference/referenceSources.json). Если же сам список загрузился, но внутри него есть битые URL отдельных каталогов, per-catalog fallback сейчас не применяется.
+Если запрос списка reference-источников целиком не удался, Apollo останавливает загрузку справочников и показывает ошибку. Bundled fallback больше не используется, чтобы не скрывать рассинхрон runtime-данных и component indexes.
 
 Важно: Apollo работает с component-каталогами через index-only lazy loading. После первой проверки он не должен скачивать все component-каталоги подряд; отсутствующий ключ в index логируется как диагностическая проблема данных.
 
@@ -101,11 +101,9 @@
 - основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
-- bundled fallback-список для runtime хранится в [`src/reference/referenceSources.json`](./src/reference/referenceSources.json);
-- локальный исходник для пересборки reference-списка хранится в [`JSONS/referenceSourcesMVP.json`](./JSONS/referenceSourcesMVP.json);
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
 
-Важно: текущий runtime-аудит зависит не только от доступности GitHub Pages, но и от актуальности опубликованного содержимого `ackedze.github.io/apollo`. Обновление git-репозитория и обновление `Pages` могут расходиться по времени. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
+Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/design-system_ab`. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
 
@@ -114,7 +112,7 @@
 При публикации изменений Apollo обновляйте этот README вместе с кодом, если меняется runtime-поведение, источники данных, сборка, контракты UI/backend или workflow проверки. Если изменение влияет на общий workspace-процесс, дополнительно обновляйте root `README.md` и `WORKSPACE.md`.
 
 ## UI и поведение
-- [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder/fallback-сценарии и маршрутизация табов в React results bridge.
+- [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder-сценарии и маршрутизация табов в React results bridge.
 - Внутренний контракт между runtime и [`src/ui.html`](./src/ui.html) упрощён: правый bridge больше не держит legacy-fallback на дублирующее поле `views`, а читает только актуальные `visibleViews`.
 - React-хром UI вынесен в [`src/ui-app`](./src/ui-app): на первом этапе туда перенесены `topSection`, `leftSection` и базовые компоненты (`Button`, `CategoryCard`, `CounterBadge`).
 - В шапке [`TopSection`](./src/ui-app/components/TopSection.tsx) появился channel picker на базе [`PickerButton`](./src/ui-app/components/PickerButton.tsx), [`OptionList`](./src/ui-app/components/OptionList.tsx), [`OptionListCell`](./src/ui-app/components/OptionListCell.tsx) и [`OptionListHeader`](./src/ui-app/components/OptionListHeader.tsx).
@@ -127,13 +125,13 @@
 - В `Кастомизации` diff-ы теперь группируются по узлу: один [`ResultSubCard`](./src/ui-app/components/ResultSubCard.tsx) соответствует одному узлу, а внутри него рендерится одна или несколько property-строк.
 - `Кастомные стили` тоже переведены на React-карточку: в этом табе `caption` заполняется названием стиля или эффекта из `formatCustomStyleReason(...)`.
 - React-карточки результатов в `Актуальных компонентах` закреплены как `hug` по содержимому (`flex: 0 0 auto`), чтобы при длинной выдаче контейнер скроллился, а карточки не схлопывались по высоте.
-- Layout token-изменения, включая `itemSpacingToken`, в diff-выводе тоже проходят через token label resolver и показываются по имени токена, а не как сырые `VariableID`.
+- Layout token-изменения, включая `itemSpacingToken`, `paddingTokens`, `radiusToken` и `opacityToken`, в diff-выводе проходят через token label resolver и показываются по имени токена, а не как сырые `VariableID`; для padding скрывается технический namespace `Vertical/Horizontal Paddings`, а token-diff подавляется, если после резолва видимые значения совпадают.
 - Стили React-компонентов вынесены из [`src/ui.html`](./src/ui.html) в отдельные `*.module.css` рядом с компонентами; при сборке `ui-app.css` автоматически инлайнится в `dist/ui.html`.
 - Внутренние отступы [`TopSection`](./src/ui-app/components/TopSection.tsx) задаются самим компонентом, а `.header` в [`src/ui.html`](./src/ui.html) отвечает только за разделитель и оболочку.
 - Базовый [`Button`](./src/ui-app/components/Button.tsx) выровнен по Figma component set `Button`: поддерживает `type="primary" | "secondary"` и отдельные состояния `hover`/`disabled` через CSS, включая загрузочные варианты с addon-spinner.
-- [`CategoryCard`](./src/ui-app/components/CategoryCard.tsx) соответствует `categoryCard` из Figma, учитывает состояния `selected`, `non-empty` и `empty`, а при переполнении заголовок уходит в ellipsis; DOM fallback использует те же class-based состояния, что и React-версия.
+- [`CategoryCard`](./src/ui-app/components/CategoryCard.tsx) соответствует `categoryCard` из Figma, учитывает состояния `selected`, `non-empty` и `empty`, а при переполнении заголовок уходит в ellipsis.
 - [`LeftSection`](./src/ui-app/components/LeftSection.tsx) следует актуальному Figma-порядку категорий, вставляет `Divider` между логическими группами и использует типизированные counters: `general`, `warning`, `error`, `empty`. Источник истины для порядка категорий один: [`src/config/tabs.ts`](./src/config/tabs.ts).
-- Старый DOM-пайплайн карточек удалён из [`src/ui.html`](./src/ui.html): активные табы правой колонки рендерятся через React results bridge, а `ui.html` оставляет только placeholder/fallback при сбое bridge.
+- Старый DOM-пайплайн карточек удалён из [`src/ui.html`](./src/ui.html): активные табы правой колонки рендерятся через React results bridge, а `ui.html` оставляет только placeholder-состояния.
 - В UI таб `Темизация` проверяет page-level mode `Theme / Corp` и использование `[Corporate]`-компонентов.
 - В табе `Темизация` кнопка `Сменить` теперь выполняет действие: для page-level finding переключает mode `Theme -> Corp`, а для `[Corporate]`-инстанса делает `swapComponent(...)` на базовую версию без `[Corporate]`.
 - Подбор пары для `[Corporate]`-компонента теперь учитывает платформу (`[D]` / `[M]`) и не схлопывает desktop/mobile-версии в один counterpart. Это устраняет кейсы вроде `🔄 [D][Corporate] Button -> [M] Button`.
@@ -158,9 +156,10 @@
 
 ## Ограничения и известные проблемы
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
-- Если remote reference list с GitHub Pages загрузился успешно, но внутри него есть устаревшие или битые пути до каталогов, Apollo сейчас падает на `404` и не переключается на bundled per-catalog fallback.
-- Репозиторий `Ackedze/apollo` и опубликованный `GitHub Pages`-слой `ackedze.github.io/apollo` могут быть временно рассинхронизированы после push.
-- В проекте нет полного автоматизированного test-suite и нет штатного `type-check`/`lint` скрипта.
+- Если remote reference list с GitHub Pages недоступен, Apollo не использует bundled fallback и показывает ошибку загрузки справочников.
+- Если внутри remote reference list есть устаревшие или битые пути до token/style каталогов, Apollo сейчас логирует ошибку каталога и продолжает с доступными данными; component-каталоги подгружаются строго через indexes.
+- Репозиторий `Ackedze/apollo` и опубликованный `GitHub Pages`-слой `ackedze.github.io/design-system_ab` могут быть временно рассинхронизированы после push.
+- В проекте есть штатный `type-check`, но нет полноценного интеграционного test-suite для Figma runtime.
 - Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
 - Для кастомизаций и nested reference-resolution есть набор точечных regression-check’ов: `npm run test:customization-filters`, `npm run test:nested-variants`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют policy-based suppression nested overrides, nested variant-switch suppression, variant-aware reference resolution и несколько критичных diff-path кейсов, но не заменяют интеграционные проверки в Figma.
 
@@ -174,8 +173,8 @@
 - [`src/structure`](./src/structure) — snapshot и diff.
 - [`src/services`](./src/services) — подготовка представлений для UI.
 - [`src/utils`](./src/utils) — вспомогательные утилиты.
-- [`JSONS`](./JSONS) — локальные JSON-артефакты справочников.
-- [`scripts`](./scripts) — служебные скрипты подготовки reference-списка и экспортов.
+- [`JSONS`](./JSONS) — локальные JSON-артефакты справочников для regression-checks.
+- [`scripts`](./scripts) — точечные regression-checks и отчётные скрипты.
 
 ## Сборка и запуск
 
@@ -195,12 +194,16 @@ npm run build
 Команда:
 - при необходимости автоматически восстанавливает зависимости через `npm install`;
 - собирает `dist/code.js` через `esbuild`;
-- копирует [`src/ui.html`](./src/ui.html) в `dist/ui.html`;
-- запускает [`scripts/exportComponentTree.js`](./scripts/exportComponentTree.js).
+- копирует [`src/ui.html`](./src/ui.html) в `dist/ui.html`.
 
 ### Watch-режим
 ```bash
 npm run watch
+```
+
+### Type-check
+```bash
+npm run type-check
 ```
 
 ### Точечная проверка themization
@@ -245,17 +248,7 @@ Trace mode включается через `pluginData`-флаг `apollo.debug.a
 npm run report:nested-overrides
 ```
 
-Скрипт делает грубый локальный проход по `JSONS/components` и печатает кандидатов на host-controlled nested overrides. Это не финальный source of truth, а быстрый способ находить новые семейства кейсов до ручной проверки в Figma.
-
-### Подготовка списка reference-источников вручную
-```bash
-node scripts/prepareReferences.js
-```
-
-Дополнительные переменные:
-- `REFERENCE_SOURCES_URL` — переопределяет URL списка каталогов;
-- `NEMESIS_OFFLINE=1` — заставляет скрипт брать локальный cache;
-- `NEMESIS_FETCH_TIMEOUT_MS` — таймаут загрузки.
+Скрипт делает грубый локальный проход по component-каталогам внутри `JSONS` и печатает кандидатов на host-controlled nested overrides. Это не финальный source of truth, а быстрый способ находить новые семейства кейсов до ручной проверки в Figma.
 
 ## Как подключить в Figma
 1. Соберите проект через `npm run build`.
@@ -266,6 +259,7 @@ node scripts/prepareReferences.js
 ```bash
 npm run build
 npm run watch
+npm run type-check
 npm run test:themization
 npm run test:customization-filters
 npm run test:nested-variants
@@ -273,5 +267,4 @@ npm run test:item-spacing-diff
 npm run test:variant-structure-paths
 npm run test:snapshot-tree
 npm run report:nested-overrides
-node scripts/prepareReferences.js
 ```

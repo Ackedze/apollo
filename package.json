@@ -2,8 +2,9 @@
   "name": "apollo",
   "version": "0.1.0",
   "scripts": {
-    "build": "node build.js && node scripts/exportComponentTree.js",
+    "build": "node build.js",
     "watch": "node build.js --watch",
+    "type-check": "tsc --noEmit",
     "test:themization": "node scripts/test-themization.js",
     "test:customization-filters": "node scripts/test-customization-filters.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",

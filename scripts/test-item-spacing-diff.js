@@ -34,8 +34,14 @@ function createLayoutNode({
   path,
   name,
   visible = true,
+  padding = { top: 0, right: 0, bottom: 0, left: 0 },
+  paddingTokens = null,
   itemSpacing = null,
   itemSpacingToken = null,
+  radius = 0,
+  radiusToken = null,
+  opacity = 1,
+  opacityToken = null,
   componentInstance = null,
 }) {
   return {
@@ -46,14 +52,18 @@ function createLayoutNode({
     type: 'FRAME',
     name,
     visible,
+    opacity,
+    opacityToken,
     layout: {
       direction: 'H',
-      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      padding,
+      paddingTokens,
       itemSpacing,
       itemSpacingToken,
     },
     componentInstance,
-    radius: 0,
+    radius,
+    radiusToken,
   };
 }
 
@@ -359,6 +369,84 @@ function main() {
       (diff) => diff.message === 'Отступ между элементами: 6 → 0',
     ),
     'Amount/Account-like body cell variants must not be hidden by the generic Text itemSpacing suppression',
+  );
+
+  const tokenLabels = new Map([
+    ['VariableID:ref-padding', 'spacing/m'],
+    ['VariableID:actual-padding', 'spacing/l'],
+    ['VariableID:ref-radius', 'radius/s'],
+    ['VariableID:actual-radius', 'radius/m'],
+    ['VariableID:ref-opacity', 'opacity/high'],
+    ['VariableID:actual-opacity', 'opacity/low'],
+    ['VariableID:ref-equivalent-padding', 'Vertical Paddings/12 px'],
+    ['VariableID:actual-equivalent-padding', 'Vertical Paddings/12 px'],
+  ]);
+  const referenceTokenizedLayout = [
+    createLayoutNode({
+      id: 1,
+      parentId: null,
+      path: 'Token Box',
+      name: 'Token Box',
+      paddingTokens: { top: 'VariableID:ref-padding' },
+      radiusToken: 'VariableID:ref-radius',
+      opacityToken: 'VariableID:ref-opacity',
+    }),
+    createLayoutNode({
+      id: 2,
+      parentId: null,
+      path: 'Equivalent Token Box',
+      name: 'Equivalent Token Box',
+      paddingTokens: { top: 'VariableID:ref-equivalent-padding' },
+    }),
+  ];
+  const actualTokenizedLayout = [
+    createLayoutNode({
+      id: 1,
+      parentId: null,
+      path: 'Token Box',
+      name: 'Token Box',
+      paddingTokens: { top: 'VariableID:actual-padding' },
+      radiusToken: 'VariableID:actual-radius',
+      opacityToken: 'VariableID:actual-opacity',
+    }),
+    createLayoutNode({
+      id: 2,
+      parentId: null,
+      path: 'Equivalent Token Box',
+      name: 'Equivalent Token Box',
+      paddingTokens: { top: 'VariableID:actual-equivalent-padding' },
+    }),
+  ];
+
+  const tokenizedLayoutResult = diffStructures(
+    actualTokenizedLayout,
+    referenceTokenizedLayout,
+    {
+      resolveTokenLabel: (token) => tokenLabels.get(token) ?? null,
+    },
+  );
+
+  assert.ok(
+    tokenizedLayoutResult.diffs.some(
+      (diff) => diff.message === 'Паддинг top (токен): spacing/m → spacing/l',
+    ),
+    'Padding token diffs must use resolved token labels',
+  );
+  assert.ok(
+    tokenizedLayoutResult.diffs.some(
+      (diff) => diff.message === 'Скругления (токен): radius/s → radius/m',
+    ),
+    'Radius token diffs must use resolved token labels',
+  );
+  assert.ok(
+    tokenizedLayoutResult.diffs.some(
+      (diff) => diff.message === 'Прозрачность (токен): opacity/high → opacity/low',
+    ),
+    'Opacity token diffs must use resolved token labels',
+  );
+  assert.ok(
+    tokenizedLayoutResult.diffs.every((diff) => diff.nodePath !== 'Equivalent Token Box'),
+    'Equivalent resolved token labels must not create noisy layout token diffs',
   );
 
   console.log('Item spacing diff regression checks passed');

@@ -1,6 +1,6 @@
 type DSLayoutDirection = 'H' | 'V' | null;
 
-interface DSPadding {
+export interface DSPadding {
   top: number | null;
   right: number | null;
   bottom: number | null;

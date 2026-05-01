@@ -125,6 +125,7 @@
         let leftSectionOrder = [
           'themization',
           'wrongChannel',
+          'technical',
           'deprecated',
           'deprecatedStyles',
           'customStyles',
@@ -162,7 +163,9 @@
             .filter(Boolean);
           renderTabs();
           const target =
-            tabConfig.find((tab) => tab.id === currentTab) ?? tabConfig[0];
+            getVisibleTabs().find((tab) => tab.id === currentTab) ??
+            getVisibleTabs()[0] ??
+            tabConfig[0];
           if (target) {
             setActiveTab(target.id);
           }
@@ -197,6 +200,8 @@
               return () => resolveViewArray(['detached']);
             case 'changes':
               return () => resolveViewArray(['changes']);
+            case 'technical':
+              return () => resolveViewArray(['relevance', 'technical']);
             case 'deprecated':
               return () => resolveViewArray(['relevance', 'deprecated']);
             case 'update':
@@ -286,8 +291,15 @@
             currentTab = tabId;
             return;
           }
-          const tab = tabConfig.find((entry) => entry.id === tabId);
+          const visibleTabs = getVisibleTabs();
+          const tab = visibleTabs.find((entry) => entry.id === tabId);
           if (!tab) {
+            const fallbackTab = visibleTabs[0] ?? null;
+            if (fallbackTab) {
+              currentTab = fallbackTab.id;
+              updateActiveTabClasses();
+              renderList();
+            }
             return;
           }
           currentTab = tab.id;
@@ -305,7 +317,7 @@
           hideReactResults();
           listContainer.innerHTML = '';
 
-          const tab = tabConfig.find((entry) => entry.id === currentTab);
+          const tab = getVisibleTabs().find((entry) => entry.id === currentTab);
           if (!tab) {
             showPlaceholder('Выберите таб');
             return;
@@ -766,6 +778,7 @@
         function shouldUseAuditReactResults(tabId) {
           return (
             tabId === 'current' ||
+            tabId === 'technical' ||
             tabId === 'deprecated' ||
             tabId === 'wrongChannel' ||
             tabId === 'update' ||
@@ -1064,6 +1077,12 @@
           }
 
           currentPickerLabel = normalizedPickerLabel;
+          const activeVisibleTab = getVisibleTabs().find(
+            (tab) => tab.id === currentTab,
+          );
+          if (!activeVisibleTab && getVisibleTabs()[0]) {
+            currentTab = getVisibleTabs()[0].id;
+          }
           syncChromeState();
         }
 
@@ -1113,7 +1132,7 @@
         }
 
         function syncChromeState() {
-          const tabs = tabConfig.map((tab) => {
+          const tabs = getVisibleTabs().map((tab) => {
             const items = tab.source();
             const count = Array.isArray(items) ? items.length : 0;
             return {
@@ -1184,6 +1203,23 @@
           }
 
           return 'general';
+        }
+
+        function getHiddenTabIds() {
+          const hiddenFromResults = Array.isArray(currentResults?.ui?.hiddenTabIds)
+            ? currentResults.ui.hiddenTabIds
+            : [];
+          const normalizedPicker = String(currentPickerLabel || '').trim().toLowerCase();
+          const hiddenByPicker =
+            normalizedPicker === 'ios' || normalizedPicker === 'android'
+              ? ['themization']
+              : [];
+          return Array.from(new Set([...hiddenFromResults, ...hiddenByPicker]));
+        }
+
+        function getVisibleTabs() {
+          const hiddenIds = new Set(getHiddenTabIds());
+          return tabConfig.filter((tab) => !hiddenIds.has(tab.id));
         }
       })();
     </script>

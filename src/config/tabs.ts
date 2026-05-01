@@ -2,6 +2,7 @@ export type TabId =
   | 'current'
   | 'detached'
   | 'changes'
+  | 'technical'
   | 'deprecated'
   | 'update'
   | 'themization'
@@ -39,6 +40,11 @@ export const tabDefinitions: TabDefinition[] = [
     emptyMessage: 'Кастомизации не найдены',
     requiresScan: true,
     ignoreComponentFilter: true,
+  },
+  {
+    id: 'technical',
+    title: 'Технические',
+    emptyMessage: 'Технических компонентов не найдено',
   },
   {
     id: 'themization',
@@ -82,6 +88,7 @@ export const tabDefinitions: TabDefinition[] = [
 export const LEFT_SECTION_ORDER: LeftSectionOrderItem[] = [
   'themization',
   'wrongChannel',
+  'technical',
   'deprecated',
   'deprecatedStyles',
   'customStyles',

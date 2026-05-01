@@ -22,6 +22,7 @@ export interface CheckState {
 export const createCheckState = (): CheckState => {
     return {
         relevanceBuckets: {
+            technical: [],
             deprecated: [],
             update: [],
             current: [],

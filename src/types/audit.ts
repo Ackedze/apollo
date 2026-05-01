@@ -1,7 +1,7 @@
 import type { LibraryComponent } from '../reference/libraryTypes';
 import type { DiffEntry } from '../structure/diff';
 
-export type RelevanceStatus = 'deprecated' | 'update' | 'current' | 'unknown';
+export type RelevanceStatus = 'technical' | 'deprecated' | 'update' | 'current' | 'unknown';
 export type ThemeAuditKind = 'corporateComponent' | 'missingThemeMode';
 
 export interface PathSegment {
@@ -27,6 +27,10 @@ export interface AuditItem {
   diffs: DiffEntry[];
   comparisonIssues?: string[];
   customStyleReasons?: string[];
+  forcedCategory?: 'technical' | 'deprecated' | null;
+  forcedCategoryReason?: string | null;
+  resolvedReferenceVariantKey?: string | null;
+  resolvedReferenceVariantName?: string | null;
 }
 
 export interface DetachedEntry {

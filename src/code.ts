@@ -47,9 +47,16 @@ import {
   resolveStyleMetadata,
 } from './services/styleMetadata';
 import { CheckState, createCheckState } from './create-check-state';
+import { applyAllowedCustomizationRules } from './filters/allowedCustomizationRules';
 import { applyCustomizationFilters } from './filters/customizationFilters';
 import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
 import { markSuppressedDiff, createRuntimeSuppressionDependencies } from './filters/suppressionPolicy';
+import {
+  getForcedAuditCategory,
+  getForcedAuditCategoryReason,
+  getHiddenTabsForChannel,
+  supportsThemizationForChannel,
+} from './policies/componentAuditPolicy';
 import {
   buildCorporateThemizationEntry,
   buildPageThemizationEntry,
@@ -305,9 +312,17 @@ async function runAudit(
 
     const checkState = createCheckState()
 
-    const pageThemizationEntry = await buildPageThemizationEntry(selection);
-    if (pageThemizationEntry) {
-      checkState.themizationEntries.push(pageThemizationEntry);
+    if (supportsThemizationForChannel(selectedChannel)) {
+      const pageThemizationEntry = await buildPageThemizationEntry(selection);
+      if (pageThemizationEntry) {
+        checkState.themizationEntries.push(pageThemizationEntry);
+      }
+    } else {
+      traceAudit('themization-skipped', {
+        selectedChannel,
+        categoryDecision: 'skipped-check',
+        reason: 'themization is disabled for the selected channel',
+      });
     }
 
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
@@ -372,6 +387,9 @@ async function runAudit(
       payload: {
         summary: {
           totalTargets: checkState.totalItems,
+        },
+        ui: {
+          hiddenTabIds: getHiddenTabsForChannel(selectedChannel),
         },
         visibleViews,
       },
@@ -471,6 +489,7 @@ async function collectTargets(
   checkedComponentNodesList: Set<string>,
   throwIfCancelled: () => void,
 ) {
+  const themizationEnabled = supportsThemizationForChannel(selectedChannel);
   const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
     try {
       return 'visible' in candidate ? (candidate as SceneNode & { visible: boolean }).visible !== false : true;
@@ -479,14 +498,22 @@ async function collectTargets(
     }
   };
 
-  const visit = async (node: SceneNode): Promise<void> => {
+  const visit = async (
+    node: SceneNode,
+    inheritedForcedCategory: 'technical' | 'deprecated' | null = null,
+  ): Promise<void> => {
       throwIfCancelled();
 
       if (!isNodeVisibleSafe(node)) {
         return;
       }
 
+      if (inheritedForcedCategory) {
+        return;
+      }
+
       const nodeIsComponent = node.type === 'INSTANCE' || node.type === 'COMPONENT'
+      let subtreeForcedCategory: 'technical' | 'deprecated' | null = null;
 
       if (nodeIsComponent) {
         const item = await classifyNode(
@@ -500,6 +527,7 @@ async function collectTargets(
         throwIfCancelled();
 
         checkState.totalItems++;
+        subtreeForcedCategory = item.forcedCategory ?? null;
 
         const wrongChannel =
           item.reference != null &&
@@ -509,7 +537,7 @@ async function collectTargets(
           checkState.relevanceBuckets[item.relevance].push(item);
         }
 
-        if (item.reference) {
+        if (!subtreeForcedCategory && item.reference && themizationEnabled) {
           const themizationEntry = buildCorporateThemizationEntry(
             node,
             item.reference,
@@ -518,17 +546,37 @@ async function collectTargets(
             checkState.themizationEntries.push(themizationEntry);
           }
 
-          if (wrongChannel) {
-            checkState.wrongChannelEntries.push(item);
-          }
         }
 
-        if (item.isLocal) {
+        if (!subtreeForcedCategory && item.reference && wrongChannel) {
+          checkState.wrongChannelEntries.push(item);
+        }
+
+        if (!subtreeForcedCategory && item.isLocal) {
           checkState.localLibraryItems.push(item);
         }
 
-        if (isPresetCandidate(item)) {
+        if (!subtreeForcedCategory && isPresetCandidate(item)) {
           checkState.presetItems.push(item);
+        }
+
+        if (subtreeForcedCategory) {
+          traceAudit('category-subtree-skipped', {
+            nodeId: node.id,
+            nodeName: node.name,
+            libraryName: item.librarySource ?? null,
+            componentName:
+              item.reference?.displayName ?? item.reference?.name ?? item.name,
+            categoryDecision: subtreeForcedCategory,
+            matchedRule: subtreeForcedCategory,
+            property: null,
+            expected: null,
+            actual: null,
+            reason:
+              item.forcedCategoryReason ??
+              'component subtree is excluded from deep audit by policy',
+          });
+          return;
         }
       }
 
@@ -565,7 +613,7 @@ async function collectTargets(
       if ('children' in node && node.children.length > 0) {
         for (const child of node.children) {
           throwIfCancelled();
-          await visit(child as SceneNode);
+          await visit(child as SceneNode, subtreeForcedCategory);
         }
       }
   };
@@ -602,17 +650,23 @@ async function classifyNode(
   const fullPath = buildNodePath(node);
   const componentKey = await getComponentKeyCached(node, componentKeyCache);
   throwIfCancelled();
-  const ref = componentKey ? findComponent(componentKey): null;
+  let ref = componentKey ? findComponent(componentKey) : null;
+
+  if (componentKey && !ref) {
+    await ensureReferenceCatalogsForKeys([componentKey]);
+    ref = findComponent(componentKey);
+  }
 
   if (!componentKey || !ref) {
     reportMissingReference(node.name, componentKey);
+    const isRemoteLibraryNode = await getIsRemoteLibraryNode(node);
 
     return {
       id: node.id,
       name: node.name,
       nodeType: node.type,
       relevance: 'unknown',
-      isLocal: true,
+      isLocal: !isRemoteLibraryNode,
       pageName,
       pathSegments,
       fullPath,
@@ -631,6 +685,11 @@ async function classifyNode(
     node.type === 'INSTANCE'
       ? resolveVariantKeyForInstance(ref, componentKey, instanceVariantProperties)
       : componentKey;
+  const resolvedReferenceVariantName =
+    ref.variants?.find((item) => item?.key === resolvedReferenceVariantKey)?.name ?? null;
+  const forcedCategory = getForcedAuditCategory(ref);
+  const forcedCategoryReason =
+    forcedCategory ? getForcedAuditCategoryReason(forcedCategory, ref) : null;
 
   let referenceStructure = getReferenceStructureCached(
     ref,
@@ -660,6 +719,7 @@ async function classifyNode(
     node.type === 'INSTANCE' &&
     (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
   const shouldDiff =
+    !forcedCategory &&
     needsDiff &&
     (ref?.status !== 'current' ||
       instanceHasOverrides ||
@@ -696,7 +756,15 @@ async function classifyNode(
   const markedDiffs = diffResult.diffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
-  const diffs = applyCustomizationFilters(markedDiffs);
+  const allowlistedDiffs = applyAllowedCustomizationRules(markedDiffs, {
+    libraryName: ref?.source ?? null,
+    componentName: node.name,
+    referenceComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? null,
+  });
+  const diffs = applyCustomizationFilters(allowlistedDiffs, {
+    libraryName: ref?.source ?? null,
+    componentName: ref?.displayName ?? ref?.name ?? node.name,
+  });
 
   traceAudit('reference-resolution', {
     nodeId: node.id,
@@ -706,13 +774,32 @@ async function classifyNode(
       node.type === 'INSTANCE' ? (node as InstanceNode).variantProperties ?? null : null,
     referenceKey: ref.key ?? null,
     referenceStatus: ref.status,
+    referenceVariantKey: resolvedReferenceVariantKey,
+    referenceVariantName: resolvedReferenceVariantName,
+    categoryDecision: forcedCategory ?? 'default',
     shouldDiff,
     referenceNodes: expandedReferenceStructure?.length ?? 0,
     actualNodes: alignedActualStructure?.length ?? 0,
     rawDiffs: diffResult.diffs.length,
+    allowlistedDiffs: markedDiffs.length - allowlistedDiffs.length,
     filteredDiffs: diffs.length,
     diffDurationMs: Number((getTimestamp() - diffStartedAt).toFixed(1)),
   });
+
+  if (forcedCategory) {
+    traceAudit('category-decision', {
+      nodeId: node.id,
+      nodeName: node.name,
+      libraryName: ref?.source ?? null,
+      componentName: ref?.displayName ?? ref?.name ?? node.name,
+      categoryDecision: forcedCategory,
+      matchedRule: forcedCategory,
+      property: null,
+      expected: null,
+      actual: null,
+      reason: forcedCategoryReason,
+    });
+  }
 
   if (comparisonIssues.length) {
     console.warn('[Apollo] comparison issues', {
@@ -724,7 +811,7 @@ async function classifyNode(
     });
   }
 
-  const relevance = normalizeRelevanceStatus(ref.status);
+  const relevance = forcedCategory ?? normalizeRelevanceStatus(ref.status);
 
   return {
     id: node.id,
@@ -741,6 +828,10 @@ async function classifyNode(
     componentKey,
     diffs,
     comparisonIssues,
+    forcedCategory,
+    forcedCategoryReason,
+    resolvedReferenceVariantKey,
+    resolvedReferenceVariantName,
   };
 }
 
@@ -755,6 +846,23 @@ async function getComponentKey(node: SceneNode): Promise<string | null> {
   }
 
   return null;
+}
+
+async function getIsRemoteLibraryNode(node: SceneNode): Promise<boolean> {
+  try {
+    if (node.type === 'INSTANCE') {
+      const mainComponent = await node.getMainComponentAsync();
+      return mainComponent?.remote === true;
+    }
+
+    if (node.type === 'COMPONENT') {
+      return node.remote === true;
+    }
+  } catch (_error) {
+    return false;
+  }
+
+  return false;
 }
 
 async function getComponentKeyCached(

@@ -27,6 +27,7 @@ import type {
 import {
   countVariantPropertyMatches,
   parseVariantName,
+  variantMatchesSourceWithDefaultExtras,
   variantPropertiesEqual,
 } from '../utils/variantProperties';
 import { getTimestamp, logAuditMetric } from '../utils/auditInstrumentation';
@@ -44,8 +45,10 @@ const componentCatalogSourcesByPath = new Map<string, ReferenceCatalogSource>();
 const componentCatalogPathByKey = new Map<string, string>();
 const loadedComponentCatalogPaths = new Set<string>();
 const componentCatalogLoadPromises = new Map<string, Promise<void>>();
+const failedComponentIndexSources = new Map<string, ReferenceCatalogSource>();
 let componentIndexesLoaded = false;
 let componentIndexLoadPromise: Promise<void> | null = null;
+let componentIndexRetryPromise: Promise<void> | null = null;
 
 const catalogLoadState: {
   ready: boolean;
@@ -124,22 +127,18 @@ export async function ensureReferenceCatalogsForKeys(
   await ensureReferenceCatalogsLoaded();
   await ensureComponentIndexesLoaded();
 
-  const requestedKeys = Array.from(new Set(
-    Array.from(keys).filter((key): key is string => typeof key === 'string' && key.length > 0),
-  ));
-  const catalogPaths = new Set<string>();
-  const unresolvedKeys: string[] = [];
+  const requestedKeys = Array.from(
+    new Set(
+      Array.from(keys).filter(
+        (key): key is string => typeof key === 'string' && key.length > 0,
+      ),
+    ),
+  );
+  let { catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(requestedKeys);
 
-  for (const key of requestedKeys) {
-    if (findCatalogComponentByKey(key)) {
-      continue;
-    }
-    const catalogPath = componentCatalogPathByKey.get(key);
-    if (catalogPath) {
-      catalogPaths.add(catalogPath);
-    } else {
-      unresolvedKeys.push(key);
-    }
+  if (unresolvedKeys.length && failedComponentIndexSources.size) {
+    await retryFailedComponentIndexes();
+    ({ catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(requestedKeys));
   }
 
   if (unresolvedKeys.length) {
@@ -178,6 +177,31 @@ function reportMissingIndexKeys(keys: string[]): void {
   }
 }
 
+function resolveCatalogPathsForKeys(
+  requestedKeys: string[],
+): {
+  catalogPaths: Set<string>;
+  unresolvedKeys: string[];
+} {
+  const catalogPaths = new Set<string>();
+  const unresolvedKeys: string[] = [];
+
+  for (const key of requestedKeys) {
+    if (findCatalogComponentByKey(key)) {
+      continue;
+    }
+
+    const catalogPath = componentCatalogPathByKey.get(key);
+    if (catalogPath) {
+      catalogPaths.add(catalogPath);
+    } else {
+      unresolvedKeys.push(key);
+    }
+  }
+
+  return { catalogPaths, unresolvedKeys };
+}
+
 async function ensureComponentIndexesLoaded(): Promise<void> {
   if (componentIndexLoadPromise) {
     return componentIndexLoadPromise;
@@ -193,6 +217,26 @@ async function ensureComponentIndexesLoaded(): Promise<void> {
       componentIndexLoadPromise = null;
     });
   return componentIndexLoadPromise;
+}
+
+async function retryFailedComponentIndexes(): Promise<void> {
+  if (componentIndexRetryPromise) {
+    return componentIndexRetryPromise;
+  }
+
+  const failedSources = Array.from(failedComponentIndexSources.values());
+  if (!failedSources.length) {
+    return;
+  }
+
+  componentIndexRetryPromise = loadComponentIndexes(failedSources, {
+    preserveExistingKeys: true,
+    resetFailureState: false,
+  }).finally(() => {
+    componentIndexRetryPromise = null;
+  });
+
+  return componentIndexRetryPromise;
 }
 
 async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
@@ -393,14 +437,25 @@ type ComponentIndexPayload = {
 
 async function loadComponentIndexes(
   sources: ReferenceCatalogSource[],
+  options?: {
+    preserveExistingKeys?: boolean;
+    resetFailureState?: boolean;
+  },
 ): Promise<void> {
   if (componentIndexesLoaded) {
-    return;
+    if (!options?.preserveExistingKeys) {
+      return;
+    }
   }
 
   const startedAt = getTimestamp();
   componentIndexesLoaded = true;
-  componentCatalogPathByKey.clear();
+  if (!options?.preserveExistingKeys) {
+    componentCatalogPathByKey.clear();
+  }
+  if (options?.resetFailureState !== false) {
+    failedComponentIndexSources.clear();
+  }
   let loadedIndexes = 0;
   let failedIndexes = 0;
   const indexSourceCount = sources.filter((source) => Boolean(source.indexUrl)).length;
@@ -433,9 +488,11 @@ async function loadComponentIndexes(
         }
 
         loadedIndexes += 1;
+        failedComponentIndexSources.delete(source.path);
         reportCatalogLoaded(source.fileName.replace(/\.json$/i, '.index.json'), raw.length);
       } catch (error) {
         failedIndexes += 1;
+        failedComponentIndexSources.set(source.path, source);
         const message =
           error && typeof error === 'object' && 'message' in error
             ? String((error as any).message)
@@ -1263,6 +1320,25 @@ export function resolveVariantKeyForInstance(
   const directByKey = componentKey
     ? variants.find((variant) => variant.key === componentKey)
     : null;
+  const defaultVariantKey =
+    typeof (component as { defaultVariant?: unknown }).defaultVariant === 'string'
+      ? ((component as { defaultVariant?: string }).defaultVariant ?? null)
+      : null;
+  const defaultVariantName =
+    variants.find((variant) => variant.key === defaultVariantKey)?.name ??
+    variants[0]?.name ??
+    '';
+  const defaultVariantProperties = parseVariantName(defaultVariantName);
+  const defaultCompatible = variants.find((variant) =>
+    variantMatchesSourceWithDefaultExtras(
+      getVariantPropertiesForLookup(variant),
+      desiredProperties,
+      defaultVariantProperties,
+    ),
+  );
+  if (defaultCompatible?.key) {
+    return defaultCompatible.key;
+  }
 
   const bestByOverlap = variants
     .map((variant) => ({

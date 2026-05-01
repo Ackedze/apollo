@@ -7,6 +7,8 @@
     "type-check": "tsc --noEmit",
     "test:themization": "node scripts/test-themization.js",
     "test:customization-filters": "node scripts/test-customization-filters.js",
+    "test:allowed-customizations": "node scripts/test-allowed-customizations.js",
+    "test:audit-policies": "node scripts/test-audit-policies.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
     "test:nested-variants": "node scripts/test-nested-variant-scenarios.js",
     "test:audit-view-builder": "node scripts/test-audit-view-builder.js",

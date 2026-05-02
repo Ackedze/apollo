@@ -100,16 +100,6 @@ const allowedCustomizationRules: AllowedCustomizationRule[] = [
     reason: 'allowed tokenized PaintMe recolor in nested TopAddon',
   },
   {
-    id: 'button-paintme-fill',
-    libraryName: 'Web :: Core',
-    componentName: '[D] Button',
-    layerName: 'PaintMe',
-    property: 'fill',
-    from: 'status/info',
-    to: 'Button/Desktop/Colors/Primary/text',
-    reason: 'allowed host-controlled paint override in Button',
-  },
-  {
     id: 'amount-major-fill',
     libraryName: 'Web :: Core',
     componentName: 'Amount',
@@ -236,6 +226,40 @@ const allowedCustomizationRules: AllowedCustomizationRule[] = [
     from: '#747474',
     toTokenized: true,
     reason: 'allowed tokenized icon recolor in Icons library',
+  },
+  {
+    id: 'icon-view-paintme-fill',
+    libraryName: 'Web :: Core',
+    componentName: 'IconView',
+    layerName: 'PaintMe',
+    property: 'fill',
+    toTokenized: true,
+    reason: 'allowed tokenized PaintMe recolor in IconView',
+  },
+  {
+    id: 'icon-view-paintme-fill-nested',
+    nestedComponentName: 'IconView',
+    layerName: 'PaintMe',
+    property: 'fill',
+    toTokenized: true,
+    reason: 'allowed tokenized PaintMe recolor in nested IconView',
+  },
+  {
+    id: 'icon-view-bgcolor-fill',
+    libraryName: 'Web :: Core',
+    componentName: 'IconView',
+    layerName: 'BgColor',
+    property: 'fill',
+    toTokenized: true,
+    reason: 'allowed tokenized BgColor recolor in IconView',
+  },
+  {
+    id: 'icon-view-bgcolor-fill-nested',
+    nestedComponentName: 'IconView',
+    layerName: 'BgColor',
+    property: 'fill',
+    toTokenized: true,
+    reason: 'allowed tokenized BgColor recolor in nested IconView',
   },
   {
     id: 'link-spacing',
@@ -492,16 +516,6 @@ const allowedCustomizationRules: AllowedCustomizationRule[] = [
     toTokenized: true,
     reason: 'allowed tokenized nested Link underline recolor',
   },
-  {
-    id: 'filter-tag-paintme-fill',
-    libraryName: 'Web :: Core',
-    componentName: '[D] FilterTag',
-    layerName: 'PaintMe',
-    property: 'fill',
-    from: 'text/info',
-    toTokenized: true,
-    reason: 'allowed tokenized PaintMe recolor in FilterTag',
-  },
 ];
 
 export function applyAllowedCustomizationRules(
@@ -534,6 +548,80 @@ export function applyAllowedCustomizationRules(
     );
 
     if (!rule) {
+      if (shouldTraceAllowedCustomizationMiss(diff, parsedDiff, nestedComponentName)) {
+        console.log('[Apollo][debug] allowed-customization-miss', {
+          nodeId: diff.nodeId ?? null,
+          nodeName: diff.nodeName,
+          nodePath: diff.nodePath,
+          libraryName: context.libraryName,
+          componentName: context.referenceComponentName ?? context.componentName,
+          property: parsedDiff.property,
+          expected: parsedDiff.expected,
+          actual: parsedDiff.actual,
+          nestedComponentName,
+          actualNestedOwnerComponentKey: diff.context.actualNestedOwnerComponentKey ?? null,
+          actualNestedOwnerPath: diff.context.actualNestedOwnerPath ?? null,
+          actualNestedOwnerRelativePath:
+            diff.context.actualNestedOwnerRelativePath ?? null,
+          nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey ?? null,
+          nestedOwnerPath: diff.context.nestedOwnerPath ?? null,
+          nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath ?? null,
+          candidateRules: getAllowedCustomizationDebugCandidates(
+            parsedDiff.property,
+            diff.nodeName,
+            nestedComponentName,
+          ),
+        });
+        console.log(
+          '[Apollo][debug-json] allowed-customization-miss',
+          JSON.stringify({
+            nodeId: diff.nodeId ?? null,
+            nodeName: diff.nodeName,
+            nodePath: diff.nodePath,
+            libraryName: context.libraryName,
+            componentName: context.referenceComponentName ?? context.componentName,
+            property: parsedDiff.property,
+            expected: parsedDiff.expected,
+            actual: parsedDiff.actual,
+            nestedComponentName,
+            actualNestedOwnerComponentKey: diff.context.actualNestedOwnerComponentKey ?? null,
+            actualNestedOwnerPath: diff.context.actualNestedOwnerPath ?? null,
+            actualNestedOwnerRelativePath:
+              diff.context.actualNestedOwnerRelativePath ?? null,
+            nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey ?? null,
+            nestedOwnerPath: diff.context.nestedOwnerPath ?? null,
+            nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath ?? null,
+            candidateRules: getAllowedCustomizationDebugCandidates(
+              parsedDiff.property,
+              diff.nodeName,
+              nestedComponentName,
+            ),
+          }),
+        );
+        traceAudit('allowed-customization-miss', {
+          nodeId: diff.nodeId ?? null,
+          nodeName: diff.nodeName,
+          nodePath: diff.nodePath,
+          libraryName: context.libraryName,
+          componentName: context.referenceComponentName ?? context.componentName,
+          property: parsedDiff.property,
+          expected: parsedDiff.expected,
+          actual: parsedDiff.actual,
+          nestedComponentName,
+          actualNestedOwnerComponentKey: diff.context.actualNestedOwnerComponentKey ?? null,
+          actualNestedOwnerPath: diff.context.actualNestedOwnerPath ?? null,
+          actualNestedOwnerRelativePath:
+            diff.context.actualNestedOwnerRelativePath ?? null,
+          nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey ?? null,
+          nestedOwnerPath: diff.context.nestedOwnerPath ?? null,
+          nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath ?? null,
+          candidateRules: getAllowedCustomizationDebugCandidates(
+            parsedDiff.property,
+            diff.nodeName,
+            nestedComponentName,
+          ),
+        });
+      }
       return true;
     }
 
@@ -574,6 +662,20 @@ function matchesAllowedCustomizationRule(
     ? componentAliases.has(normalizeName(rule.componentName))
     : false;
   const nodePathMatched = matchesPathPart(diff.nodePath, rule.nodePathIncludes);
+  const nestedOwnerPathMatched = matchesAnyPathPart(
+    [
+      diff.context.actualNestedOwnerPath,
+      diff.context.nestedOwnerPath,
+    ],
+    rule.nestedOwnerPathIncludes,
+  );
+  const nestedOwnerRelativePathMatched = matchesAnyPathPart(
+    [
+      diff.context.actualNestedOwnerRelativePath,
+      diff.context.nestedOwnerRelativePath,
+    ],
+    rule.nestedOwnerRelativePath,
+  );
 
   if (rule.componentName && !componentNameMatched) {
     if (!(rule.matchNodePathWhenComponentNameMismatch && nodePathMatched)) {
@@ -591,21 +693,22 @@ function matchesAllowedCustomizationRule(
   if (
     rule.nestedComponentName &&
     normalizeName(nestedComponentName) !== normalizeName(rule.nestedComponentName) &&
-    !matchesPathPart(diff.context.nestedOwnerPath, rule.nestedOwnerPathIncludes)
+    !matchesPathPart(diff.context.actualNestedOwnerPath, rule.nestedComponentName) &&
+    !(rule.nestedOwnerPathIncludes && nestedOwnerPathMatched)
   ) {
     return false;
   }
 
   if (
     rule.nestedOwnerPathIncludes &&
-    !matchesPathPart(diff.context.nestedOwnerPath, rule.nestedOwnerPathIncludes)
+    !nestedOwnerPathMatched
   ) {
     return false;
   }
 
   if (
     rule.nestedOwnerRelativePath &&
-    !matchesPathPart(diff.context.nestedOwnerRelativePath, rule.nestedOwnerRelativePath)
+    !nestedOwnerRelativePathMatched
   ) {
     return false;
   }
@@ -652,6 +755,64 @@ function matchesAllowedCustomizationRule(
   }
 
   return true;
+}
+
+function shouldTraceAllowedCustomizationMiss(
+  diff: DiffEntry,
+  parsedDiff: ParsedCustomizationDiff,
+  nestedComponentName: string | null,
+): boolean {
+  if (parsedDiff.property !== 'fill' && parsedDiff.property !== 'stroke') {
+    return false;
+  }
+
+  const haystack = [
+    diff.nodeName,
+    diff.nodePath,
+    nestedComponentName,
+    diff.context.actualNestedOwnerPath,
+    diff.context.nestedOwnerPath,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+
+  return (
+    haystack.includes('iconview') ||
+    haystack.includes('button') ||
+    haystack.includes('addon') ||
+    haystack.includes('paintme') ||
+    haystack.includes('bgcolor')
+  );
+}
+
+function getAllowedCustomizationDebugCandidates(
+  property: AllowedCustomizationProperty,
+  layerName: string,
+  nestedComponentName: string | null,
+): string[] {
+  const normalizedLayerName = normalizeName(layerName);
+  const normalizedNestedName = normalizeName(nestedComponentName);
+
+  return allowedCustomizationRules
+    .filter((rule) => rule.property === property)
+    .filter((rule) => {
+      if (rule.layerName && normalizeName(rule.layerName) !== normalizedLayerName) {
+        return false;
+      }
+
+      if (rule.nestedComponentName && normalizedNestedName) {
+        return normalizeName(rule.nestedComponentName) === normalizedNestedName;
+      }
+
+      if (rule.componentName && normalizedNestedName) {
+        return normalizeName(rule.componentName) === normalizedNestedName;
+      }
+
+      return Boolean(rule.layerName || rule.componentName || rule.nestedComponentName);
+    })
+    .slice(0, 10)
+    .map((rule) => rule.id);
 }
 
 function parseCustomizationDiff(message: string | null | undefined): ParsedCustomizationDiff | null {
@@ -706,13 +867,65 @@ function valuesEqual(left: string | number, right: string | number): boolean {
 }
 
 function resolveNestedComponentName(diff: DiffEntry): string | null {
-  const componentKey = diff.context.nestedOwnerComponentKey ?? null;
+  const componentKey =
+    diff.context.actualNestedOwnerComponentKey ??
+    diff.context.nestedOwnerComponentKey ??
+    null;
   if (!componentKey) {
     return null;
   }
 
   const component = findComponent(componentKey);
-  return component?.displayName ?? component?.name ?? component?.names?.[0] ?? null;
+  return resolveRuleComponentName(component);
+}
+
+function resolveRuleComponentName(
+  component:
+    | {
+        displayName?: string | null;
+        name?: string | null;
+        names?: Array<string | null | undefined> | null;
+        role?: string | null;
+        variantOf?: string | null;
+      }
+    | null
+    | undefined,
+): string | null {
+  if (!component) {
+    return null;
+  }
+
+  const role = String(component.role ?? '').trim().toLowerCase();
+  const variantOf = String(component.variantOf ?? '').trim();
+  if (role === 'part' && variantOf) {
+    return variantOf;
+  }
+
+  return (
+    component.displayName ??
+    component.name ??
+    component.names?.[0] ??
+    null
+  );
+}
+
+export function __test_resolveRuleComponentName(
+  component:
+    | {
+        displayName?: string | null;
+        name?: string | null;
+        names?: Array<string | null | undefined> | null;
+        role?: string | null;
+        variantOf?: string | null;
+      }
+    | null
+    | undefined,
+): string | null {
+  return resolveRuleComponentName(component);
+}
+
+export function __test_normalizeRuleName(value: string | null | undefined): string {
+  return normalizeName(value);
 }
 
 function isMatchingLayerName(actualName: string | null | undefined, expectedName: string): boolean {
@@ -731,11 +944,36 @@ function matchesPathPart(
   return normalizeName(actualPath).includes(normalizedExpected);
 }
 
+function matchesAnyPathPart(
+  actualPaths: Array<string | null | undefined>,
+  expectedPart: string | null | undefined,
+): boolean {
+  const normalizedExpected = normalizeName(expectedPart);
+  if (!normalizedExpected) {
+    return true;
+  }
+
+  return actualPaths.some((actualPath) => matchesPathPart(actualPath, expectedPart));
+}
+
 function normalizeName(value: string | null | undefined): string {
-  return String(value ?? '')
+  return normalizeCatalogPathName(String(value ?? ''))
     .replace(/^[^0-9A-Za-zА-Яа-я\[]+\s*/u, '')
     .trim()
     .toLowerCase();
+}
+
+function normalizeCatalogPathName(value: string): string {
+  const trimmed = value.trim();
+  if (!/\.json$/i.test(trimmed)) {
+    return trimmed;
+  }
+
+  const fileName = trimmed.split(/[\\/]/).pop() ?? trimmed;
+  return fileName
+    .replace(/\.json$/i, '')
+    .replace(/^.+--\s*/u, '')
+    .trim();
 }
 
 function addNameAliases(target: Set<string>, value: string | null | undefined): void {

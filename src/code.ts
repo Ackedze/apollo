@@ -15,7 +15,9 @@ import {
   resolveStructureForInstance,
   resolveVariantKeyForInstance,
 } from './reference/library';
-import { shouldPreferMaterializedInstanceReference } from './reference/nestedReferenceMerge';
+import {
+  getMaterializedInstanceReferenceDecision,
+} from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
 import { diffStructures } from './structure/diff';
@@ -74,6 +76,7 @@ import {
   setAuditTraceEnabled,
   traceAudit,
 } from './utils/auditInstrumentation';
+import { resolveCachedComponentKey } from './utils/componentKeyCache';
 import {
   countVariantPropertyMatches,
   parseVariantName,
@@ -648,7 +651,9 @@ async function classifyNode(
 
   const pageName = getPageName(node);
   const fullPath = buildNodePath(node);
-  const componentKey = await getComponentKeyCached(node, componentKeyCache);
+  const componentKey = await getComponentKeyCached(node, componentKeyCache, {
+    retryIfMissing: true,
+  });
   throwIfCancelled();
   let ref = componentKey ? findComponent(componentKey) : null;
 
@@ -765,6 +770,15 @@ async function classifyNode(
     libraryName: ref?.source ?? null,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
   });
+  debugPaintMeDiffPipeline({
+    componentName: ref?.displayName ?? ref?.name ?? node.name,
+    alignedActualStructure,
+    expandedReferenceStructure,
+    rawDiffs: diffResult.diffs,
+    markedDiffs,
+    allowlistedDiffs,
+    finalDiffs: diffs,
+  });
 
   traceAudit('reference-resolution', {
     nodeId: node.id,
@@ -868,14 +882,16 @@ async function getIsRemoteLibraryNode(node: SceneNode): Promise<boolean> {
 async function getComponentKeyCached(
   node: SceneNode,
   cache: Map<string, string | null>,
+  options?: {
+    retryIfMissing?: boolean;
+  },
 ): Promise<string | null> {
-  if (cache.has(node.id)) {
-    return cache.get(node.id) ?? null;
-  }
-
-  const key = await getComponentKey(node);
-  cache.set(node.id, key ?? null);
-  return key ?? null;
+  return resolveCachedComponentKey(
+    node.id,
+    cache,
+    () => getComponentKey(node),
+    options,
+  );
 }
 
 async function isInsideLocalComponentContext(
@@ -897,6 +913,7 @@ async function isInsideLocalComponentContext(
       const currentKey = await getComponentKeyCached(
         current as SceneNode,
         componentKeyCache,
+        { retryIfMissing: true },
       );
       isLocalContext = Boolean(currentKey && !findComponent(currentKey));
     }
@@ -2179,18 +2196,65 @@ function expandReferenceWithInstanceComponents(
       const existingIndex = referenceKeyToIndex.get(occurrenceKey);
       const existingNode =
         typeof existingIndex === 'number' ? referenceEntries[existingIndex] : null;
+      const mergeDecision =
+        existingNode && typeof existingIndex === 'number'
+          ? getMaterializedInstanceReferenceDecision(
+              existingNode,
+              refNode,
+              node.path,
+              (ownerComponentKey, relativePath) =>
+                isNestedComponentPaintPathHostControlled(ownerComponentKey, relativePath) ||
+                isNestedComponentTextPathHostControlled(ownerComponentKey, relativePath) ||
+                isNestedComponentLayoutPathHostControlled(ownerComponentKey, relativePath),
+            )
+          : null;
+
+      if (mergeDecision && shouldTraceNestedReferenceMerge(node.path, refNode.path, refNode.name)) {
+        console.log('[Apollo][debug] nested-reference-merge-decision', {
+          materializedRootPath: node.path,
+          targetPath: refNode.path,
+          targetName: refNode.name,
+          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
+          existingNodeName: existingNode?.name ?? null,
+          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
+          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
+          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
+          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
+          decision: mergeDecision,
+        });
+        console.log(
+          '[Apollo][debug-json] nested-reference-merge-decision',
+          JSON.stringify({
+            materializedRootPath: node.path,
+            targetPath: refNode.path,
+            targetName: refNode.name,
+            existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
+            existingNodeName: existingNode?.name ?? null,
+            existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
+            existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
+            candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
+            candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
+            decision: mergeDecision,
+          }),
+        );
+        traceAudit('nested-reference-merge-decision', {
+          materializedRootPath: node.path,
+          targetPath: refNode.path,
+          targetName: refNode.name,
+          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
+          existingNodeName: existingNode?.name ?? null,
+          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
+          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
+          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
+          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
+          decision: mergeDecision,
+        });
+      }
+
       if (
         existingNode &&
         typeof existingIndex === 'number' &&
-        shouldPreferMaterializedInstanceReference(
-          existingNode,
-          refNode,
-          node.path,
-          (ownerComponentKey, relativePath) =>
-            isNestedComponentPaintPathHostControlled(ownerComponentKey, relativePath) ||
-            isNestedComponentTextPathHostControlled(ownerComponentKey, relativePath) ||
-            isNestedComponentLayoutPathHostControlled(ownerComponentKey, relativePath),
-        )
+        mergeDecision?.preferCandidate === true
       ) {
         referenceEntries[existingIndex] = refNode;
         continue;
@@ -2276,6 +2340,108 @@ function replacePathPrefix(path: string, from: string, to: string): string {
     return `${to} / ${path.slice(needle.length)}`;
   }
   return path;
+}
+
+function debugPaintMeDiffPipeline(payload: {
+  componentName: string | null | undefined;
+  alignedActualStructure: DSStructureNode[] | null;
+  expandedReferenceStructure: DSStructureNode[] | null;
+  rawDiffs: ReturnType<typeof diffStructures>['diffs'];
+  markedDiffs: ReturnType<typeof diffStructures>['diffs'];
+  allowlistedDiffs: ReturnType<typeof diffStructures>['diffs'];
+  finalDiffs: ReturnType<typeof diffStructures>['diffs'];
+}) {
+  const componentName = payload.componentName ?? '';
+  if (!componentName.includes('[D] Button')) {
+    return;
+  }
+
+  const actual = payload.alignedActualStructure ?? [];
+  const reference = payload.expandedReferenceStructure ?? [];
+  if (!actual.length || !reference.length) {
+    return;
+  }
+
+  const actualKeyMap = buildOccurrenceKeyMap(actual);
+  const referenceKeyMap = buildOccurrenceKeyMap(reference);
+  const referenceByOccurrence = new Map(
+    reference.map((node) => [referenceKeyMap.get(node) ?? node.path, node]),
+  );
+
+  for (const actualNode of actual) {
+    if (actualNode.name !== 'PaintMe' || !actualNode.path.includes('Addon')) {
+      continue;
+    }
+
+    const occurrenceKey = actualKeyMap.get(actualNode) ?? actualNode.path;
+    const referenceNode = referenceByOccurrence.get(occurrenceKey) ?? null;
+    const rawDiffs = getDiffsForPath(payload.rawDiffs, actualNode.path);
+    const markedDiffs = getDiffsForPath(payload.markedDiffs, actualNode.path);
+    const allowlistedDiffs = getDiffsForPath(payload.allowlistedDiffs, actualNode.path);
+    const finalDiffs = getDiffsForPath(payload.finalDiffs, actualNode.path);
+
+    console.log(
+      '[Apollo][debug-json] paintme-diff-pipeline',
+      JSON.stringify({
+        componentName,
+        path: actualNode.path,
+        occurrenceKey,
+        actual: describeDebugPaintNode(actualNode),
+        reference: referenceNode ? describeDebugPaintNode(referenceNode) : null,
+        rawDiffs: rawDiffs.map(describeDebugDiff),
+        markedDiffs: markedDiffs.map(describeDebugDiff),
+        allowlistedDiffs: allowlistedDiffs.map(describeDebugDiff),
+        finalDiffs: finalDiffs.map(describeDebugDiff),
+      }),
+    );
+  }
+}
+
+function getDiffsForPath(
+  diffs: ReturnType<typeof diffStructures>['diffs'],
+  path: string,
+) {
+  return diffs.filter((diff) => diff.nodePath === path);
+}
+
+function describeDebugPaintNode(node: DSStructureNode) {
+  return {
+    name: node.name,
+    type: node.type,
+    referenceOrigin: node.referenceOrigin ?? 'host',
+    fill: node.fill ?? null,
+    stroke: node.stroke ?? null,
+    styles: node.styles ?? null,
+    ownerComponentKey: node.referenceOwnerComponentKey ?? null,
+    ownerRelativePath: node.referenceOwnerRelativePath ?? null,
+  };
+}
+
+function describeDebugDiff(diff: ReturnType<typeof diffStructures>['diffs'][number]) {
+  return {
+    message: diff.message,
+    diffKind: diff.diffKind ?? null,
+    referenceOrigin: diff.context.referenceOrigin,
+    nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey,
+    nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
+    suppressed: diff.suppressAsHostControlledNestedProperty === true,
+    suppressionReason: diff.suppressionReason ?? null,
+  };
+}
+
+function shouldTraceNestedReferenceMerge(
+  materializedRootPath: string,
+  targetPath: string,
+  targetName: string | null | undefined,
+): boolean {
+  const haystack = `${materializedRootPath} ${targetPath} ${targetName ?? ''}`.toLowerCase();
+  return (
+    haystack.includes('iconview') ||
+    haystack.includes('button') ||
+    haystack.includes('addon') ||
+    haystack.includes('paintme') ||
+    haystack.includes('bgcolor')
+  );
 }
 
 /**

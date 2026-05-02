@@ -42,11 +42,6 @@ export const tabDefinitions: TabDefinition[] = [
     ignoreComponentFilter: true,
   },
   {
-    id: 'technical',
-    title: 'Технические',
-    emptyMessage: 'Технических компонентов не найдено',
-  },
-  {
     id: 'themization',
     title: 'Темизация',
     emptyMessage: 'Проблем темизации не обнаружено',
@@ -65,6 +60,11 @@ export const tabDefinitions: TabDefinition[] = [
     id: 'presets',
     title: 'Пресеты',
     emptyMessage: 'Пресетов не найдено',
+  },
+  {
+    id: 'technical',
+    title: 'Технические',
+    emptyMessage: 'Технических компонентов не найдено',
   },
   {
     id: 'local',
@@ -88,7 +88,6 @@ export const tabDefinitions: TabDefinition[] = [
 export const LEFT_SECTION_ORDER: LeftSectionOrderItem[] = [
   'themization',
   'wrongChannel',
-  'technical',
   'deprecated',
   'deprecatedStyles',
   'customStyles',
@@ -99,6 +98,7 @@ export const LEFT_SECTION_ORDER: LeftSectionOrderItem[] = [
   'detached',
   '__divider_after_detached__',
   'presets',
+  'technical',
   'current',
 ];
 

@@ -236,6 +236,193 @@ function main() {
     'Host-controlled descendant paths must keep the host reference instead of being overwritten by materialized nested descendants',
   );
 
+  const hostPaintedDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      {
+        path: 'View=Primary / LeftAddon / LeftAddon / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 54,
+        parentId: 50,
+        referenceOrigin: 'host',
+        fill: {
+          token: 'Button/Desktop/Primary/text',
+        },
+      },
+      {
+        path: 'View=Primary / LeftAddon / LeftAddon / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 154,
+        parentId: 150,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'addon-icon-16',
+        referenceOwnerPath: 'View=Primary / LeftAddon / LeftAddon',
+        referenceOwnerRelativePath: 'Fixer / PaintMe',
+        fill: {
+          token: 'status/info',
+        },
+      },
+      'View=Primary / LeftAddon / LeftAddon',
+      () => false,
+    );
+
+  assert.equal(
+    hostPaintedDecision.preferCandidate,
+    false,
+    'Host-painted descendants must keep the host token as expected value',
+  );
+  assert.equal(
+    hostPaintedDecision.reason,
+    'keep-host-painted-descendant',
+    'Host-painted descendant merge must report why standalone nested paint was ignored',
+  );
+
+  for (const path of [
+    'View=Filled / LeftAddon / LeftAddon / Fixer / PaintMe',
+    'View=Filled / Icon / Fixer / PaintMe',
+    'Size=56, View=Primary / Icon / Fixer / PaintMe',
+    'View=Primary / Bg / Fixer / PaintMe',
+    'SelectedState=false / Arrow / Fixer / PaintMe',
+  ]) {
+    const decision = nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      {
+        path,
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 54,
+        parentId: 50,
+        referenceOrigin: 'host',
+        fill: {
+          token: 'Host/View/text',
+        },
+      },
+      {
+        path,
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 154,
+        parentId: 150,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'paintable-part',
+        referenceOwnerPath: path.split(' / ').slice(0, -2).join(' / '),
+        referenceOwnerRelativePath: path.split(' / ').slice(-2).join(' / '),
+        fill: {
+          token: 'status/info',
+        },
+      },
+      path.split(' / ').slice(0, -2).join(' / '),
+      () => false,
+    );
+
+    assert.equal(
+      decision.reason,
+      'keep-host-painted-descendant',
+      `Host-painted descendant merge must keep host expected paint for ${path}`,
+    );
+  }
+
+  const nestedHostControlledPaintDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      {
+        path:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 54,
+        parentId: 50,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'filter-company-select',
+        referenceOwnerPath: 'View=xLarge / [D] FilterCompanySelect_Single',
+        referenceOwnerRelativePath: '[D] CompactTag / Arrow / Fixer / PaintMe',
+        fill: {
+          token: 'text/primary',
+        },
+      },
+      {
+        path:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 154,
+        parentId: 150,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'filter-tag-arrow-open-false',
+        referenceOwnerPath:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow',
+        referenceOwnerRelativePath: 'Fixer / PaintMe',
+        fill: {
+          token: 'text/info',
+        },
+      },
+      'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow',
+      (ownerComponentKey, relativePath) =>
+        ownerComponentKey === 'filter-tag-arrow-open-false' &&
+        relativePath === 'Fixer / PaintMe',
+    );
+
+  assert.equal(
+    nestedHostControlledPaintDecision.preferCandidate,
+    false,
+    'Deeper standalone materialization must not overwrite parent host-controlled paint',
+  );
+  assert.equal(
+    nestedHostControlledPaintDecision.reason,
+    'keep-host-controlled-descendant',
+    'Nested host-controlled paint must report why parent expected token was kept',
+  );
+
+  const componentQualifiedNestedPaintDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      {
+        path:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 254,
+        parentId: 250,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'filter-company-select',
+        referenceOwnerPath: 'View=xLarge / [D] FilterCompanySelect_Single',
+        referenceOwnerRelativePath: '[D] CompactTag / Arrow / Fixer / PaintMe',
+        fill: {
+          token: 'text/primary',
+        },
+      },
+      {
+        path:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow / Fixer / PaintMe',
+        type: 'BOOLEAN_OPERATION',
+        name: 'PaintMe',
+        visible: true,
+        id: 354,
+        parentId: 350,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'filter-tag-arrow-open-false',
+        referenceOwnerPath:
+          'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow',
+        referenceOwnerRelativePath: 'Fixer / PaintMe',
+        fill: {
+          token: 'text/info',
+        },
+      },
+      'View=xLarge / [D] FilterCompanySelect_Single / [D] CompactTag / Arrow',
+      () => false,
+    );
+
+  assert.equal(
+    componentQualifiedNestedPaintDecision.preferCandidate,
+    false,
+    'Component-qualified parent nested paint must remain the expected value even without policy registry hit',
+  );
+
   const duplicateNodes = [
     {
       id: 1,
@@ -611,6 +798,16 @@ function main() {
     'LeftAddon / LeftAddon / Fixer / PaintMe',
     'Host descendant diffs must inherit the nearest nested instance owner relative path',
   );
+  assert.equal(
+    hostNestedOwnerDiff.diffs[0].context.actualNestedOwnerComponentKey,
+    'button-secondary',
+    'Host descendant diffs must also expose the nearest actual nested instance owner component key',
+  );
+  assert.equal(
+    hostNestedOwnerDiff.diffs[0].context.actualNestedOwnerRelativePath,
+    'LeftAddon / LeftAddon / Fixer / PaintMe',
+    'Host descendant diffs must also expose the nearest actual nested instance owner relative path',
+  );
 
   const deps = {
     isPaintPathHostControlled: (componentKey, relativePath) =>
@@ -652,6 +849,27 @@ function main() {
     ),
     { suppressed: true, reason: 'host-controlled-paint' },
     'Host-controlled nested paint overrides must be suppressed',
+  );
+
+  assert.deepEqual(
+    suppressionPolicy.evaluateDiffSuppression(
+      {
+        message: 'заливка: Button/Desktop/Primary/text → decorative/green',
+        diffKind: 'paint',
+        context: {
+          actualComponentKey: null,
+          referenceComponentKey: null,
+          referenceOrigin: 'host',
+          nestedOwnerComponentKey: 'nested-a',
+          nestedOwnerComponentRole: 'Part',
+          nestedOwnerPath: 'Host / Nested',
+          nestedOwnerRelativePath: 'PaintMe',
+        },
+      },
+      deps,
+    ),
+    { suppressed: false, reason: null },
+    'Manual paint changes against host reference must remain visible',
   );
 
   assert.deepEqual(
@@ -736,6 +954,31 @@ function main() {
     ),
     { suppressed: false, reason: null },
     'Different nested families must remain visible as real customization',
+  );
+
+  library.__test_resetHostControlledNestedPathPolicies();
+  library.__test_registerHostControlledNestedPath(
+    'paint',
+    ['addon-icon-24', 'addon-family'],
+    'Fixer / PaintMe',
+  );
+
+  assert.equal(
+    library.isNestedComponentPaintPathHostControlled(
+      'addon-icon-24',
+      'Fixer / PaintMe',
+    ),
+    true,
+    'Host-controlled nested paint path must resolve by variant key',
+  );
+
+  assert.equal(
+    library.isNestedComponentPaintPathHostControlled(
+      'addon-family',
+      'Fixer / PaintMe',
+    ),
+    true,
+    'Host-controlled nested paint path must also resolve by family key alias',
   );
 
   console.log('Nested variant and suppression policy regression checks passed');

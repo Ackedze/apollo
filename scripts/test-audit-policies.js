@@ -55,6 +55,11 @@ function main() {
     'Deprecated libraries must map into the deprecated bucket',
   );
   assert.equal(
+    getForcedAuditCategory({ source: 'Web :: DEPRECATED CORP (не подключать)' }),
+    'deprecated',
+    'Deprecated libraries must also match when the published catalog omits the leading emoji',
+  );
+  assert.equal(
     getForcedAuditCategory({ source: 'Web :: Core' }),
     null,
     'Regular product libraries must not get a forced audit category',

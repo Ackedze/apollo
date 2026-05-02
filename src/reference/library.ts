@@ -602,6 +602,32 @@ export function isNestedComponentLayoutPathHostControlled(
   return hostControlledLayoutPaths.get(componentKey)?.has(relativePath) === true;
 }
 
+// Test helper for verifying host-controlled path aliasing without loading remote catalogs.
+export function __test_resetHostControlledNestedPathPolicies(): void {
+  hostControlledPaintPaths.clear();
+  hostControlledTextPaths.clear();
+  hostControlledLayoutPaths.clear();
+}
+
+// Test helper for registering path ownership under variant/family aliases.
+export function __test_registerHostControlledNestedPath(
+  kind: 'paint' | 'text' | 'layout',
+  componentKeys: Array<string | null | undefined>,
+  relativePath: string,
+): void {
+  if (kind === 'paint') {
+    addHostControlledPath(hostControlledPaintPaths, componentKeys, relativePath);
+    return;
+  }
+
+  if (kind === 'text') {
+    addHostControlledPath(hostControlledTextPaths, componentKeys, relativePath);
+    return;
+  }
+
+  addHostControlledPath(hostControlledLayoutPaths, componentKeys, relativePath);
+}
+
 function isAthenaCatalog(payload: unknown): payload is AthenaCatalog {
   return Boolean(
     payload &&
@@ -1441,13 +1467,13 @@ function registerHostControlledPaintPathsForStructure(
 
       const overrideKinds = getNestedOverrideKinds(hostNode, partNode);
       if (overrideKinds.paint) {
-        addHostControlledPaintPath(partKey, relativePath);
+        addHostControlledPaintPath(partKey, relativePath, partComponent.key ?? null);
       }
       if (overrideKinds.text) {
-        addHostControlledTextPath(partKey, relativePath);
+        addHostControlledTextPath(partKey, relativePath, partComponent.key ?? null);
       }
       if (overrideKinds.layout) {
-        addHostControlledLayoutPath(partKey, relativePath);
+        addHostControlledLayoutPath(partKey, relativePath, partComponent.key ?? null);
       }
     }
   }
@@ -1616,28 +1642,63 @@ function getRelativeInstancePath(
   return fullPath.slice(prefix.length);
 }
 
-function addHostControlledPaintPath(partKey: string, relativePath: string) {
-  if (!hostControlledPaintPaths.has(partKey)) {
-    hostControlledPaintPaths.set(partKey, new Set());
-  }
-
-  hostControlledPaintPaths.get(partKey)!.add(relativePath);
+function addHostControlledPaintPath(
+  partKey: string,
+  relativePath: string,
+  partComponentKey?: string | null,
+) {
+  addHostControlledPath(
+    hostControlledPaintPaths,
+    [partKey, partComponentKey ?? null],
+    relativePath,
+  );
 }
 
-function addHostControlledTextPath(partKey: string, relativePath: string) {
-  if (!hostControlledTextPaths.has(partKey)) {
-    hostControlledTextPaths.set(partKey, new Set());
-  }
-
-  hostControlledTextPaths.get(partKey)!.add(relativePath);
+function addHostControlledTextPath(
+  partKey: string,
+  relativePath: string,
+  partComponentKey?: string | null,
+) {
+  addHostControlledPath(
+    hostControlledTextPaths,
+    [partKey, partComponentKey ?? null],
+    relativePath,
+  );
 }
 
-function addHostControlledLayoutPath(partKey: string, relativePath: string) {
-  if (!hostControlledLayoutPaths.has(partKey)) {
-    hostControlledLayoutPaths.set(partKey, new Set());
-  }
+function addHostControlledLayoutPath(
+  partKey: string,
+  relativePath: string,
+  partComponentKey?: string | null,
+) {
+  addHostControlledPath(
+    hostControlledLayoutPaths,
+    [partKey, partComponentKey ?? null],
+    relativePath,
+  );
+}
 
-  hostControlledLayoutPaths.get(partKey)!.add(relativePath);
+function addHostControlledPath(
+  registry: Map<string, Set<string>>,
+  componentKeys: Array<string | null | undefined>,
+  relativePath: string,
+) {
+  const uniqueKeys = Array.from(
+    new Set(
+      componentKeys.filter(
+        (componentKey): componentKey is string =>
+          typeof componentKey === 'string' && componentKey.length > 0,
+      ),
+    ),
+  );
+
+  for (const componentKey of uniqueKeys) {
+    if (!registry.has(componentKey)) {
+      registry.set(componentKey, new Set());
+    }
+
+    registry.get(componentKey)!.add(relativePath);
+  }
 }
 
 function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {

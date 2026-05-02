@@ -47,6 +47,7 @@ export function evaluateDiffSuppression(
 
   if (
     diff.diffKind === 'paint' &&
+    shouldSuppressHostControlledPropertyDiff(diff) &&
     dependencies.isPaintPathHostControlled(componentKey, relativePath)
   ) {
     return { suppressed: true, reason: 'host-controlled-paint' };
@@ -54,6 +55,7 @@ export function evaluateDiffSuppression(
 
   if (
     diff.diffKind === 'text-style' &&
+    shouldSuppressHostControlledPropertyDiff(diff) &&
     dependencies.isTextPathHostControlled(componentKey, relativePath)
   ) {
     return { suppressed: true, reason: 'host-controlled-text' };
@@ -61,6 +63,7 @@ export function evaluateDiffSuppression(
 
   if (
     diff.diffKind === 'layout' &&
+    shouldSuppressHostControlledPropertyDiff(diff) &&
     dependencies.isLayoutPathHostControlled(componentKey, relativePath)
   ) {
     return { suppressed: true, reason: 'host-controlled-layout' };
@@ -74,6 +77,18 @@ export function evaluateDiffSuppression(
   }
 
   return { suppressed: false, reason: null };
+}
+
+function shouldSuppressHostControlledPropertyDiff(
+  diff: Pick<DiffEntry, 'context'>,
+): boolean {
+  const relativePath = diff.context.nestedOwnerRelativePath ?? null;
+
+  if (relativePath === '') {
+    return true;
+  }
+
+  return diff.context.referenceOrigin === 'nested-component';
 }
 
 export function markSuppressedDiff(

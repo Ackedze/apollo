@@ -49,7 +49,27 @@ function makeDiff(nodeName, message) {
 }
 
 function main() {
-  const { applyAllowedCustomizationRules } = loadAllowedCustomizationModule();
+  const {
+    applyAllowedCustomizationRules,
+    __test_normalizeRuleName,
+    __test_resolveRuleComponentName,
+  } = loadAllowedCustomizationModule();
+
+  assert.equal(
+    __test_resolveRuleComponentName({
+      displayName: '🔩 Content',
+      role: 'Part',
+      variantOf: 'IconView',
+    }),
+    'IconView',
+    'Part components must resolve to their owning family name for nested allowlist rules',
+  );
+
+  assert.equal(
+    __test_normalizeRuleName('web/components/web-core/core/Web _ Core -- IconView.json'),
+    'iconview',
+    'Catalog source paths must normalize to component names for nested allowlist matching',
+  );
 
   const progressBarDiffs = applyAllowedCustomizationRules(
     [
@@ -161,6 +181,30 @@ function main() {
     'TitleView must allow tokenized nested Button icon recolors',
   );
 
+  const directButtonPaintMeDiffs = applyAllowedCustomizationRules(
+    [
+      {
+        ...makeDiff(
+          'PaintMe',
+          'заливка: Button/Desktop/Colors/Primary/text → decorative/green',
+        ),
+        nodePath:
+          'View=Primary, Size=32, Shape=Rectangular, SingleIcon=False, DisabledState=False / LeftAddon / LeftAddon / Fixer / PaintMe',
+      },
+    ],
+    {
+      libraryName: 'Web :: Core',
+      componentName: '[D] Button',
+      referenceComponentName: '[D] Button',
+    },
+  );
+
+  assert.equal(
+    directButtonPaintMeDiffs.length,
+    1,
+    'Manual Button PaintMe recolor must remain visible as customization',
+  );
+
   const linkDiffs = applyAllowedCustomizationRules(
     [
       makeDiff('Link', 'Отступ между элементами: 4 → 6'),
@@ -244,6 +288,76 @@ function main() {
     nestedLinkDiffs.length,
     0,
     'Nested Link overrides must be allowed even when the host component is not Link',
+  );
+
+  const iconViewDiffs = applyAllowedCustomizationRules(
+    [
+      makeDiff('PaintMe', 'заливка: text/primary → text/positive'),
+      makeDiff('BgColor', 'заливка: neutral/100 → decorative/green'),
+      makeDiff('PaintMe', 'заливка: text/primary → #123456'),
+    ],
+    {
+      libraryName: 'Web :: Core',
+      componentName: 'IconView',
+      referenceComponentName: 'IconView',
+    },
+  );
+
+  assert.equal(
+    iconViewDiffs.length,
+    1,
+    'IconView must allow tokenized PaintMe/BgColor recolors but keep raw colors visible',
+  );
+  assert.equal(
+    iconViewDiffs[0].message,
+    'заливка: text/primary → #123456',
+    'IconView raw PaintMe color must still be treated as customization',
+  );
+
+  const nestedIconViewDiffs = applyAllowedCustomizationRules(
+    [
+      {
+        ...makeDiff('PaintMe', 'заливка: text/primary → text/secondary'),
+        context: {
+          actualComponentKey: null,
+          referenceComponentKey: null,
+          referenceOrigin: 'nested-component',
+          actualNestedOwnerComponentKey: 'icon-view-component',
+          actualNestedOwnerPath: '[D] Button / LeftAddon / IconView',
+          actualNestedOwnerRelativePath: 'Content / ShapeContent / Content / Fixer / PaintMe',
+          nestedOwnerComponentKey: 'button-addon-component',
+          nestedOwnerComponentRole: 'Main',
+          nestedOwnerPath: '[D] Button / LeftAddon / LeftAddon',
+          nestedOwnerRelativePath: 'Fixer / PaintMe',
+        },
+      },
+      {
+        ...makeDiff('BgColor', 'заливка: neutral/100 → decorative/green'),
+        context: {
+          actualComponentKey: null,
+          referenceComponentKey: null,
+          referenceOrigin: 'nested-component',
+          actualNestedOwnerComponentKey: 'icon-view-component',
+          actualNestedOwnerPath: '[D] Button / LeftAddon / IconView',
+          actualNestedOwnerRelativePath: 'Content / ShapeContent / BgColor',
+          nestedOwnerComponentKey: 'button-addon-component',
+          nestedOwnerComponentRole: 'Main',
+          nestedOwnerPath: '[D] Button / LeftAddon / LeftAddon',
+          nestedOwnerRelativePath: 'BgColor',
+        },
+      },
+    ],
+    {
+      libraryName: 'Web :: Core',
+      componentName: '[D] Button',
+      referenceComponentName: '[D] Button',
+    },
+  );
+
+  assert.equal(
+    nestedIconViewDiffs.length,
+    0,
+    'Swapped nested IconView inside Button must allow tokenized PaintMe/BgColor recolors',
   );
 
   const bodyCellTextDiffs = applyAllowedCustomizationRules(
@@ -532,20 +646,28 @@ function main() {
     'Nested StatusBadge PaintMe recolor must be allowed in host Addon contexts',
   );
 
-  const filterTagDiffs = applyAllowedCustomizationRules(
-    [makeDiff('PaintMe', 'заливка: text/info → text/primary')],
-    {
-      libraryName: 'Web :: Core',
-      componentName: '[D] FilterTag',
-      referenceComponentName: '[D] FilterTag',
-    },
-  );
+  for (const { componentName, libraryName } of [
+    { componentName: '[D] FilterTag', libraryName: 'Web :: Core' },
+    { componentName: '[D] Tag', libraryName: 'Web :: Core' },
+    { componentName: '[D] IconButton', libraryName: 'Web :: Core' },
+    { componentName: 'ActionButton', libraryName: 'Web :: Core' },
+    { componentName: '[D] CompactTag', libraryName: 'Web :: Corp Components' },
+  ]) {
+    const hostControlledPaintMeDiffs = applyAllowedCustomizationRules(
+      [makeDiff('PaintMe', 'заливка: text/info → text/primary')],
+      {
+        libraryName,
+        componentName,
+        referenceComponentName: componentName,
+      },
+    );
 
-  assert.equal(
-    filterTagDiffs.length,
-    0,
-    'FilterTag PaintMe tokenized recolor must be treated as allowed override',
-  );
+    assert.equal(
+      hostControlledPaintMeDiffs.length,
+      1,
+      `${componentName} PaintMe recolor must remain visible as host-controlled customization`,
+    );
+  }
 
   const paymentMaskedDiffs = applyAllowedCustomizationRules(
     [

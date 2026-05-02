@@ -5,6 +5,9 @@ export type DiffContext = {
   actualComponentKey: string | null;
   referenceComponentKey: string | null;
   referenceOrigin: 'host' | 'nested-component';
+  actualNestedOwnerComponentKey: string | null;
+  actualNestedOwnerPath: string | null;
+  actualNestedOwnerRelativePath: string | null;
   nestedOwnerComponentKey: string | null;
   nestedOwnerComponentRole: 'Main' | 'Part' | null;
   nestedOwnerPath: string | null;
@@ -75,16 +78,19 @@ export function diffStructures(
 ): DiffResult {
   const diffs: DiffEntry[] = [];
   const issueSet = new Set<string>();
+  const normalizedActual = attachImplicitNestedOwners(actual, {
+    respectReferenceOrigin: false,
+  });
   const normalizedReference = attachImplicitReferenceOwners(reference);
-  const actualKeyMap = buildOccurrenceKeyMap(actual);
+  const actualKeyMap = buildOccurrenceKeyMap(normalizedActual);
   const referenceKeyMap = buildOccurrenceKeyMap(normalizedReference);
   const actualMap = new Map(
-    actual.map((node) => [actualKeyMap.get(node) ?? node.path, node]),
+    normalizedActual.map((node) => [actualKeyMap.get(node) ?? node.path, node]),
   );
   const referenceMap = new Map(
     normalizedReference.map((node) => [referenceKeyMap.get(node) ?? node.path, node]),
   );
-  const actualVisibleChildCount = buildVisibleChildCountMap(actual);
+  const actualVisibleChildCount = buildVisibleChildCountMap(normalizedActual);
   const strict = options?.strict ?? false;
   const resolveTokenLabel = options?.resolveTokenLabel;
   const resolveStyleLabel = options?.resolveStyleLabel;
@@ -111,14 +117,17 @@ export function diffStructures(
   return { diffs, issues: Array.from(issueSet.values()) };
 }
 
-function attachImplicitReferenceOwners(
-  reference: DSStructureNode[],
+function attachImplicitNestedOwners(
+  nodes: DSStructureNode[],
+  options: {
+    respectReferenceOrigin: boolean;
+  },
 ): DSStructureNode[] {
-  if (!reference.length) {
-    return reference;
+  if (!nodes.length) {
+    return nodes;
   }
 
-  const cloned = reference.map((node) => Object.assign({}, node));
+  const cloned = nodes.map((node) => Object.assign({}, node));
   const idMap = new Map<number, DSStructureNode>();
   const occurrenceKeyMap = buildOccurrenceKeyMap(cloned);
   const occurrenceKeyToNode = new Map<string, DSStructureNode>();
@@ -133,7 +142,7 @@ function attachImplicitReferenceOwners(
       continue;
     }
 
-    if ((node.referenceOrigin ?? 'host') !== 'host') {
+    if (options.respectReferenceOrigin && (node.referenceOrigin ?? 'host') !== 'host') {
       continue;
     }
 
@@ -170,6 +179,14 @@ function attachImplicitReferenceOwners(
   }
 
   return cloned;
+}
+
+function attachImplicitReferenceOwners(
+  reference: DSStructureNode[],
+): DSStructureNode[] {
+  return attachImplicitNestedOwners(reference, {
+    respectReferenceOrigin: true,
+  });
 }
 
 function attachImplicitOwnerByPathPrefix(
@@ -1008,6 +1025,9 @@ function pushDiff(
       actualComponentKey: node.componentInstance?.componentKey ?? null,
       referenceComponentKey: referenceNode.componentInstance?.componentKey ?? null,
       referenceOrigin: referenceNode.referenceOrigin ?? 'host',
+      actualNestedOwnerComponentKey: node.referenceOwnerComponentKey ?? null,
+      actualNestedOwnerPath: node.referenceOwnerPath ?? null,
+      actualNestedOwnerRelativePath: node.referenceOwnerRelativePath ?? null,
       nestedOwnerComponentKey:
         referenceNode.referenceOwnerComponentKey ??
         (isHostNestedInstanceRoot

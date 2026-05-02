@@ -3,30 +3,43 @@ import type { AuditChannel } from '../services/channelAudit';
 
 export type ForcedAuditCategory = 'technical' | 'deprecated';
 
-const TECHNICAL_LIBRARY_NAMES = new Set([
+const TECHNICAL_LIBRARY_NAMES = [
   'Web :: Core Helpers',
   'Web :: Corp Helpers',
-]);
+];
 
-const DEPRECATED_LIBRARY_NAMES = new Set([
+const DEPRECATED_LIBRARY_NAMES = [
   'Web :: Old Core Default Components',
+  'Web :: DEPRECATED CORP (не подключать)',
   '❌ Web :: DEPRECATED CORP (не подключать)',
-]);
+];
 
 function normalizeLibraryName(value: string | null | undefined): string {
-  return String(value ?? '').trim();
+  return String(value ?? '')
+    .trim()
+    .replace(/^[^\p{L}\p{N}]+/u, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
 }
+
+const TECHNICAL_LIBRARY_NAME_SET = new Set(
+  TECHNICAL_LIBRARY_NAMES.map(normalizeLibraryName),
+);
+
+const DEPRECATED_LIBRARY_NAME_SET = new Set(
+  DEPRECATED_LIBRARY_NAMES.map(normalizeLibraryName),
+);
 
 export function getForcedAuditCategory(
   component: LibraryComponent | null | undefined,
 ): ForcedAuditCategory | null {
   const libraryName = normalizeLibraryName(component?.source);
 
-  if (TECHNICAL_LIBRARY_NAMES.has(libraryName)) {
+  if (TECHNICAL_LIBRARY_NAME_SET.has(libraryName)) {
     return 'technical';
   }
 
-  if (DEPRECATED_LIBRARY_NAMES.has(libraryName)) {
+  if (DEPRECATED_LIBRARY_NAME_SET.has(libraryName)) {
     return 'deprecated';
   }
 

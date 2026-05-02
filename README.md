@@ -30,6 +30,7 @@
 
 - `Темизация` — page-level mode `Theme / Corp` и случаи использования `[Corporate]`-компонентов.
 - `Не тот канал` — компоненты, не соответствующие каналу, выбранному в channel picker (`Desktop`, `MobileWeb`, `iOS`, `Android`).
+- `Технические` — helper-компоненты из технических библиотек, которые Apollo помечает без deep-аудита.
 - `Устаревшие` — компоненты со статусом `deprecated`.
 - `Устаревшие стили` — style findings, собранные отдельно от component relevance.
 - `Кастомные стили` — узлы с локальными fill/stroke/effect без корректной токенизации или style-binding.
@@ -41,6 +42,8 @@
 - `Актуальные компоненты` — компоненты со статусом `current`.
 
 Важно: если компонент попал в `Не тот канал`, он не показывается в `Актуальных компонентах`, даже если его reference-статус сам по себе `current`.
+Важно: для `iOS` и `Android` таб `Темизация` скрывается полностью, а сама themization-проверка не запускается даже в фоне.
+Важно: компоненты из `Web :: Core Helpers` и `Web :: Corp Helpers` принудительно попадают в `Технические`, а компоненты из `Web :: Old Core Default Components` и `❌ Web :: DEPRECATED CORP (не подключать)` — в `Устаревшие`.
 
 ## Как устроен аудит
 
@@ -58,10 +61,13 @@
 - [`src/structure/snapshot.ts`](./src/structure/snapshot.ts) сериализует дерево нод в нормализованный плоский список.
 - [`src/structure/diff.ts`](./src/structure/diff.ts) сравнивает layout, padding, стили, fill/stroke, radius и opacity и строит нормализованный `DiffContext` для каждого diff.
 - [`src/reference/library.ts`](./src/reference/library.ts) загружает и нормализует каталоги компонентов, токенов и стилей, а также строит policy-карты host-controlled nested property paths по самим reference-каталогам.
+- [`src/policies/componentAuditPolicy.ts`](./src/policies/componentAuditPolicy.ts) задаёт forced audit categories и platform-aware visibility для табов вроде `Темизация`.
+- [`src/filters/allowedCustomizationRules.ts`](./src/filters/allowedCustomizationRules.ts) содержит декларативный allowlist разрешённых кастомизаций и context-specific override-правила.
 - [`src/filters/suppressionPolicy.ts`](./src/filters/suppressionPolicy.ts) содержит единый policy-слой suppression для nested host-controlled overrides и root-level nested variant switch.
 - [`src/types/audit.ts`](./src/types/audit.ts) описывает `AuditItem`, `DetachedEntry`, `CustomStyleEntry` и связанные типы.
 - [`src/utils/variantProperties.ts`](./src/utils/variantProperties.ts) даёт единый парсер и matcher variant properties для themization и nested reference expansion.
 - [`src/utils/auditInstrumentation.ts`](./src/utils/auditInstrumentation.ts) управляет audit trace mode и метриками preload/diff-phase.
+- [`src/utils/componentKeyCache.ts`](./src/utils/componentKeyCache.ts) даёт retryable cache для `componentKey`, чтобы nested instances не застревали в `unknown/local`, если первый `getMainComponentAsync()` временно вернул `null`.
 - [`src/filters/customStyleFilters.ts`](./src/filters/customStyleFilters.ts), [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) и [`src/filters/ignoredComponentFilters.ts`](./src/filters/ignoredComponentFilters.ts) содержат управляемые исключения для известных технических кейсов DS. Для `Кастомизации` основной suppression-слой теперь не regex-based, а policy-based: он подавляет host-controlled nested property diff-ы, вычисленные из каталогов, а не из ручного списка path-паттернов, а также гасит root-level diff у вложенного инстанса, если на том же path фактически произошёл variant switch внутри одной component family.
 - Контракт [`src/filters/customizationFilters.ts`](./src/filters/customizationFilters.ts) упрощён: фильтры кастомизации больше не получают `node`, так как фактическая фильтрация выполняется только по `diff`-записям и их metadata.
 
@@ -81,19 +87,29 @@
 Важно: скрытые и полностью прозрачные `fill`-paints игнорируются в actual snapshot так же, как и в reference-нормализации. Это убирает ложные кастомизации, когда в компонентных каталогах есть технические `fills` с `"visible": false`.
 Для nested instances используется variant-aware reference expansion: Apollo сначала пытается взять nested reference по текущему `componentKey`, а если этого недостаточно, добирает нужный variant по `variantProperties`, чтобы stateful nested-компоненты вроде `Radio_24` не сравнивались с неправильным reference-state.
 Важно: при раскрытии nested instances host reference имеет приоритет над standalone reference вложенного компонента. Standalone-структура nested-компонента используется только для дозаполнения отсутствующих путей.
+Важно: если host reference уже содержит явный paint descriptor на descendant-узле, Apollo не заменяет его standalone paint descriptor вложенного компонента. Это сохраняет корректный expected-token для variant-controlled слоёв вроде `Button / Addon / PaintMe`, `FilterTag / Addon|Arrow / PaintMe`, `Tag / Icon|Addon / PaintMe`, `IconButton / Icon / PaintMe`, `ActionButton / Bg / PaintMe` и `CompactTag / Arrow / PaintMe`.
+Важно: suppression для host-controlled nested properties применяется только к diff-ам, построенным от standalone nested reference. Если diff построен от host reference, ручное изменение остаётся видимым как кастомизация.
+Важно: `Button / Addon / PaintMe`, `FilterTag / PaintMe`, `Tag / PaintMe`, `IconButton / PaintMe`, `ActionButton / PaintMe` и `CompactTag / PaintMe` не входят в allowlist разрешённых recolor-кастомизаций. Цвет задаётся variant-controlled host reference и ручное изменение должно попадать в `Кастомизации`.
+Важно: если parent nested materialization уже несёт host-controlled paint, более глубокий standalone nested reference не затирает это значение. Например, `TitleView → FilterCompanySelect → CompactTag → Arrow / PaintMe` сравнивается с expected из `TitleView/FilterCompanySelect`, а не со standalone `FilterTag / Arrow`.
+Важно: если policy-карта ещё не знает inner variant key, Apollo дополнительно сохраняет parent-reference для component-qualified путей вида `[D] CompactTag / Arrow / Fixer / PaintMe`. Это не allowlist: ручная перекраска всё равно остаётся кастомизацией, но expected берётся из более специфичной сборки.
 Важно: ложные кастомизации для nested overrides теперь подавляются универсально, если reference-каталоги показывают, что хост-компонент управляет свойством вложенного компонента. Сейчас policy покрывает не только `fill/stroke`, `BgColor` и `Border`, но и nested `typographyToken`/`text style`.
 Важно: отдельный suppression введён и для root-level nested variant switch. Если на одном и том же path actual и reference указывают на разные variant keys одной и той же component family, Apollo больше не считает это кастомизацией layout/property самого вложенного узла.
 Важно: current linked instances внутри `instance` локального компонента теперь тоже форсируются в diff, даже если у самого внутреннего инстанса нет direct `overrides`. Это устраняет пропуски кастомизаций, которые раньше были видны только в оригинале локального компонента, но терялись в его инстансах.
 Важно: старые path-based regex-исключения для `PaintMe`, `IconView` и похожих nested color-кейсов удалены; работоспособность suppression теперь определяется именно catalog-derived policy-слоем.
 Важно: у каждого diff теперь есть явный `DiffContext`, а не набор постепенно наращённых служебных полей. Это снижает риск регрессий в suppression/filter-слое и делает trace-вывод стабильнее.
+Важно: поверх suppression-policy есть второй слой `allowedCustomizationRules`: Apollo может обнаружить diff, распознать его как допустимый override и убрать из проблемной категории, не теряя trace о сработавшем правиле.
+Важно: для nested instances Apollo теперь умеет повторно получать `componentKey`, если на раннем обходе Figma временно вернула `null`. Это критично для частей вроде `BorderLine`, которые раньше могли ошибочно застревать вне `Актуальных`.
 
 ## Известные классы ложных срабатываний
 - Nested host-controlled `fill/stroke/BgColor/Border` внутри хоста не считаются кастомизацией, если это подтверждается reference-каталогами.
+- Для host-controlled nested overrides Apollo регистрирует path ownership и по variant key, и по family component key вложенного компонента, чтобы runtime Figma и JSON-каталоги не расходились по ключу одного и того же nested-instance.
+- Имена nested-компонентов в allowlist нормализуются из catalog source paths вида `Web _ Core -- IconView.json`, потому что runtime может резолвить owner через index-only данные до полной загрузки каталога.
 - Nested host-controlled `typographyToken` и `text style` тоже гасятся policy-слоем, но реальные изменения текста остаются видимыми.
 - Root-level nested variant switch внутри одной component family не считается кастомизацией layout самого вложенного инстанса.
 - Для stateful nested-компонентов reference теперь резолвится по `variantProperties`, чтобы `SelectedState/Type/View/Preset` не подменялись дефолтным variant.
 - `itemSpacing` сравнивается только для контейнеров, где spacing реально влияет на layout.
 - Linked instances внутри local-component context не пропускаются даже без direct overrides на внутреннем инстансе.
+- Системные allowlist-правила покрывают семейства nested override-кейсов вроде `Status`, `Amount`, `PaymentMaskedNumber`, `Link`, `StatusBadge`, `TopAddon` и `ProgressBar`, где допустимое переопределение должно задаваться на уровне вложенного компонента, а не отдельным host-specific хаком.
 
 ## Источники данных
 Плагин работает с JSON-справочниками в [`JSONS`](./JSONS), а в рантайме берёт список источников с GitHub Pages:
@@ -110,6 +126,15 @@
 ## Правило публикации
 
 При публикации изменений Apollo обновляйте этот README вместе с кодом, если меняется runtime-поведение, источники данных, сборка, контракты UI/backend или workflow проверки. Если изменение влияет на общий workspace-процесс, дополнительно обновляйте root `README.md` и `WORKSPACE.md`.
+
+## Правило проверки
+
+После любых изменений в Apollo перед завершением работы обязательно:
+- запустить `npm run type-check`;
+- запустить релевантные regression-check’и для затронутого поведения;
+- пересобрать проект через `npm run build`.
+
+Изменение не считается завершённым, пока эти шаги не выполнены или пока явно не зафиксировано, почему какой-то из них нельзя выполнить.
 
 ## UI и поведение
 - [`src/ui.html`](./src/ui.html) теперь служит HTML-shell и bridge-слоем: в нём остались message-handlers, placeholder-сценарии и маршрутизация табов в React results bridge.
@@ -163,7 +188,7 @@
 - Репозиторий `Ackedze/apollo` и опубликованный `GitHub Pages`-слой `ackedze.github.io/design-system_ab` могут быть временно рассинхронизированы после push.
 - В проекте есть штатный `type-check`, но нет полноценного интеграционного test-suite для Figma runtime.
 - Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
-- Для кастомизаций и nested reference-resolution есть набор точечных regression-check’ов: `npm run test:customization-filters`, `npm run test:nested-variants`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют policy-based suppression nested overrides, nested variant-switch suppression, variant-aware reference resolution и несколько критичных diff-path кейсов, но не заменяют интеграционные проверки в Figma.
+- Для forced categories, allowlist-кастомизаций, nested reference-resolution и retryable `componentKey` cache есть набор точечных regression-check’ов: `npm run test:audit-policies`, `npm run test:allowed-customizations`, `npm run test:component-key-cache`, `npm run test:customization-filters`, `npm run test:nested-variants`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют forced audit categories, platform-aware themization visibility, declarative allowlist, nested variant-switch suppression, variant-aware reference resolution и кейсы с повторным key-resolve для nested instances, но не заменяют интеграционные проверки в Figma.
 
 Подробный технический отчёт по найденным рискам хранится в [`AUDIT.md`](./AUDIT.md), но перед использованием стоит учитывать, что этот файл частично устарел и не полностью отражает текущее состояние проекта.
 
@@ -220,6 +245,9 @@ npm run test:themization
 
 ### Точечные проверки кастомизаций и diff
 ```bash
+npm run test:audit-policies
+npm run test:allowed-customizations
+npm run test:component-key-cache
 npm run test:customization-filters
 npm run test:nested-variants
 npm run test:item-spacing-diff
@@ -228,6 +256,9 @@ npm run test:snapshot-tree
 ```
 
 Скрипты проверяют:
+- forced audit categories для technical/deprecated-библиотек и скрытие `Темизации` для `iOS`/`Android`;
+- декларативные allowlist-правила для разрешённых nested и direct override-сценариев;
+- retry cached-missing `componentKey` для nested instances, если первый lookup временно вернул `null`;
 - policy-based suppression для host-controlled nested color и typography overrides;
 - variant-aware nested reference resolution по `SelectedState`, `Type`, `View` и `Preset`;
 - suppression для root-level nested variant switch внутри одной component family;
@@ -243,6 +274,7 @@ Trace mode включается через `pluginData`-флаг `apollo.debug.a
 - `set-debug-audit` с payload `{ enabled: true | false }`
 
 При активном trace mode Apollo пишет structured-логи `[Apollo][trace] ...` по reference-resolution и nested expansion. Метрики preload и audit-phase всегда пишутся как `[Apollo][metrics] ...`.
+Trace также покрывает решения `allowed-customization`, `skipped-check`, `forced-category` и `category-subtree-skipped`, чтобы было видно, почему компонент попал в `Технические`/`Устаревшие`, почему diff был разрешён или почему конкретная проверка вообще не запускалась.
 Временные targeted trace-блоки для отдельных компонентных кейсов в runtime не используются: диагностика идёт через общий trace mode.
 
 ### Поиск подозрительных nested overrides

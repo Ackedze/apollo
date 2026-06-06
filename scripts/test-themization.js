@@ -2,10 +2,12 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
-function readCatalog(relativePath) {
-  const fullPath = path.resolve(__dirname, '..', relativePath);
-  return JSON.parse(fs.readFileSync(fullPath, 'utf8'));
-}
+const fixtures = JSON.parse(
+  fs.readFileSync(
+    path.resolve(__dirname, 'fixtures/themization-catalogs.json'),
+    'utf8',
+  ),
+);
 
 function normalizeCorporateName(name) {
   return String(name ?? '')
@@ -128,8 +130,8 @@ function chooseBestVariantByName(variants, sourceVariantName, defaultVariantName
 }
 
 function testPlatformAwareCounterparts() {
-  const buttonCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Button.json');
-  const tagCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Tag.json');
+  const buttonCatalog = fixtures.button;
+  const tagCatalog = fixtures.tag;
   const index = new Map();
 
   for (const component of [...buttonCatalog.components, ...tagCatalog.components]) {
@@ -163,8 +165,8 @@ function testPlatformAwareCounterparts() {
 }
 
 function testVariantResolution() {
-  const buttonCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Button.json');
-  const tagCatalog = readCatalog('JSONS/web/components/web-core/core/Web _ Core -- Tag.json');
+  const buttonCatalog = fixtures.button;
+  const tagCatalog = fixtures.tag;
 
   const desktopCorporateButton = buttonCatalog.components.find(
     (component) => component.name === '🔄 [D][Corporate] Button',

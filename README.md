@@ -112,7 +112,7 @@
 - Системные allowlist-правила покрывают семейства nested override-кейсов вроде `Status`, `Amount`, `PaymentMaskedNumber`, `Link`, `StatusBadge`, `TopAddon` и `ProgressBar`, где допустимое переопределение должно задаваться на уровне вложенного компонента, а не отдельным host-specific хаком.
 
 ## Источники данных
-Плагин работает с JSON-справочниками в [`JSONS`](./JSONS), а в рантайме берёт список источников с GitHub Pages:
+Плагин работает с удалёнными JSON-справочниками и в рантайме берёт список источников с GitHub Pages:
 
 - основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
 - token/style каталоги: пути из этого списка;
@@ -223,7 +223,7 @@ Ackedze/design-system_ab/apollo-stats/<figma-user>/<figma-user>_dd-mm-yyyy_hh-mm
 - [`src/services`](./src/services) — подготовка представлений для UI.
 - [`src/stats`](./src/stats) — формирование и отправка локальных отчётов проверок.
 - [`src/utils`](./src/utils) — вспомогательные утилиты.
-- [`JSONS`](./JSONS) — локальные JSON-артефакты справочников для regression-checks.
+- [`scripts/fixtures`](./scripts/fixtures) — компактные JSON-fixtures для regression-checks.
 - [`scripts`](./scripts) — точечные regression-checks и отчётные скрипты.
 
 ## Сборка и запуск
@@ -307,7 +307,7 @@ Trace также покрывает решения `allowed-customization`, `ski
 npm run report:nested-overrides
 ```
 
-Скрипт делает грубый локальный проход по component-каталогам внутри `JSONS` и печатает кандидатов на host-controlled nested overrides. Это не финальный source of truth, а быстрый способ находить новые семейства кейсов до ручной проверки в Figma.
+Скрипт делает грубый локальный проход по component-каталогам из `shared/design-system_ab/JSONS` и печатает кандидатов на host-controlled nested overrides. Альтернативный путь задаётся через `APOLLO_JSONS_ROOT`. Это не финальный source of truth, а быстрый способ находить новые семейства кейсов до ручной проверки в Figma.
 
 ## Как подключить в Figma
 1. Соберите проект через `npm run build`.

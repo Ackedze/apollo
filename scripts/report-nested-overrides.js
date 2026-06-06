@@ -1,7 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const COMPONENTS_ROOT = path.resolve(__dirname, '../JSONS');
+const COMPONENTS_ROOT = process.env.APOLLO_JSONS_ROOT
+  ? path.resolve(process.env.APOLLO_JSONS_ROOT)
+  : path.resolve(__dirname, '../../../../shared/design-system_ab/JSONS');
 
 function walkJsonFiles(rootDir) {
   const files = [];
@@ -53,6 +55,12 @@ function hasSuspiciousNestedOverride(element) {
 }
 
 function main() {
+  if (!fs.existsSync(COMPONENTS_ROOT)) {
+    throw new Error(
+      `Catalog root not found: ${COMPONENTS_ROOT}. Set APOLLO_JSONS_ROOT to the design-system_ab/JSONS directory.`,
+    );
+  }
+
   const rows = [];
   const files = walkJsonFiles(COMPONENTS_ROOT);
 

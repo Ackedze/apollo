@@ -1,0 +1,71 @@
+{
+  "button": {
+    "components": [
+      {
+        "name": "[D] Button",
+        "platform": "desktop",
+        "defaultVariant": "button-default",
+        "variants": [
+          {
+            "key": "button-default",
+            "name": "View=Accent, Size=56, Shape=Rectangular, SingleIcon=False, DisabledState=False"
+          },
+          {
+            "key": "button-source",
+            "name": "View=Accent, Size=72, Shape=Rectangular, SingleIcon=False, DisabledState=True"
+          }
+        ]
+      },
+      {
+        "name": "[M] Button",
+        "platform": "mobile-web",
+        "variants": []
+      },
+      {
+        "name": "🔄 [D][Corporate] Button",
+        "platform": "desktop",
+        "variants": []
+      },
+      {
+        "name": "🔄 [M][Corporate] Button",
+        "platform": "mobile-web",
+        "variants": []
+      }
+    ]
+  },
+  "tag": {
+    "components": [
+      {
+        "name": "[D] Tag",
+        "platform": "desktop",
+        "defaultVariant": "tag-default",
+        "variants": [
+          {
+            "key": "tag-default",
+            "name": "View=Filled, Size=56, Shape=Rectangular, SelectedState=True, DisabledState=False, SingleIcon=False, Indicator=Hidden"
+          }
+        ]
+      },
+      {
+        "name": "[M] Tag",
+        "platform": "mobile-web",
+        "variants": []
+      },
+      {
+        "name": "🔄 [D][Corporate] Tag",
+        "platform": "desktop",
+        "variants": [
+          {
+            "key": "corporate-tag-source",
+            "name": "View=Filled, Size=56, Shape=Rectangular, SelectedState=True, DisabledState=False"
+          }
+        ]
+      },
+      {
+        "name": "🔄 [M][Corporate] Tag",
+        "platform": "mobile-web",
+        "variants": []
+      }
+    ]
+  }
+}

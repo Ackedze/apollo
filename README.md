@@ -114,12 +114,12 @@
 ## Источники данных
 Плагин работает с удалёнными JSON-справочниками и в рантайме берёт список источников с GitHub Pages:
 
-- основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
+- основной URL: `https://ackedze.github.io/apollo/JSONS/referenceSourcesMVP.json`;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
 
-Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/design-system_ab`. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
+Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/apollo`. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
 
@@ -185,7 +185,7 @@
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
 - Если remote reference list с GitHub Pages недоступен, Apollo не использует bundled fallback и показывает ошибку загрузки справочников.
 - Если внутри remote reference list есть устаревшие или битые пути до token/style каталогов, Apollo сейчас логирует ошибку каталога и продолжает с доступными данными; component-каталоги подгружаются строго через indexes.
-- Репозиторий `Ackedze/apollo` и опубликованный `GitHub Pages`-слой `ackedze.github.io/design-system_ab` могут быть временно рассинхронизированы после push.
+- Private source `Ackedze/design-system_ab` и опубликованный GitHub Pages слой `ackedze.github.io/apollo` могут быть рассинхронизированы не более чем на интервал плановой публикации. Workflow также можно запустить вручную.
 - В проекте есть штатный `type-check`, но нет полноценного интеграционного test-suite для Figma runtime.
 - Для themization-flow есть точечный regression-check `npm run test:themization`, который проверяет platform-aware counterpart lookup и variant matching на JSON-каталогах `Button` и `Tag`, но он не заменяет интеграционные проверки в Figma.
 - Для forced categories, allowlist-кастомизаций, nested reference-resolution и retryable `componentKey` cache есть набор точечных regression-check’ов: `npm run test:audit-policies`, `npm run test:allowed-customizations`, `npm run test:component-key-cache`, `npm run test:customization-filters`, `npm run test:nested-variants`, `npm run test:item-spacing-diff`, `npm run test:variant-structure-paths`, `npm run test:snapshot-tree`. Они проверяют forced audit categories, platform-aware themization visibility, declarative allowlist, nested variant-switch suppression, variant-aware reference resolution и кейсы с повторным key-resolve для nested instances, но не заменяют интеграционные проверки в Figma.
@@ -212,7 +212,7 @@ Ackedze/design-system_ab/apollo-stats/<figma-user>/<figma-user>_dd-mm-yyyy_hh-mm
 
 Локальный `services/apollo-stats-collector` сохранён только как инструмент разработки и не используется production-сборкой Apollo.
 
-Публичный слой каталогов перед приватизацией `Ackedze/design-system_ab` должен быть перенесён на GitHub Pages репозитория `Ackedze/apollo`. Workflow находится в [`.github/workflows/publish-catalogs-pages.yml`](./.github/workflows/publish-catalogs-pages.yml) и получает source-каталоги из private-репозитория через Actions secret `CATALOGS_REPO_TOKEN`. До успешной публикации и проверки нового `referenceSourcesMVP.json` текущий репозиторий каталогов нельзя переводить в private.
+Публичный слой каталогов публикуется на GitHub Pages репозитория `Ackedze/apollo`. Workflow находится в [`.github/workflows/publish-catalogs-pages.yml`](./.github/workflows/publish-catalogs-pages.yml), получает source-каталоги из private-репозитория через Actions secret `CATALOGS_REPO_TOKEN` и автоматически запускается каждые 15 минут.
 
 ## Структура проекта
 - [`src/code.ts`](./src/code.ts) — основной runtime плагина.

@@ -31,7 +31,7 @@ export type RemoteReferenceCatalogList = {
 };
 
 export const apolloReferenceCatalogListUrl =
-  'https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json';
+  'https://ackedze.github.io/apollo/JSONS/referenceSourcesMVP.json';
 
 export function buildReferenceCatalogSources(
   payload: RemoteReferenceCatalogList,
@@ -103,10 +103,6 @@ function buildIndexUrl(
   const explicitIndexPath = entry.source?.indexPath;
   if (explicitIndexPath) {
     return resolveCatalogUrl(baseUrl, explicitIndexPath);
-  }
-
-  if (!/design-system_ab/i.test(baseUrl)) {
-    return undefined;
   }
 
   const normalizedPath = normalizePath(entry.path);

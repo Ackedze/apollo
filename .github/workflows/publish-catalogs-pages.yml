@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - .github/workflows/publish-catalogs-pages.yml
+  schedule:
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:

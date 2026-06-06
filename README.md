@@ -212,7 +212,7 @@ Ackedze/design-system_ab/apollo-stats/<figma-user>/<figma-user>_dd-mm-yyyy_hh-mm
 
 Локальный `services/apollo-stats-collector` сохранён только как инструмент разработки и не используется production-сборкой Apollo.
 
-Публичный слой каталогов перед приватизацией `Ackedze/design-system_ab` должен быть перенесён на GitHub Pages репозитория `Ackedze/apollo`. Workflow находится в [`.github/workflows/publish-catalogs-pages.yml`](./.github/workflows/publish-catalogs-pages.yml). До успешной публикации и проверки нового `referenceSourcesMVP.json` текущий репозиторий каталогов нельзя переводить в private.
+Публичный слой каталогов перед приватизацией `Ackedze/design-system_ab` должен быть перенесён на GitHub Pages репозитория `Ackedze/apollo`. Workflow находится в [`.github/workflows/publish-catalogs-pages.yml`](./.github/workflows/publish-catalogs-pages.yml) и получает source-каталоги из private-репозитория через Actions secret `CATALOGS_REPO_TOKEN`. До успешной публикации и проверки нового `referenceSourcesMVP.json` текущий репозиторий каталогов нельзя переводить в private.
 
 ## Структура проекта
 - [`src/code.ts`](./src/code.ts) — основной runtime плагина.

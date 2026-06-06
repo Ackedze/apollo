@@ -203,7 +203,7 @@ POST https://dwjnndpxzqizrcwpasrs.supabase.co/functions/v1/apollo-stats
 Отчёты сохраняются в:
 
 ```text
-Ackedze/design-system_ab/apollo-stats/<figma-user>/<figma-user>_dd-mm-yyyy_hh-mm-ss.json
+Ackedze/design-system_ab/apollo-stats/<figma-user>/dd-mm-yyyy/<figma-user>_dd-mm-yyyy_hh-mm-ss.json
 ```
 
 Отчёт содержит все категории аудита, включая устаревшие компоненты и стили, кастомные стили, обновления, кастомизации, локальные и detached-компоненты, пресеты, технические и актуальные компоненты, ошибки канала и темизации. Актуальные компоненты используются как инвентаризация и не входят в общий счётчик проблем.

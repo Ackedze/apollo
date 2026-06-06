@@ -5,6 +5,7 @@ import {
 import { deprecatedStyleSourceFileSet } from '../config/deprecatedStyleSources';
 
 export type StyleMetadataEntry = {
+  key: string;
   label: string;
   library?: string;
   sourceFile?: string;
@@ -42,6 +43,7 @@ export async function ensureStyleMetadataLoaded(): Promise<void> {
           );
 
           map.set(style.key, {
+            key: style.key,
             label,
             library: libraryName || undefined,
             sourceFile: sourceFile || undefined,
@@ -186,7 +188,7 @@ export function extractStyleKey(styleId: string): string | null {
   return extracted || null;
 }
 
-function getStyleMetadataFromKnownKey(
+export function getStyleMetadataFromKnownKey(
   styleKey: string,
 ): StyleMetadataEntry | null {
   return styleMetadataMap?.get(styleKey) ?? null;

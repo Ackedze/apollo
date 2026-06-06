@@ -24,6 +24,20 @@ export type DiffEntry = {
   suppressAsHostControlledNestedProperty?: boolean;
   suppressionReason?: string | null;
   diffKind?: 'paint' | 'text-style' | 'layout' | 'shape' | 'opacity' | 'other';
+  details?: DiffDetails;
+};
+
+export type DiffValueDetails = {
+  value: string | number | null;
+  resourceType?: 'style' | 'token' | 'color';
+  resourceId?: string | null;
+  displayName?: string | null;
+};
+
+export type DiffDetails = {
+  property: string;
+  reference: DiffValueDetails;
+  actual: DiffValueDetails;
 };
 
 type DiffResult = {
@@ -303,6 +317,11 @@ function compareNode(
           path,
           `Отступ между элементами: ${referenceLayout.itemSpacing ?? '—'} → ${actualLayout.itemSpacing ?? '—'}`,
           'layout',
+          {
+            property: 'layout.itemSpacing',
+            reference: { value: referenceLayout.itemSpacing ?? null },
+            actual: { value: actualLayout.itemSpacing ?? null },
+          },
         );
       }
     }
@@ -329,6 +348,21 @@ function compareNode(
             path,
             `Отступ между элементами (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
             'layout',
+            {
+              property: 'layout.itemSpacingToken',
+              reference: {
+                value: formattedReferenceToken,
+                resourceType: 'token',
+                resourceId: referenceLayout.itemSpacingToken,
+                displayName: formattedReferenceToken,
+              },
+              actual: {
+                value: formattedActualToken,
+                resourceType: 'token',
+                resourceId: actualToken,
+                displayName: formattedActualToken,
+              },
+            },
           );
         }
       }
@@ -514,6 +548,11 @@ function comparePadding(
         path,
         `Паддинг ${label(side)}: ${b ?? '—'} → ${a ?? '—'}`,
         'layout',
+        {
+          property: `layout.padding.${side}`,
+          reference: { value: b },
+          actual: { value: a },
+        },
       );
       continue;
     }
@@ -541,6 +580,21 @@ function comparePadding(
           path,
           `Паддинг ${label(side)} (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
           'layout',
+          {
+            property: `layout.paddingTokens.${side}`,
+            reference: {
+              value: formattedReferenceToken,
+              resourceType: 'token',
+              resourceId: refToken,
+              displayName: formattedReferenceToken,
+            },
+            actual: {
+              value: formattedActualToken,
+              resourceType: 'token',
+              resourceId: actualToken,
+              displayName: formattedActualToken,
+            },
+          },
         );
       }
     }
@@ -610,6 +664,31 @@ function compareStyle(
     path,
     `Стиль ${label}: ${formattedReference} → ${formattedActual}`,
     label === 'текст' ? 'text-style' : 'paint',
+    {
+      property:
+        label === 'текст'
+          ? 'styles.text'
+          : label === 'заливка'
+            ? 'styles.fill'
+            : 'styles.stroke',
+      reference: {
+        value: formattedReference,
+        resourceType: 'style',
+        resourceId: reference ?? null,
+        displayName: formattedReference,
+      },
+      actual: actual
+        ? {
+            value: formattedActual,
+            resourceType: 'style',
+            resourceId: actual,
+            displayName: formattedActual,
+          }
+        : {
+            value: formattedActual,
+            displayName: formattedActual,
+          },
+    },
   );
 
   return true;
@@ -685,6 +764,11 @@ function comparePaint(
         path,
         `${label}: — → ${actualValue.text}`,
         label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
+        {
+          property: label === 'обводка' ? 'stroke' : 'fill',
+          reference: { value: null },
+          actual: paintValueToDiffValue(actualValue),
+        },
       );
     }
     return;
@@ -752,7 +836,23 @@ function comparePaint(
     path,
     `${label}: ${formattedReference} → ${formattedActual}`,
     label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
+    {
+      property: label === 'обводка' ? 'stroke' : 'fill',
+      reference: paintValueToDiffValue(referenceValue),
+      actual: actualValue
+        ? paintValueToDiffValue(actualValue)
+        : { value: null },
+    },
   );
+}
+
+function paintValueToDiffValue(value: PaintValueDescription): DiffValueDetails {
+  return {
+    value: value.text,
+    resourceType: value.kind,
+    resourceId: value.id,
+    displayName: value.text,
+  };
 }
 
 function compareStroke(
@@ -834,6 +934,12 @@ function compareStroke(
         referenceNode,
         path,
         `Толщина обводки: ${reference.weight ?? '—'} → ${actualWeight ?? '—'}`,
+        'shape',
+        {
+          property: 'stroke.weight',
+          reference: { value: reference.weight ?? null },
+          actual: { value: actualWeight },
+        },
       );
     }
   }
@@ -894,6 +1000,21 @@ function compareRadius(
           path,
           `Скругления (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
           'layout',
+          {
+            property: 'radiusToken',
+            reference: {
+              value: formattedReferenceToken,
+              resourceType: 'token',
+              resourceId: referenceToken,
+              displayName: formattedReferenceToken,
+            },
+            actual: {
+              value: formattedActualToken,
+              resourceType: 'token',
+              resourceId: actualToken,
+              displayName: formattedActualToken,
+            },
+          },
         );
       }
     }
@@ -909,6 +1030,11 @@ function compareRadius(
     path,
     `Скругления: ${formatRadius(reference)} → ${formatRadius(actual)}`,
     'layout',
+    {
+      property: 'radius',
+      reference: { value: formatRadius(reference) },
+      actual: { value: formatRadius(actual) },
+    },
   );
 }
 
@@ -961,6 +1087,22 @@ function compareOpacity(
           referenceNode,
           path,
           `Прозрачность (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+          'opacity',
+          {
+            property: 'opacityToken',
+            reference: {
+              value: formattedReferenceToken,
+              resourceType: 'token',
+              resourceId: referenceToken,
+              displayName: formattedReferenceToken,
+            },
+            actual: {
+              value: formattedActualToken,
+              resourceType: 'token',
+              resourceId: actualToken,
+              displayName: formattedActualToken,
+            },
+          },
         );
       }
     }
@@ -972,6 +1114,12 @@ function compareOpacity(
     referenceNode,
     path,
     `Прозрачность: ${normalizedReference ?? '—'} → ${normalizedActual ?? '—'}`,
+    'opacity',
+    {
+      property: 'opacity',
+      reference: { value: normalizedReference },
+      actual: { value: normalizedActual },
+    },
   );
 }
 
@@ -1008,6 +1156,7 @@ function pushDiff(
   path: string,
   message: string,
   diffKind: DiffEntry['diffKind'] = 'other',
+  details?: DiffDetails,
 ) {
   const isHostNestedInstanceRoot =
     (referenceNode.referenceOrigin ?? 'host') === 'host' &&
@@ -1042,6 +1191,7 @@ function pushDiff(
         (isHostNestedInstanceRoot ? '' : null),
     },
     diffKind,
+    details,
   });
 }
 

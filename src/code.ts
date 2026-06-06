@@ -43,6 +43,7 @@ import {
 import {
   ensureStyleMetadataLoaded,
   extractStyleKey,
+  getStyleMetadataFromKnownKey,
   isKnownStyleId,
   normalizeStyleId,
   resolveStyleLabelForDiff,
@@ -83,6 +84,9 @@ import {
   variantMatchesSourceWithDefaultExtras,
   variantPropertiesEqual,
 } from './utils/variantProperties';
+import { buildApolloStatsReport } from './stats/report';
+import { submitApolloStatsReport } from './stats/collector';
+import type { StatsResource } from './stats/types';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
@@ -173,6 +177,7 @@ let lastAuditChannel: AuditChannel = 'Desktop';
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
+const APOLLO_VERSION = '0.1.0';
 
 class AuditCancelledError extends Error {
   constructor() {
@@ -184,6 +189,7 @@ class AuditCancelledError extends Error {
 type TokenLabelEntry = {
   label: string;
   library?: string;
+  sourceFile?: string;
   resolvedType?: string;
 };
 
@@ -216,6 +222,7 @@ async function runAudit(
   let finished = false;
 
   const auditStart = getTimestamp();
+  const auditStartedAt = new Date();
 
   const finalize = (status: 'finished' | 'cancelled') => {
     if (finished) return;
@@ -335,6 +342,7 @@ async function runAudit(
     const customStyleReasonOptions: CustomStyleCollectionOptions = {
       tokenLabelMap: tokenLabelMap ?? new Map(),
       isKnownStyleId,
+      resolveStyleMetadata,
     };
     const deprecatedStyleOptions: DeprecatedStyleCollectionOptions = {
       resolveStyleMetadata,
@@ -397,6 +405,61 @@ async function runAudit(
         visibleViews,
       },
     });
+
+    try {
+      const currentUser = figma.currentUser;
+      const selectionStats = await Promise.all(
+        selection.map(async (node) => ({
+          nodeId: node.id,
+          name: node.name,
+          nodeType: node.type,
+          path: buildNodePath(node),
+          componentKey:
+            node.type === 'INSTANCE' || node.type === 'COMPONENT'
+              ? await getComponentKeyCached(node, componentKeyCache)
+              : null,
+        })),
+      );
+      const report = buildApolloStatsReport({
+        pluginVersion: APOLLO_VERSION,
+        user: {
+          id: currentUser?.id ?? null,
+          name: currentUser?.name ?? 'Unknown User',
+        },
+        figma: {
+          fileKey: figma.fileKey ?? null,
+          fileName: figma.root.name ?? null,
+          editorType: figma.editorType,
+        },
+        scan: {
+          channel: selectedChannel,
+          startedAt: auditStartedAt,
+          finishedAt: new Date(),
+          selection: selectionStats,
+          scannedComponents: checkState.totalItems,
+        },
+        views: {
+          deprecatedComponents: checkState.relevanceBuckets.deprecated,
+          deprecatedStyles: checkState.deprecatedStyleEntries,
+          customStyles: checkState.customStyleEntries,
+          updates: checkState.relevanceBuckets.update,
+          customizations: changesResults,
+          localComponents: visibleLocalItems,
+          detachedComponents: checkState.detachedEntries,
+          presets: checkState.presetItems,
+          technicalComponents: checkState.relevanceBuckets.technical,
+          currentComponents: checkState.relevanceBuckets.current,
+          wrongChannel: checkState.wrongChannelEntries,
+          themization: checkState.themizationEntries,
+        },
+        resolveStyleResource: resolveStyleStatsResource,
+        resolveTokenResource: resolveTokenStatsResource,
+      });
+      void submitApolloStatsReport(report);
+    } catch (error) {
+      console.warn('[Apollo] failed to prepare stats report', error);
+    }
+
     finalize('finished');
   } catch (error) {
     if (error instanceof AuditCancelledError) {
@@ -2476,6 +2539,7 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
             const entry: TokenLabelEntry = {
               label,
               library: collectionName || catalogLibrary,
+              sourceFile: catalog.meta?.fileName ?? undefined,
               resolvedType:
                 typeof variable.resolvedType === 'string'
                   ? variable.resolvedType
@@ -2531,6 +2595,41 @@ function resolveTokenLabelForDiff(token: string): string | null {
   if (!aliasKey) return token;
   const label = tokenLabelMap?.get(aliasKey);
   return label?.label ?? token;
+}
+
+function resolveTokenStatsResource(
+  tokenId: string,
+  displayName: string | null,
+): StatsResource | null {
+  const tokenKey = extractAliasKey(tokenId);
+  if (!tokenKey) {
+    return null;
+  }
+  const metadata = tokenLabelMap?.get(tokenId) ?? tokenLabelMap?.get(tokenKey);
+  return {
+    type: 'token',
+    name: metadata?.label ?? displayName ?? tokenKey,
+    key: tokenKey,
+    id: tokenId,
+    library: metadata?.library ?? null,
+    sourceFile: metadata?.sourceFile ?? null,
+  };
+}
+
+function resolveStyleStatsResource(
+  styleId: string,
+  displayName: string | null,
+): StatsResource | null {
+  const styleKey = extractStyleKey(styleId) ?? styleId;
+  const metadata = getStyleMetadataFromKnownKey(styleKey);
+  return {
+    type: 'style',
+    name: metadata?.label ?? displayName ?? styleKey,
+    key: metadata?.key ?? styleKey,
+    id: styleId,
+    library: metadata?.library ?? null,
+    sourceFile: metadata?.sourceFile ?? null,
+  };
 }
 
 function isColorTokenForPaintDiff(token: string): boolean {

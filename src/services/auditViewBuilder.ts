@@ -3,11 +3,13 @@ import {
 } from '../reference/library';
 import type { DiffEntry } from '../structure/diff';
 import type {
+  AuditResource,
   AuditItem,
   CustomStyleEntry,
   DetachedEntry,
   PathSegment,
 } from '../types/audit';
+import type { StyleMetadataEntry } from './styleMetadata';
 import {
   applyCustomStyleFilters,
   shouldIgnorePaintCustomStyle,
@@ -21,8 +23,14 @@ import {
 } from '../utils/nodeHelpers';
 
 export interface CustomStyleCollectionOptions {
-  tokenLabelMap: Map<string, { label: string; library?: string }>;
+  tokenLabelMap: Map<
+    string,
+    { label: string; library?: string; sourceFile?: string }
+  >;
   isKnownStyleId: (styleId: string | null | undefined) => Promise<boolean>;
+  resolveStyleMetadata: (
+    styleId: string | null | undefined,
+  ) => Promise<StyleMetadataEntry | null>;
 }
 
 /**
@@ -49,13 +57,131 @@ export async function collectCustomStyles(
           name: node.name,
           nodeType: node.type,
           pageName: getPageName(node),
+          path: buildNodePath(node),
           visible: isNodeVisible(node),
           reason,
+          resource: await resolveCustomStyleResource(node, reason, options),
         });
       }
     }
 
   return applyCustomStyleFilters(node, entries);
+}
+
+async function resolveCustomStyleResource(
+  node: SceneNode,
+  reason: string,
+  options: CustomStyleCollectionOptions,
+): Promise<AuditResource> {
+  if (reason === 'fill' || reason === 'stroke') {
+    const styleField = reason === 'fill' ? 'fillStyleId' : 'strokeStyleId';
+    const paintsField = reason === 'fill' ? 'fills' : 'strokes';
+    const styleId = readStyleId(node, styleField);
+    if (styleId) {
+      return resolveStyleResource(styleId, reason, options);
+    }
+
+    const tokenResource = resolvePaintTokenResource(
+      (node as any)[paintsField],
+      options.tokenLabelMap,
+    );
+    if (tokenResource) {
+      return tokenResource;
+    }
+
+    return {
+      type: 'raw-value',
+      name: reason === 'fill' ? 'Raw fill' : 'Raw stroke',
+      key: null,
+      library: null,
+    };
+  }
+
+  if (reason.startsWith('effect:')) {
+    const styleId = readStyleId(node, 'effectStyleId');
+    if (styleId) {
+      return resolveStyleResource(styleId, reason.slice('effect:'.length), options);
+    }
+    return {
+      type: 'raw-value',
+      name: reason.slice('effect:'.length) || 'Raw effect',
+      key: null,
+      library: null,
+    };
+  }
+
+  return {
+    type: 'raw-value',
+    name: reason || 'Custom style',
+    key: null,
+    library: null,
+  };
+}
+
+function readStyleId(node: SceneNode, field: string): string | null {
+  const value = (node as any)[field];
+  return typeof value === 'string' && value ? value : null;
+}
+
+async function resolveStyleResource(
+  styleId: string,
+  fallbackName: string,
+  options: CustomStyleCollectionOptions,
+): Promise<AuditResource> {
+  const metadata = await options.resolveStyleMetadata(styleId);
+  const style = await getStyleById(styleId);
+  return {
+    type: 'style',
+    name: metadata?.label ?? style?.name ?? fallbackName,
+    key: metadata?.key ?? style?.key ?? null,
+    id: styleId,
+    library: metadata?.library ?? null,
+    sourceFile: metadata?.sourceFile ?? null,
+  };
+}
+
+async function getStyleById(styleId: string): Promise<BaseStyle | null> {
+  try {
+    return typeof figma.getStyleByIdAsync === 'function'
+      ? await figma.getStyleByIdAsync(styleId)
+      : null;
+  } catch (_error) {
+    return null;
+  }
+}
+
+function resolvePaintTokenResource(
+  paints: readonly Paint[] | PluginAPI['mixed'] | undefined,
+  tokenLabelMap: Map<
+    string,
+    { label: string; library?: string; sourceFile?: string }
+  >,
+): AuditResource | null {
+  if (!Array.isArray(paints)) {
+    return null;
+  }
+
+  for (const paint of paints) {
+    if (!paint || paint.visible === false || paint.type !== 'SOLID') {
+      continue;
+    }
+    const tokenId = paint.boundVariables?.color?.id ?? null;
+    const tokenKey = extractAliasKey(tokenId ?? undefined);
+    if (!tokenId || !tokenKey) {
+      continue;
+    }
+    const metadata = tokenLabelMap.get(tokenId) ?? tokenLabelMap.get(tokenKey);
+    return {
+      type: 'token',
+      name: metadata?.label ?? tokenKey,
+      key: tokenKey,
+      id: tokenId,
+      library: metadata?.library ?? null,
+      sourceFile: metadata?.sourceFile ?? null,
+    };
+  }
+
+  return null;
 }
 
 /**

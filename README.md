@@ -192,6 +192,28 @@
 
 Подробный технический отчёт по найденным рискам хранится в [`AUDIT.md`](./AUDIT.md), но перед использованием стоит учитывать, что этот файл частично устарел и не полностью отражает текущее состояние проекта.
 
+## Локальная статистика проверок
+
+После каждой успешно завершённой проверки Apollo формирует JSON-отчёт и автоматически отправляет его в production Edge Function:
+
+```text
+POST https://dwjnndpxzqizrcwpasrs.supabase.co/functions/v1/apollo-stats
+```
+
+Отчёты сохраняются в:
+
+```text
+Ackedze/design-system_ab/apollo-stats/<figma-user>/<figma-user>_dd-mm-yyyy_hh-mm-ss.json
+```
+
+Отчёт содержит все категории аудита, включая устаревшие компоненты и стили, кастомные стили, обновления, кастомизации, локальные и detached-компоненты, пресеты, технические и актуальные компоненты, ошибки канала и темизации. Актуальные компоненты используются как инвентаризация и не входят в общий счётчик проблем.
+
+Пользователю плагина не нужны GitHub token, Supabase-аккаунт, локальный сервис или дополнительная настройка. GitHub token хранится только в Supabase secret и запрещён в `src`, `manifest.json`, build-конфиге и собранном plugin bundle. Ошибка загрузки статистики не прерывает аудит.
+
+Локальный `services/apollo-stats-collector` сохранён только как инструмент разработки и не используется production-сборкой Apollo.
+
+Публичный слой каталогов перед приватизацией `Ackedze/design-system_ab` должен быть перенесён на GitHub Pages репозитория `Ackedze/apollo`. Workflow находится в [`.github/workflows/publish-catalogs-pages.yml`](./.github/workflows/publish-catalogs-pages.yml). До успешной публикации и проверки нового `referenceSourcesMVP.json` текущий репозиторий каталогов нельзя переводить в private.
+
 ## Структура проекта
 - [`src/code.ts`](./src/code.ts) — основной runtime плагина.
 - [`src/ui.html`](./src/ui.html) — интерфейс и клиентская логика панели.
@@ -199,6 +221,7 @@
 - [`src/reference`](./src/reference) — загрузка и нормализация reference-каталогов.
 - [`src/structure`](./src/structure) — snapshot и diff.
 - [`src/services`](./src/services) — подготовка представлений для UI.
+- [`src/stats`](./src/stats) — формирование и отправка локальных отчётов проверок.
 - [`src/utils`](./src/utils) — вспомогательные утилиты.
 - [`JSONS`](./JSONS) — локальные JSON-артефакты справочников для regression-checks.
 - [`scripts`](./scripts) — точечные regression-checks и отчётные скрипты.
@@ -253,6 +276,7 @@ npm run test:nested-variants
 npm run test:item-spacing-diff
 npm run test:variant-structure-paths
 npm run test:snapshot-tree
+npm run test:stats-report
 ```
 
 Скрипты проверяют:
@@ -265,6 +289,7 @@ npm run test:snapshot-tree
 - отсутствие ложных `itemSpacing` diff-ов для проблемных variant-комбинаций;
 - корректную привязку reference-структуры к выбранному variant path;
 - сохранение `id/parentId/visible` в actual snapshot, от которых зависит корректный layout diff.
+- формирование статистического отчёта, обязательные категории, resource metadata и исключение актуальных компонентов из счётчика проблем.
 
 ### Отладка аудита
 Trace mode включается через `pluginData`-флаг `apollo.debug.audit`.
@@ -300,5 +325,6 @@ npm run test:nested-variants
 npm run test:item-spacing-diff
 npm run test:variant-structure-paths
 npm run test:snapshot-tree
+npm run test:stats-report
 npm run report:nested-overrides
 ```

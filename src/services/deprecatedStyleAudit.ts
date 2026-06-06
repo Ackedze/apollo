@@ -1,6 +1,7 @@
 import type { DeprecatedStyleEntry } from '../types/audit';
 import type { StyleMetadataEntry } from './styleMetadata';
 import {
+  buildNodePath,
   getPageName,
   isNodeVisible,
 } from '../utils/nodeHelpers';
@@ -47,8 +48,11 @@ export async function collectDeprecatedStyleUsages(
       name: node.name,
       nodeType: node.type,
       pageName,
+      path: buildNodePath(node),
       visible,
       reason: candidate.reason,
+      styleId: candidate.styleId,
+      styleKey: metadata.key,
       styleLabel: metadata.label,
       sourceFile: metadata.sourceFile ?? 'Unknown style catalog',
       sourceLibrary: metadata.library ?? metadata.sourceFile ?? 'Unknown style catalog',

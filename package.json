@@ -16,6 +16,7 @@
     "test:deprecated-styles": "node scripts/test-deprecated-styles.js",
     "test:variant-structure-paths": "node scripts/test-variant-structure-paths.js",
     "test:snapshot-tree": "node scripts/test-snapshot-tree.js",
+    "test:stats-report": "node scripts/test-stats-report.js",
     "report:nested-overrides": "node scripts/report-nested-overrides.js"
   },
   "devDependencies": {

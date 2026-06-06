@@ -49,8 +49,10 @@ export interface CustomStyleEntry {
   name: string;
   nodeType: SceneNode['type'] | null;
   pageName: string;
+  path: string;
   visible: boolean;
   reason: string;
+  resource: AuditResource;
 }
 
 export interface DeprecatedStyleEntry {
@@ -58,11 +60,23 @@ export interface DeprecatedStyleEntry {
   name: string;
   nodeType: SceneNode['type'] | null;
   pageName: string;
+  path: string;
   visible: boolean;
   reason: 'fill' | 'stroke';
+  styleId: string;
+  styleKey: string;
   styleLabel: string;
   sourceFile: string;
   sourceLibrary?: string;
+}
+
+export interface AuditResource {
+  type: 'component' | 'component-variant' | 'style' | 'token' | 'raw-value';
+  name: string;
+  key: string | null;
+  id?: string | null;
+  library: string | null;
+  sourceFile?: string | null;
 }
 
 export interface ThemeAuditEntry {

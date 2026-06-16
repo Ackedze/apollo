@@ -93,7 +93,8 @@
 Важно: если parent nested materialization уже несёт host-controlled paint, более глубокий standalone nested reference не затирает это значение. Например, `TitleView → FilterCompanySelect → CompactTag → Arrow / PaintMe` сравнивается с expected из `TitleView/FilterCompanySelect`, а не со standalone `FilterTag / Arrow`.
 Важно: если policy-карта ещё не знает inner variant key, Apollo дополнительно сохраняет parent-reference для component-qualified путей вида `[D] CompactTag / Arrow / Fixer / PaintMe`. Это не allowlist: ручная перекраска всё равно остаётся кастомизацией, но expected берётся из более специфичной сборки.
 Важно: ложные кастомизации для nested overrides теперь подавляются универсально, если reference-каталоги показывают, что хост-компонент управляет свойством вложенного компонента. Сейчас policy покрывает не только `fill/stroke`, `BgColor` и `Border`, но и nested `typographyToken`/`text style`.
-Важно: отдельный suppression введён и для root-level nested variant switch. Если на одном и том же path actual и reference указывают на разные variant keys одной и той же component family, Apollo больше не считает это кастомизацией layout/property самого вложенного узла.
+Важно: отдельный suppression введён и для root-level nested variant switch. Если на одном и том же path actual и reference указывают на разные variant keys одной и той же component family, Apollo больше не считает это кастомизацией layout/paint/property самого вложенного узла.
+Важно: если в host reference у nested instance есть `variantProperties`, но нет `componentKey`, Apollo восстанавливает family key по уникальному имени компонента из загруженного каталога. Это нужно для кейсов вроде `BackgroundPlate → Style Level 1`, где разрешённый switch `Type=Secondary` не должен превращаться в ложный diff заливки.
 Важно: current linked instances внутри `instance` локального компонента теперь тоже форсируются в diff, даже если у самого внутреннего инстанса нет direct `overrides`. Это устраняет пропуски кастомизаций, которые раньше были видны только в оригинале локального компонента, но терялись в его инстансах.
 Важно: старые path-based regex-исключения для `PaintMe`, `IconView` и похожих nested color-кейсов удалены; работоспособность suppression теперь определяется именно catalog-derived policy-слоем.
 Важно: у каждого diff теперь есть явный `DiffContext`, а не набор постепенно наращённых служебных полей. Это снижает риск регрессий в suppression/filter-слое и делает trace-вывод стабильнее.
@@ -105,7 +106,7 @@
 - Для host-controlled nested overrides Apollo регистрирует path ownership и по variant key, и по family component key вложенного компонента, чтобы runtime Figma и JSON-каталоги не расходились по ключу одного и того же nested-instance.
 - Имена nested-компонентов в allowlist нормализуются из catalog source paths вида `Web _ Core -- IconView.json`, потому что runtime может резолвить owner через index-only данные до полной загрузки каталога.
 - Nested host-controlled `typographyToken` и `text style` тоже гасятся policy-слоем, но реальные изменения текста остаются видимыми.
-- Root-level nested variant switch внутри одной component family не считается кастомизацией layout самого вложенного инстанса.
+- Root-level nested variant switch внутри одной component family не считается кастомизацией layout/paint самого вложенного инстанса.
 - Для stateful nested-компонентов reference теперь резолвится по `variantProperties`, чтобы `SelectedState/Type/View/Preset` не подменялись дефолтным variant.
 - `itemSpacing` сравнивается только для контейнеров, где spacing реально влияет на layout.
 - Linked instances внутри local-component context не пропускаются даже без direct overrides на внутреннем инстансе.

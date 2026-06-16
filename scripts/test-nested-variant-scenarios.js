@@ -826,6 +826,12 @@ function main() {
       if (key === 'variant-c') {
         return { key: 'family-b', platform: 'Desktop' };
       }
+      if (key === 'style-level-1') {
+        return { key: 'style-level-1', platform: 'Desktop' };
+      }
+      if (key === 'style-secondary') {
+        return { key: 'style-level-1', platform: 'Desktop' };
+      }
       return null;
     },
   };
@@ -979,6 +985,114 @@ function main() {
     ),
     true,
     'Host-controlled nested paint path must also resolve by family key alias',
+  );
+
+  const backgroundPlate = {
+    key: 'background-plate',
+    name: '[D] BackgroundPlate',
+    structure: [
+      {
+        id: 1,
+        parentId: null,
+        path: 'Position=Level 1 (outer)',
+        type: 'INSTANCE',
+        name: 'Position=Level 1 (outer)',
+        visible: true,
+        radius: null,
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: 'Position=Level 1 (outer) / [D] Style Level 1',
+        type: 'INSTANCE',
+        name: '[D] Style Level 1',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          variantProperties: {
+            BackgroundColor: 'base-bg-alt (gray)',
+            Skeleton: 'False',
+            Type: 'Primary',
+          },
+        },
+        fill: { token: 'base-bg-alt-secondary' },
+      },
+    ],
+  };
+  const styleLevel = {
+    key: 'style-level-1',
+    name: '[D] Style Level 1',
+    variants: [
+      {
+        key: 'style-primary',
+        name: 'BackgroundColor=base-bg-alt (gray), Type=Primary, Skeleton=False',
+        properties: {
+          BackgroundColor: 'base-bg-alt (gray)',
+          Skeleton: 'False',
+          Type: 'Primary',
+        },
+      },
+      {
+        key: 'style-secondary',
+        name: 'BackgroundColor=base-bg-alt (gray), Type=Secondary, Skeleton=False',
+        properties: {
+          BackgroundColor: 'base-bg-alt (gray)',
+          Skeleton: 'False',
+          Type: 'Secondary',
+        },
+      },
+    ],
+  };
+
+  library.__test_hydrateNestedInstanceComponentKeys(backgroundPlate, [
+    backgroundPlate,
+    styleLevel,
+  ]);
+
+  assert.equal(
+    backgroundPlate.structure[1].componentInstance.componentKey,
+    'style-level-1',
+    'Missing nested component keys must be restored from unique component names',
+  );
+
+  const nestedVariantDiff = diff.diffStructures(
+    [
+      Object.assign({}, backgroundPlate.structure[0], {
+        nodeId: 'actual-root',
+      }),
+      Object.assign({}, backgroundPlate.structure[1], {
+        nodeId: 'actual-style',
+        componentInstance: {
+          componentKey: 'style-secondary',
+          variantProperties: {
+            BackgroundColor: 'base-bg-alt (gray)',
+            Skeleton: 'False',
+            Type: 'Secondary',
+          },
+        },
+        fill: { token: 'neutral-translucent-100' },
+      }),
+    ],
+    backgroundPlate.structure,
+    {
+      resolveTokenLabel(token) {
+        return {
+          'base-bg-alt-secondary': 'base-bg-alt/secondary',
+          'neutral-translucent-100': 'neutral-translucent/100',
+        }[token] ?? token;
+      },
+    },
+  ).diffs.find((entry) => entry.message.includes('заливка:'));
+
+  assert.equal(
+    nestedVariantDiff?.message,
+    'заливка: base-bg-alt/secondary → neutral-translucent/100',
+    'Nested Style Level variant switch reproduces the BackgroundPlate fill diff before suppression',
+  );
+  assert.deepEqual(
+    suppressionPolicy.evaluateDiffSuppression(nestedVariantDiff, deps),
+    { suppressed: true, reason: 'nested-variant-root-switch' },
+    'Allowed nested Style Level variant switches inside BackgroundPlate must not surface as fill customizations',
   );
 
   console.log('Nested variant and suppression policy regression checks passed');

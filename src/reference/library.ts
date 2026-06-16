@@ -628,6 +628,17 @@ export function __test_registerHostControlledNestedPath(
   addHostControlledPath(hostControlledLayoutPaths, componentKeys, relativePath);
 }
 
+export function __test_hydrateNestedInstanceComponentKeys(
+  component: AthenaComponent,
+  components: AthenaComponent[],
+): AthenaComponent {
+  hydrateNestedInstanceComponentKeys(
+    component,
+    buildComponentKeyByUniqueName([{ meta: { fileName: 'test' }, components }]),
+  );
+  return component;
+}
+
 function isAthenaCatalog(payload: unknown): payload is AthenaCatalog {
   return Boolean(
     payload &&
@@ -985,6 +996,105 @@ function normalizeComponentPaints(component: AthenaComponent) {
   }
 }
 
+function buildComponentKeyByUniqueName(
+  modules: AthenaCatalog[],
+): Map<string, string> {
+  const keysByName = new Map<string, Set<string>>();
+
+  for (const module of modules) {
+    for (const component of module.components ?? []) {
+      const name = normalizeComponentInstanceName(component.name);
+      const key = component.key;
+      if (!name || !key) {
+        continue;
+      }
+
+      const keys = keysByName.get(name) ?? new Set<string>();
+      keys.add(key);
+      keysByName.set(name, keys);
+    }
+  }
+
+  const unique = new Map<string, string>();
+  for (const [name, keys] of keysByName.entries()) {
+    if (keys.size === 1) {
+      unique.set(name, Array.from(keys)[0] ?? '');
+    }
+  }
+
+  return unique;
+}
+
+function hydrateNestedInstanceComponentKeys(
+  component: AthenaComponent,
+  componentKeyByUniqueName: Map<string, string>,
+) {
+  if (!componentKeyByUniqueName.size) {
+    return;
+  }
+
+  if (Array.isArray(component.structure)) {
+    for (const node of component.structure) {
+      hydrateNodeInstanceComponentKey(node, componentKeyByUniqueName);
+    }
+  }
+
+  if (!component.variantStructures) {
+    return;
+  }
+
+  for (const patches of Object.values(component.variantStructures)) {
+    if (!Array.isArray(patches)) {
+      continue;
+    }
+
+    for (const patch of patches) {
+      if (!patch) {
+        continue;
+      }
+
+      if (patch.op === 'update') {
+        hydrateNodeInstanceComponentKey(patch.value, componentKeyByUniqueName);
+      } else if (patch.op === 'add') {
+        hydrateNodeInstanceComponentKey(patch.node, componentKeyByUniqueName);
+      }
+    }
+  }
+}
+
+function hydrateNodeInstanceComponentKey(
+  node: Partial<DSStructureNode> | null | undefined,
+  componentKeyByUniqueName: Map<string, string>,
+) {
+  if (!node || node.type !== 'INSTANCE' || !node.componentInstance) {
+    return;
+  }
+
+  if (node.componentInstance.componentKey) {
+    return;
+  }
+
+  const normalizedName = normalizeComponentInstanceName(node.name);
+  const componentKey = normalizedName
+    ? componentKeyByUniqueName.get(normalizedName)
+    : null;
+  if (!componentKey) {
+    return;
+  }
+
+  node.componentInstance = Object.assign({}, node.componentInstance, {
+    componentKey,
+  });
+}
+
+function normalizeComponentInstanceName(
+  value: string | null | undefined,
+): string {
+  return String(value ?? '')
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
 function normalizePaintFields(target: any) {
   if (!target || typeof target !== 'object') return;
 
@@ -1086,6 +1196,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   const uniqueKeys = new Set<string>();
 
   const validationWarnings: string[] = [];
+  const componentKeyByUniqueName = buildComponentKeyByUniqueName(modules);
 
   for (const module of catalogs) {
     for (const component of module.components ?? []) {
@@ -1104,6 +1215,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
       }
 
       prepareComponent(component, module);
+      hydrateNestedInstanceComponentKeys(component, componentKeyByUniqueName);
       indexComponentByKey(component as unknown as LibraryComponent);
 
       registerPartUsage(component as unknown as LibraryComponent);
@@ -1144,10 +1256,12 @@ function hydrateAdditionalCatalogs(modules: AthenaCatalog[]) {
   }
 
   catalogs = catalogs.concat(modules);
+  const componentKeyByUniqueName = buildComponentKeyByUniqueName(catalogs);
 
   for (const module of modules) {
     for (const component of module.components ?? []) {
       prepareComponent(component, module);
+      hydrateNestedInstanceComponentKeys(component, componentKeyByUniqueName);
       indexComponentByKey(component as unknown as LibraryComponent);
       registerPartUsage(component as unknown as LibraryComponent);
     }

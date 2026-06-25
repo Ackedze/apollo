@@ -87,6 +87,15 @@ import {
 import { buildApolloStatsReport } from './stats/report';
 import { submitApolloStatsReport } from './stats/collector';
 import type { StatsResource } from './stats/types';
+import {
+  applyAssessmentPresentation,
+  assessCustomizationDiffs,
+  collapsePatternViolationDiffs,
+  collapseConfiguredSemanticVariantDiffs,
+  collapseSemanticVariantDiffs,
+  createNestedContextEvidence,
+  createPatternContextResolver,
+} from './assessment/customizationAssessment';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
@@ -824,7 +833,59 @@ async function classifyNode(
   const markedDiffs = diffResult.diffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
-  const allowlistedDiffs = applyAllowedCustomizationRules(markedDiffs, {
+  const hostDiffs =
+    shouldDiff && referenceStructure && alignedActualStructure
+      ? diffStructures(alignedActualStructure, referenceStructure, {
+          strict: STRICT_COMPARISON,
+          resolveTokenLabel: resolveTokenLabelForDiff,
+          resolveStyleLabel: resolveStyleLabelForDiff,
+          isPaintToken: isColorTokenForPaintDiff,
+        }).diffs
+      : [];
+  const assessedDiffs = assessCustomizationDiffs(markedDiffs, {
+    hostDiffs,
+    hostReference: referenceStructure ?? [],
+    nestedContextEvidence: alignedActualStructure
+      ? createNestedContextEvidence(alignedActualStructure, (instance) => {
+          const nestedReference = findComponent(
+            instance.componentInstance?.componentKey ?? '',
+          );
+          return resolveStructureForInstance(
+            nestedReference,
+            instance.componentInstance ?? null,
+          );
+        }, markedDiffs, (nestedComponentKey) =>
+          findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+        )
+      : undefined,
+    resolvePatternContext:
+      alignedActualStructure && referenceStructure
+        ? createPatternContextResolver({
+            actualStructure: alignedActualStructure,
+            hostReference: referenceStructure,
+            hostComponentKey: ref?.key ?? componentKey ?? null,
+            hostComponentName:
+              ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+            resolveComponent: findComponent,
+          })
+        : undefined,
+  });
+  const semanticDiffs = collapsePatternViolationDiffs(
+    applyAssessmentPresentation(
+      collapseSemanticVariantDiffs(
+        collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
+          actualStructure: alignedActualStructure ?? [],
+          hostReference: referenceStructure ?? [],
+          hostComponentKey: ref?.key ?? componentKey ?? null,
+          resolveFamilyKey: (nestedComponentKey) =>
+            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+        }),
+        alignedActualStructure ?? [],
+      ),
+    ),
+    alignedActualStructure ?? [],
+  );
+  const allowlistedDiffs = applyAllowedCustomizationRules(semanticDiffs, {
     libraryName: ref?.source ?? null,
     componentName: node.name,
     referenceComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? null,
@@ -838,7 +899,7 @@ async function classifyNode(
     alignedActualStructure,
     expandedReferenceStructure,
     rawDiffs: diffResult.diffs,
-    markedDiffs,
+    markedDiffs: assessedDiffs,
     allowlistedDiffs,
     finalDiffs: diffs,
   });
@@ -1053,6 +1114,11 @@ async function resetCustomizationGroup(payload: {
   rootId?: string;
   nodeId?: string;
   messages?: string[];
+  remediations?: Array<{
+    kind?: string;
+    nodeId?: string;
+    properties?: Record<string, string>;
+  }>;
 }) {
   const rootId = typeof payload?.rootId === 'string' ? payload.rootId : '';
   const nodeId = typeof payload?.nodeId === 'string' ? payload.nodeId : '';
@@ -1062,8 +1128,18 @@ async function resetCustomizationGroup(payload: {
           typeof message === 'string' && message.trim().length > 0,
       )
     : [];
+  const remediations = Array.isArray(payload?.remediations)
+    ? payload.remediations.filter(
+        (item) =>
+          item?.kind === 'set-variant-properties' &&
+          typeof item.nodeId === 'string' &&
+          item.nodeId.length > 0 &&
+          item.properties &&
+          typeof item.properties === 'object',
+      )
+    : [];
 
-  if (!rootId || !nodeId || !messages.length) {
+  if (!rootId || !nodeId || (!messages.length && !remediations.length)) {
     figma.notify('Недостаточно данных для сброса изменений.');
     return;
   }
@@ -1075,6 +1151,26 @@ async function resetCustomizationGroup(payload: {
 
   if (!rootNode || !targetNode) {
     figma.notify('Не удалось найти узел для сброса изменений.');
+    return;
+  }
+
+  if (remediations.length) {
+    for (const remediation of remediations) {
+      const variantNode = await getSceneNodeById(remediation.nodeId!);
+      if (variantNode?.type !== 'INSTANCE') {
+        figma.notify('Не удалось найти вложенный компонент для смены варианта.');
+        return;
+      }
+      variantNode.setProperties(remediation.properties!);
+    }
+
+    figma.notify('Параметры компонента восстановлены.');
+    const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
+    if (rerunSelection.length) {
+      void runAudit(rerunSelection, lastAuditChannel);
+    } else {
+      void runAudit([rootNode], lastAuditChannel);
+    }
     return;
   }
 

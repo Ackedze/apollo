@@ -26,9 +26,22 @@ type RemoteReferenceLibrary = {
 
 export type RemoteReferenceCatalogList = {
   baseUrl?: string;
+  apollo?: {
+    patternRulesPath?: string;
+  };
   catalogs?: RemoteReferenceCatalogEntry[];
   libraries?: RemoteReferenceLibrary[];
 };
+
+export function resolvePatternRulesUrl(
+  payload: RemoteReferenceCatalogList,
+): string {
+  const path = payload.apollo?.patternRulesPath?.trim();
+  if (!path) {
+    throw new Error('referenceSourcesMVP.json does not define apollo.patternRulesPath');
+  }
+  return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
 
 export const apolloReferenceCatalogListUrl =
   'https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json';

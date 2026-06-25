@@ -12,6 +12,7 @@ type ResultAction = {
 type ResultValueLine = {
   label: string;
   values: string[];
+  marker?: 'Expected';
 };
 
 type ResultSubCardProps = {
@@ -121,6 +122,9 @@ export function ResultSubCard({
                 <span>{line.label}</span>
                 <span>:</span>
               </div>
+              {line.marker ? (
+                <span className={styles.valueMarker}>{line.marker}</span>
+              ) : null}
                 <div className={styles.valueBody}>
                 {line.values.map((part, index) => (
                   <React.Fragment key={`${part}:${index}`}>

@@ -1,4 +1,5 @@
 import type { DSRadii, DSStructureNode } from '../types/structures';
+import type { CustomizationAssessment } from '../assessment/types';
 import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
 
 export type DiffContext = {
@@ -25,6 +26,7 @@ export type DiffEntry = {
   suppressionReason?: string | null;
   diffKind?: 'paint' | 'text-style' | 'layout' | 'shape' | 'opacity' | 'other';
   details?: DiffDetails;
+  assessment?: CustomizationAssessment;
 };
 
 export type DiffValueDetails = {

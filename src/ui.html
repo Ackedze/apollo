@@ -429,8 +429,18 @@
           );
         }
 
-        function requestCustomizationReset(rootId, nodeId, messages) {
-          if (!rootId || !nodeId || !Array.isArray(messages) || !messages.length) {
+        function requestCustomizationReset(
+          rootId,
+          nodeId,
+          messages,
+          remediations = [],
+        ) {
+          if (
+            !rootId ||
+            !nodeId ||
+            (!Array.isArray(messages) && !Array.isArray(remediations)) ||
+            (!messages.length && !remediations.length)
+          ) {
             return;
           }
 
@@ -442,6 +452,7 @@
                   rootId,
                   nodeId,
                   messages,
+                  remediations,
                 },
               },
             },
@@ -707,15 +718,45 @@
                 const existing = groupsMap.get(groupId);
                 const parsed = parseCustomizationDiffMessage(diff.message);
                 const line = parsed
-                  ? parsed
+                  ? {
+                      ...parsed,
+                      marker:
+                        diff.assessment?.verdict === 'expected' ||
+                        diff.assessment?.verdict === 'allowed'
+                          ? 'Expected'
+                          : undefined,
+                    }
                   : {
                       label: 'Изменение',
                       values: [(diff.message || '').trim() || '—'],
+                      marker:
+                        diff.assessment?.verdict === 'expected' ||
+                        diff.assessment?.verdict === 'allowed'
+                          ? 'Expected'
+                          : undefined,
                     };
+                const canReset =
+                  diff.assessment?.verdict !== 'expected' &&
+                  diff.assessment?.verdict !== 'allowed';
+                const remediation = diff.assessment?.remediation;
 
                 if (existing) {
                   existing.lines.push(line);
-                  existing.messages.push(diff.message);
+                  if (canReset && !remediation) {
+                    existing.messages.push(diff.message);
+                  }
+                  if (
+                    remediation &&
+                    !existing.remediations.some(
+                      (item) =>
+                        item.kind === remediation.kind &&
+                        item.nodeId === remediation.nodeId &&
+                        JSON.stringify(item.properties) ===
+                          JSON.stringify(remediation.properties),
+                    )
+                  ) {
+                    existing.remediations.push(remediation);
+                  }
                   return;
                 }
 
@@ -725,15 +766,11 @@
                   onFocus: diff.nodeId
                     ? () => focusNodeById(diff.nodeId)
                     : undefined,
-                  onReset: undefined,
+                  nodeId: diff.nodeId,
                   lines: [line],
-                  messages: [diff.message],
+                  messages: canReset && !remediation ? [diff.message] : [],
+                  remediations: remediation ? [remediation] : [],
                 };
-
-                if (diff.nodeId) {
-                  group.onReset = () =>
-                    requestCustomizationReset(item.id, diff.nodeId, group.messages);
-                }
 
                 groupsMap.set(groupId, group);
               });
@@ -742,8 +779,17 @@
                 id: group.id,
                 name: group.name,
                 onFocus: group.onFocus,
-                onReset: group.onReset,
                 lines: group.lines,
+                onReset:
+                  (group.messages.length || group.remediations.length) && group.nodeId
+                    ? () =>
+                        requestCustomizationReset(
+                          item.id,
+                          group.nodeId,
+                          group.messages,
+                          group.remediations,
+                        )
+                    : undefined,
               }));
               if (!groups.length) {
                 return null;

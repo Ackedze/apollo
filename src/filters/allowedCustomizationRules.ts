@@ -45,21 +45,6 @@ type ParsedCustomizationDiff = {
 
 const allowedCustomizationRules: AllowedCustomizationRule[] = [
   {
-    id: 'status-direct-fill-tokenized',
-    componentName: 'Status',
-    property: 'fill',
-    toTokenized: true,
-    reason: 'allowed tokenized fill overrides inside Status',
-  },
-  {
-    id: 'status-nested-fill-tokenized',
-    nestedComponentName: 'Status',
-    nestedOwnerPathIncludes: 'Status',
-    property: 'fill',
-    toTokenized: true,
-    reason: 'allowed tokenized fill overrides inside nested Status',
-  },
-  {
     id: 'status-badge-paintme-fill',
     libraryName: 'Web :: Core',
     componentName: 'StatusBadge',
@@ -531,6 +516,10 @@ export function applyAllowedCustomizationRules(
   addNameAliases(componentAliases, context.referenceComponentName ?? null);
 
   return diffs.filter((diff) => {
+    if (diff.assessment && diff.assessment.verdict !== 'unknown') {
+      return true;
+    }
+
     const parsedDiff = parseCustomizationDiff(diff.message);
     if (!parsedDiff) {
       return true;

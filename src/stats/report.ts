@@ -94,9 +94,19 @@ export function buildApolloStatsReport(
   const categoryCounts = Object.fromEntries(
     Object.entries(categories).map(([key, value]) => [key, value.count]),
   ) as Record<keyof ApolloStatsViews, number>;
+  const customizationProblemCount = categories.customizations.items.filter(
+    (item) =>
+      item.changes.some(
+        (change) =>
+          change.assessment?.verdict !== 'expected' &&
+          change.assessment?.verdict !== 'allowed',
+      ),
+  ).length;
   const problemOccurrenceCount = Object.entries(categoryCounts)
-    .filter(([key]) => key !== 'currentComponents')
-    .reduce((sum, [, count]) => sum + count, 0);
+    .filter(
+      ([key]) => key !== 'currentComponents' && key !== 'customizations',
+    )
+    .reduce((sum, [, count]) => sum + count, customizationProblemCount);
 
   return {
     schemaVersion: 1,
@@ -236,6 +246,22 @@ function customizationChange(
       nestedOwnerPath: diff.context.nestedOwnerPath,
       nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
     },
+    assessment: diff.assessment
+      ? {
+          verdict: diff.assessment.verdict,
+          source: diff.assessment.source,
+          reasonCode: diff.assessment.reasonCode,
+          ruleId: diff.assessment.ruleId,
+          message: diff.assessment.message,
+          remediation: diff.assessment.remediation
+            ? {
+                kind: diff.assessment.remediation.kind,
+                nodeId: diff.assessment.remediation.nodeId,
+                properties: diff.assessment.remediation.properties,
+              }
+            : null,
+        }
+      : null,
   };
 }
 

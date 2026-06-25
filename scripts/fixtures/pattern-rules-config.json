@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    {
+      "id": "buttons-group.first-button-primary",
+      "match": { "hostComponentNames": ["[D] ButtonsGroup", "[M] ButtonsGroup"] },
+      "selector": {
+        "nestedComponentNames": ["[D] Button", "[M] Button"],
+        "occurrence": "first"
+      },
+      "assert": { "variantProperties": { "View": { "oneOf": ["Primary"] } } },
+      "messages": {
+        "allowed": "Первая кнопка соответствует паттерну ButtonsGroup",
+        "violation": "Первая кнопка должна иметь View=Primary"
+      }
+    },
+    {
+      "id": "buttons-group.fourth-button-single-icon",
+      "match": { "hostComponentNames": ["[D] ButtonsGroup", "[M] ButtonsGroup"] },
+      "selector": {
+        "nestedComponentNames": ["[D] Button", "[M] Button"],
+        "occurrence": "last"
+      },
+      "when": { "nestedCount": 4 },
+      "assert": {
+        "variantProperties": { "SingleIcon": { "oneOf": ["False", "True"] } }
+      },
+      "messages": {
+        "allowed": "Последняя кнопка может использовать SingleIcon в группе из четырёх кнопок",
+        "violation": "SingleIcon допускается только для последней кнопки группы из четырёх кнопок"
+      }
+    },
+    {
+      "id": "buttons-group.single-icon-position",
+      "match": { "hostComponentNames": ["[D] ButtonsGroup", "[M] ButtonsGroup"] },
+      "selector": { "nestedComponentNames": ["[D] Button", "[M] Button"] },
+      "assert": { "variantProperties": { "SingleIcon": { "oneOf": ["False"] } } },
+      "messages": {
+        "allowed": "Кнопка соответствует паттерну ButtonsGroup",
+        "violation": "SingleIcon допускается только для последней кнопки группы из четырёх кнопок"
+      }
+    },
+    {
+      "id": "tag-group.nested-tag-variant",
+      "match": { "hostComponentNames": ["[D] TagGroup", "[M] TagGroup"] },
+      "selector": { "nestedComponentNames": ["[D] Tag", "[M] Tag"] },
+      "assert": {
+        "variantProperties": {
+          "Size": { "oneOf": ["32", "40", "48", "56"] },
+          "Shape": { "oneOf": ["Rectangular", "Rounded"] }
+        }
+      },
+      "messages": {
+        "allowed": "Вложенный Tag соответствует конфигурации TagGroup",
+        "violation": "Вложенный Tag использует недопустимую конфигурацию Size/Shape"
+      },
+      "presentation": "suppress-derived"
+    },
+    {
+      "id": "background-plate.level-one-type",
+      "match": {
+        "hostComponentKeys": [
+          "2c7332d281570f4d5af6d334f8df378d24a1f235",
+          "c49f08db71ab44ea64f0880730220de1d93ac263"
+        ]
+      },
+      "selector": {
+        "nestedComponentKeys": [
+          "adb65a62cde9ebedc5d0d41d2d77cd63e71e0745",
+          "2b46e94cdecdab7d4cb977055c0405b2f6204127"
+        ]
+      },
+      "assert": {
+        "variantProperties": {
+          "Type": { "oneOf": ["Primary", "Secondary", "Colored", "Border"] }
+        }
+      },
+      "messages": {
+        "allowed": "Тип Style Level 1 соответствует паттерну BackgroundPlate",
+        "violation": "Style Level 1 использует недопустимый Type"
+      },
+      "presentation": "semantic-variant"
+    }
+  ]
+}

@@ -2,9 +2,14 @@ import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
   normalizePath,
+  resolvePatternRulesUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
-import { fetchDirect } from '../utils/networkFetch';
+import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
+import {
+  appendCacheBustingQuery,
+  fetchDirect,
+} from '../utils/networkFetch';
 import type {
   AthenaCatalog,
   AthenaComponent,
@@ -245,13 +250,20 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
   }
 
   try {
-    const response = await requestCatalogSource(apolloReferenceCatalogListUrl);
+    const referenceListRequestUrl = appendCacheBustingQuery(
+      apolloReferenceCatalogListUrl,
+      'apolloReferenceSources',
+    );
+    const response = await requestCatalogSource(referenceListRequestUrl);
     const payload = JSON.parse(response);
+    const patternRulesUrl = resolvePatternRulesUrl(payload);
+    await loadPatternRulesConfig(patternRulesUrl);
     const sources = buildReferenceCatalogSources(payload);
 
     console.log('[Apollo] reference sources list loaded', {
       url: apolloReferenceCatalogListUrl,
       baseUrl: payload?.baseUrl ?? '',
+      patternRulesUrl,
       count: sources.length,
     });
 

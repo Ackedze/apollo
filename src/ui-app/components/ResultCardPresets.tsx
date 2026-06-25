@@ -13,6 +13,7 @@ type BasePresetProps = {
 type ChangeLine = {
   label: string;
   values: string[];
+  marker?: 'Expected';
 };
 
 type ChangeGroup = {

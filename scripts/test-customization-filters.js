@@ -84,8 +84,8 @@ function main() {
 
   assert.equal(
     suppressedPartPolicy.length,
-    0,
-    'Host-controlled nested property diffs must be suppressed by the universal policy flag',
+    3,
+    'Host-controlled diffs must remain available for contextual assessment',
   );
 
   const preservedWithoutPolicyFlag = applyCustomizationFilters([

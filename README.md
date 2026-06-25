@@ -116,11 +116,14 @@
 Плагин работает с удалёнными JSON-справочниками и в рантайме берёт список источников с GitHub Pages:
 
 - основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
+- декларативные правила кастомизаций: путь `apollo.patternRulesPath` из основного списка, сейчас `JSONS/apollo/patternRules.json`;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
 
-Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/design-system_ab`. `npm run build` не публикует JSON-каталоги и не скачивает их автоматически, а только собирает плагин.
+При старте Apollo загружает и список источников, и pattern rules с cache-busting query-параметрами, затем валидирует `schemaVersion` и структуру каждого правила. Это исключает чтение предыдущей версии GitHub Pages из десятиминутного CDN-кеша. После публикации изменённого JSON достаточно перезапустить плагин: пересборка Apollo не требуется. Отсутствующий или некорректный конфиг считается ошибкой reference bootstrap; встроенного fallback с устаревшими правилами нет.
+
+Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/design-system_ab`. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
 
@@ -149,6 +152,14 @@
 - Для правой колонки подготовлены базовые React-компоненты карточек результата: [`ResultCard`](./src/ui-app/components/ResultCard.tsx), [`ResultSubCard`](./src/ui-app/components/ResultSubCard.tsx) и preset-обёртки в [`ResultCardPresets.tsx`](./src/ui-app/components/ResultCardPresets.tsx).
 - Интеграция правой колонки начата для audit-like категорий: `Актуальные компоненты`, `Устаревшие`, `Пора обновить`, `Пресеты`, `Локальные`, `Детач`, `Темизация`, `Кастомные стили` и `Кастомизация` уже используют React-bridge и React-карточки.
 - В `Кастомизации` diff-ы теперь группируются по узлу: один [`ResultSubCard`](./src/ui-app/components/ResultSubCard.tsx) соответствует одному узлу, а внутри него рендерится одна или несколько property-строк.
+- Перед отображением кастомизаций [`CustomizationAssessment`](./src/assessment/customizationAssessment.ts) проверяет diff против materialized host и выбранных variant-структур всех вложенных ancestor-компонентов. Значение получает `Expected`, только если конкретный node/property совпадает хотя бы с одним точным contextual reference; ручное значение, отсутствующее в выбранной конфигурации, не становится Expected.
+- Декларативные composition rules хранятся вне plugin bundle в `Ackedze/design-system_ab/JSONS/apollo/patternRules.json`. [`patternRules.ts`](./src/assessment/patternRules.ts) содержит только типы, строгую валидацию и evaluator, поэтому изменение набора правил не требует пересборки Apollo.
+- Строки со статусами `expected` и `allowed` показываются в UI с маркером `Expected`, сохраняются в статистике вместе с причиной assessment и не предлагают действие `Сбросить`.
+- Для pattern violation с variant constraint действие `Сбросить` восстанавливает variant property через `InstanceNode.setProperties(...)`, а не копирует визуальные значения другого варианта в текущий instance.
+- Производные paint/layout diff-ы запрещённого variant switch сворачиваются в одну семантическую строку вида `view: primary → accent`; независимые ручные изменения внутри того же subtree сохраняются отдельными строками.
+- Contextual reference сопоставляет переименованные nested layers по component family key, поэтому пары вроде `Icon` и `🔩 Icon` не теряют host-defined overrides из-за различия display name/path.
+- Для штатных nested variant switch декларативное правило может задать `presentation: suppress-derived`. Первое такое правило применяется к `[D]/[M] TagGroup`: визуальные последствия разрешённых `Tag Size/Shape` не выводятся как отдельные Expected-кастомизации, но ручные значения без подтверждения выбранной variant-структурой остаются видимыми.
+- Режим `presentation: semantic-variant` сохраняет Expected-настройку, но заменяет производные visual diff-ы одной строкой variant property. Для `[D][Promo] BackgroundPlate` заливка `base-bg-alt/secondary → neutral-translucent/100` отображается как `type: primary → secondary`.
 - `Кастомные стили` тоже переведены на React-карточку: в этом табе `caption` заполняется названием стиля или эффекта из `formatCustomStyleReason(...)`.
 - React-карточки результатов в `Актуальных компонентах` закреплены как `hug` по содержимому (`flex: 0 0 auto`), чтобы при длинной выдаче контейнер скроллился, а карточки не схлопывались по высоте.
 - Layout token-изменения, включая `itemSpacingToken`, `paddingTokens`, `radiusToken` и `opacityToken`, в diff-выводе проходят через token label resolver и показываются по имени токена, а не как сырые `VariableID`; для padding скрывается технический namespace `Vertical/Horizontal Paddings`, а token-diff подавляется, если после резолва видимые значения совпадают.

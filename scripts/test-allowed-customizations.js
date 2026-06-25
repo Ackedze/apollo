@@ -493,8 +493,8 @@ function main() {
 
   assert.equal(
     bodyCellStatusDiffs.length,
-    0,
-    'BodyCell must allow tokenized nested Status fill overrides',
+    2,
+    'Status recolors without contextual assessment must remain visible',
   );
 
   const directBodyCellStatusDiffs = applyAllowedCustomizationRules(
@@ -535,8 +535,8 @@ function main() {
 
   assert.equal(
     directBodyCellStatusDiffs.length,
-    0,
-    'Direct BodyCell audit must allow tokenized Status recolors',
+    2,
+    'BodyCell Status recolors require contextual evidence instead of a global allowlist',
   );
 
   const directStatusDiffs = applyAllowedCustomizationRules(
@@ -559,8 +559,8 @@ function main() {
 
   assert.equal(
     directStatusDiffs.length,
-    0,
-    'Direct Status audit must allow tokenized fill overrides for any internal layer',
+    2,
+    'Direct Status token overrides must remain visible without contextual evidence',
   );
 
   const directAmountDiffs = applyAllowedCustomizationRules(

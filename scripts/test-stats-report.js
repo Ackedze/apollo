@@ -79,6 +79,14 @@ function main() {
             displayName: 'Paragraph/S',
           },
         },
+        assessment: {
+          verdict: 'violation',
+          source: 'catalog-host',
+          reasonCode: 'differs-from-materialized-host-value',
+          ruleId: null,
+          message: 'Значение не соответствует структуре родительского компонента',
+          remediation: null,
+        },
         context: {
           actualComponentKey: 'tag-key',
           referenceComponentKey: 'tag-key',
@@ -90,6 +98,22 @@ function main() {
           nestedOwnerComponentRole: null,
           nestedOwnerPath: null,
           nestedOwnerRelativePath: null,
+        },
+      },
+    ],
+  });
+  const expectedCustomization = componentItem({
+    id: '1:3',
+    diffs: [
+      {
+        ...customization.diffs[0],
+        assessment: {
+          verdict: 'expected',
+          source: 'catalog-host',
+          reasonCode: 'matches-materialized-host-value',
+          ruleId: null,
+          message: 'Значение задано структурой родительского компонента',
+          remediation: null,
         },
       },
     ],
@@ -115,7 +139,7 @@ function main() {
       deprecatedStyles: [],
       customStyles: [],
       updates: [],
-      customizations: [customization],
+      customizations: [customization, expectedCustomization],
       localComponents: [],
       detachedComponents: [],
       presets: [],
@@ -138,11 +162,13 @@ function main() {
   assert.equal(report.schemaVersion, 1);
   assert.equal(report.user.slug, 'User-Name');
   assert.equal(report.summary.categoryCounts.currentComponents, 1);
+  assert.equal(report.summary.categoryCounts.customizations, 2);
   assert.equal(report.summary.problemOccurrenceCount, 1);
   const change = report.categories.customizations.items[0].changes[0];
   assert.equal(change.property, 'styles.text');
   assert.equal(change.reference.resource.key, 'style-large');
   assert.equal(change.reference.resource.library, 'Web Typography');
+  assert.equal(change.assessment.verdict, 'violation');
   assert.match(change.signature, /component:tag-key:text-style:styles\.text/);
 
   console.log('Stats report regression checks passed');

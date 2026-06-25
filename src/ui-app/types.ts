@@ -69,6 +69,7 @@ export type DeprecatedStyleResultItem = {
 export type CustomValueLine = {
   label: string;
   values: string[];
+  marker?: 'Expected';
 };
 
 export type CustomChangeGroup = {

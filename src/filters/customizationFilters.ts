@@ -17,16 +17,6 @@ const rules: CustomizationFilterRule[] = [
       return diffs.filter((diff) => !isIgnoredSandboxCustomizationDiff(diff));
     },
   },
-  {
-    id: 'ignore_host_controlled_nested_part_paint_customization',
-    apply(diffs) {
-      if (!diffs.length) {
-        return diffs;
-      }
-
-      return diffs.filter((diff) => !diff.suppressAsHostControlledNestedProperty);
-    },
-  },
 ];
 
 export function applyCustomizationFilters(

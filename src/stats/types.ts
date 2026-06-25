@@ -52,6 +52,18 @@ export type StatsCustomizationChange = {
   };
   signature: string;
   context: Record<string, string | null>;
+  assessment: {
+    verdict: string;
+    source: string;
+    reasonCode: string;
+    ruleId: string | null;
+    message: string;
+    remediation: {
+      kind: string;
+      nodeId: string;
+      properties: Record<string, string>;
+    } | null;
+  } | null;
 };
 
 export type StatsCustomizationItem = StatsComponentItem & {
@@ -148,4 +160,3 @@ export type ApolloStatsReport = {
     themization: StatsCategory<StatsThemeItem>;
   };
 };
-

@@ -863,16 +863,25 @@ async function classifyNode(
     hostDiffs,
     hostReference: referenceStructure ?? [],
     nestedContextEvidence: alignedActualStructure
-      ? createNestedContextEvidence(alignedActualStructure, (instance) => {
-          const nestedReference = findComponent(
-            instance.componentInstance?.componentKey ?? '',
-          );
-          return resolveStructureForInstance(
-            nestedReference,
-            instance.componentInstance ?? null,
-          );
-        }, diffsForAssessment, (nestedComponentKey) =>
-          findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+      ? createNestedContextEvidence(
+          alignedActualStructure,
+          (instance) => {
+            const nestedReference = findComponent(
+              instance.componentInstance?.componentKey ?? '',
+            );
+            return resolveStructureForInstance(
+              nestedReference,
+              instance.componentInstance ?? null,
+            );
+          },
+          diffsForAssessment,
+          (nestedComponentKey) =>
+            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+          {
+            resolveTokenLabel: resolveTokenLabelForDiff,
+            resolveStyleLabel: resolveStyleLabelForDiff,
+            isPaintToken: isColorTokenForPaintDiff,
+          },
         )
       : undefined,
     resolvePatternContext:
@@ -1134,6 +1143,16 @@ async function resetCustomizationGroup(payload: {
   rootId?: string;
   nodeId?: string;
   messages?: string[];
+  details?: Array<{
+    property?: string;
+    reference?: {
+      value?: string | number | null;
+      resourceType?: 'style' | 'token' | 'color';
+      resourceId?: string | null;
+      displayName?: string | null;
+    };
+    message?: string;
+  }>;
   remediations?: Array<{
     kind?: string;
     nodeId?: string;
@@ -1148,6 +1167,16 @@ async function resetCustomizationGroup(payload: {
           typeof message === 'string' && message.trim().length > 0,
       )
     : [];
+  const details = Array.isArray(payload?.details)
+    ? payload.details.filter(
+        (detail) =>
+          detail &&
+          typeof detail.property === 'string' &&
+          detail.property.length > 0 &&
+          detail.reference &&
+          typeof detail.reference === 'object',
+      )
+    : [];
   const remediations = Array.isArray(payload?.remediations)
     ? payload.remediations.filter(
         (item) =>
@@ -1159,7 +1188,7 @@ async function resetCustomizationGroup(payload: {
       )
     : [];
 
-  if (!rootId || !nodeId || (!messages.length && !remediations.length)) {
+  if (!rootId || !nodeId || (!messages.length && !details.length && !remediations.length)) {
     figma.notify('Недостаточно данных для сброса изменений.');
     return;
   }
@@ -1184,14 +1213,11 @@ async function resetCustomizationGroup(payload: {
       variantNode.setProperties(remediation.properties!);
     }
 
-    figma.notify('Параметры компонента восстановлены.');
-    const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
-    if (rerunSelection.length) {
-      void runAudit(rerunSelection, lastAuditChannel);
-    } else {
-      void runAudit([rootNode], lastAuditChannel);
+    if (!messages.length && !details.length) {
+      figma.notify('Параметры компонента восстановлены.');
+      await rerunLastAuditWithFallback([rootNode]);
+      return;
     }
-    return;
   }
 
   const componentKey = await getComponentKey(rootNode);
@@ -1237,7 +1263,12 @@ async function resetCustomizationGroup(payload: {
     return;
   }
 
-  await applyReferenceResetByMessages(targetNode, referenceNode, messages);
+  if (details.length) {
+    await applyReferenceResetByDetails(targetNode, details);
+  }
+  if (messages.length) {
+    await applyReferenceResetByMessages(targetNode, referenceNode, messages);
+  }
 
   figma.notify('Изменения сброшены.');
 
@@ -1788,6 +1819,72 @@ async function applyReferenceResetByMessages(
   }
 }
 
+async function applyReferenceResetByDetails(
+  node: SceneNode,
+  details: Array<{
+    property?: string;
+    reference?: {
+      value?: string | number | null;
+      resourceType?: 'style' | 'token' | 'color';
+      resourceId?: string | null;
+      displayName?: string | null;
+    };
+  }>,
+) {
+  for (const detail of details) {
+    const property = detail.property;
+    const reference = detail.reference;
+    if (!property || !reference) {
+      continue;
+    }
+
+    if (property === 'fill' || property === 'stroke') {
+      await resetPaintByDiffReference(node, property, reference);
+      continue;
+    }
+
+    if (property === 'styles.fill') {
+      await resetStyleById(node, 'fill', reference.resourceId ?? null);
+      continue;
+    }
+
+    if (property === 'styles.stroke') {
+      await resetStyleById(node, 'stroke', reference.resourceId ?? null);
+      continue;
+    }
+
+    if (property === 'styles.text') {
+      await resetStyleById(node, 'text', reference.resourceId ?? null);
+      continue;
+    }
+
+    const paddingSide = property.match(/^layout\.padding\.(top|right|bottom|left)$/)?.[1] as
+      | 'top'
+      | 'right'
+      | 'bottom'
+      | 'left'
+      | undefined;
+    if (paddingSide && typeof reference.value === 'number') {
+      setLayoutPaddingSide(node, paddingSide, reference.value);
+      continue;
+    }
+
+    if (property === 'layout.itemSpacing' && typeof reference.value === 'number') {
+      setLayoutItemSpacing(node, reference.value);
+      continue;
+    }
+
+    if (property === 'radius') {
+      await setRadiusFromValue(node, reference.value);
+      continue;
+    }
+
+    if (property === 'opacity' && typeof reference.value === 'number' && 'opacity' in node) {
+      (node as SceneNode & { opacity: number }).opacity = reference.value;
+    }
+  }
+}
+
 function extractPaddingSide(message: string): 'top' | 'right' | 'bottom' | 'left' | null {
   const match = message.match(/(top|right|bottom|left)/i);
   if (!match) return null;
@@ -1844,6 +1941,58 @@ async function resetItemSpacing(node: SceneNode, referenceNode: DSStructureNode)
   );
 }
 
+function setLayoutPaddingSide(
+  node: SceneNode,
+  side: 'top' | 'right' | 'bottom' | 'left',
+  value: number,
+) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+  const fieldMap = {
+    top: 'paddingTop',
+    right: 'paddingRight',
+    bottom: 'paddingBottom',
+    left: 'paddingLeft',
+  } as const;
+  (node as any)[fieldMap[side]] = value;
+}
+
+function setLayoutItemSpacing(node: SceneNode, value: number) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+  (node as any).itemSpacing = value;
+}
+
+async function resetStyleById(
+  node: SceneNode,
+  target: 'fill' | 'stroke' | 'text',
+  styleKey: string | null,
+) {
+  if (target === 'text') {
+    if (node.type !== 'TEXT') return;
+    const style = styleKey ? await importStyleById(styleKey) : null;
+    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
+    return;
+  }
+
+  const mutableNode = node as any;
+  const style = styleKey ? await importStyleById(styleKey) : null;
+  const styleId = style?.id ?? '';
+
+  if (target === 'fill') {
+    if (typeof mutableNode.setFillStyleIdAsync === 'function') {
+      await mutableNode.setFillStyleIdAsync(styleId);
+    }
+    return;
+  }
+
+  if (typeof mutableNode.setStrokeStyleIdAsync === 'function') {
+    await mutableNode.setStrokeStyleIdAsync(styleId);
+  }
+}
+
 async function resetStyle(
   node: SceneNode,
   referenceNode: DSStructureNode,
@@ -1856,29 +2005,66 @@ async function resetStyle(
         ? referenceNode.styles?.fill?.styleKey
         : referenceNode.styles?.stroke?.styleKey;
 
-  if (target === 'text') {
-    if (node.type !== 'TEXT') return;
-    const style = styleKey ? await importStyleById(styleKey) : null;
-    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
+  await resetStyleById(node, target, styleKey ?? null);
+}
+
+async function resetPaintByDiffReference(
+  node: SceneNode,
+  target: 'fill' | 'stroke',
+  reference: {
+    value?: string | number | null;
+    resourceType?: 'style' | 'token' | 'color';
+    resourceId?: string | null;
+  },
+) {
+  const resourceId =
+    typeof reference.resourceId === 'string' && reference.resourceId.length
+      ? reference.resourceId
+      : null;
+
+  if (reference.resourceType === 'style') {
+    await resetStyleById(node, target, resourceId);
     return;
   }
 
-  const style = styleKey ? await importStyleById(styleKey) : null;
+  const prop = target === 'fill' ? 'fills' : 'strokes';
+  if (!(prop in (node as any))) {
+    return;
+  }
+
   const mutableNode = node as any;
-  const styleId = style?.id ?? '';
+  if (target === 'fill' && typeof mutableNode.setFillStyleIdAsync === 'function') {
+    await mutableNode.setFillStyleIdAsync('');
+  } else if (
+    target === 'stroke' &&
+    typeof mutableNode.setStrokeStyleIdAsync === 'function'
+  ) {
+    await mutableNode.setStrokeStyleIdAsync('');
+  }
 
-  if (target === 'fill') {
-    if (typeof mutableNode.setFillStyleIdAsync !== 'function') {
-      return;
-    }
-    await mutableNode.setFillStyleIdAsync(styleId);
+  const token =
+    reference.resourceType === 'token'
+      ? resourceId ?? (typeof reference.value === 'string' ? reference.value : null)
+      : null;
+  const color =
+    reference.resourceType === 'color' && typeof reference.value === 'string'
+      ? reference.value
+      : null;
+  const paint = await buildSolidPaintFromReference({ token, color });
+
+  if (!paint) {
     return;
   }
 
-  if (typeof mutableNode.setStrokeStyleIdAsync !== 'function') {
-    return;
+  mutableNode[prop] = [paint];
+
+  if (target === 'stroke') {
+    const weight =
+      typeof (mutableNode as { strokeWeight?: unknown }).strokeWeight === 'number'
+        ? (mutableNode as { strokeWeight: number }).strokeWeight
+        : 1;
+    mutableNode.strokeWeight = weight;
   }
-  await mutableNode.setStrokeStyleIdAsync(styleId);
 }
 
 async function resetPaint(
@@ -1968,6 +2154,26 @@ async function resetRadius(node: SceneNode, referenceNode: DSStructureNode) {
     mutableNode.bottomRightRadius = radius.bottomRight;
     mutableNode.bottomLeftRadius = radius.bottomLeft;
   }
+}
+
+async function setRadiusFromValue(
+  node: SceneNode,
+  value: string | number | null | undefined,
+) {
+  if (!('cornerRadius' in (node as any))) {
+    return;
+  }
+  const numericValue =
+    typeof value === 'number'
+      ? value
+      : typeof value === 'string'
+        ? Number.parseFloat(value)
+        : Number.NaN;
+  if (!Number.isFinite(numericValue)) {
+    return;
+  }
+  await bindNodeVariable(node, 'cornerRadius', null);
+  (node as any).cornerRadius = numericValue;
 }
 
 async function resetOpacity(node: SceneNode, referenceNode: DSStructureNode) {

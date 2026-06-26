@@ -116,25 +116,34 @@ export function ResultSubCard({
 
       {hasRenderedValues ? (
         <div className={styles.values}>
-          {normalizedValueLines.map((line, lineIndex) => (
-            <div className={styles.valueLine} key={`${line.label}:${lineIndex}`}>
-              <div className={styles.valueHeader}>
-                <span>{line.label}</span>
-                <span>:</span>
+          {normalizedValueLines.map((line, lineIndex) =>
+            line.values.length === 0 ? (
+              <div
+                className={styles.valueSectionHeader}
+                key={`${line.label}:${lineIndex}`}
+              >
+                {line.label}
               </div>
-              {line.marker ? (
-                <span className={styles.valueMarker}>{line.marker}</span>
-              ) : null}
+            ) : (
+              <div className={styles.valueLine} key={`${line.label}:${lineIndex}`}>
+                <div className={styles.valueHeader}>
+                  <span>{line.label}</span>
+                  <span>:</span>
+                </div>
+                {line.marker ? (
+                  <span className={styles.valueMarker}>{line.marker}</span>
+                ) : null}
                 <div className={styles.valueBody}>
-                {line.values.map((part, index) => (
-                  <React.Fragment key={`${part}:${index}`}>
-                    {index > 0 ? <span>→</span> : null}
-                    <span className={styles.valuePart}>{part}</span>
-                  </React.Fragment>
-                ))}
+                  {line.values.map((part, index) => (
+                    <React.Fragment key={`${part}:${index}`}>
+                      {index > 0 ? <span>→</span> : null}
+                      <span className={styles.valuePart}>{part}</span>
+                    </React.Fragment>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       ) : null}
 

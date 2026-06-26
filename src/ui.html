@@ -433,13 +433,16 @@
           rootId,
           nodeId,
           messages,
+          details = [],
           remediations = [],
         ) {
           if (
             !rootId ||
             !nodeId ||
-            (!Array.isArray(messages) && !Array.isArray(remediations)) ||
-            (!messages.length && !remediations.length)
+            (!Array.isArray(messages) &&
+              !Array.isArray(details) &&
+              !Array.isArray(remediations)) ||
+            (!messages.length && !details.length && !remediations.length)
           ) {
             return;
           }
@@ -452,12 +455,135 @@
                   rootId,
                   nodeId,
                   messages,
+                  details,
                   remediations,
                 },
               },
             },
             '*',
           );
+        }
+
+        function buildCustomizationResetActions(rootId, group) {
+          if (!rootId || !group?.nodeId) {
+            return [];
+          }
+
+          const actions = [];
+          const hasComponentProperties =
+            Array.isArray(group.remediations) && group.remediations.length > 0;
+          const hasLayerProperties =
+            (Array.isArray(group.details) && group.details.length > 0) ||
+            (Array.isArray(group.messages) && group.messages.length > 0);
+
+          if (hasComponentProperties && hasLayerProperties) {
+            const allMessages = [
+              ...(Array.isArray(group.messages) ? group.messages : []),
+              ...(Array.isArray(group.details)
+                ? group.details
+                    .map((detail) => detail?.message)
+                    .filter((message) => typeof message === 'string' && message.length)
+                : []),
+            ];
+            actions.push({
+              label: 'Сбросить всё',
+              singleIcon: false,
+              onPress: () =>
+                requestCustomizationReset(
+                  rootId,
+                  group.nodeId,
+                  allMessages,
+                  [],
+                  group.remediations,
+                ),
+            });
+          }
+
+          if (hasComponentProperties) {
+            actions.push({
+              label: 'Параметры',
+              singleIcon: false,
+              onPress: () =>
+                requestCustomizationReset(
+                  rootId,
+                  group.nodeId,
+                  [],
+                  [],
+                  group.remediations,
+                ),
+            });
+          }
+
+          if (hasLayerProperties) {
+            actions.push({
+              label: 'Слой',
+              singleIcon: false,
+              onPress: () =>
+                requestCustomizationReset(
+                  rootId,
+                  group.nodeId,
+                  group.messages,
+                  group.details,
+                  [],
+                ),
+            });
+          }
+
+          return actions;
+        }
+
+        function sortCustomizationGroupsByPath(groups) {
+          return groups
+            .map((group) => ({
+              group,
+              order: getCustomizationGroupSortOrder(group, groups),
+            }))
+            .sort((left, right) => compareCustomizationGroupSortEntries(left, right))
+            .map((entry) => entry.group);
+        }
+
+        function compareCustomizationGroupSortEntries(leftEntry, rightEntry) {
+          const left = leftEntry.group;
+          const right = rightEntry.group;
+          const leftPath = getCustomizationGroupPath(left);
+          const rightPath = getCustomizationGroupPath(right);
+          if (leftEntry.order !== rightEntry.order) {
+            return leftEntry.order - rightEntry.order;
+          }
+          if (leftPath === rightPath) {
+            return (left?.order ?? 0) - (right?.order ?? 0);
+          }
+          if (isAncestorPath(leftPath, rightPath)) {
+            return -1;
+          }
+          if (isAncestorPath(rightPath, leftPath)) {
+            return 1;
+          }
+
+          return (left?.order ?? 0) - (right?.order ?? 0);
+        }
+
+        function getCustomizationGroupSortOrder(group, groups) {
+          const groupPath = getCustomizationGroupPath(group);
+          let order = group?.order ?? 0;
+          groups.forEach((candidate) => {
+            const candidatePath = getCustomizationGroupPath(candidate);
+            if (isAncestorPath(groupPath, candidatePath)) {
+              order = Math.min(order, candidate?.order ?? order);
+            }
+          });
+          return order;
+        }
+
+        function getCustomizationGroupPath(group) {
+          return String(group?.nodePath || group?.name || '');
+        }
+
+        function isAncestorPath(parentPath, childPath) {
+          if (!parentPath || !childPath || parentPath === childPath) {
+            return false;
+          }
+          return childPath.indexOf(`${parentPath} / `) === 0;
         }
 
         function requestThemizationAction(
@@ -739,11 +865,41 @@
                 const canReset =
                   diff.assessment?.verdict !== 'expected' &&
                   diff.assessment?.verdict !== 'allowed';
-                const remediation = diff.assessment?.remediation;
+                let remediation = diff.assessment?.remediation;
+                if (!remediation && canReset && isVariantDiff && diff.nodeId) {
+                  const property = diff.details?.property?.slice('variant.'.length);
+                  const referenceValue = diff.details?.reference?.value;
+                  if (
+                    property &&
+                    typeof referenceValue === 'string' &&
+                    referenceValue.length
+                  ) {
+                    remediation = {
+                      kind: 'set-variant-properties',
+                      nodeId: diff.nodeId,
+                      properties: {
+                        [property]: referenceValue,
+                      },
+                    };
+                  }
+                }
+                const resetDetail =
+                  canReset && !remediation && diff.details
+                    ? {
+                        property: diff.details.property,
+                        reference: diff.details.reference,
+                        message: diff.message,
+                      }
+                    : null;
 
                 if (existing) {
-                  existing.lines.push(line);
-                  if (canReset && !remediation) {
+                  const sectionLines = isVariantDiff
+                    ? existing.componentLines
+                    : existing.layerLines;
+                  sectionLines.push(line);
+                  if (resetDetail) {
+                    existing.details.push(resetDetail);
+                  } else if (canReset && !remediation) {
                     existing.messages.push(diff.message);
                   }
                   if (
@@ -764,34 +920,64 @@
                 const group = {
                   id: groupId,
                   name: diff.nodeName || diff.nodePath || 'Слой',
+                  nodePath: diff.nodePath || '',
+                  order: groupsMap.size,
                   onFocus: diff.nodeId
                     ? () => focusNodeById(diff.nodeId)
                     : undefined,
                   nodeId: diff.nodeId,
-                  lines: [line],
-                  messages: canReset && !remediation ? [diff.message] : [],
+                  componentLines: isVariantDiff ? [line] : [],
+                  layerLines: isVariantDiff ? [] : [line],
+                  messages:
+                    canReset && !remediation && !resetDetail ? [diff.message] : [],
+                  details: resetDetail ? [resetDetail] : [],
                   remediations: remediation ? [remediation] : [],
                 };
 
                 groupsMap.set(groupId, group);
               });
 
-              const groups = Array.from(groupsMap.values()).map((group) => ({
-                id: group.id,
-                name: group.name,
-                onFocus: group.onFocus,
-                lines: group.lines,
-                onReset:
-                  (group.messages.length || group.remediations.length) && group.nodeId
-                    ? () =>
-                        requestCustomizationReset(
-                          item.id,
-                          group.nodeId,
-                          group.messages,
-                          group.remediations,
-                        )
-                    : undefined,
-              }));
+              const groups = sortCustomizationGroupsByPath(Array.from(groupsMap.values()))
+                .map((group) => ({
+                  id: group.id,
+                  name: group.name,
+                  onFocus: group.onFocus,
+                  lines: [
+                    ...(group.componentLines.length
+                      ? [
+                          {
+                            label: 'Параметры компонента',
+                            values: [],
+                          },
+                          ...group.componentLines,
+                        ]
+                      : []),
+                    ...(group.layerLines.length
+                      ? [
+                          {
+                            label: 'Параметры слоя',
+                            values: [],
+                          },
+                          ...group.layerLines,
+                        ]
+                      : []),
+                  ],
+                  actions: buildCustomizationResetActions(item.id, group),
+                  onReset:
+                    (group.messages.length ||
+                      group.details.length ||
+                      group.remediations.length) &&
+                    group.nodeId
+                      ? () =>
+                          requestCustomizationReset(
+                            item.id,
+                            group.nodeId,
+                            group.messages,
+                            group.details,
+                            group.remediations,
+                          )
+                      : undefined,
+                }));
               if (!groups.length) {
                 return null;
               }

@@ -449,6 +449,147 @@ function main() {
     true,
     'Selected nested variant paint must match by resolved token label when resource ids differ',
   );
+  const manualPaintAfterVariantSwitch = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'Button/Desktop/Colors/Primary/text' },
+          actual: {
+            value: 'text/tertiary',
+            resourceType: 'token',
+            resourceId: 'text/tertiary',
+            displayName: 'text/tertiary',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: nestedEvidence,
+    },
+  );
+  assert.equal(manualPaintAfterVariantSwitch[0].assessment.verdict, 'unknown');
+  assert.equal(
+    manualPaintAfterVariantSwitch[0].details.reference.value,
+    'Button/Desktop/Colors/Accent/text',
+    'Manual paint override after variant switch must use selected variant as reference',
+  );
+  assert.equal(
+    manualPaintAfterVariantSwitch[0].message,
+    'заливка: Button/Desktop/Colors/Accent/text → text/tertiary',
+  );
+  const variableTokenEvidence = createNestedContextEvidence(
+    actualNested,
+    (instance) =>
+      instance.componentInstance?.componentKey === 'tag-size-40'
+        ? [
+            selectedTagReference[0],
+            {
+              ...selectedTagReference[1],
+              fill: {
+                token:
+                  'VariableID:2d3423db5972143518c6f4be83e8bc842d3a9078/2011:155',
+              },
+            },
+          ]
+        : null,
+    [],
+    (componentKey) => componentKey,
+    {
+      resolveTokenLabel: (token) =>
+        token.startsWith('VariableID:')
+          ? 'Button/Desktop/Colors/Accent/text'
+          : token,
+      isPaintToken: () => true,
+    },
+  );
+  const manualPaintWithVariableReference = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'Button/Desktop/Colors/Primary/text' },
+          actual: {
+            value: 'text/positive',
+            resourceType: 'token',
+            resourceId: 'text/positive',
+            displayName: 'text/positive',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: variableTokenEvidence,
+    },
+  );
+  assert.equal(
+    manualPaintWithVariableReference[0].details.reference.value,
+    'Button/Desktop/Colors/Accent/text',
+    'VariableID selected references must render as resolved token labels',
+  );
+  assert.equal(
+    manualPaintWithVariableReference[0].details.reference.resourceId,
+    'VariableID:2d3423db5972143518c6f4be83e8bc842d3a9078/2011:155',
+  );
+  const styledTextEvidence = createNestedContextEvidence(
+    actualNested,
+    (instance) =>
+      instance.componentInstance?.componentKey === 'tag-size-40'
+        ? selectedTagReference
+        : null,
+    [],
+    (componentKey) => componentKey,
+    {
+      resolveStyleLabel: (styleKey) =>
+        styleKey.startsWith('S:small-style') ? 'Action/11-16 Secondary Small' : styleKey,
+    },
+  );
+  const manualTextStyleWithResolvedReference = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'text-style',
+        details: {
+          property: 'styles.text',
+          reference: { value: 'Paragraph/L' },
+          actual: {
+            value: 'Action/11-16 Secondary Small',
+            resourceType: 'style',
+            resourceId: 'S:manual-style',
+            displayName: 'Action/11-16 Secondary Small',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: styledTextEvidence,
+    },
+  );
+  assert.equal(
+    manualTextStyleWithResolvedReference[0].details.reference.value,
+    'Action/11-16 Secondary Small',
+    'Selected text style references must render as resolved style labels',
+  );
+  assert.equal(
+    manualTextStyleWithResolvedReference[0].details.reference.resourceId,
+    'S:small-style,reference-node',
+  );
 
   const mismatchingEvidence = createNestedContextEvidence(
     actualNested,

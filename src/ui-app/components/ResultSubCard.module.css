@@ -78,6 +78,17 @@
   color: rgba(3, 3, 6, 0.88);
 }
 
+.valueSectionHeader {
+  width: 100%;
+  min-width: 0;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05px;
+  color: rgba(4, 4, 19, 0.45);
+}
+
 .valueHeader {
   display: inline-flex;
   align-items: center;

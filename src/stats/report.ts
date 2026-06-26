@@ -20,6 +20,8 @@ import type {
   StatsThemeItem,
 } from './types';
 
+export { buildApolloAgentReport } from './agentReport';
+
 type ResourceResolver = (
   id: string,
   displayName: string | null,
@@ -220,6 +222,7 @@ function customizationChange(
   const actualSignature = resourceSignature(actualResource, actual.value);
 
   return {
+    node: diffNode(diff, item),
     kind: diff.diffKind ?? 'other',
     property,
     message: diff.message,
@@ -262,6 +265,17 @@ function customizationChange(
             : null,
         }
       : null,
+  };
+}
+
+function diffNode(diff: DiffEntry, item: AuditItem) {
+  return {
+    id: diff.nodeId ?? item.id,
+    name: diff.nodeName || item.name,
+    type: null,
+    pageName: item.pageName,
+    path: diff.nodePath || item.fullPath,
+    visible: diff.visible ?? true,
   };
 }
 

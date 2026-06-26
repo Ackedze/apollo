@@ -54,6 +54,7 @@ const failedComponentIndexSources = new Map<string, ReferenceCatalogSource>();
 let componentIndexesLoaded = false;
 let componentIndexLoadPromise: Promise<void> | null = null;
 let componentIndexRetryPromise: Promise<void> | null = null;
+const catalogCacheBust = Date.now();
 
 const catalogLoadState: {
   ready: boolean;
@@ -1361,7 +1362,7 @@ function reportCatalogLoaded(fileName: string, size: number) {
 }
 
 async function requestCatalogSource(url: string): Promise<string> {
-  return fetchDirect(url);
+  return fetchDirect(appendCacheBustingQuery(url, 'apolloCatalog', catalogCacheBust));
 }
 
 function* iterateCatalogComponents(): IterableIterator<LibraryComponent> {

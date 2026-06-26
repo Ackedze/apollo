@@ -1,6 +1,7 @@
 import type { DSRadii, DSStructureNode } from '../types/structures';
 import type { CustomizationAssessment } from '../assessment/types';
 import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
+import { parseVariantName } from '../utils/variantProperties';
 
 export type DiffContext = {
   actualComponentKey: string | null;
@@ -131,6 +132,61 @@ export function diffStructures(
   }
 
   return { diffs, issues: Array.from(issueSet.values()) };
+}
+
+export function diffExplicitNestedVariantStates(
+  actual: DSStructureNode[],
+  hostReference: DSStructureNode[],
+  existingDiffs: DiffEntry[] = [],
+): DiffEntry[] {
+  if (!actual.length || !hostReference.length) {
+    return [];
+  }
+
+  const actualRootId = actual[0]?.id ?? null;
+  const actualKeyMap = buildOccurrenceKeyMap(actual);
+  const referenceKeyMap = buildOccurrenceKeyMap(hostReference);
+  const referenceByOccurrence = new Map(
+    hostReference.map((node) => [referenceKeyMap.get(node) ?? node.path, node]),
+  );
+  const existingKeys = new Set(existingDiffs.map(getVariantStateDiffKey));
+  const result: DiffEntry[] = [];
+
+  for (const actualNode of actual) {
+    if (
+      actualNode.id === actualRootId ||
+      actualNode.type !== 'INSTANCE' ||
+      !actualNode.componentInstance?.componentKey
+    ) {
+      continue;
+    }
+
+    const occurrenceKey = actualKeyMap.get(actualNode) ?? actualNode.path;
+    const referenceNode = referenceByOccurrence.get(occurrenceKey) ?? null;
+    if (!referenceNode || referenceNode.type !== 'INSTANCE') {
+      continue;
+    }
+
+    const produced: DiffEntry[] = [];
+    compareVariantProperties(occurrenceKey, actualNode, referenceNode, produced);
+    for (const diff of produced) {
+      const key = getVariantStateDiffKey(diff);
+      if (existingKeys.has(key)) {
+        continue;
+      }
+      existingKeys.add(key);
+      result.push(diff);
+    }
+  }
+
+  return result;
+}
+
+function getVariantStateDiffKey(diff: DiffEntry): string {
+  return [
+    diff.nodeId ?? diff.nodePath,
+    diff.details?.property ?? diff.message,
+  ].join('|');
 }
 
 function attachImplicitNestedOwners(
@@ -472,6 +528,167 @@ function compareNode(
     strict,
     resolveTokenLabel,
   );
+
+  compareVariantProperties(path, actual, reference, diffs);
+}
+
+function compareVariantProperties(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  diffs: DiffEntry[],
+) {
+  const actualProperties = actualNode.componentInstance?.variantProperties ?? null;
+  const referenceProperties = getReferenceVariantProperties(referenceNode);
+
+  if (!actualProperties && !referenceProperties) {
+    return;
+  }
+
+  const propertyEntries = new Map<
+    string,
+    {
+      property: string;
+      referenceProperty: string | null;
+      actualProperty: string | null;
+      referenceValue: string | null;
+      actualValue: string | null;
+    }
+  >();
+
+  for (const property of Object.keys(referenceProperties ?? {})) {
+    const key = property.toLowerCase();
+    propertyEntries.set(key, {
+      property,
+      referenceProperty: property,
+      actualProperty: null,
+      referenceValue: referenceProperties?.[property] ?? null,
+      actualValue: null,
+    });
+  }
+  for (const property of Object.keys(actualProperties ?? {})) {
+    const key = property.toLowerCase();
+    const entry =
+      propertyEntries.get(key) ??
+      {
+        property,
+        referenceProperty: null,
+        actualProperty: property,
+        referenceValue: null,
+        actualValue: null,
+      };
+    entry.actualProperty = property;
+    entry.actualValue = actualProperties?.[property] ?? null;
+    propertyEntries.set(key, entry);
+  }
+
+  const entries = Array.from(propertyEntries.values()).sort((left, right) =>
+    left.property.localeCompare(right.property),
+  );
+
+  for (const entry of entries) {
+    const property =
+      entry.referenceProperty ?? entry.actualProperty ?? entry.property;
+    const referenceValue =
+      entry.referenceValue ??
+      getUnanchoredExpectedVariantValue(property, entry.actualValue);
+    const actualValue = entry.actualValue;
+
+    if (actualValue === null) {
+      continue;
+    }
+
+    if (variantValuesEqual(referenceValue, actualValue)) {
+      continue;
+    }
+
+    if (referenceValue === null) {
+      continue;
+    }
+
+    const label = property.charAt(0).toLowerCase() + property.slice(1);
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `${label}: ${formatVariantValue(referenceValue)} → ${formatVariantValue(actualValue)}`,
+      'other',
+      {
+        property: `variant.${property}`,
+        reference: { value: referenceValue },
+        actual: { value: actualValue },
+      },
+    );
+  }
+}
+
+function getReferenceVariantProperties(
+  referenceNode: DSStructureNode,
+): Record<string, string> | null {
+  const componentProperties =
+    referenceNode.componentInstance?.variantProperties ?? null;
+  const parsedProperties = shouldUseReferenceVariantName(referenceNode)
+    ? parseVariantName(getReferenceVariantName(referenceNode))
+    : {};
+
+  if (!componentProperties && !Object.keys(parsedProperties).length) {
+    return null;
+  }
+
+  return Object.assign({}, parsedProperties, componentProperties ?? {});
+}
+
+function shouldUseReferenceVariantName(referenceNode: DSStructureNode): boolean {
+  if (referenceNode.type === 'COMPONENT' || referenceNode.type === 'COMPONENT_SET') {
+    return true;
+  }
+
+  return (referenceNode.referenceOrigin ?? 'host') === 'host';
+}
+
+function getReferenceVariantName(referenceNode: DSStructureNode): string {
+  const pathLeaf = referenceNode.path.split(' / ').pop() ?? '';
+  return referenceNode.name || pathLeaf;
+}
+
+function getUnanchoredExpectedVariantValue(
+  property: string,
+  actualValue: string | null,
+): string | null {
+  if (!actualValue) {
+    return null;
+  }
+
+  const normalizedProperty = property.toLowerCase();
+  const normalizedValue = actualValue.toLowerCase();
+  const defaultValues: Record<string, string> = {
+    disabledstate: 'False',
+    disabled: 'False',
+    singleicon: 'False',
+    overflow: 'False',
+  };
+  const defaultValue = defaultValues[normalizedProperty] ?? null;
+
+  if (!defaultValue || defaultValue.toLowerCase() === normalizedValue) {
+    return null;
+  }
+
+  return defaultValue;
+}
+
+function variantValuesEqual(left: string | null, right: string | null): boolean {
+  if (left === right) {
+    return true;
+  }
+  if (left === null || right === null) {
+    return false;
+  }
+  return left.trim().toLowerCase() === right.trim().toLowerCase();
+}
+
+function formatVariantValue(value: string | null): string {
+  return value ? value.toLowerCase() : '—';
 }
 
 function comparePadding(

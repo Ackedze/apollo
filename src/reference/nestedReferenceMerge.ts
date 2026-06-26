@@ -1,4 +1,5 @@
 import type { DSStructureNode } from '../types/structures';
+import { buildOccurrenceKeyMap } from '../structure/occurrenceKeys';
 
 export type MaterializedInstanceReferenceDecision = {
   preferCandidate: boolean;
@@ -36,6 +37,129 @@ export function shouldPreferMaterializedInstanceReference(
     materializedRootPath,
     isHostControlledPath,
   ).preferCandidate;
+}
+
+export function mergeMaterializedInstanceReferenceNode(
+  existingNode: DSStructureNode,
+  candidateNode: DSStructureNode,
+  decision: MaterializedInstanceReferenceDecision,
+): DSStructureNode {
+  if (
+    decision.preferCandidate !== true ||
+    (
+      decision.reason !== 'replace-instance-root' &&
+      !(decision.reason === 'replace-host-descendant' && decision.relativePath === '')
+    )
+  ) {
+    return candidateNode;
+  }
+
+  return applyMaterializedHostVariantBaselineToNode(candidateNode, existingNode);
+}
+
+export function applyMaterializedHostVariantBaselineToNode(
+  candidateNode: DSStructureNode,
+  hostNode: DSStructureNode | null | undefined,
+): DSStructureNode {
+  if (candidateNode.type !== 'INSTANCE') {
+    return candidateNode;
+  }
+
+  const hostVariantProperties =
+    hostNode?.componentInstance?.variantProperties ?? null;
+  if (!hostVariantProperties || !Object.keys(hostVariantProperties).length) {
+    return candidateNode;
+  }
+
+  const currentVariantProperties =
+    candidateNode.componentInstance?.variantProperties ?? null;
+  if (
+    currentVariantProperties &&
+    variantPropertiesEqual(currentVariantProperties, hostVariantProperties)
+  ) {
+    return candidateNode;
+  }
+
+  return Object.assign({}, candidateNode, {
+    componentInstance: Object.assign({}, candidateNode.componentInstance ?? {}, {
+      componentKey:
+        candidateNode.componentInstance?.componentKey ??
+        hostNode?.componentInstance?.componentKey ??
+        '',
+      variantProperties: Object.assign({}, hostVariantProperties),
+    }),
+  });
+}
+
+export function applyMaterializedHostVariantBaselines(
+  referenceEntries: DSStructureNode[],
+  hostReference: DSStructureNode[],
+): DSStructureNode[] {
+  const hostOccurrenceKeys = buildOccurrenceKeyMap(hostReference);
+  const hostVariantPropertiesByOccurrence = new Map<string, Record<string, string>>();
+
+  for (const hostNode of hostReference) {
+    const variantProperties = hostNode.componentInstance?.variantProperties ?? null;
+    if (
+      hostNode.type !== 'INSTANCE' ||
+      !variantProperties ||
+      !Object.keys(variantProperties).length
+    ) {
+      continue;
+    }
+
+    hostVariantPropertiesByOccurrence.set(
+      hostOccurrenceKeys.get(hostNode) ?? hostNode.path,
+      variantProperties,
+    );
+  }
+
+  if (!hostVariantPropertiesByOccurrence.size) {
+    return referenceEntries;
+  }
+
+  const referenceOccurrenceKeys = buildOccurrenceKeyMap(referenceEntries);
+  return referenceEntries.map((entry) => {
+    if (entry.type !== 'INSTANCE') {
+      return entry;
+    }
+
+    const occurrenceKey = referenceOccurrenceKeys.get(entry) ?? entry.path;
+    const hostVariantProperties =
+      hostVariantPropertiesByOccurrence.get(occurrenceKey) ?? null;
+    if (!hostVariantProperties) {
+      return entry;
+    }
+
+    const currentVariantProperties =
+      entry.componentInstance?.variantProperties ?? null;
+    if (
+      currentVariantProperties &&
+      variantPropertiesEqual(currentVariantProperties, hostVariantProperties)
+    ) {
+      return entry;
+    }
+
+    return Object.assign({}, entry, {
+      componentInstance: Object.assign({}, entry.componentInstance ?? {}, {
+        componentKey: entry.componentInstance?.componentKey ?? '',
+        variantProperties: Object.assign({}, hostVariantProperties),
+      }),
+    });
+  });
+}
+
+function variantPropertiesEqual(
+  left: Record<string, string>,
+  right: Record<string, string>,
+): boolean {
+  const leftKeys = Object.keys(left);
+  const rightKeys = Object.keys(right);
+  if (leftKeys.length !== rightKeys.length) {
+    return false;
+  }
+
+  return leftKeys.every((key) => left[key] === right[key]);
 }
 
 export function getMaterializedInstanceReferenceDecision(

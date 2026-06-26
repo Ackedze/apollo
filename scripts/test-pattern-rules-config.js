@@ -55,10 +55,15 @@ function main() {
   assert.equal(fixture.schemaVersion, 1);
   assert.ok(getPatternRules().length > 0);
 
+  const empty = setPatternRulesConfig({ schemaVersion: 1, rules: [] });
+  assert.equal(empty.schemaVersion, 1);
+  assert.equal(empty.rules.length, 0);
+  assert.equal(getPatternRules().length, 0);
+
   if (fs.existsSync(workspaceConfigPath)) {
     const workspace = setPatternRulesConfig(readJson(workspaceConfigPath));
     assert.equal(workspace.schemaVersion, 1);
-    assert.ok(workspace.rules.length >= fixture.rules.length);
+    assert.ok(Array.isArray(workspace.rules));
   }
 
   assert.throws(

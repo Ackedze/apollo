@@ -54,7 +54,7 @@ function componentItem(overrides = {}) {
 }
 
 function main() {
-  const { buildApolloStatsReport } = loadReportModule();
+  const { buildApolloAgentReport, buildApolloStatsReport } = loadReportModule();
   const customization = componentItem({
     diffs: [
       {
@@ -165,11 +165,71 @@ function main() {
   assert.equal(report.summary.categoryCounts.customizations, 2);
   assert.equal(report.summary.problemOccurrenceCount, 1);
   const change = report.categories.customizations.items[0].changes[0];
+  assert.equal(change.node.id, '1:2');
+  assert.equal(change.node.name, 'Label');
+  assert.equal(change.node.path, 'Frame / [D] Tag / Label');
   assert.equal(change.property, 'styles.text');
   assert.equal(change.reference.resource.key, 'style-large');
   assert.equal(change.reference.resource.library, 'Web Typography');
   assert.equal(change.assessment.verdict, 'violation');
   assert.match(change.signature, /component:tag-key:text-style:styles\.text/);
+
+  const agentReport = buildApolloAgentReport(report);
+  assert.equal(agentReport.schemaVersion, 1);
+  assert.equal(agentReport.reportKind, 'apollo-agent-report');
+  assert.equal(agentReport.sourceReportId, report.reportId);
+  assert.equal(
+    agentReport.suggestedFileName,
+    'User-Name_06-06-2026_12-00-01_agent.json',
+  );
+  assert.equal(agentReport.summary.omittedCurrentComponentCount, 1);
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('Variant/state changes'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('Do not invent usage rationale'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('assessment.ruleId is null'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('pattern name and link'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('raise severity only'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('anti-examples are not rules'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('match_kind=exact_rule'),
+    ),
+  );
+  assert.ok(
+    agentReport.guidance.notes.some((note) =>
+      note.includes('match_kind=no_rule'),
+    ),
+  );
+  assert.equal(agentReport.categorySummaries.customizations.totalCount, 2);
+  assert.equal(agentReport.categorySummaries.customizations.includedCount, 1);
+  assert.equal(agentReport.findings.length, 1);
+  assert.equal(agentReport.findings[0].category, 'customizations');
+  assert.equal(agentReport.findings[0].changes.length, 1);
+  assert.equal(agentReport.findings[0].changes[0].node.name, 'Label');
+  assert.equal(agentReport.findings[0].changes[0].assessment.verdict, 'violation');
 
   console.log('Stats report regression checks passed');
 }

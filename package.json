@@ -1,6 +1,6 @@
 {
   "name": "apollo",
-  "version": "0.1.0",
+  "version": "0.1.14",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
@@ -13,6 +13,7 @@
     "test:audit-policies": "node scripts/test-audit-policies.js",
     "test:component-key-cache": "node scripts/test-component-key-cache.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
+    "test:variant-state-diff": "node scripts/test-variant-state-diff.js",
     "test:nested-variants": "node scripts/test-nested-variant-scenarios.js",
     "test:audit-view-builder": "node scripts/test-audit-view-builder.js",
     "test:deprecated-styles": "node scripts/test-deprecated-styles.js",

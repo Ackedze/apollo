@@ -717,23 +717,24 @@
                   `${item.id}:diff:${index}`;
                 const existing = groupsMap.get(groupId);
                 const parsed = parseCustomizationDiffMessage(diff.message);
+                const isVariantDiff =
+                  typeof diff.details?.property === 'string' &&
+                  diff.details.property.indexOf('variant.') === 0;
+                const marker =
+                  !isVariantDiff &&
+                  (diff.assessment?.verdict === 'expected' ||
+                    diff.assessment?.verdict === 'allowed')
+                    ? 'Expected'
+                    : undefined;
                 const line = parsed
                   ? {
                       ...parsed,
-                      marker:
-                        diff.assessment?.verdict === 'expected' ||
-                        diff.assessment?.verdict === 'allowed'
-                          ? 'Expected'
-                          : undefined,
+                      marker,
                     }
                   : {
                       label: 'Изменение',
                       values: [(diff.message || '').trim() || '—'],
-                      marker:
-                        diff.assessment?.verdict === 'expected' ||
-                        diff.assessment?.verdict === 'allowed'
-                          ? 'Expected'
-                          : undefined,
+                      marker,
                     };
                 const canReset =
                   diff.assessment?.verdict !== 'expected' &&

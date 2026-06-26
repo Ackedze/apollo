@@ -16,11 +16,14 @@ import {
   resolveVariantKeyForInstance,
 } from './reference/library';
 import {
+  applyMaterializedHostVariantBaselines,
+  applyMaterializedHostVariantBaselineToNode,
   getMaterializedInstanceReferenceDecision,
+  mergeMaterializedInstanceReferenceNode,
 } from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
-import { diffStructures } from './structure/diff';
+import { diffExplicitNestedVariantStates, diffStructures } from './structure/diff';
 import {
   buildOccurrenceIndexMap,
   buildOccurrenceKeyMap,
@@ -90,6 +93,7 @@ import type { StatsResource } from './stats/types';
 import {
   applyAssessmentPresentation,
   assessCustomizationDiffs,
+  collapseVisualDiffsUnderVariantChanges,
   collapsePatternViolationDiffs,
   collapseConfiguredSemanticVariantDiffs,
   collapseSemanticVariantDiffs,
@@ -97,7 +101,12 @@ import {
   createPatternContextResolver,
 } from './assessment/customizationAssessment';
 
+declare const __APOLLO_VERSION__: string;
+
+const APOLLO_VERSION = __APOLLO_VERSION__;
+
 figma.showUI(__html__, { width: 800, height: 860 });
+console.log('[Apollo] plugin version', { version: APOLLO_VERSION });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
 const COMPACT_UI_SIZE = { width: 263, height: 860 };
 // Передаём UI конфигурацию табов из централизованного источника.
@@ -186,7 +195,6 @@ let lastAuditChannel: AuditChannel = 'Desktop';
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
-const APOLLO_VERSION = '0.1.0';
 
 class AuditCancelledError extends Error {
   constructor() {
@@ -833,6 +841,15 @@ async function classifyNode(
   const markedDiffs = diffResult.diffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
+  const explicitVariantStateDiffs =
+    shouldDiff && referenceStructure && alignedActualStructure
+      ? diffExplicitNestedVariantStates(
+          alignedActualStructure,
+          referenceStructure,
+          markedDiffs,
+        ).map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
+      : [];
+  const diffsForAssessment = markedDiffs.concat(explicitVariantStateDiffs);
   const hostDiffs =
     shouldDiff && referenceStructure && alignedActualStructure
       ? diffStructures(alignedActualStructure, referenceStructure, {
@@ -842,7 +859,7 @@ async function classifyNode(
           isPaintToken: isColorTokenForPaintDiff,
         }).diffs
       : [];
-  const assessedDiffs = assessCustomizationDiffs(markedDiffs, {
+  const assessedDiffs = assessCustomizationDiffs(diffsForAssessment, {
     hostDiffs,
     hostReference: referenceStructure ?? [],
     nestedContextEvidence: alignedActualStructure
@@ -854,7 +871,7 @@ async function classifyNode(
             nestedReference,
             instance.componentInstance ?? null,
           );
-        }, markedDiffs, (nestedComponentKey) =>
+        }, diffsForAssessment, (nestedComponentKey) =>
           findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
         )
       : undefined,
@@ -871,17 +888,20 @@ async function classifyNode(
         : undefined,
   });
   const semanticDiffs = collapsePatternViolationDiffs(
-    applyAssessmentPresentation(
-      collapseSemanticVariantDiffs(
-        collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
-          actualStructure: alignedActualStructure ?? [],
-          hostReference: referenceStructure ?? [],
-          hostComponentKey: ref?.key ?? componentKey ?? null,
-          resolveFamilyKey: (nestedComponentKey) =>
-            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
-        }),
-        alignedActualStructure ?? [],
+    collapseVisualDiffsUnderVariantChanges(
+      applyAssessmentPresentation(
+        collapseSemanticVariantDiffs(
+          collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
+            actualStructure: alignedActualStructure ?? [],
+            hostReference: referenceStructure ?? [],
+            hostComponentKey: ref?.key ?? componentKey ?? null,
+            resolveFamilyKey: (nestedComponentKey) =>
+              findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+          }),
+          alignedActualStructure ?? [],
+        ),
       ),
+      alignedActualStructure ?? [],
     ),
     alignedActualStructure ?? [],
   );
@@ -919,7 +939,7 @@ async function classifyNode(
     referenceNodes: expandedReferenceStructure?.length ?? 0,
     actualNodes: alignedActualStructure?.length ?? 0,
     rawDiffs: diffResult.diffs.length,
-    allowlistedDiffs: markedDiffs.length - allowlistedDiffs.length,
+    allowlistedDiffs: diffsForAssessment.length - allowlistedDiffs.length,
     filteredDiffs: diffs.length,
     diffDurationMs: Number((getTimestamp() - diffStartedAt).toFixed(1)),
   });
@@ -2274,12 +2294,12 @@ function expandReferenceWithInstanceComponents(
     ) + 1;
   const referenceOccurrenceKeys = buildOccurrenceKeyMap(referenceEntries);
   const referenceKeyToIndex = new Map<string, number>();
+  const hostReferenceByOccurrenceKey = new Map<string, DSStructureNode>();
   for (let index = 0; index < referenceEntries.length; index += 1) {
     const entry = referenceEntries[index];
-    referenceKeyToIndex.set(
-      referenceOccurrenceKeys.get(entry) ?? entry.path,
-      index,
-    );
+    const occurrenceKey = referenceOccurrenceKeys.get(entry) ?? entry.path;
+    referenceKeyToIndex.set(occurrenceKey, index);
+    hostReferenceByOccurrenceKey.set(occurrenceKey, entry);
   }
   const actualOccurrenceIndexMap = buildOccurrenceIndexMap(actual);
   const actualRootPath = actual[0]?.path ?? '';
@@ -2350,11 +2370,17 @@ function expandReferenceWithInstanceComponents(
     );
     nextSyntheticReferenceId += rebasedAligned.length;
 
-    for (const refNode of rebasedAligned) {
-      const occurrenceKey = makeOccurrenceKey(refNode.path, actualOccurrenceIndex);
+    for (const rawRefNode of rebasedAligned) {
+      const occurrenceKey = makeOccurrenceKey(rawRefNode.path, actualOccurrenceIndex);
       const existingIndex = referenceKeyToIndex.get(occurrenceKey);
       const existingNode =
         typeof existingIndex === 'number' ? referenceEntries[existingIndex] : null;
+      const hostBaselineNode =
+        hostReferenceByOccurrenceKey.get(occurrenceKey) ?? existingNode;
+      const refNode =
+        rawRefNode.path === node.path
+          ? applyMaterializedHostVariantBaselineToNode(rawRefNode, hostBaselineNode)
+          : rawRefNode;
       const mergeDecision =
         existingNode && typeof existingIndex === 'number'
           ? getMaterializedInstanceReferenceDecision(
@@ -2415,7 +2441,11 @@ function expandReferenceWithInstanceComponents(
         typeof existingIndex === 'number' &&
         mergeDecision?.preferCandidate === true
       ) {
-        referenceEntries[existingIndex] = refNode;
+        referenceEntries[existingIndex] = mergeMaterializedInstanceReferenceNode(
+          hostBaselineNode ?? existingNode,
+          refNode,
+          mergeDecision,
+        );
         continue;
       }
 
@@ -2427,7 +2457,7 @@ function expandReferenceWithInstanceComponents(
     }
   }
 
-  return referenceEntries;
+  return applyMaterializedHostVariantBaselines(referenceEntries, reference);
 }
 
 function rebaseReferenceSubtreeIds(

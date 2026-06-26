@@ -219,6 +219,8 @@ function referenceMatchesActualDiffValue(
   if (property === 'fill') {
     return matchesPaintResource(
       actual.resourceId ?? null,
+      actual.value ?? null,
+      actual.displayName ?? null,
       referenceNode.fill?.token ?? null,
       referenceNode.styles?.fill?.styleKey ?? null,
     );
@@ -226,6 +228,8 @@ function referenceMatchesActualDiffValue(
   if (property === 'stroke') {
     return matchesPaintResource(
       actual.resourceId ?? null,
+      actual.value ?? null,
+      actual.displayName ?? null,
       referenceNode.stroke?.token ?? null,
       referenceNode.styles?.stroke?.styleKey ?? null,
     );
@@ -253,12 +257,27 @@ function referenceMatchesActualDiffValue(
 
 function matchesPaintResource(
   actualResourceId: string | null,
+  actualValue: string | number | null,
+  actualDisplayName: string | null,
   token: string | null,
   style: string | null,
 ): boolean {
+  const normalizedActualValue =
+    typeof actualValue === 'string' && actualValue.trim()
+      ? actualValue.trim()
+      : null;
+  const normalizedActualDisplayName =
+    typeof actualDisplayName === 'string' && actualDisplayName.trim()
+      ? actualDisplayName.trim()
+      : null;
+
   return (
     resourceIdsEqual(actualResourceId, token) ||
-    resourceIdsEqual(actualResourceId, style)
+    resourceIdsEqual(actualResourceId, style) ||
+    normalizedActualValue === token ||
+    normalizedActualValue === style ||
+    normalizedActualDisplayName === token ||
+    normalizedActualDisplayName === style
   );
 }
 
@@ -325,6 +344,7 @@ export function assessCustomizationDiffs(
   const hostDiffKeys = new Set(options.hostDiffs.map(makeDiffPropertyKey));
 
   return diffs.map((diff) => {
+    const isVariantDiff = isVariantPropertyDiff(diff);
     const patternDecision = evaluatePatternRules(
       options.resolvePatternContext?.(diff) ?? null,
     );
@@ -342,7 +362,7 @@ export function assessCustomizationDiffs(
       });
     }
 
-    if (options.nestedContextEvidence?.explains(diff)) {
+    if (!isVariantDiff && options.nestedContextEvidence?.explains(diff)) {
       return withAssessment(diff, {
         verdict: patternDecision?.verdict ?? 'expected',
         source: patternDecision ? 'pattern-rule' : 'catalog-host',
@@ -359,7 +379,7 @@ export function assessCustomizationDiffs(
       });
     }
 
-    if (diff.suppressAsHostControlledNestedProperty === true) {
+    if (!isVariantDiff && diff.suppressAsHostControlledNestedProperty === true) {
       const hostContainsNode = hostReferenceKeys.has(diff.nodePath);
       const differsFromHost = hostDiffKeys.has(makeDiffPropertyKey(diff));
 
@@ -401,9 +421,77 @@ export function assessCustomizationDiffs(
 }
 
 export function applyAssessmentPresentation(diffs: DiffEntry[]): DiffEntry[] {
-  return diffs.filter(
-    (diff) => diff.assessment?.presentation !== 'suppress-derived',
+  return diffs.filter((diff) => {
+    if (isVariantPropertyDiff(diff)) {
+      return true;
+    }
+
+    if (diff.assessment?.presentation === 'suppress-derived') {
+      return false;
+    }
+
+    if (
+      diff.assessment?.presentation !== 'semantic-variant' &&
+      (
+        diff.assessment?.verdict === 'expected' ||
+        diff.assessment?.verdict === 'allowed'
+      )
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+export function collapseVisualDiffsUnderVariantChanges(
+  diffs: DiffEntry[],
+  actualStructure: DSStructureNode[],
+): DiffEntry[] {
+  const variantDiffs = diffs.filter(isVariantPropertyDiff);
+  if (!variantDiffs.length) {
+    return diffs;
+  }
+
+  const byNodeId = new Map(
+    actualStructure
+      .filter((node) => Boolean(node.nodeId))
+      .map((node) => [node.nodeId!, node]),
   );
+  const collapsedNodeIds = new Set<string>();
+
+  for (const diff of variantDiffs) {
+    if (!diff.nodeId) {
+      continue;
+    }
+    const node = byNodeId.get(diff.nodeId);
+    if (!node) {
+      continue;
+    }
+    for (const subtreeNode of collectSubtree(actualStructure, node.id)) {
+      if (subtreeNode.nodeId) {
+        collapsedNodeIds.add(subtreeNode.nodeId);
+      }
+    }
+  }
+
+  if (!collapsedNodeIds.size) {
+    return diffs;
+  }
+
+  return diffs.filter(
+    (diff) =>
+      isVariantPropertyDiff(diff) ||
+      diff.assessment?.verdict === 'unknown' ||
+      diff.assessment?.verdict === 'violation' ||
+      !diff.nodeId ||
+      !collapsedNodeIds.has(diff.nodeId),
+  );
+}
+
+function isVariantPropertyDiff(diff: DiffEntry): boolean {
+  return typeof diff.details?.property === 'string' &&
+    diff.details.property.startsWith('variant.');
 }
 
 export function collapseSemanticVariantDiffs(

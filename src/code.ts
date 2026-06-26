@@ -87,9 +87,9 @@ import {
   variantMatchesSourceWithDefaultExtras,
   variantPropertiesEqual,
 } from './utils/variantProperties';
-import { buildApolloStatsReport } from './stats/report';
+import { buildApolloAgentReport, buildApolloStatsReport } from './stats/report';
 import { submitApolloStatsReport } from './stats/collector';
-import type { StatsResource } from './stats/types';
+import type { ApolloAgentReport, StatsResource } from './stats/types';
 import {
   applyAssessmentPresentation,
   assessCustomizationDiffs,
@@ -104,11 +104,14 @@ import {
 declare const __APOLLO_VERSION__: string;
 
 const APOLLO_VERSION = __APOLLO_VERSION__;
+const APOLLO_PROXY_URL = 'http://localhost:3001/analyze';
 
 figma.showUI(__html__, { width: 800, height: 860 });
 console.log('[Apollo] plugin version', { version: APOLLO_VERSION });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
 const COMPACT_UI_SIZE = { width: 263, height: 860 };
+let lastApolloAgentReport: ApolloAgentReport | null = null;
+let activeApolloAgentRequestId: string | null = null;
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -134,6 +137,37 @@ figma.ui.onmessage = (msg) => {
   if (msg.type === 'cancel-scan') {
     if (scanInProgress) {
       cancelRequested = true;
+    }
+    return;
+  }
+
+  if (msg.type === 'send-apollo-agent-report') {
+    void sendApolloAgentReport(msg.payload?.requestId).catch((error) => {
+      console.error('[Apollo] failed to send agent report', error);
+      figma.ui.postMessage({
+        type: 'apollo-agent-result',
+        payload: {
+          requestId: msg.payload?.requestId ?? null,
+          error:
+            error instanceof Error
+              ? error.message
+              : 'Не удалось отправить отчёт агенту.',
+        },
+      });
+    });
+    return;
+  }
+
+  if (msg.type === 'cancel-apollo-agent-report') {
+    if (
+      !msg.payload?.requestId ||
+      msg.payload.requestId === activeApolloAgentRequestId
+    ) {
+      activeApolloAgentRequestId = null;
+      figma.ui.postMessage({
+        type: 'apollo-agent-cancelled',
+        payload: { requestId: msg.payload?.requestId ?? null },
+      });
     }
     return;
   }
@@ -233,6 +267,8 @@ async function runAudit(
   }
   scanInProgress = true;
   cancelRequested = false;
+  lastApolloAgentReport = null;
+  activeApolloAgentRequestId = null;
 
   figma.ui.postMessage({ type: 'scan-started' });
 
@@ -472,6 +508,17 @@ async function runAudit(
         resolveStyleResource: resolveStyleStatsResource,
         resolveTokenResource: resolveTokenStatsResource,
       });
+      const agentReport = buildApolloAgentReport(report);
+      lastApolloAgentReport = agentReport;
+      figma.ui.postMessage({
+        type: 'apollo-agent-report-ready',
+        payload: {
+          reportId: agentReport.reportId,
+          suggestedFileName: agentReport.suggestedFileName,
+          findingCount: agentReport.findings.length,
+        },
+      });
+      void sendApolloAgentReport();
       void submitApolloStatsReport(report);
     } catch (error) {
       console.warn('[Apollo] failed to prepare stats report', error);
@@ -494,6 +541,108 @@ async function runAudit(
 
     finalize('finished');
   }
+}
+
+async function sendApolloAgentReport(requestId?: string): Promise<void> {
+  const report = lastApolloAgentReport;
+  const currentRequestId = requestId || `${Date.now()}`;
+  activeApolloAgentRequestId = currentRequestId;
+
+  if (!report) {
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        error: 'Сначала завершите проверку Apollo.',
+      },
+    });
+    activeApolloAgentRequestId = null;
+    return;
+  }
+
+  figma.ui.postMessage({
+    type: 'apollo-agent-started',
+    payload: {
+      requestId: currentRequestId,
+      reportId: report.reportId,
+      suggestedFileName: report.suggestedFileName,
+    },
+  });
+
+  try {
+    const response = await fetch(APOLLO_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        report,
+        component: 'apollo-agent-report',
+        action: 'audit-report',
+        session_id: createApolloAgentSessionId(report),
+      }),
+    });
+
+    if (activeApolloAgentRequestId !== currentRequestId) {
+      return;
+    }
+
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data?.success) {
+      figma.ui.postMessage({
+        type: 'apollo-agent-result',
+        payload: {
+          requestId: currentRequestId,
+          reportId: report.reportId,
+          suggestedFileName: report.suggestedFileName,
+          error: data?.error || `Apollo proxy error ${response.status}`,
+        },
+      });
+      return;
+    }
+
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        reportId: report.reportId,
+        suggestedFileName: report.suggestedFileName,
+        text: typeof data.result === 'string' ? data.result : '',
+      },
+    });
+  } catch (error) {
+    if (activeApolloAgentRequestId !== currentRequestId) {
+      return;
+    }
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        reportId: report.reportId,
+        suggestedFileName: report.suggestedFileName,
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Не удалось отправить отчёт агенту.',
+      },
+    });
+  } finally {
+    if (activeApolloAgentRequestId === currentRequestId) {
+      activeApolloAgentRequestId = null;
+    }
+  }
+}
+
+function createApolloAgentSessionId(report: ApolloAgentReport): string {
+  const base = [
+    report.user?.slug || report.user?.id || 'unknown-user',
+    report.sourceReportId || report.reportId,
+  ].join('__');
+  const sanitized = base
+    .normalize('NFKC')
+    .replace(/[^\p{Letter}\p{Number}._-]+/gu, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-_.]+|[-_.]+$/g, '')
+    .slice(0, 180);
+  return sanitized || 'apollo-agent-report';
 }
 
 /**

@@ -142,7 +142,10 @@ figma.ui.onmessage = (msg) => {
   }
 
   if (msg.type === 'send-apollo-agent-report') {
-    void sendApolloAgentReport(msg.payload?.requestId).catch((error) => {
+    void sendApolloAgentReport(
+      msg.payload?.requestId,
+      msg.payload?.userMessage,
+    ).catch((error) => {
       console.error('[Apollo] failed to send agent report', error);
       figma.ui.postMessage({
         type: 'apollo-agent-result',
@@ -543,16 +546,23 @@ async function runAudit(
   }
 }
 
-async function sendApolloAgentReport(requestId?: string): Promise<void> {
+async function sendApolloAgentReport(
+  requestId?: string,
+  userMessage?: string,
+): Promise<void> {
   const report = lastApolloAgentReport;
   const currentRequestId = requestId || `${Date.now()}`;
+  const agentInputText = buildApolloAgentInputText(userMessage);
+  const isDirectUserQuestion = agentInputText !== null;
+  const requestKind = isDirectUserQuestion ? 'question' : 'report';
   activeApolloAgentRequestId = currentRequestId;
 
-  if (!report) {
+  if (!report && !isDirectUserQuestion) {
     figma.ui.postMessage({
       type: 'apollo-agent-result',
       payload: {
         requestId: currentRequestId,
+        requestKind,
         error: 'Сначала завершите проверку Apollo.',
       },
     });
@@ -564,21 +574,37 @@ async function sendApolloAgentReport(requestId?: string): Promise<void> {
     type: 'apollo-agent-started',
     payload: {
       requestId: currentRequestId,
-      reportId: report.reportId,
-      suggestedFileName: report.suggestedFileName,
+      requestKind,
+      reportId: report?.reportId ?? null,
+      suggestedFileName: report?.suggestedFileName ?? '',
     },
   });
 
   try {
+    const requestBody = {
+      component: 'apollo-agent-report',
+      action: isDirectUserQuestion ? 'user-question' : 'audit-report',
+      session_id: report
+        ? createApolloAgentSessionId(report)
+        : createApolloAgentFallbackSessionId(),
+    } as {
+      component: string;
+      action: string;
+      session_id: string;
+      report?: ApolloAgentReport;
+      text?: string;
+    };
+
+    if (agentInputText) {
+      requestBody.text = agentInputText;
+    } else if (report) {
+      requestBody.report = report;
+    }
+
     const response = await fetch(APOLLO_PROXY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        report,
-        component: 'apollo-agent-report',
-        action: 'audit-report',
-        session_id: createApolloAgentSessionId(report),
-      }),
+      body: JSON.stringify(requestBody),
     });
 
     if (activeApolloAgentRequestId !== currentRequestId) {
@@ -591,8 +617,9 @@ async function sendApolloAgentReport(requestId?: string): Promise<void> {
         type: 'apollo-agent-result',
         payload: {
           requestId: currentRequestId,
-          reportId: report.reportId,
-          suggestedFileName: report.suggestedFileName,
+          requestKind,
+          reportId: report?.reportId ?? null,
+          suggestedFileName: report?.suggestedFileName ?? '',
           error: data?.error || `Apollo proxy error ${response.status}`,
         },
       });
@@ -603,8 +630,9 @@ async function sendApolloAgentReport(requestId?: string): Promise<void> {
       type: 'apollo-agent-result',
       payload: {
         requestId: currentRequestId,
-        reportId: report.reportId,
-        suggestedFileName: report.suggestedFileName,
+        requestKind,
+        reportId: report?.reportId ?? null,
+        suggestedFileName: report?.suggestedFileName ?? '',
         text: typeof data.result === 'string' ? data.result : '',
       },
     });
@@ -616,8 +644,9 @@ async function sendApolloAgentReport(requestId?: string): Promise<void> {
       type: 'apollo-agent-result',
       payload: {
         requestId: currentRequestId,
-        reportId: report.reportId,
-        suggestedFileName: report.suggestedFileName,
+        requestKind,
+        reportId: report?.reportId ?? null,
+        suggestedFileName: report?.suggestedFileName ?? '',
         error:
           error instanceof Error
             ? error.message
@@ -629,6 +658,17 @@ async function sendApolloAgentReport(requestId?: string): Promise<void> {
       activeApolloAgentRequestId = null;
     }
   }
+}
+
+function buildApolloAgentInputText(userMessage?: string): string | null {
+  const trimmedMessage =
+    typeof userMessage === 'string' ? userMessage.trim() : '';
+
+  if (!trimmedMessage) {
+    return null;
+  }
+
+  return trimmedMessage;
 }
 
 function createApolloAgentSessionId(report: ApolloAgentReport): string {
@@ -643,6 +683,20 @@ function createApolloAgentSessionId(report: ApolloAgentReport): string {
     .replace(/^[-_.]+|[-_.]+$/g, '')
     .slice(0, 180);
   return sanitized || 'apollo-agent-report';
+}
+
+function createApolloAgentFallbackSessionId(): string {
+  const base = [
+    figma.currentUser?.id || 'unknown-user',
+    figma.currentUser?.name || 'apollo-user-question',
+  ].join('__');
+  const sanitized = base
+    .normalize('NFKC')
+    .replace(/[^\p{Letter}\p{Number}._-]+/gu, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-_.]+|[-_.]+$/g, '')
+    .slice(0, 180);
+  return sanitized || 'apollo-user-question';
 }
 
 /**

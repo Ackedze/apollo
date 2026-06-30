@@ -288,6 +288,80 @@
         border-radius: 50%;
         animation: spin 1s linear infinite;
       }
+      .agent-composer {
+        position: relative;
+        z-index: 1;
+        flex: 0 0 auto;
+        min-height: 56px;
+        width: 100%;
+        margin: 0;
+        border-top: 1px solid #e7e7e7;
+        border-radius: 0 0 16px 16px;
+        background: #f5f5f5;
+        overflow: hidden;
+      }
+      .agent-composer-input {
+        position: relative;
+        z-index: 2;
+        display: block;
+        width: 100%;
+        min-height: 56px;
+        max-height: 196px;
+        resize: none;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        padding: 18px 52px 18px 20px;
+        color: rgba(3, 3, 6, 0.88);
+        font: inherit;
+        font-size: 15px;
+        line-height: 20px;
+        letter-spacing: 0;
+        caret-color: rgba(3, 3, 6, 0.88);
+      }
+      .agent-composer-input::placeholder {
+        color: rgba(5, 8, 29, 0.38);
+        -webkit-text-fill-color: rgba(5, 8, 29, 0.38);
+      }
+      .agent-composer-input:disabled {
+        color: rgba(5, 8, 29, 0.38);
+        opacity: 1;
+        -webkit-text-fill-color: rgba(5, 8, 29, 0.38);
+      }
+      .agent-input-addon {
+        position: absolute;
+        z-index: 3;
+        right: 10px;
+        bottom: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+      .agent-input-addon[disabled] {
+        cursor: default;
+        opacity: 0.36;
+      }
+      .agent-input-addon.hidden {
+        display: none;
+      }
+      .agent-input-addon svg {
+        display: block;
+        width: 24px;
+        height: 24px;
+      }
+      .agent-input-addon .agent-stop-icon,
+      .agent-input-addon.is-stop .agent-send-icon {
+        display: none;
+      }
+      .agent-input-addon.is-stop .agent-stop-icon {
+        display: block;
+      }
       .markdown-root {
         display: flex;
         flex-direction: column;
@@ -308,6 +382,9 @@
         padding: 24px 0 14px;
       }
       .md-block--h3,
+      .md-block--h4,
+      .md-block--h5,
+      .md-block--h6,
       .md-block--divider,
       .md-block--table,
       .md-block--code {
@@ -322,6 +399,9 @@
       .md-h1,
       .md-h2,
       .md-h3,
+      .md-h4,
+      .md-h5,
+      .md-h6,
       .md-p,
       .md-quote,
       .md-list-content,
@@ -345,6 +425,13 @@
         line-height: 22px;
         font-weight: 700;
       }
+      .md-h4,
+      .md-h5,
+      .md-h6 {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 700;
+      }
       .md-p,
       .md-list-content,
       .md-th,
@@ -359,9 +446,14 @@
         overflow-wrap: anywhere;
       }
       .md-quote {
-        font-size: 13px;
-        line-height: 18px;
-        color: rgba(4, 4, 19, 0.55);
+        padding-left: 16px;
+        border-left: 4px solid rgba(30, 43, 68, 0.12);
+        font-size: 15px;
+        line-height: 22px;
+        font-style: italic;
+        font-weight: 600;
+        color: rgba(5, 8, 29, 0.78);
+        white-space: pre-wrap;
       }
       .md-list {
         display: flex;
@@ -440,10 +532,15 @@
       .md-pre {
         padding: 12px 14px;
         border-radius: 12px;
-        background: rgba(30, 43, 68, 0.06);
+        border: 1px solid rgba(30, 43, 68, 0.12);
+        background: rgba(3, 3, 6, 0.86);
+        color: rgba(255, 255, 255, 0.88);
         overflow-x: auto;
         max-width: 100%;
-        white-space: pre-wrap;
+        white-space: pre;
+        word-break: normal;
+        overflow-wrap: normal;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
       .md-code-inline {
         padding: 1px 5px;
@@ -539,6 +636,29 @@
         <section id="agent-conversation" class="agent-conversation" aria-live="polite">
           <div id="agent-conversation-inner" class="agent-conversation-inner"></div>
         </section>
+        <form id="agent-composer" class="agent-composer">
+          <textarea
+            id="agent-composer-input"
+            class="agent-composer-input"
+            rows="1"
+            placeholder="Задать вопрос по отчёту"
+          ></textarea>
+          <button
+            id="agent-composer-submit"
+            type="submit"
+            class="agent-input-addon hidden"
+            aria-label="Отправить агенту"
+          >
+            <svg class="agent-send-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="#212124"></circle>
+              <path d="M12 15.5V8.5M12 8.5L9.25 11.25M12 8.5L14.75 11.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg class="agent-stop-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" fill="#212124"></circle>
+              <path d="M8.75 8.75L15.25 15.25M15.25 8.75L8.75 15.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </form>
       </div>
     </section>
     <script src="./ui-app.js"></script>
@@ -659,6 +779,7 @@
         let agentChatOpen = false;
         let agentRequestInProgress = false;
         let agentActiveRequestId = null;
+        let agentActiveRequestKind = null;
         let agentLastSentReportId = null;
         let agentMessages = [];
         let agentMessageSequence = 0;
@@ -678,6 +799,13 @@
         const agentConversation = document.getElementById('agent-conversation');
         const agentConversationInner = document.getElementById(
           'agent-conversation-inner',
+        );
+        const agentComposer = document.getElementById('agent-composer');
+        const agentComposerInput = document.getElementById(
+          'agent-composer-input',
+        );
+        const agentComposerSubmit = document.getElementById(
+          'agent-composer-submit',
         );
         const chromeBridge = window.ApolloChromeBridge || null;
         const resultsBridge = window.ApolloResultsBridge || null;
@@ -725,6 +853,17 @@
         agentChatOverlay?.addEventListener('click', (event) => {
           if (event.target === agentChatOverlay) {
             closeAgentChat();
+          }
+        });
+        agentComposer?.addEventListener('submit', handleAgentComposerSubmit);
+        agentComposerInput?.addEventListener('input', () => {
+          resizeAgentComposerInput();
+          syncAgentChatState();
+        });
+        agentComposerInput?.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleAgentComposerSubmit(event);
           }
         });
 
@@ -1627,8 +1766,13 @@
             agentLastSentReportId = null;
             agentRequestInProgress = false;
             agentActiveRequestId = null;
+            agentActiveRequestKind = null;
             agentMessages = [];
             agentChatOpen = false;
+            if (agentComposerInput) {
+              agentComposerInput.value = '';
+              resizeAgentComposerInput();
+            }
             syncAgentChatState();
             renderAgentMessages();
           }
@@ -1691,8 +1835,9 @@
           if (msg.type === 'apollo-agent-cancelled') {
             agentRequestInProgress = false;
             agentActiveRequestId = null;
+            agentActiveRequestKind = null;
+            removeAgentLoadingMessage();
             syncAgentChatState();
-            renderAgentMessages();
             return;
           }
 
@@ -1746,14 +1891,10 @@
         }
 
         function openAgentChat() {
-          if (!scanCompleted) {
-            return;
-          }
-
           agentChatOpen = true;
           syncAgentChatState();
 
-          if (!agentMessages.length) {
+          if (!agentMessages.length && agentReportMeta) {
             addAgentMessage({
               role: 'user',
               text: agentReportMeta?.suggestedFileName
@@ -1763,10 +1904,6 @@
           }
 
           if (!agentReportMeta) {
-            addAgentMessage({
-              role: 'error',
-              text: 'Agent report ещё готовится. Попробуйте ещё раз через несколько секунд.',
-            });
             return;
           }
 
@@ -1783,14 +1920,78 @@
           syncAgentChatState();
         }
 
-        function sendAgentReportToProxy() {
-          if (!agentReportMeta || agentRequestInProgress) {
+        function handleAgentComposerSubmit(event) {
+          event?.preventDefault?.();
+
+          if (agentRequestInProgress) {
+            cancelAgentReportRequest();
+            return;
+          }
+
+          const userMessage = agentComposerInput?.value?.trim() || '';
+          if (!userMessage) {
+            return;
+          }
+
+          addAgentMessage({
+            role: 'user',
+            text: userMessage,
+          });
+
+          if (agentComposerInput) {
+            agentComposerInput.value = '';
+            resizeAgentComposerInput();
+          }
+
+          sendAgentReportToProxy(userMessage);
+        }
+
+        function cancelAgentReportRequest() {
+          if (!agentRequestInProgress) {
+            return;
+          }
+
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'cancel-apollo-agent-report',
+                payload: { requestId: agentActiveRequestId },
+              },
+            },
+            '*',
+          );
+        }
+
+        function resizeAgentComposerInput() {
+          if (!agentComposerInput) {
+            return;
+          }
+
+          agentComposerInput.style.height = '0px';
+          const height = Math.min(
+            Math.max(agentComposerInput.scrollHeight, 56),
+            196,
+          );
+          agentComposerInput.style.height = `${height}px`;
+        }
+
+        function sendAgentReportToProxy(userMessage) {
+          const normalizedUserMessage =
+            typeof userMessage === 'string' ? userMessage.trim() : '';
+          const requestKind = normalizedUserMessage ? 'question' : 'report';
+
+          if (agentRequestInProgress) {
+            return;
+          }
+
+          if (requestKind === 'report' && !agentReportMeta) {
             return;
           }
 
           agentMessageSequence += 1;
           const requestId = `apollo-agent-${Date.now()}-${agentMessageSequence}`;
           agentActiveRequestId = requestId;
+          agentActiveRequestKind = requestKind;
           agentRequestInProgress = true;
           syncAgentChatState();
 
@@ -1798,7 +1999,7 @@
             {
               pluginMessage: {
                 type: 'send-apollo-agent-report',
-                payload: { requestId },
+                payload: { requestId, userMessage: normalizedUserMessage },
               },
             },
             '*',
@@ -1809,6 +2010,7 @@
           if (payload.requestId && payload.requestId !== agentActiveRequestId) {
             agentActiveRequestId = payload.requestId;
           }
+          agentActiveRequestKind = payload.requestKind || agentActiveRequestKind || 'report';
           agentRequestInProgress = true;
           ensureAgentUserMessage(payload);
           syncAgentChatState();
@@ -1816,11 +2018,18 @@
           replaceAgentLoadingMessage({
             role: 'assistant',
             variant: 'loading',
-            text: 'Агент анализирует отчёт',
+            text:
+              agentActiveRequestKind === 'question'
+                ? 'Apollo думает'
+                : 'Агент анализирует отчёт',
           });
         }
 
         function ensureAgentUserMessage(payload) {
+          if (payload.requestKind === 'question') {
+            return;
+          }
+
           const hasUserMessage = agentMessages.some(
             (message) => message.role === 'user',
           );
@@ -1849,6 +2058,7 @@
 
           agentRequestInProgress = false;
           agentActiveRequestId = null;
+          agentActiveRequestKind = null;
 
           removeAgentLoadingMessage();
 
@@ -1918,9 +2128,14 @@
           }
 
           if (message.variant === 'loading') {
-            return `<article class="message-card assistant"><div class="assistant-msg"><div class="assistant-msg__container"><div class="assistant-copy">${escapeHtml(
-              message.text || 'Агент анализирует отчёт',
-            )}</div><div class="assistant-actions loading"><span class="spinner" aria-hidden="true"></span><span>LLM думает</span></div></div></div></article>`;
+            const loadingText = message.text || 'Apollo думает';
+            const loadingCopy =
+              loadingText === 'Apollo думает'
+                ? ''
+                : `<div class="assistant-copy">${escapeHtml(loadingText)}</div>`;
+            return `<article class="message-card assistant"><div class="assistant-msg"><div class="assistant-msg__container">${loadingCopy}<div class="assistant-actions loading"><span class="spinner" aria-hidden="true"></span><span>${escapeHtml(
+              loadingText === 'Apollo думает' ? 'Apollo думает' : 'LLM думает',
+            )}</span></div></div></div></article>`;
           }
 
           return `<article class="message-card assistant"><div class="assistant-msg"><div class="assistant-msg__container"><div class="assistant-copy">${buildMarkdownMessageMarkup(
@@ -1930,7 +2145,7 @@
 
         function syncAgentChatState() {
           if (agentChatFab) {
-            agentChatFab.classList.toggle('visible', scanCompleted);
+            agentChatFab.classList.add('visible');
             agentChatFab.disabled = false;
           }
           if (agentChatOverlay) {
@@ -1942,7 +2157,10 @@
           }
           if (agentChatMeta) {
             if (agentRequestInProgress) {
-              agentChatMeta.textContent = 'Отправляем отчёт агенту';
+              agentChatMeta.textContent =
+                agentActiveRequestKind === 'question'
+                  ? 'Apollo думает'
+                  : 'Отправляем отчёт агенту';
             } else if (agentReportMeta?.suggestedFileName) {
               const count =
                 typeof agentReportMeta.findingCount === 'number'
@@ -1955,10 +2173,27 @@
               agentChatMeta.textContent = 'Отчёт ещё не отправлен';
             }
           }
+          if (agentComposerInput) {
+            agentComposerInput.disabled = agentRequestInProgress;
+          }
+          if (agentComposerSubmit) {
+            const hasDraft = Boolean(agentComposerInput?.value?.trim());
+            agentComposerSubmit.classList.toggle('is-stop', agentRequestInProgress);
+            agentComposerSubmit.classList.toggle(
+              'hidden',
+              !agentRequestInProgress && !hasDraft,
+            );
+            agentComposerSubmit.disabled =
+              !agentRequestInProgress && !hasDraft;
+            agentComposerSubmit.setAttribute(
+              'aria-label',
+              agentRequestInProgress ? 'Остановить ответ' : 'Отправить агенту',
+            );
+          }
         }
 
         function buildMarkdownMessageMarkup(source) {
-          const normalized = String(source || '').replace(/\r\n?/g, '\n').trim();
+          const normalized = normalizeMarkdownSource(source);
           if (!normalized) {
             return '';
           }
@@ -1975,16 +2210,20 @@
           while (index < lines.length) {
             const line = lines[index];
             const trimmed = line.trim();
+            const normalizedTrimmed = normalizeMarkdownLine(trimmed);
 
-            if (!trimmed) {
+            if (!normalizedTrimmed) {
               index += 1;
               continue;
             }
 
-            if (trimmed.startsWith('```')) {
+            if (isCodeFence(normalizedTrimmed)) {
               const code = [];
               index += 1;
-              while (index < lines.length && !lines[index].trim().startsWith('```')) {
+              while (
+                index < lines.length &&
+                !isCodeFence(normalizeMarkdownLine(lines[index].trim()))
+              ) {
                 code.push(lines[index]);
                 index += 1;
               }
@@ -2006,7 +2245,7 @@
               continue;
             }
 
-            const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+            const heading = normalizedTrimmed.match(/^(#{1,6})\s*(.+)$/);
             if (heading) {
               blocks.push({
                 type: 'heading',
@@ -2017,27 +2256,46 @@
               continue;
             }
 
-            if (/^-{3,}$/.test(trimmed)) {
+            if (/^-{3,}$/.test(normalizedTrimmed)) {
               blocks.push({ type: 'divider' });
               index += 1;
               continue;
             }
 
-            if (/^>\s?/.test(trimmed)) {
+            if (/^>\s?/.test(normalizedTrimmed)) {
+              const quoteLines = [];
+              while (index < lines.length) {
+                const quoteLine = normalizeMarkdownLine(lines[index].trim());
+                if (!/^>\s?/.test(quoteLine)) {
+                  break;
+                }
+                quoteLines.push(quoteLine.replace(/^>\s?/, ''));
+                index += 1;
+              }
+              blocks.push({ type: 'quote', text: quoteLines.join('\n') });
+              continue;
+            }
+
+            if (
+              isStandaloneQuotedLine(normalizedTrimmed) &&
+              shouldTreatAsQuoteAfter(blocks)
+            ) {
               blocks.push({
                 type: 'quote',
-                text: trimmed.replace(/^>\s?/, ''),
+                text: unwrapStandaloneQuote(normalizedTrimmed),
               });
               index += 1;
               continue;
             }
 
-            const listMeta = getListMeta(trimmed);
+            const listMeta = getListMeta(normalizedTrimmed);
             if (listMeta) {
               const items = [];
               const ordered = listMeta.ordered;
               while (index < lines.length) {
-                const currentMeta = getListMeta(lines[index].trim());
+                const currentMeta = getListMeta(
+                  normalizeMarkdownLine(lines[index].trim()),
+                );
                 if (!currentMeta || currentMeta.ordered !== ordered) {
                   break;
                 }
@@ -2048,15 +2306,15 @@
               continue;
             }
 
-            const paragraph = [trimmed];
+            const paragraph = [normalizedTrimmed];
             index += 1;
             while (index < lines.length) {
-              const next = lines[index].trim();
+              const next = normalizeMarkdownLine(lines[index].trim());
               if (
                 !next ||
-                next.startsWith('```') ||
-                /^(#{1,3})\s+/.test(next) ||
-                /^[-*–—]\s+/.test(next) ||
+                isCodeFence(next) ||
+                /^(#{1,6})\s*/.test(next) ||
+                isListLine(next) ||
                 /^\d+[.)]\s+/.test(next) ||
                 /^>\s?/.test(next) ||
                 isMarkdownTableStart(lines, index)
@@ -2246,11 +2504,64 @@
           if (orderedMatch) {
             return { ordered: true, content: orderedMatch[2].trim() };
           }
-          const unorderedMatch = line.match(/^\s*[-*–—]\s+(.+)$/);
+          const unorderedMatch = line.match(/^\s*[-*+–—•]\s+(.+)$/);
           if (unorderedMatch) {
             return { ordered: false, content: unorderedMatch[1].trim() };
           }
           return null;
+        }
+
+        function normalizeMarkdownSource(source) {
+          return String(source || '')
+            .replace(/\r\n?/g, '\n')
+            .replace(/[“”]/g, '"')
+            .replace(/[‘’]/g, "'")
+            .replace(/^\uFEFF/, '')
+            .trim();
+        }
+
+        function normalizeMarkdownLine(line) {
+          return String(line || '')
+            .replace(/\u00a0/g, ' ')
+            .replace(/^`{3,}\s*$/g, '```')
+            .replace(/^`{3,}\s*([A-Za-z0-9_-]+)\s*$/g, '```$1')
+            .trim();
+        }
+
+        function isCodeFence(line) {
+          return /^`{3,}(?:[A-Za-z0-9_-]+)?\s*$/.test(line);
+        }
+
+        function isListLine(line) {
+          return Boolean(getListMeta(line));
+        }
+
+        function shouldTreatAsQuoteAfter(blocks) {
+          const previous = blocks[blocks.length - 1];
+          if (!previous) {
+            return false;
+          }
+          const previousText = String(previous.text || '').toLowerCase();
+          if (previous.type !== 'paragraph' && previous.type !== 'heading') {
+            return false;
+          }
+          return /(^|\s)(правило|цитата|source quote|quote)[^.!?]*:\s*$/.test(
+            previousText,
+          );
+        }
+
+        function isStandaloneQuotedLine(line) {
+          return (
+            /^["'«„“][\s\S]+["'»“”]$/.test(line) ||
+            /^"«[\s\S]+»"$/.test(line) ||
+            /^«[\s\S]+»$/.test(line)
+          );
+        }
+
+        function unwrapStandaloneQuote(line) {
+          return String(line || '')
+            .replace(/^["'«„“]\s*/, '')
+            .replace(/\s*["'»“”]$/, '');
         }
 
         function escapeHtml(value) {

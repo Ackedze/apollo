@@ -1,10 +1,12 @@
 {
   "name": "apollo",
-  "version": "0.1.22",
+  "version": "0.1.27",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
+    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:stats-report",
     "type-check": "tsc --noEmit",
+    "check:figma-runtime": "node scripts/check-figma-runtime.js",
     "test:themization": "node scripts/test-themization.js",
     "test:customization-filters": "node scripts/test-customization-filters.js",
     "test:customization-assessment": "node scripts/test-customization-assessment.js",

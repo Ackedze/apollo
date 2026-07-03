@@ -41,6 +41,7 @@ export interface DetachedEntry {
   componentKey: string;
   libraryName: string | null;
   componentName: string | null;
+  sourceFile?: string | null;
   visible: boolean;
 }
 

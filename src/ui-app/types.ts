@@ -16,6 +16,7 @@ export type ChromeState = {
   actionLoading: boolean;
   actionType: ChromeButtonType;
   compact: boolean;
+  shellAuditEnabled: boolean;
   tabs: ChromeTabItem[];
 };
 

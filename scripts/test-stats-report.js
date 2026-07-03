@@ -292,6 +292,9 @@ function main() {
       startedAt: new Date('2026-06-06T09:00:00.000Z'),
       finishedAt: new Date('2026-06-06T09:00:01.500Z'),
       selection: [],
+      settings: {
+        shellAuditEnabled: false,
+      },
       scannedComponents: 2,
     },
     views: {
@@ -338,6 +341,7 @@ function main() {
   });
 
   assert.equal(report.schemaVersion, 1);
+  assert.equal(report.scan.settings.shellAuditEnabled, false);
   assert.equal(report.user.slug, 'User-Name');
   assert.equal(report.summary.categoryCounts.currentComponents, 1);
   assert.equal(report.summary.categoryCounts.customizations, 4);
@@ -368,6 +372,7 @@ function main() {
   const agentReport = buildApolloAgentReport(report);
   assert.equal(agentReport.schemaVersion, 1);
   assert.equal(agentReport.reportKind, 'apollo-agent-report');
+  assert.equal(agentReport.scan.settings.shellAuditEnabled, false);
   assert.equal(agentReport.sourceReportId, report.reportId);
   assert.equal(
     agentReport.suggestedFileName,

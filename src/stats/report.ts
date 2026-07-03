@@ -55,6 +55,9 @@ export type BuildApolloStatsReportInput = {
       path: string;
       componentKey: string | null;
     }>;
+    settings: {
+      shellAuditEnabled: boolean;
+    };
     scannedComponents: number;
   };
   views: ApolloStatsViews;
@@ -140,6 +143,7 @@ export function buildApolloStatsReport(
         finishedAt.getTime() - input.scan.startedAt.getTime(),
       ),
       selection: input.scan.selection,
+      settings: input.scan.settings,
     },
     summary: {
       scannedComponents: input.scan.scannedComponents,
@@ -383,7 +387,7 @@ function detachedItem(entry: DetachedEntry): StatsDetachedItem {
       key: entry.componentKey,
       id: null,
       library: entry.libraryName,
-      sourceFile: null,
+      sourceFile: entry.sourceFile ?? null,
     },
   };
 }

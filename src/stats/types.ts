@@ -155,6 +155,9 @@ export type ApolloStatsReport = {
       path: string;
       componentKey: string | null;
     }>;
+    settings: {
+      shellAuditEnabled: boolean;
+    };
   };
   summary: {
     scannedComponents: number;

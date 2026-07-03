@@ -64,6 +64,11 @@ import {
   supportsThemizationForChannel,
 } from './policies/componentAuditPolicy';
 import {
+  getShellComponentAuditReason,
+  isShellComponentAuditExcluded,
+  isShellDetachedEntryExcluded,
+} from './policies/shellComponentAuditPolicy';
+import {
   buildCorporateThemizationEntry,
   buildPageThemizationEntry,
   getContainingPage,
@@ -138,7 +143,9 @@ figma.ui.onmessage = (msg) => {
   }
 
   if (msg.type === 'scan-selection') {
-    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel));
+    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel), {
+      shellAuditEnabled: msg.payload?.shellAuditEnabled === true,
+    });
     return;
   }
 
@@ -271,6 +278,9 @@ const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
 async function runAudit(
   selectionOverride?: readonly SceneNode[],
   selectedChannel: AuditChannel = 'Desktop',
+  options?: {
+    shellAuditEnabled?: boolean;
+  },
 ) {
   if (scanInProgress) {
     figma.notify('Проверка уже выполняется.');
@@ -426,6 +436,7 @@ async function runAudit(
       customStyleReasonOptions,
       deprecatedStyleOptions,
       checkedComponentNodesList,
+      Boolean(options?.shellAuditEnabled),
       throwIfCancelled,
     );
     logAuditMetric('audit-diff-phase', {
@@ -503,6 +514,9 @@ async function runAudit(
           startedAt: auditStartedAt,
           finishedAt: new Date(),
           selection: selectionStats,
+          settings: {
+            shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+          },
           scannedComponents: checkState.totalItems,
         },
         views: {
@@ -800,6 +814,7 @@ async function collectTargets(
   customStyleReasonOptions: CustomStyleCollectionOptions,
   deprecatedStyleOptions: DeprecatedStyleCollectionOptions,
   checkedComponentNodesList: Set<string>,
+  shellAuditEnabled: boolean,
   throwIfCancelled: () => void,
 ) {
   const themizationEnabled = supportsThemizationForChannel(selectedChannel);
@@ -838,6 +853,23 @@ async function collectTargets(
           throwIfCancelled,
         );
         throwIfCancelled();
+
+        if (!shellAuditEnabled && isShellComponentAuditExcluded(item)) {
+          traceAudit('shell-subtree-skipped', {
+            nodeId: node.id,
+            nodeName: node.name,
+            libraryName: item.librarySource ?? null,
+            componentName:
+              item.reference?.displayName ?? item.reference?.name ?? item.name,
+            categoryDecision: 'skipped-check',
+            matchedRule: 'shell-audit-disabled',
+            property: null,
+            expected: null,
+            actual: null,
+            reason: getShellComponentAuditReason(item),
+          });
+          return;
+        }
 
         checkState.totalItems++;
         subtreeForcedCategory = item.forcedCategory ?? null;
@@ -897,6 +929,23 @@ async function collectTargets(
         const item = collectDetachedEntry(node);
 
         if (item) {
+          if (!shellAuditEnabled && isShellDetachedEntryExcluded(item)) {
+            traceAudit('shell-detached-subtree-skipped', {
+              nodeId: node.id,
+              nodeName: node.name,
+              libraryName: item.libraryName,
+              componentName: item.componentName,
+              componentKey: item.componentKey,
+              categoryDecision: 'skipped-check',
+              matchedRule: 'shell-audit-disabled',
+              property: null,
+              expected: null,
+              actual: null,
+              reason: `detached component ${item.componentName ?? item.componentKey} is excluded by Apollo shell settings`,
+            });
+            return;
+          }
+
           checkState.detachedEntries.push(item);
         }
       }
@@ -2854,48 +2903,6 @@ function expandReferenceWithInstanceComponents(
             )
           : null;
 
-      if (mergeDecision && shouldTraceNestedReferenceMerge(node.path, refNode.path, refNode.name)) {
-        console.log('[Apollo][debug] nested-reference-merge-decision', {
-          materializedRootPath: node.path,
-          targetPath: refNode.path,
-          targetName: refNode.name,
-          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-          existingNodeName: existingNode?.name ?? null,
-          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-          decision: mergeDecision,
-        });
-        console.log(
-          '[Apollo][debug-json] nested-reference-merge-decision',
-          JSON.stringify({
-            materializedRootPath: node.path,
-            targetPath: refNode.path,
-            targetName: refNode.name,
-            existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-            existingNodeName: existingNode?.name ?? null,
-            existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-            existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-            candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-            candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-            decision: mergeDecision,
-          }),
-        );
-        traceAudit('nested-reference-merge-decision', {
-          materializedRootPath: node.path,
-          targetPath: refNode.path,
-          targetName: refNode.name,
-          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-          existingNodeName: existingNode?.name ?? null,
-          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-          decision: mergeDecision,
-        });
-      }
-
       if (
         existingNode &&
         typeof existingIndex === 'number' &&
@@ -3076,21 +3083,6 @@ function describeDebugDiff(diff: ReturnType<typeof diffStructures>['diffs'][numb
     suppressed: diff.suppressAsHostControlledNestedProperty === true,
     suppressionReason: diff.suppressionReason ?? null,
   };
-}
-
-function shouldTraceNestedReferenceMerge(
-  materializedRootPath: string,
-  targetPath: string,
-  targetName: string | null | undefined,
-): boolean {
-  const haystack = `${materializedRootPath} ${targetPath} ${targetName ?? ''}`.toLowerCase();
-  return (
-    haystack.includes('iconview') ||
-    haystack.includes('button') ||
-    haystack.includes('addon') ||
-    haystack.includes('paintme') ||
-    haystack.includes('bgcolor')
-  );
 }
 
 /**

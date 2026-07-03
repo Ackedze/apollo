@@ -96,11 +96,16 @@
       #toast.visible {
         opacity: 1;
       }
-      .agent-chat-fab {
+      .agent-fab-group {
         position: absolute;
         right: 20px;
         bottom: 20px;
         z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .agent-fab {
         display: none;
         width: 44px;
         height: 44px;
@@ -108,20 +113,41 @@
         justify-content: center;
         border: 0;
         border-radius: 50%;
-        background: #111827;
-        color: #fff;
         box-shadow:
           0 10px 24px rgba(15, 23, 42, 0.18),
           0 2px 6px rgba(15, 23, 42, 0.16);
         cursor: pointer;
       }
-      .agent-chat-fab.visible {
+      .agent-fab.visible {
         display: inline-flex;
       }
-      .agent-chat-fab svg {
+      .agent-fab svg {
         width: 22px;
         height: 22px;
         display: block;
+      }
+      .agent-fab:disabled {
+        cursor: default;
+        opacity: 0.48;
+      }
+      .agent-chat-fab {
+        background: #000;
+        color: #fff;
+      }
+      .shell-audit-fab {
+        background: rgba(0, 0, 0, 0.06);
+        color: rgba(3, 3, 6, 0.82);
+        box-shadow:
+          0 10px 24px rgba(15, 23, 42, 0.12),
+          0 2px 6px rgba(15, 23, 42, 0.12);
+      }
+      .shell-audit-fab.active {
+        background: #e8f2ff;
+        color: #1f73ea;
+        box-shadow:
+          inset 0 0 0 2px rgba(31, 115, 234, 0.08),
+          0 10px 24px rgba(31, 115, 234, 0.14),
+          0 2px 6px rgba(31, 115, 234, 0.12);
       }
       .agent-chat-overlay {
         position: absolute;
@@ -590,29 +616,59 @@
       </div>
     </div>
     <div id="toast"></div>
-    <button
-      id="agent-chat-fab"
-      class="agent-chat-fab"
-      type="button"
-      aria-label="Открыть рекомендации агента"
-    >
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M21 11.5a8.5 8.5 0 0 1-9.7 8.42 8.7 8.7 0 0 1-3.2-1.1L3 20l1.2-4.35A8.4 8.4 0 0 1 3 11.5C3 6.8 7.03 3 12 3s9 3.8 9 8.5Z"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M8 10.25h8M8 13.5h5.5"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-        />
-      </svg>
-    </button>
+    <div class="agent-fab-group" aria-label="Быстрые действия Apollo">
+      <button
+        id="shell-audit-fab"
+        class="agent-fab shell-audit-fab"
+        type="button"
+        aria-label="Включить проверку Header и SideMenu"
+        aria-pressed="false"
+        title="Header и SideMenu исключены из проверки"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect
+            x="4"
+            y="4"
+            width="16"
+            height="16"
+            rx="2.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path
+            d="M9 4v16M4 9h16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+      <button
+        id="agent-chat-fab"
+        class="agent-fab agent-chat-fab"
+        type="button"
+        aria-label="Открыть рекомендации агента"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M21 11.5a8.5 8.5 0 0 1-9.7 8.42 8.7 8.7 0 0 1-3.2-1.1L3 20l1.2-4.35A8.4 8.4 0 0 1 3 11.5C3 6.8 7.03 3 12 3s9 3.8 9 8.5Z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M8 10.25h8M8 13.5h5.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+    </div>
     <section
       id="agent-chat-overlay"
       class="agent-chat-overlay"
@@ -775,6 +831,7 @@
         let scanCompleted = false;
         let isCompact = false;
         let currentPickerLabel = 'Desktop';
+        let shellAuditEnabled = false;
         let agentReportMeta = null;
         let agentChatOpen = false;
         let agentRequestInProgress = false;
@@ -793,6 +850,7 @@
         const leftChromeContainer =
           document.getElementById('react-left-section');
         const agentChatFab = document.getElementById('agent-chat-fab');
+        const shellAuditFab = document.getElementById('shell-audit-fab');
         const agentChatOverlay = document.getElementById('agent-chat-overlay');
         const agentChatClose = document.getElementById('agent-chat-close');
         const agentChatMeta = document.getElementById('agent-chat-meta');
@@ -848,6 +906,7 @@
         setScanningState(false);
         syncAgentChatState();
 
+        shellAuditFab?.addEventListener('click', handleShellAuditToggle);
         agentChatFab?.addEventListener('click', openAgentChat);
         agentChatClose?.addEventListener('click', closeAgentChat);
         agentChatOverlay?.addEventListener('click', (event) => {
@@ -1662,6 +1721,7 @@
           actionPhase = active ? 'scanning' : getIdleActionPhase();
           refreshScanButton();
           updateLoaderVisibility();
+          syncShellAuditFabState();
         }
 
         function getIdleActionPhase() {
@@ -2148,6 +2208,7 @@
             agentChatFab.classList.add('visible');
             agentChatFab.disabled = false;
           }
+          syncShellAuditFabState();
           if (agentChatOverlay) {
             agentChatOverlay.classList.toggle('visible', agentChatOpen);
             agentChatOverlay.setAttribute(
@@ -2602,7 +2663,10 @@
               {
                 pluginMessage: {
                   type: 'scan-selection',
-                  payload: { pickerLabel: currentPickerLabel },
+                  payload: {
+                    pickerLabel: currentPickerLabel,
+                    shellAuditEnabled,
+                  },
                 },
               },
               '*',
@@ -2628,6 +2692,42 @@
             currentTab = getVisibleTabs()[0].id;
           }
           syncChromeState();
+        }
+
+        function handleShellAuditToggle() {
+          if (isScanning) {
+            return;
+          }
+
+          shellAuditEnabled = !shellAuditEnabled;
+          syncShellAuditFabState();
+          syncChromeState();
+        }
+
+        function syncShellAuditFabState() {
+          if (!shellAuditFab) {
+            return;
+          }
+
+          shellAuditFab.classList.add('visible');
+          shellAuditFab.classList.toggle('active', shellAuditEnabled);
+          shellAuditFab.disabled = isScanning;
+          shellAuditFab.setAttribute(
+            'aria-pressed',
+            shellAuditEnabled ? 'true' : 'false',
+          );
+          shellAuditFab.setAttribute(
+            'aria-label',
+            shellAuditEnabled
+              ? 'Выключить проверку Header и SideMenu'
+              : 'Включить проверку Header и SideMenu',
+          );
+          shellAuditFab.setAttribute(
+            'title',
+            shellAuditEnabled
+              ? 'Header и SideMenu включены в проверку'
+              : 'Header и SideMenu исключены из проверки',
+          );
         }
 
         function applyCompactMode() {
@@ -2706,6 +2806,7 @@
                 ? 'secondary'
                 : 'primary',
             compact: isCompact,
+            shellAuditEnabled,
             tabs,
           };
 

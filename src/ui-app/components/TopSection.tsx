@@ -36,6 +36,11 @@ type PickerOption = {
   icon: React.ReactNode;
 };
 
+type WorkshopOption = {
+  id: string;
+  label: string;
+};
+
 const PICKER_OPTIONS: PickerOption[] = [
   {
     id: 'desktop',
@@ -63,6 +68,25 @@ const PICKER_OPTIONS: PickerOption[] = [
   },
 ];
 
+const WORKSHOP_OPTIONS: WorkshopOption[] = [
+  {
+    id: 'b2b',
+    label: 'b2b',
+  },
+  {
+    id: 'b2c',
+    label: 'b2c',
+  },
+  {
+    id: 'site',
+    label: 'site',
+  },
+  {
+    id: 'invest',
+    label: 'invest',
+  },
+];
+
 export function TopSection({
   title,
   pickerLabel,
@@ -76,8 +100,13 @@ export function TopSection({
   onPickerChange,
 }: TopSectionProps): React.JSX.Element {
   const pickerRootRef = useRef<HTMLDivElement | null>(null);
+  const workshopRootRef = useRef<HTMLDivElement | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [workshopOpen, setWorkshopOpen] = useState(false);
   const [selectedPickerLabel, setSelectedPickerLabel] = useState(pickerLabel);
+  const [selectedWorkshopId, setSelectedWorkshopId] = useState(
+    WORKSHOP_OPTIONS[0].id,
+  );
 
   useEffect(() => {
     setSelectedPickerLabel(pickerLabel);
@@ -86,23 +115,29 @@ export function TopSection({
   useEffect(() => {
     if (compact || actionLoading) {
       setPickerOpen(false);
+      setWorkshopOpen(false);
     }
   }, [compact, actionLoading]);
 
   useEffect(() => {
-    if (!pickerOpen) {
+    if (!pickerOpen && !workshopOpen) {
       return undefined;
     }
 
     function handlePointerDown(event: MouseEvent): void {
-      if (!pickerRootRef.current?.contains(event.target as Node)) {
+      const target = event.target as Node;
+      if (!pickerRootRef.current?.contains(target)) {
         setPickerOpen(false);
+      }
+      if (!workshopRootRef.current?.contains(target)) {
+        setWorkshopOpen(false);
       }
     }
 
     function handleKeyDown(event: KeyboardEvent): void {
       if (event.key === 'Escape') {
         setPickerOpen(false);
+        setWorkshopOpen(false);
       }
     }
 
@@ -113,13 +148,17 @@ export function TopSection({
       document.removeEventListener('mousedown', handlePointerDown);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [pickerOpen]);
+  }, [pickerOpen, workshopOpen]);
 
   const selectedOption =
     PICKER_OPTIONS.find((option) => option.label === selectedPickerLabel) ??
     PICKER_OPTIONS[0];
+  const selectedWorkshop =
+    WORKSHOP_OPTIONS.find((option) => option.id === selectedWorkshopId) ??
+    WORKSHOP_OPTIONS[0];
   const actionKey = [
     selectedOption.label,
+    selectedWorkshop.id,
     actionType,
     actionLabel,
     actionDisabled ? 'disabled' : 'enabled',
@@ -152,6 +191,32 @@ export function TopSection({
         />
       ) : (
         <div className={styles.rightSide}>
+          <div className={styles.pickerWrap} ref={workshopRootRef}>
+            <PickerButton
+              label={selectedWorkshop.label}
+              open={workshopOpen}
+              disabled={actionLoading}
+              onPress={() => {
+                setPickerOpen(false);
+                setWorkshopOpen((value) => !value);
+              }}
+            />
+            {workshopOpen ? (
+              <OptionList className={styles.pickerMenu}>
+                {WORKSHOP_OPTIONS.map((option) => (
+                  <OptionListCell
+                    key={option.id}
+                    label={option.label}
+                    selected={selectedWorkshop.id === option.id}
+                    onPress={() => {
+                      setSelectedWorkshopId(option.id);
+                      setWorkshopOpen(false);
+                    }}
+                  />
+                ))}
+              </OptionList>
+            ) : null}
+          </div>
           <div className={styles.pickerWrap} ref={pickerRootRef}>
             <PickerButton
               label={selectedOption.label}
@@ -159,7 +224,10 @@ export function TopSection({
               selected
               disabled={actionLoading}
               leadingIcon={selectedOption.icon}
-              onPress={() => setPickerOpen((value) => !value)}
+              onPress={() => {
+                setWorkshopOpen(false);
+                setPickerOpen((value) => !value);
+              }}
             />
             {pickerOpen ? (
               <OptionList className={styles.pickerMenu}>

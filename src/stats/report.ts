@@ -1,4 +1,9 @@
 import type { DiffEntry, DiffValueDetails } from '../structure/diff';
+import {
+  findComponentContractRulesForDiff,
+  findComponentContractViolationForDiff,
+  type ComponentContractRule,
+} from '../contracts/componentRules';
 import type {
   AuditItem,
   AuditResource,
@@ -12,6 +17,7 @@ import type {
   ApolloStatsViews,
   StatsCategory,
   StatsComponentItem,
+  StatsComponentContractRule,
   StatsCustomizationChange,
   StatsCustomizationItem,
   StatsDetachedItem,
@@ -214,6 +220,11 @@ function customizationChange(
   const actual = diff.details?.actual ?? { value: null };
   const referenceResource = resolveDiffResource(reference, input);
   const actualResource = resolveDiffResource(actual, input);
+  const componentRules = findComponentContractRulesForDiff(diff).map(
+    statsComponentRule,
+  );
+  const componentContractViolation =
+    findComponentContractViolationForDiff(diff);
   const componentKey = item.componentKey ?? 'local';
   const referenceSignature = resourceSignature(
     referenceResource,
@@ -249,7 +260,17 @@ function customizationChange(
       nestedOwnerPath: diff.context.nestedOwnerPath,
       nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
     },
-    assessment: diff.assessment
+    componentRules,
+    assessment: componentContractViolation
+      ? {
+          verdict: 'violation',
+          source: 'component-contract',
+          reasonCode: 'component-contract-violation',
+          ruleId: componentContractViolation.ruleId,
+          message: componentContractViolation.ruleText,
+          remediation: null,
+        }
+      : diff.assessment
       ? {
           verdict: diff.assessment.verdict,
           source: diff.assessment.source,
@@ -265,6 +286,23 @@ function customizationChange(
             : null,
         }
       : null,
+  };
+}
+
+function statsComponentRule(
+  rule: ComponentContractRule,
+): StatsComponentContractRule {
+  return {
+    ruleId: rule.ruleId,
+    severity: rule.severity,
+    source: rule.source,
+    ruleKind: rule.ruleKind ?? null,
+    severityScope: rule.severityScope ?? null,
+    appliesTo: rule.appliesTo,
+    checkType: rule.checkType ?? null,
+    matchKind: rule.matchKind ?? null,
+    ruleText: rule.ruleText,
+    remediation: rule.remediation ?? null,
   };
 }
 

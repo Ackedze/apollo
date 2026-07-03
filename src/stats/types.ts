@@ -22,6 +22,19 @@ export type StatsResource = {
   sourceFile: string | null;
 };
 
+export type StatsComponentContractRule = {
+  ruleId: string;
+  severity: string;
+  source: string;
+  ruleKind: string | null;
+  severityScope: string | null;
+  appliesTo: string;
+  checkType: string | null;
+  matchKind: string | null;
+  ruleText: string;
+  remediation: string | null;
+};
+
 export type StatsNode = {
   id: string;
   name: string;
@@ -53,6 +66,7 @@ export type StatsCustomizationChange = {
   };
   signature: string;
   context: Record<string, string | null>;
+  componentRules: StatsComponentContractRule[];
   assessment: {
     verdict: string;
     source: string;
@@ -197,8 +211,13 @@ export type ApolloAgentFinding = {
     message: string;
     referenceValue: string | number | null;
     actualValue: string | number | null;
+    referenceRawValue?: string | number | null;
+    actualRawValue?: string | number | null;
+    referenceDisplayValue?: string | number | null;
+    actualDisplayValue?: string | number | null;
     referenceResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
     actualResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
+    componentRules?: StatsComponentContractRule[];
     assessment: StatsCustomizationChange['assessment'];
   }>;
 };

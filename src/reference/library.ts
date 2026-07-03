@@ -1,10 +1,13 @@
 import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
+  getReferenceCatalogBaseUrl,
   normalizePath,
+  resolveComponentContractIndexUrl,
   resolvePatternRulesUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
+import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
 import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
 import {
   appendCacheBustingQuery,
@@ -258,6 +261,10 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     const response = await requestCatalogSource(referenceListRequestUrl);
     const payload = JSON.parse(response);
     const patternRulesUrl = resolvePatternRulesUrl(payload);
+    configureRemoteContractIndexSource(
+      resolveComponentContractIndexUrl(payload),
+      getReferenceCatalogBaseUrl(payload),
+    );
     await loadPatternRulesConfig(patternRulesUrl);
     const sources = buildReferenceCatalogSources(payload);
 
@@ -2010,7 +2017,9 @@ function buildStructureFromPatches(
       case 'add': {
         const copy = cloneNode(patch.node);
         nodes.push(copy);
-        nodeMap.set(copy.id, copy);
+        if (!nodeMap.has(copy.id)) {
+          nodeMap.set(copy.id, copy);
+        }
         break;
       }
     }

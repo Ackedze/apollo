@@ -100,6 +100,14 @@ import {
   createNestedContextEvidence,
   createPatternContextResolver,
 } from './assessment/customizationAssessment';
+import {
+  APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
+  applyContractAwareDiffs,
+} from './contracts/contractAwareDiffs';
+import {
+  ensureContractArtifactsForHints,
+  type ContractArtifactHint,
+} from './contracts/runtimeContractRegistry';
 
 declare const __APOLLO_VERSION__: string;
 
@@ -370,6 +378,9 @@ async function runAudit(
       throwIfCancelled,
     );
     await ensureReferenceCatalogsForKeys(selectionComponentKeys);
+    await ensureContractArtifactsForHints(
+      buildContractArtifactHints(selectionComponentKeys),
+    );
     logAuditMetric('audit-component-reference-ready', {
       totalMs: Number((getTimestamp() - keyCollectStartedAt).toFixed(1)),
       componentKeyCount: selectionComponentKeys.size,
@@ -763,6 +774,22 @@ async function collectComponentKeys(
   return keys;
 }
 
+function buildContractArtifactHints(
+  componentKeys: Iterable<string>,
+): ContractArtifactHint[] {
+  const hints: ContractArtifactHint[] = [];
+  for (const key of componentKeys) {
+    const reference = findComponent(key);
+    hints.push({
+      figmaKey: key,
+      componentName: reference?.name ?? null,
+      displayName: reference?.displayName ?? null,
+      sourceFile: reference?.sourceFile ?? null,
+    });
+  }
+  return hints;
+}
+
 async function collectTargets(
   selection: readonly SceneNode[], 
   checkState: CheckState, 
@@ -1122,7 +1149,31 @@ async function classifyNode(
     componentName: node.name,
     referenceComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? null,
   });
-  const diffs = applyCustomizationFilters(allowlistedDiffs, {
+  const contractAwareResult = applyContractAwareDiffs(allowlistedDiffs, {
+    enabled: APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
+    hostComponentKey: ref?.key ?? componentKey ?? null,
+    hostComponentName: ref?.displayName ?? ref?.name ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    hostReference: referenceStructure ?? [],
+    resolveStyleLabel: resolveStyleLabelForDiff,
+  });
+  if (contractAwareResult.applied) {
+    console.log('[Apollo][contracts] applied composition contract', {
+      componentName: ref?.displayName ?? ref?.name ?? node.name,
+      matchedContracts: contractAwareResult.matchedContractKeys,
+      suppressedCount: contractAwareResult.suppressedCount,
+      rebasedCount: contractAwareResult.rebasedCount,
+    });
+    traceAudit('contract-aware-diffs', {
+      nodeId: node.id,
+      nodeName: node.name,
+      componentKey: ref?.key ?? componentKey ?? null,
+      matchedContracts: contractAwareResult.matchedContractKeys,
+      suppressedCount: contractAwareResult.suppressedCount,
+      rebasedCount: contractAwareResult.rebasedCount,
+    });
+  }
+  const diffs = applyCustomizationFilters(contractAwareResult.diffs, {
     libraryName: ref?.source ?? null,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
   });

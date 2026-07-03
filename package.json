@@ -1,10 +1,10 @@
 {
   "name": "apollo",
-  "version": "0.1.27",
+  "version": "0.1.33",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:stats-report",
+    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:variant-structure-paths && npm run test:stats-report && npm run test:contract-aware-diffs",
     "type-check": "tsc --noEmit",
     "check:figma-runtime": "node scripts/check-figma-runtime.js",
     "test:themization": "node scripts/test-themization.js",
@@ -22,6 +22,7 @@
     "test:variant-structure-paths": "node scripts/test-variant-structure-paths.js",
     "test:snapshot-tree": "node scripts/test-snapshot-tree.js",
     "test:stats-report": "node scripts/test-stats-report.js",
+    "test:contract-aware-diffs": "node scripts/test-contract-aware-diffs.js",
     "report:nested-overrides": "node scripts/report-nested-overrides.js"
   },
   "devDependencies": {

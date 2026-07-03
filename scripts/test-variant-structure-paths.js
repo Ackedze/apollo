@@ -39,7 +39,7 @@ function createNode(id, parentId, path) {
     layout: {
       direction: 'V',
       padding: { top: 0, right: 0, bottom: 0, left: 0 },
-      itemSpacing: 0,
+      itemSpacing: 6,
     },
   };
 }
@@ -61,6 +61,10 @@ function main() {
     ],
     variantStructures: {
       'text-key': [
+        {
+          op: 'add',
+          node: createNode(2, 1, 'Presets=Text, Skeleton=False / Graphics'),
+        },
         {
           op: 'update',
           id: 2,
@@ -99,6 +103,14 @@ function main() {
   assert.ok(
     !textStructure.some((node) => node.path.startsWith('Presets=Status, Skeleton=False')),
     'Resolved variant structure must not contain Status-prefixed paths for the Text variant',
+  );
+  const content = textStructure.find(
+    (node) => node.path === 'Presets=Text, Skeleton=False / Content',
+  );
+  assert.equal(
+    content?.layout?.itemSpacing,
+    0,
+    'Variant update patches must keep targeting the base node when add patches reuse a base id',
   );
 
   console.log('Variant structure path regression checks passed');

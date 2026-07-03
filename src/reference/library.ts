@@ -96,7 +96,7 @@ async function loadAllCatalogs(): Promise<void> {
   );
   componentCatalogSourcesByPath.clear();
   for (const source of componentSources) {
-    componentCatalogSourcesByPath.set(normalizePath(source.path), source);
+    registerComponentCatalogSource(source);
   }
 
   const hydrateStartedAt = getTimestamp();
@@ -184,6 +184,33 @@ function reportMissingIndexKeys(keys: string[]): void {
     missingIndexLog.add(key);
     console.warn('[Apollo::catalog] Component key is missing from index', { key });
   }
+}
+
+function registerComponentCatalogSource(source: ReferenceCatalogSource): void {
+  const aliases = [
+    source.path,
+    source.fileName,
+    source.url,
+    extractJsonsRelativePath(source.path),
+    extractJsonsRelativePath(source.url),
+  ];
+
+  for (const alias of aliases) {
+    const normalizedAlias = normalizePath(alias ?? '');
+    if (normalizedAlias) {
+      componentCatalogSourcesByPath.set(normalizedAlias, source);
+    }
+  }
+}
+
+function extractJsonsRelativePath(value: string | null | undefined): string {
+  const raw = String(value ?? '');
+  const marker = '/JSONS/';
+  const markerIndex = raw.indexOf(marker);
+  if (markerIndex >= 0) {
+    return raw.slice(markerIndex + marker.length);
+  }
+  return raw;
 }
 
 function resolveCatalogPathsForKeys(

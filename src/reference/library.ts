@@ -1,10 +1,13 @@
 import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
+  getReferenceCatalogBaseUrl,
   normalizePath,
+  resolveComponentContractIndexUrl,
   resolvePatternRulesUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
+import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
 import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
 import {
   appendCacheBustingQuery,
@@ -54,6 +57,7 @@ const failedComponentIndexSources = new Map<string, ReferenceCatalogSource>();
 let componentIndexesLoaded = false;
 let componentIndexLoadPromise: Promise<void> | null = null;
 let componentIndexRetryPromise: Promise<void> | null = null;
+const catalogCacheBust = Date.now();
 
 const catalogLoadState: {
   ready: boolean;
@@ -92,7 +96,7 @@ async function loadAllCatalogs(): Promise<void> {
   );
   componentCatalogSourcesByPath.clear();
   for (const source of componentSources) {
-    componentCatalogSourcesByPath.set(normalizePath(source.path), source);
+    registerComponentCatalogSource(source);
   }
 
   const hydrateStartedAt = getTimestamp();
@@ -182,6 +186,33 @@ function reportMissingIndexKeys(keys: string[]): void {
   }
 }
 
+function registerComponentCatalogSource(source: ReferenceCatalogSource): void {
+  const aliases = [
+    source.path,
+    source.fileName,
+    source.url,
+    extractJsonsRelativePath(source.path),
+    extractJsonsRelativePath(source.url),
+  ];
+
+  for (const alias of aliases) {
+    const normalizedAlias = normalizePath(alias ?? '');
+    if (normalizedAlias) {
+      componentCatalogSourcesByPath.set(normalizedAlias, source);
+    }
+  }
+}
+
+function extractJsonsRelativePath(value: string | null | undefined): string {
+  const raw = String(value ?? '');
+  const marker = '/JSONS/';
+  const markerIndex = raw.indexOf(marker);
+  if (markerIndex >= 0) {
+    return raw.slice(markerIndex + marker.length);
+  }
+  return raw;
+}
+
 function resolveCatalogPathsForKeys(
   requestedKeys: string[],
 ): {
@@ -257,6 +288,10 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     const response = await requestCatalogSource(referenceListRequestUrl);
     const payload = JSON.parse(response);
     const patternRulesUrl = resolvePatternRulesUrl(payload);
+    configureRemoteContractIndexSource(
+      resolveComponentContractIndexUrl(payload),
+      getReferenceCatalogBaseUrl(payload),
+    );
     await loadPatternRulesConfig(patternRulesUrl);
     const sources = buildReferenceCatalogSources(payload);
 
@@ -1361,7 +1396,7 @@ function reportCatalogLoaded(fileName: string, size: number) {
 }
 
 async function requestCatalogSource(url: string): Promise<string> {
-  return fetchDirect(url);
+  return fetchDirect(appendCacheBustingQuery(url, 'apolloCatalog', catalogCacheBust));
 }
 
 function* iterateCatalogComponents(): IterableIterator<LibraryComponent> {
@@ -2009,7 +2044,9 @@ function buildStructureFromPatches(
       case 'add': {
         const copy = cloneNode(patch.node);
         nodes.push(copy);
-        nodeMap.set(copy.id, copy);
+        if (!nodeMap.has(copy.id)) {
+          nodeMap.set(copy.id, copy);
+        }
         break;
       }
     }

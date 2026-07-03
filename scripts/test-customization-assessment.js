@@ -60,6 +60,7 @@ function main() {
   const {
     assessCustomizationDiffs,
     applyAssessmentPresentation,
+    collapseVisualDiffsUnderVariantChanges,
     collapsePatternViolationDiffs,
     collapseConfiguredSemanticVariantDiffs,
     collapseSemanticVariantDiffs,
@@ -104,12 +105,221 @@ function main() {
   });
   assert.equal(expected[0].assessment.verdict, 'expected');
   assert.equal(expected[0].assessment.source, 'catalog-host');
+  assert.equal(
+    applyAssessmentPresentation(expected).length,
+    0,
+    'Expected catalog-host diffs must be hidden from the customization list',
+  );
+  assert.equal(
+    applyAssessmentPresentation([
+      {
+        ...makeDiff(),
+        diffKind: 'other',
+        details: {
+          property: 'variant.View',
+          reference: { value: 'Secondary' },
+          actual: { value: 'Accent' },
+        },
+        assessment: {
+          verdict: 'expected',
+          source: 'catalog-host',
+          reasonCode: 'matches-selected-nested-context',
+          ruleId: null,
+          message: 'Variant state change is primary evidence',
+          remediation: null,
+          presentation: 'show',
+        },
+      },
+    ]).length,
+    1,
+    'Variant state diffs must stay visible even when derived values are expected',
+  );
+  const nestedExplainedVariant = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        diffKind: 'other',
+        details: {
+          property: 'variant.View',
+          reference: { value: 'Secondary' },
+          actual: { value: 'Accent' },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: {
+        explains: () => true,
+      },
+    },
+  );
+  assert.equal(
+    nestedExplainedVariant[0].assessment.verdict,
+    'unknown',
+    'Nested context must not convert variant state changes into Expected diffs',
+  );
 
   const violation = assessCustomizationDiffs([makeDiff()], {
     hostDiffs: [makeDiff()],
     hostReference,
   });
   assert.equal(violation[0].assessment.verdict, 'violation');
+  assert.equal(
+    applyAssessmentPresentation(violation).length,
+    1,
+    'Violations must remain visible in the customization list',
+  );
+
+  const variantAndVisualDiffs = collapseVisualDiffsUnderVariantChanges(
+    [
+      {
+        ...makeDiff(),
+        nodeId: 'button',
+        nodePath: 'Host / Button',
+        nodeName: '[D] Button',
+        diffKind: 'other',
+        details: {
+          property: 'variant.View',
+          reference: { value: 'Secondary' },
+          actual: { value: 'Accent' },
+        },
+      },
+      {
+        ...makeDiff(),
+        nodeId: 'button-label',
+        nodePath: 'Host / Button / Label',
+        nodeName: 'Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'text/primary' },
+          actual: { value: 'Button/Desktop/Colors/Accent/text' },
+        },
+      },
+    ],
+    [
+      {
+        id: 10,
+        nodeId: 'host',
+        parentId: null,
+        path: 'Host',
+        type: 'INSTANCE',
+        name: 'Host',
+        visible: true,
+        radius: 0,
+      },
+      {
+        id: 11,
+        nodeId: 'button',
+        parentId: 10,
+        path: 'Host / Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        radius: 0,
+      },
+      {
+        id: 12,
+        nodeId: 'button-label',
+        parentId: 11,
+        path: 'Host / Button / Label',
+        type: 'TEXT',
+        name: 'Label',
+        visible: true,
+        radius: 0,
+      },
+    ],
+  );
+  assert.deepEqual(
+    variantAndVisualDiffs.map((diff) => diff.details.property),
+    ['variant.View'],
+    'Visual diffs inside an instance with a variant state change must collapse into the variant diff',
+  );
+
+  const variantWithManualVisualDiff = collapseVisualDiffsUnderVariantChanges(
+    [
+      {
+        ...makeDiff(),
+        nodeId: 'button',
+        nodePath: 'Host / Button',
+        nodeName: '[D] Button',
+        diffKind: 'other',
+        details: {
+          property: 'variant.View',
+          reference: { value: 'Secondary' },
+          actual: { value: 'Accent' },
+        },
+        assessment: {
+          verdict: 'unknown',
+          source: 'standalone-reference',
+          reasonCode: 'no-contextual-expectation',
+          ruleId: null,
+          message: 'Контекстное правило не найдено',
+          remediation: null,
+          presentation: 'show',
+        },
+      },
+      {
+        ...makeDiff(),
+        nodeId: 'button-label',
+        nodePath: 'Host / Button / Label',
+        nodeName: 'Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'Button/Desktop/Colors/Accent/text' },
+          actual: { value: 'text/warning' },
+        },
+        assessment: {
+          verdict: 'unknown',
+          source: 'standalone-reference',
+          reasonCode: 'no-contextual-expectation',
+          ruleId: null,
+          message: 'Контекстное правило не найдено',
+          remediation: null,
+          presentation: 'show',
+        },
+      },
+    ],
+    [
+      {
+        id: 10,
+        nodeId: 'host',
+        parentId: null,
+        path: 'Host',
+        type: 'INSTANCE',
+        name: 'Host',
+        visible: true,
+        radius: 0,
+      },
+      {
+        id: 11,
+        nodeId: 'button',
+        parentId: 10,
+        path: 'Host / Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        radius: 0,
+      },
+      {
+        id: 12,
+        nodeId: 'button-label',
+        parentId: 11,
+        path: 'Host / Button / Label',
+        type: 'TEXT',
+        name: 'Label',
+        visible: true,
+        radius: 0,
+      },
+    ],
+  );
+  assert.deepEqual(
+    variantWithManualVisualDiff.map((diff) => diff.details.property),
+    ['variant.View', 'fill'],
+    'Manual visual overrides inside a changed variant must remain visible',
+  );
 
   const actualNested = [
     {
@@ -174,6 +384,7 @@ function main() {
       visible: true,
       radius: 0,
       styles: { text: { styleKey: 'S:small-style,reference-node' } },
+      fill: { token: 'Button/Desktop/Colors/Accent/text' },
     },
   ];
   const nestedEvidence = createNestedContextEvidence(
@@ -217,6 +428,167 @@ function main() {
     }),
     true,
     'Equivalent style keys with different node-id suffixes must be contextual matches',
+  );
+  assert.equal(
+    nestedEvidence.explains({
+      ...makeDiff(),
+      nodeId: '1:tag-label',
+      nodePath: 'TagGroup / Tag / Label',
+      diffKind: 'paint',
+      details: {
+        property: 'fill',
+        reference: { value: 'Button/Desktop/Colors/Primary/text' },
+        actual: {
+          value: 'Button/Desktop/Colors/Accent/text',
+          resourceType: 'style',
+          resourceId: 'theme-token-key',
+          displayName: 'Button/Desktop/Colors/Accent/text',
+        },
+      },
+    }),
+    true,
+    'Selected nested variant paint must match by resolved token label when resource ids differ',
+  );
+  const manualPaintAfterVariantSwitch = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'Button/Desktop/Colors/Primary/text' },
+          actual: {
+            value: 'text/tertiary',
+            resourceType: 'token',
+            resourceId: 'text/tertiary',
+            displayName: 'text/tertiary',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: nestedEvidence,
+    },
+  );
+  assert.equal(manualPaintAfterVariantSwitch[0].assessment.verdict, 'unknown');
+  assert.equal(
+    manualPaintAfterVariantSwitch[0].details.reference.value,
+    'Button/Desktop/Colors/Accent/text',
+    'Manual paint override after variant switch must use selected variant as reference',
+  );
+  assert.equal(
+    manualPaintAfterVariantSwitch[0].message,
+    'заливка: Button/Desktop/Colors/Accent/text → text/tertiary',
+  );
+  const variableTokenEvidence = createNestedContextEvidence(
+    actualNested,
+    (instance) =>
+      instance.componentInstance?.componentKey === 'tag-size-40'
+        ? [
+            selectedTagReference[0],
+            {
+              ...selectedTagReference[1],
+              fill: {
+                token:
+                  'VariableID:2d3423db5972143518c6f4be83e8bc842d3a9078/2011:155',
+              },
+            },
+          ]
+        : null,
+    [],
+    (componentKey) => componentKey,
+    {
+      resolveTokenLabel: (token) =>
+        token.startsWith('VariableID:')
+          ? 'Button/Desktop/Colors/Accent/text'
+          : token,
+      isPaintToken: () => true,
+    },
+  );
+  const manualPaintWithVariableReference = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'Button/Desktop/Colors/Primary/text' },
+          actual: {
+            value: 'text/positive',
+            resourceType: 'token',
+            resourceId: 'text/positive',
+            displayName: 'text/positive',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: variableTokenEvidence,
+    },
+  );
+  assert.equal(
+    manualPaintWithVariableReference[0].details.reference.value,
+    'Button/Desktop/Colors/Accent/text',
+    'VariableID selected references must render as resolved token labels',
+  );
+  assert.equal(
+    manualPaintWithVariableReference[0].details.reference.resourceId,
+    'VariableID:2d3423db5972143518c6f4be83e8bc842d3a9078/2011:155',
+  );
+  const styledTextEvidence = createNestedContextEvidence(
+    actualNested,
+    (instance) =>
+      instance.componentInstance?.componentKey === 'tag-size-40'
+        ? selectedTagReference
+        : null,
+    [],
+    (componentKey) => componentKey,
+    {
+      resolveStyleLabel: (styleKey) =>
+        styleKey.startsWith('S:small-style') ? 'Action/11-16 Secondary Small' : styleKey,
+    },
+  );
+  const manualTextStyleWithResolvedReference = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        nodeId: '1:tag-label',
+        nodePath: 'TagGroup / Tag / Label',
+        diffKind: 'text-style',
+        details: {
+          property: 'styles.text',
+          reference: { value: 'Paragraph/L' },
+          actual: {
+            value: 'Action/11-16 Secondary Small',
+            resourceType: 'style',
+            resourceId: 'S:manual-style',
+            displayName: 'Action/11-16 Secondary Small',
+          },
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference,
+      nestedContextEvidence: styledTextEvidence,
+    },
+  );
+  assert.equal(
+    manualTextStyleWithResolvedReference[0].details.reference.value,
+    'Action/11-16 Secondary Small',
+    'Selected text style references must render as resolved style labels',
+  );
+  assert.equal(
+    manualTextStyleWithResolvedReference[0].details.reference.resourceId,
+    'S:small-style,reference-node',
   );
 
   const mismatchingEvidence = createNestedContextEvidence(

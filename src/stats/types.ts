@@ -22,6 +22,19 @@ export type StatsResource = {
   sourceFile: string | null;
 };
 
+export type StatsComponentContractRule = {
+  ruleId: string;
+  severity: string;
+  source: string;
+  ruleKind: string | null;
+  severityScope: string | null;
+  appliesTo: string;
+  checkType: string | null;
+  matchKind: string | null;
+  ruleText: string;
+  remediation: string | null;
+};
+
 export type StatsNode = {
   id: string;
   name: string;
@@ -39,6 +52,7 @@ export type StatsComponentItem = {
 };
 
 export type StatsCustomizationChange = {
+  node: StatsNode;
   kind: string;
   property: string;
   message: string;
@@ -52,6 +66,7 @@ export type StatsCustomizationChange = {
   };
   signature: string;
   context: Record<string, string | null>;
+  componentRules: StatsComponentContractRule[];
   assessment: {
     verdict: string;
     source: string;
@@ -110,6 +125,7 @@ export type ApolloStatsViews = {
 
 export type ApolloStatsReport = {
   schemaVersion: 1;
+  reportKind?: 'apollo-full-report';
   reportId: string;
   generatedAt: string;
   suggestedFileName: string;
@@ -139,6 +155,9 @@ export type ApolloStatsReport = {
       path: string;
       componentKey: string | null;
     }>;
+    settings: {
+      shellAuditEnabled: boolean;
+    };
   };
   summary: {
     scannedComponents: number;
@@ -159,4 +178,80 @@ export type ApolloStatsReport = {
     wrongChannel: StatsCategory<StatsComponentItem>;
     themization: StatsCategory<StatsThemeItem>;
   };
+};
+
+export type ApolloAgentSeverityHint = 'high' | 'medium' | 'low';
+
+export type ApolloAgentFindingCategory =
+  | 'deprecatedComponents'
+  | 'deprecatedStyles'
+  | 'customStyles'
+  | 'updates'
+  | 'customizations'
+  | 'localComponents'
+  | 'detachedComponents'
+  | 'presets'
+  | 'technicalComponents'
+  | 'wrongChannel'
+  | 'themization';
+
+export type ApolloAgentFinding = {
+  category: ApolloAgentFindingCategory;
+  severityHint: ApolloAgentSeverityHint;
+  title: string;
+  node: StatsNode;
+  component?: Pick<StatsResource, 'name' | 'key' | 'library' | 'sourceFile'> | null;
+  variant?: Pick<StatsResource, 'name' | 'key'> | null;
+  style?: Pick<StatsResource, 'name' | 'key' | 'library' | 'sourceFile'> | null;
+  usage?: string;
+  kind?: string;
+  recommendation?: string;
+  comparisonIssues?: string[];
+  changes?: Array<{
+    node: StatsNode;
+    kind: string;
+    property: string;
+    message: string;
+    referenceValue: string | number | null;
+    actualValue: string | number | null;
+    referenceRawValue?: string | number | null;
+    actualRawValue?: string | number | null;
+    referenceDisplayValue?: string | number | null;
+    actualDisplayValue?: string | number | null;
+    referenceResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
+    actualResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
+    componentRules?: StatsComponentContractRule[];
+    assessment: StatsCustomizationChange['assessment'];
+  }>;
+};
+
+export type ApolloAgentReport = {
+  schemaVersion: 1;
+  reportKind: 'apollo-agent-report';
+  reportId: string;
+  sourceReportId: string;
+  generatedAt: string;
+  suggestedFileName: string;
+  user: ApolloStatsReport['user'];
+  plugin: ApolloStatsReport['plugin'];
+  figma: ApolloStatsReport['figma'];
+  scan: ApolloStatsReport['scan'];
+  summary: ApolloStatsReport['summary'] & {
+    includedFindingCount: number;
+    omittedCurrentComponentCount: number;
+  };
+  guidance: {
+    purpose: string;
+    expectedOutput: string;
+    notes: string[];
+  };
+  categorySummaries: Record<
+    ApolloAgentFindingCategory,
+    {
+      totalCount: number;
+      includedCount: number;
+      severityHint: ApolloAgentSeverityHint;
+    }
+  >;
+  findings: ApolloAgentFinding[];
 };

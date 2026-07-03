@@ -24,6 +24,8 @@ function loadEsbuild() {
 }
 
 const esbuild = loadEsbuild();
+const packageJson = require('./package.json');
+const pluginVersion = packageJson.version;
 
 const common = {
   entryPoints: {
@@ -42,12 +44,25 @@ const common = {
     '.tsx': 'tsx',
     '.module.css': 'local-css',
   },
+  define: {
+    __APOLLO_VERSION__: JSON.stringify(pluginVersion),
+  },
 };
 
 async function buildOnce() {
+  writeVersionMetadata();
   await esbuild.build(common);
   copyHtml();
-  console.log('✅ Apollo build done');
+  console.log(`✅ Apollo build done (${pluginVersion})`);
+}
+
+function writeVersionMetadata() {
+  const distDir = path.join(__dirname, 'dist');
+  fs.mkdirSync(distDir, { recursive: true });
+  fs.writeFileSync(
+    path.join(distDir, 'version.json'),
+    `${JSON.stringify({ version: pluginVersion }, null, 2)}\n`,
+  );
 }
 
 function copyHtml() {
@@ -82,10 +97,11 @@ function copyHtml() {
 
 if (isWatch) {
   (async () => {
+    writeVersionMetadata();
     const ctx = await esbuild.context(common);
     await ctx.watch();
     copyHtml();
-    console.log('👀 Apollo watching');
+    console.log(`👀 Apollo watching (${pluginVersion})`);
   })();
 } else {
   buildOnce();

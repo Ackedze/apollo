@@ -20,6 +20,11 @@ type ChangeGroup = {
   name: string;
   onFocus?: () => void;
   onReset?: () => void;
+  actions?: Array<{
+    label: string;
+    onPress: () => void;
+    singleIcon?: boolean;
+  }>;
   lines: ChangeLine[];
 };
 
@@ -76,7 +81,9 @@ export function CustomizationResultCard({
           showFocus={Boolean(group.onFocus)}
           valueLines={group.lines}
           actions={
-            group.onReset
+            group.actions?.length
+              ? group.actions
+              : group.onReset
               ? [{ label: 'Сбросить', onPress: group.onReset, singleIcon: false }]
               : []
           }

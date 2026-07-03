@@ -16,11 +16,14 @@ import {
   resolveVariantKeyForInstance,
 } from './reference/library';
 import {
+  applyMaterializedHostVariantBaselines,
+  applyMaterializedHostVariantBaselineToNode,
   getMaterializedInstanceReferenceDecision,
+  mergeMaterializedInstanceReferenceNode,
 } from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
-import { diffStructures } from './structure/diff';
+import { diffExplicitNestedVariantStates, diffStructures } from './structure/diff';
 import {
   buildOccurrenceIndexMap,
   buildOccurrenceKeyMap,
@@ -61,6 +64,11 @@ import {
   supportsThemizationForChannel,
 } from './policies/componentAuditPolicy';
 import {
+  getShellComponentAuditReason,
+  isShellComponentAuditExcluded,
+  isShellDetachedEntryExcluded,
+} from './policies/shellComponentAuditPolicy';
+import {
   buildCorporateThemizationEntry,
   buildPageThemizationEntry,
   getContainingPage,
@@ -84,22 +92,39 @@ import {
   variantMatchesSourceWithDefaultExtras,
   variantPropertiesEqual,
 } from './utils/variantProperties';
-import { buildApolloStatsReport } from './stats/report';
+import { buildApolloAgentReport, buildApolloStatsReport } from './stats/report';
 import { submitApolloStatsReport } from './stats/collector';
-import type { StatsResource } from './stats/types';
+import type { ApolloAgentReport, StatsResource } from './stats/types';
 import {
   applyAssessmentPresentation,
   assessCustomizationDiffs,
+  collapseVisualDiffsUnderVariantChanges,
   collapsePatternViolationDiffs,
   collapseConfiguredSemanticVariantDiffs,
   collapseSemanticVariantDiffs,
   createNestedContextEvidence,
   createPatternContextResolver,
 } from './assessment/customizationAssessment';
+import {
+  APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
+  applyContractAwareDiffs,
+} from './contracts/contractAwareDiffs';
+import {
+  ensureContractArtifactsForHints,
+  type ContractArtifactHint,
+} from './contracts/runtimeContractRegistry';
+
+declare const __APOLLO_VERSION__: string;
+
+const APOLLO_VERSION = __APOLLO_VERSION__;
+const APOLLO_PROXY_URL = 'http://localhost:3001/analyze';
 
 figma.showUI(__html__, { width: 800, height: 860 });
+console.log('[Apollo] plugin version', { version: APOLLO_VERSION });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
 const COMPACT_UI_SIZE = { width: 263, height: 860 };
+let lastApolloAgentReport: ApolloAgentReport | null = null;
+let activeApolloAgentRequestId: string | null = null;
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -118,13 +143,49 @@ figma.ui.onmessage = (msg) => {
   }
 
   if (msg.type === 'scan-selection') {
-    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel));
+    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel), {
+      shellAuditEnabled: msg.payload?.shellAuditEnabled === true,
+    });
     return;
   }
 
   if (msg.type === 'cancel-scan') {
     if (scanInProgress) {
       cancelRequested = true;
+    }
+    return;
+  }
+
+  if (msg.type === 'send-apollo-agent-report') {
+    void sendApolloAgentReport(
+      msg.payload?.requestId,
+      msg.payload?.userMessage,
+    ).catch((error) => {
+      console.error('[Apollo] failed to send agent report', error);
+      figma.ui.postMessage({
+        type: 'apollo-agent-result',
+        payload: {
+          requestId: msg.payload?.requestId ?? null,
+          error:
+            error instanceof Error
+              ? error.message
+              : 'Не удалось отправить отчёт агенту.',
+        },
+      });
+    });
+    return;
+  }
+
+  if (msg.type === 'cancel-apollo-agent-report') {
+    if (
+      !msg.payload?.requestId ||
+      msg.payload.requestId === activeApolloAgentRequestId
+    ) {
+      activeApolloAgentRequestId = null;
+      figma.ui.postMessage({
+        type: 'apollo-agent-cancelled',
+        payload: { requestId: msg.payload?.requestId ?? null },
+      });
     }
     return;
   }
@@ -186,7 +247,6 @@ let lastAuditChannel: AuditChannel = 'Desktop';
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
-const APOLLO_VERSION = '0.1.0';
 
 class AuditCancelledError extends Error {
   constructor() {
@@ -218,6 +278,9 @@ const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
 async function runAudit(
   selectionOverride?: readonly SceneNode[],
   selectedChannel: AuditChannel = 'Desktop',
+  options?: {
+    shellAuditEnabled?: boolean;
+  },
 ) {
   if (scanInProgress) {
     figma.notify('Проверка уже выполняется.');
@@ -225,6 +288,8 @@ async function runAudit(
   }
   scanInProgress = true;
   cancelRequested = false;
+  lastApolloAgentReport = null;
+  activeApolloAgentRequestId = null;
 
   figma.ui.postMessage({ type: 'scan-started' });
 
@@ -323,6 +388,9 @@ async function runAudit(
       throwIfCancelled,
     );
     await ensureReferenceCatalogsForKeys(selectionComponentKeys);
+    await ensureContractArtifactsForHints(
+      buildContractArtifactHints(selectionComponentKeys),
+    );
     logAuditMetric('audit-component-reference-ready', {
       totalMs: Number((getTimestamp() - keyCollectStartedAt).toFixed(1)),
       componentKeyCount: selectionComponentKeys.size,
@@ -368,6 +436,7 @@ async function runAudit(
       customStyleReasonOptions,
       deprecatedStyleOptions,
       checkedComponentNodesList,
+      Boolean(options?.shellAuditEnabled),
       throwIfCancelled,
     );
     logAuditMetric('audit-diff-phase', {
@@ -445,6 +514,9 @@ async function runAudit(
           startedAt: auditStartedAt,
           finishedAt: new Date(),
           selection: selectionStats,
+          settings: {
+            shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+          },
           scannedComponents: checkState.totalItems,
         },
         views: {
@@ -464,6 +536,17 @@ async function runAudit(
         resolveStyleResource: resolveStyleStatsResource,
         resolveTokenResource: resolveTokenStatsResource,
       });
+      const agentReport = buildApolloAgentReport(report);
+      lastApolloAgentReport = agentReport;
+      figma.ui.postMessage({
+        type: 'apollo-agent-report-ready',
+        payload: {
+          reportId: agentReport.reportId,
+          suggestedFileName: agentReport.suggestedFileName,
+          findingCount: agentReport.findings.length,
+        },
+      });
+      void sendApolloAgentReport();
       void submitApolloStatsReport(report);
     } catch (error) {
       console.warn('[Apollo] failed to prepare stats report', error);
@@ -486,6 +569,159 @@ async function runAudit(
 
     finalize('finished');
   }
+}
+
+async function sendApolloAgentReport(
+  requestId?: string,
+  userMessage?: string,
+): Promise<void> {
+  const report = lastApolloAgentReport;
+  const currentRequestId = requestId || `${Date.now()}`;
+  const agentInputText = buildApolloAgentInputText(userMessage);
+  const isDirectUserQuestion = agentInputText !== null;
+  const requestKind = isDirectUserQuestion ? 'question' : 'report';
+  activeApolloAgentRequestId = currentRequestId;
+
+  if (!report && !isDirectUserQuestion) {
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        requestKind,
+        error: 'Сначала завершите проверку Apollo.',
+      },
+    });
+    activeApolloAgentRequestId = null;
+    return;
+  }
+
+  figma.ui.postMessage({
+    type: 'apollo-agent-started',
+    payload: {
+      requestId: currentRequestId,
+      requestKind,
+      reportId: report?.reportId ?? null,
+      suggestedFileName: report?.suggestedFileName ?? '',
+    },
+  });
+
+  try {
+    const requestBody = {
+      component: 'apollo-agent-report',
+      action: isDirectUserQuestion ? 'user-question' : 'audit-report',
+      session_id: report
+        ? createApolloAgentSessionId(report)
+        : createApolloAgentFallbackSessionId(),
+    } as {
+      component: string;
+      action: string;
+      session_id: string;
+      report?: ApolloAgentReport;
+      text?: string;
+    };
+
+    if (agentInputText) {
+      requestBody.text = agentInputText;
+    } else if (report) {
+      requestBody.report = report;
+    }
+
+    const response = await fetch(APOLLO_PROXY_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (activeApolloAgentRequestId !== currentRequestId) {
+      return;
+    }
+
+    const data = await response.json().catch(() => null);
+    if (!response.ok || !data?.success) {
+      figma.ui.postMessage({
+        type: 'apollo-agent-result',
+        payload: {
+          requestId: currentRequestId,
+          requestKind,
+          reportId: report?.reportId ?? null,
+          suggestedFileName: report?.suggestedFileName ?? '',
+          error: data?.error || `Apollo proxy error ${response.status}`,
+        },
+      });
+      return;
+    }
+
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        requestKind,
+        reportId: report?.reportId ?? null,
+        suggestedFileName: report?.suggestedFileName ?? '',
+        text: typeof data.result === 'string' ? data.result : '',
+      },
+    });
+  } catch (error) {
+    if (activeApolloAgentRequestId !== currentRequestId) {
+      return;
+    }
+    figma.ui.postMessage({
+      type: 'apollo-agent-result',
+      payload: {
+        requestId: currentRequestId,
+        requestKind,
+        reportId: report?.reportId ?? null,
+        suggestedFileName: report?.suggestedFileName ?? '',
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Не удалось отправить отчёт агенту.',
+      },
+    });
+  } finally {
+    if (activeApolloAgentRequestId === currentRequestId) {
+      activeApolloAgentRequestId = null;
+    }
+  }
+}
+
+function buildApolloAgentInputText(userMessage?: string): string | null {
+  const trimmedMessage =
+    typeof userMessage === 'string' ? userMessage.trim() : '';
+
+  if (!trimmedMessage) {
+    return null;
+  }
+
+  return trimmedMessage;
+}
+
+function createApolloAgentSessionId(report: ApolloAgentReport): string {
+  const base = [
+    report.user?.slug || report.user?.id || 'unknown-user',
+    report.sourceReportId || report.reportId,
+  ].join('__');
+  const sanitized = base
+    .normalize('NFKC')
+    .replace(/[^\p{Letter}\p{Number}._-]+/gu, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-_.]+|[-_.]+$/g, '')
+    .slice(0, 180);
+  return sanitized || 'apollo-agent-report';
+}
+
+function createApolloAgentFallbackSessionId(): string {
+  const base = [
+    figma.currentUser?.id || 'unknown-user',
+    figma.currentUser?.name || 'apollo-user-question',
+  ].join('__');
+  const sanitized = base
+    .normalize('NFKC')
+    .replace(/[^\p{Letter}\p{Number}._-]+/gu, '-')
+    .replace(/-+/g, '-')
+    .replace(/^[-_.]+|[-_.]+$/g, '')
+    .slice(0, 180);
+  return sanitized || 'apollo-user-question';
 }
 
 /**
@@ -552,6 +788,22 @@ async function collectComponentKeys(
   return keys;
 }
 
+function buildContractArtifactHints(
+  componentKeys: Iterable<string>,
+): ContractArtifactHint[] {
+  const hints: ContractArtifactHint[] = [];
+  for (const key of componentKeys) {
+    const reference = findComponent(key);
+    hints.push({
+      figmaKey: key,
+      componentName: reference?.name ?? null,
+      displayName: reference?.displayName ?? null,
+      sourceFile: reference?.sourceFile ?? null,
+    });
+  }
+  return hints;
+}
+
 async function collectTargets(
   selection: readonly SceneNode[], 
   checkState: CheckState, 
@@ -562,6 +814,7 @@ async function collectTargets(
   customStyleReasonOptions: CustomStyleCollectionOptions,
   deprecatedStyleOptions: DeprecatedStyleCollectionOptions,
   checkedComponentNodesList: Set<string>,
+  shellAuditEnabled: boolean,
   throwIfCancelled: () => void,
 ) {
   const themizationEnabled = supportsThemizationForChannel(selectedChannel);
@@ -600,6 +853,23 @@ async function collectTargets(
           throwIfCancelled,
         );
         throwIfCancelled();
+
+        if (!shellAuditEnabled && isShellComponentAuditExcluded(item)) {
+          traceAudit('shell-subtree-skipped', {
+            nodeId: node.id,
+            nodeName: node.name,
+            libraryName: item.librarySource ?? null,
+            componentName:
+              item.reference?.displayName ?? item.reference?.name ?? item.name,
+            categoryDecision: 'skipped-check',
+            matchedRule: 'shell-audit-disabled',
+            property: null,
+            expected: null,
+            actual: null,
+            reason: getShellComponentAuditReason(item),
+          });
+          return;
+        }
 
         checkState.totalItems++;
         subtreeForcedCategory = item.forcedCategory ?? null;
@@ -659,6 +929,23 @@ async function collectTargets(
         const item = collectDetachedEntry(node);
 
         if (item) {
+          if (!shellAuditEnabled && isShellDetachedEntryExcluded(item)) {
+            traceAudit('shell-detached-subtree-skipped', {
+              nodeId: node.id,
+              nodeName: node.name,
+              libraryName: item.libraryName,
+              componentName: item.componentName,
+              componentKey: item.componentKey,
+              categoryDecision: 'skipped-check',
+              matchedRule: 'shell-audit-disabled',
+              property: null,
+              expected: null,
+              actual: null,
+              reason: `detached component ${item.componentName ?? item.componentKey} is excluded by Apollo shell settings`,
+            });
+            return;
+          }
+
           checkState.detachedEntries.push(item);
         }
       }
@@ -833,6 +1120,15 @@ async function classifyNode(
   const markedDiffs = diffResult.diffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
+  const explicitVariantStateDiffs =
+    shouldDiff && referenceStructure && alignedActualStructure
+      ? diffExplicitNestedVariantStates(
+          alignedActualStructure,
+          referenceStructure,
+          markedDiffs,
+        ).map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
+      : [];
+  const diffsForAssessment = markedDiffs.concat(explicitVariantStateDiffs);
   const hostDiffs =
     shouldDiff && referenceStructure && alignedActualStructure
       ? diffStructures(alignedActualStructure, referenceStructure, {
@@ -842,20 +1138,29 @@ async function classifyNode(
           isPaintToken: isColorTokenForPaintDiff,
         }).diffs
       : [];
-  const assessedDiffs = assessCustomizationDiffs(markedDiffs, {
+  const assessedDiffs = assessCustomizationDiffs(diffsForAssessment, {
     hostDiffs,
     hostReference: referenceStructure ?? [],
     nestedContextEvidence: alignedActualStructure
-      ? createNestedContextEvidence(alignedActualStructure, (instance) => {
-          const nestedReference = findComponent(
-            instance.componentInstance?.componentKey ?? '',
-          );
-          return resolveStructureForInstance(
-            nestedReference,
-            instance.componentInstance ?? null,
-          );
-        }, markedDiffs, (nestedComponentKey) =>
-          findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+      ? createNestedContextEvidence(
+          alignedActualStructure,
+          (instance) => {
+            const nestedReference = findComponent(
+              instance.componentInstance?.componentKey ?? '',
+            );
+            return resolveStructureForInstance(
+              nestedReference,
+              instance.componentInstance ?? null,
+            );
+          },
+          diffsForAssessment,
+          (nestedComponentKey) =>
+            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+          {
+            resolveTokenLabel: resolveTokenLabelForDiff,
+            resolveStyleLabel: resolveStyleLabelForDiff,
+            isPaintToken: isColorTokenForPaintDiff,
+          },
         )
       : undefined,
     resolvePatternContext:
@@ -871,17 +1176,20 @@ async function classifyNode(
         : undefined,
   });
   const semanticDiffs = collapsePatternViolationDiffs(
-    applyAssessmentPresentation(
-      collapseSemanticVariantDiffs(
-        collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
-          actualStructure: alignedActualStructure ?? [],
-          hostReference: referenceStructure ?? [],
-          hostComponentKey: ref?.key ?? componentKey ?? null,
-          resolveFamilyKey: (nestedComponentKey) =>
-            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
-        }),
-        alignedActualStructure ?? [],
+    collapseVisualDiffsUnderVariantChanges(
+      applyAssessmentPresentation(
+        collapseSemanticVariantDiffs(
+          collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
+            actualStructure: alignedActualStructure ?? [],
+            hostReference: referenceStructure ?? [],
+            hostComponentKey: ref?.key ?? componentKey ?? null,
+            resolveFamilyKey: (nestedComponentKey) =>
+              findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+          }),
+          alignedActualStructure ?? [],
+        ),
       ),
+      alignedActualStructure ?? [],
     ),
     alignedActualStructure ?? [],
   );
@@ -890,7 +1198,31 @@ async function classifyNode(
     componentName: node.name,
     referenceComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? null,
   });
-  const diffs = applyCustomizationFilters(allowlistedDiffs, {
+  const contractAwareResult = applyContractAwareDiffs(allowlistedDiffs, {
+    enabled: APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
+    hostComponentKey: ref?.key ?? componentKey ?? null,
+    hostComponentName: ref?.displayName ?? ref?.name ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    hostReference: referenceStructure ?? [],
+    resolveStyleLabel: resolveStyleLabelForDiff,
+  });
+  if (contractAwareResult.applied) {
+    console.log('[Apollo][contracts] applied composition contract', {
+      componentName: ref?.displayName ?? ref?.name ?? node.name,
+      matchedContracts: contractAwareResult.matchedContractKeys,
+      suppressedCount: contractAwareResult.suppressedCount,
+      rebasedCount: contractAwareResult.rebasedCount,
+    });
+    traceAudit('contract-aware-diffs', {
+      nodeId: node.id,
+      nodeName: node.name,
+      componentKey: ref?.key ?? componentKey ?? null,
+      matchedContracts: contractAwareResult.matchedContractKeys,
+      suppressedCount: contractAwareResult.suppressedCount,
+      rebasedCount: contractAwareResult.rebasedCount,
+    });
+  }
+  const diffs = applyCustomizationFilters(contractAwareResult.diffs, {
     libraryName: ref?.source ?? null,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
   });
@@ -919,7 +1251,7 @@ async function classifyNode(
     referenceNodes: expandedReferenceStructure?.length ?? 0,
     actualNodes: alignedActualStructure?.length ?? 0,
     rawDiffs: diffResult.diffs.length,
-    allowlistedDiffs: markedDiffs.length - allowlistedDiffs.length,
+    allowlistedDiffs: diffsForAssessment.length - allowlistedDiffs.length,
     filteredDiffs: diffs.length,
     diffDurationMs: Number((getTimestamp() - diffStartedAt).toFixed(1)),
   });
@@ -1114,6 +1446,16 @@ async function resetCustomizationGroup(payload: {
   rootId?: string;
   nodeId?: string;
   messages?: string[];
+  details?: Array<{
+    property?: string;
+    reference?: {
+      value?: string | number | null;
+      resourceType?: 'style' | 'token' | 'color';
+      resourceId?: string | null;
+      displayName?: string | null;
+    };
+    message?: string;
+  }>;
   remediations?: Array<{
     kind?: string;
     nodeId?: string;
@@ -1128,6 +1470,16 @@ async function resetCustomizationGroup(payload: {
           typeof message === 'string' && message.trim().length > 0,
       )
     : [];
+  const details = Array.isArray(payload?.details)
+    ? payload.details.filter(
+        (detail) =>
+          detail &&
+          typeof detail.property === 'string' &&
+          detail.property.length > 0 &&
+          detail.reference &&
+          typeof detail.reference === 'object',
+      )
+    : [];
   const remediations = Array.isArray(payload?.remediations)
     ? payload.remediations.filter(
         (item) =>
@@ -1139,7 +1491,7 @@ async function resetCustomizationGroup(payload: {
       )
     : [];
 
-  if (!rootId || !nodeId || (!messages.length && !remediations.length)) {
+  if (!rootId || !nodeId || (!messages.length && !details.length && !remediations.length)) {
     figma.notify('Недостаточно данных для сброса изменений.');
     return;
   }
@@ -1164,14 +1516,11 @@ async function resetCustomizationGroup(payload: {
       variantNode.setProperties(remediation.properties!);
     }
 
-    figma.notify('Параметры компонента восстановлены.');
-    const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
-    if (rerunSelection.length) {
-      void runAudit(rerunSelection, lastAuditChannel);
-    } else {
-      void runAudit([rootNode], lastAuditChannel);
+    if (!messages.length && !details.length) {
+      figma.notify('Параметры компонента восстановлены.');
+      await rerunLastAuditWithFallback([rootNode]);
+      return;
     }
-    return;
   }
 
   const componentKey = await getComponentKey(rootNode);
@@ -1217,7 +1566,12 @@ async function resetCustomizationGroup(payload: {
     return;
   }
 
-  await applyReferenceResetByMessages(targetNode, referenceNode, messages);
+  if (details.length) {
+    await applyReferenceResetByDetails(targetNode, details);
+  }
+  if (messages.length) {
+    await applyReferenceResetByMessages(targetNode, referenceNode, messages);
+  }
 
   figma.notify('Изменения сброшены.');
 
@@ -1768,6 +2122,72 @@ async function applyReferenceResetByMessages(
   }
 }
 
+async function applyReferenceResetByDetails(
+  node: SceneNode,
+  details: Array<{
+    property?: string;
+    reference?: {
+      value?: string | number | null;
+      resourceType?: 'style' | 'token' | 'color';
+      resourceId?: string | null;
+      displayName?: string | null;
+    };
+  }>,
+) {
+  for (const detail of details) {
+    const property = detail.property;
+    const reference = detail.reference;
+    if (!property || !reference) {
+      continue;
+    }
+
+    if (property === 'fill' || property === 'stroke') {
+      await resetPaintByDiffReference(node, property, reference);
+      continue;
+    }
+
+    if (property === 'styles.fill') {
+      await resetStyleById(node, 'fill', reference.resourceId ?? null);
+      continue;
+    }
+
+    if (property === 'styles.stroke') {
+      await resetStyleById(node, 'stroke', reference.resourceId ?? null);
+      continue;
+    }
+
+    if (property === 'styles.text') {
+      await resetStyleById(node, 'text', reference.resourceId ?? null);
+      continue;
+    }
+
+    const paddingSide = property.match(/^layout\.padding\.(top|right|bottom|left)$/)?.[1] as
+      | 'top'
+      | 'right'
+      | 'bottom'
+      | 'left'
+      | undefined;
+    if (paddingSide && typeof reference.value === 'number') {
+      setLayoutPaddingSide(node, paddingSide, reference.value);
+      continue;
+    }
+
+    if (property === 'layout.itemSpacing' && typeof reference.value === 'number') {
+      setLayoutItemSpacing(node, reference.value);
+      continue;
+    }
+
+    if (property === 'radius') {
+      await setRadiusFromValue(node, reference.value);
+      continue;
+    }
+
+    if (property === 'opacity' && typeof reference.value === 'number' && 'opacity' in node) {
+      (node as SceneNode & { opacity: number }).opacity = reference.value;
+    }
+  }
+}
+
 function extractPaddingSide(message: string): 'top' | 'right' | 'bottom' | 'left' | null {
   const match = message.match(/(top|right|bottom|left)/i);
   if (!match) return null;
@@ -1824,6 +2244,58 @@ async function resetItemSpacing(node: SceneNode, referenceNode: DSStructureNode)
   );
 }
 
+function setLayoutPaddingSide(
+  node: SceneNode,
+  side: 'top' | 'right' | 'bottom' | 'left',
+  value: number,
+) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+  const fieldMap = {
+    top: 'paddingTop',
+    right: 'paddingRight',
+    bottom: 'paddingBottom',
+    left: 'paddingLeft',
+  } as const;
+  (node as any)[fieldMap[side]] = value;
+}
+
+function setLayoutItemSpacing(node: SceneNode, value: number) {
+  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
+    return;
+  }
+  (node as any).itemSpacing = value;
+}
+
+async function resetStyleById(
+  node: SceneNode,
+  target: 'fill' | 'stroke' | 'text',
+  styleKey: string | null,
+) {
+  if (target === 'text') {
+    if (node.type !== 'TEXT') return;
+    const style = styleKey ? await importStyleById(styleKey) : null;
+    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
+    return;
+  }
+
+  const mutableNode = node as any;
+  const style = styleKey ? await importStyleById(styleKey) : null;
+  const styleId = style?.id ?? '';
+
+  if (target === 'fill') {
+    if (typeof mutableNode.setFillStyleIdAsync === 'function') {
+      await mutableNode.setFillStyleIdAsync(styleId);
+    }
+    return;
+  }
+
+  if (typeof mutableNode.setStrokeStyleIdAsync === 'function') {
+    await mutableNode.setStrokeStyleIdAsync(styleId);
+  }
+}
+
 async function resetStyle(
   node: SceneNode,
   referenceNode: DSStructureNode,
@@ -1836,29 +2308,66 @@ async function resetStyle(
         ? referenceNode.styles?.fill?.styleKey
         : referenceNode.styles?.stroke?.styleKey;
 
-  if (target === 'text') {
-    if (node.type !== 'TEXT') return;
-    const style = styleKey ? await importStyleById(styleKey) : null;
-    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
+  await resetStyleById(node, target, styleKey ?? null);
+}
+
+async function resetPaintByDiffReference(
+  node: SceneNode,
+  target: 'fill' | 'stroke',
+  reference: {
+    value?: string | number | null;
+    resourceType?: 'style' | 'token' | 'color';
+    resourceId?: string | null;
+  },
+) {
+  const resourceId =
+    typeof reference.resourceId === 'string' && reference.resourceId.length
+      ? reference.resourceId
+      : null;
+
+  if (reference.resourceType === 'style') {
+    await resetStyleById(node, target, resourceId);
     return;
   }
 
-  const style = styleKey ? await importStyleById(styleKey) : null;
+  const prop = target === 'fill' ? 'fills' : 'strokes';
+  if (!(prop in (node as any))) {
+    return;
+  }
+
   const mutableNode = node as any;
-  const styleId = style?.id ?? '';
+  if (target === 'fill' && typeof mutableNode.setFillStyleIdAsync === 'function') {
+    await mutableNode.setFillStyleIdAsync('');
+  } else if (
+    target === 'stroke' &&
+    typeof mutableNode.setStrokeStyleIdAsync === 'function'
+  ) {
+    await mutableNode.setStrokeStyleIdAsync('');
+  }
 
-  if (target === 'fill') {
-    if (typeof mutableNode.setFillStyleIdAsync !== 'function') {
-      return;
-    }
-    await mutableNode.setFillStyleIdAsync(styleId);
+  const token =
+    reference.resourceType === 'token'
+      ? resourceId ?? (typeof reference.value === 'string' ? reference.value : null)
+      : null;
+  const color =
+    reference.resourceType === 'color' && typeof reference.value === 'string'
+      ? reference.value
+      : null;
+  const paint = await buildSolidPaintFromReference({ token, color });
+
+  if (!paint) {
     return;
   }
 
-  if (typeof mutableNode.setStrokeStyleIdAsync !== 'function') {
-    return;
+  mutableNode[prop] = [paint];
+
+  if (target === 'stroke') {
+    const weight =
+      typeof (mutableNode as { strokeWeight?: unknown }).strokeWeight === 'number'
+        ? (mutableNode as { strokeWeight: number }).strokeWeight
+        : 1;
+    mutableNode.strokeWeight = weight;
   }
-  await mutableNode.setStrokeStyleIdAsync(styleId);
 }
 
 async function resetPaint(
@@ -1948,6 +2457,26 @@ async function resetRadius(node: SceneNode, referenceNode: DSStructureNode) {
     mutableNode.bottomRightRadius = radius.bottomRight;
     mutableNode.bottomLeftRadius = radius.bottomLeft;
   }
+}
+
+async function setRadiusFromValue(
+  node: SceneNode,
+  value: string | number | null | undefined,
+) {
+  if (!('cornerRadius' in (node as any))) {
+    return;
+  }
+  const numericValue =
+    typeof value === 'number'
+      ? value
+      : typeof value === 'string'
+        ? Number.parseFloat(value)
+        : Number.NaN;
+  if (!Number.isFinite(numericValue)) {
+    return;
+  }
+  await bindNodeVariable(node, 'cornerRadius', null);
+  (node as any).cornerRadius = numericValue;
 }
 
 async function resetOpacity(node: SceneNode, referenceNode: DSStructureNode) {
@@ -2274,12 +2803,12 @@ function expandReferenceWithInstanceComponents(
     ) + 1;
   const referenceOccurrenceKeys = buildOccurrenceKeyMap(referenceEntries);
   const referenceKeyToIndex = new Map<string, number>();
+  const hostReferenceByOccurrenceKey = new Map<string, DSStructureNode>();
   for (let index = 0; index < referenceEntries.length; index += 1) {
     const entry = referenceEntries[index];
-    referenceKeyToIndex.set(
-      referenceOccurrenceKeys.get(entry) ?? entry.path,
-      index,
-    );
+    const occurrenceKey = referenceOccurrenceKeys.get(entry) ?? entry.path;
+    referenceKeyToIndex.set(occurrenceKey, index);
+    hostReferenceByOccurrenceKey.set(occurrenceKey, entry);
   }
   const actualOccurrenceIndexMap = buildOccurrenceIndexMap(actual);
   const actualRootPath = actual[0]?.path ?? '';
@@ -2350,11 +2879,17 @@ function expandReferenceWithInstanceComponents(
     );
     nextSyntheticReferenceId += rebasedAligned.length;
 
-    for (const refNode of rebasedAligned) {
-      const occurrenceKey = makeOccurrenceKey(refNode.path, actualOccurrenceIndex);
+    for (const rawRefNode of rebasedAligned) {
+      const occurrenceKey = makeOccurrenceKey(rawRefNode.path, actualOccurrenceIndex);
       const existingIndex = referenceKeyToIndex.get(occurrenceKey);
       const existingNode =
         typeof existingIndex === 'number' ? referenceEntries[existingIndex] : null;
+      const hostBaselineNode =
+        hostReferenceByOccurrenceKey.get(occurrenceKey) ?? existingNode;
+      const refNode =
+        rawRefNode.path === node.path
+          ? applyMaterializedHostVariantBaselineToNode(rawRefNode, hostBaselineNode)
+          : rawRefNode;
       const mergeDecision =
         existingNode && typeof existingIndex === 'number'
           ? getMaterializedInstanceReferenceDecision(
@@ -2368,54 +2903,16 @@ function expandReferenceWithInstanceComponents(
             )
           : null;
 
-      if (mergeDecision && shouldTraceNestedReferenceMerge(node.path, refNode.path, refNode.name)) {
-        console.log('[Apollo][debug] nested-reference-merge-decision', {
-          materializedRootPath: node.path,
-          targetPath: refNode.path,
-          targetName: refNode.name,
-          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-          existingNodeName: existingNode?.name ?? null,
-          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-          decision: mergeDecision,
-        });
-        console.log(
-          '[Apollo][debug-json] nested-reference-merge-decision',
-          JSON.stringify({
-            materializedRootPath: node.path,
-            targetPath: refNode.path,
-            targetName: refNode.name,
-            existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-            existingNodeName: existingNode?.name ?? null,
-            existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-            existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-            candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-            candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-            decision: mergeDecision,
-          }),
-        );
-        traceAudit('nested-reference-merge-decision', {
-          materializedRootPath: node.path,
-          targetPath: refNode.path,
-          targetName: refNode.name,
-          existingNodeOrigin: existingNode?.referenceOrigin ?? 'host',
-          existingNodeName: existingNode?.name ?? null,
-          existingOwnerComponentKey: existingNode?.referenceOwnerComponentKey ?? null,
-          existingOwnerRelativePath: existingNode?.referenceOwnerRelativePath ?? null,
-          candidateOwnerComponentKey: refNode.referenceOwnerComponentKey ?? null,
-          candidateOwnerRelativePath: refNode.referenceOwnerRelativePath ?? null,
-          decision: mergeDecision,
-        });
-      }
-
       if (
         existingNode &&
         typeof existingIndex === 'number' &&
         mergeDecision?.preferCandidate === true
       ) {
-        referenceEntries[existingIndex] = refNode;
+        referenceEntries[existingIndex] = mergeMaterializedInstanceReferenceNode(
+          hostBaselineNode ?? existingNode,
+          refNode,
+          mergeDecision,
+        );
         continue;
       }
 
@@ -2427,7 +2924,7 @@ function expandReferenceWithInstanceComponents(
     }
   }
 
-  return referenceEntries;
+  return applyMaterializedHostVariantBaselines(referenceEntries, reference);
 }
 
 function rebaseReferenceSubtreeIds(
@@ -2586,21 +3083,6 @@ function describeDebugDiff(diff: ReturnType<typeof diffStructures>['diffs'][numb
     suppressed: diff.suppressAsHostControlledNestedProperty === true,
     suppressionReason: diff.suppressionReason ?? null,
   };
-}
-
-function shouldTraceNestedReferenceMerge(
-  materializedRootPath: string,
-  targetPath: string,
-  targetName: string | null | undefined,
-): boolean {
-  const haystack = `${materializedRootPath} ${targetPath} ${targetName ?? ''}`.toLowerCase();
-  return (
-    haystack.includes('iconview') ||
-    haystack.includes('button') ||
-    haystack.includes('addon') ||
-    haystack.includes('paintme') ||
-    haystack.includes('bgcolor')
-  );
 }
 
 /**

@@ -12,6 +12,7 @@ const defaultState: ChromeState = {
   actionLoading: true,
   actionType: 'secondary',
   compact: false,
+  shellAuditEnabled: false,
   tabs: [],
 };
 

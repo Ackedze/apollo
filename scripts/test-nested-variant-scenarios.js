@@ -206,6 +206,219 @@ function main() {
     'Materialized nested descendants must replace host descendants when the path is not host-controlled',
   );
 
+  const mergedInstanceRoot = nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+    {
+      path: 'Size=56, Overflow=false / [D] Button',
+      type: 'INSTANCE',
+      name: '[D] Button',
+      visible: true,
+      id: 50,
+      parentId: 1,
+      referenceOrigin: 'host',
+      componentInstance: {
+        variantProperties: {
+          DisabledState: 'False',
+          Shape: 'Rectangular',
+          SingleIcon: 'False',
+          Size: '56',
+          View: 'Secondary',
+        },
+      },
+    },
+    {
+      path: 'Size=56, Overflow=false / [D] Button',
+      type: 'INSTANCE',
+      name: '[D] Button',
+      visible: true,
+      id: 150,
+      parentId: 100,
+      referenceOrigin: 'nested-component',
+      referenceOwnerComponentKey: 'button-secondary',
+      referenceOwnerPath: 'Size=56, Overflow=false / [D] Button',
+      referenceOwnerRelativePath: '',
+      componentInstance: {
+        componentKey: 'button-secondary',
+      },
+    },
+    {
+      preferCandidate: true,
+      reason: 'replace-instance-root',
+      existingOrigin: 'host',
+      candidateOrigin: 'nested-component',
+      ownerComponentKey: 'button-secondary',
+      relativePath: '',
+      withinMaterializedSubtree: true,
+    },
+  );
+  assert.deepEqual(
+    mergedInstanceRoot.componentInstance.variantProperties,
+    {
+      DisabledState: 'False',
+      Shape: 'Rectangular',
+      SingleIcon: 'False',
+      Size: '56',
+      View: 'Secondary',
+    },
+    'Replacing a materialized host instance root must preserve host variantProperties as reference baseline',
+  );
+  assert.equal(
+    mergedInstanceRoot.componentInstance.componentKey,
+    'button-secondary',
+    'Nested candidate component key must be preserved while host variantProperties become the expected state',
+  );
+
+  const mergedHostDescendantRoot = nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+    {
+      path: 'Size=56, Overflow=false / [D] Button',
+      type: 'INSTANCE',
+      name: '[D] Button',
+      visible: true,
+      id: 51,
+      parentId: 1,
+      referenceOrigin: 'host',
+      componentInstance: {
+        variantProperties: {
+          DisabledState: 'False',
+          Shape: 'Rectangular',
+          SingleIcon: 'False',
+          Size: '56',
+          View: 'Secondary',
+        },
+      },
+    },
+    {
+      path: 'Size=56, Overflow=false / [D] Button',
+      type: 'INSTANCE',
+      name: '[D] Button',
+      visible: true,
+      id: 151,
+      parentId: 100,
+      referenceOrigin: 'nested-component',
+      referenceOwnerComponentKey: 'button-secondary',
+      referenceOwnerPath: 'Size=56, Overflow=false / [D] Button',
+      referenceOwnerRelativePath: '',
+      componentInstance: {
+        componentKey: 'button-secondary',
+        variantProperties: {
+          DisabledState: 'False',
+          Shape: 'Rectangular',
+          SingleIcon: 'True',
+          Size: '56',
+          View: 'Secondary',
+        },
+      },
+    },
+    {
+      preferCandidate: true,
+      reason: 'replace-host-descendant',
+      existingOrigin: 'host',
+      candidateOrigin: 'nested-component',
+      ownerComponentKey: 'button-secondary',
+      relativePath: '',
+      withinMaterializedSubtree: true,
+    },
+  );
+  assert.deepEqual(
+    mergedHostDescendantRoot.componentInstance.variantProperties,
+    {
+      DisabledState: 'False',
+      Shape: 'Rectangular',
+      SingleIcon: 'False',
+      Size: '56',
+      View: 'Secondary',
+    },
+    'Root-level replace-host-descendant must also preserve host variantProperties as the reference baseline',
+  );
+
+  const baselineApplied = nestedReferenceMerge.applyMaterializedHostVariantBaselines(
+    [
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 150,
+        parentId: 100,
+        referenceOrigin: 'nested-component',
+        componentInstance: {
+          componentKey: 'button-primary',
+        },
+      },
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 151,
+        parentId: 100,
+        referenceOrigin: 'nested-component',
+        componentInstance: {
+          componentKey: 'button-secondary',
+        },
+      },
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 152,
+        parentId: 100,
+        referenceOrigin: 'nested-component',
+        componentInstance: {
+          componentKey: 'button-secondary',
+        },
+      },
+    ],
+    [
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 50,
+        parentId: 1,
+        referenceOrigin: 'host',
+        componentInstance: {
+          variantProperties: { SingleIcon: 'False', View: 'Primary' },
+        },
+      },
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 51,
+        parentId: 1,
+        referenceOrigin: 'host',
+        componentInstance: {
+          variantProperties: { SingleIcon: 'False', View: 'Secondary' },
+        },
+      },
+      {
+        path: 'Size=56, Overflow=false / [D] Button',
+        type: 'INSTANCE',
+        name: '[D] Button',
+        visible: true,
+        id: 52,
+        parentId: 1,
+        referenceOrigin: 'host',
+        componentInstance: {
+          variantProperties: { SingleIcon: 'False', View: 'Secondary' },
+        },
+      },
+    ],
+  );
+  assert.deepEqual(
+    baselineApplied[2].componentInstance.variantProperties,
+    { SingleIcon: 'False', View: 'Secondary' },
+    'Host variantProperties must be restored by occurrence even when root replacement did not merge them earlier',
+  );
+  assert.equal(
+    baselineApplied[2].componentInstance.componentKey,
+    'button-secondary',
+    'Occurrence baseline restore must preserve nested candidate componentKey',
+  );
+
   assert.equal(
     nestedReferenceMerge.shouldPreferMaterializedInstanceReference(
       {

@@ -1,10 +1,12 @@
 {
   "name": "apollo",
-  "version": "0.1.0",
+  "version": "0.1.38",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
+    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:variant-structure-paths && npm run test:shell-component-policy && npm run test:stats-report && npm run test:contract-aware-diffs",
     "type-check": "tsc --noEmit",
+    "check:figma-runtime": "node scripts/check-figma-runtime.js",
     "test:themization": "node scripts/test-themization.js",
     "test:customization-filters": "node scripts/test-customization-filters.js",
     "test:customization-assessment": "node scripts/test-customization-assessment.js",
@@ -13,12 +15,15 @@
     "test:audit-policies": "node scripts/test-audit-policies.js",
     "test:component-key-cache": "node scripts/test-component-key-cache.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
+    "test:variant-state-diff": "node scripts/test-variant-state-diff.js",
     "test:nested-variants": "node scripts/test-nested-variant-scenarios.js",
     "test:audit-view-builder": "node scripts/test-audit-view-builder.js",
     "test:deprecated-styles": "node scripts/test-deprecated-styles.js",
     "test:variant-structure-paths": "node scripts/test-variant-structure-paths.js",
+    "test:shell-component-policy": "node scripts/test-shell-component-policy.js",
     "test:snapshot-tree": "node scripts/test-snapshot-tree.js",
     "test:stats-report": "node scripts/test-stats-report.js",
+    "test:contract-aware-diffs": "node scripts/test-contract-aware-diffs.js",
     "report:nested-overrides": "node scripts/report-nested-overrides.js"
   },
   "devDependencies": {

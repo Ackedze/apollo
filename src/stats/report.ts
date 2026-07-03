@@ -1,4 +1,9 @@
 import type { DiffEntry, DiffValueDetails } from '../structure/diff';
+import {
+  findComponentContractRulesForDiff,
+  findComponentContractViolationForDiff,
+  type ComponentContractRule,
+} from '../contracts/componentRules';
 import type {
   AuditItem,
   AuditResource,
@@ -12,6 +17,7 @@ import type {
   ApolloStatsViews,
   StatsCategory,
   StatsComponentItem,
+  StatsComponentContractRule,
   StatsCustomizationChange,
   StatsCustomizationItem,
   StatsDetachedItem,
@@ -19,6 +25,8 @@ import type {
   StatsStyleItem,
   StatsThemeItem,
 } from './types';
+
+export { buildApolloAgentReport } from './agentReport';
 
 type ResourceResolver = (
   id: string,
@@ -47,6 +55,9 @@ export type BuildApolloStatsReportInput = {
       path: string;
       componentKey: string | null;
     }>;
+    settings: {
+      shellAuditEnabled: boolean;
+    };
     scannedComponents: number;
   };
   views: ApolloStatsViews;
@@ -132,6 +143,7 @@ export function buildApolloStatsReport(
         finishedAt.getTime() - input.scan.startedAt.getTime(),
       ),
       selection: input.scan.selection,
+      settings: input.scan.settings,
     },
     summary: {
       scannedComponents: input.scan.scannedComponents,
@@ -212,6 +224,11 @@ function customizationChange(
   const actual = diff.details?.actual ?? { value: null };
   const referenceResource = resolveDiffResource(reference, input);
   const actualResource = resolveDiffResource(actual, input);
+  const componentRules = findComponentContractRulesForDiff(diff).map(
+    statsComponentRule,
+  );
+  const componentContractViolation =
+    findComponentContractViolationForDiff(diff);
   const componentKey = item.componentKey ?? 'local';
   const referenceSignature = resourceSignature(
     referenceResource,
@@ -220,6 +237,7 @@ function customizationChange(
   const actualSignature = resourceSignature(actualResource, actual.value);
 
   return {
+    node: diffNode(diff, item),
     kind: diff.diffKind ?? 'other',
     property,
     message: diff.message,
@@ -246,7 +264,17 @@ function customizationChange(
       nestedOwnerPath: diff.context.nestedOwnerPath,
       nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
     },
-    assessment: diff.assessment
+    componentRules,
+    assessment: componentContractViolation
+      ? {
+          verdict: 'violation',
+          source: 'component-contract',
+          reasonCode: 'component-contract-violation',
+          ruleId: componentContractViolation.ruleId,
+          message: componentContractViolation.ruleText,
+          remediation: null,
+        }
+      : diff.assessment
       ? {
           verdict: diff.assessment.verdict,
           source: diff.assessment.source,
@@ -262,6 +290,34 @@ function customizationChange(
             : null,
         }
       : null,
+  };
+}
+
+function statsComponentRule(
+  rule: ComponentContractRule,
+): StatsComponentContractRule {
+  return {
+    ruleId: rule.ruleId,
+    severity: rule.severity,
+    source: rule.source,
+    ruleKind: rule.ruleKind ?? null,
+    severityScope: rule.severityScope ?? null,
+    appliesTo: rule.appliesTo,
+    checkType: rule.checkType ?? null,
+    matchKind: rule.matchKind ?? null,
+    ruleText: rule.ruleText,
+    remediation: rule.remediation ?? null,
+  };
+}
+
+function diffNode(diff: DiffEntry, item: AuditItem) {
+  return {
+    id: diff.nodeId ?? item.id,
+    name: diff.nodeName || item.name,
+    type: null,
+    pageName: item.pageName,
+    path: diff.nodePath || item.fullPath,
+    visible: diff.visible ?? true,
   };
 }
 
@@ -331,7 +387,7 @@ function detachedItem(entry: DetachedEntry): StatsDetachedItem {
       key: entry.componentKey,
       id: null,
       library: entry.libraryName,
-      sourceFile: null,
+      sourceFile: entry.sourceFile ?? null,
     },
   };
 }

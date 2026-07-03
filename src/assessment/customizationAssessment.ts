@@ -1,4 +1,4 @@
-import { diffStructures, type DiffEntry } from '../structure/diff';
+import { diffStructures, type DiffEntry, type DiffValueDetails } from '../structure/diff';
 import {
   buildOccurrenceKeyMap,
   makeOccurrenceKey,
@@ -25,6 +25,13 @@ export type CustomizationAssessmentOptions = {
 
 export type NestedContextEvidence = {
   explains: (diff: DiffEntry) => boolean;
+  selectedReference: (diff: DiffEntry) => DiffValueDetails | null;
+};
+
+export type NestedContextEvidenceOptions = {
+  resolveTokenLabel?: (token: string) => string | null;
+  resolveStyleLabel?: (styleKey: string) => string | null;
+  isPaintToken?: (token: string) => boolean;
 };
 
 export type PatternContextResolverOptions = {
@@ -100,6 +107,7 @@ export function createNestedContextEvidence(
   resolveReference: (instance: DSStructureNode) => DSStructureNode[] | null,
   candidateDiffs: DiffEntry[] = [],
   resolveFamilyKey: (componentKey: string) => string = (componentKey) => componentKey,
+  options: NestedContextEvidenceOptions = {},
 ): NestedContextEvidence {
   const contexts: Array<{
     matchedNodeIds: Set<string>;
@@ -171,6 +179,10 @@ export function createNestedContextEvidence(
   }
 
   return {
+    selectedReference(diff) {
+      const referenceNode = findSelectedReferenceNode(contexts, diff);
+      return referenceNode ? selectedReferenceValue(referenceNode, diff, options) : null;
+    },
     explains(diff) {
       if (!diff.nodeId) {
         return false;
@@ -186,7 +198,7 @@ export function createNestedContextEvidence(
           }
           const referenceNode = context.referenceByNodeId.get(diff.nodeId!);
           return referenceNode
-            ? referenceMatchesActualDiffValue(referenceNode, diff)
+            ? referenceMatchesActualDiffValue(referenceNode, diff, options)
             : false;
         },
       );
@@ -194,9 +206,159 @@ export function createNestedContextEvidence(
   };
 }
 
+function findSelectedReferenceNode(
+  contexts: Array<{
+    matchedNodeIds: Set<string>;
+    diffKeys: Set<string>;
+    referenceByNodeId: Map<string, DSStructureNode>;
+  }>,
+  diff: DiffEntry,
+): DSStructureNode | null {
+  if (!diff.nodeId || !diff.details) {
+    return null;
+  }
+  const key = makeDiffPropertyKey(diff);
+  for (const context of contexts) {
+    if (!context.matchedNodeIds.has(diff.nodeId) || !context.diffKeys.has(key)) {
+      continue;
+    }
+    const referenceNode = context.referenceByNodeId.get(diff.nodeId);
+    if (referenceNode) {
+      return referenceNode;
+    }
+  }
+  return null;
+}
+
+function selectedReferenceValue(
+  referenceNode: DSStructureNode,
+  diff: DiffEntry,
+  options: NestedContextEvidenceOptions = {},
+): DiffValueDetails | null {
+  const property = diff.details?.property;
+  if (!property) {
+    return null;
+  }
+
+  if (property === 'styles.text') {
+    const styleKey = referenceNode.styles?.text?.styleKey ?? null;
+    return resourceValue(
+      styleKey,
+      'style',
+      styleKey ? options.resolveStyleLabel?.(styleKey) ?? styleKey : null,
+    );
+  }
+  if (property === 'typography.token') {
+    const token = referenceNode.typographyToken ?? null;
+    return resourceValue(
+      token,
+      'token',
+      token ? options.resolveTokenLabel?.(token) ?? token : null,
+    );
+  }
+  if (property === 'fill') {
+    return paintReferenceValue(
+      referenceNode.fill ?? null,
+      referenceNode.styles?.fill?.styleKey ?? null,
+      options,
+    );
+  }
+  if (property === 'stroke') {
+    return paintReferenceValue(
+      referenceNode.stroke ?? null,
+      referenceNode.styles?.stroke?.styleKey ?? null,
+      options,
+    );
+  }
+  if (property === 'layout.itemSpacing') {
+    return primitiveReferenceValue(referenceNode.layout?.itemSpacing ?? null);
+  }
+  if (property === 'layout.itemSpacingToken') {
+    return resourceValue(referenceNode.layout?.itemSpacingToken ?? null, 'token');
+  }
+  if (property === 'radius') {
+    return primitiveReferenceValue(
+      typeof referenceNode.radius === 'string' ||
+        typeof referenceNode.radius === 'number'
+        ? referenceNode.radius
+        : null,
+    );
+  }
+
+  const paddingSide = property.match(/^layout\.padding\.(top|right|bottom|left)$/)?.[1] as
+    | 'top'
+    | 'right'
+    | 'bottom'
+    | 'left'
+    | undefined;
+  if (paddingSide) {
+    return primitiveReferenceValue(referenceNode.layout?.padding?.[paddingSide] ?? null);
+  }
+
+  return null;
+}
+
+function paintReferenceValue(
+  paint: { color?: string | null; token?: string | null } | null,
+  styleKey: string | null,
+  options: NestedContextEvidenceOptions = {},
+): DiffValueDetails | null {
+  const token = normalizePaintTokenForAssessment(
+    paint?.token ?? null,
+    options.isPaintToken,
+  );
+  if (token) {
+    return resourceValue(
+      token,
+      'token',
+      options.resolveTokenLabel?.(token) ?? token,
+    );
+  }
+  if (styleKey) {
+    return resourceValue(
+      styleKey,
+      'style',
+      options.resolveStyleLabel?.(styleKey) ?? styleKey,
+    );
+  }
+  if (paint?.color) {
+    return {
+      value: paint.color,
+      resourceType: 'color',
+      resourceId: null,
+      displayName: paint.color,
+    };
+  }
+  return null;
+}
+
+function resourceValue(
+  value: string | null,
+  resourceType: 'style' | 'token',
+  displayName: string | null = value,
+): DiffValueDetails | null {
+  if (!value) {
+    return null;
+  }
+  const label = displayName || value;
+  return {
+    value: label,
+    resourceType,
+    resourceId: value,
+    displayName: label,
+  };
+}
+
+function primitiveReferenceValue(
+  value: string | number | null,
+): DiffValueDetails | null {
+  return value == null ? null : { value };
+}
+
 function referenceMatchesActualDiffValue(
   referenceNode: DSStructureNode,
   diff: DiffEntry,
+  options: NestedContextEvidenceOptions = {},
 ): boolean {
   const property = diff.details?.property;
   const actual = diff.details?.actual;
@@ -217,17 +379,35 @@ function referenceMatchesActualDiffValue(
     );
   }
   if (property === 'fill') {
+    const token = normalizePaintTokenForAssessment(
+      referenceNode.fill?.token ?? null,
+      options.isPaintToken,
+    );
+    const style = referenceNode.styles?.fill?.styleKey ?? null;
     return matchesPaintResource(
       actual.resourceId ?? null,
-      referenceNode.fill?.token ?? null,
-      referenceNode.styles?.fill?.styleKey ?? null,
+      actual.value ?? null,
+      actual.displayName ?? null,
+      token,
+      style,
+      token ? options.resolveTokenLabel?.(token) ?? token : null,
+      style ? options.resolveStyleLabel?.(style) ?? style : null,
     );
   }
   if (property === 'stroke') {
+    const token = normalizePaintTokenForAssessment(
+      referenceNode.stroke?.token ?? null,
+      options.isPaintToken,
+    );
+    const style = referenceNode.styles?.stroke?.styleKey ?? null;
     return matchesPaintResource(
       actual.resourceId ?? null,
-      referenceNode.stroke?.token ?? null,
-      referenceNode.styles?.stroke?.styleKey ?? null,
+      actual.value ?? null,
+      actual.displayName ?? null,
+      token,
+      style,
+      token ? options.resolveTokenLabel?.(token) ?? token : null,
+      style ? options.resolveStyleLabel?.(style) ?? style : null,
     );
   }
 
@@ -253,13 +433,47 @@ function referenceMatchesActualDiffValue(
 
 function matchesPaintResource(
   actualResourceId: string | null,
+  actualValue: string | number | null,
+  actualDisplayName: string | null,
   token: string | null,
   style: string | null,
+  tokenLabel: string | null = token,
+  styleLabel: string | null = style,
 ): boolean {
+  const normalizedActualValue =
+    typeof actualValue === 'string' && actualValue.trim()
+      ? actualValue.trim()
+      : null;
+  const normalizedActualDisplayName =
+    typeof actualDisplayName === 'string' && actualDisplayName.trim()
+      ? actualDisplayName.trim()
+      : null;
+
   return (
     resourceIdsEqual(actualResourceId, token) ||
-    resourceIdsEqual(actualResourceId, style)
+    resourceIdsEqual(actualResourceId, style) ||
+    normalizedActualValue === token ||
+    normalizedActualValue === style ||
+    normalizedActualValue === tokenLabel ||
+    normalizedActualValue === styleLabel ||
+    normalizedActualDisplayName === token ||
+    normalizedActualDisplayName === style ||
+    normalizedActualDisplayName === tokenLabel ||
+    normalizedActualDisplayName === styleLabel
   );
+}
+
+function normalizePaintTokenForAssessment(
+  token: string | null | undefined,
+  isPaintToken?: (token: string) => boolean,
+): string | null {
+  if (!token) {
+    return null;
+  }
+  if (typeof isPaintToken === 'function' && !isPaintToken(token)) {
+    return null;
+  }
+  return token;
 }
 
 function resourceIdsEqual(
@@ -324,7 +538,20 @@ export function assessCustomizationDiffs(
   );
   const hostDiffKeys = new Set(options.hostDiffs.map(makeDiffPropertyKey));
 
-  return diffs.map((diff) => {
+  return diffs.map((inputDiff) => {
+    let diff = inputDiff;
+    const isVariantDiff = isVariantPropertyDiff(diff);
+    const nestedContextExplains =
+      !isVariantDiff && options.nestedContextEvidence?.explains(diff);
+    const selectedReference =
+      !isVariantDiff && !nestedContextExplains
+        ? options.nestedContextEvidence?.selectedReference(diff) ?? null
+        : null;
+
+    if (selectedReference) {
+      diff = withSelectedReference(diff, selectedReference);
+    }
+
     const patternDecision = evaluatePatternRules(
       options.resolvePatternContext?.(diff) ?? null,
     );
@@ -342,7 +569,7 @@ export function assessCustomizationDiffs(
       });
     }
 
-    if (options.nestedContextEvidence?.explains(diff)) {
+    if (nestedContextExplains) {
       return withAssessment(diff, {
         verdict: patternDecision?.verdict ?? 'expected',
         source: patternDecision ? 'pattern-rule' : 'catalog-host',
@@ -359,7 +586,7 @@ export function assessCustomizationDiffs(
       });
     }
 
-    if (diff.suppressAsHostControlledNestedProperty === true) {
+    if (!isVariantDiff && diff.suppressAsHostControlledNestedProperty === true) {
       const hostContainsNode = hostReferenceKeys.has(diff.nodePath);
       const differsFromHost = hostDiffKeys.has(makeDiffPropertyKey(diff));
 
@@ -401,9 +628,77 @@ export function assessCustomizationDiffs(
 }
 
 export function applyAssessmentPresentation(diffs: DiffEntry[]): DiffEntry[] {
-  return diffs.filter(
-    (diff) => diff.assessment?.presentation !== 'suppress-derived',
+  return diffs.filter((diff) => {
+    if (isVariantPropertyDiff(diff)) {
+      return true;
+    }
+
+    if (diff.assessment?.presentation === 'suppress-derived') {
+      return false;
+    }
+
+    if (
+      diff.assessment?.presentation !== 'semantic-variant' &&
+      (
+        diff.assessment?.verdict === 'expected' ||
+        diff.assessment?.verdict === 'allowed'
+      )
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+export function collapseVisualDiffsUnderVariantChanges(
+  diffs: DiffEntry[],
+  actualStructure: DSStructureNode[],
+): DiffEntry[] {
+  const variantDiffs = diffs.filter(isVariantPropertyDiff);
+  if (!variantDiffs.length) {
+    return diffs;
+  }
+
+  const byNodeId = new Map(
+    actualStructure
+      .filter((node) => Boolean(node.nodeId))
+      .map((node) => [node.nodeId!, node]),
   );
+  const collapsedNodeIds = new Set<string>();
+
+  for (const diff of variantDiffs) {
+    if (!diff.nodeId) {
+      continue;
+    }
+    const node = byNodeId.get(diff.nodeId);
+    if (!node) {
+      continue;
+    }
+    for (const subtreeNode of collectSubtree(actualStructure, node.id)) {
+      if (subtreeNode.nodeId) {
+        collapsedNodeIds.add(subtreeNode.nodeId);
+      }
+    }
+  }
+
+  if (!collapsedNodeIds.size) {
+    return diffs;
+  }
+
+  return diffs.filter(
+    (diff) =>
+      isVariantPropertyDiff(diff) ||
+      diff.assessment?.verdict === 'unknown' ||
+      diff.assessment?.verdict === 'violation' ||
+      !diff.nodeId ||
+      !collapsedNodeIds.has(diff.nodeId),
+  );
+}
+
+function isVariantPropertyDiff(diff: DiffEntry): boolean {
+  return typeof diff.details?.property === 'string' &&
+    diff.details.property.startsWith('variant.');
 }
 
 export function collapseSemanticVariantDiffs(
@@ -903,6 +1198,43 @@ function withAssessment(
   assessment: CustomizationAssessment,
 ): DiffEntry {
   return Object.assign({}, diff, { assessment });
+}
+
+function withSelectedReference(
+  diff: DiffEntry,
+  reference: DiffValueDetails,
+): DiffEntry {
+  if (!diff.details) {
+    return diff;
+  }
+
+  const details = Object.assign({}, diff.details, { reference });
+  return Object.assign({}, diff, {
+    details,
+    message: formatDiffMessageWithReference(diff, reference),
+  });
+}
+
+function formatDiffMessageWithReference(
+  diff: DiffEntry,
+  reference: DiffValueDetails,
+): string {
+  const labelEnd = diff.message.indexOf(':');
+  const label = labelEnd >= 0
+    ? diff.message.slice(0, labelEnd)
+    : diff.details?.property ?? diff.nodeName;
+  const actual = diff.details?.actual;
+  return `${label}: ${formatDiffValue(reference)} → ${formatDiffValue(actual)}`;
+}
+
+function formatDiffValue(value: DiffValueDetails | undefined): string {
+  if (!value) {
+    return '—';
+  }
+  if (value.displayName) {
+    return value.displayName;
+  }
+  return value.value == null ? '—' : String(value.value);
 }
 
 function invertOccurrenceMap(

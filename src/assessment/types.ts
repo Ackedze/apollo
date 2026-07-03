@@ -6,6 +6,7 @@ export type CustomizationAssessmentVerdict =
 
 export type CustomizationAssessmentSource =
   | 'catalog-host'
+  | 'component-contract'
   | 'pattern-rule'
   | 'standalone-reference';
 

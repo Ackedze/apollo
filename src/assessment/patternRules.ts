@@ -87,8 +87,8 @@ function validatePatternRulesConfig(payload: unknown): PatternRulesConfig {
       `Unsupported pattern rules schemaVersion: ${String(candidate.schemaVersion)}`,
     );
   }
-  if (!Array.isArray(candidate.rules) || !candidate.rules.length) {
-    throw new Error('Pattern rules config must contain a non-empty rules array');
+  if (!Array.isArray(candidate.rules)) {
+    throw new Error('Pattern rules config must contain a rules array');
   }
 
   const ids = new Set<string>();

@@ -15,10 +15,12 @@
     "allowedDomains": [
       "https://ackedze.github.io",
       "https://llm.api.cloud.yandex.net",
-      "https://dwjnndpxzqizrcwpasrs.supabase.co"
+      "https://dwjnndpxzqizrcwpasrs.supabase.co",
+      "http://localhost:3001"
     ],
     "devAllowedDomains": [
       "http://localhost:3000",
+      "http://localhost:3001",
       "http://localhost:3847"
     ],
     "reasoning": "Local proxy is used for development only to bypass CORS limitations"

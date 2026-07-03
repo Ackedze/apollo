@@ -28,6 +28,8 @@ export type RemoteReferenceCatalogList = {
   baseUrl?: string;
   apollo?: {
     patternRulesPath?: string;
+    componentContractIndexPath?: string;
+    contractsManifestPath?: string;
   };
   catalogs?: RemoteReferenceCatalogEntry[];
   libraries?: RemoteReferenceLibrary[];
@@ -41,6 +43,26 @@ export function resolvePatternRulesUrl(
     throw new Error('referenceSourcesMVP.json does not define apollo.patternRulesPath');
   }
   return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
+
+export function resolveComponentContractIndexUrl(
+  payload: RemoteReferenceCatalogList,
+): string | null {
+  const path = (
+    payload.apollo?.componentContractIndexPath ??
+    payload.apollo?.contractsManifestPath ??
+    ''
+  ).trim();
+  if (!path) {
+    return null;
+  }
+  return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
+
+export function getReferenceCatalogBaseUrl(
+  payload: RemoteReferenceCatalogList,
+): string {
+  return (payload.baseUrl ?? '').trim();
 }
 
 export const apolloReferenceCatalogListUrl =
@@ -127,7 +149,7 @@ function buildIndexUrl(
   return resolveCatalogUrl(baseUrl, indexPath);
 }
 
-function resolveCatalogUrl(baseUrl: string, path: string): string {
+export function resolveCatalogUrl(baseUrl: string, path: string): string {
   if (!path) return baseUrl;
   if (/^https?:\/\//i.test(path)) {
     return path;

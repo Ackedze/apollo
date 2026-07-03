@@ -127,6 +127,49 @@
 
 История и шаги миграции собраны в [`APOLLO_MIGRATION.md`](./APOLLO_MIGRATION.md).
 
+## Component contract artifacts
+
+Apollo постепенно расширяется от одного Figma-плагина до небольшой экосистемы вокруг raw-каталогов, contract artifacts, агентских отчётов и прокси к корпоративному агенту. Сейчас рабочие JSON-файлы публикуются в `Ackedze/design-system_ab` и подхватываются Apollo через reference source list и component indexes.
+
+Для экспериментальных component kits используется такой набор файлов:
+
+- `contract.generated.json` — компактный контракт, сгенерированный из raw Figma catalog. Не редактируется руками и не отправляется агенту целиком.
+- `contract.overrides.json` — ручной semantic layer: public API компонента, anatomy semantics, reset model и dependency policy. Его место в pipeline — до diff/classification, когда Apollo строит effective модель компонента.
+- `composition-contract.json` — optional-файл для wrapper/composite компонентов. Он нужен, когда родительский компонент владеет настройками вложенных компонентов и должен объявить effective baseline для nested layers. У standalone core-компонентов вроде Button такого файла может не быть.
+- `rules.json` — source of truth для component rules, design-rule violations и ссылок на pattern rules. Matched rules добавляются в `*_agent.json` рядом с конкретным change.
+- `audit-mapping.json` — декларативная карта группировки, порядка и reset-action для diff-ов. Сейчас часть этого поведения ещё зашита в Apollo, но целевая модель — переносить такую классификацию сюда.
+- `agent-context.json` — компактный explanatory context для агента. Он может ссылаться на rule ids, но не должен дублировать `ruleText`, `severity` и `matchKind` из `rules.json`.
+- `examples.json` — fixtures и примеры интерпретации. Их стоит подключать к агенту on demand, а не класть в каждый отчёт.
+
+Текущий runtime Apollo уже использует `composition-contract.json` для contract-aware diff/rebase и `rules.json` для обогащения agent report. `contract.generated.json`, `contract.overrides.json` и `audit-mapping.json` пока не являются полноценным runtime source of truth, но должны стать входом следующего поколения пайплайна.
+
+`composition-contract.json` сейчас есть у:
+
+- `web-core/navigation/Tabs`;
+- `web-corp/TabsView`;
+- `web-corp/TitleView`;
+- `web-corp/ButtonGroup [D]`;
+- `web-corp/BackgroundPlate`.
+
+У `web-core/core/button` `composition-contract.json` отсутствует осознанно: Button описывается как standalone core component через generated contract, overrides и rules.
+
+## Публикационный пайплайн Apollo ecosystem
+
+Рабочая модель не должна полагаться на ручное обновление связанных JSON-файлов. При публикации raw-каталогов и indexes Athena CLI или отдельный publish job должен детерминированно пересобирать и проверять весь комплект:
+
+1. raw component catalogs;
+2. component indexes и `referenceSourcesMVP.json`;
+3. `contract.generated.json`;
+4. `contract.overrides.json` validation;
+5. `composition-contract.json` для composite/wrapper компонентов;
+6. `rules.json`;
+7. `audit-mapping.json`;
+8. `agent-context.json`;
+9. `examples.json` fixtures, если они есть;
+10. consistency checks между agent-context rule references и `rules.json`.
+
+Публикация на GitHub Pages должна быть атомарной относительно этого комплекта: Apollo не должен получать новый raw-каталог со старым index, старые rules с новым agent-context или composition contract без соответствующего component catalog.
+
 ## Правило публикации
 
 При публикации изменений Apollo обновляйте этот README вместе с кодом, если меняется runtime-поведение, источники данных, сборка, контракты UI/backend или workflow проверки. Если изменение влияет на общий workspace-процесс, дополнительно обновляйте root `README.md` и `WORKSPACE.md`.
@@ -206,7 +249,7 @@
 
 ## Локальная статистика проверок
 
-После каждой успешно завершённой проверки Apollo формирует JSON-отчёт и автоматически отправляет его в production Edge Function:
+После каждой успешно завершённой проверки Apollo формирует полный JSON-отчёт и компактный агентский JSON-отчёт, затем автоматически отправляет оба файла в production Edge Function:
 
 ```text
 POST https://dwjnndpxzqizrcwpasrs.supabase.co/functions/v1/apollo-stats
@@ -215,10 +258,10 @@ POST https://dwjnndpxzqizrcwpasrs.supabase.co/functions/v1/apollo-stats
 Отчёты сохраняются в:
 
 ```text
-Ackedze/design-system_ab/apollo-stats/<figma-user>/dd-mm-yyyy/<figma-user>_dd-mm-yyyy_hh-mm-ss.json
+Ackedze/design-system_ab/apollo/stats/<figma-user>/dd-mm-yyyy/
 ```
 
-Отчёт содержит все категории аудита, включая устаревшие компоненты и стили, кастомные стили, обновления, кастомизации, локальные и detached-компоненты, пресеты, технические и актуальные компоненты, ошибки канала и темизации. Актуальные компоненты используются как инвентаризация и не входят в общий счётчик проблем.
+Полный отчёт содержит все категории аудита, включая устаревшие компоненты и стили, кастомные стили, обновления, кастомизации, локальные и detached-компоненты, пресеты, технические и актуальные компоненты, ошибки канала и темизации. Актуальные компоненты используются как инвентаризация и не входят в общий счётчик проблем. Агентский отчёт получает суффикс `_agent.json`, не включает `currentComponents.items`, фильтрует `expected`/`allowed` кастомизации и предназначен для ручной передачи корпоративному агенту.
 
 Пользователю плагина не нужны GitHub token, Supabase-аккаунт, локальный сервис или дополнительная настройка. GitHub token хранится только в Supabase secret и запрещён в `src`, `manifest.json`, build-конфиге и собранном plugin bundle. Ошибка загрузки статистики не прерывает аудит.
 

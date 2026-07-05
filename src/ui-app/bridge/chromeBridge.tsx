@@ -6,6 +6,7 @@ import type { ChromeBridgeOptions, ChromeState } from '../types';
 
 const defaultState: ChromeState = {
   title: 'Apollo',
+  channelId: 'b2b',
   pickerLabel: 'Desktop',
   actionLabel: 'Загрузка каталогов...',
   actionDisabled: true,
@@ -57,15 +58,19 @@ class ApolloChromeBridge {
       topRoot.render(
         <TopSection
           title={this.state.title}
+          channelId={this.state.channelId}
           pickerLabel={this.state.pickerLabel}
           actionLabel={this.state.actionLabel}
           actionDisabled={this.state.actionDisabled}
           actionLoading={this.state.actionLoading}
           actionType={this.state.actionType}
           compact={this.state.compact}
+          shellAuditEnabled={this.state.shellAuditEnabled}
           onActionPress={options.onActionPress}
           onToggleCompact={options.onToggleCompact}
+          onChannelChange={options.onChannelChange}
           onPickerChange={options.onPickerChange}
+          onShellAuditToggle={options.onShellAuditToggle}
         />,
       );
 

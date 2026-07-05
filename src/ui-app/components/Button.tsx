@@ -4,6 +4,8 @@ import styles from './Button.module.css';
 
 type ButtonProps = {
   label: string;
+  ariaLabel?: string;
+  title?: string;
   disabled?: boolean;
   loading?: boolean;
   type?: 'primary' | 'secondary';
@@ -14,6 +16,8 @@ type ButtonProps = {
 
 export function Button({
   label,
+  ariaLabel,
+  title,
   disabled = false,
   loading = false,
   type = 'primary',
@@ -32,6 +36,8 @@ export function Button({
       type="button"
       className={className}
       disabled={disabled}
+      aria-label={ariaLabel ?? label}
+      title={title ?? ariaLabel ?? label}
       onClick={onPress}
     >
       {loading ? <span className={styles.loader} aria-hidden="true" /> : null}

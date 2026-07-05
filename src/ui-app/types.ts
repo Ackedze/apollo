@@ -10,6 +10,7 @@ export type ChromeButtonType = 'primary' | 'secondary';
 
 export type ChromeState = {
   title: string;
+  channelId: string;
   pickerLabel: string;
   actionLabel: string;
   actionDisabled: boolean;
@@ -26,7 +27,9 @@ export type ChromeBridgeOptions = {
   onActionPress: () => void;
   onTabSelect: (tabId: string, count: number) => void;
   onToggleCompact: () => void;
+  onChannelChange: (channelId: string) => void;
   onPickerChange: (pickerLabel: string) => void;
+  onShellAuditToggle: () => void;
 };
 
 export type AuditResultItem = {

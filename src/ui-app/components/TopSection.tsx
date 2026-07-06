@@ -128,12 +128,12 @@ export function TopSection({
   }, [channelId]);
 
   useEffect(() => {
-    if (compact || actionLoading) {
+    if (actionLoading) {
       setSettingsOpen(false);
       setPickerOpen(false);
       setWorkshopOpen(false);
     }
-  }, [compact, actionLoading]);
+  }, [actionLoading]);
 
   useEffect(() => {
     if (!settingsOpen && !pickerOpen && !workshopOpen) {
@@ -187,11 +187,152 @@ export function TopSection({
     compact ? 'compact' : 'full',
   ].join(':');
 
+  const settingsControl = (
+    <div className={styles.settingsWrap} ref={settingsRootRef}>
+      <Button
+        label="Настройки"
+        singleIcon
+        type="secondary"
+        size={compact ? 'compact' : 'regular'}
+        ariaLabel="Открыть настройки Apollo"
+        title="Настройки"
+        icon={<SettingsIcon />}
+        onPress={() => {
+          setPickerOpen(false);
+          setWorkshopOpen(false);
+          setSettingsOpen((value) => !value);
+        }}
+      />
+      {settingsOpen ? (
+        <div className={styles.settingsPanel} role="dialog" aria-label="Настройки Apollo">
+          <div className={styles.settingsField}>
+            <div className={styles.settingsLabel}>Канал</div>
+            <div className={styles.pickerWrap} ref={workshopRootRef}>
+              <PickerButton
+                label={selectedWorkshop.label}
+                open={workshopOpen}
+                disabled={actionLoading}
+                onPress={() => {
+                  setPickerOpen(false);
+                  setWorkshopOpen((value) => !value);
+                }}
+              />
+              {workshopOpen ? (
+                <OptionList className={styles.pickerMenu}>
+                  {WORKSHOP_OPTIONS.map((option) => (
+                    <OptionListCell
+                      key={option.id}
+                      label={option.label}
+                      selected={selectedWorkshop.id === option.id}
+                      onPress={() => {
+                        setSelectedWorkshopId(option.id);
+                        onChannelChange?.(option.id);
+                        setWorkshopOpen(false);
+                      }}
+                    />
+                  ))}
+                </OptionList>
+              ) : null}
+            </div>
+          </div>
+          <div className={styles.settingsField}>
+            <div className={styles.settingsLabel}>Платформа</div>
+            <div className={styles.pickerWrap} ref={pickerRootRef}>
+              <PickerButton
+                label={selectedOption.label}
+                open={pickerOpen}
+                selected
+                disabled={actionLoading}
+                leadingIcon={selectedOption.icon}
+                onPress={() => {
+                  setWorkshopOpen(false);
+                  setPickerOpen((value) => !value);
+                }}
+              />
+              {pickerOpen ? (
+                <OptionList className={styles.pickerMenu}>
+                  <OptionListHeader label="Web" />
+                  <OptionListCell
+                    label="Desktop"
+                    selected={selectedOption.id === 'desktop'}
+                    leadingIcon={<PickerDisplayIcon />}
+                    onPress={() => {
+                      setSelectedPickerLabel('Desktop');
+                      onPickerChange?.('Desktop');
+                      setPickerOpen(false);
+                    }}
+                  />
+                  <OptionListCell
+                    label="MobileWeb"
+                    selected={selectedOption.id === 'mobile-web'}
+                    leadingIcon={<PickerMobilePhoneIcon />}
+                    onPress={() => {
+                      setSelectedPickerLabel('MobileWeb');
+                      onPickerChange?.('MobileWeb');
+                      setPickerOpen(false);
+                    }}
+                  />
+                  <OptionListHeader label="АБМ" />
+                  <OptionListCell
+                    label="iOS"
+                    selected={selectedOption.id === 'ios'}
+                    leadingIcon={<PickerAppleIcon />}
+                    onPress={() => {
+                      setSelectedPickerLabel('iOS');
+                      onPickerChange?.('iOS');
+                      setPickerOpen(false);
+                    }}
+                  />
+                  <OptionListCell
+                    label="Android"
+                    selected={selectedOption.id === 'android'}
+                    leadingIcon={<PickerAndroidIcon />}
+                    onPress={() => {
+                      setSelectedPickerLabel('Android');
+                      onPickerChange?.('Android');
+                      setPickerOpen(false);
+                    }}
+                  />
+                </OptionList>
+              ) : null}
+            </div>
+          </div>
+          <button
+            type="button"
+            className={styles.switchRow}
+            disabled={actionLoading}
+            aria-pressed={shellAuditEnabled}
+            onClick={onShellAuditToggle}
+          >
+            <span className={styles.switchText}>Проверять шаред</span>
+            <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+              <span className={styles.switchThumb} />
+            </span>
+          </button>
+        </div>
+      ) : null}
+    </div>
+  );
+
+  const actionButton = (
+    <Button
+      key={actionKey}
+      label={actionLabel}
+      disabled={actionDisabled}
+      loading={actionLoading}
+      type={actionType}
+      size={compact ? 'compact' : 'regular'}
+      singleIcon={compact}
+      icon={<FlashIcon />}
+      onPress={onActionPress}
+    />
+  );
+
   return (
     <div className={[styles.root, compact ? styles.rootCompact : ''].filter(Boolean).join(' ')}>
       <div className={[styles.titleWrap, compact ? styles.titleWrapCompact : ''].filter(Boolean).join(' ')}>
         <div className={styles.titleButton}>
-          {title}
+          {compact ? 'A' : title}
         </div>
         <SmallButton
           singleIcon
@@ -200,150 +341,14 @@ export function TopSection({
         />
       </div>
       {compact ? (
-        <Button
-          key={actionKey}
-          label={actionLabel}
-          disabled={actionDisabled}
-          loading={actionLoading}
-          type={actionType}
-          singleIcon
-          icon={<FlashIcon />}
-          onPress={onActionPress}
-        />
+        <div className={styles.compactRightSide}>
+          {settingsControl}
+          {actionButton}
+        </div>
       ) : (
         <div className={styles.rightSide}>
-          <div className={styles.settingsWrap} ref={settingsRootRef}>
-            <Button
-              label="Настройки"
-              singleIcon
-              type="secondary"
-              ariaLabel="Открыть настройки Apollo"
-              title="Настройки"
-              icon={<SettingsIcon />}
-              onPress={() => {
-                setPickerOpen(false);
-                setWorkshopOpen(false);
-                setSettingsOpen((value) => !value);
-              }}
-            />
-            {settingsOpen ? (
-              <div className={styles.settingsPanel} role="dialog" aria-label="Настройки Apollo">
-                <div className={styles.settingsField}>
-                  <div className={styles.settingsLabel}>Канал</div>
-                  <div className={styles.pickerWrap} ref={workshopRootRef}>
-                    <PickerButton
-                      label={selectedWorkshop.label}
-                      open={workshopOpen}
-                      disabled={actionLoading}
-                      onPress={() => {
-                        setPickerOpen(false);
-                        setWorkshopOpen((value) => !value);
-                      }}
-                    />
-                    {workshopOpen ? (
-                      <OptionList className={styles.pickerMenu}>
-                        {WORKSHOP_OPTIONS.map((option) => (
-                          <OptionListCell
-                            key={option.id}
-                            label={option.label}
-                            selected={selectedWorkshop.id === option.id}
-                            onPress={() => {
-                              setSelectedWorkshopId(option.id);
-                              onChannelChange?.(option.id);
-                              setWorkshopOpen(false);
-                            }}
-                          />
-                        ))}
-                      </OptionList>
-                    ) : null}
-                  </div>
-                </div>
-                <div className={styles.settingsField}>
-                  <div className={styles.settingsLabel}>Платформа</div>
-                  <div className={styles.pickerWrap} ref={pickerRootRef}>
-                    <PickerButton
-                      label={selectedOption.label}
-                      open={pickerOpen}
-                      selected
-                      disabled={actionLoading}
-                      leadingIcon={selectedOption.icon}
-                      onPress={() => {
-                        setWorkshopOpen(false);
-                        setPickerOpen((value) => !value);
-                      }}
-                    />
-                    {pickerOpen ? (
-                      <OptionList className={styles.pickerMenu}>
-                        <OptionListHeader label="Web" />
-                        <OptionListCell
-                          label="Desktop"
-                          selected={selectedOption.id === 'desktop'}
-                          leadingIcon={<PickerDisplayIcon />}
-                          onPress={() => {
-                            setSelectedPickerLabel('Desktop');
-                            onPickerChange?.('Desktop');
-                            setPickerOpen(false);
-                          }}
-                        />
-                        <OptionListCell
-                          label="MobileWeb"
-                          selected={selectedOption.id === 'mobile-web'}
-                          leadingIcon={<PickerMobilePhoneIcon />}
-                          onPress={() => {
-                            setSelectedPickerLabel('MobileWeb');
-                            onPickerChange?.('MobileWeb');
-                            setPickerOpen(false);
-                          }}
-                        />
-                        <OptionListHeader label="АБМ" />
-                        <OptionListCell
-                          label="iOS"
-                          selected={selectedOption.id === 'ios'}
-                          leadingIcon={<PickerAppleIcon />}
-                          onPress={() => {
-                            setSelectedPickerLabel('iOS');
-                            onPickerChange?.('iOS');
-                            setPickerOpen(false);
-                          }}
-                        />
-                        <OptionListCell
-                          label="Android"
-                          selected={selectedOption.id === 'android'}
-                          leadingIcon={<PickerAndroidIcon />}
-                          onPress={() => {
-                            setSelectedPickerLabel('Android');
-                            onPickerChange?.('Android');
-                            setPickerOpen(false);
-                          }}
-                        />
-                      </OptionList>
-                    ) : null}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  className={styles.switchRow}
-                  disabled={actionLoading}
-                  aria-pressed={shellAuditEnabled}
-                  onClick={onShellAuditToggle}
-                >
-                  <span className={styles.switchText}>Проверять шаред</span>
-                  <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
-                    <span className={styles.switchThumb} />
-                  </span>
-                </button>
-              </div>
-            ) : null}
-          </div>
-          <Button
-            key={actionKey}
-            label={actionLabel}
-            disabled={actionDisabled}
-            loading={actionLoading}
-            type={actionType}
-            icon={<FlashIcon />}
-            onPress={onActionPress}
-          />
+          {settingsControl}
+          {actionButton}
         </div>
       )}
     </div>

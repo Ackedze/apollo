@@ -14,6 +14,7 @@
         background: #eceff3;
       }
       .shell {
+        position: relative;
         width: 800px;
         height: 860px;
         margin: 0 auto;
@@ -21,6 +22,7 @@
         border-radius: 0;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
       }
       .shell.compact {
         width: 263px;
@@ -58,6 +60,13 @@
         grid-template-columns: 1fr;
         gap: 0;
       }
+      .workspace.chat-active {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .workspace.chat-active .sidebar {
+        display: none;
+      }
       .sidebar {
         width: 263px;
         padding: 12px;
@@ -74,8 +83,15 @@
         min-width: 0;
         min-height: 0;
       }
+      .main.chat-active .results-pane {
+        display: none !important;
+      }
       .workspace.compact .main {
         display: none;
+      }
+      .workspace.compact.chat-active .main,
+      .workspace.chat-active .main {
+        display: flex;
       }
       .placeholder {
         padding: 24px;
@@ -104,20 +120,25 @@
       }
       .view-segmented-control {
         position: absolute;
-        right: 12px;
-        bottom: 16px;
-        z-index: 20;
+        left: 50%;
+        top: 12px;
+        z-index: 12;
+        transform: translateX(-50%);
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         border: 1px solid rgba(0, 0, 0, 0.04);
         border-radius: 999px;
         background: rgba(0, 0, 0, 0.04);
       }
       .view-segment {
+        box-sizing: border-box;
+        width: 40px;
+        height: 40px;
         min-width: 40px;
         min-height: 40px;
-        padding: 4px 12px;
+        padding: 4px 10px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -138,11 +159,22 @@
         box-shadow: inset 0 0 0 1px #000;
       }
       .view-segment svg {
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         display: block;
       }
-      #agent-chat-fab svg {
+      .view-segmented-control.compact {
+        top: 16px;
+      }
+      .view-segmented-control.compact .view-segment {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 2px 6px;
+      }
+      .view-segmented-control.compact .view-segment svg,
+      .view-segmented-control.compact #agent-chat-fab svg {
         width: 20px;
         height: 20px;
       }
@@ -151,29 +183,25 @@
         opacity: 0.48;
       }
       .agent-chat-overlay {
-        position: absolute;
-        inset: 0;
-        z-index: 30;
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
         display: none;
-        background: rgba(17, 24, 39, 0.18);
+        overflow: hidden;
+        border-radius: 16px 16px 0 0;
+        background: #f5f5f5;
       }
       .agent-chat-overlay.visible {
-        display: block;
+        display: flex;
       }
       .agent-chat-panel {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        bottom: 16px;
-        left: 16px;
+        flex: 1;
+        min-width: 0;
+        min-height: 0;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        border-radius: 16px;
         background: #f5f5f5;
-        box-shadow:
-          0 18px 44px rgba(15, 23, 42, 0.2),
-          0 0 0 1px rgba(15, 23, 42, 0.08);
       }
       .agent-chat-panel,
       .agent-chat-panel *,
@@ -183,14 +211,14 @@
       }
       .agent-chat-header {
         flex: 0 0 auto;
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
         min-height: 52px;
-        padding: 12px 16px;
+        padding: 12px 20px;
         border-bottom: 1px solid #e7e7e7;
-        background: #fff;
+        background: #f3f4f7;
       }
       .agent-chat-title {
         font-size: 14px;
@@ -207,7 +235,7 @@
       .agent-chat-close {
         width: 28px;
         height: 28px;
-        display: inline-flex;
+        display: none;
         align-items: center;
         justify-content: center;
         border: 0;
@@ -613,6 +641,54 @@
           <div id="results" class="results-pane placeholder">
             Начните со сканирования.
           </div>
+          <section
+            id="agent-chat-overlay"
+            class="agent-chat-overlay"
+            aria-hidden="true"
+          >
+            <div class="agent-chat-panel" role="region" aria-label="Рекомендации Apollo агента">
+              <header class="agent-chat-header">
+                <div>
+                  <div class="agent-chat-title">Apollo agent</div>
+                  <div id="agent-chat-meta" class="agent-chat-meta">Отчёт ещё не отправлен</div>
+                </div>
+                <button
+                  id="agent-chat-close"
+                  class="agent-chat-close"
+                  type="button"
+                  aria-label="Закрыть рекомендации агента"
+                >
+                  ×
+                </button>
+              </header>
+              <section id="agent-conversation" class="agent-conversation" aria-live="polite">
+                <div id="agent-conversation-inner" class="agent-conversation-inner"></div>
+              </section>
+              <form id="agent-composer" class="agent-composer">
+                <textarea
+                  id="agent-composer-input"
+                  class="agent-composer-input"
+                  rows="1"
+                  placeholder="Задать вопрос по отчёту"
+                ></textarea>
+                <button
+                  id="agent-composer-submit"
+                  type="submit"
+                  class="agent-input-addon hidden"
+                  aria-label="Отправить агенту"
+                >
+                  <svg class="agent-send-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" fill="#212124"></circle>
+                    <path d="M12 15.5V8.5M12 8.5L9.25 11.25M12 8.5L14.75 11.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                  <svg class="agent-stop-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" fill="#212124"></circle>
+                    <path d="M8.75 8.75L15.25 15.25M15.25 8.75L8.75 15.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"></path>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </section>
         </main>
       </div>
     </div>
@@ -625,22 +701,22 @@
         aria-label="Показать таблицу"
         aria-pressed="true"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+        <svg viewBox="0 0 20 20" aria-hidden="true">
           <rect
-            x="4"
-            y="4"
-            width="16"
-            height="16"
-            rx="2.5"
+            x="3.75"
+            y="3.75"
+            width="12.5"
+            height="12.5"
+            rx="2"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.5"
           />
           <path
-            d="M10 4v16M4 10h16"
+            d="M8 3.75v12.5M3.75 8h12.5"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.5"
             stroke-linecap="round"
           />
         </svg>
@@ -671,54 +747,6 @@
         </svg>
       </button>
     </div>
-    <section
-      id="agent-chat-overlay"
-      class="agent-chat-overlay"
-      aria-hidden="true"
-    >
-      <div class="agent-chat-panel" role="dialog" aria-modal="true" aria-label="Рекомендации Apollo агента">
-        <header class="agent-chat-header">
-          <div>
-            <div class="agent-chat-title">Apollo agent</div>
-            <div id="agent-chat-meta" class="agent-chat-meta">Отчёт ещё не отправлен</div>
-          </div>
-          <button
-            id="agent-chat-close"
-            class="agent-chat-close"
-            type="button"
-            aria-label="Закрыть рекомендации агента"
-          >
-            ×
-          </button>
-        </header>
-        <section id="agent-conversation" class="agent-conversation" aria-live="polite">
-          <div id="agent-conversation-inner" class="agent-conversation-inner"></div>
-        </section>
-        <form id="agent-composer" class="agent-composer">
-          <textarea
-            id="agent-composer-input"
-            class="agent-composer-input"
-            rows="1"
-            placeholder="Задать вопрос по отчёту"
-          ></textarea>
-          <button
-            id="agent-composer-submit"
-            type="submit"
-            class="agent-input-addon hidden"
-            aria-label="Отправить агенту"
-          >
-            <svg class="agent-send-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" fill="#212124"></circle>
-              <path d="M12 15.5V8.5M12 8.5L9.25 11.25M12 8.5L14.75 11.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <svg class="agent-stop-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" fill="#212124"></circle>
-              <path d="M8.75 8.75L15.25 15.25M15.25 8.75L8.75 15.25" stroke="#FFFFFF" stroke-width="1.7" stroke-linecap="round"></path>
-            </svg>
-          </button>
-        </form>
-      </div>
-    </section>
     <script src="./ui-app.js"></script>
     <script>
       (function () {
@@ -846,12 +874,16 @@
 
         const shellEl = document.querySelector('.shell');
         const workspaceEl = document.querySelector('.workspace');
+        const mainEl = document.querySelector('.main');
         const listContainer = document.getElementById('results');
         const reactResultsContainer = document.getElementById('react-results');
         const toastEl = document.getElementById('toast');
         const topChromeContainer = document.getElementById('react-top-section');
         const leftChromeContainer =
           document.getElementById('react-left-section');
+        const viewSegmentedControl = document.querySelector(
+          '.view-segmented-control',
+        );
         const agentTableFab = document.getElementById('agent-table-fab');
         const agentChatFab = document.getElementById('agent-chat-fab');
         const agentChatOverlay = document.getElementById('agent-chat-overlay');
@@ -914,11 +946,6 @@
         agentTableFab?.addEventListener('click', closeAgentChat);
         agentChatFab?.addEventListener('click', openAgentChat);
         agentChatClose?.addEventListener('click', closeAgentChat);
-        agentChatOverlay?.addEventListener('click', (event) => {
-          if (event.target === agentChatOverlay) {
-            closeAgentChat();
-          }
-        });
         agentComposer?.addEventListener('submit', handleAgentComposerSubmit);
         agentComposerInput?.addEventListener('input', () => {
           resizeAgentComposerInput();
@@ -2242,6 +2269,12 @@
               agentChatOpen ? 'false' : 'true',
             );
           }
+          if (mainEl) {
+            mainEl.classList.toggle('chat-active', agentChatOpen);
+          }
+          if (workspaceEl) {
+            workspaceEl.classList.toggle('chat-active', agentChatOpen);
+          }
           if (agentChatMeta) {
             if (agentRequestInProgress) {
               agentChatMeta.textContent =
@@ -2750,6 +2783,9 @@
           }
           if (workspaceEl) {
             workspaceEl.classList.toggle('compact', isCompact);
+          }
+          if (viewSegmentedControl) {
+            viewSegmentedControl.classList.toggle('compact', isCompact);
           }
           syncChromeState();
         }

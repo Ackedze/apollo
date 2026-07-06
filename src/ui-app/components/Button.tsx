@@ -9,6 +9,7 @@ type ButtonProps = {
   disabled?: boolean;
   loading?: boolean;
   type?: 'primary' | 'secondary';
+  size?: 'regular' | 'compact';
   singleIcon?: boolean;
   icon?: React.ReactNode;
   onPress: () => void;
@@ -21,6 +22,7 @@ export function Button({
   disabled = false,
   loading = false,
   type = 'primary',
+  size = 'regular',
   singleIcon = false,
   icon,
   onPress,
@@ -28,6 +30,7 @@ export function Button({
   const className = [
     styles.button,
     type === 'secondary' ? styles.secondary : styles.primary,
+    size === 'compact' ? styles.compact : '',
     singleIcon ? styles.singleIcon : '',
   ].join(' ');
 
@@ -41,7 +44,7 @@ export function Button({
       onClick={onPress}
     >
       {loading ? <span className={styles.loader} aria-hidden="true" /> : null}
-      {singleIcon ? (!loading ? <IconSlot size={16}>{icon}</IconSlot> : null) : <span className={styles.text}>{label}</span>}
+      {singleIcon ? (!loading ? <IconSlot size={20}>{icon}</IconSlot> : null) : <span className={styles.text}>{label}</span>}
     </button>
   );
 }

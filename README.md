@@ -258,7 +258,7 @@ POST https://dwjnndpxzqizrcwpasrs.supabase.co/functions/v1/apollo-stats
 Отчёты сохраняются в:
 
 ```text
-Ackedze/design-system_ab/apollo/stats/<figma-user>/dd-mm-yyyy/
+Ackedze/design-system_stats/apollo/stats/<figma-user>/dd-mm-yyyy/
 ```
 
 Полный отчёт содержит все категории аудита, включая устаревшие компоненты и стили, кастомные стили, обновления, кастомизации, локальные и detached-компоненты, пресеты, технические и актуальные компоненты, ошибки канала и темизации. Актуальные компоненты используются как инвентаризация и не входят в общий счётчик проблем. Агентский отчёт получает суффикс `_agent.json`, не включает `currentComponents.items`, фильтрует `expected`/`allowed` кастомизации и предназначен для ручной передачи корпоративному агенту.

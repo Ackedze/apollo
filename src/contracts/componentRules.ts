@@ -26,6 +26,7 @@ type ComponentRulesFile = {
 type ComponentRuleRegistryEntry = {
   componentKey: string;
   aliases: string[];
+  figmaKeys?: string[];
   rulesFile: ComponentRulesFile;
 };
 
@@ -91,6 +92,16 @@ function diffTargetsComponent(
     diff.context.referenceComponentKey === entry.componentKey ||
     diff.context.nestedOwnerComponentKey === entry.componentKey ||
     diff.context.actualNestedOwnerComponentKey === entry.componentKey
+  ) {
+    return true;
+  }
+
+  const figmaKeys = Array.isArray(entry.figmaKeys) ? entry.figmaKeys : [];
+  if (
+    figmaKeys.includes(diff.context.actualComponentKey ?? '') ||
+    figmaKeys.includes(diff.context.referenceComponentKey ?? '') ||
+    figmaKeys.includes(diff.context.nestedOwnerComponentKey ?? '') ||
+    figmaKeys.includes(diff.context.actualNestedOwnerComponentKey ?? '')
   ) {
     return true;
   }

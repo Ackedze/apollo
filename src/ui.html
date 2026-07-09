@@ -262,9 +262,75 @@
         justify-content: flex-end;
         min-width: 0;
       }
+      .agent-conversation-inner.system-state-visible {
+        align-items: center;
+        justify-content: center;
+      }
       .message-card {
         width: 100%;
         min-width: 0;
+      }
+      .message-card.system-state {
+        width: min(100%, 420px);
+      }
+      .agent-system-state {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .agent-system-state__graphic {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 28px;
+        background: rgba(38, 55, 88, 0.06);
+        color: rgba(3, 3, 6, 0.88);
+      }
+      .agent-system-state__graphic svg {
+        width: 48px;
+        height: 48px;
+        display: block;
+      }
+      .agent-system-state__title {
+        width: 100%;
+        padding-bottom: 16px;
+        color: rgba(3, 3, 6, 0.88);
+        font-size: 22px;
+        line-height: 26px;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+      .agent-system-state__subtitle {
+        width: 100%;
+        padding-bottom: 12px;
+        color: rgba(3, 3, 6, 0.88);
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        letter-spacing: 0;
+      }
+      .agent-system-state__retry {
+        min-height: 40px;
+        margin-top: 12px;
+        padding: 8px 18px;
+        border: 0;
+        border-radius: 999px;
+        background: #000;
+        color: rgba(255, 255, 255, 0.94);
+        font: inherit;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        letter-spacing: 0;
+        cursor: pointer;
+      }
+      .agent-system-state__retry:hover {
+        background: rgba(3, 3, 6, 0.88);
       }
       .message-card.user {
         padding: 0;
@@ -354,6 +420,9 @@
         border-radius: 0 0 16px 16px;
         background: #f5f5f5;
         overflow: hidden;
+      }
+      .agent-composer.hidden {
+        display: none;
       }
       .agent-composer-input {
         position: relative;
@@ -871,6 +940,7 @@
         let agentLastSentReportId = null;
         let agentMessages = [];
         let agentMessageSequence = 0;
+        let agentRetryTimerId = null;
 
         const shellEl = document.querySelector('.shell');
         const workspaceEl = document.querySelector('.workspace');
@@ -947,6 +1017,15 @@
         agentChatFab?.addEventListener('click', openAgentChat);
         agentChatClose?.addEventListener('click', closeAgentChat);
         agentComposer?.addEventListener('submit', handleAgentComposerSubmit);
+        agentConversationInner?.addEventListener('click', (event) => {
+          const target = event.target;
+          if (
+            target instanceof Element &&
+            target.closest('[data-agent-retry-button]')
+          ) {
+            retryAgentReport();
+          }
+        });
         agentComposerInput?.addEventListener('input', () => {
           resizeAgentComposerInput();
           syncAgentChatState();
@@ -2023,6 +2102,13 @@
           syncAgentChatState();
         }
 
+        function retryAgentReport() {
+          if (agentRequestInProgress || !agentReportMeta) {
+            return;
+          }
+          sendAgentReportToProxy();
+        }
+
         function handleAgentComposerSubmit(event) {
           event?.preventDefault?.();
 
@@ -2089,6 +2175,11 @@
 
           if (requestKind === 'report' && !agentReportMeta) {
             return;
+          }
+
+          if (requestKind === 'report' && hasAgentSystemState()) {
+            agentMessages = [];
+            renderAgentMessages();
           }
 
           agentMessageSequence += 1;
@@ -2166,10 +2257,16 @@
           removeAgentLoadingMessage();
 
           if (payload.error) {
-            addAgentMessage({
-              role: 'error',
-              text: payload.error,
-            });
+            agentMessageSequence += 1;
+            agentMessages = [
+              {
+                id: `agent-message-${agentMessageSequence}`,
+                role: 'error',
+                text:
+                  'Агент сейчас недоступен\nПроверь подключение прокси и попробуй ещё раз',
+              },
+            ];
+            renderAgentMessages();
           } else {
             agentLastSentReportId =
               payload.reportId || agentReportMeta?.reportId || agentLastSentReportId;
@@ -2208,6 +2305,11 @@
             return;
           }
 
+          const hasSystemState = hasAgentSystemState();
+          agentConversationInner.classList.toggle(
+            'system-state-visible',
+            hasSystemState,
+          );
           agentConversationInner.innerHTML = agentMessages
             .map((message) => renderAgentMessage(message))
             .join('');
@@ -2215,6 +2317,41 @@
           if (agentConversation) {
             agentConversation.scrollTop = agentConversation.scrollHeight;
           }
+        }
+
+        function hasAgentSystemState() {
+          return agentMessages.length === 1 && agentMessages[0]?.role === 'error';
+        }
+
+        function updateAgentRetryTimer() {
+          const shouldRetry =
+            agentChatOpen &&
+            hasAgentSystemState() &&
+            Boolean(agentReportMeta) &&
+            !agentRequestInProgress;
+
+          if (!shouldRetry) {
+            if (agentRetryTimerId !== null) {
+              clearInterval(agentRetryTimerId);
+              agentRetryTimerId = null;
+            }
+            return;
+          }
+
+          if (agentRetryTimerId !== null) {
+            return;
+          }
+
+          agentRetryTimerId = setInterval(() => {
+            if (
+              agentChatOpen &&
+              hasAgentSystemState() &&
+              agentReportMeta &&
+              !agentRequestInProgress
+            ) {
+              retryAgentReport();
+            }
+          }, 30000);
         }
 
         function renderAgentMessage(message) {
@@ -2225,19 +2362,13 @@
           }
 
           if (message.role === 'error') {
-            return `<article class="message-card error"><div class="assistant-msg"><div class="assistant-msg__container error">${escapeHtml(
-              message.text || '',
-            )}</div></div></article>`;
+            return `<article class="message-card system-state"><div class="agent-system-state"><div class="agent-system-state__graphic" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 10C7.32843 10 8 10.6716 8 11.5C8 12.3284 7.32843 13 6.5 13C5.67157 13 5 12.3284 5 11.5C5 10.6716 5.67157 10 6.5 10Z" fill="currentColor"/><path d="M13.5 10C14.3284 10 15 10.6716 15 11.5C15 12.3284 14.3284 13 13.5 13C12.6716 13 12 12.3284 12 11.5C12 10.6716 12.6716 10 13.5 10Z" fill="currentColor"/><path d="M10 2C10.8284 2 11.5 2.67157 11.5 3.5C11.5 4.05495 11.198 4.5384 10.75 4.79785V6.9502H14.4512C16.1078 6.95041 17.4512 8.29347 17.4512 9.9502V15C17.4512 16.6567 16.1078 17.9998 14.4512 18H5.55078C3.89393 18 2.55078 16.6569 2.55078 15V9.9502C2.55078 8.29334 3.89393 6.9502 5.55078 6.9502H9.25V4.79785C8.802 4.5384 8.5 4.05495 8.5 3.5C8.5 2.67157 9.17157 2 10 2ZM5.55078 8.4502C4.72236 8.4502 4.05078 9.12177 4.05078 9.9502V15C4.05078 15.8284 4.72235 16.5 5.55078 16.5H14.4512C15.2794 16.4998 15.9512 15.8283 15.9512 15V9.9502C15.9512 9.1219 15.2794 8.45041 14.4512 8.4502H5.55078Z" fill="currentColor"/></svg></div><div class="agent-system-state__title">Агент сейчас недоступен</div><div class="agent-system-state__subtitle">Проверь подключение прокси и попробуй ещё раз</div><button class="agent-system-state__retry" type="button" data-agent-retry-button>Попробовать ещё раз</button></div></article>`;
           }
 
           if (message.variant === 'loading') {
             const loadingText = message.text || 'Apollo думает';
-            const loadingCopy =
-              loadingText === 'Apollo думает'
-                ? ''
-                : `<div class="assistant-copy">${escapeHtml(loadingText)}</div>`;
-            return `<article class="message-card assistant"><div class="assistant-msg"><div class="assistant-msg__container">${loadingCopy}<div class="assistant-actions loading"><span class="spinner" aria-hidden="true"></span><span>${escapeHtml(
-              loadingText === 'Apollo думает' ? 'Apollo думает' : 'LLM думает',
+            return `<article class="message-card assistant"><div class="assistant-msg"><div class="assistant-msg__container"><div class="assistant-actions loading"><span class="spinner" aria-hidden="true"></span><span>${escapeHtml(
+              loadingText,
             )}</span></div></div></div></article>`;
           }
 
@@ -2296,6 +2427,9 @@
           if (agentComposerInput) {
             agentComposerInput.disabled = agentRequestInProgress;
           }
+          if (agentComposer) {
+            agentComposer.classList.toggle('hidden', hasAgentSystemState());
+          }
           if (agentComposerSubmit) {
             const hasDraft = Boolean(agentComposerInput?.value?.trim());
             agentComposerSubmit.classList.toggle('is-stop', agentRequestInProgress);
@@ -2310,6 +2444,7 @@
               agentRequestInProgress ? 'Остановить ответ' : 'Отправить агенту',
             );
           }
+          updateAgentRetryTimer();
         }
 
         function buildMarkdownMessageMarkup(source) {

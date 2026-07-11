@@ -267,6 +267,82 @@ The first runtime implementation should:
 - Add a publish dry-run command.
 - Make GitHub Pages publication fail if any referenced artifact is missing or stale.
 
+## Apollo Runtime Backlog
+
+### Capture and diff auto-layout sizing
+
+- [ ] Add `layoutSizingHorizontal` and `layoutSizingVertical` to Apollo structure snapshots for nodes that support auto-layout sizing.
+- [ ] Normalize values into stable diff properties such as `layout.sizing.horizontal` and `layout.sizing.vertical`, while preserving Figma API aliases for contract matching.
+- [ ] Compare sizing against the effective reference baseline in `diffStructures` and expose changes as independently resettable layer customizations.
+- [ ] Include sizing changes in the full stats report and `*_agent.json` without losing the owning component and nested layer path.
+- [ ] Allow component rules to match sizing properties deterministically. Initial required case: `BackgroundPlateSlot / Slot` must use `FILL` horizontally and `HUG` vertically.
+- [ ] Add regression tests for `FILL -> FIXED`, `HUG -> FILL`, unchanged sizing, nested component ownership and layer-only reset.
+
+Acceptance criteria:
+
+- Apollo displays horizontal and vertical sizing changes on the correct nested layer.
+- The reference and actual values use human-readable `Fill`, `Hug` or `Fixed` labels in the UI and agent report.
+- Rule `component:web-corp.background-plate.slot-sizing-fill-width-hug-height` matches the captured properties and raises the declared design severity.
+- Reset restores only the selected sizing property to the effective baseline without resetting unrelated component properties or layout settings.
+
+### Diff stroke alignment
+
+- [ ] Compare the existing snapshot field `stroke.align` in `diffStructures`; Apollo already captures `strokeAlign`, but currently diffs only stroke paint and weight.
+- [ ] Emit a separate layer customization with canonical property `stroke.align` and human-readable values `Inside`, `Center` or `Outside`.
+- [ ] Include the property in the full stats report and `*_agent.json` and support a layer-only reset to the effective reference value.
+- [ ] Add deterministic component-rule matching for `stroke.align`. Initial required case: `BackgroundPlate` with `Type=Border` must keep `INSIDE`.
+- [ ] Add regression tests for `INSIDE -> CENTER`, `INSIDE -> OUTSIDE`, unchanged alignment and reset without changing stroke color or weight.
+
+Acceptance criteria:
+
+- Apollo reports the stroke alignment change on the correct nested layer independently from stroke color and weight.
+- Rule `component:web-corp.background-plate.border-stroke-align-is-fixed` matches the captured change and raises the declared design severity.
+- Reset restores only stroke alignment and preserves tokenized stroke color and context-controlled stroke weight.
+
+### Diff visual effects
+
+- [ ] Compare the existing snapshot field `effects` in `diffStructures`; Apollo already extracts effect types, but does not currently emit structural effect diffs.
+- [ ] Emit separate layer customizations for added, removed or changed `DROP_SHADOW` and `INNER_SHADOW` effects without merging them with opacity or paint findings.
+- [ ] Preserve effect type during classification: component rules may prohibit `DROP_SHADOW` and `INNER_SHADOW` while allowing contextual `LAYER_BLUR` and `BACKGROUND_BLUR` on the same component family.
+- [ ] Preserve effect type, visibility and style identity in the full stats report and `*_agent.json` using human-readable labels.
+- [ ] Support deterministic component-rule matching for effect types. Initial required case: BackgroundPlate prohibits manually added shadows.
+- [ ] Add layer-only reset and regression tests for raw Drop shadow, Inner shadow, effect style, unchanged effects and nested component ownership.
+
+Acceptance criteria:
+
+- Rule `component:web-corp.background-plate.manual-shadows-are-prohibited` matches a manually added shadow and raises the declared design severity.
+- Rule `component:web-corp.background-plate.blur-is-context-controlled` keeps Layer blur and Background blur informational and does not route them through the shadow prohibition.
+- Reset removes only the detected shadow and preserves opacity, fill, stroke and component properties.
+
+### Capture and diff blend mode
+
+- [ ] Add `blendMode` to Apollo structure snapshots for nodes that expose `BlendMixin`.
+- [ ] Normalize it as canonical property `blend.mode` while preserving the Figma API alias `blendMode` for contract matching.
+- [ ] Compare actual and effective reference values in `diffStructures` and emit an independently resettable layer customization.
+- [ ] Include human-readable blend mode values in the full stats report and `*_agent.json`.
+- [ ] Support deterministic component-rule matching. Initial required case: BackgroundPlate prohibits manual blend mode changes.
+- [ ] Add regression tests for unchanged mode, `PASS_THROUGH -> MULTIPLY`, nested surface ownership and layer-only reset.
+
+Acceptance criteria:
+
+- Rule `component:web-corp.background-plate.blend-mode-is-fixed` matches a manual blend mode change and raises the declared design severity.
+- Reset restores only blend mode to the effective baseline and preserves opacity, effects, paint and component properties.
+
+### Capture ancestor variable-mode context
+
+- [ ] Collect relevant `explicitVariableModes` and `resolvedVariableModes` from the audited node and its ancestor chain without serializing unrelated variable collections.
+- [ ] Resolve collection and mode ids to stable names through the loaded token catalog. Initial required collections: `BackgroundPlate Level`, `BackgroundPlate Radius` and `BackgroundPlate Color`.
+- [ ] Include compact ancestor surface context in the full stats report and `*_agent.json` for affected component families.
+- [ ] Support composition-rule matching against required ancestor modes. Initial required case: the root page or modal surface containing `BackgroundPlateSlot` must provide `BackgroundPlate Level=Level-0 (base)`.
+- [ ] Distinguish mode assigned to the parent surface from a mode assigned directly to the component instance.
+- [ ] Add regression tests for inherited Level-0, missing Level-0, Level-0 assigned to the wrong node, automatic Level-1 resolution and modal/page color modes.
+
+Acceptance criteria:
+
+- Rule `component:web-corp.background-plate.root-surface-requires-level-0` receives deterministic ancestor-mode evidence instead of relying on an unsupported inference.
+- The agent report names the collection, resolved mode and owning ancestor without exposing unrelated variables.
+- Apollo does not report a violation when Level-0 is correctly inherited and the first BackgroundPlate resolves to Level-1.
+
 ## Open Questions
 
 - Whether `referenceSourcesMVP.json` should be upgraded in place to `schemaVersion: 2` or point to a secondary `apolloManifest.json`.

@@ -343,6 +343,55 @@ Acceptance criteria:
 - The agent report names the collection, resolved mode and owning ancestor without exposing unrelated variables.
 - Apollo does not report a violation when Level-0 is correctly inherited and the first BackgroundPlate resolves to Level-1.
 
+### Preserve the full component name in catalog `category`
+
+- [ ] Fix Athena catalog export so `category` preserves the opening bracket in component prefixes such as `[D]` and `[M]`.
+- [ ] Inspect name parsing for a regular expression, `slice` or `substring` operation that removes the first character.
+- [ ] Apply the fix to all component catalogs rather than patching individual exported files.
+- [ ] Add regression coverage for `[D] BackgroundPlate`, `[D] Style Level 1`, `[M] TitleViewMobile` and `[D] RightAddon`.
+- [ ] Verify that names without bracketed prefixes remain unchanged after export.
+
+Acceptance criteria:
+
+- The exported `category` exactly matches the full Figma component name, including its `[D]` or `[M]` prefix.
+- `BackgroundPlate`, `TitleViewMobile`, `Style Level 1` and `RightAddon` no longer produce values such as `D] BackgroundPlate` or `M] TitleViewMobile`.
+- A repeat export does not introduce new changes to already-correct category values.
+
+### Populate Figma source metadata in catalog indexes
+
+- [ ] Update Athena `*.index.json` generation to read the current Figma file key and write it to `source.fileKey`.
+- [ ] Generate `source.figmaLink` in the form `https://www.figma.com/file/{fileKey}/...` and include a page or node target when that context is available.
+- [ ] Emit an explicit publication warning or validation failure when required source context is unavailable instead of silently publishing empty strings.
+- [ ] Keep the source metadata contract usable by Apollo and Argus without reconstructing a file key from catalog names or paths.
+- [ ] Add regression coverage for index source metadata generation.
+
+Acceptance criteria:
+
+- Newly exported indexes, including `BackgroundPlate.index.json`, have non-empty `source.fileKey` and `source.figmaLink` values.
+- `source.fileKey` identifies the Figma file from which the catalog was exported.
+- `source.figmaLink` is a valid link to the same file and can be used as an Apollo/Argus deep link.
+- Missing source context is visible in export or release validation and cannot pass as a successful publication with empty required fields.
+
+### Warn about untokenized catalog colors
+
+- [ ] Add Athena export warnings for `tokenKey: null` on fills and strokes of non-auxiliary elements.
+- [ ] Include catalog, component, layer name or path, paint property and resolved color in every warning.
+- [ ] Define and document an explicit rule for auxiliary-layer exclusions so ordinary visible elements are not hidden from diagnostics.
+- [ ] Add an export summary with the total count and list of untokenized colors without aborting the catalog export.
+- [ ] Bind the known source colors to design tokens in Figma and re-export the affected catalogs:
+  - `TitleViewMobile / Shape`: `#CF70FF`;
+  - `TitleViewMobile / Indicator (Ellipse)`: `#3778FB`;
+  - `TitleView / icon`: `#9032EE` and `#747474`.
+- [ ] Add regression coverage for a warning on a normal layer and no warning on an explicitly auxiliary layer.
+- [ ] Preserve enough state for Apollo to distinguish a missing token binding from a token parsing error or an unsupported token format.
+
+Acceptance criteria:
+
+- Every untokenized fill or stroke on a non-auxiliary element produces an actionable warning with its exact source location and color.
+- Export completes and reports a deterministic untokenized-color summary.
+- After the Figma sources are corrected, the listed `TitleViewMobile` and `TitleView` layers export with non-null `tokenKey` values.
+- Apollo can validate light/dark theming for the corrected paints and the layout generator can resolve their theme-specific values.
+
 ## Open Questions
 
 - Whether `referenceSourcesMVP.json` should be upgraded in place to `schemaVersion: 2` or point to a secondary `apolloManifest.json`.

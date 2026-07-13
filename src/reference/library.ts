@@ -39,6 +39,9 @@ import {
   variantPropertiesEqual,
 } from '../utils/variantProperties';
 import { getTimestamp, logAuditMetric } from '../utils/auditInstrumentation';
+import { forEachWithConcurrency } from '../utils/promisePool';
+
+const COMPONENT_INDEX_PRELOAD_CONCURRENCY = 8;
 
 let catalogs: AthenaCatalog[] = [];
 const tokenCatalogs: TokenCatalog[] = [];
@@ -505,13 +508,16 @@ async function loadComponentIndexes(
   }
   let loadedIndexes = 0;
   let failedIndexes = 0;
-  const indexSourceCount = sources.filter((source) => Boolean(source.indexUrl)).length;
+  const indexSources = sources.filter(
+    (source): source is ReferenceCatalogSource & { indexUrl: string } =>
+      Boolean(source.indexUrl),
+  );
+  const indexSourceCount = indexSources.length;
 
-  await Promise.all(
-    sources.map(async (source) => {
-      if (!source.indexUrl) {
-        return;
-      }
+  await forEachWithConcurrency(
+    indexSources,
+    COMPONENT_INDEX_PRELOAD_CONCURRENCY,
+    async (source) => {
 
       try {
         const raw = await requestCatalogSource(source.indexUrl);
@@ -549,7 +555,7 @@ async function loadComponentIndexes(
           logCatalogEvent(source, `index failed: ${message}`);
         }
       }
-    }),
+    },
   );
 
   logAuditMetric('reference-index-load', {
@@ -558,6 +564,7 @@ async function loadComponentIndexes(
     failedIndexes,
     indexedKeys: componentCatalogPathByKey.size,
     indexSources: indexSourceCount,
+    concurrency: COMPONENT_INDEX_PRELOAD_CONCURRENCY,
   });
 }
 

@@ -25,6 +25,8 @@ type RemoteReferenceLibrary = {
 };
 
 export type RemoteReferenceCatalogList = {
+  schemaVersion?: number;
+  generatedAt?: string;
   baseUrl?: string;
   apollo?: {
     patternRulesPath?: string;
@@ -73,6 +75,7 @@ export function buildReferenceCatalogSources(
 ): ReferenceCatalogSource[] {
   const baseUrl = (payload.baseUrl ?? '').trim();
   const entries = normalizeCatalogEntries(payload);
+  const requireExplicitIndexPath = (payload.schemaVersion ?? 0) >= 2;
   
   return entries.map((entry, index) => ({
     id: entry.id ?? `catalog${index}`,
@@ -80,7 +83,7 @@ export function buildReferenceCatalogSources(
     path: normalizePath(entry.path),
     url: resolveCatalogUrl(baseUrl, entry.path),
     kind: inferCatalogKind(entry),
-    indexUrl: buildIndexUrl(baseUrl, entry),
+    indexUrl: buildIndexUrl(baseUrl, entry, requireExplicitIndexPath),
   }));
 }
 
@@ -130,6 +133,7 @@ function inferCatalogKind(
 function buildIndexUrl(
   baseUrl: string,
   entry: RemoteReferenceCatalogEntry,
+  requireExplicitIndexPath: boolean,
 ): string | undefined {
   if (inferCatalogKind(entry) !== 'components') {
     return undefined;
@@ -140,13 +144,37 @@ function buildIndexUrl(
     return resolveCatalogUrl(baseUrl, explicitIndexPath);
   }
 
+  if (requireExplicitIndexPath) {
+    return undefined;
+  }
+
   if (!/design-system_ab/i.test(baseUrl)) {
     return undefined;
   }
 
   const normalizedPath = normalizePath(entry.path);
+  if (isKnownNonCatalogArtifactPath(normalizedPath)) {
+    return undefined;
+  }
   const indexPath = `indexes/${normalizedPath.replace(/\.json$/i, '.index.json')}`;
   return resolveCatalogUrl(baseUrl, indexPath);
+}
+
+function isKnownNonCatalogArtifactPath(value: string): boolean {
+  const fileName = value.split('/').pop()?.toLowerCase() ?? '';
+  if (
+    fileName === 'agent-context.json' ||
+    fileName === 'audit-mapping.json' ||
+    fileName === 'composition-contract.json' ||
+    fileName === 'contract.generated.json' ||
+    fileName === 'contract.overrides.json' ||
+    fileName === 'examples.json' ||
+    fileName === 'rules.json' ||
+    fileName === 'componentcontractindex.json'
+  ) {
+    return true;
+  }
+  return fileName.startsWith('apollo-') || fileName.startsWith('patternrules');
 }
 
 export function resolveCatalogUrl(baseUrl: string, path: string): string {

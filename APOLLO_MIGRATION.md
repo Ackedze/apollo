@@ -317,18 +317,20 @@ Status: **not implemented**. Local checks exist, but they are incomplete and the
 - [x] Do not classify arbitrary JSON under `JSONS/` as `source.kind=components`; exclude contract packages, Apollo indexes, registries, pattern rules, copies and sidecar documents.
 - [x] Add `schemaVersion` and `generatedAt` to `referenceSourcesMVP.json` and validate every entry against its declared source kind before writing the manifest.
 - [x] Write an explicit `source.indexPath` for every component catalog and validate that the referenced index exists.
-- [ ] Clean the existing 1,020 non-catalog component entries from the published manifest.
+- [x] Clean the existing 1,020 non-catalog component entries in a prepared local release.
+- [ ] Publish the prepared cleaned manifest release to GitHub Pages.
 - [x] Add bounded concurrency to Apollo component-index preload and request only explicit, validated component index sources.
 - [x] Report the number of manifest entries, index requests, successful indexes and failures as release/runtime metrics.
 - [x] Add regression fixtures proving that `rules.json`, `contract.generated.json`, `agent-context.json`, `componentContractIndex.json` and `patternRules.json` never become catalog entries.
 
-Implementation verification (local, isolated catalog copy):
+Implementation verification (live local catalog tree, 2026-07-14):
 
 - Manifest reduced from 1,385 entries to 365 publishable entries: 334 components, 22 tokens and 9 styles.
 - All 334 component entries have explicit existing index paths; contract artifacts in the manifest: 0.
 - A second `catalogs:sync-apollo -- --check` run is clean. Index comparison is now JSON-canonical and no longer changes `generatedAt` because of omitted `undefined` fields.
 - Apollo schema-v2 loading requires explicit index paths. Legacy loading filters known contract/registry artifacts and caps index requests at 8 concurrent operations.
-- Applying and publishing the cleaned manifest remains pending because the live catalog worktree had concurrent contract/index edits during the audit.
+- Athena CLI `catalogs:rebuild-apollo` now performs the full rebuild in disk-backed staging, runs a second full catalog check and activates only the validated tree with a cumulative release receipt.
+- Live manifest rebuild release `2026-07-14T19-06-05-527Z-c3252d08` is ready and supersedes the two pending Icons releases. Publish dry-run passes with 343 receipt changes mapped to 318 actual Git paths; no commit or push has been performed.
 
 Acceptance criteria:
 
@@ -362,6 +364,13 @@ Implementation status (Athena CLI local publish tree, 2026-07-14):
 - [x] Unrelated staged, dirty and untracked files are excluded from the release commit and remain unchanged.
 - [x] A rejected push leaves the remote release unchanged and persists `commit-created`; an idempotent retry pushes the same commit, while unexpected branch movement produces a deterministic conflict.
 - [x] Isolated Git regression tests cover dry-run, exact commit scope, content drift, remote divergence, rejected push, preserved remote state and successful retry.
+- [x] Athena CLI detects renamed component catalogs in staging by exact Figma node identity, with an exact component/variant-key signature fallback for legacy catalogs that have no source metadata.
+- [x] A detected rename deletes the previous raw catalog and component index, removes its targeted manifest entry, validates the replacement entry and records both deletions in the release receipt.
+- [x] Ambiguous legacy signature matches fail the batch before activation; tests cover source-identity rename, legacy rename, manifest/index cleanup and ambiguity preservation.
+- [x] Consecutive local batches activated before Git publication now form one cumulative pending scope. Repeated paths use their latest content while change kinds are composed against the original Git baseline.
+- [x] New finalize operations mark carried predecessors `superseded`; the publisher can also consolidate legacy consecutive `ready` receipts in memory, so dry-run remains read-only and existing pending batches do not require re-export.
+- [x] Publishing a non-latest pending receipt is rejected, and a `commit-created` receipt blocks further consolidation until its push is resumed or the conflict is resolved.
+- [x] Regression tests cover automatic carry-forward, `added + modified` composition, predecessor status, legacy receipt consolidation and one Git commit containing files from both batches.
 - [ ] The legacy Athena Figma plugin still uses independent GitHub Contents API writes. Route it through the CLI/service release pipeline or give it equivalent transactional semantics before considering publication transactional from every supported surface.
 
 Acceptance criteria:
@@ -370,6 +379,8 @@ Acceptance criteria:
 - A failed publication does not change the stable bootstrap manifest and does not leave it pointing to missing or stale artifacts.
 - Re-publishing an unchanged release performs no semantic data changes and can safely resume after a network or Git conflict.
 - Publication logs expose one release identifier across every generated and uploaded artifact.
+- Renaming a configured catalog path leaves exactly one raw catalog, one matching component index and one manifest entry after activation; the previous paths are absent and appear as `deleted` in the receipt.
+- Two or more local batches completed before publication are exposed as one cumulative latest receipt; publishing it includes every still-current path from all pending batches and marks predecessors `superseded`.
 
 ### P0. Restore Athena TypeScript correctness and add a validation gate
 

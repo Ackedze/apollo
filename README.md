@@ -143,6 +143,8 @@ Apollo постепенно расширяется от одного Figma-пл�
 
 Текущий runtime Apollo уже использует `composition-contract.json` для contract-aware diff/rebase и `rules.json` для обогащения agent report. `contract.generated.json`, `contract.overrides.json` и `audit-mapping.json` пока не являются полноценным runtime source of truth, но должны стать входом следующего поколения пайплайна.
 
+При нескольких вложенных компонентах с одинаковым path contract-aware слой сопоставляет их по occurrence (`path`, `path@@2`, `path@@3`). Простой `path` всегда относится к первому видимому occurrence, поэтому baseline первой кнопки в `TitleView` не может быть подменён состоянием следующей кнопки.
+
 `composition-contract.json` сейчас есть у:
 
 - `web-core/navigation/Tabs`;

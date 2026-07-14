@@ -323,6 +323,19 @@ function main() {
         type: 'INSTANCE',
         componentInstance: {
           variantProperties: {
+            View: 'Primary',
+          },
+        },
+      },
+    ),
+    makeNode(
+      3,
+      'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button',
+      '[D] Button',
+      {
+        type: 'INSTANCE',
+        componentInstance: {
+          variantProperties: {
             View: 'Secondary',
           },
         },
@@ -339,16 +352,29 @@ function main() {
         type: 'INSTANCE',
         componentInstance: {
           variantProperties: {
+            View: 'Accent',
+          },
+        },
+      },
+    ),
+    makeNode(
+      3,
+      'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button',
+      '[D] Button',
+      {
+        type: 'INSTANCE',
+        componentInstance: {
+          variantProperties: {
             View: 'Secondary',
           },
         },
       },
     ),
   ];
-  const titleViewSuppressed = applyContractAwareDiffs(
+  const titleViewSecondarySuppressed = applyContractAwareDiffs(
     [
       makeDiff(
-        'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button',
+        'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button@@2',
         'variant.View',
         'Primary',
         'Secondary',
@@ -364,10 +390,12 @@ function main() {
     },
   );
 
-  assert.equal(titleViewSuppressed.diffs.length, 0);
-  assert.deepEqual(titleViewSuppressed.matchedContractKeys, ['web-corp.title-view']);
+  assert.equal(titleViewSecondarySuppressed.diffs.length, 0);
+  assert.deepEqual(titleViewSecondarySuppressed.matchedContractKeys, [
+    'web-corp.title-view',
+  ]);
 
-  const titleViewRebased = applyContractAwareDiffs(
+  const titleViewPrimaryChanged = applyContractAwareDiffs(
     [
       makeDiff(
         'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button',
@@ -386,9 +414,32 @@ function main() {
     },
   );
 
-  assert.equal(titleViewRebased.diffs.length, 1);
-  assert.equal(titleViewRebased.diffs[0].details.reference.value, 'Secondary');
-  assert.equal(titleViewRebased.diffs[0].message, 'view: Secondary → Accent');
+  assert.equal(titleViewPrimaryChanged.diffs.length, 1);
+  assert.equal(titleViewPrimaryChanged.diffs[0].details.reference.value, 'Primary');
+  assert.equal(titleViewPrimaryChanged.rebasedCount, 0);
+
+  const titleViewSecondaryChanged = applyContractAwareDiffs(
+    [
+      makeDiff(
+        'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button@@2',
+        'variant.View',
+        'Primary',
+        'Accent',
+      ),
+    ],
+    {
+      enabled: true,
+      hostComponentKey: 'title-view-key',
+      hostComponentName: '[D] TitleView',
+      actualStructure: titleViewActual,
+      hostReference: titleViewReference,
+      resolveStyleLabel: () => null,
+    },
+  );
+
+  assert.equal(titleViewSecondaryChanged.diffs.length, 1);
+  assert.equal(titleViewSecondaryChanged.diffs[0].details.reference.value, 'Secondary');
+  assert.equal(titleViewSecondaryChanged.diffs[0].message, 'view: Secondary → Accent');
 
   const buttonsGroupReference = [
     makeNode(1, 'Size=56, Overflow=false', 'Size=56, Overflow=false'),

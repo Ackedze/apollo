@@ -343,10 +343,26 @@ Acceptance criteria:
 - [ ] Replace Athena's sequence of independent GitHub Contents API writes with a staged release mechanism: one Git tree/commit, a versioned release directory plus pointer switch, or another transaction with equivalent visibility guarantees.
 - [ ] Ensure catalog, component index, contract package artifacts, contract index, registries and pattern-rule dependencies are all uploaded and validated before the bootstrap manifest becomes visible.
 - [ ] Update the manifest last for both new and already registered catalogs; the current path updates it only when a reference entry is newly created.
-- [ ] Reorder Athena CLI generation so contracts, contract index and release validation complete before the final manifest write or commit.
+- [x] Reorder Athena CLI generation so catalogs, indexes, contracts and targeted release validation complete in a disk-backed staging tree before the local publish tree is activated.
 - [ ] Preserve the previous published release when any target upload, schema check or consistency check fails.
 - [ ] Add an idempotent retry path and deterministic conflict handling for the entire release, not only the web-corp rules registry.
 - [ ] Add failure-injection tests for errors after catalog upload, after index upload and before manifest switch.
+
+Implementation status (Athena CLI local publish tree, 2026-07-14):
+
+- [x] A configured export creates a copy-on-write release workspace on disk instead of retaining a 40–100 catalog batch in process memory.
+- [x] Catalogs, reference/index updates, contract packages, contract index and registries are generated and checked against the staged `outputRoot`.
+- [x] Activation rejects concurrent changes to the live `outputRoot`; task, sync or validation failures discard staging and preserve the previous tree.
+- [x] A per-`outputRoot` process lock prevents a second Athena CLI run from deleting or activating another live staging workspace.
+- [x] A durable `release.json` journal carries one release identifier and restores the previous directory after an interrupted first rename.
+- [x] Regression tests cover complete activation, discard, concurrent-change rejection, interrupted-swap recovery and in-root/out-of-root path routing.
+- [x] Every activated local batch writes a completed receipt outside the publish tree with the exact added/modified/deleted paths and SHA-256 hashes.
+- [x] `npm run release:publish-apollo` is a dry-run by default: it verifies receipt drift and builds the proposed commit in an isolated temporary Git index without touching the user's index, `HEAD` or remote.
+- [x] `release:publish-apollo -- --execute` fetches the target branch, rejects remote divergence and publishes all receipt paths through one Git commit/push. Manifest ordering inside the batch is no longer observable because Git exposes the complete commit snapshot at once.
+- [x] Unrelated staged, dirty and untracked files are excluded from the release commit and remain unchanged.
+- [x] A rejected push leaves the remote release unchanged and persists `commit-created`; an idempotent retry pushes the same commit, while unexpected branch movement produces a deterministic conflict.
+- [x] Isolated Git regression tests cover dry-run, exact commit scope, content drift, remote divergence, rejected push, preserved remote state and successful retry.
+- [ ] The legacy Athena Figma plugin still uses independent GitHub Contents API writes. Route it through the CLI/service release pipeline or give it equivalent transactional semantics before considering publication transactional from every supported surface.
 
 Acceptance criteria:
 
@@ -491,12 +507,14 @@ Acceptance criteria:
 
 ### P1. Preserve the full component name in catalog `category`
 
-- [ ] Fix Athena catalog export so `category` preserves the opening bracket in component prefixes such as `[D]` and `[M]`.
+- [x] Fix Athena CLI catalog export so `category` preserves the complete component name and opening bracket in prefixes such as `[D]` and `[M]`.
 - [ ] Fix both confirmed implementations of `inferCategoryFromName`: Athena plugin and Athena CLI currently call `replace(/^[^\wА-Яа-я]+/, "")`, which strips the opening bracket.
-- [ ] Cover `[T]` and other supported bracketed prefixes in addition to `[D]` and `[M]`.
-- [ ] Apply the fix to all component catalogs rather than patching individual exported files.
-- [ ] Add regression coverage for `[D] BackgroundPlate`, `[D] Style Level 1`, `[M] TitleViewMobile` and `[D] RightAddon`.
-- [ ] Verify that names without bracketed prefixes remain unchanged after export.
+- [x] Cover `[T]` and other supported bracketed prefixes in Athena CLI in addition to `[D]` and `[M]`.
+- [x] Apply the Athena CLI fix in the shared normalizer for all component catalogs rather than patching individual exported files.
+- [x] Add Athena CLI regression coverage for `[D] BackgroundPlate`, `[D] Style Level 1`, `[M] TitleViewMobile` and `[D] RightAddon`.
+- [x] Verify in Athena CLI tests that names without bracketed prefixes remain unchanged after export.
+
+Implementation status (2026-07-14): Athena CLI is fixed and covered by tests. The Athena Figma plugin implementation and re-export of existing published catalogs remain pending.
 
 Acceptance criteria:
 
@@ -506,14 +524,16 @@ Acceptance criteria:
 
 ### P1. Populate Figma source metadata in catalog indexes
 
-- [ ] Update Athena `*.index.json` generation to read the current Figma file key and write it to `source.fileKey`.
-- [ ] Preserve `ComponentsReport.meta.fileKey` and source node/page context when Athena CLI normalizes a raw response; the current normalized catalog `source` discards them.
-- [ ] Remove the hardcoded `fileKey: ""` and `figmaLink: ""` values from Athena CLI `sync-apollo-catalogs`.
+- [x] Update Athena CLI `*.index.json` generation to read the current Figma file key and write it to `source.fileKey`.
+- [x] Preserve `ComponentsReport.meta.fileKey` and source node/page context when Athena CLI normalizes a raw response.
+- [x] Remove the hardcoded `fileKey: ""` and `figmaLink: ""` values from Athena CLI `sync-apollo-catalogs`.
 - [ ] In the Athena plugin, populate index source metadata in the main runtime from `figma.fileKey`; do not depend only on UI `document.referrer`, and patch/validate related index JSON before upload.
-- [ ] Generate `source.figmaLink` in the form `https://www.figma.com/file/{fileKey}/...` and include a page or node target when that context is available.
-- [ ] Emit an explicit publication warning or validation failure when required source context is unavailable instead of silently publishing empty strings.
-- [ ] Keep the source metadata contract usable by Apollo and Argus without reconstructing a file key from catalog names or paths.
-- [ ] Add regression coverage for index source metadata generation.
+- [x] Generate Athena CLI `source.figmaLink` in the form `https://www.figma.com/file/{fileKey}/...` and include a page or node target when that context is available.
+- [x] Emit an explicit Athena CLI sync warning when required source context is unavailable instead of silently publishing empty strings; missing values serialize as `null`.
+- [x] Keep the Athena CLI source metadata contract usable by Apollo and Argus without reconstructing a file key from catalog names or paths.
+- [x] Add Athena CLI regression coverage for raw catalog and index source metadata generation.
+
+Implementation status (2026-07-14): Athena CLI writes canonical source metadata and can recover it for legacy raw catalogs from the reference-library link. Athena plugin changes and re-export of published indexes remain pending.
 
 Acceptance criteria:
 
@@ -525,15 +545,18 @@ Acceptance criteria:
 ### P1. Warn about untokenized catalog colors
 
 - [ ] Add the same structured export warnings in Athena plugin and Athena CLI for `tokenKey: null` on fills and strokes of non-auxiliary elements.
-- [ ] Include catalog, component, layer name or path, paint property and resolved color in every warning.
-- [ ] Define and document an explicit rule for auxiliary-layer exclusions so ordinary visible elements are not hidden from diagnostics.
-- [ ] Add an export summary with the total count and list of untokenized colors without aborting the catalog export.
+- [x] Add structured Athena CLI warnings for `tokenKey: null` on fills and strokes of non-auxiliary elements without aborting export.
+- [x] Include catalog, component, variant, layer name/path/type, paint property/index, resolved color and effective layer visibility in every Athena CLI warning.
+- [x] Define and document a narrow auxiliary-layer rule: exact case-insensitive names `Fixer`, `Helper`, `Mask`, `Placeholder`, `Spacer`; `isMask` alone and hidden layers are not excluded.
+- [x] Add an Athena CLI batch summary with the total count and deterministic structured warning list.
 - [ ] Bind the known source colors to design tokens in Figma and re-export the affected catalogs:
   - `TitleViewMobile / Shape`: `#CF70FF`;
   - `TitleViewMobile / Indicator (Ellipse)`: `#3778FB`;
   - `TitleView / icon`: `#9032EE` and `#747474`.
-- [ ] Add regression coverage for a warning on a normal layer and no warning on an explicitly auxiliary layer.
-- [ ] Preserve enough state for Apollo to distinguish a missing token binding from a token parsing error or an unsupported token format.
+- [x] Add Athena CLI regression coverage for fill/stroke warnings, an explicitly auxiliary layer, an invisible paint and a hidden ordinary layer.
+- [x] Preserve `tokenState: "missing-binding"` so Apollo can distinguish a missing token binding from a future parsing error or unsupported token format.
+
+Implementation status (2026-07-14): Athena CLI implementation and tests are complete. Verification against saved real export responses reports the known `TitleView` icon colors and all three `TitleViewMobile` Shape/Indicator paints. Athena plugin parity and Figma-side token binding remain pending.
 
 Acceptance criteria:
 

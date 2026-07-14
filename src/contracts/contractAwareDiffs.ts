@@ -481,8 +481,14 @@ function buildNodeByOccurrenceMap(nodes: DSStructureNode[]): Map<string, DSStruc
   const map = new Map<string, DSStructureNode>();
 
   for (const node of nodes) {
-    map.set(occurrenceKeys.get(node) ?? node.path, node);
-    map.set(node.path, node);
+    const occurrenceKey = occurrenceKeys.get(node) ?? node.path;
+    map.set(occurrenceKey, node);
+
+    // The plain path is the key of the first visible occurrence. Do not let
+    // later siblings with the same path overwrite that alias.
+    if (!map.has(node.path)) {
+      map.set(node.path, node);
+    }
   }
 
   return map;

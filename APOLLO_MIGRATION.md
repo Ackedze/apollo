@@ -444,12 +444,14 @@ Acceptance criteria:
 
 ### P1. Capture and diff auto-layout sizing
 
-- [ ] Add `layoutSizingHorizontal` and `layoutSizingVertical` to Apollo structure snapshots for nodes that support auto-layout sizing.
-- [ ] Normalize values into stable diff properties such as `layout.sizing.horizontal` and `layout.sizing.vertical`, while preserving Figma API aliases for contract matching.
-- [ ] Compare sizing against the effective reference baseline in `diffStructures` and expose changes as independently resettable layer customizations.
-- [ ] Include sizing changes in the full stats report and `*_agent.json` without losing the owning component and nested layer path.
-- [ ] Allow component rules to match sizing properties deterministically. Initial required case: `BackgroundPlateSlot / Slot` must use `FILL` horizontally and `HUG` vertically.
-- [ ] Add regression tests for `FILL -> FIXED`, `HUG -> FILL`, unchanged sizing, nested component ownership and layer-only reset.
+- [x] Add `layoutSizingHorizontal` and `layoutSizingVertical` to Apollo structure snapshots for nodes that support auto-layout sizing.
+- [x] Normalize values into stable diff properties such as `layout.sizing.horizontal` and `layout.sizing.vertical`, while preserving Figma API aliases for contract matching.
+- [x] Compare sizing against the effective reference baseline in `diffStructures` and expose changes as independently resettable layer customizations.
+- [x] Include sizing changes in the full stats report and `*_agent.json` without losing the owning component and nested layer path.
+- [x] Allow component rules to match sizing properties deterministically. Initial required case: `BackgroundPlateSlot / Slot` must use `FILL` horizontally and `HUG` vertically.
+- [x] Add regression tests for `FILL -> FIXED`, `HUG -> FILL`, unchanged sizing, nested component ownership and layer-only reset.
+
+Implementation status (2026-07-15): implemented in Apollo runtime and included in `npm run validate` through `test:layout-sizing-diff`. Apollo reads sizing from snapshots and normalized catalogs; while older catalogs do not yet carry these fields, deterministic component-rule `requiredValues` provides the effective baseline. Components with required sizing rules always receive a structural audit because Figma may omit sizing changes from `instance.overrides`. Component ownership is matched by key, while nested targets use their relative layer path, so renamed consumer instances and variant-aligned roots do not break the rule. Stats and agent-report regression coverage preserves the owning component, nested layer path, canonical property and human-readable values.
 
 Acceptance criteria:
 
@@ -460,11 +462,13 @@ Acceptance criteria:
 
 ### P1. Diff stroke alignment
 
-- [ ] Compare the existing snapshot field `stroke.align` in `diffStructures`; Apollo already captures `strokeAlign`, but currently diffs only stroke paint and weight.
-- [ ] Emit a separate layer customization with canonical property `stroke.align` and human-readable values `Inside`, `Center` or `Outside`.
-- [ ] Include the property in the full stats report and `*_agent.json` and support a layer-only reset to the effective reference value.
-- [ ] Add deterministic component-rule matching for `stroke.align`. Initial required case: `BackgroundPlate` with `Type=Border` must keep `INSIDE`.
-- [ ] Add regression tests for `INSIDE -> CENTER`, `INSIDE -> OUTSIDE`, unchanged alignment and reset without changing stroke color or weight.
+- [x] Compare the existing snapshot field `stroke.align` in `diffStructures`; Apollo already captures `strokeAlign`, but previously diffed only stroke paint and weight.
+- [x] Emit a separate layer customization with canonical property `stroke.align` and human-readable values `Inside`, `Center` or `Outside`.
+- [x] Include the property in the full stats report and `*_agent.json` and support a layer-only reset to the effective reference value.
+- [x] Add deterministic component-rule matching for `stroke.align`. `BackgroundPlate` with `Type=Border` must keep `INSIDE`; variant conditions prevent this rule from raising severity for other types.
+- [x] Add regression tests for `INSIDE -> CENTER`, `INSIDE -> OUTSIDE`, unchanged alignment, nested ownership and reset without changing stroke color or weight.
+
+Implementation status (2026-07-14): implemented in Apollo runtime and included in `npm run validate` through `test:stroke-align-diff`. Stats/agent regression coverage confirms the exact BackgroundPlate component rule and human-readable values.
 
 Acceptance criteria:
 

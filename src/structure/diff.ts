@@ -1,7 +1,12 @@
-import type { DSRadii, DSStructureNode } from '../types/structures';
+import type { DSNodeLayout, DSRadii, DSStructureNode } from '../types/structures';
 import type { CustomizationAssessment } from '../assessment/types';
 import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
 import { parseVariantName } from '../utils/variantProperties';
+import {
+  formatStrokeAlignment,
+  normalizeStrokeAlignment,
+} from './strokeAlignment';
+import { formatLayoutSizing, normalizeLayoutSizing } from './layoutSizing';
 
 export type DiffContext = {
   actualComponentKey: string | null;
@@ -14,6 +19,8 @@ export type DiffContext = {
   nestedOwnerComponentRole: 'Main' | 'Part' | null;
   nestedOwnerPath: string | null;
   nestedOwnerRelativePath: string | null;
+  actualVariantProperties?: Record<string, string> | null;
+  referenceVariantProperties?: Record<string, string> | null;
 };
 
 export type DiffEntry = {
@@ -219,11 +226,11 @@ function attachImplicitNestedOwners(
     }
 
     let parentId = typeof node.parentId === 'number' ? node.parentId : null;
-      while (typeof parentId === 'number') {
-        const parent = idMap.get(parentId) ?? null;
-        if (!parent) {
-          break;
-        }
+    while (typeof parentId === 'number') {
+      const parent = idMap.get(parentId) ?? null;
+      if (!parent) {
+        break;
+      }
 
       if (
         parent.type === 'INSTANCE' &&
@@ -235,19 +242,21 @@ function attachImplicitNestedOwners(
         node.referenceOwnerPath = parent.path;
         node.referenceOwnerRelativePath =
           getRelativeOwnerPath(parent.path, node.path) ?? null;
+        node.referenceOwnerVariantProperties =
+          parent.componentInstance.variantProperties ?? null;
         break;
       }
 
-        parentId = typeof parent.parentId === 'number' ? parent.parentId : null;
-      }
+      parentId = typeof parent.parentId === 'number' ? parent.parentId : null;
+    }
 
-      if (!node.referenceOwnerComponentKey || !node.referenceOwnerPath) {
-        attachImplicitOwnerByPathPrefix(
-          node,
-          occurrenceKeyMap.get(node) ?? node.path,
-          occurrenceKeyToNode,
-        );
-      }
+    if (!node.referenceOwnerComponentKey || !node.referenceOwnerPath) {
+      attachImplicitOwnerByPathPrefix(
+        node,
+        occurrenceKeyMap.get(node) ?? node.path,
+        occurrenceKeyToNode,
+      );
+    }
   }
 
   return cloned;
@@ -290,6 +299,8 @@ function attachImplicitOwnerByPathPrefix(
     node.referenceOwnerPath = ancestor.path;
     node.referenceOwnerRelativePath =
       getRelativeOwnerPath(ancestor.path, node.path) ?? null;
+    node.referenceOwnerVariantProperties =
+      ancestor.componentInstance.variantProperties ?? null;
     return;
   }
 }
@@ -335,6 +346,15 @@ function compareNode(
 ) {
   const actualLayout = actual.layout ?? {};
   const referenceLayout = reference.layout ?? {};
+
+  compareLayoutSizing(
+    path,
+    actual,
+    reference,
+    actualLayout.sizing ?? null,
+    referenceLayout.sizing ?? null,
+    diffs,
+  );
 
   comparePadding(
     path,
@@ -530,6 +550,40 @@ function compareNode(
   );
 
   compareVariantProperties(path, actual, reference, diffs);
+}
+
+function compareLayoutSizing(
+  path: string,
+  actual: DSStructureNode,
+  reference: DSStructureNode,
+  actualSizing: DSNodeLayout['sizing'],
+  referenceSizing: DSNodeLayout['sizing'],
+  diffs: DiffEntry[],
+) {
+  const axes = [
+    { axis: 'horizontal' as const, label: 'Ширина в auto-layout' },
+    { axis: 'vertical' as const, label: 'Высота в auto-layout' },
+  ];
+
+  for (const { axis, label } of axes) {
+    const referenceValue = normalizeLayoutSizing(referenceSizing?.[axis] ?? null);
+    if (!referenceValue) continue;
+    const actualValue = normalizeLayoutSizing(actualSizing?.[axis] ?? null);
+    if (!actualValue || actualValue === referenceValue) continue;
+    pushDiff(
+      diffs,
+      actual,
+      reference,
+      path,
+      `${label}: ${formatLayoutSizing(referenceValue)} → ${formatLayoutSizing(actualValue)}`,
+      'layout',
+      {
+        property: `layout.sizing.${axis}`,
+        reference: { value: formatLayoutSizing(referenceValue) },
+        actual: { value: formatLayoutSizing(actualValue) },
+      },
+    );
+  }
 }
 
 function compareVariantProperties(
@@ -1162,6 +1216,33 @@ function compareStroke(
       );
     }
   }
+
+  const referenceAlign = normalizeStrokeAlignment(reference.align);
+  if (referenceAlign && actual) {
+    const actualAlign = normalizeStrokeAlignment(actual.align);
+    if (strict && !actualAlign) {
+      addIssue(
+        issueSet,
+        `Нет данных для положения обводки в снапшоте для «${path}»`,
+      );
+    } else if (actualAlign !== referenceAlign) {
+      const referenceLabel = formatStrokeAlignment(referenceAlign);
+      const actualLabel = formatStrokeAlignment(actualAlign);
+      pushDiff(
+        diffs,
+        actualNode,
+        referenceNode,
+        path,
+        `Положение обводки: ${referenceLabel} → ${actualLabel}`,
+        'shape',
+        {
+          property: 'stroke.align',
+          reference: { value: referenceLabel },
+          actual: { value: actualLabel },
+        },
+      );
+    }
+  }
 }
 
 function normalizePaintToken(
@@ -1408,6 +1489,14 @@ function pushDiff(
       nestedOwnerRelativePath:
         referenceNode.referenceOwnerRelativePath ??
         (isHostNestedInstanceRoot ? '' : null),
+      actualVariantProperties:
+        node.componentInstance?.variantProperties ??
+        node.referenceOwnerVariantProperties ??
+        null,
+      referenceVariantProperties:
+        referenceNode.componentInstance?.variantProperties ??
+        referenceNode.referenceOwnerVariantProperties ??
+        null,
     },
     diffKind,
     details,

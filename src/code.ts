@@ -24,6 +24,11 @@ import {
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
 import { diffExplicitNestedVariantStates, diffStructures } from './structure/diff';
+import { setNodeStrokeAlignment } from './structure/strokeAlignment';
+import {
+  setNodeLayoutSizing,
+  type LayoutSizingAxis,
+} from './structure/layoutSizing';
 import {
   buildOccurrenceIndexMap,
   buildOccurrenceKeyMap,
@@ -113,6 +118,11 @@ import {
   ensureContractArtifactsForHints,
   type ContractArtifactHint,
 } from './contracts/runtimeContractRegistry';
+import {
+  applyRequiredComponentSizingAssessment,
+  createRequiredComponentSizingDiffs,
+  hasRequiredComponentSizingRules,
+} from './contracts/componentRules';
 
 declare const __APOLLO_VERSION__: string;
 
@@ -1079,6 +1089,10 @@ async function classifyNode(
   const needsDiff = Boolean(referenceStructure) && !checkedComponentNodesList.has(node.id);
   const instanceHasOverrides =
     node.type === 'INSTANCE' && hasInstanceOverrides(node as InstanceNode);
+  const requiresSizingRuleAudit = hasRequiredComponentSizingRules(
+    componentKey,
+    [ref?.name, ref?.displayName, node.name],
+  );
   const isInheritedFromLocalComponentContext =
     node.type === 'INSTANCE' &&
     (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
@@ -1087,6 +1101,7 @@ async function classifyNode(
     needsDiff &&
     (ref?.status !== 'current' ||
       instanceHasOverrides ||
+      requiresSizingRuleAudit ||
       isInheritedFromLocalComponentContext);
   const actualStructure =
     shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
@@ -1117,7 +1132,17 @@ async function classifyNode(
     comparisonIssues.push(...diffResult.issues);
   }
 
-  const markedDiffs = diffResult.diffs.map((diff) =>
+  const requiredSizingDiffs =
+    shouldDiff && alignedActualStructure
+      ? createRequiredComponentSizingDiffs(
+          alignedActualStructure,
+          diffResult.diffs,
+        )
+      : [];
+  const rawDiffs = diffResult.diffs
+    .concat(requiredSizingDiffs)
+    .map(applyRequiredComponentSizingAssessment);
+  const markedDiffs = rawDiffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
   const explicitVariantStateDiffs =
@@ -1230,7 +1255,7 @@ async function classifyNode(
     componentName: ref?.displayName ?? ref?.name ?? node.name,
     alignedActualStructure,
     expandedReferenceStructure,
-    rawDiffs: diffResult.diffs,
+    rawDiffs,
     markedDiffs: assessedDiffs,
     allowlistedDiffs,
     finalDiffs: diffs,
@@ -1250,7 +1275,7 @@ async function classifyNode(
     shouldDiff,
     referenceNodes: expandedReferenceStructure?.length ?? 0,
     actualNodes: alignedActualStructure?.length ?? 0,
-    rawDiffs: diffResult.diffs.length,
+    rawDiffs: rawDiffs.length,
     allowlistedDiffs: diffsForAssessment.length - allowlistedDiffs.length,
     filteredDiffs: diffs.length,
     diffDurationMs: Number((getTimestamp() - diffStartedAt).toFixed(1)),
@@ -2078,6 +2103,16 @@ async function applyReferenceResetByMessages(
       continue;
     }
 
+    if (trimmed.startsWith('Ширина в auto-layout:')) {
+      resetLayoutSizing(node, referenceNode, 'horizontal');
+      continue;
+    }
+
+    if (trimmed.startsWith('Высота в auto-layout:')) {
+      resetLayoutSizing(node, referenceNode, 'vertical');
+      continue;
+    }
+
     if (trimmed.startsWith('Стиль заливка:')) {
       await resetStyle(node, referenceNode, 'fill');
       continue;
@@ -2105,6 +2140,11 @@ async function applyReferenceResetByMessages(
 
     if (trimmed.startsWith('Толщина обводки:')) {
       resetStrokeWeight(node, referenceNode);
+      continue;
+    }
+
+    if (trimmed.startsWith('Положение обводки:')) {
+      resetStrokeAlign(node, referenceNode);
       continue;
     }
 
@@ -2174,6 +2214,27 @@ async function applyReferenceResetByDetails(
 
     if (property === 'layout.itemSpacing' && typeof reference.value === 'number') {
       setLayoutItemSpacing(node, reference.value);
+      continue;
+    }
+
+    if (
+      property === 'layout.sizing.horizontal' &&
+      typeof reference.value === 'string'
+    ) {
+      setNodeLayoutSizing(node, 'horizontal', reference.value);
+      continue;
+    }
+
+    if (
+      property === 'layout.sizing.vertical' &&
+      typeof reference.value === 'string'
+    ) {
+      setNodeLayoutSizing(node, 'vertical', reference.value);
+      continue;
+    }
+
+    if (property === 'stroke.align' && typeof reference.value === 'string') {
+      setNodeStrokeAlignment(node, reference.value);
       continue;
     }
 
@@ -2266,6 +2327,14 @@ function setLayoutItemSpacing(node: SceneNode, value: number) {
     return;
   }
   (node as any).itemSpacing = value;
+}
+
+function resetLayoutSizing(
+  node: SceneNode,
+  referenceNode: DSStructureNode,
+  axis: LayoutSizingAxis,
+) {
+  setNodeLayoutSizing(node, axis, referenceNode.layout?.sizing?.[axis] ?? null);
 }
 
 async function resetStyleById(
@@ -2430,6 +2499,10 @@ function resetStrokeWeight(node: SceneNode, referenceNode: DSStructureNode) {
   }
   const weight = referenceNode.stroke?.weight;
   (node as any).strokeWeight = typeof weight === 'number' ? weight : 0;
+}
+
+function resetStrokeAlign(node: SceneNode, referenceNode: DSStructureNode) {
+  setNodeStrokeAlignment(node, referenceNode.stroke?.align ?? null);
 }
 
 async function resetRadius(node: SceneNode, referenceNode: DSStructureNode) {

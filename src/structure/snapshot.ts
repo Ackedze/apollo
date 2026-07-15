@@ -249,6 +249,23 @@ function extractLayout(node: SceneNode): DSNodeLayout | undefined {
   if ('minHeight' in source) assign('minHeight', source.minHeight);
   if ('maxHeight' in source) assign('maxHeight', source.maxHeight);
 
+  const horizontalSizing =
+    'layoutSizingHorizontal' in source &&
+    typeof source.layoutSizingHorizontal === 'string'
+      ? source.layoutSizingHorizontal
+      : null;
+  const verticalSizing =
+    'layoutSizingVertical' in source &&
+    typeof source.layoutSizingVertical === 'string'
+      ? source.layoutSizingVertical
+      : null;
+  if (horizontalSizing || verticalSizing) {
+    layout.sizing = {
+      horizontal: horizontalSizing,
+      vertical: verticalSizing,
+    };
+  }
+
   if ('layoutMode' in node && (node as AutoLayoutMixin).layoutMode && (node as AutoLayoutMixin).layoutMode !== 'NONE') {
     layout.direction = (node as AutoLayoutMixin).layoutMode === 'HORIZONTAL' ? 'H' : 'V';
     const padding = {

@@ -1,4 +1,6 @@
 import { diffStructures, type DiffEntry, type DiffValueDetails } from '../structure/diff';
+import { formatStrokeAlignment } from '../structure/strokeAlignment';
+import { formatLayoutSizing } from '../structure/layoutSizing';
 import {
   buildOccurrenceKeyMap,
   makeOccurrenceKey,
@@ -270,8 +272,20 @@ function selectedReferenceValue(
       options,
     );
   }
+  if (property === 'stroke.align') {
+    const align = referenceNode.stroke?.align ?? null;
+    return align ? primitiveReferenceValue(formatStrokeAlignment(align)) : null;
+  }
   if (property === 'layout.itemSpacing') {
     return primitiveReferenceValue(referenceNode.layout?.itemSpacing ?? null);
+  }
+  if (property === 'layout.sizing.horizontal') {
+    const value = referenceNode.layout?.sizing?.horizontal ?? null;
+    return value ? primitiveReferenceValue(formatLayoutSizing(value)) : null;
+  }
+  if (property === 'layout.sizing.vertical') {
+    const value = referenceNode.layout?.sizing?.vertical ?? null;
+    return value ? primitiveReferenceValue(formatLayoutSizing(value)) : null;
   }
   if (property === 'layout.itemSpacingToken') {
     return resourceValue(referenceNode.layout?.itemSpacingToken ?? null, 'token');
@@ -411,9 +425,19 @@ function referenceMatchesActualDiffValue(
     );
   }
 
+  if (property === 'stroke.align') {
+    return actual.value === formatStrokeAlignment(referenceNode.stroke?.align ?? null);
+  }
+
   const actualValue = actual.value;
   if (property === 'layout.itemSpacing') {
     return actualValue === (referenceNode.layout?.itemSpacing ?? null);
+  }
+  if (property === 'layout.sizing.horizontal') {
+    return actualValue === formatLayoutSizing(referenceNode.layout?.sizing?.horizontal);
+  }
+  if (property === 'layout.sizing.vertical') {
+    return actualValue === formatLayoutSizing(referenceNode.layout?.sizing?.vertical);
   }
   if (property === 'radius') {
     return actualValue === referenceNode.radius;
@@ -539,6 +563,9 @@ export function assessCustomizationDiffs(
   const hostDiffKeys = new Set(options.hostDiffs.map(makeDiffPropertyKey));
 
   return diffs.map((inputDiff) => {
+    if (inputDiff.assessment?.source === 'component-contract') {
+      return inputDiff;
+    }
     let diff = inputDiff;
     const isVariantDiff = isVariantPropertyDiff(diff);
     const nestedContextExplains =

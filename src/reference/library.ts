@@ -979,6 +979,13 @@ function buildNodeLayout(
     out.itemSpacing = layout.gap;
   }
 
+  if (layout.sizing) {
+    out.sizing = {
+      horizontal: layout.sizing.horizontal ?? null,
+      vertical: layout.sizing.vertical ?? null,
+    };
+  }
+
   if (layout.paddingTokens) {
     
     out.paddingTokens = {
@@ -1033,6 +1040,7 @@ function normalizeComponentPaints(component: AthenaComponent) {
   if (Array.isArray(component.structure)) {
     for (const node of component.structure) {
       normalizePaintFields(node);
+      normalizeLayoutFields(node);
     }
   }
   if (component.variantStructures) {
@@ -1042,8 +1050,10 @@ function normalizeComponentPaints(component: AthenaComponent) {
         if (!patch) continue;
         if (patch.op === 'update') {
           normalizePaintFields(patch.value);
+          normalizeLayoutFields(patch.value);
         } else if (patch.op === 'add') {
           normalizePaintFields(patch.node);
+          normalizeLayoutFields(patch.node);
         }
       }
     }
@@ -1186,6 +1196,33 @@ function normalizePaintFields(target: any) {
     if (!target.stroke.align && target.strokeAlign) {
       target.stroke.align = target.strokeAlign;
     }
+  }
+}
+
+function normalizeLayoutFields(target: any) {
+  if (!target || typeof target !== 'object') return;
+
+  const sourceLayout =
+    target.layout && typeof target.layout === 'object' ? target.layout : null;
+  const horizontal =
+    sourceLayout?.sizing?.horizontal ??
+    target.layoutSizingHorizontal ??
+    sourceLayout?.layoutSizingHorizontal ??
+    null;
+  const vertical =
+    sourceLayout?.sizing?.vertical ??
+    target.layoutSizingVertical ??
+    sourceLayout?.layoutSizingVertical ??
+    null;
+
+  if (!horizontal && !vertical) return;
+  target.layout = sourceLayout ?? {};
+  target.layout.sizing = target.layout.sizing ?? {};
+  if (!target.layout.sizing.horizontal && horizontal) {
+    target.layout.sizing.horizontal = horizontal;
+  }
+  if (!target.layout.sizing.vertical && vertical) {
+    target.layout.sizing.vertical = vertical;
   }
 }
 
@@ -1738,7 +1775,10 @@ function areLayoutDescriptorsEqual(
       right?.paddingTokens ?? null,
     ) &&
     (left?.itemSpacing ?? null) === (right?.itemSpacing ?? null) &&
-    (left?.itemSpacingToken ?? null) === (right?.itemSpacingToken ?? null)
+    (left?.itemSpacingToken ?? null) === (right?.itemSpacingToken ?? null) &&
+    (left?.sizing?.horizontal ?? null) ===
+      (right?.sizing?.horizontal ?? null) &&
+    (left?.sizing?.vertical ?? null) === (right?.sizing?.vertical ?? null)
   );
 }
 

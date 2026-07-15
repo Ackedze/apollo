@@ -17,6 +17,10 @@ export interface DSNodeLayout {
   direction?: DSLayoutDirection;
   padding?: DSPadding | null;
   itemSpacing?: number | null;
+  sizing?: {
+    horizontal?: string | null;
+    vertical?: string | null;
+  } | null;
   paddingTokens?: {
     top?: string | null;
     right?: string | null;
@@ -101,6 +105,7 @@ export interface DSStructureNode {
   referenceOwnerRole?: 'Main' | 'Part' | null;
   referenceOwnerPath?: string | null;
   referenceOwnerRelativePath?: string | null;
+  referenceOwnerVariantProperties?: Record<string, string> | null;
 }
 
 export interface DSNormalizedElement {
@@ -116,6 +121,10 @@ export interface DSNormalizedElement {
   layout?: {
     padding?: [number, number, number, number];
     gap?: number;
+    sizing?: {
+      horizontal?: string | null;
+      vertical?: string | null;
+    } | null;
     radius?: number | [number, number, number, number];
     paddingTokens?: {
       top?: string | null;

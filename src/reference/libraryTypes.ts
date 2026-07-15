@@ -97,6 +97,10 @@ export type NormalizedElement = {
   layout?: {
     padding?: number[];
     gap?: number;
+    sizing?: {
+      horizontal?: string | null;
+      vertical?: string | null;
+    } | null;
     radius?: number | number[];
     paddingTokens?: {
       top?: string | null;

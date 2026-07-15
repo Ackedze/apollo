@@ -1,5 +1,7 @@
 import type { DiffEntry, DiffValueDetails } from '../structure/diff';
+import { formatStrokeAlignment } from '../structure/strokeAlignment';
 import type { DSStructureNode } from '../types/structures';
+import { formatLayoutSizing } from '../structure/layoutSizing';
 import { buildOccurrenceKeyMap } from '../structure/occurrenceKeys';
 import { getRemoteCompositionContractRegistry } from './runtimeContractRegistry';
 
@@ -360,6 +362,14 @@ function readNodePropertyAsDiffValue(
     const value = node.layout?.itemSpacing ?? null;
     return typeof value === 'number' ? { value } : null;
   }
+  if (property === 'layout.sizing.horizontal') {
+    const value = node.layout?.sizing?.horizontal ?? null;
+    return value ? { value: formatLayoutSizing(value) } : null;
+  }
+  if (property === 'layout.sizing.vertical') {
+    const value = node.layout?.sizing?.vertical ?? null;
+    return value ? { value: formatLayoutSizing(value) } : null;
+  }
 
   if (property === 'styles.text') {
     const styleKey = node.styles?.text?.styleKey ?? null;
@@ -402,6 +412,11 @@ function readNodePropertyAsDiffValue(
     }
     const color = node.stroke?.color ?? null;
     return color ? { value: color, resourceType: 'color', displayName: color } : null;
+  }
+
+  if (property === 'stroke.align') {
+    const align = node.stroke?.align ?? null;
+    return align ? { value: formatStrokeAlignment(align) } : null;
   }
 
   if (property === 'opacity') {
@@ -466,8 +481,17 @@ function getPropertyDisplayLabel(property: string): string {
   if (property === 'layout.itemSpacing') {
     return 'Отступ между элементами';
   }
+  if (property === 'layout.sizing.horizontal') {
+    return 'Ширина в auto-layout';
+  }
+  if (property === 'layout.sizing.vertical') {
+    return 'Высота в auto-layout';
+  }
   if (property === 'styles.text') {
     return 'Стиль текст';
+  }
+  if (property === 'stroke.align') {
+    return 'Положение обводки';
   }
   if (property.indexOf('variant.') === 0) {
     const propertyName = property.slice('variant.'.length);

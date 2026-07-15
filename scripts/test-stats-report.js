@@ -83,6 +83,53 @@ function main() {
         ],
       },
     },
+    {
+      componentKey: 'web-corp.background-plate',
+      aliases: ['[D] BackgroundPlate'],
+      rulesFile: {
+        componentKey: 'web-corp.background-plate',
+        rules: [
+          {
+            ruleId: 'component:web-corp.background-plate.border-stroke-align-is-fixed',
+            severity: 'error',
+            source: 'pattern-link',
+            ruleKind: 'design-rule',
+            severityScope: 'design',
+            appliesTo: 'stroke.align|strokeAlign',
+            checkType: 'deterministic',
+            matchKind: 'exact_component_rule',
+            conditions: {
+              component: 'web-corp.background-plate',
+              variant: { Type: 'Border' },
+            },
+            ruleText: 'Для Type=Border strokeAlign должен оставаться INSIDE.',
+            remediation: 'Верните положение обводки в Inside.',
+          },
+          {
+            ruleId:
+              'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',
+            severity: 'error',
+            source: 'pattern-link',
+            ruleKind: 'design-rule',
+            severityScope: 'design',
+            appliesTo:
+              'layout.sizing.horizontal|layout.sizing.vertical|layoutSizingHorizontal|layoutSizingVertical',
+            checkType: 'deterministic',
+            matchKind: 'exact_component_rule',
+            target: {
+              component: 'web-corp.background-plate',
+              layers: ['[D] BackgroundPlateSlot / Slot'],
+            },
+            requiredValues: {
+              'layout.sizing.horizontal': 'FILL',
+              'layout.sizing.vertical': 'HUG',
+            },
+            ruleText: 'Slot должен использовать Fill по ширине и Hug по высоте.',
+            remediation: 'Верните Slot ширину Fill и высоту Hug.',
+          },
+        ],
+      },
+    },
   ];
   const customization = componentItem({
     diffs: [
@@ -279,6 +326,100 @@ function main() {
     ],
   });
 
+  const strokeAlignCustomization = componentItem({
+    id: '1:8',
+    name: '[D] BackgroundPlate',
+    componentKey: 'web-corp.background-plate',
+    librarySource: 'Web _ Corp Components',
+    librarySourceFile:
+      'web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json',
+    reference: {
+      key: 'web-corp.background-plate',
+      names: ['[D] BackgroundPlate'],
+      name: '[D] BackgroundPlate',
+      displayName: '[D] BackgroundPlate',
+      status: 'current',
+      source: 'Web _ Corp Components',
+      sourceFile:
+        'web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json',
+    },
+    diffs: [
+      {
+        message: 'Положение обводки: Inside → Center',
+        nodePath: '[D] BackgroundPlate / Border',
+        nodeName: 'Border',
+        nodeId: '1:9',
+        visible: true,
+        diffKind: 'shape',
+        details: {
+          property: 'stroke.align',
+          reference: { value: 'Inside' },
+          actual: { value: 'Center' },
+        },
+        context: {
+          actualComponentKey: null,
+          referenceComponentKey: null,
+          referenceOrigin: 'host',
+          actualNestedOwnerComponentKey: 'web-corp.background-plate',
+          actualNestedOwnerPath: '[D] BackgroundPlate',
+          actualNestedOwnerRelativePath: 'Border',
+          nestedOwnerComponentKey: 'web-corp.background-plate',
+          nestedOwnerComponentRole: 'Main',
+          nestedOwnerPath: '[D] BackgroundPlate',
+          nestedOwnerRelativePath: 'Border',
+          actualVariantProperties: { Type: 'Border' },
+          referenceVariantProperties: { Type: 'Border' },
+        },
+      },
+    ],
+  });
+
+  const layoutSizingCustomization = componentItem({
+    id: '1:10',
+    name: '[D] BackgroundPlateSlot',
+    componentKey: 'web-corp.background-plate',
+    librarySource: 'Web _ Corp Components',
+    librarySourceFile:
+      'web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json',
+    reference: {
+      key: 'web-corp.background-plate',
+      names: ['[D] BackgroundPlateSlot'],
+      name: '[D] BackgroundPlateSlot',
+      displayName: '[D] BackgroundPlateSlot',
+      status: 'current',
+      source: 'Web _ Corp Components',
+      sourceFile:
+        'web/components/web-corp/Web _ Corp Components -- BackgroundPlate.json',
+    },
+    diffs: [
+      {
+        message: 'Ширина в auto-layout: Fill → Fixed',
+        nodePath: '[D] BackgroundPlateSlot / Level=1 / Slot',
+        nodeName: 'Slot',
+        nodeId: '1:11',
+        visible: true,
+        diffKind: 'layout',
+        details: {
+          property: 'layout.sizing.horizontal',
+          reference: { value: 'Fill' },
+          actual: { value: 'Fixed' },
+        },
+        context: {
+          actualComponentKey: null,
+          referenceComponentKey: null,
+          referenceOrigin: 'host',
+          actualNestedOwnerComponentKey: 'web-corp.background-plate',
+          actualNestedOwnerPath: '[D] BackgroundPlateSlot',
+          actualNestedOwnerRelativePath: 'Level=1 / Slot',
+          nestedOwnerComponentKey: 'web-corp.background-plate',
+          nestedOwnerComponentRole: 'Main',
+          nestedOwnerPath: '[D] BackgroundPlateSlot',
+          nestedOwnerRelativePath: 'Level=1 / Slot',
+        },
+      },
+    ],
+  });
+
   const report = buildApolloStatsReport({
     pluginVersion: '0.1.0',
     user: { id: 'user-id', name: 'User Name' },
@@ -307,6 +448,8 @@ function main() {
         expectedCustomization,
         buttonTextStyleCustomization,
         tokenCustomization,
+        strokeAlignCustomization,
+        layoutSizingCustomization,
       ],
       localComponents: [],
       detachedComponents: [],
@@ -344,8 +487,8 @@ function main() {
   assert.equal(report.scan.settings.shellAuditEnabled, false);
   assert.equal(report.user.slug, 'User-Name');
   assert.equal(report.summary.categoryCounts.currentComponents, 1);
-  assert.equal(report.summary.categoryCounts.customizations, 4);
-  assert.equal(report.summary.problemOccurrenceCount, 3);
+  assert.equal(report.summary.categoryCounts.customizations, 6);
+  assert.equal(report.summary.problemOccurrenceCount, 5);
   const change = report.categories.customizations.items[0].changes[0];
   assert.equal(change.node.id, '1:2');
   assert.equal(change.node.name, 'Label');
@@ -367,6 +510,27 @@ function main() {
   assert.equal(
     buttonTextStyleChange.componentRules[0].matchKind,
     'exact_component_rule',
+  );
+  const strokeAlignChange =
+    report.categories.customizations.items[4].changes[0];
+  assert.equal(strokeAlignChange.property, 'stroke.align');
+  assert.equal(strokeAlignChange.reference.value, 'Inside');
+  assert.equal(strokeAlignChange.actual.value, 'Center');
+  assert.equal(strokeAlignChange.assessment.verdict, 'violation');
+  assert.equal(
+    strokeAlignChange.assessment.ruleId,
+    'component:web-corp.background-plate.border-stroke-align-is-fixed',
+  );
+  const layoutSizingChange =
+    report.categories.customizations.items[5].changes[0];
+  assert.equal(layoutSizingChange.property, 'layout.sizing.horizontal');
+  assert.equal(layoutSizingChange.reference.value, 'Fill');
+  assert.equal(layoutSizingChange.actual.value, 'Fixed');
+  assert.equal(layoutSizingChange.node.path, '[D] BackgroundPlateSlot / Level=1 / Slot');
+  assert.equal(layoutSizingChange.assessment.verdict, 'violation');
+  assert.equal(
+    layoutSizingChange.assessment.ruleId,
+    'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',
   );
 
   const agentReport = buildApolloAgentReport(report);
@@ -464,9 +628,9 @@ function main() {
       note.includes('Raw technical ids are preserved separately'),
     ),
   );
-  assert.equal(agentReport.categorySummaries.customizations.totalCount, 4);
-  assert.equal(agentReport.categorySummaries.customizations.includedCount, 3);
-  assert.equal(agentReport.findings.length, 3);
+  assert.equal(agentReport.categorySummaries.customizations.totalCount, 6);
+  assert.equal(agentReport.categorySummaries.customizations.includedCount, 5);
+  assert.equal(agentReport.findings.length, 5);
   assert.equal(agentReport.findings[0].category, 'customizations');
   assert.equal(agentReport.findings[0].changes.length, 1);
   assert.equal(agentReport.findings[0].changes[0].node.name, 'Label');
@@ -488,6 +652,25 @@ function main() {
     'VariableID:53f842b1771349c5dca692351edfc422e8f081b5/3541:208',
   );
   assert.equal(agentTokenChange.referenceDisplayValue, 'text/primary');
+  const agentStrokeAlignChange = agentReport.findings[3].changes[0];
+  assert.equal(agentStrokeAlignChange.node.name, 'Border');
+  assert.equal(agentStrokeAlignChange.property, 'stroke.align');
+  assert.equal(agentStrokeAlignChange.referenceValue, 'Inside');
+  assert.equal(agentStrokeAlignChange.actualValue, 'Center');
+  assert.equal(
+    agentStrokeAlignChange.assessment.ruleId,
+    'component:web-corp.background-plate.border-stroke-align-is-fixed',
+  );
+  const agentLayoutSizingChange = agentReport.findings[4].changes[0];
+  assert.equal(agentLayoutSizingChange.node.name, 'Slot');
+  assert.equal(agentLayoutSizingChange.node.path, '[D] BackgroundPlateSlot / Level=1 / Slot');
+  assert.equal(agentLayoutSizingChange.property, 'layout.sizing.horizontal');
+  assert.equal(agentLayoutSizingChange.referenceValue, 'Fill');
+  assert.equal(agentLayoutSizingChange.actualValue, 'Fixed');
+  assert.equal(
+    agentLayoutSizingChange.assessment.ruleId,
+    'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',
+  );
 
   console.log('Stats report regression checks passed');
 }

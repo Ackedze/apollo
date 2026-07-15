@@ -50,6 +50,7 @@ const componentIndexByKey = new Map<string, LibraryComponent>();
 const hostControlledPaintPaths = new Map<string, Set<string>>();
 const hostControlledTextPaths = new Map<string, Set<string>>();
 const hostControlledLayoutPaths = new Map<string, Set<string>>();
+const inferredNestedComponentKeyNodes = new Set<Partial<DSStructureNode>>();
 const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
 const componentCatalogSourcesByPath = new Map<string, ReferenceCatalogSource>();
@@ -170,6 +171,7 @@ export async function ensureReferenceCatalogsForKeys(
 
   const loadStartedAt = getTimestamp();
   await Promise.all(Array.from(catalogPaths).map(loadComponentCatalogByPath));
+  refreshDerivedComponentCatalogState();
   logAuditMetric('reference-lazy-load', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
     requestedKeys: requestedKeys.length,
@@ -693,6 +695,15 @@ export function __test_hydrateNestedInstanceComponentKeys(
   return component;
 }
 
+export function __test_rehydrateNestedInstanceComponentKeys(
+  components: AthenaComponent[],
+): AthenaComponent[] {
+  rehydrateNestedInstanceComponentKeys([
+    { meta: { fileName: 'test' }, components },
+  ]);
+  return components;
+}
+
 function isAthenaCatalog(payload: unknown): payload is AthenaCatalog {
   return Boolean(
     payload &&
@@ -1149,6 +1160,7 @@ function hydrateNodeInstanceComponentKey(
   node.componentInstance = Object.assign({}, node.componentInstance, {
     componentKey,
   });
+  inferredNestedComponentKeyNodes.add(node);
 }
 
 function normalizeComponentInstanceName(
@@ -1287,8 +1299,6 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   const uniqueKeys = new Set<string>();
 
   const validationWarnings: string[] = [];
-  const componentKeyByUniqueName = buildComponentKeyByUniqueName(modules);
-
   for (const module of catalogs) {
     for (const component of module.components ?? []) {
       totalComponents += 1;
@@ -1306,7 +1316,6 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
       }
 
       prepareComponent(component, module);
-      hydrateNestedInstanceComponentKeys(component, componentKeyByUniqueName);
       indexComponentByKey(component as unknown as LibraryComponent);
 
       registerPartUsage(component as unknown as LibraryComponent);
@@ -1320,7 +1329,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
     }
   }
 
-  buildPartHostControlledPaintPaths();
+  refreshDerivedComponentCatalogState();
 
   console.log('[Apollo] catalog merge summary', {
     catalogCount: catalogs.length,
@@ -1347,18 +1356,54 @@ function hydrateAdditionalCatalogs(modules: AthenaCatalog[]) {
   }
 
   catalogs = catalogs.concat(modules);
-  const componentKeyByUniqueName = buildComponentKeyByUniqueName(catalogs);
 
   for (const module of modules) {
     for (const component of module.components ?? []) {
       prepareComponent(component, module);
-      hydrateNestedInstanceComponentKeys(component, componentKeyByUniqueName);
       indexComponentByKey(component as unknown as LibraryComponent);
       registerPartUsage(component as unknown as LibraryComponent);
     }
   }
+}
 
+function refreshDerivedComponentCatalogState() {
+  catalogs.sort((left, right) => {
+    const leftName = String(left.meta?.fileName ?? '');
+    const rightName = String(right.meta?.fileName ?? '');
+    return leftName < rightName ? -1 : leftName > rightName ? 1 : 0;
+  });
+  rehydrateNestedInstanceComponentKeys(catalogs);
+  componentIndexByKey.clear();
+  corporateNameIndex.clear();
+  for (const module of catalogs) {
+    for (const component of module.components ?? []) {
+      indexComponentByKey(component as unknown as LibraryComponent);
+      registerPartUsage(component as unknown as LibraryComponent);
+    }
+  }
   buildPartHostControlledPaintPaths();
+}
+
+function rehydrateNestedInstanceComponentKeys(modules: AthenaCatalog[]) {
+  clearInferredNestedInstanceComponentKeys();
+  const componentKeyByUniqueName = buildComponentKeyByUniqueName(modules);
+  for (const module of modules) {
+    for (const component of module.components ?? []) {
+      hydrateNestedInstanceComponentKeys(component, componentKeyByUniqueName);
+    }
+  }
+}
+
+function clearInferredNestedInstanceComponentKeys() {
+  for (const node of inferredNestedComponentKeyNodes) {
+    if (!node.componentInstance) {
+      continue;
+    }
+    const componentInstance = Object.assign({}, node.componentInstance);
+    componentInstance.componentKey = '';
+    node.componentInstance = componentInstance;
+  }
+  inferredNestedComponentKeyNodes.clear();
 }
 
 function validateCatalogComponent(
@@ -1592,6 +1637,9 @@ export function resolveVariantKeyForInstance(
 }
 
 function buildPartHostControlledPaintPaths() {
+  hostControlledPaintPaths.clear();
+  hostControlledTextPaths.clear();
+  hostControlledLayoutPaths.clear();
   const structureCache = new Map<string, DSStructureNode[] | null>();
   const startedAt = getTimestamp();
 
@@ -2077,6 +2125,7 @@ function buildStructureFromPatches(
         const target = nodeMap.get(patch.id);
         if (target) {
           Object.assign(target, patch.value);
+          markVariantOwnedProperties(target, patch.value);
         }
         break;
       }
@@ -2090,6 +2139,7 @@ function buildStructureFromPatches(
       }
       case 'add': {
         const copy = cloneNode(patch.node);
+        markVariantOwnedProperties(copy, patch.node);
         nodes.push(copy);
         if (!nodeMap.has(copy.id)) {
           nodeMap.set(copy.id, copy);
@@ -2100,6 +2150,90 @@ function buildStructureFromPatches(
   }
 
   return nodes;
+}
+
+const VARIANT_OWNED_PROPERTY_ROOTS = [
+  'styles',
+  'fill',
+  'stroke',
+  'layout',
+  'opacity',
+  'opacityToken',
+  'typographyToken',
+  'radius',
+  'radiusToken',
+  'effects',
+  'componentInstance',
+  'text',
+  'visible',
+];
+
+function markVariantOwnedProperties(
+  node: DSStructureNode,
+  source: Partial<DSStructureNode> | null | undefined,
+) {
+  if (!source || typeof source !== 'object') {
+    return;
+  }
+
+  const owned = collectVariantOwnedPropertyPaths(source);
+  if (!owned.length) {
+    return;
+  }
+
+  const merged = new Set<string>(node.referenceVariantOwnedProperties ?? []);
+  for (const property of owned) {
+    merged.add(property);
+  }
+  node.referenceVariantOwnedProperties = Array.from(merged).sort();
+}
+
+function collectVariantOwnedPropertyPaths(
+  source: Partial<DSStructureNode>,
+): string[] {
+  const result: string[] = [];
+
+  for (const root of VARIANT_OWNED_PROPERTY_ROOTS) {
+    if (!Object.prototype.hasOwnProperty.call(source, root)) {
+      continue;
+    }
+    collectVariantOwnedLeafPaths(
+      (source as Record<string, unknown>)[root],
+      root,
+      result,
+    );
+  }
+
+  return result.sort();
+}
+
+function collectVariantOwnedLeafPaths(
+  value: unknown,
+  path: string,
+  result: string[],
+) {
+  if (
+    value == null ||
+    typeof value !== 'object' ||
+    Array.isArray(value)
+  ) {
+    result.push(path);
+    return;
+  }
+
+  const keys = Object.keys(value as Record<string, unknown>).sort();
+  if (!keys.length) {
+    result.push(path);
+    return;
+  }
+
+  for (const key of keys) {
+    collectVariantOwnedLeafPaths(
+      (value as Record<string, unknown>)[key],
+      `${path}.${key}`,
+      result,
+    );
+  }
 }
 
 function normalizeVariantStructureRootPath(

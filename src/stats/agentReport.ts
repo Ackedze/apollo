@@ -10,6 +10,7 @@ import type {
   StatsStyleItem,
   StatsThemeItem,
 } from './types';
+import { getComponentAgentContextsForKeys } from '../contracts/runtimeContractRegistry';
 
 const AGENT_CATEGORIES: ApolloAgentFindingCategory[] = [
   'deprecatedComponents',
@@ -59,6 +60,22 @@ export function buildApolloAgentReport(
     includedFindingCount: findings.length,
     omittedCurrentComponentCount: report.categories.currentComponents.count,
   });
+  const componentContextKeys: Array<string | null> = [];
+  for (const finding of findings) {
+    componentContextKeys.push(finding.component?.key ?? null);
+    for (const change of finding.changes ?? []) {
+      const context = change.context ?? {};
+      componentContextKeys.push(
+        context.actualComponentKey ?? null,
+        context.referenceComponentKey ?? null,
+        context.actualNestedOwnerComponentKey ?? null,
+        context.nestedOwnerComponentKey ?? null,
+      );
+    }
+  }
+  const componentContexts = getComponentAgentContextsForKeys(
+    componentContextKeys,
+  );
 
   return {
     schemaVersion: 1,
@@ -109,6 +126,7 @@ export function buildApolloAgentReport(
     },
     categorySummaries,
     findings,
+    componentContexts,
   };
 }
 
@@ -176,7 +194,9 @@ function buildFindings(report: ApolloStatsReport): ApolloAgentFinding[] {
           ),
           referenceResource: compactResource(change.reference.resource),
           actualResource: compactResource(change.actual.resource),
+          context: change.context,
           componentRules: change.componentRules,
+          presentation: change.presentation,
           assessment: change.assessment,
         })),
       });

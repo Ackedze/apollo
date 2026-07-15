@@ -98,7 +98,8 @@ For each component package, the publication pipeline should be able to produce o
 6. Apollo lazily loads component contract artifacts for those same component families from the same package directory:
    - `composition-contract.json` when present;
    - `rules.json`;
-   - later `contract.overrides.json` and `audit-mapping.json`.
+   - `agent-context.json`;
+   - `contract.overrides.json` and `audit-mapping.json` for the currently supported compact context and presentation fields.
 7. Apollo applies contract-aware diffing before customization assessment.
 8. Apollo applies matched component rules while building stats and `*_agent.json`.
 9. Apollo includes only matched rules and compact relevant context in the agent report.
@@ -203,7 +204,7 @@ The component contract index shape for the MVP:
 }
 ```
 
-For runtime audit Apollo needs only `artifacts.rules` and `artifacts.composition` at first. `artifacts.agentContext`, `audit-mapping.json`, `examples.json`, `contract.overrides.json` and `contract.generated.json` remain future pipeline inputs until the corresponding runtime phases are implemented.
+For runtime audit Apollo uses `artifacts.rules`, `artifacts.composition`, `artifacts.agentContext`, `audit-mapping.json` and compact sections of `contract.overrides.json`. `examples.json` is fetched only for direct agent questions. `contract.generated.json` remains a future baseline-loader input and is not loaded alongside the raw catalog.
 
 ### Apollo Runtime Loading Step
 
@@ -214,7 +215,7 @@ The current runtime/hardening sequence is:
 3. During scan, collect component keys from the selected area.
 4. Resolve references for those keys through the existing component index/catalog loader.
 5. Match contract packages by `figmaKeys`, `aliases` or `sourceCatalogPath`.
-6. Lazily fetch only matched `artifacts.rules` and `artifacts.composition`.
+6. Lazily fetch only matched runtime artifacts: rules, composition, agent context, audit mapping and overrides.
 7. Use remote artifacts as the only production source for matching `componentKey`.
 8. Apply an explicit contract-coverage policy: fail loudly when a required package or artifact is unavailable, and continue without contract-aware checks only when the manifest explicitly marks that component family as not contract-covered.
 9. Do not silently fall back to stale bundled artifacts.
@@ -277,7 +278,7 @@ Status: **implemented, hardening required**. Raw component catalogs and remote r
 
 ### Phase 4: Move Classification Policy Out of Code
 
-Status: **not implemented**. `audit-mapping.json` is generated but Apollo runtime does not consume it as the classification source of truth.
+Status: **partial**. Apollo consumes presentation grouping, order and reset metadata from `audit-mapping.json`; the complete classification policy still has code-owned fallbacks.
 
 - Start consuming `audit-mapping.json` for grouping, ordering and reset-action decisions.
 - Move hardcoded customization grouping rules into declarative mappings where possible.
@@ -285,7 +286,7 @@ Status: **not implemented**. `audit-mapping.json` is generated but Apollo runtim
 
 ### Phase 5: Use Overrides as Effective Model Input
 
-Status: **not implemented**. `contract.overrides.json` is generated but is not loaded by the Apollo runtime registry.
+Status: **partial**. `contract.overrides.json` is loaded for matched component packages; compact `publicApi` and `resetModel` sections are included in agent context. Applying the full override model to diff/classification remains pending.
 
 - Load `contract.overrides.json` before diff/classification.
 - Use overrides for public API, anatomy semantics, reset model and dependency policy.
@@ -293,12 +294,14 @@ Status: **not implemented**. `contract.overrides.json` is generated but is not l
 
 ### Phase 6: Agent Context on Demand
 
-Status: **partial**. Matched remote component rules are included in `*_agent.json`; the runtime index can describe `agentContext`, but Apollo does not currently load compact agent-context slices or examples on demand.
+Status: **implemented for agent context**. Matched remote component rules and compact component context are included in `*_agent.json`; examples are loaded only for direct questions.
 
-- [ ] Add a compact context resolver for agent requests.
+- [x] Add a compact context resolver for agent requests.
 - [x] Include matched `rules.json` entries in `*_agent.json`.
-- [ ] Include relevant `agent-context.json` slices only for affected components.
-- [ ] Load `examples.json` only for direct Q&A or when the agent explicitly needs examples.
+- [x] Include relevant `agent-context.json` slices only for affected components.
+- [x] Load `examples.json` only for direct Q&A or when the agent explicitly needs examples.
+
+Runtime hardening (2026-07-15): relevant context is collected from the root finding and every actual/reference nested diff owner, canonical component keys come from the contract index, and each agent-report change retains its normalized `DiffContext`. Component-rule attachments are deduplicated by `ruleId`; explicit owner keys take priority over path aliases, layer targets must end at the changed node, and token-source violations require actual missing-binding evidence.
 
 ### Phase 7: CI and Publication Gates
 
@@ -396,6 +399,95 @@ Acceptance criteria:
 - Esbuild can no longer produce a release artifact from source that fails the TypeScript gate.
 - Regression tests cover mixed Figma values and effect/text variants implicated by the current diagnostics.
 
+### P0. Preserve variant-aware host paint through deep nested materialization
+
+Evidence from Apollo 0.1.43 report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_08-20-39_agent.json`: four table rows use `[D] StatusPreset` with `Type=Approved, Style=Muted, Size=20`. The published Status & Property catalog correctly defines `decorative-text/green` for the nested Label, but Apollo compares it with the standalone Label baseline `text/info` and reports four false fill customizations.
+
+- [x] Keep the effective paint descriptor from the selected host variant when a deeper standalone nested component is materialized.
+- [x] Resolve the complete owner chain `StatusPreset -> Status -> Label` before applying standalone fallback data.
+- [x] Do not replace a host-controlled descendant fill/stroke/style with the default baseline of the nested Label component.
+- [x] Add a regression fixture for `[D] StatusPreset`, `Type=Approved, Style=Muted, Size=20`, nested inside a changed `Table Wide [D]` cell.
+- [x] Keep genuine `variant.Presets` changes in the same row visible; the confirmed `Account -> Text`, `Status -> Account` and `Amount -> Status` changes must not be suppressed by the paint fix.
+- [x] Verify the same behavior across at least four repeated table rows so occurrence suffixes do not change the effective baseline.
+- [x] Re-run the control layout and confirm that the four false fill changes are gone while all 12 confirmed `variant.Presets` changes remain.
+
+Implementation status (Apollo 0.1.46): variant structure resolution records deterministic property-level provenance for patch-owned paint, styles, layout, opacity, radius, effects, component properties, text and visibility. A deeper standalone materialization remains the structural base, but parent-variant-owned leaf properties are overlaid back onto it together with the parent owner/variant context. The 0.1.44 field run exposed a stale original host merge source; 0.1.45 corrected that source but the field run still showed four false fills because the catalog branch `Status / 🔩 Label / Label` did not share a literal path with actual `Status / Label / Label`. Version 0.1.46 aligns descendant instance subtrees by component-key chain and occurrence, with a normalized-name-chain fallback when raw variant patches omit the nested component key. This avoids component-specific suppression and still lets standalone references provide fields the parent variant did not define. `test:nested-variants` covers stale-host selection, renamed nested instances without raw keys, Approved baseline, a real manual recolor and four repeated rows and is part of `npm run validate`.
+
+Field verification (Apollo 0.1.46, report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_09-31-22_agent.json`): false fill customizations `text/info -> decorative-text/green` reduced from four to zero; all 12 confirmed `variant.Presets` changes remain; duplicate rule attachments remain zero. The report contains 22 total changes because four independently detected `variant.Uppercase` changes are now visible alongside the 12 presets and six layout changes.
+
+Acceptance criteria:
+
+- `decorative-text/green -> decorative-text/green` produces no fill customization for the Approved preset.
+- A real manual recolor of the same Label still produces one paint customization with the Approved preset baseline.
+- The 12 confirmed `variant.Presets` customizations in the control layout remain present after the fix.
+
+### P1. Support the complete published `rules.target` schema in Apollo runtime
+
+Evidence from the same 0.1.43 report: changes inside Section descendants receive unrelated CorporateContent root rules because runtime matching understands only `target.component` and `target.layers`. Published packages also use `target.components`, singular `target.layer`, `target.slots`, component key/name arrays and root selectors.
+
+- [x] Extend the runtime rule type and validator for `target.component`, `target.components`, `target.componentKeys`, `target.componentNames`, `target.layer`, `target.layers`, `target.slot` and `target.slots`.
+- [x] Interpret `target.layer: "root"` against the targeted component root, not every descendant in the same package.
+- [x] Match renamed component instances by Figma component key while preserving layer/slot scope.
+- [x] Prevent CorporateContent root rules from attaching to Section `Content`/`Isle` descendants and BackgroundPlateSlot padding changes.
+- [x] Keep rule attachment deduplicated by `ruleId` after schema expansion.
+- [x] Add schema fixtures from CorporateContent, Table Wide and BackgroundPlate packages.
+- [ ] Re-run the control layout on Apollo 0.1.47 and confirm the corrected rule attachments in a field report.
+
+Implementation status (Apollo 0.1.47): runtime validates every declared `target` before matching and supports the complete published component/layer/slot selector family. Actual/reference component identities are resolved to canonical catalog names by Figma key. Direct changed instances take precedence over package ancestors for component and root rules; an ancestor remains eligible only for explicit slot selectors such as `CorporateContent -> Body`. Root scope requires the targeted component itself, while layer and slot scopes use terminal matching and do not leak to descendants. Unsupported structural selectors such as `placeholder`, `parentComponents` or `prohibitedDescendants` are reported once and skipped instead of becoming unconstrained rules. `test:component-rules` includes CorporateContent, Table Wide and BackgroundPlate fixtures, renamed instances, singular/plural selectors, key/name arrays, unsupported targets and `ruleId` deduplication.
+
+Field verification (Apollo 0.1.47, report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_10-49-14_agent.json`): root-rule leakage into BackgroundPlateSlot is fixed, all 12 confirmed Table Wide `variant.Presets` changes retain the correct rule, false paint changes remain at zero and duplicate rule ids remain at zero. The task is not closed because two targetless package rules, `gutter-horizontal-composition` and `header-adjacency`, still attach to Section `Content` and `Isle` item-spacing changes. Targetless composition/screen rules need their own change-scope policy instead of package-wide per-diff attachment.
+
+Acceptance criteria:
+
+- Every attached rule satisfies both its component selector and its layer/slot selector.
+- Package membership alone is not sufficient to attach a root-only rule to a nested component.
+- Unsupported target shapes fail artifact validation or are reported explicitly instead of being treated as unconstrained rules.
+
+### P0. Make repeated Apollo audits deterministic after lazy catalog loading
+
+Evidence from four consecutive Apollo 0.1.47 reports for the same selected frame and unchanged 207 component instances:
+
+- `10-47-47`: 22 changes, including four `variant.Uppercase True -> False` changes;
+- `10-48-26`: 19 changes, including one `variant.Uppercase` change;
+- `10-48-37`: 18 changes, no `variant.Uppercase` changes;
+- `10-49-14`: 18 changes, no `variant.Uppercase` changes.
+
+The stable 12 `variant.Presets`, six layout changes and zero paint changes show that only nested Label variant baselines drift as component catalogs become available or cached. A repeated audit must not mutate cached catalog structures or change host-vs-standalone materialization semantics.
+
+- [x] Reproduce the 4 -> 1 -> 0 `variant.Uppercase` drift in a regression that executes the same audit/materialization sequence at least three times in one runtime.
+- [x] Make lazy nested-component loading complete before the effective reference is finalized, or make the merge result invariant to whether the standalone nested catalog was already cached.
+- [x] Keep catalog `structure` and `variantStructures` immutable across scans; clone every cached structure before alignment, provenance and merge operations.
+- [x] Confirm in regression coverage that repeated materialization produces the same ordered change signatures, excluding timestamps and report ids.
+- [ ] Re-run the control layout at least three times without restarting Apollo and verify an identical change count each time.
+
+Implementation status (Apollo 0.1.48): `diffExplicitNestedVariantStates` aligns the host reference with actual nested instance paths by component identity and normalized name before comparing variant properties. Explicit host-owned state therefore remains visible whether expanded standalone materialization produced four, one or zero copies of the same change; existing diffs are still deduplicated by node/property. Component catalogs loaded in one lazy batch no longer update inferred nested keys and host policies in fetch-completion order. Apollo waits for the batch, removes previous inferred-only keys, recomputes unique-name inference over the complete loaded set, rebuilds indexes in deterministic catalog order and then rebuilds host-controlled policies. Regression coverage models the observed 4 -> 1 -> 0 sequence, verifies four stable `variant.Uppercase` signatures and asserts that repeated comparisons do not mutate actual or cached host structures.
+
+Field verification (Apollo 0.1.48, report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_11-22-10_agent.json`): failed with 18 changes and zero `variant.Uppercase` changes. The synthetic fallback covered a StatusPreset used as the direct host, while the real audit starts at CorporateContent and materializes `Table Wide -> StatusPreset -> Label`. The broader Table host descendant carried `Uppercase=False` and overwrote the selected StatusPreset variant-owned `Uppercase=True` before the explicit fallback ran.
+
+Follow-up implementation (Apollo 0.1.49): host variant restoration now merges nested instance variant properties at property level. Values marked in `referenceVariantOwnedProperties`, such as `componentInstance.variantProperties.Uppercase`, remain owned by the selected parent variant; the broader host supplies only properties that parent variant does not own. The same rule is applied both during instance-root replacement and during the final occurrence-based host baseline restoration. Regression coverage includes the real stale Table host (`False`) versus selected StatusPreset (`True`) conflict.
+
+Field verification (Apollo 0.1.49, reports `12-34-36` and `12-34-41`): both consecutive saved runs contain the same 18 changes: 12 `variant.Presets` changes and six layout changes, with zero paint/stroke changes, zero `variant.Uppercase` changes and no duplicate `ruleId` values. After removing report metadata, their ordered full change signatures and rule sets are identical (`SHA-256 b9bae2a7d973c4e86e19f2d7eb7aef216620363ab84d5ac6930e75018bd6b782`). This confirms deterministic output for the two available 0.1.49 reports. The third attached report, `11-22-10`, was produced by Apollo 0.1.48, so the formal three-run field acceptance remains open. The stable absence of `variant.Uppercase` is a semantic-baseline question rather than evidence of repeated-run drift and must not be treated as a determinism failure without confirming that these four differences are expected user-visible customizations.
+
+Acceptance criteria:
+
+- The first and every subsequent scan in one Apollo session produce the same customization signatures for an unchanged Figma selection.
+- Host-variant-owned Label properties do not depend on lazy-load/cache timing of the standalone Label catalog.
+- A full plugin restart does not change the effective baseline or finding set.
+
+### P1. Define per-change scope for targetless component rules
+
+- [ ] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.
+- [ ] Add an explicit artifact field or deterministic mapping for rules that are intentionally attachable to atomic layer changes.
+- [ ] Prevent `header-adjacency` from attaching to Section `Content`/`Isle` `layout.itemSpacing` changes.
+- [ ] Attach `gutter-horizontal-composition` only when horizontal-composition evidence is present; do not infer direction from `layout.itemSpacing` alone.
+- [ ] Add CorporateContent fixtures for targetless `composition_rule`, `screen.composition` and package-level informational context.
+
+Acceptance criteria:
+
+- A rule without `target` never becomes a per-change rule solely because the changed component key belongs to the same package.
+- Screen-level composition rules appear in component/agent context until the report contains the screen relationship required to evaluate them.
+- Section slot layout changes contain only rules whose selector and semantic change scope are both satisfied.
+
 ### P1. Unify Athena plugin and Athena CLI publication contracts
 
 - [ ] Extract shared catalog naming, category inference, index construction, source metadata and validation logic into one tested module or schema package.
@@ -451,7 +543,7 @@ Acceptance criteria:
 - [x] Allow component rules to match sizing properties deterministically. Initial required case: `BackgroundPlateSlot / Slot` must use `FILL` horizontally and `HUG` vertically.
 - [x] Add regression tests for `FILL -> FIXED`, `HUG -> FILL`, unchanged sizing, nested component ownership and layer-only reset.
 
-Implementation status (2026-07-15): implemented in Apollo runtime and included in `npm run validate` through `test:layout-sizing-diff`. Apollo reads sizing from snapshots and normalized catalogs; while older catalogs do not yet carry these fields, deterministic component-rule `requiredValues` provides the effective baseline. Components with required sizing rules always receive a structural audit because Figma may omit sizing changes from `instance.overrides`. Component ownership is matched by key, while nested targets use their relative layer path, so renamed consumer instances and variant-aligned roots do not break the rule. Stats and agent-report regression coverage preserves the owning component, nested layer path, canonical property and human-readable values.
+Implementation status (2026-07-15): implemented in Apollo runtime and included in `npm run validate` through `test:layout-sizing-diff` and `test:component-rules`. Apollo reads sizing from snapshots and normalized catalogs; while older catalogs do not yet carry these fields, deterministic component-rule `requiredValues` provides the effective baseline. Components with required sizing rules always receive a structural audit because Figma may omit sizing changes from `instance.overrides`. Component ownership is matched by explicit actual/reference keys, while nested targets must end at the changed relative layer path, so a `Slot` rule cannot leak into its descendants. Stats and agent-report regression coverage preserves the owning component, nested layer path, canonical property and human-readable values.
 
 Acceptance criteria:
 

@@ -25,6 +25,7 @@ import type {
   StatsStyleItem,
   StatsThemeItem,
 } from './types';
+import { getAuditPresentationForComponent } from '../contracts/runtimeContractRegistry';
 
 export { buildApolloAgentReport } from './agentReport';
 
@@ -260,11 +261,24 @@ function customizationChange(
       actualComponentKey: diff.context.actualComponentKey,
       referenceComponentKey: diff.context.referenceComponentKey,
       referenceOrigin: diff.context.referenceOrigin,
+      actualNestedOwnerComponentKey:
+        diff.context.actualNestedOwnerComponentKey,
+      actualNestedOwnerPath: diff.context.actualNestedOwnerPath,
+      actualNestedOwnerRelativePath:
+        diff.context.actualNestedOwnerRelativePath,
       nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey,
       nestedOwnerPath: diff.context.nestedOwnerPath,
       nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
     },
     componentRules,
+    presentation: getAuditPresentationForComponent(
+      diff.context.actualComponentKey ??
+        diff.context.actualNestedOwnerComponentKey ??
+        diff.context.nestedOwnerComponentKey ??
+        diff.context.referenceComponentKey ??
+        item.componentKey,
+      property,
+    ),
     assessment: componentContractViolation
       ? {
           verdict: 'violation',

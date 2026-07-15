@@ -5,6 +5,10 @@ import type {
   DetachedEntry,
   ThemeAuditEntry,
 } from '../types/audit';
+import type {
+  RuntimeAuditPresentation,
+  RuntimeComponentAgentContext,
+} from '../contracts/artifactContext';
 
 export type StatsResourceType =
   | 'component'
@@ -67,6 +71,7 @@ export type StatsCustomizationChange = {
   signature: string;
   context: Record<string, string | null>;
   componentRules: StatsComponentContractRule[];
+  presentation: RuntimeAuditPresentation | null;
   assessment: {
     verdict: string;
     source: string;
@@ -220,7 +225,9 @@ export type ApolloAgentFinding = {
     actualDisplayValue?: string | number | null;
     referenceResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
     actualResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
+    context?: StatsCustomizationChange['context'];
     componentRules?: StatsComponentContractRule[];
+    presentation?: RuntimeAuditPresentation | null;
     assessment: StatsCustomizationChange['assessment'];
   }>;
 };
@@ -254,4 +261,5 @@ export type ApolloAgentReport = {
     }
   >;
   findings: ApolloAgentFinding[];
+  componentContexts: RuntimeComponentAgentContext[];
 };

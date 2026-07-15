@@ -93,6 +93,88 @@ function main() {
 
   const component = makeComponent();
 
+  const lazyHostComponent = {
+    key: 'lazy-host-key',
+    name: 'LazyHost',
+    structure: [
+      {
+        id: 1,
+        parentId: null,
+        path: 'LazyHost',
+        type: 'COMPONENT',
+        name: 'LazyHost',
+        visible: true,
+        radius: null,
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: 'LazyHost / 🔩 Label',
+        type: 'INSTANCE',
+        name: '🔩 Label',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          variantProperties: { Uppercase: 'True' },
+        },
+      },
+      {
+        id: 3,
+        parentId: 1,
+        path: 'LazyHost / Explicit Icon',
+        type: 'INSTANCE',
+        name: 'Explicit Icon',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'explicit-icon-key',
+          variantProperties: {},
+        },
+      },
+    ],
+  };
+  const lazyLabelComponent = {
+    key: 'label-key',
+    name: '🔩 Label',
+  };
+  const duplicateLabelComponent = {
+    key: 'duplicate-label-key',
+    name: '🔩 Label',
+  };
+  library.__test_rehydrateNestedInstanceComponentKeys([
+    lazyHostComponent,
+    lazyLabelComponent,
+  ]);
+  assert.equal(
+    lazyHostComponent.structure[1].componentInstance.componentKey,
+    'label-key',
+    'A unique nested component loaded after its host must hydrate the host key',
+  );
+  library.__test_rehydrateNestedInstanceComponentKeys([
+    lazyHostComponent,
+    lazyLabelComponent,
+    duplicateLabelComponent,
+  ]);
+  assert.equal(
+    lazyHostComponent.structure[1].componentInstance.componentKey,
+    '',
+    'A later ambiguous name must clear a previously inferred component key',
+  );
+  assert.equal(
+    lazyHostComponent.structure[2].componentInstance.componentKey,
+    'explicit-icon-key',
+    'Catalog-authored component keys must survive inferred-key refreshes',
+  );
+  library.__test_rehydrateNestedInstanceComponentKeys([
+    lazyHostComponent,
+    lazyLabelComponent,
+  ]);
+  assert.equal(
+    lazyHostComponent.structure[1].componentInstance.componentKey,
+    'label-key',
+    'The same final catalog set must restore the same inferred key',
+  );
+
   assert.equal(
     library.resolveVariantKeyForInstance(component, 'radio-selected', null),
     'radio-selected',
@@ -330,6 +412,44 @@ function main() {
     'Root-level replace-host-descendant must also preserve host variantProperties as the reference baseline',
   );
 
+  const parentVariantOwnedInstanceRoot =
+    nestedReferenceMerge.applyMaterializedHostVariantBaselineToNode(
+      {
+        path: 'Table / StatusPreset / Status / Label',
+        type: 'INSTANCE',
+        name: '🔩 Label',
+        visible: true,
+        id: 160,
+        parentId: 150,
+        referenceOrigin: 'nested-component',
+        referenceVariantOwnedProperties: [
+          'componentInstance.variantProperties.Uppercase',
+        ],
+        componentInstance: {
+          componentKey: 'label-key',
+          variantProperties: { Uppercase: 'True' },
+        },
+      },
+      {
+        path: 'Table / StatusPreset / Status / Label',
+        type: 'INSTANCE',
+        name: 'Label',
+        visible: true,
+        id: 60,
+        parentId: 50,
+        referenceOrigin: 'host',
+        componentInstance: {
+          componentKey: 'label-key',
+          variantProperties: { Uppercase: 'False' },
+        },
+      },
+    );
+  assert.deepEqual(
+    parentVariantOwnedInstanceRoot.componentInstance.variantProperties,
+    { Uppercase: 'True' },
+    'A selected parent variant must keep its owned nested variant property over a stale host descendant baseline',
+  );
+
   const baselineApplied = nestedReferenceMerge.applyMaterializedHostVariantBaselines(
     [
       {
@@ -417,6 +537,48 @@ function main() {
     baselineApplied[2].componentInstance.componentKey,
     'button-secondary',
     'Occurrence baseline restore must preserve nested candidate componentKey',
+  );
+
+  const ownedBaselineApplied =
+    nestedReferenceMerge.applyMaterializedHostVariantBaselines(
+      [
+        {
+          path: 'Table / StatusPreset / Status / Label',
+          type: 'INSTANCE',
+          name: '🔩 Label',
+          visible: true,
+          id: 170,
+          parentId: null,
+          referenceOrigin: 'nested-component',
+          referenceVariantOwnedProperties: [
+            'componentInstance.variantProperties.Uppercase',
+          ],
+          componentInstance: {
+            componentKey: 'label-key',
+            variantProperties: { Uppercase: 'True' },
+          },
+        },
+      ],
+      [
+        {
+          path: 'Table / StatusPreset / Status / Label',
+          type: 'INSTANCE',
+          name: 'Label',
+          visible: true,
+          id: 70,
+          parentId: null,
+          referenceOrigin: 'host',
+          componentInstance: {
+            componentKey: 'label-key',
+            variantProperties: { Uppercase: 'False' },
+          },
+        },
+      ],
+    );
+  assert.deepEqual(
+    ownedBaselineApplied[0].componentInstance.variantProperties,
+    { Uppercase: 'True' },
+    'Final host baseline restoration must not erase parent-variant-owned nested state',
   );
 
   assert.equal(
@@ -634,6 +796,398 @@ function main() {
     componentQualifiedNestedPaintDecision.preferCandidate,
     false,
     'Component-qualified parent nested paint must remain the expected value even without policy registry hit',
+  );
+
+  const parentVariantComponent = {
+    key: 'status-preset',
+    name: '[D] StatusPreset',
+    displayName: '[D] StatusPreset',
+    status: 'current',
+    platform: 'Desktop',
+    defaultVariant: 'status-default',
+    structure: [
+      {
+        id: 1,
+        parentId: null,
+        path: 'Type=Default',
+        type: 'INSTANCE',
+        name: 'Type=Default',
+        visible: true,
+        radius: null,
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: 'Type=Default / Status / Label / Label',
+        type: 'TEXT',
+        name: 'Label',
+        visible: true,
+        radius: null,
+        fill: { token: 'text/info' },
+        layout: { itemSpacing: 0 },
+      },
+    ],
+    variants: [
+      {
+        key: 'status-default',
+        name: 'Type=Default',
+        properties: { Type: 'Default' },
+      },
+      {
+        key: 'status-approved',
+        name: 'Type=Approved, Style=Muted, Size=20',
+        properties: { Type: 'Approved', Style: 'Muted', Size: '20' },
+      },
+    ],
+    variantStructures: {
+      'status-approved': [
+        {
+          op: 'update',
+          id: 1,
+          value: { name: 'Type=Approved, Style=Muted, Size=20' },
+        },
+        {
+          op: 'update',
+          id: 2,
+          value: { fill: { token: 'decorative-text/green' } },
+        },
+      ],
+    },
+  };
+  const approvedReference = library.resolveStructureForInstance(
+    parentVariantComponent,
+    {
+      componentKey: 'status-approved',
+      variantProperties: { Type: 'Approved', Style: 'Muted', Size: '20' },
+    },
+  );
+  const approvedLabel = approvedReference.find((node) => node.id === 2);
+
+  assert.deepEqual(
+    approvedLabel.referenceVariantOwnedProperties,
+    ['fill.token'],
+    'Resolved variant structure must retain property-level provenance for fields changed by its patch',
+  );
+
+  const renamedNestedInstanceReference =
+    nestedReferenceMerge.alignMaterializedReferenceInstancePaths(
+      [
+        {
+          id: 1,
+          parentId: null,
+          path: 'Table / StatusPreset',
+          type: 'COMPONENT',
+          name: 'Type=Approved, Style=Muted, Size=20',
+          visible: true,
+          radius: null,
+        },
+        {
+          id: 2,
+          parentId: 1,
+          path: 'Table / StatusPreset / Status / 🔩 Label',
+          type: 'INSTANCE',
+          name: '🔩 Label',
+          visible: true,
+          radius: null,
+          componentInstance: { variantProperties: { Uppercase: 'True' } },
+        },
+        {
+          id: 3,
+          parentId: 2,
+          path: 'Table / StatusPreset / Status / 🔩 Label / Label',
+          type: 'TEXT',
+          name: 'Label',
+          visible: true,
+          radius: null,
+          fill: { token: 'decorative-text/green' },
+          referenceOwnerPath: 'Table / StatusPreset',
+          referenceOwnerRelativePath: 'Status / 🔩 Label / Label',
+        },
+      ],
+      [
+        {
+          id: 101,
+          parentId: null,
+          path: 'Table / StatusPreset',
+          type: 'INSTANCE',
+          name: 'StatusPreset',
+          visible: true,
+          radius: null,
+          componentInstance: { componentKey: 'status-approved' },
+        },
+        {
+          id: 102,
+          parentId: 101,
+          path: 'Table / StatusPreset / Status / Label',
+          type: 'INSTANCE',
+          name: 'Label',
+          visible: true,
+          radius: null,
+          componentInstance: { componentKey: 'label-key' },
+        },
+        {
+          id: 103,
+          parentId: 102,
+          path: 'Table / StatusPreset / Status / Label / Label',
+          type: 'TEXT',
+          name: 'Label',
+          visible: true,
+          radius: null,
+          fill: { token: 'decorative-text/green' },
+        },
+      ],
+      'Table / StatusPreset',
+    );
+  assert.equal(
+    renamedNestedInstanceReference[2].path,
+    'Table / StatusPreset / Status / Label / Label',
+    'Nested reference paths must align by component identity when an instance display name differs from the catalog',
+  );
+  assert.equal(
+    renamedNestedInstanceReference[2].referenceOwnerRelativePath,
+    'Status / Label / Label',
+    'Reference owner relative paths must follow component-key path alignment',
+  );
+
+  const parentOwnedPaintNode = Object.assign({}, approvedLabel, {
+    path: 'Table / StatusPreset / Status / Label / Label',
+    referenceOrigin: 'nested-component',
+    referenceOwnerComponentKey: 'status-approved',
+    referenceOwnerPath: 'Table / StatusPreset',
+    referenceOwnerRelativePath: 'Status / Label / Label',
+    referenceOwnerVariantProperties: {
+      Type: 'Approved',
+      Style: 'Muted',
+      Size: '20',
+    },
+  });
+  const standaloneLabelNode = {
+    id: 202,
+    parentId: 201,
+    path: 'Table / StatusPreset / Status / Label / Label',
+    type: 'TEXT',
+    name: 'Label',
+    visible: true,
+    radius: null,
+    fill: { token: 'text/info' },
+    layout: { itemSpacing: 10 },
+    referenceOrigin: 'nested-component',
+    referenceOwnerComponentKey: 'label-default',
+    referenceOwnerPath: 'Table / StatusPreset / Status / Label',
+    referenceOwnerRelativePath: 'Label',
+  };
+  const parentVariantDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      parentOwnedPaintNode,
+      standaloneLabelNode,
+      'Table / StatusPreset / Status / Label',
+      () => false,
+    );
+
+  assert.equal(
+    parentVariantDecision.preferCandidate,
+    true,
+    'Deeper standalone materialization must still contribute properties not owned by the parent variant',
+  );
+  assert.equal(
+    parentVariantDecision.reason,
+    'merge-parent-variant-owned-descendant',
+    'Property-level merge must explicitly report parent variant precedence',
+  );
+
+  const staleOriginalHostBaseline = Object.assign({}, parentOwnedPaintNode, {
+    fill: { token: 'text/info' },
+    referenceOrigin: 'host',
+    referenceVariantOwnedProperties: undefined,
+  });
+  const selectedMergeSource =
+    nestedReferenceMerge.selectMaterializedInstanceMergeSource(
+      parentOwnedPaintNode,
+      staleOriginalHostBaseline,
+      parentVariantDecision,
+    );
+  assert.equal(
+    selectedMergeSource,
+    parentOwnedPaintNode,
+    'Property-level merge must use the latest materialized parent node instead of a stale original host baseline',
+  );
+
+  const mergedApprovedLabel =
+    nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+      selectedMergeSource,
+      standaloneLabelNode,
+      parentVariantDecision,
+    );
+
+  assert.equal(
+    mergedApprovedLabel.fill.token,
+    'decorative-text/green',
+    'Parent StatusPreset variant paint must survive deeper standalone Label materialization',
+  );
+  assert.equal(
+    mergedApprovedLabel.layout.itemSpacing,
+    10,
+    'Standalone fallback must still fill properties that the parent variant did not own',
+  );
+  assert.equal(
+    mergedApprovedLabel.referenceOwnerComponentKey,
+    'status-approved',
+    'Merged baseline ownership must point to the parent variant that supplied the protected property',
+  );
+
+  const approvedWithoutManualRecolor = diff.diffStructures(
+    [Object.assign({}, mergedApprovedLabel, { id: 302, parentId: null })],
+    [Object.assign({}, mergedApprovedLabel, { id: 402, parentId: null })],
+  );
+  assert.equal(
+    approvedWithoutManualRecolor.diffs.length,
+    0,
+    'Approved preset using its effective green token must not create a paint customization',
+  );
+
+  const approvedWithManualRecolor = diff.diffStructures(
+    [
+      Object.assign({}, mergedApprovedLabel, {
+        id: 303,
+        parentId: null,
+        fill: { token: 'decorative-text/red' },
+      }),
+    ],
+    [Object.assign({}, mergedApprovedLabel, { id: 403, parentId: null })],
+  );
+  assert.equal(
+    approvedWithManualRecolor.diffs.length,
+    1,
+    'A real manual recolor must remain visible after parent variant precedence is applied',
+  );
+  assert.equal(
+    approvedWithManualRecolor.diffs[0].message,
+    'заливка: decorative-text/green → decorative-text/red',
+    'Manual recolor must use the selected parent variant token as its reference baseline',
+  );
+
+  for (let row = 1; row <= 4; row += 1) {
+    const rowPath = `Table / Row ${row} / StatusPreset / Status / Label / Label`;
+    const rowParent = Object.assign({}, parentOwnedPaintNode, { path: rowPath });
+    const rowCandidate = Object.assign({}, standaloneLabelNode, { path: rowPath });
+    const rowDecision =
+      nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+        rowParent,
+        rowCandidate,
+        `Table / Row ${row} / StatusPreset / Status / Label`,
+        () => false,
+      );
+    const rowMerged = nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+      rowParent,
+      rowCandidate,
+      rowDecision,
+    );
+    assert.equal(
+      rowMerged.fill.token,
+      'decorative-text/green',
+      `Repeated row ${row} must retain the same parent variant paint baseline`,
+    );
+  }
+
+  const repeatedActualVariantNodes = [
+    {
+      id: 1,
+      parentId: null,
+      path: 'Table',
+      type: 'FRAME',
+      name: 'Table',
+      visible: true,
+      radius: null,
+    },
+  ];
+  const repeatedRenamedHostNodes = [
+    {
+      id: 101,
+      parentId: null,
+      path: 'Table',
+      type: 'FRAME',
+      name: 'Table',
+      visible: true,
+      radius: null,
+    },
+  ];
+  for (let row = 1; row <= 4; row += 1) {
+    repeatedActualVariantNodes.push({
+      id: row + 1,
+      nodeId: `actual-label-${row}`,
+      parentId: 1,
+      path: `Table / Row ${row} / StatusPreset / Status / Label`,
+      type: 'INSTANCE',
+      name: 'Label',
+      visible: true,
+      radius: null,
+      componentInstance: {
+        componentKey: 'label-key',
+        variantProperties: { Uppercase: 'False' },
+      },
+    });
+    repeatedRenamedHostNodes.push({
+      id: row + 101,
+      parentId: 101,
+      path: `Table / Row ${row} / StatusPreset / Status / 🔩 Label`,
+      type: 'INSTANCE',
+      name: '🔩 Label',
+      visible: true,
+      radius: null,
+      referenceOrigin: 'host',
+      componentInstance: {
+        variantProperties: { Uppercase: 'True' },
+      },
+    });
+  }
+  const alreadyAlignedHostNodes = repeatedRenamedHostNodes.map((node) =>
+    Object.assign({}, node, {
+      path: node.path.replace(' / 🔩 Label', ' / Label'),
+    }),
+  );
+  const completeExpandedVariantDiffs = diff.diffExplicitNestedVariantStates(
+    repeatedActualVariantNodes,
+    alreadyAlignedHostNodes,
+  );
+  assert.equal(
+    completeExpandedVariantDiffs.length,
+    4,
+    'The aligned host fixture must expose all four Uppercase changes',
+  );
+
+  const actualBeforeRepeatedAudit = JSON.stringify(repeatedActualVariantNodes);
+  const hostBeforeRepeatedAudit = JSON.stringify(repeatedRenamedHostNodes);
+  for (const expandedCount of [4, 1, 0]) {
+    const expandedDiffs = completeExpandedVariantDiffs.slice(0, expandedCount);
+    const explicitHostDiffs = diff.diffExplicitNestedVariantStates(
+      repeatedActualVariantNodes,
+      repeatedRenamedHostNodes,
+      expandedDiffs,
+    );
+    const signatures = expandedDiffs
+      .concat(explicitHostDiffs)
+      .map((entry) => `${entry.nodeId}|${entry.details.property}`)
+      .sort();
+    assert.deepEqual(
+      signatures,
+      [
+        'actual-label-1|variant.Uppercase',
+        'actual-label-2|variant.Uppercase',
+        'actual-label-3|variant.Uppercase',
+        'actual-label-4|variant.Uppercase',
+      ],
+      `Host variant fallback must make ${expandedCount} expanded diffs deterministic`,
+    );
+  }
+  assert.equal(
+    JSON.stringify(repeatedActualVariantNodes),
+    actualBeforeRepeatedAudit,
+    'Repeated explicit variant comparison must not mutate actual snapshots',
+  );
+  assert.equal(
+    JSON.stringify(repeatedRenamedHostNodes),
+    hostBeforeRepeatedAudit,
+    'Repeated explicit variant comparison must not mutate cached host structures',
   );
 
   const duplicateNodes = [

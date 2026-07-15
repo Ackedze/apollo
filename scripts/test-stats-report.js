@@ -131,6 +131,52 @@ function main() {
       },
     },
   ];
+  globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__ = [
+    {
+      componentKey: 'web-corp.background-plate',
+      summary: 'Surface component context',
+      criticalBaselines: ['Slot width is Fill and height is Hug'],
+      agentInstructions: ['Use exact component rules'],
+      includedComponents: ['[D] BackgroundPlateSlot'],
+      auditInterpretation: { baselinePolicy: 'effective' },
+      overrideContext: null,
+    },
+    {
+      componentKey: 'web-core.button',
+      summary: 'Button component context',
+      criticalBaselines: [],
+      agentInstructions: [],
+      includedComponents: ['[D] Button'],
+      auditInterpretation: null,
+      overrideContext: null,
+    },
+  ];
+  globalThis.__APOLLO_TEST_REMOTE_AUDIT_PRESENTATIONS__ = [
+    {
+      componentKey: 'web-corp.background-plate',
+      property: 'layout.sizing.horizontal',
+      presentation: {
+        scope: 'layer-property',
+        groupTitle: 'Параметры слоя',
+        displayName: 'Ширина',
+        priority: 20,
+        resetAction: 'reset-layer-properties',
+        effectiveBaseline: 'composition-contract',
+      },
+    },
+    {
+      componentKey: 'web-core.button',
+      property: 'styles.text',
+      presentation: {
+        scope: 'layer-property',
+        groupTitle: 'Button layers',
+        displayName: 'Button text style',
+        priority: 30,
+        resetAction: 'reset-layer-properties',
+        effectiveBaseline: 'component-contract',
+      },
+    },
+  ];
   const customization = componentItem({
     diffs: [
       {
@@ -246,9 +292,10 @@ function main() {
           actualComponentKey: null,
           referenceComponentKey: null,
           referenceOrigin: 'host',
-          actualNestedOwnerComponentKey: null,
-          actualNestedOwnerPath: null,
-          actualNestedOwnerRelativePath: null,
+          actualNestedOwnerComponentKey: 'web-core.button',
+          actualNestedOwnerPath:
+            'View=xLarge, Skeleton=False / MainContent / Button group / [D] Button',
+          actualNestedOwnerRelativePath: 'Text / Label',
           nestedOwnerComponentKey: null,
           nestedOwnerComponentRole: null,
           nestedOwnerPath: null,
@@ -528,6 +575,8 @@ function main() {
   assert.equal(layoutSizingChange.actual.value, 'Fixed');
   assert.equal(layoutSizingChange.node.path, '[D] BackgroundPlateSlot / Level=1 / Slot');
   assert.equal(layoutSizingChange.assessment.verdict, 'violation');
+  assert.equal(layoutSizingChange.presentation.groupTitle, 'Параметры слоя');
+  assert.equal(layoutSizingChange.presentation.resetAction, 'reset-layer-properties');
   assert.equal(
     layoutSizingChange.assessment.ruleId,
     'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',
@@ -631,6 +680,20 @@ function main() {
   assert.equal(agentReport.categorySummaries.customizations.totalCount, 6);
   assert.equal(agentReport.categorySummaries.customizations.includedCount, 5);
   assert.equal(agentReport.findings.length, 5);
+  assert.equal(agentReport.componentContexts.length, 2);
+  const backgroundPlateContext = agentReport.componentContexts.find(
+    (context) => context.componentKey === 'web-corp.background-plate',
+  );
+  assert.deepEqual(backgroundPlateContext.criticalBaselines, [
+    'Slot width is Fill and height is Hug',
+  ]);
+  assert.equal(
+    agentReport.componentContexts.some(
+      (context) => context.componentKey === 'web-core.button',
+    ),
+    true,
+    'Nested diff owners must contribute their agent context',
+  );
   assert.equal(agentReport.findings[0].category, 'customizations');
   assert.equal(agentReport.findings[0].changes.length, 1);
   assert.equal(agentReport.findings[0].changes[0].node.name, 'Label');
@@ -643,6 +706,11 @@ function main() {
   );
   assert.equal(agentButtonChange.componentRules.length, 1);
   assert.equal(agentButtonChange.componentRules[0].ruleKind, 'design-rule');
+  assert.equal(
+    agentButtonChange.context.actualNestedOwnerComponentKey,
+    'web-core.button',
+  );
+  assert.equal(agentButtonChange.presentation.groupTitle, 'Button layers');
   const agentTokenChange = agentReport.findings[2].changes[0];
   assert.equal(agentTokenChange.node.name, 'Minus');
   assert.equal(agentTokenChange.referenceValue, 'text/primary');
@@ -667,6 +735,7 @@ function main() {
   assert.equal(agentLayoutSizingChange.property, 'layout.sizing.horizontal');
   assert.equal(agentLayoutSizingChange.referenceValue, 'Fill');
   assert.equal(agentLayoutSizingChange.actualValue, 'Fixed');
+  assert.equal(agentLayoutSizingChange.presentation.displayName, 'Ширина');
   assert.equal(
     agentLayoutSizingChange.assessment.ruleId,
     'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',

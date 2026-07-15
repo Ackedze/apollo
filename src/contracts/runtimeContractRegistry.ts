@@ -7,6 +7,14 @@ import {
   resolveCatalogUrl,
 } from '../reference/referenceList';
 import type { ComponentContractRule } from './componentRules';
+import {
+  compactAgentContext,
+  compactExamples,
+  resolveAuditPresentation,
+  type RuntimeAuditPresentation,
+  type RuntimeComponentAgentContext,
+  type RuntimeComponentExample,
+} from './artifactContext';
 
 type RemoteContractPackage = {
   componentKey?: string;
@@ -22,6 +30,7 @@ type RemoteContractPackage = {
     auditMapping?: string;
     overrides?: string;
     generatedContract?: string;
+    examples?: string;
   };
   rulesPath?: string;
   rulesFile?: string;
@@ -89,6 +98,11 @@ type RuntimeContractPackageState = {
   aliases: string[];
   rulesEntry: RuntimeComponentRuleRegistryEntry | null;
   compositionEntry: RuntimeCompositionRegistryEntry | null;
+  agentContext: RuntimeComponentAgentContext | null;
+  auditMapping: any | null;
+  overridesPayload: any | null;
+  examples: RuntimeComponentExample[] | null;
+  examplesLoading: Promise<void> | null;
   loading: Promise<void> | null;
   loaded: boolean;
 };
@@ -109,6 +123,16 @@ declare global {
     | undefined;
   var __APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__:
     | RuntimeCompositionRegistryEntry[]
+    | undefined;
+  var __APOLLO_TEST_REMOTE_AGENT_CONTEXTS__:
+    | RuntimeComponentAgentContext[]
+    | undefined;
+  var __APOLLO_TEST_REMOTE_AUDIT_PRESENTATIONS__:
+    | Array<{
+        componentKey: string;
+        property: string;
+        presentation: RuntimeAuditPresentation;
+      }>
     | undefined;
 }
 
@@ -160,6 +184,7 @@ export async function ensureContractArtifactsForHints(
     requestedPackages: matchedPackages.size,
     rulesCount: getRemoteComponentRuleRegistry().length,
     compositionCount: getRemoteCompositionContractRegistry().length,
+    agentContextCount: getRemoteComponentAgentContexts().length,
   });
 }
 
@@ -181,6 +206,100 @@ export function getRemoteCompositionContractRegistry():
   return packageStates
     .map((state) => state.compositionEntry)
     .filter((entry): entry is RuntimeCompositionRegistryEntry => entry !== null);
+}
+
+export function getRemoteComponentAgentContexts(): RuntimeComponentAgentContext[] {
+  if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__)) {
+    return globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__;
+  }
+  return packageStates
+    .map((state) => state.agentContext)
+    .filter((entry): entry is RuntimeComponentAgentContext => entry !== null);
+}
+
+export function getComponentAgentContextsForKeys(
+  componentKeys: Array<string | null | undefined>,
+): RuntimeComponentAgentContext[] {
+  const keys = new Set(componentKeys.filter((key): key is string => Boolean(key)));
+  if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__)) {
+    return globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__.filter((context) =>
+      keys.has(context.componentKey),
+    );
+  }
+  const contexts = packageStates
+    .filter((state) => {
+      const entry = state.indexEntry;
+      return (
+        state.agentContext !== null &&
+        (keys.has(entry.componentKey ?? '') ||
+          (entry.figmaKeys ?? []).some((key) => keys.has(key)))
+      );
+    })
+    .map((state) => state.agentContext as RuntimeComponentAgentContext);
+  const unique = new Map<string, RuntimeComponentAgentContext>();
+  for (const context of contexts) {
+    if (!unique.has(context.componentKey)) {
+      unique.set(context.componentKey, context);
+    }
+  }
+  return Array.from(unique.values());
+}
+
+export function getAuditPresentationForComponent(
+  componentKey: string | null | undefined,
+  property: string,
+): RuntimeAuditPresentation | null {
+  if (!componentKey) return null;
+  if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_AUDIT_PRESENTATIONS__)) {
+    return (
+      globalThis.__APOLLO_TEST_REMOTE_AUDIT_PRESENTATIONS__.find(
+        (entry) =>
+          entry.componentKey === componentKey && entry.property === property,
+      )?.presentation ?? null
+    );
+  }
+  for (const state of packageStates) {
+    const entry = state.indexEntry;
+    if (
+      componentKey !== entry.componentKey &&
+      !(entry.figmaKeys ?? []).includes(componentKey)
+    ) {
+      continue;
+    }
+    const presentation = resolveAuditPresentation(state.auditMapping, property);
+    if (presentation) return presentation;
+  }
+  return null;
+}
+
+export async function ensureContractExamplesForHints(
+  hints: ContractArtifactHint[],
+): Promise<void> {
+  await ensureRemoteContractIndexLoaded();
+  const matched = packageStates.filter((state) =>
+    hints.some((hint) => packageMatchesHint(state, hint)),
+  );
+  await Promise.all(matched.map(loadPackageExamples));
+}
+
+export function getComponentExamplesForKeys(
+  componentKeys: Array<string | null | undefined>,
+): Array<{ componentKey: string; examples: RuntimeComponentExample[] }> {
+  const keys = new Set(componentKeys.filter((key): key is string => Boolean(key)));
+  return packageStates
+    .filter((state) => {
+      const entry = state.indexEntry;
+      return (
+        state.examples !== null &&
+        (keys.has(entry.componentKey ?? '') ||
+          (entry.figmaKeys ?? []).some((key) => keys.has(key)))
+      );
+    })
+    .map((state) => ({
+      componentKey: state.indexEntry.componentKey ?? state.indexEntry.packageName ?? '',
+      examples: state.examples ?? [],
+    }))
+    .filter((entry) => Boolean(entry.componentKey) && entry.examples.length > 0);
 }
 
 async function ensureRemoteContractIndexLoaded(): Promise<void> {
@@ -224,6 +343,11 @@ async function loadRemoteContractIndex(): Promise<void> {
         aliases: buildPackageAliases(entry),
         rulesEntry: null,
         compositionEntry: null,
+        agentContext: null,
+        auditMapping: null,
+        overridesPayload: null,
+        examples: null,
+        examplesLoading: null,
         loading: null,
         loaded: false,
       }));
@@ -307,6 +431,35 @@ async function loadPackageArtifacts(
       }
     }
 
+    const overridesPath = getPackageArtifactPath(
+      entry,
+      entry.artifacts?.overrides ?? 'contract.overrides.json',
+    );
+    state.overridesPayload = overridesPath
+      ? await loadJsonArtifact(overridesPath)
+      : null;
+
+    const agentContextPath = getPackageArtifactPath(
+      entry,
+      entry.agentContextPath ?? entry.artifacts?.agentContext ?? '',
+    );
+    if (agentContextPath) {
+      const payload = await loadJsonArtifact(agentContextPath);
+      state.agentContext = compactAgentContext(
+        payload,
+        componentKey,
+        state.overridesPayload,
+      );
+    }
+
+    const auditMappingPath = getPackageArtifactPath(
+      entry,
+      entry.artifacts?.auditMapping ?? 'audit-mapping.json',
+    );
+    state.auditMapping = auditMappingPath
+      ? await loadJsonArtifact(auditMappingPath)
+      : null;
+
     state.loaded = true;
   })().catch((error) => {
     const payload = {
@@ -326,6 +479,30 @@ async function loadPackageArtifacts(
   });
 
   return state.loading;
+}
+
+async function loadPackageExamples(
+  state: RuntimeContractPackageState,
+): Promise<void> {
+  if (state.examples !== null) return;
+  if (state.examplesLoading) return state.examplesLoading;
+  state.examplesLoading = (async () => {
+    const path = getPackageArtifactPath(
+      state.indexEntry,
+      state.indexEntry.artifacts?.examples ?? 'examples.json',
+    );
+    const payload = path ? await loadJsonArtifact(path) : null;
+    state.examples = compactExamples(payload);
+  })().catch((error) => {
+    state.examples = [];
+    console.warn('[Apollo][contracts] optional examples unavailable', {
+      componentKey: state.indexEntry.componentKey ?? null,
+      error: error instanceof Error ? error.message : String(error ?? 'Unknown error'),
+    });
+  }).finally(() => {
+    state.examplesLoading = null;
+  });
+  return state.examplesLoading;
 }
 
 async function loadJsonArtifact(path: string): Promise<any> {

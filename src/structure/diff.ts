@@ -7,6 +7,7 @@ import {
   normalizeStrokeAlignment,
 } from './strokeAlignment';
 import { formatLayoutSizing, normalizeLayoutSizing } from './layoutSizing';
+import { alignMaterializedReferenceInstancePaths } from '../reference/nestedReferenceMerge';
 
 export type DiffContext = {
   actualComponentKey: string | null;
@@ -42,6 +43,7 @@ export type DiffValueDetails = {
   resourceType?: 'style' | 'token' | 'color';
   resourceId?: string | null;
   displayName?: string | null;
+  bindingId?: string | null;
 };
 
 export type DiffDetails = {
@@ -151,10 +153,21 @@ export function diffExplicitNestedVariantStates(
   }
 
   const actualRootId = actual[0]?.id ?? null;
+  const actualRootPath = actual[0]?.path ?? '';
+  const alignedHostReference = actualRootPath
+    ? alignMaterializedReferenceInstancePaths(
+        hostReference,
+        actual,
+        actualRootPath,
+      )
+    : hostReference;
   const actualKeyMap = buildOccurrenceKeyMap(actual);
-  const referenceKeyMap = buildOccurrenceKeyMap(hostReference);
+  const referenceKeyMap = buildOccurrenceKeyMap(alignedHostReference);
   const referenceByOccurrence = new Map(
-    hostReference.map((node) => [referenceKeyMap.get(node) ?? node.path, node]),
+    alignedHostReference.map((node) => [
+      referenceKeyMap.get(node) ?? node.path,
+      node,
+    ]),
   );
   const existingKeys = new Set(existingDiffs.map(getVariantStateDiffKey));
   const result: DiffEntry[] = [];
@@ -806,6 +819,9 @@ function comparePadding(
     }
 
     if (strict && a === null) {
+      if (isUnavailableInstanceRootProperty(actualNode, referenceNode)) {
+        continue;
+      }
       addIssue(
         issueSet,
         `Нет данных для padding ${label(side)} в снапшоте для «${path}»`,
@@ -823,8 +839,14 @@ function comparePadding(
         'layout',
         {
           property: `layout.padding.${side}`,
-          reference: { value: b },
-          actual: { value: a },
+          reference: {
+            value: b,
+            bindingId: referenceTokens?.[side] ?? null,
+          },
+          actual: {
+            value: a,
+            bindingId: actualTokens?.[side] ?? null,
+          },
         },
       );
       continue;
@@ -1073,6 +1095,9 @@ function comparePaint(
   );
 
   if (strict && !actualValue) {
+    if (isUnavailableInstanceRootProperty(actualNode, referenceNode)) {
+      return;
+    }
     addIssue(
       issueSet,
       `Нет данных для ${label} в снапшоте для «${path}»`,
@@ -1128,6 +1153,13 @@ function paintValueToDiffValue(value: PaintValueDescription): DiffValueDetails {
   };
 }
 
+function isUnavailableInstanceRootProperty(
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+): boolean {
+  return actualNode.type === 'INSTANCE' && referenceNode.type === 'COMPONENT';
+}
+
 function compareStroke(
   path: string,
   actualNode: DSStructureNode,
@@ -1166,6 +1198,10 @@ function compareStroke(
     if (hasActualStroke) {
       pushDiff(diffs, actualNode, referenceNode, path, `Обводка: — → ${actualValue?.text ?? '—'}`);
     }
+    return;
+  }
+
+  if (!actual && isUnavailableInstanceRootProperty(actualNode, referenceNode)) {
     return;
   }
 
@@ -1274,6 +1310,8 @@ function compareRadius(
   resolveTokenLabel?: (token: string) => string | null,
 ) {
   if (reference === null) return;
+
+  if (actual === null && reference === 0) return;
 
   if (strict && actual === null) {
     addIssue(

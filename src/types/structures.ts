@@ -106,6 +106,7 @@ export interface DSStructureNode {
   referenceOwnerPath?: string | null;
   referenceOwnerRelativePath?: string | null;
   referenceOwnerVariantProperties?: Record<string, string> | null;
+  referenceVariantOwnedProperties?: string[];
 }
 
 export interface DSNormalizedElement {
@@ -163,9 +164,14 @@ type DSStructureNodePatch = Partial<
     | 'name'
     | 'visible'
     | 'styles'
+    | 'fill'
+    | 'stroke'
     | 'layout'
     | 'opacity'
+    | 'opacityToken'
+    | 'typographyToken'
     | 'radius'
+    | 'radiusToken'
     | 'effects'
     | 'componentInstance'
     | 'text'

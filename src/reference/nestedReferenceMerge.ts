@@ -7,6 +7,7 @@ export type MaterializedInstanceReferenceDecision = {
     | 'outside-materialized-subtree'
     | 'candidate-not-nested'
     | 'deeper-nested-materialization'
+    | 'merge-parent-variant-owned-descendant'
     | 'keep-existing-nested-materialization'
     | 'existing-not-host'
     | 'replace-instance-root'
@@ -44,17 +45,336 @@ export function mergeMaterializedInstanceReferenceNode(
   candidateNode: DSStructureNode,
   decision: MaterializedInstanceReferenceDecision,
 ): DSStructureNode {
+  if (decision.preferCandidate !== true) {
+    return candidateNode;
+  }
+
+  if (decision.reason === 'merge-parent-variant-owned-descendant') {
+    return applyParentVariantOwnedProperties(candidateNode, existingNode);
+  }
+
   if (
-    decision.preferCandidate !== true ||
-    (
-      decision.reason !== 'replace-instance-root' &&
-      !(decision.reason === 'replace-host-descendant' && decision.relativePath === '')
-    )
+    decision.reason !== 'replace-instance-root' &&
+    !(decision.reason === 'replace-host-descendant' && decision.relativePath === '')
   ) {
     return candidateNode;
   }
 
   return applyMaterializedHostVariantBaselineToNode(candidateNode, existingNode);
+}
+
+export function selectMaterializedInstanceMergeSource(
+  existingNode: DSStructureNode,
+  originalHostBaseline: DSStructureNode | null | undefined,
+  decision: MaterializedInstanceReferenceDecision,
+): DSStructureNode {
+  if (decision.reason === 'merge-parent-variant-owned-descendant') {
+    return existingNode;
+  }
+  return originalHostBaseline ?? existingNode;
+}
+
+export function alignMaterializedReferenceInstancePaths(
+  referenceNodes: DSStructureNode[],
+  actualNodes: DSStructureNode[],
+  materializedRootPath: string,
+): DSStructureNode[] {
+  if (!referenceNodes.length || !actualNodes.length || !materializedRootPath) {
+    return referenceNodes;
+  }
+
+  const referenceInstances = collectNestedInstanceIdentities(
+    referenceNodes,
+    materializedRootPath,
+  );
+  const actualInstances = collectNestedInstanceIdentities(
+    actualNodes,
+    materializedRootPath,
+  );
+  const pathMappings: Array<{ from: string; to: string }> = [];
+  const usedActualNodes = new Set<DSStructureNode>();
+
+  for (const referenceEntry of referenceInstances) {
+    let actualEntry = referenceEntry.keyIdentity
+      ? actualInstances.find(
+          (entry) =>
+            !usedActualNodes.has(entry.node) &&
+            entry.keyIdentity === referenceEntry.keyIdentity,
+        ) ?? null
+      : null;
+    if (!actualEntry && referenceEntry.nameIdentity) {
+      actualEntry =
+        actualInstances.find(
+          (entry) =>
+            !usedActualNodes.has(entry.node) &&
+            entry.nameIdentity === referenceEntry.nameIdentity,
+        ) ?? null;
+    }
+    if (!actualEntry) {
+      continue;
+    }
+    usedActualNodes.add(actualEntry.node);
+    if (referenceEntry.node.path === actualEntry.node.path) {
+      continue;
+    }
+    pathMappings.push({
+      from: referenceEntry.node.path,
+      to: actualEntry.node.path,
+    });
+  }
+
+  if (!pathMappings.length) {
+    return referenceNodes;
+  }
+
+  pathMappings.sort((left, right) => right.from.length - left.from.length);
+
+  return referenceNodes.map((node) => {
+    const alignedPath = applyLongestPathMapping(node.path, pathMappings);
+    const currentOwnerPath = node.referenceOwnerPath ?? null;
+    const alignedOwnerPath = currentOwnerPath
+      ? applyLongestPathMapping(currentOwnerPath, pathMappings)
+      : null;
+    if (alignedPath === node.path && alignedOwnerPath === currentOwnerPath) {
+      return node;
+    }
+
+    const cloned = Object.assign({}, node, {
+      path: alignedPath,
+      referenceOwnerPath: alignedOwnerPath,
+    });
+    if (alignedOwnerPath) {
+      cloned.referenceOwnerRelativePath = getRelativeAlignedPath(
+        alignedOwnerPath,
+        alignedPath,
+      );
+    }
+    return cloned;
+  });
+}
+
+type NestedInstanceIdentity = {
+  node: DSStructureNode;
+  keyIdentity: string | null;
+  nameIdentity: string;
+};
+
+function collectNestedInstanceIdentities(
+  nodes: DSStructureNode[],
+  materializedRootPath: string,
+): NestedInstanceIdentity[] {
+  const nodesById = new Map<number, DSStructureNode>();
+  for (const node of nodes) {
+    nodesById.set(node.id, node);
+  }
+
+  const result: NestedInstanceIdentity[] = [];
+  for (const node of nodes) {
+    if (
+      node.type !== 'INSTANCE' ||
+      node.path === materializedRootPath ||
+      !isWithinMaterializedSubtree(node.path, materializedRootPath)
+    ) {
+      continue;
+    }
+
+    const identity = buildNestedInstanceIdentities(
+      node,
+      nodesById,
+      materializedRootPath,
+    );
+    if (!identity.nameIdentity) {
+      continue;
+    }
+    result.push({
+      node,
+      keyIdentity: identity.keyIdentity,
+      nameIdentity: identity.nameIdentity,
+    });
+  }
+  return result;
+}
+
+function buildNestedInstanceIdentities(
+  node: DSStructureNode,
+  nodesById: Map<number, DSStructureNode>,
+  materializedRootPath: string,
+): { keyIdentity: string | null; nameIdentity: string } {
+  const componentKeys: string[] = [];
+  const componentNames: string[] = [];
+  let completeKeyChain = true;
+  let current: DSStructureNode | null = node;
+
+  while (current) {
+    if (
+      current.path !== materializedRootPath &&
+      current.type === 'INSTANCE'
+    ) {
+      const componentKey = current.componentInstance?.componentKey ?? '';
+      if (componentKey) {
+        componentKeys.unshift(componentKey);
+      } else {
+        completeKeyChain = false;
+      }
+      componentNames.unshift(normalizeNestedInstanceName(current.name));
+    }
+    if (current.path === materializedRootPath) {
+      break;
+    }
+    current =
+      typeof current.parentId === 'number'
+        ? nodesById.get(current.parentId) ?? null
+        : null;
+  }
+
+  return {
+    keyIdentity:
+      completeKeyChain && componentKeys.length
+        ? componentKeys.join('>')
+        : null,
+    nameIdentity: componentNames.join('>'),
+  };
+}
+
+function normalizeNestedInstanceName(name: string): string {
+  return String(name ?? '')
+    .trim()
+    .replace(/^[^A-Za-zА-Яа-яЁё0-9\[]+/, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+}
+
+function applyLongestPathMapping(
+  path: string,
+  mappings: Array<{ from: string; to: string }>,
+): string {
+  for (const mapping of mappings) {
+    if (path === mapping.from) {
+      return mapping.to;
+    }
+    if (path.startsWith(`${mapping.from} / `)) {
+      return `${mapping.to}${path.slice(mapping.from.length)}`;
+    }
+  }
+  return path;
+}
+
+function getRelativeAlignedPath(ownerPath: string, nodePath: string): string | null {
+  if (ownerPath === nodePath) {
+    return '';
+  }
+  const prefix = `${ownerPath} / `;
+  return nodePath.startsWith(prefix) ? nodePath.slice(prefix.length) : null;
+}
+
+function applyParentVariantOwnedProperties(
+  candidateNode: DSStructureNode,
+  parentVariantNode: DSStructureNode,
+): DSStructureNode {
+  const ownedProperties = parentVariantNode.referenceVariantOwnedProperties ?? [];
+  if (!ownedProperties.length) {
+    return candidateNode;
+  }
+
+  const merged = Object.assign({}, candidateNode) as DSStructureNode;
+  for (const property of ownedProperties) {
+    const segments = property.split('.').filter(Boolean);
+    if (!segments.length) {
+      continue;
+    }
+    setNestedProperty(
+      merged as unknown as Record<string, unknown>,
+      segments,
+      clonePropertyValue(
+        getNestedProperty(
+          parentVariantNode as unknown as Record<string, unknown>,
+          segments,
+        ),
+      ),
+    );
+  }
+
+  const combinedOwnedProperties = new Set<string>(
+    candidateNode.referenceVariantOwnedProperties ?? [],
+  );
+  for (const property of ownedProperties) {
+    combinedOwnedProperties.add(property);
+  }
+
+  merged.referenceOrigin = parentVariantNode.referenceOrigin ?? 'nested-component';
+  merged.referenceOwnerComponentKey =
+    parentVariantNode.referenceOwnerComponentKey ??
+    candidateNode.referenceOwnerComponentKey ??
+    null;
+  merged.referenceOwnerRole =
+    parentVariantNode.referenceOwnerRole ??
+    candidateNode.referenceOwnerRole ??
+    null;
+  merged.referenceOwnerPath =
+    parentVariantNode.referenceOwnerPath ??
+    candidateNode.referenceOwnerPath ??
+    null;
+  merged.referenceOwnerRelativePath =
+    parentVariantNode.referenceOwnerRelativePath ??
+    candidateNode.referenceOwnerRelativePath ??
+    null;
+  merged.referenceOwnerVariantProperties =
+    parentVariantNode.referenceOwnerVariantProperties ??
+    candidateNode.referenceOwnerVariantProperties ??
+    null;
+  merged.referenceVariantOwnedProperties =
+    Array.from(combinedOwnedProperties).sort();
+
+  return merged;
+}
+
+function getNestedProperty(
+  source: Record<string, unknown>,
+  segments: string[],
+): unknown {
+  let current: unknown = source;
+  for (const segment of segments) {
+    if (!current || typeof current !== 'object') {
+      return undefined;
+    }
+    current = (current as Record<string, unknown>)[segment];
+  }
+  return current;
+}
+
+function setNestedProperty(
+  target: Record<string, unknown>,
+  segments: string[],
+  value: unknown,
+) {
+  let current = target;
+  for (let index = 0; index < segments.length - 1; index += 1) {
+    const segment = segments[index];
+    const existing = current[segment];
+    const next =
+      existing && typeof existing === 'object' && !Array.isArray(existing)
+        ? Object.assign({}, existing as Record<string, unknown>)
+        : {};
+    current[segment] = next;
+    current = next;
+  }
+  current[segments[segments.length - 1]] = value;
+}
+
+function clonePropertyValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(clonePropertyValue);
+  }
+  if (value && typeof value === 'object') {
+    const clone: Record<string, unknown> = {};
+    for (const key of Object.keys(value as Record<string, unknown>)) {
+      clone[key] = clonePropertyValue(
+        (value as Record<string, unknown>)[key],
+      );
+    }
+    return clone;
+  }
+  return value;
 }
 
 export function applyMaterializedHostVariantBaselineToNode(
@@ -73,9 +393,17 @@ export function applyMaterializedHostVariantBaselineToNode(
 
   const currentVariantProperties =
     candidateNode.componentInstance?.variantProperties ?? null;
+  const effectiveVariantProperties = Object.assign({}, hostVariantProperties);
+  for (const [property, value] of Object.entries(
+    currentVariantProperties ?? {},
+  )) {
+    if (isParentVariantOwnedInstanceProperty(candidateNode, property)) {
+      effectiveVariantProperties[property] = value;
+    }
+  }
   if (
     currentVariantProperties &&
-    variantPropertiesEqual(currentVariantProperties, hostVariantProperties)
+    variantPropertiesEqual(currentVariantProperties, effectiveVariantProperties)
   ) {
     return candidateNode;
   }
@@ -86,9 +414,22 @@ export function applyMaterializedHostVariantBaselineToNode(
         candidateNode.componentInstance?.componentKey ??
         hostNode?.componentInstance?.componentKey ??
         '',
-      variantProperties: Object.assign({}, hostVariantProperties),
+      variantProperties: effectiveVariantProperties,
     }),
   });
+}
+
+function isParentVariantOwnedInstanceProperty(
+  node: DSStructureNode,
+  property: string,
+): boolean {
+  const exactPath = `componentInstance.variantProperties.${property}`;
+  return (node.referenceVariantOwnedProperties ?? []).some(
+    (ownedPath) =>
+      ownedPath === 'componentInstance' ||
+      ownedPath === 'componentInstance.variantProperties' ||
+      ownedPath === exactPath,
+  );
 }
 
 export function applyMaterializedHostVariantBaselines(
@@ -96,7 +437,7 @@ export function applyMaterializedHostVariantBaselines(
   hostReference: DSStructureNode[],
 ): DSStructureNode[] {
   const hostOccurrenceKeys = buildOccurrenceKeyMap(hostReference);
-  const hostVariantPropertiesByOccurrence = new Map<string, Record<string, string>>();
+  const hostNodesByOccurrence = new Map<string, DSStructureNode>();
 
   for (const hostNode of hostReference) {
     const variantProperties = hostNode.componentInstance?.variantProperties ?? null;
@@ -108,13 +449,13 @@ export function applyMaterializedHostVariantBaselines(
       continue;
     }
 
-    hostVariantPropertiesByOccurrence.set(
+    hostNodesByOccurrence.set(
       hostOccurrenceKeys.get(hostNode) ?? hostNode.path,
-      variantProperties,
+      hostNode,
     );
   }
 
-  if (!hostVariantPropertiesByOccurrence.size) {
+  if (!hostNodesByOccurrence.size) {
     return referenceEntries;
   }
 
@@ -125,27 +466,11 @@ export function applyMaterializedHostVariantBaselines(
     }
 
     const occurrenceKey = referenceOccurrenceKeys.get(entry) ?? entry.path;
-    const hostVariantProperties =
-      hostVariantPropertiesByOccurrence.get(occurrenceKey) ?? null;
-    if (!hostVariantProperties) {
+    const hostNode = hostNodesByOccurrence.get(occurrenceKey) ?? null;
+    if (!hostNode) {
       return entry;
     }
-
-    const currentVariantProperties =
-      entry.componentInstance?.variantProperties ?? null;
-    if (
-      currentVariantProperties &&
-      variantPropertiesEqual(currentVariantProperties, hostVariantProperties)
-    ) {
-      return entry;
-    }
-
-    return Object.assign({}, entry, {
-      componentInstance: Object.assign({}, entry.componentInstance ?? {}, {
-        componentKey: entry.componentInstance?.componentKey ?? '',
-        variantProperties: Object.assign({}, hostVariantProperties),
-      }),
-    });
+    return applyMaterializedHostVariantBaselineToNode(entry, hostNode);
   });
 }
 
@@ -205,6 +530,10 @@ export function getMaterializedInstanceReferenceDecision(
   }
 
   if (existingOrigin === 'nested-component') {
+    const preferDeeper = shouldPreferDeeperNestedMaterialization(
+      existingNode,
+      candidateNode,
+    );
     if (
       hasDifferentExplicitPaint(existingNode, candidateNode) &&
       shouldKeepExistingNestedPaintMaterialization(
@@ -224,9 +553,24 @@ export function getMaterializedInstanceReferenceDecision(
       );
     }
 
+    if (
+      preferDeeper &&
+      (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
+    ) {
+      return buildDecision(
+        true,
+        'merge-parent-variant-owned-descendant',
+        existingOrigin,
+        candidateOrigin,
+        ownerComponentKey,
+        relativePath,
+        withinMaterializedSubtree,
+      );
+    }
+
     return buildDecision(
-      shouldPreferDeeperNestedMaterialization(existingNode, candidateNode),
-      shouldPreferDeeperNestedMaterialization(existingNode, candidateNode)
+      preferDeeper,
+      preferDeeper
         ? 'deeper-nested-materialization'
         : 'keep-existing-nested-materialization',
       existingOrigin,

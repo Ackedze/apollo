@@ -55,7 +55,11 @@ function main() {
     explicit[0].indexUrl,
     `${baseUrl}indexes/web/components/Test.index.json`,
   );
-  assert.equal(explicit[1].indexUrl, undefined);
+  assert.equal(
+    explicit[1].indexUrl,
+    `${baseUrl}indexes/web/components/Missing.index.json`,
+    'Schema v2 manifests must retain a safe inferred index fallback while publication catches up',
+  );
 
   const legacy = buildReferenceCatalogSources({
     baseUrl,

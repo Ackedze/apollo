@@ -16,10 +16,12 @@ import {
   resolveVariantKeyForInstance,
 } from './reference/library';
 import {
+  alignMaterializedReferenceInstancePaths,
   applyMaterializedHostVariantBaselines,
   applyMaterializedHostVariantBaselineToNode,
   getMaterializedInstanceReferenceDecision,
   mergeMaterializedInstanceReferenceNode,
+  selectMaterializedInstanceMergeSource,
 } from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
@@ -115,7 +117,9 @@ import {
   applyContractAwareDiffs,
 } from './contracts/contractAwareDiffs';
 import {
+  ensureContractExamplesForHints,
   ensureContractArtifactsForHints,
+  getComponentExamplesForKeys,
   type ContractArtifactHint,
 } from './contracts/runtimeContractRegistry';
 import {
@@ -134,6 +138,7 @@ console.log('[Apollo] plugin version', { version: APOLLO_VERSION });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
 const COMPACT_UI_SIZE = { width: 263, height: 860 };
 let lastApolloAgentReport: ApolloAgentReport | null = null;
+let lastContractArtifactHints: ContractArtifactHint[] = [];
 let activeApolloAgentRequestId: string | null = null;
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
@@ -299,6 +304,7 @@ async function runAudit(
   scanInProgress = true;
   cancelRequested = false;
   lastApolloAgentReport = null;
+  lastContractArtifactHints = [];
   activeApolloAgentRequestId = null;
 
   figma.ui.postMessage({ type: 'scan-started' });
@@ -398,9 +404,8 @@ async function runAudit(
       throwIfCancelled,
     );
     await ensureReferenceCatalogsForKeys(selectionComponentKeys);
-    await ensureContractArtifactsForHints(
-      buildContractArtifactHints(selectionComponentKeys),
-    );
+    lastContractArtifactHints = buildContractArtifactHints(selectionComponentKeys);
+    await ensureContractArtifactsForHints(lastContractArtifactHints);
     logAuditMetric('audit-component-reference-ready', {
       totalMs: Number((getTimestamp() - keyCollectStartedAt).toFixed(1)),
       componentKeyCount: selectionComponentKeys.size,
@@ -616,6 +621,9 @@ async function sendApolloAgentReport(
   });
 
   try {
+    const contextualAgentInputText = agentInputText
+      ? await buildContextualApolloAgentInput(agentInputText, report)
+      : null;
     const requestBody = {
       component: 'apollo-agent-report',
       action: isDirectUserQuestion ? 'user-question' : 'audit-report',
@@ -630,8 +638,8 @@ async function sendApolloAgentReport(
       text?: string;
     };
 
-    if (agentInputText) {
-      requestBody.text = agentInputText;
+    if (contextualAgentInputText) {
+      requestBody.text = contextualAgentInputText;
     } else if (report) {
       requestBody.report = report;
     }
@@ -693,6 +701,31 @@ async function sendApolloAgentReport(
       activeApolloAgentRequestId = null;
     }
   }
+}
+
+async function buildContextualApolloAgentInput(
+  question: string,
+  report: ApolloAgentReport | null,
+): Promise<string> {
+  const componentKeys = report
+    ? report.findings.map((finding) => finding.component?.key ?? null)
+    : [];
+  const keySet = new Set(
+    componentKeys.filter((key): key is string => Boolean(key)),
+  );
+  const relevantHints = lastContractArtifactHints.filter((hint) =>
+    hint.figmaKey ? keySet.has(hint.figmaKey) : false,
+  );
+  if (relevantHints.length) {
+    await ensureContractExamplesForHints(relevantHints);
+  }
+  return JSON.stringify({
+    question,
+    auditReport: report,
+    componentExamples: getComponentExamplesForKeys(componentKeys),
+    evidencePolicy:
+      'Examples are contextual evidence, not rules. Use exact rules for violations.',
+  });
 }
 
 function buildApolloAgentInputText(userMessage?: string): string | null {
@@ -2932,6 +2965,10 @@ function expandReferenceWithInstanceComponents(
               node.path,
               cloned.path,
             );
+            cloned.referenceOwnerVariantProperties =
+              resolvedVariantProperties == null
+                ? null
+                : Object.assign({}, resolvedVariantProperties);
             return cloned;
           })
         : instanceStructure.map((refNode) =>
@@ -2944,10 +2981,19 @@ function expandReferenceWithInstanceComponents(
                 node.path,
                 refNode.path,
               ),
+              referenceOwnerVariantProperties:
+                resolvedVariantProperties == null
+                  ? null
+                  : Object.assign({}, resolvedVariantProperties),
             }),
           );
-    const rebasedAligned = rebaseReferenceSubtreeIds(
+    const identityAligned = alignMaterializedReferenceInstancePaths(
       aligned,
+      actual,
+      node.path,
+    );
+    const rebasedAligned = rebaseReferenceSubtreeIds(
+      identityAligned,
       nextSyntheticReferenceId,
     );
     nextSyntheticReferenceId += rebasedAligned.length;
@@ -2982,7 +3028,11 @@ function expandReferenceWithInstanceComponents(
         mergeDecision?.preferCandidate === true
       ) {
         referenceEntries[existingIndex] = mergeMaterializedInstanceReferenceNode(
-          hostBaselineNode ?? existingNode,
+          selectMaterializedInstanceMergeSource(
+            existingNode,
+            hostBaselineNode,
+            mergeDecision,
+          ),
           refNode,
           mergeDecision,
         );

@@ -1,10 +1,10 @@
 {
   "name": "apollo",
-  "version": "0.1.40",
+  "version": "0.1.49",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:reference-manifest && npm run test:promise-pool && npm run test:variant-structure-paths && npm run test:shell-component-policy && npm run test:stats-report && npm run test:contract-aware-diffs && npm run test:stroke-align-diff && npm run test:layout-sizing-diff",
+    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:reference-manifest && npm run test:promise-pool && npm run test:variant-structure-paths && npm run test:nested-variants && npm run test:shell-component-policy && npm run test:stats-report && npm run test:contract-aware-diffs && npm run test:stroke-align-diff && npm run test:layout-sizing-diff && npm run test:contract-artifact-context && npm run test:strict-comparison && npm run test:component-rules",
     "type-check": "tsc --noEmit",
     "check:figma-runtime": "node scripts/check-figma-runtime.js",
     "test:themization": "node scripts/test-themization.js",
@@ -26,6 +26,9 @@
     "test:contract-aware-diffs": "node scripts/test-contract-aware-diffs.js",
     "test:stroke-align-diff": "node scripts/test-stroke-align-diff.js",
     "test:layout-sizing-diff": "node scripts/test-layout-sizing-diff.js",
+    "test:contract-artifact-context": "node scripts/test-contract-artifact-context.js",
+    "test:strict-comparison": "node scripts/test-strict-comparison.js",
+    "test:component-rules": "node scripts/test-component-rules.js",
     "test:reference-manifest": "node scripts/test-reference-manifest.js",
     "test:promise-pool": "node scripts/test-promise-pool.js",
     "report:nested-overrides": "node scripts/report-nested-overrides.js"

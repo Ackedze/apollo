@@ -5,7 +5,19 @@ import {
   normalizeLayoutSizing,
   type LayoutSizingAxis,
 } from '../structure/layoutSizing';
+import { findComponent } from '../reference/library';
 import { getRemoteComponentRuleRegistry } from './runtimeContractRegistry';
+
+export type ComponentRuleTarget = {
+  component?: string;
+  components?: string[];
+  componentKeys?: string[];
+  componentNames?: string[];
+  layer?: string;
+  layers?: string[];
+  slot?: string;
+  slots?: string[];
+};
 
 export type ComponentContractRule = {
   ruleId: string;
@@ -18,15 +30,17 @@ export type ComponentContractRule = {
   matchKind?: string;
   ruleText: string;
   remediation?: string;
-  target?: {
-    component?: string;
-    layers?: string[];
-  };
+  target?: ComponentRuleTarget;
   conditions?: {
     component?: string;
     variant?: Record<string, string | string[]>;
   };
   requiredValues?: Record<string, string | number | boolean | null>;
+  requiredTokenSource?: {
+    path?: string;
+    collection?: string;
+    tokenNames?: string[];
+  };
 };
 
 type ComponentRulesFile = {
@@ -41,6 +55,39 @@ type ComponentRuleRegistryEntry = {
   rulesFile: ComponentRulesFile;
 };
 
+type ParsedRuleTarget = {
+  componentSelectors: string[];
+  componentKeySelectors: string[];
+  componentNameSelectors: string[];
+  layerSelectors: string[];
+  slotSelectors: string[];
+};
+
+type DiffComponentIdentity = {
+  key: string;
+  name: string | null;
+  kind: 'direct' | 'owner';
+  relativePath: string | null;
+};
+
+declare global {
+  var __APOLLO_TEST_COMPONENT_NAME_BY_KEY__:
+    | Record<string, string>
+    | undefined;
+}
+
+const SUPPORTED_TARGET_KEYS = new Set([
+  'component',
+  'components',
+  'componentKeys',
+  'componentNames',
+  'layer',
+  'layers',
+  'slot',
+  'slots',
+]);
+const reportedUnsupportedTargets = new Set<string>();
+
 export function findComponentContractRulesForDiff(
   diff: DiffEntry,
 ): ComponentContractRule[] {
@@ -50,6 +97,7 @@ export function findComponentContractRulesForDiff(
   }
 
   const result: ComponentContractRule[] = [];
+  const ruleIds = new Set<string>();
   const registry = getComponentRuleRegistry();
 
   for (const entry of registry) {
@@ -64,9 +112,11 @@ export function findComponentContractRulesForDiff(
       if (!isUsableRule(rule)) {
         continue;
       }
-      if (!ruleMatchesDiff(rule, diff, property)) {
+      if (!ruleMatchesDiff(rule, diff, property, entry)) {
         continue;
       }
+      if (ruleIds.has(rule.ruleId)) continue;
+      ruleIds.add(rule.ruleId);
       result.push(rule);
     }
   }
@@ -192,7 +242,7 @@ export function createRequiredComponentSizingDiffs(
           if (
             existingKeys.has(key) ||
             !diffTargetsComponent(diff, entry) ||
-            !ruleMatchesDiff(rule, diff, property)
+            !ruleMatchesDiff(rule, diff, property, entry)
           ) {
             continue;
           }
@@ -309,23 +359,17 @@ function diffTargetsComponent(
   diff: DiffEntry,
   entry: ComponentRuleRegistryEntry,
 ): boolean {
-  if (
-    diff.context.actualComponentKey === entry.componentKey ||
-    diff.context.referenceComponentKey === entry.componentKey ||
-    diff.context.nestedOwnerComponentKey === entry.componentKey ||
-    diff.context.actualNestedOwnerComponentKey === entry.componentKey
-  ) {
-    return true;
-  }
-
+  const contextKeys = [
+    diff.context.actualComponentKey,
+    diff.context.referenceComponentKey,
+    diff.context.nestedOwnerComponentKey,
+    diff.context.actualNestedOwnerComponentKey,
+  ].filter((key): key is string => Boolean(key));
   const figmaKeys = Array.isArray(entry.figmaKeys) ? entry.figmaKeys : [];
-  if (
-    figmaKeys.includes(diff.context.actualComponentKey ?? '') ||
-    figmaKeys.includes(diff.context.referenceComponentKey ?? '') ||
-    figmaKeys.includes(diff.context.nestedOwnerComponentKey ?? '') ||
-    figmaKeys.includes(diff.context.actualNestedOwnerComponentKey ?? '')
-  ) {
-    return true;
+  if (contextKeys.length) {
+    return contextKeys.some(
+      (key) => key === entry.componentKey || figmaKeys.includes(key),
+    );
   }
 
   const path = normalizePath(diff.nodePath);
@@ -342,8 +386,17 @@ function ruleMatchesDiff(
   rule: ComponentContractRule,
   diff: DiffEntry,
   property: string,
+  entry: ComponentRuleRegistryEntry,
 ): boolean {
+  const target = parseRuleTarget(rule);
+  if (!target) {
+    return false;
+  }
   if (!appliesToMatchesDiff(rule.appliesTo, property, diff)) {
+    return false;
+  }
+
+  if (!requiredTokenEvidenceMatches(rule, diff)) {
     return false;
   }
 
@@ -351,19 +404,394 @@ function ruleMatchesDiff(
     return false;
   }
 
-  const layers = rule.target?.layers;
-  if (!Array.isArray(layers) || !layers.length) {
-    return true;
+  const identities = getDiffComponentIdentities(diff);
+  const componentSelectors = target.componentSelectors.slice();
+  if (
+    !componentSelectors.length &&
+    !target.componentKeySelectors.length &&
+    !target.componentNameSelectors.length &&
+    rule.conditions?.component
+  ) {
+    componentSelectors.push(rule.conditions.component);
   }
 
-  const nodeName = normalizePathSegment(diff.nodeName);
-  for (const layer of layers) {
-    if (layerMatchesDiff(layer, nodeName, diff.nodePath)) {
+  const hasComponentSelector =
+    componentSelectors.length > 0 ||
+    target.componentKeySelectors.length > 0 ||
+    target.componentNameSelectors.length > 0;
+  const allowOwnerScope = target.slotSelectors.length > 0;
+  const scopedIdentities = getScopedIdentities(identities, allowOwnerScope);
+  const matchingIdentities = scopedIdentities.filter((identity) => {
+    if (!hasComponentSelector) {
+      return identityBelongsToEntry(identity, entry);
+    }
+    return identityMatchesSelectors(
+      identity,
+      componentSelectors,
+      target.componentKeySelectors,
+      target.componentNameSelectors,
+      entry,
+    );
+  });
+
+  if (!matchingIdentities.length) {
+    return false;
+  }
+
+  if (
+    target.layerSelectors.length > 0 &&
+    !targetSelectorsMatchDiff(
+      target.layerSelectors,
+      matchingIdentities,
+      identities,
+      diff,
+    )
+  ) {
+    return false;
+  }
+
+  if (
+    target.slotSelectors.length > 0 &&
+    !targetSelectorsMatchDiff(
+      target.slotSelectors,
+      matchingIdentities,
+      identities,
+      diff,
+    )
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function parseRuleTarget(
+  rule: ComponentContractRule,
+): ParsedRuleTarget | null {
+  const rawTarget = rule.target as Record<string, unknown> | undefined;
+  if (typeof rawTarget === 'undefined') {
+    return createEmptyParsedTarget();
+  }
+  if (
+    !rawTarget ||
+    typeof rawTarget !== 'object' ||
+    Array.isArray(rawTarget)
+  ) {
+    reportUnsupportedTarget(rule, [], 'target must be an object');
+    return null;
+  }
+
+  const keys = Object.keys(rawTarget);
+  const unknownKeys = keys.filter((key) => !SUPPORTED_TARGET_KEYS.has(key));
+  if (unknownKeys.length) {
+    reportUnsupportedTarget(rule, unknownKeys, 'unsupported selector fields');
+    return null;
+  }
+
+  const target = createEmptyParsedTarget();
+  if (!readOptionalString(rawTarget, 'component', target.componentSelectors)) {
+    reportUnsupportedTarget(rule, ['component'], 'invalid selector value');
+    return null;
+  }
+  if (!readOptionalStrings(rawTarget, 'components', target.componentSelectors)) {
+    reportUnsupportedTarget(rule, ['components'], 'invalid selector value');
+    return null;
+  }
+  if (
+    !readOptionalStrings(
+      rawTarget,
+      'componentKeys',
+      target.componentKeySelectors,
+    )
+  ) {
+    reportUnsupportedTarget(rule, ['componentKeys'], 'invalid selector value');
+    return null;
+  }
+  if (
+    !readOptionalStrings(
+      rawTarget,
+      'componentNames',
+      target.componentNameSelectors,
+    )
+  ) {
+    reportUnsupportedTarget(rule, ['componentNames'], 'invalid selector value');
+    return null;
+  }
+  if (!readOptionalString(rawTarget, 'layer', target.layerSelectors)) {
+    reportUnsupportedTarget(rule, ['layer'], 'invalid selector value');
+    return null;
+  }
+  if (!readOptionalStrings(rawTarget, 'layers', target.layerSelectors)) {
+    reportUnsupportedTarget(rule, ['layers'], 'invalid selector value');
+    return null;
+  }
+  if (!readOptionalString(rawTarget, 'slot', target.slotSelectors)) {
+    reportUnsupportedTarget(rule, ['slot'], 'invalid selector value');
+    return null;
+  }
+  if (!readOptionalStrings(rawTarget, 'slots', target.slotSelectors)) {
+    reportUnsupportedTarget(rule, ['slots'], 'invalid selector value');
+    return null;
+  }
+
+  if (
+    keys.length > 0 &&
+    !target.componentSelectors.length &&
+    !target.componentKeySelectors.length &&
+    !target.componentNameSelectors.length &&
+    !target.layerSelectors.length &&
+    !target.slotSelectors.length
+  ) {
+    reportUnsupportedTarget(rule, keys, 'selectors must not be empty');
+    return null;
+  }
+
+  return target;
+}
+
+function createEmptyParsedTarget(): ParsedRuleTarget {
+  return {
+    componentSelectors: [],
+    componentKeySelectors: [],
+    componentNameSelectors: [],
+    layerSelectors: [],
+    slotSelectors: [],
+  };
+}
+
+function readOptionalString(
+  target: Record<string, unknown>,
+  key: string,
+  result: string[],
+): boolean {
+  if (!Object.prototype.hasOwnProperty.call(target, key)) return true;
+  const value = target[key];
+  if (typeof value !== 'string' || !value.trim()) return false;
+  result.push(value);
+  return true;
+}
+
+function readOptionalStrings(
+  target: Record<string, unknown>,
+  key: string,
+  result: string[],
+): boolean {
+  if (!Object.prototype.hasOwnProperty.call(target, key)) return true;
+  const values = target[key];
+  if (!Array.isArray(values) || !values.length) return false;
+  for (const value of values) {
+    if (typeof value !== 'string' || !value.trim()) return false;
+    result.push(value);
+  }
+  return true;
+}
+
+function reportUnsupportedTarget(
+  rule: ComponentContractRule,
+  fields: string[],
+  reason: string,
+): void {
+  const signature = `${rule.ruleId}|${reason}|${fields.slice().sort().join(',')}`;
+  if (reportedUnsupportedTargets.has(signature)) return;
+  reportedUnsupportedTargets.add(signature);
+  console.warn('[Apollo][contracts] unsupported rule target', {
+    ruleId: rule.ruleId,
+    fields,
+    reason,
+  });
+}
+
+function getDiffComponentIdentities(diff: DiffEntry): DiffComponentIdentity[] {
+  const identities: DiffComponentIdentity[] = [];
+  addComponentIdentity(
+    identities,
+    diff.context.actualComponentKey,
+    'direct',
+    '',
+  );
+  addComponentIdentity(
+    identities,
+    diff.context.referenceComponentKey,
+    'direct',
+    '',
+  );
+  addComponentIdentity(
+    identities,
+    diff.context.actualNestedOwnerComponentKey,
+    'owner',
+    diff.context.actualNestedOwnerRelativePath,
+  );
+  addComponentIdentity(
+    identities,
+    diff.context.nestedOwnerComponentKey,
+    'owner',
+    diff.context.nestedOwnerRelativePath,
+  );
+  return identities;
+}
+
+function addComponentIdentity(
+  identities: DiffComponentIdentity[],
+  key: string | null,
+  kind: 'direct' | 'owner',
+  relativePath: string | null,
+): void {
+  if (!key) return;
+  if (
+    identities.some(
+      (identity) =>
+        identity.key === key &&
+        identity.kind === kind &&
+        identity.relativePath === relativePath,
+    )
+  ) {
+    return;
+  }
+  identities.push({
+    key,
+    name: resolveComponentName(key),
+    kind,
+    relativePath,
+  });
+}
+
+function resolveComponentName(key: string): string | null {
+  const testName = globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__?.[key];
+  if (typeof testName === 'string' && testName.trim()) {
+    return testName;
+  }
+  const component = findComponent(key);
+  return component?.name ?? component?.displayName ?? component?.names?.[0] ?? null;
+}
+
+function getScopedIdentities(
+  identities: DiffComponentIdentity[],
+  allowOwnerScope: boolean,
+): DiffComponentIdentity[] {
+  const direct = identities.filter((identity) => identity.kind === 'direct');
+  if (allowOwnerScope) {
+    return identities;
+  }
+  return direct.length
+    ? direct
+    : identities.filter((identity) => identity.kind === 'owner');
+}
+
+function identityMatchesSelectors(
+  identity: DiffComponentIdentity,
+  componentSelectors: string[],
+  componentKeySelectors: string[],
+  componentNameSelectors: string[],
+  entry: ComponentRuleRegistryEntry,
+): boolean {
+  if (componentKeySelectors.includes(identity.key)) {
+    return true;
+  }
+  if (
+    identity.name &&
+    componentNameSelectors.some(
+      (selector) =>
+        normalizePathSegment(selector) === normalizePathSegment(identity.name ?? ''),
+    )
+  ) {
+    return true;
+  }
+  return componentSelectors.some((selector) =>
+    genericComponentSelectorMatchesIdentity(selector, identity, entry),
+  );
+}
+
+function genericComponentSelectorMatchesIdentity(
+  selector: string,
+  identity: DiffComponentIdentity,
+  entry: ComponentRuleRegistryEntry,
+): boolean {
+  const normalizedSelector = normalizePathSegment(selector);
+  if (normalizePathSegment(entry.componentKey) === normalizedSelector) {
+    return identityBelongsToEntry(identity, entry);
+  }
+  if (identity.key === selector) {
+    return true;
+  }
+  if (
+    identity.key === entry.componentKey &&
+    entry.aliases.some(
+      (alias) => normalizePathSegment(alias) === normalizedSelector,
+    )
+  ) {
+    return true;
+  }
+  return Boolean(
+    identity.name &&
+      normalizePathSegment(identity.name) === normalizedSelector,
+  );
+}
+
+function identityBelongsToEntry(
+  identity: DiffComponentIdentity,
+  entry: ComponentRuleRegistryEntry,
+): boolean {
+  const figmaKeys = Array.isArray(entry.figmaKeys) ? entry.figmaKeys : [];
+  if (identity.key === entry.componentKey || figmaKeys.includes(identity.key)) {
+    return true;
+  }
+  if (!identity.name) return false;
+  const normalizedName = normalizePathSegment(identity.name);
+  return entry.aliases.some(
+    (alias) => normalizePathSegment(alias) === normalizedName,
+  );
+}
+
+function targetSelectorsMatchDiff(
+  selectors: string[],
+  matchingIdentities: DiffComponentIdentity[],
+  identities: DiffComponentIdentity[],
+  diff: DiffEntry,
+): boolean {
+  const directIdentities = identities.filter(
+    (identity) => identity.kind === 'direct',
+  );
+  const currentIdentities = directIdentities.length
+    ? directIdentities
+    : identities.filter((identity) => identity.kind === 'owner');
+  const canonicalNames = currentIdentities
+    .map((identity) => identity.name)
+    .filter((name): name is string => Boolean(name));
+  for (const selector of selectors) {
+    if (normalizePathSegment(selector) === 'root') {
+      if (matchingIdentities.some(identityIsRoot)) {
+        return true;
+      }
+      continue;
+    }
+    if (
+      layerMatchesDiff(
+        selector,
+        normalizePathSegment(diff.nodeName),
+        diff.nodePath,
+        canonicalNames,
+      )
+    ) {
       return true;
     }
   }
-
   return false;
+}
+
+function identityIsRoot(identity: DiffComponentIdentity): boolean {
+  return identity.kind === 'direct' || identity.relativePath === '';
+}
+
+function requiredTokenEvidenceMatches(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  if (!rule.requiredTokenSource) return true;
+  const actual = diff.details?.actual;
+  if (!actual || !Object.prototype.hasOwnProperty.call(actual, 'bindingId')) {
+    return false;
+  }
+  return !actual.bindingId;
 }
 
 function variantConditionsMatchDiff(
@@ -463,6 +891,7 @@ function layerMatchesDiff(
   layer: string,
   normalizedNodeName: string,
   nodePath: string,
+  canonicalComponentNames: string[] = [],
 ): boolean {
   const targetSegments = layer
     .split('/')
@@ -476,10 +905,13 @@ function layerMatchesDiff(
     .map((segment) => normalizePathSegment(segment))
     .filter(Boolean);
   let targetIndex = 0;
-  for (const segment of pathSegments) {
+  for (let pathIndex = 0; pathIndex < pathSegments.length; pathIndex += 1) {
+    const segment = pathSegments[pathIndex];
     if (segment === targetSegments[targetIndex]) {
       targetIndex += 1;
-      if (targetIndex === targetSegments.length) return true;
+      if (targetIndex === targetSegments.length) {
+        return pathIndex === pathSegments.length - 1;
+      }
     }
   }
 
@@ -499,7 +931,10 @@ function layerMatchesDiff(
   return (
     targetSegments.length === 1 &&
     (normalizedNodeName === lastTarget ||
-      pathSegments[pathSegments.length - 1] === lastTarget)
+      pathSegments[pathSegments.length - 1] === lastTarget ||
+      canonicalComponentNames.some(
+        (name) => normalizePathSegment(name) === lastTarget,
+      ))
   );
 }
 

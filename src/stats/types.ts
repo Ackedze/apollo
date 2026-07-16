@@ -9,6 +9,11 @@ import type {
   RuntimeAuditPresentation,
   RuntimeComponentAgentContext,
 } from '../contracts/artifactContext';
+import type {
+  VariableBindingEvidence,
+  VariableBindingStatus,
+  VariableModeEvidence,
+} from '../structure/diff';
 
 export type StatsResourceType =
   | 'component'
@@ -35,6 +40,7 @@ export type StatsComponentContractRule = {
   appliesTo: string;
   checkType: string | null;
   matchKind: string | null;
+  changeScope: string | null;
   ruleText: string;
   remediation: string | null;
 };
@@ -63,11 +69,15 @@ export type StatsCustomizationChange = {
   reference: {
     value: string | number | null;
     resource: StatsResource | null;
+    binding: VariableBindingEvidence | null;
   };
   actual: {
     value: string | number | null;
     resource: StatsResource | null;
+    binding: VariableBindingEvidence | null;
   };
+  bindingStatus: VariableBindingStatus | null;
+  variableMode: VariableModeEvidence | null;
   signature: string;
   context: Record<string, string | null>;
   componentRules: StatsComponentContractRule[];
@@ -225,6 +235,10 @@ export type ApolloAgentFinding = {
     actualDisplayValue?: string | number | null;
     referenceResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
     actualResource?: Pick<StatsResource, 'name' | 'key' | 'library'> | null;
+    referenceBinding?: VariableBindingEvidence | null;
+    actualBinding?: VariableBindingEvidence | null;
+    bindingStatus?: VariableBindingStatus | null;
+    variableMode?: VariableModeEvidence | null;
     context?: StatsCustomizationChange['context'];
     componentRules?: StatsComponentContractRule[];
     presentation?: RuntimeAuditPresentation | null;

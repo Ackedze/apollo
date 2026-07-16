@@ -474,13 +474,50 @@ Acceptance criteria:
 - Host-variant-owned Label properties do not depend on lazy-load/cache timing of the standalone Label catalog.
 - A full plugin restart does not change the effective baseline or finding set.
 
+### P0. Make variable bindings and modes first-class audit evidence
+
+Field evidence from Apollo report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_20-44-06_agent.json`: Apollo reports CorporateContent `paddingLeft/right 52 -> 30` and nested Section `itemSpacing 24 -> 16` as layer customizations, then exposes contract rules that the agent interprets as prohibitions on manual spacing. The audited Figma nodes are in fact bound to the intended variables. The reference catalog also contains `VariableID:76532:102340` for CorporateContent left/right padding and `VariableID:76532:102341` for Section item spacing. Apollo already captures padding binding ids in the snapshot, but the numeric diff ignores binding identity, the stats builder drops `DiffValueDetails.bindingId`, and the item-spacing numeric diff does not carry its binding at all. The agent therefore receives only resolved numbers and cannot distinguish a manual override from the same variable resolving under another collection mode.
+
+- [x] Preserve property-level variable binding evidence for currently audited token-aware properties: padding, item spacing, radius, opacity, fills and strokes.
+- [ ] Extend property-level binding evidence to width/height constraints, visibility, stroke geometry, effects and layout-grid fields as Apollo adds deterministic diffs for those properties.
+- [x] Resolve binding ids to stable variable, collection and mode names and include both actual and reference binding evidence in the full stats report and `*_agent.json`.
+- [x] Capture the relevant explicit and resolved collection mode from the changed node and its ancestor chain, including the node that owns the mode, without serializing unrelated collections.
+- [x] Compare binding identity before resolved numeric values. When actual and reference use the same canonical variable, do not report a manual layer override solely because the resolved numbers differ between modes.
+- [x] Route a same-binding/different-value case to variable-mode validation. A prohibited or misplaced mode may still be a deterministic violation, but it must not be described as manual padding, gap, color or radius.
+- [ ] Distinguish at least `same-binding`, `allowed-binding`, `different-binding`, `unbound`, `unresolved-binding` and `missing-reference-binding` outcomes in assessment evidence.
+- [x] Require positive `unbound` or disallowed-binding evidence before an agent or deterministic rule describes a value as manual.
+- [x] Keep exact component rules such as `spacing-uses-grid-cols-mode` and `section-gutter-required`, but evaluate them against binding collection/mode evidence rather than the existence of a numeric diff.
+- [x] Add field-shaped regression coverage for CorporateContent `52 -> 30` and Section `24 -> 16` with the same binding, incorrect mode, wrong variable and unbound numeric value.
+- [ ] Extend the same evidence model to grid/layout-style identity and mode-driven layout changes so agents can distinguish valid responsive composition from manual geometry edits.
+
+Acceptance criteria:
+
+- Correctly bound CorporateContent padding and Section Gutter produce no manual-spacing violation when their values change only because the intended Grid & Cols mode resolves differently.
+- The report names the actual variable, collection, resolved mode and mode-owning node for every rule whose decision depends on variables.
+- An unbound `padding=30` still produces a deterministic manual-padding violation, while a wrong variable or prohibited mode produces its own precise violation.
+- Agent guidance never infers “manual” from `referenceValue != actualValue` alone.
+
+Implementation status (Apollo 0.1.50): actual snapshots preserve resolved modes plus the nearest explicit mode owner for every collection visible on the audited node. Token-catalog metadata resolves local and remote alias ids to one canonical variable key and names the variable, collection and mode. Padding, item spacing, radius and opacity compare binding identity before their resolved values; fill/stroke retain the same token-first behavior and now carry equivalent binding/mode evidence in reports. CorporateContent `Grid Margin 52 -> 30` and Section `Gutter 24 -> 16` are suppressed when the canonical bindings match. Unbound and different-variable cases remain visible with `bindingStatus` and become deterministic manual-spacing violations only when the exact component rule explicitly prohibits manual values. Rules with `variables.<collection>.mode` plus `allowedModes`/`prohibitedModes` are audited independently even when the component has no direct overrides; prohibited modes produce a dedicated mode finding with the collection, resolved mode and inherited/explicit owner. `npm run validate` includes the field-shaped binding regression and snapshot mode-ownership regression.
+
+Field verification (Apollo 0.1.50, report `Alexey-Kukhta-CORP-Lead-Designer_15-07-2026_23-02-08_agent.json`): same-binding responsive padding/gutter noise is removed. A follow-up experiment detached only the CorporateContent left-padding variable while preserving its current numeric value. Apollo correctly kept the case visible, but the UI still rendered the generic reference-mode numbers `52 -> 30`, so the user could not distinguish a detached binding from a value selected by another mode. Numeric contextual assessment could also reclassify the detached binding as expected, and ordinary properties with no variable on either side were incorrectly tagged `unbound`.
+
+Follow-up implementation (Apollo 0.1.51): a reference binding missing from actual now produces a dedicated `bindingStatus=unbound` diff before numeric comparison, even when the raw numbers are equal. Padding, item spacing, radius, opacity and tokenized fill/stroke use explicit `Переменная ... -> Отвязана` messages. Component-contract binding violations are assessed before contextual numeric baselines, so a correct accidental number cannot hide the missing variable. Properties unbound on both sides keep `bindingStatus=null`. The UI renders binding and mode findings in a separate `Переменные` section, and reset-by-details rebinds the reference variable in addition to restoring its raw value. Regression coverage includes detached CorporateContent padding with both different and equal numeric values.
+
+Field follow-up after Apollo 0.1.51: the detached left padding was correctly classified under `Переменные`, but reset wrote the catalog's exported raw value `52` and failed to restore the variable. The active document mode was `1024`, where `Grid/Grid Margin` resolves to `30`. The reset resolver incorrectly passed the local suffix `76532:102340` to `importVariableByKeyAsync`, which requires the published canonical key; a failed lookup returned `null` and the reset silently left the numeric fallback.
+
+Follow-up implementation (Apollo 0.1.52): binding reset no longer writes the catalog raw value before rebinding. Apollo first tries the exact local `VariableID`, then the variable id and canonical published key resolved from the token catalog. A requested non-null binding that cannot be resolved fails explicitly and never calls `setBoundVariable(..., null)` or leaves the catalog-mode number behind. Successful binding lets Figma resolve the value from the current inherited mode, so the same Grid Margin variable becomes `30` in mode `1024`. Reset-by-details applies this binding-first behavior to padding, item spacing, radius and opacity.
+
+The remaining unchecked evidence-status item covers `allowed-binding` and incomplete-reference classification; the unchecked property-extension item covers variable-bindable properties for which Apollo does not yet emit a deterministic structural diff.
+
 ### P1. Define per-change scope for targetless component rules
 
-- [ ] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.
-- [ ] Add an explicit artifact field or deterministic mapping for rules that are intentionally attachable to atomic layer changes.
-- [ ] Prevent `header-adjacency` from attaching to Section `Content`/`Isle` `layout.itemSpacing` changes.
-- [ ] Attach `gutter-horizontal-composition` only when horizontal-composition evidence is present; do not infer direction from `layout.itemSpacing` alone.
-- [ ] Add CorporateContent fixtures for targetless `composition_rule`, `screen.composition` and package-level informational context.
+- [x] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.
+- [x] Add an explicit artifact field or deterministic mapping for rules that are intentionally attachable to atomic layer changes.
+- [x] Prevent `header-adjacency` from attaching to Section `Content`/`Isle` `layout.itemSpacing` changes.
+- [x] Attach `gutter-horizontal-composition` only when horizontal-composition evidence is present; do not infer direction from `layout.itemSpacing` alone.
+- [x] Add CorporateContent fixtures for targetless `composition_rule`, `screen.composition` and package-level informational context.
+
+Implementation status (Apollo 0.1.53): targetless `composition_rule`, `screen.*` and `component.composition` rules no longer match atomic layer/property diffs solely through package membership. Explicit `changeScope=component-context|screen-context|package-context` forces context-only behavior, while `changeScope=atomic` opts a component-wide rule into atomic matching. Legacy deterministic and `exact_component_rule` rules without a target remain compatible unless their property scope is composition/screen context. CorporateContent regressions verify that Section root `layout.itemSpacing` keeps only `section-gutter-required`; `header-adjacency`, `gutter-horizontal-composition` and package context do not attach. Agent-report coverage verifies that composition instructions remain available through `componentContexts` while staying out of the atomic change's `componentRules`.
 
 Acceptance criteria:
 

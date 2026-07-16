@@ -9,6 +9,7 @@ import type {
   DSEffect,
   DSNormalizedSnapshot,
   DSNormalizedElement,
+  DSVariableModeContext,
 } from '../types/structures';
 
 /**
@@ -205,9 +206,88 @@ export async function snapshotNode(
     radius: extractRadius(node),
     radiusToken: getBoundVariableId(node.boundVariables, 'cornerRadius'),
     effects: extractEffects(node),
+    variableModes: extractVariableModeContexts(node),
   };
 
   return snap;
+}
+
+function extractVariableModeContexts(
+  node: SceneNode,
+): DSVariableModeContext[] | undefined {
+  const resolvedModes = readVariableModes(node, 'resolvedVariableModes');
+  const directExplicitModes = readVariableModes(node, 'explicitVariableModes');
+  const collectionIds = new Set(
+    Object.keys(resolvedModes).concat(Object.keys(directExplicitModes)),
+  );
+  if (!collectionIds.size) return undefined;
+
+  const contexts: DSVariableModeContext[] = [];
+  const sortedCollectionIds = Array.from(collectionIds).sort();
+  for (const collectionId of sortedCollectionIds) {
+    const explicitOwner = findExplicitModeOwner(node, collectionId);
+    contexts.push({
+      collectionId,
+      resolvedModeId: resolvedModes[collectionId] ?? null,
+      explicitModeId: explicitOwner?.modeId ?? null,
+      explicitOwnerNodeId: explicitOwner?.node.id ?? null,
+      explicitOwnerName: explicitOwner ? readNodeName(explicitOwner.node) : null,
+      explicitOwnerPath: explicitOwner
+        ? buildModeOwnerPath(explicitOwner.node)
+        : null,
+    });
+  }
+  return contexts;
+}
+
+function readVariableModes(
+  node: BaseNode,
+  field: 'resolvedVariableModes' | 'explicitVariableModes',
+): Record<string, string> {
+  const value = (node as unknown as Record<string, unknown>)[field];
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    return {};
+  }
+  const modes: Record<string, string> = {};
+  for (const [collectionId, modeId] of Object.entries(
+    value as Record<string, unknown>,
+  )) {
+    if (typeof modeId === 'string' && modeId) {
+      modes[collectionId] = modeId;
+    }
+  }
+  return modes;
+}
+
+function findExplicitModeOwner(
+  node: BaseNode,
+  collectionId: string,
+): { node: BaseNode; modeId: string } | null {
+  let current: BaseNode | null = node;
+  while (current && current.type !== 'DOCUMENT') {
+    const modes = readVariableModes(current, 'explicitVariableModes');
+    const modeId = modes[collectionId];
+    if (modeId) {
+      return { node: current, modeId };
+    }
+    current = current.parent;
+  }
+  return null;
+}
+
+function readNodeName(node: BaseNode): string | null {
+  return 'name' in node && typeof node.name === 'string' ? node.name : null;
+}
+
+function buildModeOwnerPath(node: BaseNode): string | null {
+  const names: string[] = [];
+  let current: BaseNode | null = node;
+  while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
+    const name = readNodeName(current);
+    if (name) names.push(name);
+    current = current.parent;
+  }
+  return names.length ? names.reverse().join(' / ') : null;
 }
 
 function extractStyles(node: SceneNode): DSNodeStyles | undefined {

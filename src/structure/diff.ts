@@ -44,13 +44,66 @@ export type DiffValueDetails = {
   resourceId?: string | null;
   displayName?: string | null;
   bindingId?: string | null;
+  binding?: VariableBindingEvidence | null;
+};
+
+export type VariableBindingStatus =
+  | 'same-binding'
+  | 'allowed-binding'
+  | 'different-binding'
+  | 'unbound'
+  | 'unresolved-binding'
+  | 'missing-reference-binding';
+
+export type VariableMetadata = {
+  variableId: string | null;
+  variableKey: string | null;
+  variableName: string | null;
+  collectionId: string | null;
+  collectionName: string | null;
+  modeNames: Record<string, string>;
+};
+
+export type VariableBindingEvidence = {
+  id: string;
+  key: string | null;
+  name: string | null;
+  collectionId: string | null;
+  collectionName: string | null;
+  resolvedModeId: string | null;
+  resolvedModeName: string | null;
+  explicitModeId: string | null;
+  explicitModeName: string | null;
+  modeSource: 'explicit' | 'inherited' | 'resolved' | 'unknown';
+  modeOwnerNodeId: string | null;
+  modeOwnerName: string | null;
+  modeOwnerPath: string | null;
+};
+
+export type VariableModeEvidence = {
+  collectionId: string;
+  collectionName: string | null;
+  resolvedModeId: string | null;
+  resolvedModeName: string | null;
+  explicitModeId: string | null;
+  explicitModeName: string | null;
+  modeSource: 'explicit' | 'inherited' | 'resolved' | 'unknown';
+  modeOwnerNodeId: string | null;
+  modeOwnerName: string | null;
+  modeOwnerPath: string | null;
 };
 
 export type DiffDetails = {
   property: string;
   reference: DiffValueDetails;
   actual: DiffValueDetails;
+  bindingStatus?: VariableBindingStatus | null;
+  variableMode?: VariableModeEvidence | null;
 };
+
+export type VariableMetadataResolver = (
+  bindingId: string,
+) => VariableMetadata | null;
 
 type DiffResult = {
   diffs: DiffEntry[];
@@ -100,6 +153,7 @@ export function diffStructures(
     resolveTokenLabel?: (token: string) => string | null;
     resolveStyleLabel?: (styleKey: string) => string | null;
     isPaintToken?: (token: string) => boolean;
+    resolveVariableMetadata?: VariableMetadataResolver;
   },
 ): DiffResult {
   const diffs: DiffEntry[] = [];
@@ -121,6 +175,7 @@ export function diffStructures(
   const resolveTokenLabel = options?.resolveTokenLabel;
   const resolveStyleLabel = options?.resolveStyleLabel;
   const isPaintToken = options?.isPaintToken;
+  const resolveVariableMetadata = options?.resolveVariableMetadata;
 
   for (const [path, ref] of referenceMap.entries()) {
     const node = actualMap.get(path);
@@ -137,6 +192,7 @@ export function diffStructures(
       resolveTokenLabel,
       resolveStyleLabel,
       isPaintToken,
+      resolveVariableMetadata,
     );
   }
 
@@ -356,6 +412,7 @@ function compareNode(
   resolveTokenLabel?: (token: string) => string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
   isPaintToken?: (token: string) => boolean,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   const actualLayout = actual.layout ?? {};
   const referenceLayout = reference.layout ?? {};
@@ -381,6 +438,7 @@ function compareNode(
     issueSet,
     strict,
     resolveTokenLabel,
+    resolveVariableMetadata,
   );
 
   const shouldCompareItemSpacing = hasMeaningfulItemSpacing(
@@ -389,7 +447,44 @@ function compareNode(
   );
 
   if (shouldCompareItemSpacing) {
+    const actualItemSpacingToken = actualLayout.itemSpacingToken ?? null;
+    const referenceItemSpacingToken =
+      referenceLayout.itemSpacingToken ?? null;
+    const itemSpacingBindingMissing = Boolean(
+      referenceItemSpacingToken && !actualItemSpacingToken,
+    );
+    if (referenceItemSpacingToken && itemSpacingBindingMissing) {
+      const formattedReferenceToken = formatTokenLabel(
+        referenceItemSpacingToken,
+        resolveTokenLabel,
+      );
+      pushDiff(
+        diffs,
+        actual,
+        reference,
+        path,
+        `Переменная itemSpacing: ${formattedReferenceToken} → Отвязана (значение: ${actualLayout.itemSpacing ?? '—'})`,
+        'layout',
+        {
+          property: 'layout.itemSpacing',
+          reference: createBoundDiffValue(
+            referenceLayout.itemSpacing ?? null,
+            referenceItemSpacingToken,
+            reference,
+            resolveVariableMetadata,
+          ),
+          actual: createBoundDiffValue(
+            actualLayout.itemSpacing ?? null,
+            null,
+            actual,
+            resolveVariableMetadata,
+          ),
+          bindingStatus: 'unbound',
+        },
+      );
+    }
     if (
+      !itemSpacingBindingMissing &&
       referenceLayout.itemSpacing !== undefined &&
       referenceLayout.itemSpacing !== null &&
       (actualLayout.itemSpacing ?? null) !==
@@ -400,7 +495,13 @@ function compareNode(
           issueSet,
           `Нет данных для itemSpacing в снапшоте для «${path}»`,
         );
-      } else {
+      } else if (
+        !bindingsEquivalent(
+          actualItemSpacingToken,
+          referenceItemSpacingToken,
+          resolveVariableMetadata,
+        )
+      ) {
         pushDiff(
           diffs,
           actual,
@@ -410,27 +511,44 @@ function compareNode(
           'layout',
           {
             property: 'layout.itemSpacing',
-            reference: { value: referenceLayout.itemSpacing ?? null },
-            actual: { value: actualLayout.itemSpacing ?? null },
+            reference: createBoundDiffValue(
+              referenceLayout.itemSpacing ?? null,
+              referenceItemSpacingToken,
+              reference,
+              resolveVariableMetadata,
+            ),
+            actual: createBoundDiffValue(
+              actualLayout.itemSpacing ?? null,
+              actualItemSpacingToken,
+              actual,
+              resolveVariableMetadata,
+            ),
+            bindingStatus: classifyBindingStatus(
+              actualItemSpacingToken,
+              referenceItemSpacingToken,
+              resolveVariableMetadata,
+            ),
           },
         );
       }
     }
 
-    if (referenceLayout.itemSpacingToken) {
-      const actualToken = actualLayout.itemSpacingToken ?? null;
-
-      if (strict && !actualToken) {
-        addIssue(
-          issueSet,
-          `Нет данных для token itemSpacing в снапшоте для «${path}»`,
-        );
-      } else if (actualToken !== referenceLayout.itemSpacingToken) {
+    if (referenceItemSpacingToken && !itemSpacingBindingMissing) {
+      if (
+        !bindingsEquivalent(
+          actualItemSpacingToken,
+          referenceItemSpacingToken,
+          resolveVariableMetadata,
+        )
+      ) {
         const formattedReferenceToken = formatTokenLabel(
-          referenceLayout.itemSpacingToken,
+          referenceItemSpacingToken,
           resolveTokenLabel,
         );
-        const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
+        const formattedActualToken = formatTokenLabel(
+          actualItemSpacingToken,
+          resolveTokenLabel,
+        );
         if (formattedActualToken !== formattedReferenceToken) {
           pushDiff(
             diffs,
@@ -444,15 +562,32 @@ function compareNode(
               reference: {
                 value: formattedReferenceToken,
                 resourceType: 'token',
-                resourceId: referenceLayout.itemSpacingToken,
+                resourceId: referenceItemSpacingToken,
                 displayName: formattedReferenceToken,
+                bindingId: referenceItemSpacingToken,
+                binding: createVariableBindingEvidence(
+                  reference,
+                  referenceItemSpacingToken,
+                  resolveVariableMetadata,
+                ),
               },
               actual: {
                 value: formattedActualToken,
                 resourceType: 'token',
-                resourceId: actualToken,
+                resourceId: actualItemSpacingToken,
                 displayName: formattedActualToken,
+                bindingId: actualItemSpacingToken,
+                binding: createVariableBindingEvidence(
+                  actual,
+                  actualItemSpacingToken,
+                  resolveVariableMetadata,
+                ),
               },
+              bindingStatus: classifyBindingStatus(
+                actualItemSpacingToken,
+                referenceItemSpacingToken,
+                resolveVariableMetadata,
+              ),
             },
           );
         }
@@ -515,6 +650,7 @@ function compareNode(
     reference.styles?.fill?.styleKey,
     resolveStyleLabel,
     hasFillStyleDiff,
+    resolveVariableMetadata,
   );
 
   compareStroke(
@@ -532,6 +668,7 @@ function compareNode(
     reference.styles?.stroke?.styleKey,
     resolveStyleLabel,
     hasStrokeStyleDiff,
+    resolveVariableMetadata,
   );
 
   compareRadius(
@@ -546,6 +683,7 @@ function compareNode(
     issueSet,
     strict,
     resolveTokenLabel,
+    resolveVariableMetadata,
   );
 
   compareOpacity(
@@ -560,6 +698,7 @@ function compareNode(
     issueSet,
     strict,
     resolveTokenLabel,
+    resolveVariableMetadata,
   );
 
   compareVariantProperties(path, actual, reference, diffs);
@@ -802,6 +941,7 @@ function comparePadding(
   issueSet: Set<string>,
   strict: boolean,
   resolveTokenLabel?: (token: string) => string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   const sides: Array<keyof NonNullable<typeof actual>> = [
     'top',
@@ -813,6 +953,8 @@ function comparePadding(
   for (const side of sides) {
     const a = actual?.[side] ?? null;
     const b = reference?.[side] ?? null;
+    const actualToken = actualTokens?.[side] ?? null;
+    const referenceToken = referenceTokens?.[side] ?? null;
 
     if (b === null) {
       continue;
@@ -829,7 +971,48 @@ function comparePadding(
       continue;
     }
 
+    if (referenceToken && !actualToken) {
+      const formattedReferenceToken = formatPaddingTokenLabel(
+        referenceToken,
+        resolveTokenLabel,
+      );
+      pushDiff(
+        diffs,
+        actualNode,
+        referenceNode,
+        path,
+        `Переменная padding ${label(side)}: ${formattedReferenceToken} → Отвязана (значение: ${a ?? '—'})`,
+        'layout',
+        {
+          property: `layout.padding.${side}`,
+          reference: createBoundDiffValue(
+            b,
+            referenceToken,
+            referenceNode,
+            resolveVariableMetadata,
+          ),
+          actual: createBoundDiffValue(
+            a,
+            null,
+            actualNode,
+            resolveVariableMetadata,
+          ),
+          bindingStatus: 'unbound',
+        },
+      );
+      continue;
+    }
+
     if (a !== b) {
+      if (
+        bindingsEquivalent(
+          actualToken,
+          referenceToken,
+          resolveVariableMetadata,
+        )
+      ) {
+        continue;
+      }
       pushDiff(
         diffs,
         actualNode,
@@ -839,30 +1022,34 @@ function comparePadding(
         'layout',
         {
           property: `layout.padding.${side}`,
-          reference: {
-            value: b,
-            bindingId: referenceTokens?.[side] ?? null,
-          },
-          actual: {
-            value: a,
-            bindingId: actualTokens?.[side] ?? null,
-          },
+          reference: createBoundDiffValue(
+            b,
+            referenceToken,
+            referenceNode,
+            resolveVariableMetadata,
+          ),
+          actual: createBoundDiffValue(
+            a,
+            actualToken,
+            actualNode,
+            resolveVariableMetadata,
+          ),
+          bindingStatus: classifyBindingStatus(
+            actualToken,
+            referenceToken,
+            resolveVariableMetadata,
+          ),
         },
       );
       continue;
     }
 
-    const refToken = referenceTokens?.[side] ?? null;
+    const refToken = referenceToken;
 
     if (refToken) {
-      const actualToken = actualTokens?.[side] ?? null;
-
-      if (strict && !actualToken) {
-        addIssue(
-          issueSet,
-          `Нет данных для token padding ${label(side)} в снапшоте для «${path}»`,
-        );
-      } else if (actualToken !== refToken) {
+      if (
+        !bindingsEquivalent(actualToken, refToken, resolveVariableMetadata)
+      ) {
         const formattedReferenceToken = formatPaddingTokenLabel(refToken, resolveTokenLabel);
         const formattedActualToken = formatPaddingTokenLabel(actualToken, resolveTokenLabel);
         if (formattedActualToken === formattedReferenceToken) {
@@ -882,13 +1069,30 @@ function comparePadding(
               resourceType: 'token',
               resourceId: refToken,
               displayName: formattedReferenceToken,
+              bindingId: refToken,
+              binding: createVariableBindingEvidence(
+                referenceNode,
+                refToken,
+                resolveVariableMetadata,
+              ),
             },
             actual: {
               value: formattedActualToken,
               resourceType: 'token',
               resourceId: actualToken,
               displayName: formattedActualToken,
+              bindingId: actualToken,
+              binding: createVariableBindingEvidence(
+                actualNode,
+                actualToken,
+                resolveVariableMetadata,
+              ),
             },
+            bindingStatus: classifyBindingStatus(
+              actualToken,
+              refToken,
+              resolveVariableMetadata,
+            ),
           },
         );
       }
@@ -1041,6 +1245,7 @@ function comparePaint(
   referenceStyleKey?: string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
   skipBecauseStyleDiff = false,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   if (!reference && !referenceStyleKey) {
     const actualValue = describePaintValue(
@@ -1062,7 +1267,15 @@ function comparePaint(
         {
           property: label === 'обводка' ? 'stroke' : 'fill',
           reference: { value: null },
-          actual: paintValueToDiffValue(actualValue),
+          actual: paintValueToDiffValue(
+            actualValue,
+            actualNode,
+            resolveVariableMetadata,
+          ),
+          bindingStatus:
+            actualValue.kind === 'token'
+              ? 'missing-reference-binding'
+              : null,
         },
       );
     }
@@ -1110,7 +1323,45 @@ function comparePaint(
   const normalizedActualStyleKey = actualStyleKey ?? null;
   const normalizedReferenceStyleKey = referenceStyleKey ?? null;
 
-  if (actualToken && referenceToken && actualToken === referenceToken) {
+  if (
+    referenceToken &&
+    !actualToken &&
+    !normalizedActualStyleKey
+  ) {
+    const bindingLabel =
+      label === 'обводка' ? 'Переменная обводки' : 'Переменная заливки';
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `${bindingLabel}: ${referenceValue.text} → Отвязана (значение: ${actualValue?.text ?? '—'})`,
+      label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
+      {
+        property: label === 'обводка' ? 'stroke' : 'fill',
+        reference: paintValueToDiffValue(
+          referenceValue,
+          referenceNode,
+          resolveVariableMetadata,
+        ),
+        actual: actualValue
+          ? paintValueToDiffValue(
+              actualValue,
+              actualNode,
+              resolveVariableMetadata,
+            )
+          : { value: null, bindingId: null, binding: null },
+        bindingStatus: 'unbound',
+      },
+    );
+    return;
+  }
+
+  if (
+    actualToken &&
+    referenceToken &&
+    bindingsEquivalent(actualToken, referenceToken, resolveVariableMetadata)
+  ) {
     return;
   }
 
@@ -1136,21 +1387,50 @@ function comparePaint(
     label === 'обводка' || label === 'заливка' ? 'paint' : 'other',
     {
       property: label === 'обводка' ? 'stroke' : 'fill',
-      reference: paintValueToDiffValue(referenceValue),
+      reference: paintValueToDiffValue(
+        referenceValue,
+        referenceNode,
+        resolveVariableMetadata,
+      ),
       actual: actualValue
-        ? paintValueToDiffValue(actualValue)
+        ? paintValueToDiffValue(
+            actualValue,
+            actualNode,
+            resolveVariableMetadata,
+          )
         : { value: null },
+      bindingStatus:
+        referenceValue.kind === 'token' || actualValue?.kind === 'token'
+          ? classifyBindingStatus(
+              actualToken,
+              referenceToken,
+              resolveVariableMetadata,
+            )
+          : null,
     },
   );
 }
 
-function paintValueToDiffValue(value: PaintValueDescription): DiffValueDetails {
-  return {
+function paintValueToDiffValue(
+  value: PaintValueDescription,
+  node: DSStructureNode,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): DiffValueDetails {
+  const result: DiffValueDetails = {
     value: value.text,
     resourceType: value.kind,
     resourceId: value.id,
     displayName: value.text,
   };
+  if (value.kind === 'token' && value.id) {
+    result.bindingId = value.id;
+    result.binding = createVariableBindingEvidence(
+      node,
+      value.id,
+      resolveVariableMetadata,
+    );
+  }
+  return result;
 }
 
 function isUnavailableInstanceRootProperty(
@@ -1181,6 +1461,7 @@ function compareStroke(
   referenceStyleKey?: string | null,
   resolveStyleLabel?: (styleKey: string) => string | null,
   skipPaintDiff = false,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   if (!reference) {
     const actualWeight = actual?.weight ?? null;
@@ -1221,6 +1502,8 @@ function compareStroke(
       actualStyleKey,
       referenceStyleKey,
       resolveStyleLabel,
+      false,
+      resolveVariableMetadata,
     );
   }
   
@@ -1308,6 +1591,7 @@ function compareRadius(
   issueSet: Set<string>,
   strict: boolean,
   resolveTokenLabel?: (token: string) => string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   if (reference === null) return;
 
@@ -1321,13 +1605,42 @@ function compareRadius(
     return;
   }
 
+  if (referenceToken && !actualToken) {
+    const formattedReferenceToken = formatTokenLabel(
+      referenceToken,
+      resolveTokenLabel,
+    );
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `Переменная скругления: ${formattedReferenceToken} → Отвязана (значение: ${formatRadius(actual)})`,
+      'layout',
+      {
+        property: 'radius',
+        reference: createBoundDiffValue(
+          formatRadius(reference),
+          referenceToken,
+          referenceNode,
+          resolveVariableMetadata,
+        ),
+        actual: createBoundDiffValue(
+          formatRadius(actual),
+          null,
+          actualNode,
+          resolveVariableMetadata,
+        ),
+        bindingStatus: 'unbound',
+      },
+    );
+    return;
+  }
+
   if (referenceToken) {
-    if (strict && !actualToken) {
-      addIssue(
-        issueSet,
-        `Нет данных для token radius в снапшоте для «${path}»`,
-      );
-    } else if (actualToken !== referenceToken) {
+    if (
+      !bindingsEquivalent(actualToken, referenceToken, resolveVariableMetadata)
+    ) {
       const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
       const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
       if (formattedActualToken !== formattedReferenceToken) {
@@ -1345,13 +1658,30 @@ function compareRadius(
               resourceType: 'token',
               resourceId: referenceToken,
               displayName: formattedReferenceToken,
+              bindingId: referenceToken,
+              binding: createVariableBindingEvidence(
+                referenceNode,
+                referenceToken,
+                resolveVariableMetadata,
+              ),
             },
             actual: {
               value: formattedActualToken,
               resourceType: 'token',
               resourceId: actualToken,
               displayName: formattedActualToken,
+              bindingId: actualToken,
+              binding: createVariableBindingEvidence(
+                actualNode,
+                actualToken,
+                resolveVariableMetadata,
+              ),
             },
+            bindingStatus: classifyBindingStatus(
+              actualToken,
+              referenceToken,
+              resolveVariableMetadata,
+            ),
           },
         );
       }
@@ -1360,6 +1690,12 @@ function compareRadius(
 
   if (JSON.stringify(actual ?? null) === JSON.stringify(reference ?? null))
     return;
+
+  if (
+    bindingsEquivalent(actualToken, referenceToken, resolveVariableMetadata)
+  ) {
+    return;
+  }
 
   pushDiff(
     diffs,
@@ -1370,8 +1706,23 @@ function compareRadius(
     'layout',
     {
       property: 'radius',
-      reference: { value: formatRadius(reference) },
-      actual: { value: formatRadius(actual) },
+      reference: createBoundDiffValue(
+        formatRadius(reference),
+        referenceToken,
+        referenceNode,
+        resolveVariableMetadata,
+      ),
+      actual: createBoundDiffValue(
+        formatRadius(actual),
+        actualToken,
+        actualNode,
+        resolveVariableMetadata,
+      ),
+      bindingStatus: classifyBindingStatus(
+        actualToken,
+        referenceToken,
+        resolveVariableMetadata,
+      ),
     },
   );
 }
@@ -1394,6 +1745,7 @@ function compareOpacity(
   issueSet: Set<string>,
   strict: boolean,
   resolveTokenLabel?: (token: string) => string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
 ) {
   if (reference === null) return;
 
@@ -1409,13 +1761,42 @@ function compareOpacity(
   const normalizedReference =
     reference === null ? null : Number(reference.toFixed(2));
 
+  if (referenceToken && !actualToken) {
+    const formattedReferenceToken = formatTokenLabel(
+      referenceToken,
+      resolveTokenLabel,
+    );
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `Переменная opacity: ${formattedReferenceToken} → Отвязана (значение: ${normalizedActual ?? '—'})`,
+      'opacity',
+      {
+        property: 'opacity',
+        reference: createBoundDiffValue(
+          normalizedReference,
+          referenceToken,
+          referenceNode,
+          resolveVariableMetadata,
+        ),
+        actual: createBoundDiffValue(
+          normalizedActual,
+          null,
+          actualNode,
+          resolveVariableMetadata,
+        ),
+        bindingStatus: 'unbound',
+      },
+    );
+    return;
+  }
+
   if (referenceToken) {
-    if (strict && !actualToken) {
-      addIssue(
-        issueSet,
-        `Нет данных для token opacity в снапшоте для «${path}»`,
-      );
-    } else if (actualToken !== referenceToken) {
+    if (
+      !bindingsEquivalent(actualToken, referenceToken, resolveVariableMetadata)
+    ) {
       const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
       const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
       if (formattedActualToken !== formattedReferenceToken) {
@@ -1433,19 +1814,41 @@ function compareOpacity(
               resourceType: 'token',
               resourceId: referenceToken,
               displayName: formattedReferenceToken,
+              bindingId: referenceToken,
+              binding: createVariableBindingEvidence(
+                referenceNode,
+                referenceToken,
+                resolveVariableMetadata,
+              ),
             },
             actual: {
               value: formattedActualToken,
               resourceType: 'token',
               resourceId: actualToken,
               displayName: formattedActualToken,
+              bindingId: actualToken,
+              binding: createVariableBindingEvidence(
+                actualNode,
+                actualToken,
+                resolveVariableMetadata,
+              ),
             },
+            bindingStatus: classifyBindingStatus(
+              actualToken,
+              referenceToken,
+              resolveVariableMetadata,
+            ),
           },
         );
       }
     }
   }
   if (normalizedActual === normalizedReference) return;
+  if (
+    bindingsEquivalent(actualToken, referenceToken, resolveVariableMetadata)
+  ) {
+    return;
+  }
   pushDiff(
     diffs,
     actualNode,
@@ -1455,10 +1858,145 @@ function compareOpacity(
     'opacity',
     {
       property: 'opacity',
-      reference: { value: normalizedReference },
-      actual: { value: normalizedActual },
+      reference: createBoundDiffValue(
+        normalizedReference,
+        referenceToken,
+        referenceNode,
+        resolveVariableMetadata,
+      ),
+      actual: createBoundDiffValue(
+        normalizedActual,
+        actualToken,
+        actualNode,
+        resolveVariableMetadata,
+      ),
+      bindingStatus: classifyBindingStatus(
+        actualToken,
+        referenceToken,
+        resolveVariableMetadata,
+      ),
     },
   );
+}
+
+function createBoundDiffValue(
+  value: string | number | null,
+  bindingId: string | null,
+  node: DSStructureNode,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): DiffValueDetails {
+  if (!bindingId) {
+    return { value, bindingId: null, binding: null };
+  }
+  const binding = createVariableBindingEvidence(
+    node,
+    bindingId,
+    resolveVariableMetadata,
+  );
+  return {
+    value,
+    resourceType: 'token',
+    resourceId: bindingId,
+    displayName: binding?.name ?? null,
+    bindingId,
+    binding,
+  };
+}
+
+function createVariableBindingEvidence(
+  node: DSStructureNode,
+  bindingId: string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): VariableBindingEvidence | null {
+  if (!bindingId) return null;
+  const metadata = resolveVariableMetadata?.(bindingId) ?? null;
+  const collectionId = metadata?.collectionId ?? null;
+  const modeContext = collectionId
+    ? node.variableModes?.find(
+        (context) => context.collectionId === collectionId,
+      ) ?? null
+    : null;
+  const resolvedModeId = modeContext?.resolvedModeId ?? null;
+  const explicitModeId = modeContext?.explicitModeId ?? null;
+  const modeNames = metadata?.modeNames ?? {};
+  const modeOwnerNodeId = modeContext?.explicitOwnerNodeId ?? null;
+  let modeSource: VariableBindingEvidence['modeSource'] = 'unknown';
+  if (modeOwnerNodeId && modeOwnerNodeId === node.nodeId) {
+    modeSource = 'explicit';
+  } else if (modeOwnerNodeId) {
+    modeSource = 'inherited';
+  } else if (resolvedModeId) {
+    modeSource = 'resolved';
+  }
+  return {
+    id: bindingId,
+    key: metadata?.variableKey ?? null,
+    name: metadata?.variableName ?? null,
+    collectionId,
+    collectionName: metadata?.collectionName ?? null,
+    resolvedModeId,
+    resolvedModeName: resolvedModeId ? modeNames[resolvedModeId] ?? null : null,
+    explicitModeId,
+    explicitModeName: explicitModeId ? modeNames[explicitModeId] ?? null : null,
+    modeSource,
+    modeOwnerNodeId,
+    modeOwnerName: modeContext?.explicitOwnerName ?? null,
+    modeOwnerPath: modeContext?.explicitOwnerPath ?? null,
+  };
+}
+
+function bindingsEquivalent(
+  actualBindingId: string | null,
+  referenceBindingId: string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): boolean {
+  if (!actualBindingId || !referenceBindingId) return false;
+  if (actualBindingId === referenceBindingId) return true;
+  const actualIdentity = canonicalBindingIdentity(
+    actualBindingId,
+    resolveVariableMetadata,
+  );
+  const referenceIdentity = canonicalBindingIdentity(
+    referenceBindingId,
+    resolveVariableMetadata,
+  );
+  return Boolean(actualIdentity && actualIdentity === referenceIdentity);
+}
+
+function classifyBindingStatus(
+  actualBindingId: string | null,
+  referenceBindingId: string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): VariableBindingStatus | null {
+  if (!actualBindingId && !referenceBindingId) return null;
+  if (!actualBindingId) return 'unbound';
+  if (!referenceBindingId) return 'missing-reference-binding';
+  if (
+    bindingsEquivalent(
+      actualBindingId,
+      referenceBindingId,
+      resolveVariableMetadata,
+    )
+  ) {
+    return 'same-binding';
+  }
+  const actualMetadata = resolveVariableMetadata?.(actualBindingId) ?? null;
+  const referenceMetadata =
+    resolveVariableMetadata?.(referenceBindingId) ?? null;
+  if (!actualMetadata || !referenceMetadata) {
+    return 'unresolved-binding';
+  }
+  return 'different-binding';
+}
+
+function canonicalBindingIdentity(
+  bindingId: string,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): string | null {
+  const variableKey = resolveVariableMetadata?.(bindingId)?.variableKey ?? null;
+  if (variableKey) return `key:${variableKey}`;
+  const normalized = bindingId.trim();
+  return normalized ? `id:${normalized}` : null;
 }
 
 function formatTokenLabel(

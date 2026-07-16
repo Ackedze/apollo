@@ -1,4 +1,7 @@
-import type { DiffEntry } from '../structure/diff';
+import type {
+  DiffEntry,
+  VariableModeEvidence,
+} from '../structure/diff';
 import type { DSStructureNode } from '../types/structures';
 import {
   formatLayoutSizing,
@@ -28,6 +31,11 @@ export type ComponentContractRule = {
   appliesTo: string;
   checkType?: string;
   matchKind?: string;
+  changeScope?:
+    | 'atomic'
+    | 'component-context'
+    | 'screen-context'
+    | 'package-context';
   ruleText: string;
   remediation?: string;
   target?: ComponentRuleTarget;
@@ -40,6 +48,16 @@ export type ComponentContractRule = {
     path?: string;
     collection?: string;
     tokenNames?: string[];
+  };
+  requiredConfiguration?: {
+    manualPaddingAllowed?: boolean;
+    manualItemSpacingAllowed?: boolean;
+    itemSpacingVariable?: string;
+    variableCollection?: string;
+    desktopCollection?: string;
+    mobileWebCollection?: string;
+    allowedModes?: string[];
+    prohibitedModes?: string[];
   };
 };
 
@@ -69,6 +87,16 @@ type DiffComponentIdentity = {
   kind: 'direct' | 'owner';
   relativePath: string | null;
 };
+
+export type VariableCollectionMetadata = {
+  collectionId: string;
+  collectionName: string | null;
+  modeNames: Record<string, string>;
+};
+
+export type VariableCollectionMetadataResolver = (
+  collectionId: string,
+) => VariableCollectionMetadata | null;
 
 declare global {
   var __APOLLO_TEST_COMPONENT_NAME_BY_KEY__:
@@ -129,11 +157,40 @@ export function findComponentContractViolationForDiff(
 ): ComponentContractRule | null {
   const rules = findComponentContractRulesForDiff(diff);
   for (const rule of rules) {
-    if (rule.ruleKind === 'design-rule' && rule.severity === 'error') {
+    if (
+      rule.severity === 'error' &&
+      (rule.ruleKind === 'design-rule' ||
+        isDeterministicBindingViolation(rule, diff))
+    ) {
       return rule;
     }
   }
   return null;
+}
+
+function isDeterministicBindingViolation(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  if (rule.checkType !== 'deterministic') return false;
+  const bindingStatus = diff.details?.bindingStatus ?? null;
+  if (bindingStatus !== 'unbound' && bindingStatus !== 'different-binding') {
+    return false;
+  }
+  const property = diff.details?.property ?? '';
+  if (
+    property.startsWith('layout.padding.') ||
+    property.startsWith('layout.paddingTokens.')
+  ) {
+    return rule.requiredConfiguration?.manualPaddingAllowed === false;
+  }
+  if (
+    property === 'layout.itemSpacing' ||
+    property === 'layout.itemSpacingToken'
+  ) {
+    return rule.requiredConfiguration?.manualItemSpacingAllowed === false;
+  }
+  return false;
 }
 
 export function hasRequiredComponentSizingRules(
@@ -173,6 +230,44 @@ export function hasRequiredComponentSizingRules(
   return false;
 }
 
+export function hasVariableModeRules(
+  componentKey: string | null | undefined,
+  componentNames: Array<string | null | undefined> = [],
+): boolean {
+  const normalizedKey = componentKey ?? '';
+  const normalizedNames = componentNames
+    .map((name) => normalizePathSegment(name ?? ''))
+    .filter(Boolean);
+
+  for (const entry of getComponentRuleRegistry()) {
+    const matchesKey =
+      normalizedKey === entry.componentKey ||
+      (entry.figmaKeys ?? []).includes(normalizedKey);
+    const matchesAlias = entry.aliases.some((alias) =>
+      normalizedNames.includes(normalizePathSegment(alias)),
+    );
+    if (!matchesKey && !matchesAlias) continue;
+    if (
+      (entry.rulesFile.rules ?? []).some((rule) => {
+        const configuration = rule.requiredConfiguration;
+        return (
+          isUsableRule(rule) &&
+          rule.severity === 'error' &&
+          rule.checkType === 'deterministic' &&
+          readVariableModeCollections(rule.appliesTo).length > 0 &&
+          Boolean(
+            configuration?.allowedModes?.length ||
+              configuration?.prohibitedModes?.length,
+          )
+        );
+      })
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function applyRequiredComponentSizingAssessment(
   diff: DiffEntry,
 ): DiffEntry {
@@ -193,6 +288,18 @@ export function applyRequiredComponentSizingAssessment(
   );
   if (!rule) return diff;
 
+  return Object.assign({}, diff, {
+    assessment: createRuleViolationAssessment(rule),
+  });
+}
+
+export function applyVariableBindingAssessment(diff: DiffEntry): DiffEntry {
+  const bindingStatus = diff.details?.bindingStatus ?? null;
+  if (bindingStatus !== 'unbound' && bindingStatus !== 'different-binding') {
+    return diff;
+  }
+  const rule = findComponentContractViolationForDiff(diff);
+  if (!rule) return diff;
   return Object.assign({}, diff, {
     assessment: createRuleViolationAssessment(rule),
   });
@@ -254,6 +361,166 @@ export function createRequiredComponentSizingDiffs(
   }
 
   return result;
+}
+
+export function createVariableModeRuleDiffs(
+  actualNodes: DSStructureNode[],
+  existingDiffs: DiffEntry[] = [],
+  resolveCollectionMetadata?: VariableCollectionMetadataResolver,
+): DiffEntry[] {
+  if (!actualNodes.length || !resolveCollectionMetadata) return [];
+  const existingKeys = new Set(existingDiffs.map(makeDiffKey));
+  const nodesById = new Map(actualNodes.map((node) => [node.id, node]));
+  const result: DiffEntry[] = [];
+
+  for (const node of actualNodes) {
+    if (!node.componentInstance?.componentKey || !node.variableModes?.length) {
+      continue;
+    }
+    const owner = findNearestInstanceOwner(node, nodesById);
+    const context = buildActualDiffContext(node, owner);
+
+    for (const entry of getComponentRuleRegistry()) {
+      for (const rule of entry.rulesFile.rules ?? []) {
+        if (
+          !isUsableRule(rule) ||
+          rule.severity !== 'error' ||
+          rule.checkType !== 'deterministic'
+        ) {
+          continue;
+        }
+        const collectionNames = readVariableModeCollections(rule.appliesTo);
+        const allowedModes = rule.requiredConfiguration?.allowedModes ?? [];
+        const prohibitedModes =
+          rule.requiredConfiguration?.prohibitedModes ?? [];
+        if (
+          !collectionNames.length ||
+          (!allowedModes.length && !prohibitedModes.length)
+        ) {
+          continue;
+        }
+
+        for (const modeContext of node.variableModes) {
+          const collection = resolveCollectionMetadata(
+            modeContext.collectionId,
+          );
+          if (
+            !collection?.collectionName ||
+            !collectionNames.some(
+              (name) =>
+                normalizeRuleValue(name) ===
+                normalizeRuleValue(collection.collectionName ?? ''),
+            )
+          ) {
+            continue;
+          }
+          const modeId = modeContext.resolvedModeId;
+          const modeName = modeId
+            ? collection.modeNames[modeId] ?? null
+            : null;
+          if (!modeName) continue;
+          const normalizedMode = normalizeRuleValue(modeName);
+          const allowed = allowedModes.some(
+            (mode) => normalizeRuleValue(mode) === normalizedMode,
+          );
+          const prohibited = prohibitedModes.some(
+            (mode) => normalizeRuleValue(mode) === normalizedMode,
+          );
+          if (!prohibited && (!allowedModes.length || allowed)) {
+            continue;
+          }
+
+          const property = `variables.${collection.collectionName}.mode`;
+          const expected = allowedModes.length
+            ? allowedModes.join(' | ')
+            : `не ${prohibitedModes.join(' | ')}`;
+          const variableMode = buildVariableModeEvidence(
+            node,
+            modeContext,
+            collection,
+          );
+          const diff: DiffEntry = {
+            message: `Mode ${collection.collectionName}: ${expected} → ${modeName}`,
+            nodePath: node.path,
+            nodeName: node.name,
+            nodeId: node.nodeId,
+            visible: node.visible,
+            context,
+            diffKind: 'other',
+            details: {
+              property,
+              reference: { value: expected },
+              actual: { value: modeName },
+              variableMode,
+            },
+            assessment: createRuleViolationAssessment(rule),
+          };
+          const key = `${makeDiffKey(diff)}|${rule.ruleId}`;
+          if (
+            existingKeys.has(key) ||
+            !diffTargetsComponent(diff, entry) ||
+            !ruleMatchesDiff(rule, diff, property, entry)
+          ) {
+            continue;
+          }
+          existingKeys.add(key);
+          result.push(diff);
+        }
+      }
+    }
+  }
+  return result;
+}
+
+function readVariableModeCollections(appliesTo: string): string[] {
+  const result: string[] = [];
+  for (const part of appliesTo.split('|')) {
+    const value = part.trim();
+    if (!value.startsWith('variables.') || !value.endsWith('.mode')) {
+      continue;
+    }
+    const collectionName = value.slice('variables.'.length, -'.mode'.length);
+    if (collectionName) result.push(collectionName);
+  }
+  return result;
+}
+
+function buildVariableModeEvidence(
+  node: DSStructureNode,
+  modeContext: NonNullable<DSStructureNode['variableModes']>[number],
+  collection: VariableCollectionMetadata,
+): VariableModeEvidence {
+  const resolvedModeId = modeContext.resolvedModeId;
+  const explicitModeId = modeContext.explicitModeId;
+  const modeOwnerNodeId = modeContext.explicitOwnerNodeId;
+  let modeSource: VariableModeEvidence['modeSource'] = 'unknown';
+  if (modeOwnerNodeId && modeOwnerNodeId === node.nodeId) {
+    modeSource = 'explicit';
+  } else if (modeOwnerNodeId) {
+    modeSource = 'inherited';
+  } else if (resolvedModeId) {
+    modeSource = 'resolved';
+  }
+  return {
+    collectionId: collection.collectionId,
+    collectionName: collection.collectionName,
+    resolvedModeId,
+    resolvedModeName: resolvedModeId
+      ? collection.modeNames[resolvedModeId] ?? null
+      : null,
+    explicitModeId,
+    explicitModeName: explicitModeId
+      ? collection.modeNames[explicitModeId] ?? null
+      : null,
+    modeSource,
+    modeOwnerNodeId,
+    modeOwnerName: modeContext.explicitOwnerName,
+    modeOwnerPath: modeContext.explicitOwnerPath,
+  };
+}
+
+function normalizeRuleValue(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
 function createRuleViolationAssessment(
@@ -392,6 +659,12 @@ function ruleMatchesDiff(
   if (!target) {
     return false;
   }
+  if (
+    !parsedTargetHasSelectors(target) &&
+    !targetlessRuleCanAttachToAtomicDiff(rule)
+  ) {
+    return false;
+  }
   if (!appliesToMatchesDiff(rule.appliesTo, property, diff)) {
     return false;
   }
@@ -463,6 +736,53 @@ function ruleMatchesDiff(
   }
 
   return true;
+}
+
+function parsedTargetHasSelectors(target: ParsedRuleTarget): boolean {
+  return Boolean(
+    target.componentSelectors.length ||
+      target.componentKeySelectors.length ||
+      target.componentNameSelectors.length ||
+      target.layerSelectors.length ||
+      target.slotSelectors.length,
+  );
+}
+
+function targetlessRuleCanAttachToAtomicDiff(
+  rule: ComponentContractRule,
+): boolean {
+  if (rule.changeScope === 'atomic') return true;
+  if (
+    rule.changeScope === 'component-context' ||
+    rule.changeScope === 'screen-context' ||
+    rule.changeScope === 'package-context'
+  ) {
+    return false;
+  }
+  if (
+    rule.matchKind === 'composition_rule'
+  ) {
+    return false;
+  }
+  const appliesToParts = rule.appliesTo
+    .split('|')
+    .map((part) => part.trim().toLowerCase());
+  if (
+    appliesToParts.some(
+      (part) =>
+        part.startsWith('screen.') ||
+        part === 'component.composition' ||
+        part === 'screen.composition',
+    )
+  ) {
+    return false;
+  }
+  return (
+    rule.matchKind === 'exact_component_rule' ||
+    rule.matchKind === 'exact_rule' ||
+    rule.ruleKind === 'design-rule' ||
+    Boolean(rule.checkType?.split('+').includes('deterministic'))
+  );
 }
 
 function parseRuleTarget(

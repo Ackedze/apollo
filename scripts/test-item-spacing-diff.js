@@ -212,12 +212,18 @@ function main() {
   });
 
   assert.ok(
-    meaningfulResult.diffs.some((diff) => diff.message === 'Отступ между элементами: 6 → 0'),
-    'Visible multi-child auto-layout must still report real itemSpacing diffs',
+    meaningfulResult.diffs.some(
+      (diff) =>
+        diff.message ===
+          'Переменная itemSpacing: gap-token → Отвязана (значение: 0)' &&
+        diff.details?.bindingStatus === 'unbound',
+    ),
+    'Visible multi-child auto-layout must classify a detached itemSpacing variable explicitly',
   );
-  assert.ok(
-    meaningfulResult.issues.includes('Нет данных для token itemSpacing в снапшоте для «Container / Content»'),
-    'Visible multi-child auto-layout must still report missing itemSpacing token issues',
+  assert.equal(
+    meaningfulResult.issues.length,
+    0,
+    'A confirmed detached binding is a diff, not missing snapshot data',
   );
 
   const referenceTextPreset = [
@@ -366,7 +372,10 @@ function main() {
 
   assert.ok(
     amountMismatchResult.diffs.some(
-      (diff) => diff.message === 'Отступ между элементами: 6 → 0',
+      (diff) =>
+        diff.message ===
+          'Переменная itemSpacing: gap-token → Отвязана (значение: 0)' &&
+        diff.details?.bindingStatus === 'unbound',
     ),
     'Amount/Account-like body cell variants must not be hidden by the generic Text itemSpacing suppression',
   );

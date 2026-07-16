@@ -25,7 +25,11 @@ import {
 } from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
-import { diffExplicitNestedVariantStates, diffStructures } from './structure/diff';
+import {
+  diffExplicitNestedVariantStates,
+  diffStructures,
+  type VariableMetadata,
+} from './structure/diff';
 import { setNodeStrokeAlignment } from './structure/strokeAlignment';
 import {
   setNodeLayoutSizing,
@@ -124,8 +128,12 @@ import {
 } from './contracts/runtimeContractRegistry';
 import {
   applyRequiredComponentSizingAssessment,
+  applyVariableBindingAssessment,
   createRequiredComponentSizingDiffs,
+  createVariableModeRuleDiffs,
   hasRequiredComponentSizingRules,
+  hasVariableModeRules,
+  type VariableCollectionMetadata,
 } from './contracts/componentRules';
 
 declare const __APOLLO_VERSION__: string;
@@ -275,9 +283,18 @@ type TokenLabelEntry = {
   library?: string;
   sourceFile?: string;
   resolvedType?: string;
+  variableKey?: string;
+  variableId?: string;
+  collectionId?: string;
+  collectionName?: string;
+  modeNames?: Record<string, string>;
 };
 
 let tokenLabelMap: Map<string, TokenLabelEntry> | null = null;
+let variableCollectionMetadataMap: Map<
+  string,
+  VariableCollectionMetadata
+> | null = null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
 
 const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
@@ -1126,6 +1143,10 @@ async function classifyNode(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
   );
+  const requiresVariableModeRuleAudit = hasVariableModeRules(
+    componentKey,
+    [ref?.name, ref?.displayName, node.name],
+  );
   const isInheritedFromLocalComponentContext =
     node.type === 'INSTANCE' &&
     (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
@@ -1135,6 +1156,7 @@ async function classifyNode(
     (ref?.status !== 'current' ||
       instanceHasOverrides ||
       requiresSizingRuleAudit ||
+      requiresVariableModeRuleAudit ||
       isInheritedFromLocalComponentContext);
   const actualStructure =
     shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
@@ -1159,6 +1181,7 @@ async function classifyNode(
           resolveTokenLabel: resolveTokenLabelForDiff,
           resolveStyleLabel: resolveStyleLabelForDiff,
           isPaintToken: isColorTokenForPaintDiff,
+          resolveVariableMetadata: resolveVariableMetadataForDiff,
         })
       : { diffs: [], issues: [] };
   if (diffResult.issues.length) {
@@ -1172,9 +1195,19 @@ async function classifyNode(
           diffResult.diffs,
         )
       : [];
+  const variableModeRuleDiffs =
+    shouldDiff && alignedActualStructure
+      ? createVariableModeRuleDiffs(
+          alignedActualStructure,
+          diffResult.diffs.concat(requiredSizingDiffs),
+          resolveVariableCollectionMetadataForDiff,
+        )
+      : [];
   const rawDiffs = diffResult.diffs
     .concat(requiredSizingDiffs)
-    .map(applyRequiredComponentSizingAssessment);
+    .concat(variableModeRuleDiffs)
+    .map(applyRequiredComponentSizingAssessment)
+    .map(applyVariableBindingAssessment);
   const markedDiffs = rawDiffs.map((diff) =>
     markSuppressedDiff(diff, runtimeSuppressionDependencies),
   );
@@ -1194,6 +1227,7 @@ async function classifyNode(
           resolveTokenLabel: resolveTokenLabelForDiff,
           resolveStyleLabel: resolveStyleLabelForDiff,
           isPaintToken: isColorTokenForPaintDiff,
+          resolveVariableMetadata: resolveVariableMetadataForDiff,
         }).diffs
       : [];
   const assessedDiffs = assessCustomizationDiffs(diffsForAssessment, {
@@ -1218,6 +1252,7 @@ async function classifyNode(
             resolveTokenLabel: resolveTokenLabelForDiff,
             resolveStyleLabel: resolveStyleLabelForDiff,
             isPaintToken: isColorTokenForPaintDiff,
+            resolveVariableMetadata: resolveVariableMetadataForDiff,
           },
         )
       : undefined,
@@ -2120,7 +2155,11 @@ async function applyReferenceResetByMessages(
     const trimmed = message.trim();
     const paddingMatch = trimmed.match(/^(?:Token )?padding (top|right|bottom|left):/i);
 
-    if (trimmed.startsWith('Паддинг ') || paddingMatch) {
+    if (
+      trimmed.startsWith('Паддинг ') ||
+      trimmed.startsWith('Переменная padding ') ||
+      paddingMatch
+    ) {
       const side = extractPaddingSide(trimmed);
       if (side) {
         await resetPaddingSide(node, referenceNode, side);
@@ -2130,6 +2169,7 @@ async function applyReferenceResetByMessages(
 
     if (
       trimmed.startsWith('Отступ между элементами') ||
+      trimmed.startsWith('Переменная itemSpacing:') ||
       trimmed.startsWith('Token itemSpacing:')
     ) {
       await resetItemSpacing(node, referenceNode);
@@ -2161,12 +2201,18 @@ async function applyReferenceResetByMessages(
       continue;
     }
 
-    if (trimmed.startsWith('заливка:')) {
+    if (
+      trimmed.startsWith('заливка:') ||
+      trimmed.startsWith('Переменная заливки:')
+    ) {
       await resetPaint(node, referenceNode, 'fill');
       continue;
     }
 
-    if (trimmed.startsWith('обводка:')) {
+    if (
+      trimmed.startsWith('обводка:') ||
+      trimmed.startsWith('Переменная обводки:')
+    ) {
       await resetPaint(node, referenceNode, 'stroke');
       continue;
     }
@@ -2181,14 +2227,19 @@ async function applyReferenceResetByMessages(
       continue;
     }
 
-    if (trimmed.startsWith('Token radius:') || trimmed.startsWith('Скругления')) {
+    if (
+      trimmed.startsWith('Token radius:') ||
+      trimmed.startsWith('Скругления') ||
+      trimmed.startsWith('Переменная скругления:')
+    ) {
       await resetRadius(node, referenceNode);
       continue;
     }
 
     if (
       trimmed.startsWith('Token opacity:') ||
-      trimmed.startsWith('Прозрачность')
+      trimmed.startsWith('Прозрачность') ||
+      trimmed.startsWith('Переменная opacity:')
     ) {
       await resetOpacity(node, referenceNode);
     }
@@ -2241,11 +2292,41 @@ async function applyReferenceResetByDetails(
       | 'left'
       | undefined;
     if (paddingSide && typeof reference.value === 'number') {
+      if (reference.resourceType === 'token' && reference.resourceId) {
+        const paddingFieldMap = {
+          top: 'paddingTop',
+          right: 'paddingRight',
+          bottom: 'paddingBottom',
+          left: 'paddingLeft',
+        };
+        const rebound = await bindNodeVariable(
+          node,
+          paddingFieldMap[paddingSide],
+          reference.resourceId,
+        );
+        if (!rebound) {
+          throw new Error(
+            `Apollo failed to restore ${paddingFieldMap[paddingSide]} variable binding`,
+          );
+        }
+        continue;
+      }
       setLayoutPaddingSide(node, paddingSide, reference.value);
       continue;
     }
 
     if (property === 'layout.itemSpacing' && typeof reference.value === 'number') {
+      if (reference.resourceType === 'token' && reference.resourceId) {
+        const rebound = await bindNodeVariable(
+          node,
+          'itemSpacing',
+          reference.resourceId,
+        );
+        if (!rebound) {
+          throw new Error('Apollo failed to restore itemSpacing variable binding');
+        }
+        continue;
+      }
       setLayoutItemSpacing(node, reference.value);
       continue;
     }
@@ -2272,11 +2353,33 @@ async function applyReferenceResetByDetails(
     }
 
     if (property === 'radius') {
+      if (reference.resourceType === 'token' && reference.resourceId) {
+        const rebound = await bindNodeVariable(
+          node,
+          'cornerRadius',
+          reference.resourceId,
+        );
+        if (!rebound) {
+          throw new Error('Apollo failed to restore cornerRadius variable binding');
+        }
+        continue;
+      }
       await setRadiusFromValue(node, reference.value);
       continue;
     }
 
     if (property === 'opacity' && typeof reference.value === 'number' && 'opacity' in node) {
+      if (reference.resourceType === 'token' && reference.resourceId) {
+        const rebound = await bindNodeVariable(
+          node,
+          'opacity',
+          reference.resourceId,
+        );
+        if (!rebound) {
+          throw new Error('Apollo failed to restore opacity variable binding');
+        }
+        continue;
+      }
       (node as SceneNode & { opacity: number }).opacity = reference.value;
     }
   }
@@ -2600,7 +2703,7 @@ async function bindNodeVariable(
   node: SceneNode,
   field: string,
   tokenId: string | null,
-) {
+): Promise<boolean> {
   const bindingNode = await resolveBindableNode(node);
   if (!bindingNode) {
     console.warn('[Apollo] skip variable binding for missing node', {
@@ -2608,16 +2711,25 @@ async function bindNodeVariable(
       field,
       tokenId,
     });
-    return;
+    return false;
   }
 
   const mutableNode = bindingNode as any;
   if (typeof mutableNode.setBoundVariable !== 'function') {
-    return;
+    return false;
   }
   const variable = tokenId ? await importVariableByToken(tokenId) : null;
+  if (tokenId && !variable) {
+    console.warn('[Apollo] skip unresolved variable binding', {
+      nodeId: bindingNode.id,
+      field,
+      tokenId,
+    });
+    return false;
+  }
   try {
     mutableNode.setBoundVariable(field, variable);
+    return true;
   } catch (error) {
     if (isMissingNodeMutationError(error)) {
       console.warn('[Apollo] skip variable binding for stale node', {
@@ -2626,7 +2738,7 @@ async function bindNodeVariable(
         tokenId,
         error,
       });
-      return;
+      return false;
     }
     throw error;
   }
@@ -2662,17 +2774,38 @@ function isMissingNodeMutationError(error: unknown): boolean {
 }
 
 async function importVariableByToken(tokenId: string): Promise<Variable | null> {
-  const key = extractAliasKey(tokenId);
-  if (!key) {
-    return null;
+  const aliasKey = extractAliasKey(tokenId);
+  const metadata = resolveVariableMetadataForDiff(tokenId);
+  const candidateIds = [tokenId, metadata?.variableId ?? null];
+  for (const candidateId of candidateIds) {
+    if (!candidateId) continue;
+    try {
+      const localVariable =
+        await figma.variables.getVariableByIdAsync(candidateId);
+      if (localVariable) {
+        return localVariable;
+      }
+    } catch (_error) {
+      // The value may be a published key or semantic catalog token.
+    }
   }
 
-  try {
-    return await figma.variables.importVariableByKeyAsync(key);
-  } catch (error) {
-    console.warn('[Apollo] failed to import variable by key', { tokenId, key, error });
-    return null;
+  const candidateKeys = [
+    metadata?.variableKey ?? null,
+    aliasKey,
+  ].filter((key): key is string => Boolean(key));
+  for (const key of Array.from(new Set(candidateKeys))) {
+    try {
+      return await figma.variables.importVariableByKeyAsync(key);
+    } catch (error) {
+      console.warn('[Apollo] failed to import variable by key', {
+        tokenId,
+        key,
+        error,
+      });
+    }
   }
+  return null;
 }
 
 async function importStyleById(styleId: string): Promise<BaseStyle | null> {
@@ -3222,6 +3355,7 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
       await ensureReferenceCatalogsLoaded();
       const catalogs = getTokenCatalogs();
       const map = new Map<string, TokenLabelEntry>();
+      const collectionMap = new Map<string, VariableCollectionMetadata>();
       for (const catalog of catalogs) {
         const catalogLibrary =
           catalog.meta?.library ?? catalog.meta?.fileName ?? '';
@@ -3230,6 +3364,23 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
           if (!collection) continue;
           const collectionName =
             collection.name ?? catalogLibrary ?? catalog.meta?.fileName ?? '';
+          const modeNames: Record<string, string> = {};
+          for (const mode of collection.modes ?? []) {
+            if (
+              mode &&
+              typeof mode.modeId === 'string' &&
+              typeof mode.name === 'string'
+            ) {
+              modeNames[mode.modeId] = mode.name;
+            }
+          }
+          if (typeof collection.id === 'string' && collection.id) {
+            collectionMap.set(collection.id, {
+              collectionId: collection.id,
+              collectionName: collectionName || null,
+              modeNames,
+            });
+          }
           const variables = collection.variables ?? [];
           for (const variable of variables) {
             if (!variable || (!variable.key && !variable.id)) continue;
@@ -3245,6 +3396,18 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
                 typeof variable.resolvedType === 'string'
                   ? variable.resolvedType
                   : undefined,
+              variableKey:
+                typeof variable.key === 'string' ? variable.key : undefined,
+              variableId:
+                typeof variable.id === 'string' ? variable.id : undefined,
+              collectionId:
+                typeof variable.variableCollectionId === 'string'
+                  ? variable.variableCollectionId
+                  : typeof collection.id === 'string'
+                    ? collection.id
+                    : undefined,
+              collectionName: collectionName || undefined,
+              modeNames,
             };
             registerTokenLabelKey(map, variable.key, entry);
             registerTokenLabelKey(map, variable.id, entry);
@@ -3252,9 +3415,11 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
         }
       }
       tokenLabelMap = map;
+      variableCollectionMetadataMap = collectionMap;
     } catch (error) {
       console.warn('[Apollo] failed to load token catalogs', error);
       tokenLabelMap = new Map();
+      variableCollectionMetadataMap = new Map();
     } finally {
       tokenLabelLoadPromise = null;
     }
@@ -3296,6 +3461,31 @@ function resolveTokenLabelForDiff(token: string): string | null {
   if (!aliasKey) return token;
   const label = tokenLabelMap?.get(aliasKey);
   return label?.label ?? token;
+}
+
+function resolveVariableMetadataForDiff(
+  bindingId: string,
+): VariableMetadata | null {
+  const aliasKey = extractAliasKey(bindingId);
+  const metadata =
+    tokenLabelMap?.get(bindingId) ??
+    (aliasKey ? tokenLabelMap?.get(aliasKey) : null) ??
+    null;
+  if (!metadata) return null;
+  return {
+    variableId: metadata.variableId ?? null,
+    variableKey: metadata.variableKey ?? aliasKey,
+    variableName: metadata.label ?? null,
+    collectionId: metadata.collectionId ?? null,
+    collectionName: metadata.collectionName ?? metadata.library ?? null,
+    modeNames: metadata.modeNames ?? {},
+  };
+}
+
+function resolveVariableCollectionMetadataForDiff(
+  collectionId: string,
+): VariableCollectionMetadata | null {
+  return variableCollectionMetadataMap?.get(collectionId) ?? null;
 }
 
 function resolveTokenStatsResource(

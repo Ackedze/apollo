@@ -245,11 +245,15 @@ function customizationChange(
     reference: {
       value: reference.value,
       resource: referenceResource,
+      binding: reference.binding ?? null,
     },
     actual: {
       value: actual.value,
       resource: actualResource,
+      binding: actual.binding ?? null,
     },
+    bindingStatus: diff.details?.bindingStatus ?? null,
+    variableMode: diff.details?.variableMode ?? null,
     signature: [
       'component',
       componentKey,
@@ -319,6 +323,7 @@ function statsComponentRule(
     appliesTo: rule.appliesTo,
     checkType: rule.checkType ?? null,
     matchKind: rule.matchKind ?? null,
+    changeScope: rule.changeScope ?? null,
     ruleText: rule.ruleText,
     remediation: rule.remediation ?? null,
   };

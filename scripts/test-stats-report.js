@@ -127,6 +127,17 @@ function main() {
             ruleText: 'Slot должен использовать Fill по ширине и Hug по высоте.',
             remediation: 'Верните Slot ширину Fill и высоту Hug.',
           },
+          {
+            ruleId:
+              'component:web-corp.background-plate.root-surface-composition-context',
+            severity: 'info',
+            source: 'component-contract',
+            appliesTo:
+              'screen.composition|layout.sizing.horizontal',
+            checkType: 'llm',
+            matchKind: 'composition_rule',
+            ruleText: 'Root surface composition context.',
+          },
         ],
       },
     },
@@ -736,6 +747,15 @@ function main() {
   assert.equal(agentLayoutSizingChange.referenceValue, 'Fill');
   assert.equal(agentLayoutSizingChange.actualValue, 'Fixed');
   assert.equal(agentLayoutSizingChange.presentation.displayName, 'Ширина');
+  assert.equal(
+    agentLayoutSizingChange.componentRules.some(
+      (rule) =>
+        rule.ruleId ===
+        'component:web-corp.background-plate.root-surface-composition-context',
+    ),
+    false,
+    'Targetless composition context must stay out of the atomic change',
+  );
   assert.equal(
     agentLayoutSizingChange.assessment.ruleId,
     'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',

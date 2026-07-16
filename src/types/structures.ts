@@ -30,6 +30,15 @@ export interface DSNodeLayout {
   itemSpacingToken?: string | null;
 }
 
+export interface DSVariableModeContext {
+  collectionId: string;
+  resolvedModeId: string | null;
+  explicitModeId: string | null;
+  explicitOwnerNodeId: string | null;
+  explicitOwnerName: string | null;
+  explicitOwnerPath: string | null;
+}
+
 interface DSTokenReference {
   styleKey: string;
 }
@@ -98,6 +107,7 @@ export interface DSStructureNode {
   radius: DSRadii | null;
   radiusToken?: string | null;
   effects?: DSEffect[] | null;
+  variableModes?: DSVariableModeContext[];
   componentInstance?: DSInstanceInfo | null;
   text?: DSTextContent;
   referenceOrigin?: 'host' | 'nested-component';
@@ -173,6 +183,7 @@ type DSStructureNodePatch = Partial<
     | 'radius'
     | 'radiusToken'
     | 'effects'
+    | 'variableModes'
     | 'componentInstance'
     | 'text'
   >

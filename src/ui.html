@@ -1602,6 +1602,9 @@
                 const isVariantDiff =
                   typeof diff.details?.property === 'string' &&
                   diff.details.property.indexOf('variant.') === 0;
+                const isBindingDiff =
+                  typeof diff.details?.bindingStatus === 'string' ||
+                  Boolean(diff.details?.variableMode);
                 const marker =
                   !isVariantDiff &&
                   (diff.assessment?.verdict === 'expected' ||
@@ -1651,7 +1654,9 @@
                 if (existing) {
                   const sectionLines = isVariantDiff
                     ? existing.componentLines
-                    : existing.layerLines;
+                    : isBindingDiff
+                      ? existing.bindingLines
+                      : existing.layerLines;
                   sectionLines.push(line);
                   if (resetDetail) {
                     existing.details.push(resetDetail);
@@ -1683,7 +1688,10 @@
                     : undefined,
                   nodeId: diff.nodeId,
                   componentLines: isVariantDiff ? [line] : [],
-                  layerLines: isVariantDiff ? [] : [line],
+                  bindingLines:
+                    !isVariantDiff && isBindingDiff ? [line] : [],
+                  layerLines:
+                    !isVariantDiff && !isBindingDiff ? [line] : [],
                   messages:
                     canReset && !remediation && !resetDetail ? [diff.message] : [],
                   details: resetDetail ? [resetDetail] : [],
@@ -1706,6 +1714,15 @@
                             values: [],
                           },
                           ...group.componentLines,
+                        ]
+                      : []),
+                    ...(group.bindingLines.length
+                      ? [
+                          {
+                            label: 'Переменные',
+                            values: [],
+                          },
+                          ...group.bindingLines,
                         ]
                       : []),
                     ...(group.layerLines.length

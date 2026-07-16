@@ -133,6 +133,10 @@ export type TokenCatalog = {
     id?: string;
     name?: string;
     defaultModeId?: string | null;
+    modes?: Array<{
+      modeId?: string;
+      name?: string;
+    }>;
     variables?: Array<{
       id?: string;
       key?: string;
@@ -140,6 +144,7 @@ export type TokenCatalog = {
       tokenName?: string;
       groupName?: string;
       resolvedType?: string;
+      variableCollectionId?: string;
       valuesByMode?: Record<string, any>;
     }>;
   } | null>;

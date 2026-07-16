@@ -223,6 +223,52 @@ function main() {
       slot: 'Isle',
     },
   };
+  const headerAdjacencyRule = {
+    ruleId: 'component:web-corp.corporate-content.header-adjacency',
+    severity: 'error',
+    source: 'pattern-link',
+    appliesTo: 'screen.composition|layout.itemSpacing',
+    checkType: 'deterministic',
+    matchKind: 'composition_rule',
+    ruleText: 'Header must be adjacent to CorporateContent.',
+  };
+  const gutterHorizontalCompositionRule = {
+    ruleId:
+      'component:web-corp.corporate-content.gutter-horizontal-composition',
+    severity: 'info',
+    source: 'component-contract',
+    appliesTo: 'layout.itemSpacing|variables.Gutter',
+    checkType: 'llm',
+    matchKind: 'composition_rule',
+    ruleText: 'Gutter may be used by horizontal compositions.',
+  };
+  const targetlessAtomicRule = {
+    ruleId: 'component:web-corp.corporate-content.atomic-padding-policy',
+    severity: 'warning',
+    source: 'component-contract',
+    appliesTo: 'layout.padding.*',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    changeScope: 'atomic',
+    ruleText: 'Atomic padding changes use the component policy.',
+  };
+  const targetlessPackageContextRule = {
+    ruleId: 'component:web-corp.corporate-content.package-layout-context',
+    severity: 'info',
+    source: 'component-contract',
+    appliesTo: 'layout.itemSpacing',
+    checkType: 'deterministic',
+    changeScope: 'package-context',
+    ruleText: 'Package-level layout context.',
+  };
+  const legacyTargetlessDeterministicRule = {
+    ruleId: 'component:web-corp.corporate-content.legacy-padding-classification',
+    severity: 'warning',
+    source: 'component-contract',
+    appliesTo: 'layout.padding.*',
+    checkType: 'deterministic',
+    ruleText: 'Legacy deterministic atomic classification.',
+  };
   const transitionKeyRule = {
     ruleId: 'component:web-corp.corporate-content.transition-key-prohibited',
     severity: 'error',
@@ -305,6 +351,11 @@ function main() {
           sectionRootRule,
           sectionSlotRule,
           sectionSingularSlotRule,
+          headerAdjacencyRule,
+          gutterHorizontalCompositionRule,
+          targetlessAtomicRule,
+          targetlessPackageContextRule,
+          legacyTargetlessDeterministicRule,
           transitionKeyRule,
           transitionNameRule,
         ],
@@ -485,7 +536,34 @@ function main() {
   assert.deepEqual(
     rules.findComponentContractRulesForDiff(sectionRoot).map((rule) => rule.ruleId),
     [sectionRootRule.ruleId],
-    'A renamed Section instance root must match by Figma key and canonical name',
+    'A renamed Section root must keep its exact rule without targetless composition/package context leakage',
+  );
+
+  const corporateRootPadding = scopedDiff(
+    'Dashboard / Corporate content',
+    'Corporate content',
+    'layout.padding.left',
+    scopedContext({ actualComponentKey: 'corporate-content-key' }),
+  );
+  const corporateRootPaddingRuleIds = rules
+    .findComponentContractRulesForDiff(corporateRootPadding)
+    .map((rule) => rule.ruleId);
+  assert.equal(
+    corporateRootPaddingRuleIds.includes(targetlessAtomicRule.ruleId),
+    true,
+    'An explicitly atomic targetless exact rule may attach component-wide',
+  );
+  assert.equal(
+    corporateRootPaddingRuleIds.includes(
+      legacyTargetlessDeterministicRule.ruleId,
+    ),
+    true,
+    'Legacy targetless deterministic atomic rules remain compatible',
+  );
+  assert.equal(
+    corporateRootPaddingRuleIds.includes(targetlessPackageContextRule.ruleId),
+    false,
+    'A package-context rule must never attach to an atomic change',
   );
 
   const backgroundPlateInsideCorporateContent = scopedDiff(

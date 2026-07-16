@@ -1,4 +1,9 @@
-import { diffStructures, type DiffEntry, type DiffValueDetails } from '../structure/diff';
+import {
+  diffStructures,
+  type DiffEntry,
+  type DiffValueDetails,
+  type VariableMetadataResolver,
+} from '../structure/diff';
 import { formatStrokeAlignment } from '../structure/strokeAlignment';
 import { formatLayoutSizing } from '../structure/layoutSizing';
 import {
@@ -34,6 +39,7 @@ export type NestedContextEvidenceOptions = {
   resolveTokenLabel?: (token: string) => string | null;
   resolveStyleLabel?: (styleKey: string) => string | null;
   isPaintToken?: (token: string) => boolean;
+  resolveVariableMetadata?: VariableMetadataResolver;
 };
 
 export type PatternContextResolverOptions = {
@@ -172,7 +178,12 @@ export function createNestedContextEvidence(
       continue;
     }
 
-    const contextualDiffs = diffStructures(actualSubtree, alignedReference).diffs;
+    const contextualDiffs = diffStructures(actualSubtree, alignedReference, {
+      resolveTokenLabel: options.resolveTokenLabel,
+      resolveStyleLabel: options.resolveStyleLabel,
+      isPaintToken: options.isPaintToken,
+      resolveVariableMetadata: options.resolveVariableMetadata,
+    }).diffs;
     contexts.push({
       matchedNodeIds,
       diffKeys: new Set(contextualDiffs.map(makeDiffPropertyKey)),

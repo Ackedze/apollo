@@ -28,8 +28,8 @@ function loadSnapshotModule() {
   }
 }
 
-function createFrame(id, name, children = []) {
-  return {
+function createFrame(id, name, children = [], modes = {}) {
+  const frame = {
     id,
     type: 'FRAME',
     name,
@@ -42,8 +42,15 @@ function createFrame(id, name, children = []) {
     paddingLeft: 0,
     itemSpacing: 8,
     boundVariables: {},
+    explicitVariableModes: modes.explicit ?? {},
+    resolvedVariableModes: modes.resolved ?? {},
+    parent: modes.parent ?? null,
     children,
   };
+  for (const child of children) {
+    child.parent = frame;
+  }
+  return frame;
 }
 
 async function main() {
@@ -51,8 +58,14 @@ async function main() {
 
   const { snapshotTree } = loadSnapshotModule();
 
-  const child = createFrame('child-node-id', 'Child');
-  const root = createFrame('root-node-id', 'Root', [child]);
+  const collectionId = 'VariableCollectionId:grid';
+  const child = createFrame('child-node-id', 'Child', [], {
+    resolved: { [collectionId]: 'mode-1024' },
+  });
+  const root = createFrame('root-node-id', 'Root', [child], {
+    explicit: { [collectionId]: 'mode-1024' },
+    resolved: { [collectionId]: 'mode-1024' },
+  });
 
   const result = await snapshotTree(root, new Set());
 
@@ -65,6 +78,16 @@ async function main() {
   assert.equal(result[1].parentId, 1, 'Child snapshot node must point to the generated parent id');
   assert.equal(result[1].nodeId, 'child-node-id', 'Child snapshot node must preserve the Figma node id');
   assert.equal(result[1].visible, true, 'Child snapshot node must preserve effective visibility');
+  assert.deepEqual(result[1].variableModes, [
+    {
+      collectionId,
+      resolvedModeId: 'mode-1024',
+      explicitModeId: 'mode-1024',
+      explicitOwnerNodeId: 'root-node-id',
+      explicitOwnerName: 'Root',
+      explicitOwnerPath: 'Root',
+    },
+  ]);
 
   console.log('Snapshot tree regression checks passed');
 }

@@ -149,6 +149,28 @@ function main() {
       criticalBaselines: ['Slot width is Fill and height is Hug'],
       agentInstructions: ['Use exact component rules'],
       includedComponents: ['[D] BackgroundPlateSlot'],
+      componentSemantics: [
+        {
+          componentKey: 'web-corp.background-plate',
+          name: '[D] BackgroundPlateSlot',
+          purpose: 'Relevant surface purpose',
+          useWhen: [],
+          doNotUseWhen: [],
+          relationship: null,
+          status: 'approved',
+          provenance: 'design-system-author',
+        },
+        {
+          componentKey: 'unrelated-family-component',
+          name: '[M] BackgroundPlateSlot',
+          purpose: 'Must not leak into this report',
+          useWhen: [],
+          doNotUseWhen: [],
+          relationship: null,
+          status: 'approved',
+          provenance: 'design-system-author',
+        },
+      ],
       auditInterpretation: { baselinePolicy: 'effective' },
       overrideContext: null,
     },
@@ -158,6 +180,7 @@ function main() {
       criticalBaselines: [],
       agentInstructions: [],
       includedComponents: ['[D] Button'],
+      componentSemantics: [],
       auditInterpretation: null,
       overrideContext: null,
     },
@@ -698,6 +721,13 @@ function main() {
   assert.deepEqual(backgroundPlateContext.criticalBaselines, [
     'Slot width is Fill and height is Hug',
   ]);
+  assert.deepEqual(
+    backgroundPlateContext.componentSemantics.map(
+      (semantic) => semantic.componentKey,
+    ),
+    ['web-corp.background-plate'],
+    'Agent reports must include only semantics for component keys present in the audit',
+  );
   assert.equal(
     agentReport.componentContexts.some(
       (context) => context.componentKey === 'web-core.button',

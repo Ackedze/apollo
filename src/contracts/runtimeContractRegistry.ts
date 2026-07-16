@@ -223,9 +223,15 @@ export function getComponentAgentContextsForKeys(
 ): RuntimeComponentAgentContext[] {
   const keys = new Set(componentKeys.filter((key): key is string => Boolean(key)));
   if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__)) {
-    return globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__.filter((context) =>
-      keys.has(context.componentKey),
-    );
+    return globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__
+      .filter(
+        (context) =>
+          keys.has(context.componentKey) ||
+          (context.componentSemantics ?? []).some((semantic) =>
+            keys.has(semantic.componentKey),
+          ),
+      )
+      .map((context) => filterContextSemantics(context, keys));
   }
   const contexts = packageStates
     .filter((state) => {
@@ -236,7 +242,12 @@ export function getComponentAgentContextsForKeys(
           (entry.figmaKeys ?? []).some((key) => keys.has(key)))
       );
     })
-    .map((state) => state.agentContext as RuntimeComponentAgentContext);
+    .map((state) =>
+      filterContextSemantics(
+        state.agentContext as RuntimeComponentAgentContext,
+        keys,
+      ),
+    );
   const unique = new Map<string, RuntimeComponentAgentContext>();
   for (const context of contexts) {
     if (!unique.has(context.componentKey)) {
@@ -244,6 +255,17 @@ export function getComponentAgentContextsForKeys(
     }
   }
   return Array.from(unique.values());
+}
+
+function filterContextSemantics(
+  context: RuntimeComponentAgentContext,
+  componentKeys: Set<string>,
+): RuntimeComponentAgentContext {
+  return Object.assign({}, context, {
+    componentSemantics: (context.componentSemantics ?? []).filter((semantic) =>
+      componentKeys.has(semantic.componentKey),
+    ),
+  });
 }
 
 export function getAuditPresentationForComponent(

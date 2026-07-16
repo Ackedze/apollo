@@ -150,7 +150,14 @@ function main() {
       },
       generated: {
         summary: { purpose: 'Generated summary' },
-        components: [{ name: '[D] Test' }],
+        components: [
+          {
+            name: '[D] Test',
+            key: 'figma-test-key',
+            description: 'Figma description',
+            descriptionProvenance: 'figma',
+          },
+        ],
         auditInterpretation: {
           componentProperties: ['variant.*'],
         },
@@ -158,9 +165,29 @@ function main() {
       manual: {
         summary: 'Expert summary',
         agentInstructions: ['Preserve expert guidance'],
+        componentSemantics: [
+          {
+            componentKey: 'figma-test-key',
+            name: '[D] Test',
+            purpose: 'Approved expert purpose',
+            useWhen: ['Use in the approved scenario.'],
+            doNotUseWhen: ['Do not use outside the approved scenario.'],
+            relationship: 'Public root of the Test family.',
+            status: 'approved',
+            provenance: 'design-system-author',
+          },
+        ],
         auditInterpretation: {
           layerProperties: ['layout.*'],
         },
+      },
+      runtime: {
+        semanticDescriptionCandidates: [
+          {
+            componentKey: 'figma-test-key',
+            purpose: 'Unreviewed runtime candidate',
+          },
+        ],
       },
     },
     'web-corp.test',
@@ -169,6 +196,18 @@ function main() {
   assert.deepEqual(ownedContext.includedComponents, ['[D] Test']);
   assert.deepEqual(ownedContext.agentInstructions, [
     'Preserve expert guidance',
+  ]);
+  assert.deepEqual(ownedContext.componentSemantics, [
+    {
+      componentKey: 'figma-test-key',
+      name: '[D] Test',
+      purpose: 'Approved expert purpose',
+      useWhen: ['Use in the approved scenario.'],
+      doNotUseWhen: ['Do not use outside the approved scenario.'],
+      relationship: 'Public root of the Test family.',
+      status: 'approved',
+      provenance: 'design-system-author',
+    },
   ]);
   assert.deepEqual(ownedContext.auditInterpretation, {
     componentProperties: ['variant.*'],

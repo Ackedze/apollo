@@ -6,11 +6,23 @@ export type RuntimeComponentAgentContext = {
   criticalBaselines: string[];
   agentInstructions: string[];
   includedComponents: string[];
+  componentSemantics: RuntimeComponentSemantic[];
   auditInterpretation: Record<string, unknown> | null;
   overrideContext: {
     resetModel: Record<string, unknown> | null;
     publicApi: Record<string, unknown> | null;
   } | null;
+};
+
+export type RuntimeComponentSemantic = {
+  componentKey: string;
+  name: string | null;
+  purpose: string;
+  useWhen: string[];
+  doNotUseWhen: string[];
+  relationship: string | null;
+  status: 'approved' | 'source';
+  provenance: string;
 };
 
 export type RuntimeAuditPresentation = {
@@ -64,6 +76,10 @@ export function compactAgentContext(
       publicPayload?.includedComponents ?? summaryValue?.includedComponents,
       40,
     ),
+    componentSemantics: compactComponentSemantics(
+      publicPayload?.componentSemantics,
+      40,
+    ),
     auditInterpretation: objectValue(publicPayload?.auditInterpretation),
     overrideContext: publicOverrides
       ? {
@@ -72,6 +88,34 @@ export function compactAgentContext(
         }
       : null,
   };
+}
+
+function compactComponentSemantics(
+  value: unknown,
+  limit: number,
+): RuntimeComponentSemantic[] {
+  if (!Array.isArray(value)) return [];
+  const result: RuntimeComponentSemantic[] = [];
+  for (const item of value) {
+    const entry = objectValue(item);
+    const componentKey = stringOrNull(entry?.componentKey);
+    const purpose = stringOrNull(entry?.purpose);
+    const status = entry?.status === 'approved' ? 'approved' : 'source';
+    const provenance = stringOrNull(entry?.provenance);
+    if (!componentKey || !purpose || !provenance) continue;
+    result.push({
+      componentKey,
+      name: stringOrNull(entry?.name),
+      purpose,
+      useWhen: stringArray(entry?.useWhen, 12),
+      doNotUseWhen: stringArray(entry?.doNotUseWhen, 12),
+      relationship: stringOrNull(entry?.relationship),
+      status,
+      provenance,
+    });
+    if (result.length >= limit) break;
+  }
+  return result;
 }
 
 function componentNameArray(value: unknown, limit: number): string[] {

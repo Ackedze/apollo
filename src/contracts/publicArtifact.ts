@@ -245,7 +245,15 @@ function compileAgentContext(
 ): Record<string, any> {
   const generatedSummary = objectValue(generated.summary);
   return compactObject(
-    Object.assign({}, base, manual, runtime, {
+    Object.assign(
+      {},
+      base,
+      omit(manual, ['componentSemantics']),
+      omit(runtime, [
+        'componentSemantics',
+        'semanticDescriptionCandidates',
+      ]),
+      {
       sourceFiles: generated.sourceFiles,
       source: generated.source,
       summary:
@@ -255,14 +263,62 @@ function compileAgentContext(
         generated.summary,
       components: generated.components,
       includedComponents: generated.components,
+      componentSemantics: compileComponentSemantics(generated, manual),
       auditInterpretation: mergeRecords(
         generated.auditInterpretation,
         manual.auditInterpretation,
         runtime.auditInterpretation,
         ['componentProperties', 'layerProperties'],
       ),
-    }),
+      },
+    ),
   );
+}
+
+function compileComponentSemantics(
+  generated: Record<string, any>,
+  manual: Record<string, any>,
+): any[] {
+  const semantics = new Map<string, any>();
+  for (const component of arrayValue(generated.components)) {
+    const entry = objectValue(component) ?? {};
+    const componentKey =
+      typeof entry.key === 'string' ? entry.key.trim() : '';
+    const purpose =
+      typeof entry.description === 'string'
+        ? entry.description.trim()
+        : '';
+    if (!componentKey || !purpose) continue;
+    semantics.set(
+      componentKey,
+      compactObject({
+        componentKey,
+        name:
+          typeof entry.name === 'string' && entry.name.trim()
+            ? entry.name
+            : undefined,
+        purpose,
+        status: 'source',
+        provenance: 'figma',
+      }),
+    );
+  }
+
+  for (const semantic of arrayValue(manual.componentSemantics)) {
+    const entry = objectValue(semantic);
+    if (
+      !entry ||
+      entry.status !== 'approved' ||
+      typeof entry.componentKey !== 'string' ||
+      !entry.componentKey.trim() ||
+      typeof entry.purpose !== 'string' ||
+      !entry.purpose.trim()
+    ) {
+      continue;
+    }
+    semantics.set(entry.componentKey, semantic);
+  }
+  return Array.from(semantics.values());
 }
 
 function compileAuditMapping(

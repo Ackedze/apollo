@@ -552,6 +552,55 @@ Acceptance criteria:
 - Apollo behavior and findings remain unchanged when only the storage ownership schema changes.
 - No tool writes outside its declared ownership section.
 
+### P1. Add approved semantic descriptions for layout generation
+
+Problem: raw component `description` coverage is insufficient for AI layout generation. The current component tree contains 2850 components; 1854 descriptions are empty, so only 34.9% have source descriptions. Three catalogs currently have exactly 14 components with `description=""` for all entries: `Steps`, promo `Footer`, and `PromoCard`. Their generated `agent-context` summaries are generic pipeline placeholders and do not explain why an individual component exists.
+
+Ownership model:
+
+- Figma-authored `component.description` remains generated source data and is never invented by Athena.
+- Approved expert semantics live in `agent-context.manual.componentSemantics`, keyed by stable Figma component key.
+- AI-generated description candidates may live only in `runtime.semanticDescriptionCandidates` until a design-system author promotes them to `manual`.
+- Public merge precedence is `manual approved semantic > Figma description > missing-description diagnostic`.
+- Names, structure, variants and tokens may help draft a candidate, but cannot become authoritative semantic meaning automatically.
+
+Suggested manual entry:
+
+```json
+{
+  "componentKey": "published-figma-key",
+  "purpose": "Кратко: какую продуктовую задачу решает компонент.",
+  "useWhen": ["Проверяемые сценарии использования."],
+  "doNotUseWhen": ["Границы и неподходящие сценарии."],
+  "relationship": "Роль внутри component family или композиции.",
+  "status": "approved",
+  "provenance": "design-system-author"
+}
+```
+
+- [x] Add `componentSemantics` schema and validation to ownership/public compilers.
+- [x] Preserve Figma descriptions in Athena generated inventory and expose their provenance.
+- [x] Add Athena semantic-coverage diagnostics split by active main, supporting part, scheduled and deprecated components.
+- [ ] Remove or ignore generic generated summary placeholders that legacy migration preserved inside `manual.summary`; they are not expert semantics.
+- [x] Warn on missing descriptions for active public/main components without failing ordinary validation.
+- [ ] Do not require full generation-oriented descriptions for deprecated or internal parts; require lifecycle/relation context appropriate to their role.
+- [x] Make Apollo load only approved component semantics relevant to component keys found in the current layout.
+- [x] Include purpose, `useWhen`, `doNotUseWhen`, relationship and provenance in the compact agent/generator context.
+- [x] Prevent unrelated family semantics from leaking into a report or generation request.
+- [ ] Add a review/promotion workflow from runtime AI draft to author-owned manual knowledge.
+- [ ] Use promo `PromoCard` as the first golden package: all 14 active desktop/mobile components receive approved semantics.
+- [ ] Add secondary fixtures for `Steps` to verify different requirements for active main, part and deprecated components.
+
+Implementation status (first approved batch, 2026-07-16): ownership/public compilers accept only validated `manual.componentSemantics` entries with `status=approved`; Figma descriptions remain generated source data with explicit provenance, and runtime candidates are excluded from the public contract. Apollo filters compact semantics by actual component keys found in the audit. Approved descriptions were added for 34 public/selectable components across the ten packages marked `Ready` in the component-documentation tracker: BackgroundPlate, CorporateAppHeaderNew [D], CorporateContent, CorporateSystemMessage, CorporateTopbar [D], Table Basic [D], Table Wide [D], TableView, TabsView and TitleView.
+
+Acceptance criteria:
+
+- A layout generator receives an approved purpose for every public component it is allowed to select.
+- Apollo never treats a generated placeholder or an unreviewed AI draft as authoritative design-system guidance.
+- Re-running Athena preserves all approved semantic descriptions.
+- `PromoCard` reaches 14/14 approved semantic entries, while desktop/mobile counterparts may share a common family purpose without duplicating identical prose.
+- Missing semantic coverage is measurable by library, package, lifecycle and component role.
+
 ### P1. Define per-change scope for targetless component rules
 
 - [x] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.

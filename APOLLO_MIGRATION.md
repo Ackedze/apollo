@@ -509,6 +509,45 @@ Follow-up implementation (Apollo 0.1.52): binding reset no longer writes the cat
 
 The remaining unchecked evidence-status item covers `allowed-binding` and incomplete-reference classification; the unchecked property-extension item covers variable-bindable properties for which Apollo does not yet emit a deterministic structural diff.
 
+### P0. Refactor manual/generated ownership model
+
+Epic: AI-ready Component Catalogs. Athena CLI is the implementation owner; Apollo is the primary runtime consumer. The full storage schema, ownership matrix, migration algorithm, regression matrix and rollout plan are defined in [`../../Athena CLI/OWNERSHIP_MIGRATION.md`](../../Athena%20CLI/OWNERSHIP_MIGRATION.md).
+
+Legacy repository evidence before implementation:
+
+- 145 component packages contain each primary artifact.
+- Only 12 `agent-context.json` and 12 `audit-mapping.json` documents currently have both `generated` and `manual`.
+- No `rules.json` or `examples.json` document has explicit ownership sections.
+- Only three `composition-contract.json` and three `contract.overrides.json` documents contain a `manual` section, while their generated and authored top-level fields remain mixed.
+- Athena protects non-hybrid artifacts only by not updating an existing file; this is not a schema-level preservation guarantee.
+
+- [x] Define and validate ownership schema v2 with `metadata`, `generated`, `manual` and optional `runtime`.
+- [x] Implement artifact-specific legacy migration for `agent-context`, `rules`, `examples`, `audit-mapping`, `contract.overrides` and `composition-contract`.
+- [x] Treat unknown legacy fields as manual by default.
+- [x] Make migration idempotent and preserve existing `manual`/`runtime` sections exactly.
+- [x] Generate all new component packages directly in schema v2.
+- [x] Refresh only Athena-owned `generated` data after migration.
+- [x] Introduce public-artifact compilers supporting legacy and v2 storage in Athena and Apollo.
+- [x] Make Apollo runtime loaders consume only compiled public artifacts and remove direct storage-section merge logic.
+- [x] Build registries and indexes from the public contract rather than raw artifact shape.
+- [x] Add public-equivalence regression fixtures and verify all six CorporateContent artifacts against their legacy versions.
+- [x] Migrate all current packages and rebuild release artifacts.
+- [x] Add full-tree ownership/check-mode validation plus duplicate `ruleId`/`exampleId` validation.
+
+Implementation status (Apollo 0.1.54 / Athena CLI, 2026-07-16): all six editable artifacts in all 145 current component packages use `apollo.artifact-ownership.v2`. Athena performs artifact-specific, idempotent migration and updates only `generated`; unknown legacy fields default to `manual`, while optional `runtime` is preserved. The global sync deduplicates legacy raw catalogs that resolve to the same package by selecting the newest `source.generatedAt`, so full sync and `--check` are stable at 145 packages.
+
+Apollo normalizes every downloaded rules, composition, overrides, agent-context, audit-mapping and examples artifact through `publicArtifact.ts`. Runtime classification and report builders no longer merge storage ownership sections. The same adapter continues to accept legacy hybrid artifacts during the compatibility window. `contract.generated.json` remains the explicitly documented generated-only exception.
+
+Regression status: ownership unit tests cover unknown/manual preservation, runtime preservation, manual rule precedence, duplicate ids, missing example ids, public equivalence and idempotence. Apollo runtime tests cover v2 rules and agent context. A full `contracts:sync-apollo` followed by `contracts:check-apollo` reports zero changed owned artifacts.
+
+Acceptance criteria:
+
+- Re-running Athena cannot remove or rewrite expert knowledge.
+- The first sync migrates a legacy artifact; the second sync produces no migration diff.
+- Legacy and v2 versions of the same artifact compile to an identical Apollo public contract.
+- Apollo behavior and findings remain unchanged when only the storage ownership schema changes.
+- No tool writes outside its declared ownership section.
+
 ### P1. Define per-change scope for targetless component rules
 
 - [x] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.

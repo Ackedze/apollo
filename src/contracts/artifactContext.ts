@@ -1,3 +1,5 @@
+import { compilePublicArtifact } from './publicArtifact';
+
 export type RuntimeComponentAgentContext = {
   componentKey: string;
   summary: string | null;
@@ -33,10 +35,11 @@ export function compactAgentContext(
   fallbackComponentKey: string,
   overridesPayload?: any,
 ): RuntimeComponentAgentContext {
-  const manual = objectValue(payload?.manual);
-  const generated = objectValue(payload?.generated);
-  const summaryValue =
-    manual?.summary ?? payload?.summary ?? generated?.summary ?? null;
+  const publicPayload = compilePublicArtifact(payload);
+  const publicOverrides = overridesPayload
+    ? compilePublicArtifact(overridesPayload)
+    : null;
+  const summaryValue = publicPayload?.summary ?? null;
   const summary =
     typeof summaryValue === 'string'
       ? summaryValue
@@ -45,29 +48,27 @@ export function compactAgentContext(
         : null;
 
   return {
-    componentKey: String(fallbackComponentKey || payload?.componentKey || ''),
+    componentKey: String(
+      fallbackComponentKey || publicPayload?.componentKey || '',
+    ),
     summary,
     criticalBaselines: stringArray(
-      manual?.criticalBaselines ?? payload?.criticalBaselines,
+      publicPayload?.criticalBaselines,
       16,
     ),
     agentInstructions: stringArray(
-      manual?.agentInstructions ?? payload?.agentInstructions,
+      publicPayload?.agentInstructions,
       20,
     ),
     includedComponents: componentNameArray(
-      payload?.includedComponents ??
-        summaryValue?.includedComponents ??
-        generated?.includedComponents,
+      publicPayload?.includedComponents ?? summaryValue?.includedComponents,
       40,
     ),
-    auditInterpretation:
-      objectValue(payload?.auditInterpretation) ??
-      objectValue(generated?.auditInterpretation),
-    overrideContext: overridesPayload
+    auditInterpretation: objectValue(publicPayload?.auditInterpretation),
+    overrideContext: publicOverrides
       ? {
-          resetModel: compactResetModel(overridesPayload.resetModel),
-          publicApi: compactPublicApi(overridesPayload.publicApi),
+          resetModel: compactResetModel(publicOverrides.resetModel),
+          publicApi: compactPublicApi(publicOverrides.publicApi),
         }
       : null,
   };
@@ -95,15 +96,10 @@ export function resolveAuditPresentation(
   payload: any,
   property: string,
 ): RuntimeAuditPresentation | null {
-  const generated = objectValue(payload?.generated);
-  const manual = objectValue(payload?.manual);
-  const entries = [
-    ...(Array.isArray(generated?.classification)
-      ? generated.classification
-      : []),
-    ...(Array.isArray(payload?.classification) ? payload.classification : []),
-    ...(Array.isArray(manual?.classification) ? manual.classification : []),
-  ];
+  const publicPayload = compilePublicArtifact(payload);
+  const entries = Array.isArray(publicPayload?.classification)
+    ? publicPayload.classification
+    : [];
   let best: any = null;
   let bestScore = -1;
   for (const entry of entries) {
@@ -132,8 +128,9 @@ export function resolveAuditPresentation(
 }
 
 export function compactExamples(payload: any): RuntimeComponentExample[] {
-  if (!Array.isArray(payload?.examples)) return [];
-  return payload.examples.slice(0, 12).map((example: any, index: number) => ({
+  const publicPayload = compilePublicArtifact(payload);
+  if (!Array.isArray(publicPayload?.examples)) return [];
+  return publicPayload.examples.slice(0, 12).map((example: any, index: number) => ({
     exampleId: String(example?.exampleId ?? `example-${index + 1}`),
     title: String(example?.title ?? 'Untitled example'),
     inputChange: objectValue(example?.inputChange),

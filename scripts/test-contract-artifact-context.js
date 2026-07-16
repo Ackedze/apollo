@@ -28,6 +28,8 @@ function loadModule(entryPoint) {
 function main() {
   const { compactAgentContext, compactExamples, resolveAuditPresentation } =
     loadModule('../src/contracts/artifactContext.ts');
+  const { compilePublicArtifact, getPublicArtifactDiagnostics } =
+    loadModule('../src/contracts/publicArtifact.ts');
 
   const context = compactAgentContext(
     {
@@ -106,6 +108,72 @@ function main() {
   });
   assert.equal(examples.length, 1);
   assert.deepEqual(examples[0].expectedAgent.mustNotSay, ['Examples are rules']);
+
+  const ownedRules = {
+    schemaVersion: 2,
+    documentType: 'component-rules',
+    metadata: {
+      componentKey: 'web-corp.test',
+      status: 'ready',
+      ownershipSchema: 'apollo.artifact-ownership.v2',
+    },
+    generated: {
+      rules: [{ ruleId: 'shared', severity: 'warning' }],
+    },
+    manual: {
+      rules: [
+        { ruleId: 'shared', severity: 'error' },
+        { ruleId: 'expert', severity: 'info' },
+      ],
+    },
+  };
+  const publicRules = compilePublicArtifact(ownedRules);
+  assert.deepEqual(publicRules.rules, [
+    { ruleId: 'shared', severity: 'error' },
+    { ruleId: 'expert', severity: 'info' },
+  ]);
+  assert.equal(publicRules.generated, undefined);
+  assert.equal(publicRules.manual, undefined);
+  assert.deepEqual(getPublicArtifactDiagnostics(ownedRules), {
+    documentType: 'component-rules',
+    storageSchema: 'ownership-v2',
+    publicSchemaVersion: 1,
+  });
+
+  const ownedContext = compactAgentContext(
+    {
+      schemaVersion: 2,
+      documentType: 'component-agent-context',
+      metadata: {
+        componentKey: 'web-corp.test',
+        ownershipSchema: 'apollo.artifact-ownership.v2',
+      },
+      generated: {
+        summary: { purpose: 'Generated summary' },
+        components: [{ name: '[D] Test' }],
+        auditInterpretation: {
+          componentProperties: ['variant.*'],
+        },
+      },
+      manual: {
+        summary: 'Expert summary',
+        agentInstructions: ['Preserve expert guidance'],
+        auditInterpretation: {
+          layerProperties: ['layout.*'],
+        },
+      },
+    },
+    'web-corp.test',
+  );
+  assert.equal(ownedContext.summary, 'Expert summary');
+  assert.deepEqual(ownedContext.includedComponents, ['[D] Test']);
+  assert.deepEqual(ownedContext.agentInstructions, [
+    'Preserve expert guidance',
+  ]);
+  assert.deepEqual(ownedContext.auditInterpretation, {
+    componentProperties: ['variant.*'],
+    layerProperties: ['layout.*'],
+  });
 
   console.log('Contract artifact context regression checks passed');
 }

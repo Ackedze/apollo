@@ -1,6 +1,6 @@
 {
   "name": "apollo",
-  "version": "0.1.53",
+  "version": "0.1.54",
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",

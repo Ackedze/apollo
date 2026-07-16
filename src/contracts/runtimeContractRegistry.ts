@@ -15,6 +15,7 @@ import {
   type RuntimeComponentAgentContext,
   type RuntimeComponentExample,
 } from './artifactContext';
+import { compilePublicArtifact } from './publicArtifact';
 
 type RemoteContractPackage = {
   componentKey?: string;
@@ -510,7 +511,7 @@ async function loadJsonArtifact(path: string): Promise<any> {
   const raw = await fetchDirect(
     appendCacheBustingQuery(url, 'apolloContractArtifact', remoteContractsCacheBust),
   );
-  return JSON.parse(raw);
+  return compilePublicArtifact(JSON.parse(raw));
 }
 
 function resolveArtifactUrl(path: string): string {

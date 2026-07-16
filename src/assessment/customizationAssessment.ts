@@ -2,6 +2,7 @@ import {
   diffStructures,
   type DiffEntry,
   type DiffValueDetails,
+  type VariableBindingEvidence,
   type VariableMetadataResolver,
 } from '../structure/diff';
 import { formatStrokeAlignment } from '../structure/strokeAlignment';
@@ -243,7 +244,7 @@ function findSelectedReferenceNode(
   return null;
 }
 
-function selectedReferenceValue(
+export function selectedReferenceValue(
   referenceNode: DSStructureNode,
   diff: DiffEntry,
   options: NestedContextEvidenceOptions = {},
@@ -299,7 +300,12 @@ function selectedReferenceValue(
     return value ? primitiveReferenceValue(formatLayoutSizing(value)) : null;
   }
   if (property === 'layout.itemSpacingToken') {
-    return resourceValue(referenceNode.layout?.itemSpacingToken ?? null, 'token');
+    return variableReferenceValue(
+      referenceNode.layout?.itemSpacing ?? null,
+      referenceNode.layout?.itemSpacingToken ?? null,
+      referenceNode,
+      options,
+    );
   }
   if (property === 'radius') {
     return primitiveReferenceValue(
@@ -321,6 +327,76 @@ function selectedReferenceValue(
   }
 
   return null;
+}
+
+function variableReferenceValue(
+  value: string | number | null,
+  token: string | null,
+  node: DSStructureNode,
+  options: NestedContextEvidenceOptions,
+): DiffValueDetails | null {
+  if (!token) {
+    return null;
+  }
+  const metadata = options.resolveVariableMetadata?.(token) ?? null;
+  const tokenLabel = options.resolveTokenLabel?.(token) ?? token;
+  const baseValue = value === null ? tokenLabel : String(value);
+  const collectionName = metadata?.collectionName?.trim() ?? '';
+  const displayName = collectionName
+    ? `${baseValue} (${collectionName})`
+    : baseValue;
+  return {
+    value,
+    resourceType: 'token',
+    resourceId: token,
+    displayName,
+    bindingId: token,
+    binding: nestedReferenceBindingEvidence(node, token, metadata),
+  };
+}
+
+function nestedReferenceBindingEvidence(
+  node: DSStructureNode,
+  token: string,
+  metadata: ReturnType<NonNullable<VariableMetadataResolver>>,
+): VariableBindingEvidence {
+  const collectionId = metadata?.collectionId ?? null;
+  const modeContext = collectionId
+    ? node.variableModes?.find(
+        (context) => context.collectionId === collectionId,
+      ) ?? null
+    : null;
+  const resolvedModeId = modeContext?.resolvedModeId ?? null;
+  const explicitModeId = modeContext?.explicitModeId ?? null;
+  const modeNames = metadata?.modeNames ?? {};
+  const modeOwnerNodeId = modeContext?.explicitOwnerNodeId ?? null;
+  const modeSource: VariableBindingEvidence['modeSource'] =
+    modeOwnerNodeId === node.nodeId
+      ? 'explicit'
+      : modeOwnerNodeId
+        ? 'inherited'
+        : resolvedModeId
+          ? 'resolved'
+          : 'unknown';
+  return {
+    id: token,
+    key: metadata?.variableKey ?? null,
+    name: metadata?.variableName ?? null,
+    collectionId,
+    collectionName: metadata?.collectionName ?? null,
+    resolvedModeId,
+    resolvedModeName: resolvedModeId
+      ? modeNames[resolvedModeId] ?? null
+      : null,
+    explicitModeId,
+    explicitModeName: explicitModeId
+      ? modeNames[explicitModeId] ?? null
+      : null,
+    modeSource,
+    modeOwnerNodeId,
+    modeOwnerName: modeContext?.explicitOwnerName ?? null,
+    modeOwnerPath: modeContext?.explicitOwnerPath ?? null,
+  };
 }
 
 function paintReferenceValue(

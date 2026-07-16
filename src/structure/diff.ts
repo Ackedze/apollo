@@ -550,39 +550,41 @@ function compareNode(
           resolveTokenLabel,
         );
         if (formattedActualToken !== formattedReferenceToken) {
+          const referenceDisplay = formatVariableBindingDisplay(
+            referenceLayout.itemSpacing ?? null,
+            referenceItemSpacingToken,
+            resolveTokenLabel,
+            resolveVariableMetadata,
+          );
+          const actualDisplay = formatVariableBindingDisplay(
+            actualLayout.itemSpacing ?? null,
+            actualItemSpacingToken,
+            resolveTokenLabel,
+            resolveVariableMetadata,
+          );
           pushDiff(
             diffs,
             actual,
             reference,
             path,
-            `Отступ между элементами (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+            `Отступ между элементами (токен): ${referenceDisplay} → ${actualDisplay}`,
             'layout',
             {
               property: 'layout.itemSpacingToken',
-              reference: {
-                value: formattedReferenceToken,
-                resourceType: 'token',
-                resourceId: referenceItemSpacingToken,
-                displayName: formattedReferenceToken,
-                bindingId: referenceItemSpacingToken,
-                binding: createVariableBindingEvidence(
-                  reference,
-                  referenceItemSpacingToken,
-                  resolveVariableMetadata,
-                ),
-              },
-              actual: {
-                value: formattedActualToken,
-                resourceType: 'token',
-                resourceId: actualItemSpacingToken,
-                displayName: formattedActualToken,
-                bindingId: actualItemSpacingToken,
-                binding: createVariableBindingEvidence(
-                  actual,
-                  actualItemSpacingToken,
-                  resolveVariableMetadata,
-                ),
-              },
+              reference: createVariableTokenDiffValue(
+                referenceLayout.itemSpacing ?? null,
+                referenceItemSpacingToken,
+                reference,
+                referenceDisplay,
+                resolveVariableMetadata,
+              ),
+              actual: createVariableTokenDiffValue(
+                actualLayout.itemSpacing ?? null,
+                actualItemSpacingToken,
+                actual,
+                actualDisplay,
+                resolveVariableMetadata,
+              ),
               bindingStatus: classifyBindingStatus(
                 actualItemSpacingToken,
                 referenceItemSpacingToken,
@@ -1055,39 +1057,41 @@ function comparePadding(
         if (formattedActualToken === formattedReferenceToken) {
           continue;
         }
+        const referenceDisplay = formatVariableBindingDisplay(
+          b,
+          refToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
+        const actualDisplay = formatVariableBindingDisplay(
+          a,
+          actualToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
         pushDiff(
           diffs,
           actualNode,
           referenceNode,
           path,
-          `Паддинг ${label(side)} (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+          `Паддинг ${label(side)} (токен): ${referenceDisplay} → ${actualDisplay}`,
           'layout',
           {
             property: `layout.paddingTokens.${side}`,
-            reference: {
-              value: formattedReferenceToken,
-              resourceType: 'token',
-              resourceId: refToken,
-              displayName: formattedReferenceToken,
-              bindingId: refToken,
-              binding: createVariableBindingEvidence(
-                referenceNode,
-                refToken,
-                resolveVariableMetadata,
-              ),
-            },
-            actual: {
-              value: formattedActualToken,
-              resourceType: 'token',
-              resourceId: actualToken,
-              displayName: formattedActualToken,
-              bindingId: actualToken,
-              binding: createVariableBindingEvidence(
-                actualNode,
-                actualToken,
-                resolveVariableMetadata,
-              ),
-            },
+            reference: createVariableTokenDiffValue(
+              b,
+              refToken,
+              referenceNode,
+              referenceDisplay,
+              resolveVariableMetadata,
+            ),
+            actual: createVariableTokenDiffValue(
+              a,
+              actualToken,
+              actualNode,
+              actualDisplay,
+              resolveVariableMetadata,
+            ),
             bindingStatus: classifyBindingStatus(
               actualToken,
               refToken,
@@ -1644,39 +1648,43 @@ function compareRadius(
       const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
       const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
       if (formattedActualToken !== formattedReferenceToken) {
+        const referenceValue = formatRadius(reference);
+        const actualValue = formatRadius(actual);
+        const referenceDisplay = formatVariableBindingDisplay(
+          referenceValue,
+          referenceToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
+        const actualDisplay = formatVariableBindingDisplay(
+          actualValue,
+          actualToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
         pushDiff(
           diffs,
           actualNode,
           referenceNode,
           path,
-          `Скругления (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+          `Скругления (токен): ${referenceDisplay} → ${actualDisplay}`,
           'layout',
           {
             property: 'radiusToken',
-            reference: {
-              value: formattedReferenceToken,
-              resourceType: 'token',
-              resourceId: referenceToken,
-              displayName: formattedReferenceToken,
-              bindingId: referenceToken,
-              binding: createVariableBindingEvidence(
-                referenceNode,
-                referenceToken,
-                resolveVariableMetadata,
-              ),
-            },
-            actual: {
-              value: formattedActualToken,
-              resourceType: 'token',
-              resourceId: actualToken,
-              displayName: formattedActualToken,
-              bindingId: actualToken,
-              binding: createVariableBindingEvidence(
-                actualNode,
-                actualToken,
-                resolveVariableMetadata,
-              ),
-            },
+            reference: createVariableTokenDiffValue(
+              referenceValue,
+              referenceToken,
+              referenceNode,
+              referenceDisplay,
+              resolveVariableMetadata,
+            ),
+            actual: createVariableTokenDiffValue(
+              actualValue,
+              actualToken,
+              actualNode,
+              actualDisplay,
+              resolveVariableMetadata,
+            ),
             bindingStatus: classifyBindingStatus(
               actualToken,
               referenceToken,
@@ -1800,39 +1808,41 @@ function compareOpacity(
       const formattedReferenceToken = formatTokenLabel(referenceToken, resolveTokenLabel);
       const formattedActualToken = formatTokenLabel(actualToken, resolveTokenLabel);
       if (formattedActualToken !== formattedReferenceToken) {
+        const referenceDisplay = formatVariableBindingDisplay(
+          normalizedReference,
+          referenceToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
+        const actualDisplay = formatVariableBindingDisplay(
+          normalizedActual,
+          actualToken,
+          resolveTokenLabel,
+          resolveVariableMetadata,
+        );
         pushDiff(
           diffs,
           actualNode,
           referenceNode,
           path,
-          `Прозрачность (токен): ${formattedReferenceToken} → ${formattedActualToken}`,
+          `Прозрачность (токен): ${referenceDisplay} → ${actualDisplay}`,
           'opacity',
           {
             property: 'opacityToken',
-            reference: {
-              value: formattedReferenceToken,
-              resourceType: 'token',
-              resourceId: referenceToken,
-              displayName: formattedReferenceToken,
-              bindingId: referenceToken,
-              binding: createVariableBindingEvidence(
-                referenceNode,
-                referenceToken,
-                resolveVariableMetadata,
-              ),
-            },
-            actual: {
-              value: formattedActualToken,
-              resourceType: 'token',
-              resourceId: actualToken,
-              displayName: formattedActualToken,
-              bindingId: actualToken,
-              binding: createVariableBindingEvidence(
-                actualNode,
-                actualToken,
-                resolveVariableMetadata,
-              ),
-            },
+            reference: createVariableTokenDiffValue(
+              normalizedReference,
+              referenceToken,
+              referenceNode,
+              referenceDisplay,
+              resolveVariableMetadata,
+            ),
+            actual: createVariableTokenDiffValue(
+              normalizedActual,
+              actualToken,
+              actualNode,
+              actualDisplay,
+              resolveVariableMetadata,
+            ),
             bindingStatus: classifyBindingStatus(
               actualToken,
               referenceToken,
@@ -1901,6 +1911,46 @@ function createBoundDiffValue(
     bindingId,
     binding,
   };
+}
+
+function createVariableTokenDiffValue(
+  value: string | number | null,
+  bindingId: string | null,
+  node: DSStructureNode,
+  displayName: string,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): DiffValueDetails {
+  return {
+    value,
+    resourceType: 'token',
+    resourceId: bindingId,
+    displayName,
+    bindingId,
+    binding: createVariableBindingEvidence(
+      node,
+      bindingId,
+      resolveVariableMetadata,
+    ),
+  };
+}
+
+function formatVariableBindingDisplay(
+  value: string | number | null,
+  bindingId: string | null,
+  resolveTokenLabel?: (token: string) => string | null,
+  resolveVariableMetadata?: VariableMetadataResolver,
+): string {
+  const metadata = bindingId
+    ? resolveVariableMetadata?.(bindingId) ?? null
+    : null;
+  const baseValue =
+    value === null
+      ? formatTokenLabel(bindingId, resolveTokenLabel)
+      : String(value);
+  const collectionName = metadata?.collectionName?.trim() ?? '';
+  return collectionName
+    ? `${baseValue} (${collectionName})`
+    : baseValue;
 }
 
 function createVariableBindingEvidence(

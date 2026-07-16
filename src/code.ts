@@ -97,6 +97,7 @@ import {
   traceAudit,
 } from './utils/auditInstrumentation';
 import { resolveCachedComponentKey } from './utils/componentKeyCache';
+import { getVariableBindingResetField } from './utils/variableBindingReset';
 import {
   countVariantPropertyMatches,
   parseVariantName,
@@ -1616,6 +1617,19 @@ async function resetCustomizationGroup(payload: {
     }
   }
 
+  if (details.length && !messages.length && !remediations.length) {
+    const resetStartedAt = getTimestamp();
+    await applyReferenceResetByDetails(targetNode, details);
+    console.log('[Apollo] customization detail reset complete', {
+      nodeId: targetNode.id,
+      totalMs: Number((getTimestamp() - resetStartedAt).toFixed(1)),
+      detailCount: details.length,
+    });
+    figma.notify('Изменения сброшены.');
+    void runAudit([targetNode], lastAuditChannel);
+    return;
+  }
+
   const componentKey = await getComponentKey(rootNode);
   await ensureReferenceCatalogsForKeys([componentKey]);
   const ref = componentKey ? findComponent(componentKey) : null;
@@ -2282,6 +2296,25 @@ async function applyReferenceResetByDetails(
 
     if (property === 'styles.text') {
       await resetStyleById(node, 'text', reference.resourceId ?? null);
+      continue;
+    }
+
+    const variableBindingField = getVariableBindingResetField(property);
+    if (
+      variableBindingField &&
+      reference.resourceType === 'token' &&
+      reference.resourceId
+    ) {
+      const rebound = await bindNodeVariable(
+        node,
+        variableBindingField,
+        reference.resourceId,
+      );
+      if (!rebound) {
+        throw new Error(
+          `Apollo failed to restore ${variableBindingField} variable binding`,
+        );
+      }
       continue;
     }
 
@@ -3500,7 +3533,7 @@ function resolveTokenStatsResource(
   return {
     type: 'token',
     name: metadata?.label ?? displayName ?? tokenKey,
-    key: tokenKey,
+    key: metadata?.variableKey ?? tokenKey,
     id: tokenId,
     library: metadata?.library ?? null,
     sourceFile: metadata?.sourceFile ?? null,

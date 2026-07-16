@@ -5,6 +5,7 @@ import type {
   ApolloAgentSeverityHint,
   ApolloStatsReport,
   StatsComponentItem,
+  StatsCustomizationChange,
   StatsDetachedItem,
   StatsResource,
   StatsStyleItem,
@@ -182,20 +183,24 @@ function buildFindings(report: ApolloStatsReport): ApolloAgentFinding[] {
           referenceValue: agentDisplayValue(
             change.reference.value,
             change.reference.resource,
+            change.reference.binding,
           ),
           actualValue: agentDisplayValue(
             change.actual.value,
             change.actual.resource,
+            change.actual.binding,
           ),
           referenceRawValue: change.reference.value,
           actualRawValue: change.actual.value,
           referenceDisplayValue: agentDisplayValue(
             change.reference.value,
             change.reference.resource,
+            change.reference.binding,
           ),
           actualDisplayValue: agentDisplayValue(
             change.actual.value,
             change.actual.resource,
+            change.actual.binding,
           ),
           referenceResource: compactResource(change.reference.resource),
           actualResource: compactResource(change.actual.resource),
@@ -239,7 +244,18 @@ function buildFindings(report: ApolloStatsReport): ApolloAgentFinding[] {
 function agentDisplayValue(
   value: string | number | null,
   resource: StatsResource | null,
+  binding: StatsCustomizationChange['reference']['binding'],
 ): string | number | null {
+  const collectionName =
+    binding?.collectionName?.trim() ?? resource?.library?.trim() ?? '';
+  const isResolvedScalar =
+    typeof value === 'number' ||
+    (typeof value === 'string' &&
+      (/^-?\d+(?:\.\d+)?$/u.test(value.trim()) ||
+        /^\([^)]*\)$/u.test(value.trim())));
+  if (value !== null && collectionName && isResolvedScalar) {
+    return `${String(value)} (${collectionName})`;
+  }
   if (resource?.name) {
     return resource.name;
   }

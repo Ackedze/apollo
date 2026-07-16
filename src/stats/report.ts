@@ -1,4 +1,8 @@
-import type { DiffEntry, DiffValueDetails } from '../structure/diff';
+import type {
+  DiffEntry,
+  DiffValueDetails,
+  VariableBindingEvidence,
+} from '../structure/diff';
 import {
   findComponentContractRulesForDiff,
   findComponentContractViolationForDiff,
@@ -225,6 +229,8 @@ function customizationChange(
   const actual = diff.details?.actual ?? { value: null };
   const referenceResource = resolveDiffResource(reference, input);
   const actualResource = resolveDiffResource(actual, input);
+  const referenceBinding = resolveStatsBinding(reference, referenceResource);
+  const actualBinding = resolveStatsBinding(actual, actualResource);
   const componentRules = findComponentContractRulesForDiff(diff).map(
     statsComponentRule,
   );
@@ -245,12 +251,12 @@ function customizationChange(
     reference: {
       value: reference.value,
       resource: referenceResource,
-      binding: reference.binding ?? null,
+      binding: referenceBinding,
     },
     actual: {
       value: actual.value,
       resource: actualResource,
-      binding: actual.binding ?? null,
+      binding: actualBinding,
     },
     bindingStatus: diff.details?.bindingStatus ?? null,
     variableMode: diff.details?.variableMode ?? null,
@@ -308,6 +314,34 @@ function customizationChange(
             : null,
         }
       : null,
+  };
+}
+
+function resolveStatsBinding(
+  value: DiffValueDetails,
+  resource: StatsResource | null,
+): VariableBindingEvidence | null {
+  if (value.binding) {
+    return value.binding;
+  }
+  const bindingId = value.bindingId ?? value.resourceId ?? null;
+  if (value.resourceType !== 'token' || !bindingId) {
+    return null;
+  }
+  return {
+    id: bindingId,
+    key: resource?.key ?? null,
+    name: resource?.name ?? value.displayName ?? null,
+    collectionId: null,
+    collectionName: resource?.library ?? null,
+    resolvedModeId: null,
+    resolvedModeName: null,
+    explicitModeId: null,
+    explicitModeName: null,
+    modeSource: 'unknown',
+    modeOwnerNodeId: null,
+    modeOwnerName: null,
+    modeOwnerPath: null,
   };
 }
 

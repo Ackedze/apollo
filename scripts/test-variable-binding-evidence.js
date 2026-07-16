@@ -29,6 +29,8 @@ const GRID_COLLECTION_ID = 'VariableCollectionId:76532:102337';
 const GRID_MARGIN_ID = 'VariableID:76532:102340';
 const GUTTER_ID = 'VariableID:76532:102341';
 const REMOTE_GUTTER_ID = 'VariableID:gutter-key/76532:102341';
+const SPACING_24_ID =
+  'VariableID:f7b969edbf5d6f8d732bf46ef7fd3f7c5511fb49/1:38';
 const BACKGROUND_COLLECTION_ID = 'VariableCollectionId:background';
 
 function variableMetadata(bindingId) {
@@ -64,6 +66,15 @@ function variableMetadata(bindingId) {
       collectionId: GRID_COLLECTION_ID,
       collectionName: '[D] Grid & Cols',
       modeNames: { '76532:2': '1280' },
+    };
+  }
+  if (bindingId === SPACING_24_ID) {
+    return {
+      variableKey: 'f7b969edbf5d6f8d732bf46ef7fd3f7c5511fb49',
+      variableName: '24',
+      collectionId: 'VariableCollectionId:1:2',
+      collectionName: 'Spacing',
+      modeNames: {},
     };
   }
   return null;
@@ -242,6 +253,78 @@ function main() {
     false,
     'Equivalent local/remote Gutter bindings must suppress 24 -> 16 mode-driven gap diffs',
   );
+
+  const substitutedSection = sectionStructures(SPACING_24_ID);
+  substitutedSection.actual[0].layout.itemSpacing = 24;
+  const substitutedSectionResult = diffStructures(
+    substitutedSection.actual,
+    substitutedSection.reference,
+    {
+      resolveVariableMetadata: variableMetadata,
+    },
+  );
+  const substitutedGutterDiff = substitutedSectionResult.diffs.find(
+    (diff) => diff.details?.property === 'layout.itemSpacingToken',
+  );
+  assert.ok(
+    substitutedGutterDiff,
+    'An equal numeric value from another collection must remain a binding substitution',
+  );
+  assert.equal(
+    substitutedGutterDiff.message,
+    'Отступ между элементами (токен): 24 ([D] Grid & Cols) → 24 (Spacing)',
+  );
+  assert.equal(substitutedGutterDiff.details.reference.value, 24);
+  assert.equal(substitutedGutterDiff.details.actual.value, 24);
+  assert.equal(
+    substitutedGutterDiff.details.reference.binding.collectionName,
+    '[D] Grid & Cols',
+  );
+  assert.equal(
+    substitutedGutterDiff.details.actual.binding.collectionName,
+    'Spacing',
+  );
+  assert.equal(
+    substitutedGutterDiff.details.bindingStatus,
+    'different-binding',
+  );
+
+  const { selectedReferenceValue } = loadModule(
+    '../src/assessment/customizationAssessment.ts',
+    'nested-variable-reference',
+  );
+  const selectedNestedReference = selectedReferenceValue(
+    substitutedSection.reference[0],
+    substitutedGutterDiff,
+    {
+      resolveVariableMetadata: variableMetadata,
+    },
+  );
+  assert.equal(selectedNestedReference.value, 24);
+  assert.equal(
+    selectedNestedReference.displayName,
+    '24 ([D] Grid & Cols)',
+  );
+  assert.equal(selectedNestedReference.resourceId, GUTTER_ID);
+  assert.equal(
+    selectedNestedReference.binding.collectionName,
+    '[D] Grid & Cols',
+  );
+
+  const { getVariableBindingResetField } = loadModule(
+    '../src/utils/variableBindingReset.ts',
+    'variable-binding-reset',
+  );
+  assert.equal(
+    getVariableBindingResetField('layout.itemSpacingToken'),
+    'itemSpacing',
+  );
+  assert.equal(
+    getVariableBindingResetField('layout.paddingTokens.left'),
+    'paddingLeft',
+  );
+  assert.equal(getVariableBindingResetField('radiusToken'), 'cornerRadius');
+  assert.equal(getVariableBindingResetField('opacityToken'), 'opacity');
 
   const wrong = corporateStructures('VariableID:wrong-spacing');
   const wrongResult = diffStructures(wrong.actual, wrong.reference, {
@@ -448,6 +531,11 @@ function main() {
   );
   const item = createStatsItem(unboundDiff);
   const modeItem = createStatsItem(modeDiffs[0]);
+  const substitutionForReport = JSON.parse(
+    JSON.stringify(substitutedGutterDiff),
+  );
+  substitutionForReport.details.reference.binding = null;
+  const substitutionItem = createStatsItem(substitutionForReport);
   const report = buildApolloStatsReport({
     pluginVersion: '0.1.50',
     user: { id: 'user', name: 'User' },
@@ -465,7 +553,7 @@ function main() {
       deprecatedStyles: [],
       customStyles: [],
       updates: [],
-      customizations: [item, modeItem],
+      customizations: [item, modeItem, substitutionItem],
       localComponents: [],
       detachedComponents: [],
       presets: [],
@@ -502,6 +590,23 @@ function main() {
   assert.equal(agentChange.bindingStatus, 'unbound');
   assert.equal(agentChange.referenceBinding.collectionName, '[D] Grid & Cols');
   assert.equal(agentChange.actualBinding, null);
+  const agentSubstitutionChange = agentReport.findings
+    .flatMap((finding) => finding.changes ?? [])
+    .find((change) => change.property === 'layout.itemSpacingToken');
+  assert.ok(agentSubstitutionChange);
+  assert.equal(
+    agentSubstitutionChange.referenceValue,
+    '24 ([D] Grid & Cols)',
+  );
+  assert.equal(agentSubstitutionChange.actualValue, '24 (Spacing)');
+  assert.equal(
+    agentSubstitutionChange.referenceBinding.key,
+    'gutter-key',
+  );
+  assert.equal(
+    agentSubstitutionChange.referenceBinding.collectionName,
+    '[D] Grid & Cols',
+  );
   const agentModeChange = agentReport.findings
     .flatMap((finding) => finding.changes ?? [])
     .find(

@@ -71,6 +71,17 @@ function main() {
     'A meaningful non-zero reference radius must still require snapshot data',
   );
 
+  const missingReferenceRadius = diffStructures(
+    [node('FRAME', { radius: 4 })],
+    [node('FRAME')],
+    { strict: true },
+  );
+  assert.deepEqual(
+    missingReferenceRadius.diffs,
+    [],
+    'A radius omitted by the reference catalog must not be reported as a customization',
+  );
+
   const missingFill = diffStructures(
     [node('FRAME')],
     [node('FRAME', { fill: { color: 'rgba(255,255,255,1)' } })],

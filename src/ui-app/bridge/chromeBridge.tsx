@@ -71,6 +71,7 @@ class ApolloChromeBridge {
           onChannelChange={options.onChannelChange}
           onPickerChange={options.onPickerChange}
           onShellAuditToggle={options.onShellAuditToggle}
+          onExampleCapture={options.onExampleCapture}
         />,
       );
 

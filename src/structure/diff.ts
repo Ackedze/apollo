@@ -8,6 +8,7 @@ import {
 } from './strokeAlignment';
 import { formatLayoutSizing, normalizeLayoutSizing } from './layoutSizing';
 import { alignMaterializedReferenceInstancePaths } from '../reference/nestedReferenceMerge';
+import type { SurfaceContextEvidence } from '../assessment/surfaceContext';
 
 export type DiffContext = {
   actualComponentKey: string | null;
@@ -22,6 +23,7 @@ export type DiffContext = {
   nestedOwnerRelativePath: string | null;
   actualVariantProperties?: Record<string, string> | null;
   referenceVariantProperties?: Record<string, string> | null;
+  surfaceContext?: SurfaceContextEvidence | null;
 };
 
 export type DiffEntry = {
@@ -217,10 +219,16 @@ export function diffExplicitNestedVariantStates(
         actualRootPath,
       )
     : hostReference;
-  const actualKeyMap = buildOccurrenceKeyMap(actual);
-  const referenceKeyMap = buildOccurrenceKeyMap(alignedHostReference);
+  const normalizedActual = attachImplicitNestedOwners(actual, {
+    respectReferenceOrigin: false,
+  });
+  const normalizedHostReference = attachImplicitReferenceOwners(
+    alignedHostReference,
+  );
+  const actualKeyMap = buildOccurrenceKeyMap(normalizedActual);
+  const referenceKeyMap = buildOccurrenceKeyMap(normalizedHostReference);
   const referenceByOccurrence = new Map(
-    alignedHostReference.map((node) => [
+    normalizedHostReference.map((node) => [
       referenceKeyMap.get(node) ?? node.path,
       node,
     ]),
@@ -228,7 +236,7 @@ export function diffExplicitNestedVariantStates(
   const existingKeys = new Set(existingDiffs.map(getVariantStateDiffKey));
   const result: DiffEntry[] = [];
 
-  for (const actualNode of actual) {
+  for (const actualNode of normalizedActual) {
     if (
       actualNode.id === actualRootId ||
       actualNode.type !== 'INSTANCE' ||
@@ -301,10 +309,14 @@ function attachImplicitNestedOwners(
         break;
       }
 
+      const isRootHostForNestedInstance =
+        node.type === 'INSTANCE' &&
+        node.path.includes(' / ') &&
+        parent.parentId === null;
       if (
         parent.type === 'INSTANCE' &&
         parent.componentInstance?.componentKey &&
-        parent.path.includes(' / ')
+        (parent.path.includes(' / ') || isRootHostForNestedInstance)
       ) {
         node.referenceOwnerComponentKey = parent.componentInstance.componentKey;
         node.referenceOwnerRole = parent.referenceOwnerRole ?? null;

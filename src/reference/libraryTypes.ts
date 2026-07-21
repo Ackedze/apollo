@@ -131,6 +131,7 @@ export type TokenCatalog = {
   meta?: { fileName?: string; library?: string };
   collections?: Array<{
     id?: string;
+    key?: string;
     name?: string;
     defaultModeId?: string | null;
     modes?: Array<{

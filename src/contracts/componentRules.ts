@@ -41,8 +41,18 @@ export type ComponentContractRule = {
   target?: ComponentRuleTarget;
   conditions?: {
     component?: string;
+    components?: string[];
     variant?: Record<string, string | string[]>;
+    variantProperty?: string;
+    slot?: string;
+    backgroundSurface?: string[];
   };
+  classification?: {
+    allPublicApiValuesAllowed?: boolean;
+  };
+  requiredVariant?: Record<string, string>;
+  forbiddenVariant?: Record<string, string>;
+  requiredVariantByContext?: Record<string, Record<string, string>>;
   requiredValues?: Record<string, string | number | boolean | null>;
   requiredTokenSource?: {
     path?: string;
@@ -303,6 +313,43 @@ export function applyVariableBindingAssessment(diff: DiffEntry): DiffEntry {
   return Object.assign({}, diff, {
     assessment: createRuleViolationAssessment(rule),
   });
+}
+
+export function applyContextualComponentRuleAssessment(
+  diff: DiffEntry,
+): DiffEntry {
+  if (
+    diff.assessment?.verdict === 'violation' ||
+    diff.assessment?.verdict === 'expected'
+  ) {
+    return diff;
+  }
+  const property = diff.details?.property ?? '';
+  if (!property.startsWith('variant.')) return diff;
+
+  const rules = findComponentContractRulesForDiff(diff);
+  for (const rule of rules) {
+    const contextual = contextualVariantAssessment(rule, diff, property);
+    if (contextual) {
+      return Object.assign({}, diff, { assessment: contextual });
+    }
+  }
+  for (const rule of rules) {
+    if (rule.classification?.allPublicApiValuesAllowed === true) {
+      return Object.assign({}, diff, {
+        assessment: {
+          verdict: 'allowed',
+          source: 'component-contract',
+          reasonCode: 'component-public-api-value',
+          ruleId: rule.ruleId,
+          message: rule.ruleText,
+          remediation: null,
+          presentation: 'show',
+        },
+      });
+    }
+  }
+  return diff;
 }
 
 export function createRequiredComponentSizingDiffs(
@@ -676,6 +723,9 @@ function ruleMatchesDiff(
   if (!variantConditionsMatchDiff(rule.conditions?.variant, diff)) {
     return false;
   }
+  if (!contextConditionsMatchDiff(rule, diff, property)) {
+    return false;
+  }
 
   const identities = getDiffComponentIdentities(diff);
   const componentSelectors = target.componentSelectors.slice();
@@ -692,7 +742,10 @@ function ruleMatchesDiff(
     componentSelectors.length > 0 ||
     target.componentKeySelectors.length > 0 ||
     target.componentNameSelectors.length > 0;
-  const allowOwnerScope = target.slotSelectors.length > 0;
+  const allowOwnerScope =
+    target.slotSelectors.length > 0 ||
+    target.layerSelectors.length > 0 ||
+    ruleHasContextualVariantEvidence(rule);
   const scopedIdentities = getScopedIdentities(identities, allowOwnerScope);
   const matchingIdentities = scopedIdentities.filter((identity) => {
     if (!hasComponentSelector) {
@@ -759,9 +812,7 @@ function targetlessRuleCanAttachToAtomicDiff(
   ) {
     return false;
   }
-  if (
-    rule.matchKind === 'composition_rule'
-  ) {
+  if (rule.matchKind === 'composition_rule' && !ruleHasContextualVariantEvidence(rule)) {
     return false;
   }
   const appliesToParts = rule.appliesTo
@@ -773,7 +824,7 @@ function targetlessRuleCanAttachToAtomicDiff(
         part.startsWith('screen.') ||
         part === 'component.composition' ||
         part === 'screen.composition',
-    )
+    ) && !ruleHasContextualVariantEvidence(rule)
   ) {
     return false;
   }
@@ -783,6 +834,165 @@ function targetlessRuleCanAttachToAtomicDiff(
     rule.ruleKind === 'design-rule' ||
     Boolean(rule.checkType?.split('+').includes('deterministic'))
   );
+}
+
+function ruleHasContextualVariantEvidence(
+  rule: ComponentContractRule,
+): boolean {
+  return Boolean(
+    rule.requiredVariantByContext ||
+      ((rule.requiredVariant || rule.forbiddenVariant) &&
+        rule.conditions?.backgroundSurface?.length),
+  );
+}
+
+function contextConditionsMatchDiff(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+  property: string,
+): boolean {
+  const conditions = rule.conditions;
+  if (conditions?.variantProperty) {
+    const expectedProperty = conditions.variantProperty.startsWith('variant.')
+      ? conditions.variantProperty
+      : `variant.${conditions.variantProperty}`;
+    if (expectedProperty !== property) return false;
+  }
+
+  const identities = getDiffComponentIdentities(diff);
+  if (conditions?.components?.length) {
+    const matchesComponent = conditions.components.some((selector) =>
+      identities.some((identity) =>
+        Boolean(
+          identity.name &&
+            normalizePathSegment(identity.name) ===
+              normalizePathSegment(selector),
+        ),
+      ),
+    );
+    if (!matchesComponent) return false;
+  }
+
+  if (
+    conditions?.slot &&
+    !pathContainsQualifiedTarget(diff.nodePath, conditions.slot)
+  ) {
+    return false;
+  }
+
+  const surface = diff.context.surfaceContext?.kind ?? 'unknown';
+  if (conditions?.backgroundSurface?.length) {
+    if (
+      surface === 'unknown' ||
+      !conditions.backgroundSurface.some((candidate) =>
+        surfaceSelectorMatches(candidate, surface),
+      )
+    ) {
+      return false;
+    }
+  }
+  if (rule.requiredVariantByContext && surface === 'unknown') {
+    return false;
+  }
+  return true;
+}
+
+function contextualVariantAssessment(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+  property: string,
+): NonNullable<DiffEntry['assessment']> | null {
+  const propertyName = property.slice('variant.'.length);
+  const actualValue = diff.details?.actual.value;
+  if (typeof actualValue !== 'string') return null;
+  const surface = diff.context.surfaceContext?.kind ?? 'unknown';
+  const requiredByContext = rule.requiredVariantByContext
+    ? findSurfaceVariantRequirement(rule.requiredVariantByContext, surface)
+    : null;
+  const required = readCaseInsensitiveValue(
+    requiredByContext ?? rule.requiredVariant ?? {},
+    propertyName,
+  );
+  const forbidden = readCaseInsensitiveValue(
+    rule.forbiddenVariant ?? {},
+    propertyName,
+  );
+  const normalizedActual = normalizeVariantValue(actualValue);
+  const isAllowed =
+    required !== null && normalizeVariantValue(required) === normalizedActual;
+  const isViolation =
+    (required !== null && !isAllowed) ||
+    (forbidden !== null && normalizeVariantValue(forbidden) === normalizedActual);
+
+  if (!isAllowed && !isViolation) return null;
+  if (isAllowed) {
+    return {
+      verdict: 'allowed',
+      source: 'component-contract',
+      reasonCode: 'contextual-variant-allowed',
+      ruleId: rule.ruleId,
+      message: rule.ruleText,
+      remediation: null,
+      presentation: 'show',
+    };
+  }
+
+  const remediation =
+    required !== null && diff.nodeId
+      ? {
+          kind: 'set-variant-properties' as const,
+          nodeId: diff.nodeId,
+          properties: { [propertyName]: required },
+        }
+      : null;
+  return {
+    verdict: 'violation',
+    source: 'component-contract',
+    reasonCode: 'contextual-variant-violation',
+    ruleId: rule.ruleId,
+    message: rule.ruleText,
+    remediation,
+    presentation: 'show',
+  };
+}
+
+function findSurfaceVariantRequirement(
+  requirements: Record<string, Record<string, string>>,
+  surface: string,
+): Record<string, string> | null {
+  for (const [contextName, requirement] of Object.entries(requirements)) {
+    if (surfaceSelectorMatches(contextName, surface)) {
+      return requirement;
+    }
+  }
+  return null;
+}
+
+function surfaceSelectorMatches(selector: string, surface: string): boolean {
+  const normalized = normalizeRuleValue(selector);
+  if (surface === 'white') {
+    return (
+      normalized.includes('white') ||
+      normalized === 'base-bg' ||
+      normalized.includes('base-bg (white)')
+    );
+  }
+  if (surface === 'gray') {
+    return (
+      normalized.includes('gray') ||
+      normalized.includes('grey') ||
+      normalized.includes('neutral') ||
+      normalized.includes('alt')
+    );
+  }
+  if (surface === 'contrast') {
+    return (
+      normalized.includes('contrast') ||
+      normalized.includes('inverse') ||
+      normalized.includes('inverted')
+    );
+  }
+  return false;
 }
 
 function parseRuleTarget(

@@ -175,3 +175,44 @@
 .switchTrackActive .switchThumb {
   transform: translateX(16px);
 }
+
+.settingsDivider {
+  height: 1px;
+  background: rgba(30, 43, 68, 0.08);
+}
+
+.settingsAction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(31, 115, 234, 0.08);
+  color: rgba(3, 3, 6, 0.88);
+  text-align: left;
+  cursor: pointer;
+}
+
+.settingsAction:hover:not(:disabled) {
+  background: rgba(31, 115, 234, 0.13);
+}
+
+.settingsAction:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+
+.settingsActionTitle {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+}
+
+.settingsActionCaption {
+  font-size: 11px;
+  line-height: 15px;
+  color: rgba(5, 8, 29, 0.52);
+}

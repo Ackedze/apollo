@@ -21,6 +21,25 @@ export type ChromeState = {
   tabs: ChromeTabItem[];
 };
 
+export type GenerationExampleCaptureRequest = {
+  exampleId: string;
+  exampleSetId: string | null;
+  breakpointLabel: string | null;
+  title: string;
+  pageType:
+    | 'form'
+    | 'landing'
+    | 'data-list'
+    | 'details'
+    | 'status-screen'
+    | 'dashboard'
+    | 'other';
+  platform: 'desktop' | 'mobile-web' | 'ios' | 'android';
+  exampleKind: 'golden' | 'variant' | 'anti-example';
+  includeTextContent: boolean;
+  sourceFigmaUrl: string | null;
+};
+
 export type ChromeBridgeOptions = {
   topRootId: string;
   leftRootId: string;
@@ -30,6 +49,7 @@ export type ChromeBridgeOptions = {
   onChannelChange: (channelId: string) => void;
   onPickerChange: (pickerLabel: string) => void;
   onShellAuditToggle: () => void;
+  onExampleCapture: (request: GenerationExampleCaptureRequest) => void;
 };
 
 export type AuditResultItem = {

@@ -184,6 +184,27 @@ function main() {
       auditInterpretation: null,
       overrideContext: null,
     },
+    {
+      componentKey: 'web-corp.allowed-only',
+      summary: 'Allowed-only component context',
+      criticalBaselines: [],
+      agentInstructions: [],
+      includedComponents: ['[D] AllowedOnly'],
+      componentSemantics: [
+        {
+          componentKey: 'allowed-only-set-key',
+          name: '[D] AllowedOnly',
+          purpose: 'Context retained for an allowed customization.',
+          useWhen: [],
+          doNotUseWhen: [],
+          relationship: null,
+          status: 'approved',
+          provenance: 'design-system-author',
+        },
+      ],
+      auditInterpretation: null,
+      overrideContext: null,
+    },
   ];
   globalThis.__APOLLO_TEST_REMOTE_AUDIT_PRESENTATIONS__ = [
     {
@@ -260,6 +281,17 @@ function main() {
   });
   const expectedCustomization = componentItem({
     id: '1:3',
+    name: '[D] AllowedOnly',
+    componentKey: 'allowed-only-variant-key',
+    reference: {
+      key: 'allowed-only-family-key',
+      names: ['[D] AllowedOnly'],
+      name: '[D] AllowedOnly',
+      displayName: '[D] AllowedOnly',
+      status: 'current',
+      source: 'Web _ Corp Components',
+      sourceFile: 'web/components/web-corp/AllowedOnly.json',
+    },
     diffs: [
       {
         ...customization.diffs[0],
@@ -714,7 +746,7 @@ function main() {
   assert.equal(agentReport.categorySummaries.customizations.totalCount, 6);
   assert.equal(agentReport.categorySummaries.customizations.includedCount, 5);
   assert.equal(agentReport.findings.length, 5);
-  assert.equal(agentReport.componentContexts.length, 2);
+  assert.equal(agentReport.componentContexts.length, 3);
   const backgroundPlateContext = agentReport.componentContexts.find(
     (context) => context.componentKey === 'web-corp.background-plate',
   );
@@ -734,6 +766,14 @@ function main() {
     ),
     true,
     'Nested diff owners must contribute their agent context',
+  );
+  const allowedOnlyContext = agentReport.componentContexts.find(
+    (context) => context.componentKey === 'web-corp.allowed-only',
+  );
+  assert.deepEqual(
+    allowedOnlyContext.componentSemantics.map((semantic) => semantic.name),
+    ['[D] AllowedOnly'],
+    'Allowed changes omitted from findings must still retain their approved component semantics',
   );
   assert.equal(agentReport.findings[0].category, 'customizations');
   assert.equal(agentReport.findings[0].changes.length, 1);

@@ -10,6 +10,7 @@ import type {
   RuntimeComponentAgentContext,
 } from '../contracts/artifactContext';
 import type {
+  DiffContext,
   VariableBindingEvidence,
   VariableBindingStatus,
   VariableModeEvidence,
@@ -79,7 +80,7 @@ export type StatsCustomizationChange = {
   bindingStatus: VariableBindingStatus | null;
   variableMode: VariableModeEvidence | null;
   signature: string;
-  context: Record<string, string | null>;
+  context: DiffContext;
   componentRules: StatsComponentContractRule[];
   presentation: RuntimeAuditPresentation | null;
   assessment: {

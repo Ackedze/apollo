@@ -28,6 +28,7 @@ import { snapshotTree } from './structure/snapshot';
 import {
   diffExplicitNestedVariantStates,
   diffStructures,
+  type DiffEntry,
   type VariableMetadata,
 } from './structure/diff';
 import { setNodeStrokeAlignment } from './structure/strokeAlignment';
@@ -99,6 +100,10 @@ import {
 import { resolveCachedComponentKey } from './utils/componentKeyCache';
 import { getVariableBindingResetField } from './utils/variableBindingReset';
 import {
+  extractVariableCollectionKey,
+  getVariableCollectionLookupKeys,
+} from './utils/variableCollectionId';
+import {
   countVariantPropertyMatches,
   parseVariantName,
   variantMatchesSourceWithDefaultExtras,
@@ -118,16 +123,33 @@ import {
   createPatternContextResolver,
 } from './assessment/customizationAssessment';
 import {
+  resolveSurfaceContext,
+  type SurfaceContextEvidence,
+} from './assessment/surfaceContext';
+import {
   APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
   applyContractAwareDiffs,
 } from './contracts/contractAwareDiffs';
 import {
+  ensureContractPackageIndexLoaded,
   ensureContractExamplesForHints,
   ensureContractArtifactsForHints,
+  getContractPackageKeyForHint,
   getComponentExamplesForKeys,
   type ContractArtifactHint,
 } from './contracts/runtimeContractRegistry';
 import {
+  auditEvidenceMatchesCapture,
+  buildGenerationExampleCandidate,
+  createGenerationExampleAuditEvidence,
+  getGenerationExampleCandidateFileName,
+  resolveLibraryComponentReference,
+  type GenerationExampleAuditEvidence,
+  type GenerationExampleCaptureOptions,
+} from './examples/generationExampleCandidate';
+import { resolveGenerationExampleSourceIdentity } from './examples/generationExampleSource';
+import {
+  applyContextualComponentRuleAssessment,
   applyRequiredComponentSizingAssessment,
   applyVariableBindingAssessment,
   createRequiredComponentSizingDiffs,
@@ -149,6 +171,10 @@ const COMPACT_UI_SIZE = { width: 263, height: 860 };
 let lastApolloAgentReport: ApolloAgentReport | null = null;
 let lastContractArtifactHints: ContractArtifactHint[] = [];
 let activeApolloAgentRequestId: string | null = null;
+let lastGenerationExampleAuditEvidence: GenerationExampleAuditEvidence | null =
+  null;
+let generationExampleCaptureInProgress = false;
+const MAX_GENERATION_EXAMPLE_SOURCE_NODES = 25000;
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -169,6 +195,13 @@ figma.ui.onmessage = (msg) => {
   if (msg.type === 'scan-selection') {
     void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel), {
       shellAuditEnabled: msg.payload?.shellAuditEnabled === true,
+    });
+    return;
+  }
+
+  if (msg.type === 'capture-generation-example') {
+    void captureGenerationExample(msg.payload).catch((error) => {
+      console.error('[Apollo][examples] unhandled capture error', error);
     });
     return;
   }
@@ -315,6 +348,10 @@ async function runAudit(
     shellAuditEnabled?: boolean;
   },
 ) {
+  if (generationExampleCaptureInProgress) {
+    figma.notify('Сначала дождитесь подготовки примера.');
+    return;
+  }
   if (scanInProgress) {
     figma.notify('Проверка уже выполняется.');
     return;
@@ -322,6 +359,7 @@ async function runAudit(
   scanInProgress = true;
   cancelRequested = false;
   lastApolloAgentReport = null;
+  lastGenerationExampleAuditEvidence = null;
   lastContractArtifactHints = [];
   activeApolloAgentRequestId = null;
 
@@ -569,6 +607,8 @@ async function runAudit(
         resolveStyleResource: resolveStyleStatsResource,
         resolveTokenResource: resolveTokenStatsResource,
       });
+      lastGenerationExampleAuditEvidence =
+        createGenerationExampleAuditEvidence(report);
       const agentReport = buildApolloAgentReport(report);
       lastApolloAgentReport = agentReport;
       figma.ui.postMessage({
@@ -602,6 +642,252 @@ async function runAudit(
 
     finalize('finished');
   }
+}
+
+async function captureGenerationExample(rawOptions: unknown): Promise<void> {
+  if (scanInProgress) {
+    const message = 'Сначала дождитесь завершения проверки Apollo.';
+    figma.notify(message);
+    figma.ui.postMessage({
+      type: 'generation-example-error',
+      payload: { message },
+    });
+    return;
+  }
+  if (generationExampleCaptureInProgress) {
+    figma.notify('Подготовка примера уже выполняется.');
+    return;
+  }
+
+  const options = normalizeGenerationExampleCaptureOptions(rawOptions);
+  const selection = figma.currentPage.selection;
+  if (selection.length !== 1) {
+    throwGenerationExampleCaptureError(
+      'Выделите один корневой фрейм или секцию примера.',
+    );
+    return;
+  }
+  const root = selection[0];
+  if (root.type !== 'FRAME' && root.type !== 'SECTION') {
+    throwGenerationExampleCaptureError(
+      'Корнем примера должен быть FRAME или SECTION.',
+    );
+    return;
+  }
+
+  generationExampleCaptureInProgress = true;
+  figma.ui.postMessage({ type: 'generation-example-started' });
+
+  try {
+    await ensureReferenceCatalogsLoaded();
+    await ensureTokenLabelMapLoaded();
+
+    const snapshot = await snapshotTree(root, new Set<string>());
+    if (snapshot.length > MAX_GENERATION_EXAMPLE_SOURCE_NODES) {
+      throw new Error(
+        `В примере ${snapshot.length} слоёв. Максимум — ${MAX_GENERATION_EXAMPLE_SOURCE_NODES}. Разделите макет на несколько примеров.`,
+      );
+    }
+
+    const componentKeys = new Set<string>();
+    for (const node of snapshot) {
+      const componentKey = node.componentInstance?.componentKey;
+      if (componentKey) componentKeys.add(componentKey);
+    }
+    await ensureReferenceCatalogsForKeys(componentKeys);
+    const generationExampleCollectionMetadata =
+      await resolveGenerationExampleCollectionMetadata(snapshot);
+    try {
+      await ensureContractPackageIndexLoaded();
+    } catch (error) {
+      console.warn(
+        '[Apollo][examples] contract package index is unavailable; canonical package keys will be omitted',
+        error,
+      );
+    }
+
+    const selectionNodeIds = [root.id];
+    const auditEvidence = auditEvidenceMatchesCapture(
+      lastGenerationExampleAuditEvidence,
+      selectionNodeIds,
+      options.platform,
+    )
+      ? lastGenerationExampleAuditEvidence
+      : null;
+    const capturedAt = new Date().toISOString();
+    const sourceIdentity = resolveGenerationExampleSourceIdentity(
+      root.id,
+      figma.fileKey,
+      options.sourceFigmaUrl,
+    );
+    const candidate = buildGenerationExampleCandidate({
+      pluginVersion: APOLLO_VERSION,
+      capturedAt,
+      options,
+      source: {
+        fileKey: sourceIdentity.fileKey,
+        fileName: figma.root.name ?? null,
+        editorType: figma.editorType,
+        pageName: getPageName(root),
+        rootNodeId: root.id,
+        rootNodeName: root.name,
+        figmaLink: sourceIdentity.figmaLink,
+      },
+      snapshot,
+      auditEvidence,
+      resolveComponent: (componentKey) => {
+        const component = findComponent(componentKey);
+        const packageKey = getContractPackageKeyForHint({
+          figmaKey: componentKey,
+          componentName: component?.name ?? null,
+          displayName: component?.displayName ?? null,
+          sourceFile: component?.sourceFile ?? null,
+        });
+        return resolveLibraryComponentReference(component, packageKey);
+      },
+      resolveVariable: (variableId) => {
+        const metadata = resolveVariableMetadataForDiff(variableId);
+        if (!metadata) return null;
+        return {
+          name: metadata.variableName,
+          collectionName: metadata.collectionName,
+        };
+      },
+      resolveVariableCollection: (collectionId) => {
+        const metadata =
+          generationExampleCollectionMetadata.get(collectionId) ??
+          resolveVariableCollectionMetadataForDiff(collectionId);
+        if (!metadata) return null;
+        return {
+          collectionName: metadata.collectionName,
+          modeNames: metadata.modeNames,
+        };
+      },
+    });
+    const suggestedFileName = getGenerationExampleCandidateFileName(
+      options.exampleId,
+    );
+    figma.ui.postMessage({
+      type: 'generation-example-ready',
+      payload: {
+        document: candidate,
+        suggestedFileName,
+        warningCount: candidate.runtime.warnings.length,
+      },
+    });
+    figma.notify('JSON-кандидат примера подготовлен.');
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Не удалось подготовить пример.';
+    console.error('[Apollo][examples] capture failed', error);
+    figma.ui.postMessage({
+      type: 'generation-example-error',
+      payload: { message },
+    });
+    figma.notify(message);
+  } finally {
+    generationExampleCaptureInProgress = false;
+  }
+}
+
+function normalizeGenerationExampleCaptureOptions(
+  value: unknown,
+): GenerationExampleCaptureOptions {
+  const payload =
+    value && typeof value === 'object'
+      ? (value as Record<string, unknown>)
+      : {};
+  return {
+    exampleId: String(payload.exampleId ?? '').trim(),
+    exampleSetId: normalizeOptionalGenerationExampleValue(
+      payload.exampleSetId,
+    ),
+    breakpointLabel: normalizeOptionalGenerationExampleValue(
+      payload.breakpointLabel,
+    ),
+    title: String(payload.title ?? '').trim(),
+    pageType: String(payload.pageType ?? 'other') as GenerationExampleCaptureOptions['pageType'],
+    platform: String(payload.platform ?? 'desktop') as GenerationExampleCaptureOptions['platform'],
+    exampleKind: String(payload.exampleKind ?? 'golden') as GenerationExampleCaptureOptions['exampleKind'],
+    includeTextContent: payload.includeTextContent === true,
+    sourceFigmaUrl: normalizeOptionalGenerationExampleValue(
+      payload.sourceFigmaUrl,
+    ),
+  };
+}
+
+function normalizeOptionalGenerationExampleValue(
+  value: unknown,
+): string | null {
+  const normalized = typeof value === 'string' ? value.trim() : '';
+  return normalized || null;
+}
+
+function throwGenerationExampleCaptureError(message: string): void {
+  figma.notify(message);
+  figma.ui.postMessage({
+    type: 'generation-example-error',
+    payload: { message },
+  });
+}
+
+async function resolveGenerationExampleCollectionMetadata(
+  snapshot: DSStructureNode[],
+): Promise<Map<string, VariableCollectionMetadata>> {
+  const collectionIds = new Set<string>();
+  for (const node of snapshot) {
+    for (const mode of node.variableModes ?? []) {
+      collectionIds.add(mode.collectionId);
+    }
+  }
+
+  const result = new Map<string, VariableCollectionMetadata>();
+  for (const collectionId of Array.from(collectionIds).sort()) {
+    const catalogMetadata =
+      resolveVariableCollectionMetadataForDiff(collectionId);
+    if (catalogMetadata) {
+      result.set(collectionId, catalogMetadata);
+      continue;
+    }
+
+    const liveMetadata = await resolveLiveVariableCollectionMetadata(
+      collectionId,
+    );
+    if (liveMetadata) result.set(collectionId, liveMetadata);
+  }
+  return result;
+}
+
+async function resolveLiveVariableCollectionMetadata(
+  collectionId: string,
+): Promise<VariableCollectionMetadata | null> {
+  const candidates = [collectionId];
+  const localId = collectionId.includes('/')
+    ? collectionId.slice(collectionId.lastIndexOf('/') + 1)
+    : '';
+  if (localId) candidates.push(`VariableCollectionId:${localId}`);
+
+  for (const candidate of candidates) {
+    try {
+      const collection =
+        await figma.variables.getVariableCollectionByIdAsync(candidate);
+      if (!collection) continue;
+      const modeNames: Record<string, string> = {};
+      for (const mode of collection.modes) {
+        modeNames[mode.modeId] = mode.name;
+      }
+      return {
+        collectionId: collection.id,
+        collectionName: collection.name,
+        modeNames,
+      };
+    } catch (_error) {
+      // Remote aliases are not always directly importable; try the next id form.
+    }
+  }
+  return null;
 }
 
 async function sendApolloAgentReport(
@@ -1204,9 +1490,14 @@ async function classifyNode(
           resolveVariableCollectionMetadataForDiff,
         )
       : [];
+  const surfaceContext = resolveSurfaceContext(
+    node,
+    resolveTokenLabelForDiff,
+  );
   const rawDiffs = diffResult.diffs
     .concat(requiredSizingDiffs)
     .concat(variableModeRuleDiffs)
+    .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)
     .map(applyVariableBindingAssessment);
   const markedDiffs = rawDiffs.map((diff) =>
@@ -1218,7 +1509,9 @@ async function classifyNode(
           alignedActualStructure,
           referenceStructure,
           markedDiffs,
-        ).map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
+        )
+          .map((diff) => attachSurfaceContext(diff, surfaceContext))
+          .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
       : [];
   const diffsForAssessment = markedDiffs.concat(explicitVariantStateDiffs);
   const hostDiffs =
@@ -1268,7 +1561,7 @@ async function classifyNode(
             resolveComponent: findComponent,
           })
         : undefined,
-  });
+  }).map(applyContextualComponentRuleAssessment);
   const semanticDiffs = collapsePatternViolationDiffs(
     collapseVisualDiffsUnderVariantChanges(
       applyAssessmentPresentation(
@@ -3057,6 +3350,15 @@ function alignStructurePaths(
   });
 }
 
+function attachSurfaceContext(
+  diff: DiffEntry,
+  surfaceContext: SurfaceContextEvidence,
+): DiffEntry {
+  return Object.assign({}, diff, {
+    context: Object.assign({}, diff.context, { surfaceContext }),
+  });
+}
+
 function expandReferenceWithInstanceComponents(
   reference: DSStructureNode[],
   actual: DSStructureNode[],
@@ -3408,11 +3710,21 @@ async function ensureTokenLabelMapLoaded(): Promise<void> {
             }
           }
           if (typeof collection.id === 'string' && collection.id) {
-            collectionMap.set(collection.id, {
+            const collectionMetadata: VariableCollectionMetadata = {
               collectionId: collection.id,
               collectionName: collectionName || null,
               modeNames,
-            });
+            };
+            registerVariableCollectionMetadata(
+              collectionMap,
+              collection.id,
+              collectionMetadata,
+            );
+            registerVariableCollectionMetadata(
+              collectionMap,
+              collection.key,
+              collectionMetadata,
+            );
           }
           const variables = collection.variables ?? [];
           for (const variable of variables) {
@@ -3518,7 +3830,23 @@ function resolveVariableMetadataForDiff(
 function resolveVariableCollectionMetadataForDiff(
   collectionId: string,
 ): VariableCollectionMetadata | null {
-  return variableCollectionMetadataMap?.get(collectionId) ?? null;
+  const collectionKey = extractVariableCollectionKey(collectionId);
+  return (
+    variableCollectionMetadataMap?.get(collectionId) ??
+    (collectionKey
+      ? variableCollectionMetadataMap?.get(collectionKey) ?? null
+      : null)
+  );
+}
+
+function registerVariableCollectionMetadata(
+  map: Map<string, VariableCollectionMetadata>,
+  rawKey: string | null | undefined,
+  metadata: VariableCollectionMetadata,
+): void {
+  for (const lookupKey of getVariableCollectionLookupKeys(rawKey)) {
+    map.set(lookupKey, metadata);
+  }
 }
 
 function resolveTokenStatsResource(

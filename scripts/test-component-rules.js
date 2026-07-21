@@ -86,6 +86,37 @@ function scopedDiff(nodePath, nodeName, property, diffContext) {
   };
 }
 
+function variantDiff(
+  nodePath,
+  nodeName,
+  property,
+  referenceValue,
+  actualValue,
+  diffContext,
+) {
+  return {
+    message: `${property}: ${referenceValue} → ${actualValue}`,
+    nodePath,
+    nodeName,
+    nodeId: 'nested-status-node',
+    context: diffContext,
+    details: {
+      property,
+      reference: { value: referenceValue },
+      actual: { value: actualValue },
+    },
+    assessment: {
+      verdict: 'unknown',
+      source: 'standalone-reference',
+      reasonCode: 'no-contextual-expectation',
+      ruleId: null,
+      message: 'No contextual expectation',
+      remediation: null,
+      presentation: 'show',
+    },
+  };
+}
+
 function sceneNode(id, parentId, nodePath, name, type, sizing, componentKey) {
   const result = {
     id,
@@ -315,6 +346,59 @@ function main() {
       layers: ['Text', 'BodyCell'],
     },
   };
+  const titleStatusStyleRule = {
+    ruleId: 'component:web-corp.title-view.status-style-matches-surface',
+    severity: 'error',
+    source: 'pattern-link',
+    appliesTo: 'variant.Style|surface.context',
+    checkType: 'deterministic',
+    matchKind: 'composition_rule',
+    conditions: {
+      components: ['[D] TitleView', '[M] TitleView'],
+      slot: 'Status',
+    },
+    requiredVariantByContext: {
+      graySurface: { Style: 'Contrast' },
+      whiteSurface: { Style: 'Muted' },
+    },
+    ruleText: 'Status style follows the containing surface.',
+  };
+  const titleStatusTypeRule = {
+    ruleId: 'component:web-corp.title-view.status-type-follows-public-api',
+    severity: 'info',
+    source: 'component-contract',
+    appliesTo: 'variant.Type',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'web-corp.title-view',
+      layers: ['Status/StatusPreset'],
+    },
+    classification: { allPublicApiValuesAllowed: true },
+    ruleText: 'Every published StatusPreset Type is allowed.',
+  };
+  const statusContrastRule = {
+    ruleId: 'component:web-corp.status-property.status-preset-contrast-on-grey-surface',
+    severity: 'error',
+    source: 'composition-contract',
+    appliesTo: 'variant.Style',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] StatusPreset', '[M] StatusPreset'],
+      variantProperty: 'Style',
+      backgroundSurface: [
+        'grey',
+        'neutral',
+        'page-grey',
+        'surface-grey',
+        'base-bg-alt',
+      ],
+    },
+    requiredVariant: { Style: 'Contrast' },
+    forbiddenVariant: { Style: 'Muted' },
+    ruleText: 'Muted is forbidden on a grey surface.',
+  };
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [
     {
       componentKey: 'web-corp.background-plate',
@@ -370,6 +454,24 @@ function main() {
         rules: [tableTextRule],
       },
     },
+    {
+      componentKey: 'web-corp.title-view',
+      aliases: ['[D] TitleView', '[M] TitleView'],
+      figmaKeys: ['title-view-key'],
+      rulesFile: {
+        componentKey: 'web-corp.title-view',
+        rules: [titleStatusStyleRule, titleStatusTypeRule],
+      },
+    },
+    {
+      componentKey: 'web-corp.status-property',
+      aliases: ['[D] StatusPreset', '[M] StatusPreset'],
+      figmaKeys: ['status-preset-key'],
+      rulesFile: {
+        componentKey: 'web-corp.status-property',
+        rules: [statusContrastRule],
+      },
+    },
   ];
   globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__ = {
     'background-plate-key': '[D] BackgroundPlateSlot',
@@ -380,6 +482,8 @@ function main() {
     'table-text-key': 'Text',
     'transition-key': 'Consumer rename',
     'transition-name-key': '[T] CorporateContent',
+    'title-view-key': '[D] TitleView',
+    'status-preset-key': '[D] StatusPreset',
   };
 
   const actualNodes = [
@@ -648,6 +752,85 @@ function main() {
     rules.findComponentContractRulesForDiff(transitionByName).map((rule) => rule.ruleId),
     [transitionNameRule.ruleId],
     'target.componentNames must use the canonical catalog component name',
+  );
+
+  const nestedStatusContext = scopedContext({
+    actualComponentKey: 'status-preset-key',
+    actualNestedOwnerComponentKey: 'title-view-key',
+    actualNestedOwnerPath: 'View=xLarge / MainContent',
+    actualNestedOwnerRelativePath: 'Status / StatusPreset',
+    surfaceContext: {
+      kind: 'white',
+      source: 'ancestor-fill-token',
+      nodeId: 'surface-node',
+      nodeName: 'White surface',
+      tokenId: 'white-token',
+      tokenName: 'static_monochrome-white/100',
+      color: '#FFFFFF',
+    },
+  });
+  const whiteStatusStyle = variantDiff(
+    'View=xLarge / MainContent / Status / StatusPreset',
+    'StatusPreset',
+    'variant.Style',
+    'Contrast',
+    'Muted',
+    nestedStatusContext,
+  );
+  const whiteStatusAssessment =
+    rules.applyContextualComponentRuleAssessment(whiteStatusStyle);
+  assert.equal(whiteStatusAssessment.assessment.verdict, 'allowed');
+  assert.equal(
+    whiteStatusAssessment.assessment.ruleId,
+    titleStatusStyleRule.ruleId,
+    'Muted StatusPreset must be allowed when the nearest surface evidence is white',
+  );
+  assert.equal(
+    rules
+      .findComponentContractRulesForDiff(whiteStatusStyle)
+      .some((rule) => rule.ruleId === statusContrastRule.ruleId),
+    false,
+    'Grey-only StatusPreset rules must not attach on a white surface',
+  );
+
+  const grayStatusStyle = variantDiff(
+    'View=xLarge / MainContent / Status / StatusPreset',
+    'StatusPreset',
+    'variant.Style',
+    'Contrast',
+    'Muted',
+    Object.assign({}, nestedStatusContext, {
+      surfaceContext: Object.assign({}, nestedStatusContext.surfaceContext, {
+        kind: 'gray',
+        tokenName: 'base-bg-alt (grey)',
+        color: '#F3F4F7',
+      }),
+    }),
+  );
+  const grayStatusAssessment =
+    rules.applyContextualComponentRuleAssessment(grayStatusStyle);
+  assert.equal(grayStatusAssessment.assessment.verdict, 'violation');
+  assert.equal(
+    grayStatusAssessment.assessment.ruleId,
+    titleStatusStyleRule.ruleId,
+    'Muted StatusPreset must be a deterministic violation on a gray surface',
+  );
+
+  const publicStatusType = variantDiff(
+    'View=xLarge / MainContent / Status / StatusPreset',
+    'StatusPreset',
+    'variant.Type',
+    'Approved',
+    'Processing',
+    nestedStatusContext,
+  );
+  const publicStatusAssessment =
+    rules.applyContextualComponentRuleAssessment(publicStatusType);
+  assert.equal(publicStatusAssessment.assessment.verdict, 'allowed');
+  assert.equal(
+    publicStatusAssessment.assessment.ruleId,
+    titleStatusTypeRule.ruleId,
+    'A published nested StatusPreset Type must be allowed by the TitleView host contract',
   );
 
   const warnings = [];

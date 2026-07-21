@@ -11,7 +11,10 @@ import type {
   StatsStyleItem,
   StatsThemeItem,
 } from './types';
-import { getComponentAgentContextsForKeys } from '../contracts/runtimeContractRegistry';
+import {
+  getComponentAgentContextsForHints,
+  type ContractArtifactHint,
+} from '../contracts/runtimeContractRegistry';
 
 const AGENT_CATEGORIES: ApolloAgentFindingCategory[] = [
   'deprecatedComponents',
@@ -61,21 +64,47 @@ export function buildApolloAgentReport(
     includedFindingCount: findings.length,
     omittedCurrentComponentCount: report.categories.currentComponents.count,
   });
-  const componentContextKeys: Array<string | null> = [];
+  const componentContextHints: ContractArtifactHint[] = [];
   for (const finding of findings) {
-    componentContextKeys.push(finding.component?.key ?? null);
+    componentContextHints.push({
+      figmaKey: finding.component?.key ?? null,
+      componentName: finding.component?.name ?? finding.node.name,
+      displayName: finding.node.name,
+    });
     for (const change of finding.changes ?? []) {
-      const context = change.context ?? {};
-      componentContextKeys.push(
-        context.actualComponentKey ?? null,
-        context.referenceComponentKey ?? null,
-        context.actualNestedOwnerComponentKey ?? null,
-        context.nestedOwnerComponentKey ?? null,
+      const context = change.context;
+      componentContextHints.push(
+        {
+          figmaKey: context?.actualComponentKey ?? null,
+          componentName: change.node.name,
+        },
+        { figmaKey: context?.referenceComponentKey ?? null },
+        { figmaKey: context?.actualNestedOwnerComponentKey ?? null },
+        { figmaKey: context?.nestedOwnerComponentKey ?? null },
       );
     }
   }
-  const componentContexts = getComponentAgentContextsForKeys(
-    componentContextKeys,
+  for (const item of report.categories.customizations.items) {
+    componentContextHints.push({
+      figmaKey: item.component.key,
+      componentName: item.component.name,
+      displayName: item.node.name,
+    });
+    for (const change of item.changes) {
+      const context = change.context;
+      componentContextHints.push(
+        {
+          figmaKey: context?.actualComponentKey ?? null,
+          componentName: change.node.name,
+        },
+        { figmaKey: context?.referenceComponentKey ?? null },
+        { figmaKey: context?.actualNestedOwnerComponentKey ?? null },
+        { figmaKey: context?.nestedOwnerComponentKey ?? null },
+      );
+    }
+  }
+  const componentContexts = getComponentAgentContextsForHints(
+    componentContextHints,
   );
 
   return {
@@ -114,6 +143,7 @@ export function buildApolloAgentReport(
         'bindingStatus=unbound confirms a missing actual variable binding. bindingStatus=different-binding confirms a variable substitution. bindingStatus=unresolved-binding or missing-reference-binding requires a manual check and must not be described as a confirmed manual override.',
         'A bindingStatus=unbound finding remains a violation even when the current raw value numerically matches the reference or a valid responsive mode. Describe it as a detached variable, not as spacing from another mode.',
         'When actualBinding names a collection and resolved mode, report that variable/mode evidence. A value produced by the same variable in another mode is mode context, not a manual layer override.',
+        'change.context.surfaceContext is deterministic evidence about the nearest resolvable containing surface. Use its kind and tokenName only when an exact contextual component rule targets the same variant property; kind=unknown does not confirm any surface requirement.',
         'Do not invent usage rationale, action examples, or allowed scenarios that are not present in this report or in an exact pattern source quote.',
         'If assessment.ruleId is null, do not write "the pattern confirms" unless an external pattern lookup returned an exact rule for the same property.',
         'If a pattern source states a prohibition, do not rewrite it as conditional permission.',

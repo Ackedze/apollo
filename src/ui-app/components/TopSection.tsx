@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import type { GenerationExampleCaptureRequest } from '../types';
 import { Button } from './Button';
+import { GenerationExampleModal } from './GenerationExampleModal';
 import { OptionList } from './OptionList';
 import { OptionListCell } from './OptionListCell';
 import { OptionListHeader } from './OptionListHeader';
@@ -32,6 +34,7 @@ type TopSectionProps = {
   onChannelChange?: (channelId: string) => void;
   onPickerChange?: (pickerLabel: string) => void;
   onShellAuditToggle?: () => void;
+  onExampleCapture?: (request: GenerationExampleCaptureRequest) => void;
 };
 
 type PickerOption = {
@@ -107,6 +110,7 @@ export function TopSection({
   onChannelChange,
   onPickerChange,
   onShellAuditToggle,
+  onExampleCapture,
 }: TopSectionProps): React.JSX.Element {
   const settingsRootRef = useRef<HTMLDivElement | null>(null);
   const pickerRootRef = useRef<HTMLDivElement | null>(null);
@@ -114,6 +118,7 @@ export function TopSection({
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [workshopOpen, setWorkshopOpen] = useState(false);
+  const [exampleModalOpen, setExampleModalOpen] = useState(false);
   const [selectedPickerLabel, setSelectedPickerLabel] = useState(pickerLabel);
   const [selectedWorkshopId, setSelectedWorkshopId] = useState(
     channelId || WORKSHOP_OPTIONS[0].id,
@@ -132,6 +137,7 @@ export function TopSection({
       setSettingsOpen(false);
       setPickerOpen(false);
       setWorkshopOpen(false);
+      setExampleModalOpen(false);
     }
   }, [actionLoading]);
 
@@ -309,6 +315,23 @@ export function TopSection({
               <span className={styles.switchThumb} />
             </span>
           </button>
+          <div className={styles.settingsDivider} />
+          <button
+            type="button"
+            className={styles.settingsAction}
+            disabled={actionLoading}
+            onClick={() => {
+              setSettingsOpen(false);
+              setPickerOpen(false);
+              setWorkshopOpen(false);
+              setExampleModalOpen(true);
+            }}
+          >
+            <span className={styles.settingsActionTitle}>Подготовить пример</span>
+            <span className={styles.settingsActionCaption}>
+              Собрать JSON из выделенного макета
+            </span>
+          </button>
         </div>
       ) : null}
     </div>
@@ -329,28 +352,49 @@ export function TopSection({
   );
 
   return (
-    <div className={[styles.root, compact ? styles.rootCompact : ''].filter(Boolean).join(' ')}>
-      <div className={[styles.titleWrap, compact ? styles.titleWrapCompact : ''].filter(Boolean).join(' ')}>
-        <div className={styles.titleButton}>
-          {compact ? 'A' : title}
+    <>
+      <div className={[styles.root, compact ? styles.rootCompact : ''].filter(Boolean).join(' ')}>
+        <div className={[styles.titleWrap, compact ? styles.titleWrapCompact : ''].filter(Boolean).join(' ')}>
+          <div className={styles.titleButton}>
+            {compact ? 'A' : title}
+          </div>
+          <SmallButton
+            singleIcon
+            icon={compact ? <ArrowsInIcon /> : <ArrowsOutIcon />}
+            onPress={onToggleCompact}
+          />
         </div>
-        <SmallButton
-          singleIcon
-          icon={compact ? <ArrowsInIcon /> : <ArrowsOutIcon />}
-          onPress={onToggleCompact}
-        />
+        {compact ? (
+          <div className={styles.compactRightSide}>
+            {settingsControl}
+            {actionButton}
+          </div>
+        ) : (
+          <div className={styles.rightSide}>
+            {settingsControl}
+            {actionButton}
+          </div>
+        )}
       </div>
-      {compact ? (
-        <div className={styles.compactRightSide}>
-          {settingsControl}
-          {actionButton}
-        </div>
-      ) : (
-        <div className={styles.rightSide}>
-          {settingsControl}
-          {actionButton}
-        </div>
-      )}
-    </div>
+      {exampleModalOpen ? (
+        <GenerationExampleModal
+          initialPlatform={
+            toGenerationExamplePlatform(selectedOption.id)
+          }
+          disabled={actionLoading}
+          onClose={() => setExampleModalOpen(false)}
+          onSubmit={(request) => onExampleCapture?.(request)}
+        />
+      ) : null}
+    </>
   );
+}
+
+function toGenerationExamplePlatform(
+  pickerId: string,
+): GenerationExampleCaptureRequest['platform'] {
+  if (pickerId === 'mobile-web') return 'mobile-web';
+  if (pickerId === 'ios') return 'ios';
+  if (pickerId === 'android') return 'android';
+  return 'desktop';
 }

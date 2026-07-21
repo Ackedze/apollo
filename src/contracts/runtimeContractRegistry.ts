@@ -221,17 +221,37 @@ export function getRemoteComponentAgentContexts(): RuntimeComponentAgentContext[
 export function getComponentAgentContextsForKeys(
   componentKeys: Array<string | null | undefined>,
 ): RuntimeComponentAgentContext[] {
-  const keys = new Set(componentKeys.filter((key): key is string => Boolean(key)));
+  return getComponentAgentContextsForHints(
+    componentKeys.map((figmaKey) => ({ figmaKey })),
+  );
+}
+
+export function getComponentAgentContextsForHints(
+  hints: ContractArtifactHint[],
+): RuntimeComponentAgentContext[] {
+  const keys = new Set(
+    hints
+      .map((hint) => hint.figmaKey)
+      .filter((key): key is string => Boolean(key)),
+  );
+  const names = new Set<string>();
+  for (const hint of hints) {
+    for (const name of [hint.componentName, hint.displayName]) {
+      const normalized = normalizeComponentIdentityName(name);
+      if (normalized) names.add(normalized);
+    }
+  }
   if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__)) {
     return globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__
       .filter(
         (context) =>
           keys.has(context.componentKey) ||
           (context.componentSemantics ?? []).some((semantic) =>
-            keys.has(semantic.componentKey),
+            keys.has(semantic.componentKey) ||
+            names.has(normalizeComponentIdentityName(semantic.name)),
           ),
       )
-      .map((context) => filterContextSemantics(context, keys));
+      .map((context) => filterContextSemantics(context, keys, names));
   }
   const contexts = packageStates
     .filter((state) => {
@@ -246,6 +266,7 @@ export function getComponentAgentContextsForKeys(
       filterContextSemantics(
         state.agentContext as RuntimeComponentAgentContext,
         keys,
+        names,
       ),
     );
   const unique = new Map<string, RuntimeComponentAgentContext>();
@@ -260,12 +281,27 @@ export function getComponentAgentContextsForKeys(
 function filterContextSemantics(
   context: RuntimeComponentAgentContext,
   componentKeys: Set<string>,
+  componentNames: Set<string> = new Set<string>(),
 ): RuntimeComponentAgentContext {
   return Object.assign({}, context, {
-    componentSemantics: (context.componentSemantics ?? []).filter((semantic) =>
-      componentKeys.has(semantic.componentKey),
-    ),
+    componentSemantics: (context.componentSemantics ?? []).filter((semantic) => {
+      const normalizedName = normalizeComponentIdentityName(semantic.name);
+      return (
+        componentKeys.has(semantic.componentKey) ||
+        Boolean(normalizedName && componentNames.has(normalizedName))
+      );
+    }),
   });
+}
+
+function normalizeComponentIdentityName(
+  value: string | null | undefined,
+): string {
+  return String(value ?? '')
+    .replace(/[🔒🔄❌]/gu, '')
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, ' ');
 }
 
 export function getAuditPresentationForComponent(
@@ -323,6 +359,25 @@ export function getComponentExamplesForKeys(
       examples: state.examples ?? [],
     }))
     .filter((entry) => Boolean(entry.componentKey) && entry.examples.length > 0);
+}
+
+export function getContractPackageKeyForHint(
+  hint: ContractArtifactHint,
+): string | null {
+  for (const state of packageStates) {
+    if (packageMatchesHint(state, hint)) {
+      return (
+        state.indexEntry.componentKey ??
+        state.indexEntry.packageName ??
+        null
+      );
+    }
+  }
+  return null;
+}
+
+export async function ensureContractPackageIndexLoaded(): Promise<void> {
+  await ensureRemoteContractIndexLoaded();
 }
 
 async function ensureRemoteContractIndexLoaded(): Promise<void> {

@@ -277,8 +277,13 @@ function customizationChange(
       actualNestedOwnerRelativePath:
         diff.context.actualNestedOwnerRelativePath,
       nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey,
+      nestedOwnerComponentRole: diff.context.nestedOwnerComponentRole,
       nestedOwnerPath: diff.context.nestedOwnerPath,
       nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
+      actualVariantProperties: diff.context.actualVariantProperties ?? null,
+      referenceVariantProperties:
+        diff.context.referenceVariantProperties ?? null,
+      surfaceContext: diff.context.surfaceContext ?? null,
     },
     componentRules,
     presentation: getAuditPresentationForComponent(

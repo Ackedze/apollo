@@ -214,6 +214,24 @@ function main() {
     layerProperties: ['layout.*'],
   });
 
+  globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__ = [ownedContext];
+  const { getComponentAgentContextsForHints } = loadModule(
+    '../src/contracts/runtimeContractRegistry.ts',
+  );
+  const contextsForVariantKey = getComponentAgentContextsForHints([
+    {
+      figmaKey: 'title-view-variant-key',
+      componentName: '🔒 [D] Test',
+    },
+  ]);
+  assert.equal(contextsForVariantKey.length, 1);
+  assert.deepEqual(
+    contextsForVariantKey[0].componentSemantics,
+    ownedContext.componentSemantics,
+    'Canonical component names must retain semantics when a finding contains a variant key instead of the component-set key',
+  );
+  delete globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__;
+
   console.log('Contract artifact context regression checks passed');
 }
 

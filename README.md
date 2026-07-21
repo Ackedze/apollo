@@ -145,13 +145,15 @@ Apollo постепенно расширяется от одного Figma-пл�
 - `agent-context.json` — компактный explanatory context для агента. Он может ссылаться на rule ids, но не должен дублировать `ruleText`, `severity` и `matchKind` из `rules.json`. Утверждённое назначение конкретных Figma-компонентов хранится в `manual.componentSemantics[]`; записи связываются по published component key и имеют приоритет над Figma-description.
 - `examples.json` — fixtures и примеры интерпретации. Их стоит подключать к агенту on demand, а не класть в каждый отчёт.
 
-Текущий runtime Apollo использует `composition-contract.json` для contract-aware diff/rebase и `rules.json` для обогащения agent report. Для component packages, найденных в проверяемом выделении, runtime также загружает `agent-context.json`, компактно добавляет его в `*_agent.json`, читает из `audit-mapping.json` presentation metadata для changes и прикладывает релевантные части `contract.overrides.json` (`publicApi`, `resetModel`) к агентскому контексту. В `componentSemantics` попадают только Figma-description или ручные записи со статусом `approved`; `runtime.semanticDescriptionCandidates` не считается нормативным источником. Перед сохранением отчёта Apollo оставляет только semantic entries для component keys, фактически найденных в макете, поэтому описания соседних компонентов пакета не протекают в контекст. `examples.json` не загружается во время обычного аудита: до 12 примеров на пакет подгружаются только для прямого вопроса Apollo Agent и явно маркируются как контекст, а не правила.
+Текущий runtime Apollo использует `composition-contract.json` для contract-aware diff/rebase и `rules.json` для обогащения agent report. Для component packages, найденных в проверяемом выделении, runtime также загружает `agent-context.json`, компактно добавляет его в `*_agent.json`, читает из `audit-mapping.json` presentation metadata для changes и прикладывает релевантные части `contract.overrides.json` (`publicApi`, `resetModel`) к агентскому контексту. В `componentSemantics` попадают только Figma-description или ручные записи со статусом `approved`; `runtime.semanticDescriptionCandidates` не считается нормативным источником. Перед сохранением отчёта Apollo оставляет только semantic entries для компонентов, фактически найденных в макете. Запись связывается по published component key, а для finding с variant key восстанавливается по каноническому имени компонента; поэтому семантика выбранного `TitleView` сохраняется, но описания соседних компонентов пакета не протекают в контекст. `examples.json` не загружается во время обычного аудита: до 12 примеров на пакет подгружаются только для прямого вопроса Apollo Agent и явно маркируются как контекст, а не правила.
 
 Component rules сопоставляются прежде всего по явным ключам actual/reference и владельца вложенного diff. Runtime понимает опубликованные селекторы `target.component`, `components`, `componentKeys`, `componentNames`, `layer`, `layers`, `slot` и `slots`. Для обычного layer/root-правила приоритет имеет непосредственно изменённый component instance; владелец-предок участвует только в явном slot-scope. `layer: "root"` относится только к корню выбранного компонента, а layer/slot-селектор должен завершаться на изменённом узле. Каноническое имя компонента восстанавливается из каталога по Figma key, поэтому переименование instance в макете не ломает scope. Неизвестные или некорректные поля `target` логируются один раз как `unsupported rule target`, и такое правило не прикладывается как unconstrained. Одинаковые правила в отчёте схлопываются по `ruleId`. Правило с `requiredTokenSource` считается нарушенным только при наличии фактических binding-данных, которые явно показывают отсутствие токена; Apollo не выводит token violation из одного raw-значения diff.
 
+Прямой вложенный instance под корнем проверяемого компонента сохраняет host ownership и относительный slot path. Это позволяет правилам композиции `TitleView` оценивать изменения `StatusPreset`, даже когда finding несёт variant key самого статуса. Для variant-правил runtime поддерживает `conditions.backgroundSurface`, `requiredVariant`, `forbiddenVariant`, `requiredVariantByContext` и `classification.allPublicApiValuesAllowed`. Ближайшая распознаваемая поверхность определяется по bound fill variable, а при отсутствии токена — по SOLID-цвету; evidence сохраняется в `change.context.surfaceContext`. При `kind=unknown` Apollo не делает предположение о фоне. Например, `StatusPreset.Style=Muted` становится разрешённым на белой поверхности и нарушением на серой, а опубликованное значение `StatusPreset.Type` остаётся допустимым public API, если это прямо объявлено правилом TitleView.
+
 Targetless rules имеют отдельную scope-политику. `matchKind=composition_rule`, `screen.*`, `component.composition`, а также явные `changeScope=component-context|screen-context|package-context` остаются контекстом component package/agent и не прикрепляются к atomic diff. Для намеренно component-wide atomic rules поддерживается `changeScope=atomic`; legacy deterministic и `exact_component_rule` без target сохраняют совместимость. Поэтому screen relation вроде `header-adjacency` и explanatory `gutter-horizontal-composition` не могут повысить severity конкретного `Section.itemSpacing`, пока отчёт не содержит соответствующего composition evidence.
 
-В `*_agent.json` сохраняется `DiffContext` каждого change, а compact component context собирается не только для корневого finding, но и для actual/reference владельцев вложенных изменений. Канонический `componentKey` берётся из contract index; несовпадающий key внутри отдельного artifact не создаёт второй контекст.
+В `*_agent.json` сохраняется `DiffContext` каждого change, включая компактное evidence о поверхности, а compact component context собирается не только для корневого finding, но и для actual/reference владельцев вложенных изменений. Канонический `componentKey` берётся из contract index; несовпадающий key внутри отдельного artifact не создаёт второй контекст.
 
 `contract.generated.json` пока не догружается поверх raw-каталога: крупные packages могут занимать много мегабайт, поэтому двойная загрузка ухудшила бы время старта и память. Его подключение выполняется как отдельная миграция baseline-loader, в которой generated contract заменит raw structure для runtime-проверки.
 
@@ -253,6 +255,29 @@ Targetless rules имеют отдельную scope-политику. `matchKin
 - Во время сканирования кнопка `Проверить` переключается в `Отменить` и прерывает текущую проверку.
 - В шапке отображается число найденных `COMPONENT`/`INSTANCE` в выделении.
 
+### Подготовка примеров для генерации
+
+В меню `Настройки` доступно отдельное действие `Подготовить пример`. Оно не запускает аудит и не меняет состояние вкладок или текущий отчёт. После нажатия Apollo открывает модальное окно со следующими настройками:
+
+- название и стабильный `exampleId`;
+- общий `exampleSetId` для responsive-вариантов одной страницы и подпись breakpoint, например `alfa-komandirovki` + `768` / `1600`;
+- тип страницы: форма, лендинг, список данных, детальная страница, статусный экран, дашборд или другое;
+- платформа `Desktop`, `Mobile Web`, `iOS` или `Android`;
+- роль примера: эталонный, допустимый вариант или антипример;
+- ссылка на исходник Figma. Apollo пытается подставить её из окружения, но поле можно заполнить вручную, если Figma runtime не сообщает `fileKey`;
+- явное согласие на включение текстового содержимого. По умолчанию тексты исключены, чтобы не экспортировать продуктовые данные.
+
+Перед запуском нужно выделить ровно один корневой `FRAME` или `SECTION`. Apollo скачивает файл `<exampleId>.generation-example-candidate.json` со статусом `runtime-candidate`. В него входят:
+
+- источник и deep link на выделенный узел; при отсутствии runtime `fileKey` он восстанавливается из указанной Figma-ссылки;
+- `runtime.dimensions` с размерами корня, viewport/content-семантикой и компактная композиция структурных слоёв и component instances;
+- component keys и явный `referenceKind`: `contract-package`, `catalog-resource` или `unresolved`. Иконки, логотипы и изображения из известных каталогов не считаются отсутствующими contract packages;
+- variant properties, layout, variable bindings и читаемые названия variable collections/modes. Повторяющиеся mode-контексты дедуплицируются в `resources.variableModeContexts`, а ноды хранят только ссылки на них;
+- опциональные текстовые примеры;
+- компактное evidence последнего аудита только при совпадении identity выделенных узлов и платформы; basis явно сохраняется как `selection-node-ids+platform`, а `categoryCounts` показывает состав проблем по категориям.
+
+Текущая схема кандидата — `apollo.generation-example-candidate.v2`. Если подходящей проверки не было, `runtime.validation.status` равен `not-run`; Apollo не запускает проверку скрыто. Даже результат со статусом `passed` остаётся кандидатом и требует ручного review. Плагин владеет только разделом `runtime`: он не пишет в `manual`, не объявляет пример approved и не изменяет agent artifacts. Promotion в публичный генерационный контракт остаётся отдельным процессом авторов дизайн-системы и Athena CLI.
+
 ## Ограничения и известные проблемы
 - Плагин сканирует только видимые узлы: скрытые ветки отбрасываются ещё на этапе обхода.
 - Если remote reference list с GitHub Pages недоступен, Apollo не использует bundled fallback и показывает ошибку загрузки справочников.
@@ -346,9 +371,12 @@ npm run test:component-key-cache
 npm run test:customization-filters
 npm run test:nested-variants
 npm run test:item-spacing-diff
+npm run test:variable-collection-id
 npm run test:variant-structure-paths
 npm run test:snapshot-tree
 npm run test:stats-report
+npm run test:surface-context
+npm run test:generation-example-candidate
 ```
 
 Скрипты проверяют:
@@ -362,6 +390,9 @@ npm run test:stats-report
 - корректную привязку reference-структуры к выбранному variant path;
 - сохранение `id/parentId/visible` в actual snapshot, от которых зависит корректный layout diff.
 - формирование статистического отчёта, обязательные категории, resource metadata и исключение актуальных компонентов из счётчика проблем.
+- определение ближайшей white/gray surface по variable token или SOLID-цвету и безопасный `unknown` без догадок.
+- разбор remote/local variable collection id и восстановление читаемых collection/mode labels из token-каталогов;
+- формирование изолированного `generation-example-candidate.v2`, компактизацию composition tree, responsive metadata, source-link fallback, классификацию contract/catalog/unresolved ресурсов, дедупликацию variable mode contexts, privacy-default для текста и точное сопоставление audit evidence.
 
 ### Отладка аудита
 Trace mode включается через `pluginData`-флаг `apollo.debug.audit`.

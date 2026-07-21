@@ -1576,6 +1576,161 @@ function main() {
     'Host descendant diffs must also expose the nearest actual nested instance owner relative path',
   );
 
+  const directNestedTitleViewDiff = diff.diffStructures(
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: '[D] TitleView',
+        type: 'INSTANCE',
+        name: '[D] TitleView',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'title-view-key',
+          variantProperties: { View: 'xLarge' },
+        },
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: '[D] TitleView / MainContent / Status / StatusPreset',
+        type: 'INSTANCE',
+        name: 'StatusPreset',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'status-preset-processing-key',
+          variantProperties: { Style: 'Muted', Type: 'Processing' },
+        },
+      },
+    ],
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: '[D] TitleView',
+        type: 'INSTANCE',
+        name: '[D] TitleView',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'title-view-key',
+          variantProperties: { View: 'xLarge' },
+        },
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: '[D] TitleView / MainContent / Status / StatusPreset',
+        type: 'INSTANCE',
+        name: 'StatusPreset',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'status-preset-approved-key',
+          variantProperties: { Style: 'Contrast', Type: 'Approved' },
+        },
+      },
+    ],
+  );
+  const directStatusStyleDiff = directNestedTitleViewDiff.diffs.find(
+    (entry) => entry.details?.property === 'variant.Style',
+  );
+  assert.equal(
+    directStatusStyleDiff?.context.nestedOwnerComponentKey,
+    'title-view-key',
+    'A direct nested instance under an audited component root must retain the host contract owner',
+  );
+  assert.equal(
+    directStatusStyleDiff?.context.actualNestedOwnerComponentKey,
+    'title-view-key',
+    'The actual direct nested instance must retain the same host contract owner',
+  );
+  assert.equal(
+    directStatusStyleDiff?.context.nestedOwnerRelativePath,
+    'MainContent / Status / StatusPreset',
+    'Direct nested instance rules must receive a host-relative slot path',
+  );
+
+  const explicitDirectNestedTitleViewDiff = diff.diffExplicitNestedVariantStates(
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: '[D] TitleView',
+        type: 'INSTANCE',
+        name: '[D] TitleView',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'title-view-key',
+          variantProperties: { View: 'xLarge' },
+        },
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: '[D] TitleView / MainContent / Status / StatusPreset',
+        type: 'INSTANCE',
+        name: 'StatusPreset',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'status-preset-processing-key',
+          variantProperties: { Style: 'Muted', Type: 'Processing' },
+        },
+      },
+    ],
+    [
+      {
+        id: 1,
+        parentId: null,
+        path: '[D] TitleView',
+        type: 'INSTANCE',
+        name: '[D] TitleView',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'title-view-key',
+          variantProperties: { View: 'xLarge' },
+        },
+      },
+      {
+        id: 2,
+        parentId: 1,
+        path: '[D] TitleView / MainContent / Status / StatusPreset',
+        type: 'INSTANCE',
+        name: 'StatusPreset',
+        visible: true,
+        radius: null,
+        componentInstance: {
+          componentKey: 'status-preset-approved-key',
+          variantProperties: { Style: 'Contrast', Type: 'Approved' },
+        },
+      },
+    ],
+  );
+  const explicitDirectStatusStyleDiff =
+    explicitDirectNestedTitleViewDiff.find(
+      (entry) => entry.details?.property === 'variant.Style',
+    );
+  assert.equal(
+    explicitDirectStatusStyleDiff?.context.nestedOwnerComponentKey,
+    'title-view-key',
+    'Explicit nested variant diffs must retain the host contract owner',
+  );
+  assert.equal(
+    explicitDirectStatusStyleDiff?.context.actualNestedOwnerComponentKey,
+    'title-view-key',
+    'Explicit actual variant state must retain the same host contract owner',
+  );
+  assert.equal(
+    explicitDirectStatusStyleDiff?.context.nestedOwnerRelativePath,
+    'MainContent / Status / StatusPreset',
+    'Explicit nested variant rules must receive a host-relative slot path',
+  );
+
   const deps = {
     isPaintPathHostControlled: (componentKey, relativePath) =>
       componentKey === 'nested-a' && relativePath === 'PaintMe',

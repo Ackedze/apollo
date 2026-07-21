@@ -552,6 +552,35 @@ Acceptance criteria:
 - Apollo behavior and findings remain unchanged when only the storage ownership schema changes.
 - No tool writes outside its declared ownership section.
 
+### P0. Evaluate nested public API and surface rules from runtime evidence
+
+Evidence from the MCP-generated TitleView golden frame and Apollo 0.1.56 report `Alexey-Kukhta-CORP-Lead-Designer_20-07-2026_23-46-07_agent.json`: the desktop TitleView uses `StatusPreset Type=Processing, Style=Muted` on a white surface. Both values are correct according to the published TitleView rules, but Apollo classified them as unknown customizations. The compact report also lost `componentSemantics` because the runtime finding carried a variant key while the approved semantic entry was keyed by the component set.
+
+- [x] Preserve the audited TitleView host as owner for a direct nested StatusPreset instance and expose its host-relative slot path.
+- [x] Resolve the nearest containing surface from a bound fill variable, with SOLID-color fallback and explicit `unknown` when evidence is insufficient.
+- [x] Persist compact surface evidence in full stats and `*_agent.json` change context.
+- [x] Evaluate `conditions.backgroundSurface`, `requiredVariant`, `forbiddenVariant` and `requiredVariantByContext` for atomic variant diffs.
+- [x] Respect `classification.allPublicApiValuesAllowed` so an available StatusPreset Type is not treated as an unexplained TitleView violation.
+- [x] Keep approved component semantics when the finding key is a component variant key by matching the canonical component name inside the already selected contract package.
+- [x] Add regressions for white/gray surface detection, white `Muted` allowed, gray `Muted` violation, public `Type=Processing` allowed, direct nested-host ownership and variant-key semantic recovery.
+- [x] Re-run the golden TitleView frame separately in Desktop and MobileWeb channels and verify that platform findings are evaluated only against their matching channel.
+
+Implementation status (Apollo 0.1.59): every diff in an audited root receives the nearest resolvable surface evidence before component-rule assessment. Contextual variant rules can deterministically allow or reject the actual value and may provide a reset remediation for a required variant. Direct nested instances retain the root host key instead of being scoped only to their own variant key. Agent context selection remains package-index driven, while semantic filtering accepts either the exact published key or the canonical component name; unrelated family entries remain excluded. Allowed/expected changes stay out of agent findings, but still contribute compact component-context hints so their approved semantics are not discarded. Unknown surface evidence remains unknown and cannot activate a contextual rule.
+
+Field follow-up (Apollo 0.1.57, reports `00-36-42`, `00-36-49` and `00-36-59`): surface detection and TitleView semantic recovery worked, and the separate desktop-medium and MobileWeb controls contained zero problems. The desktop xLarge StatusPreset changes remained unknown because the fallback `diffExplicitNestedVariantStates` route compared unnormalized structures and therefore emitted both changes without the TitleView owner. Apollo 0.1.58 normalizes implicit nested ownership in this explicit-variant route as well; the regression now calls the same exported function used by the runtime fallback.
+
+Field verification (Apollo 0.1.58, report `00-44-38`): both StatusPreset changes resolve correctly. `Style=Muted` receives `status-style-matches-surface` with `verdict=allowed` from the detected white tokenized surface, and `Type=Processing` receives `status-type-follows-public-api` with `verdict=allowed`. The agent report includes zero customization findings and keeps the preset as informational. The same run exposed that filtering the allowed customization also removed its TitleView context; Apollo 0.1.59 now derives context hints from all observed customizations before filtering recommendations.
+
+Final field verification (Apollo 0.1.59, report `00-48-01`): the full report preserves both allowed changes with their exact rule ids, TitleView owner path and `static_monochrome-white/100` surface evidence. The agent report has `customizations.includedCount=0`, contains only the informational StatusPreset finding, and retains the approved `[D] TitleView` semantic entry. Together with the clean desktop control (`00-36-49`) and MobileWeb control (`00-36-59`), this closes the P0 field-validation scope.
+
+Acceptance criteria:
+
+- `TitleView / StatusPreset Style=Muted` on `static_monochrome-white/100` is absent from unresolved customizations and is classified by `component:web-corp.title-view.status-style-matches-surface` as allowed.
+- The same `Style=Muted` on a gray/neutral containing surface is a deterministic violation with `Style=Contrast` remediation.
+- `StatusPreset Type=Processing` is allowed through the TitleView public API rule and is not presented as an unexplained customization.
+- The TitleView approved `componentSemantics` entry is present in agent context even when the scanned instance exposes a variant key.
+- `surfaceContext.kind=unknown` never becomes proof of either the white or gray branch.
+
 ### P1. Add approved semantic descriptions for layout generation
 
 Problem: raw component `description` coverage is insufficient for AI layout generation. The current component tree contains 2850 components; 1854 descriptions are empty, so only 34.9% have source descriptions. Three catalogs currently have exactly 14 components with `description=""` for all entries: `Steps`, promo `Footer`, and `PromoCard`. Their generated `agent-context` summaries are generic pipeline placeholders and do not explain why an individual component exists.
@@ -600,6 +629,56 @@ Acceptance criteria:
 - Re-running Athena preserves all approved semantic descriptions.
 - `PromoCard` reaches 14/14 approved semantic entries, while desktop/mobile counterparts may share a common family purpose without duplicating identical prose.
 - Missing semantic coverage is measurable by library, package, lifecycle and component role.
+
+### P1. Capture generation-example candidates from approved Figma layouts
+
+Problem: Apollo reports are optimized for validation findings and are not a stable source format for reusable page examples. Generation needs a compact composition, component/package identities, variant choices, variable bindings and modes, while product text must remain opt-in. Capturing this evidence must not mutate audit state or allow Apollo runtime to write author-owned knowledge.
+
+Ownership and lifecycle:
+
+- Apollo writes only a `runtime-candidate` document.
+- A candidate is never authoritative, even when its attached audit evidence is `passed`.
+- Design-system authors review semantics and suitability before promotion.
+- Athena CLI will eventually compile promoted examples into the public generation contract without exposing internal ownership layout to consumers.
+
+- [x] Add an isolated settings action that opens a dedicated capture modal.
+- [x] Require one selected root `FRAME` or `SECTION` and keep ordinary audit state unchanged.
+- [x] Capture a compact composition profile instead of duplicating full internal component anatomy already owned by component contracts.
+- [x] Include component keys, canonical package keys when available, variants, layout, variable bindings and resolved/explicit collection modes.
+- [x] Keep text content opt-in and mark its omission explicitly.
+- [x] Attach compact audit evidence only when the completed audit has the same selection node ids and platform, record `matchBasis=selection-node-ids+platform`; otherwise emit `validation.status=not-run` without silently running an audit.
+- [x] Mark every export as `runtime-candidate`, `requiresManualReview=true`, and document that Apollo never writes `manual` or approves examples.
+- [x] Add a source-tree size guard and regression coverage for compaction, token/mode labels, privacy default, audit matching and schema validation.
+- [x] Add responsive grouping through `exampleSetId` and `breakpointLabel`, and distinguish root viewport dimensions from vertically growing content bounds.
+- [x] Restore source `fileKey` and deep links from a user-supplied Figma URL when the plugin runtime does not expose the file key.
+- [x] Classify component references as contract packages, ordinary catalog resources or genuinely unresolved keys; do not report icons, logotypes and image assets as missing contract packages.
+- [x] Resolve remote variable collection aliases through catalog collection keys and live Figma metadata, and deduplicate repeated mode contexts in the candidate payload.
+- [x] Preserve audit evidence by category through `categoryCounts` instead of exposing only a single aggregate category count.
+- [ ] Define the promoted `generation-example` public schema and Athena ingestion command.
+- [ ] Add author review fields for intent, required/optional regions, responsive behavior, allowed substitutions and unacceptable outcomes.
+- [ ] Add repository fixtures for a landing, a form, a data-heavy list/table and a status screen.
+- [ ] Validate promoted examples against current component contracts in CI and report stale component/package keys.
+- [ ] Add retrieval metadata so an agent can load page-level examples lazily by task, platform and component family.
+- [ ] Require or deterministically infer `exampleSetId` when a breakpoint is supplied, so independently captured responsive variants cannot silently remain unrelated.
+- [ ] Add a promotion gate that rejects golden candidates with `validation.status=not-run`, a blocked audit, or unresolved component references until they are explicitly reviewed.
+- [ ] Resolve catalog coverage for the first landing fixtures: `ImageView`, `IconButton`, `[D](768) HeaderMenu`, `[D] SideMenu` and `[D] Header` currently remain unresolved by their published component keys.
+- [ ] Canonicalize remote variable-collection aliases by published collection key while retaining every observed raw Figma id for traceability.
+- [ ] Replace the `verticalSizing=FIXED` viewport heuristic with explicit viewport/scroll semantics. A full-page mobile frame may have a fixed content height (the 375 fixture is 2672 px), while horizontal content such as BentoGrid may intentionally overflow the 375 px root.
+
+Implementation status (Apollo 0.1.61): `Настройки → Подготовить пример` downloads an `apollo.generation-example-candidate.v2` document through an independent UI/backend message flow. Capture is blocked while an audit is running and audit start is blocked only during the short capture operation to prevent concurrent tree traversal. No scan result, tabs, agent report or stats upload is created by capture. Internal nodes below an instance are omitted except nested component instances, which keeps the document compact while preserving composition decisions.
+
+Field hardening was driven by the first two landing captures, `alfa-komandirovki-768` and `alfa-komandirovki-1600`. Their v1 exports remain diagnostic fixtures and must be re-exported to receive readable collection names, reliable Figma source identity, responsive grouping, resource classification, category counts and deduplicated variable-mode evidence. Review also found that the 768 root contained two complete desktop/tablet compositions stacked vertically; golden capture must select exactly one page composition per breakpoint and run Apollo on that same root before export.
+
+Validation of the first v2 responsive set (2026-07-21): the 375/768/1600 documents have valid schema/source identity, no duplicate capture ids, orphan parents, missing resource references or unresolved variable labels. Variable-mode deduplication reduced 425/484/786 node-level references to 17/21/20 shared contexts. The set is not promotion-ready yet: all three candidates have `exampleSetId=null` and `validation.status=not-run`; they also contain 1/2/3 unresolved component keys respectively. These are candidate-quality findings rather than JSON-integrity failures.
+
+Acceptance criteria:
+
+- Capturing an example cannot create, clear or reclassify Apollo findings.
+- A document without a matching audit says `not-run`, not `passed`.
+- Product text is absent unless the user explicitly enables it.
+- Component and variable evidence uses readable catalog labels when available while retaining stable raw ids.
+- Repeated capture of the same unchanged selection and settings produces the same composition and resource payload apart from timestamps.
+- Promotion to an approved example is impossible inside Apollo runtime.
 
 ### P1. Define per-change scope for targetless component rules
 

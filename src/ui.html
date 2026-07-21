@@ -987,6 +987,7 @@
                 onChannelChange: handleChannelChange,
                 onPickerChange: handlePickerChange,
                 onShellAuditToggle: handleShellAuditToggle,
+                onExampleCapture: handleGenerationExampleCapture,
               }),
             );
           } catch (error) {
@@ -2003,6 +2004,30 @@
             return;
           }
 
+          if (msg.type === 'generation-example-started') {
+            showToast('Собираем пример…');
+            return;
+          }
+
+          if (msg.type === 'generation-example-ready') {
+            downloadJsonDocument(
+              msg.payload?.document,
+              msg.payload?.suggestedFileName,
+            );
+            const warningCount = Number(msg.payload?.warningCount || 0);
+            showToast(
+              warningCount > 0
+                ? `Пример собран · предупреждений: ${warningCount}`
+                : 'Пример собран',
+            );
+            return;
+          }
+
+          if (msg.type === 'generation-example-error') {
+            showToast(msg.payload?.message ?? 'Не удалось собрать пример');
+            return;
+          }
+
           if (msg.type === 'apollo-agent-report-ready') {
             agentReportMeta = msg.payload || null;
             syncAgentChatState();
@@ -2075,6 +2100,30 @@
           setTimeout(() => {
             toastEl?.classList.remove('visible');
           }, 3000);
+        }
+
+        function downloadJsonDocument(payloadDocument, suggestedFileName) {
+          if (!payloadDocument) {
+            showToast('Apollo не вернул данные примера');
+            return;
+          }
+          const fileName =
+            typeof suggestedFileName === 'string' && suggestedFileName.trim()
+              ? suggestedFileName.trim()
+              : 'apollo.generation-example-candidate.json';
+          const blob = new Blob(
+            [JSON.stringify(payloadDocument, null, 2)],
+            { type: 'application/json;charset=utf-8' },
+          );
+          const objectUrl = URL.createObjectURL(blob);
+          const anchor = document.createElement('a');
+          anchor.href = objectUrl;
+          anchor.download = fileName;
+          anchor.style.display = 'none';
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
         }
 
         function showCatalogToast(message) {
@@ -2927,6 +2976,18 @@
 
           shellAuditEnabled = !shellAuditEnabled;
           syncChromeState();
+        }
+
+        function handleGenerationExampleCapture(payload) {
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'capture-generation-example',
+                payload,
+              },
+            },
+            '*',
+          );
         }
 
         function applyCompactMode() {

@@ -44,6 +44,11 @@ export type StatsComponentContractRule = {
   changeScope: string | null;
   ruleText: string;
   remediation: string | null;
+  numericConstraint: {
+    minimum?: number;
+    maximum?: number;
+    recommended?: number;
+  } | null;
 };
 
 export type StatsNode = {

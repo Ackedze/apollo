@@ -462,6 +462,7 @@ function compareNode(
     const actualItemSpacingToken = actualLayout.itemSpacingToken ?? null;
     const referenceItemSpacingToken =
       referenceLayout.itemSpacingToken ?? null;
+    let itemSpacingValueDiffEmitted = false;
     const itemSpacingBindingMissing = Boolean(
       referenceItemSpacingToken && !actualItemSpacingToken,
     );
@@ -542,10 +543,15 @@ function compareNode(
             ),
           },
         );
+        itemSpacingValueDiffEmitted = true;
       }
     }
 
-    if (referenceItemSpacingToken && !itemSpacingBindingMissing) {
+    if (
+      referenceItemSpacingToken &&
+      !itemSpacingBindingMissing &&
+      !itemSpacingValueDiffEmitted
+    ) {
       if (
         !bindingsEquivalent(
           actualItemSpacingToken,
@@ -1955,10 +1961,13 @@ function formatVariableBindingDisplay(
   const metadata = bindingId
     ? resolveVariableMetadata?.(bindingId) ?? null
     : null;
+  const resolvedTokenLabel = bindingId
+    ? resolveTokenLabel?.(bindingId) ?? null
+    : null;
   const baseValue =
     value === null
       ? formatTokenLabel(bindingId, resolveTokenLabel)
-      : String(value);
+      : resolvedTokenLabel ?? String(value);
   const collectionName = metadata?.collectionName?.trim() ?? '';
   return collectionName
     ? `${baseValue} (${collectionName})`

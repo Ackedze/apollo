@@ -29,6 +29,13 @@ type CompositionContract = {
     styleKey?: string | null;
     scope?: string;
   }>;
+  compositionPolicy?: {
+    singleIcon?: {
+      enabledBy?: string;
+      requiredPosition?: string;
+      minimumButtonCount?: number;
+    };
+  };
 };
 
 type ContractRegistryEntry = {
@@ -79,6 +86,7 @@ export function applyContractAwareDiffs(
 
   const hostReferenceByOccurrence = buildNodeByOccurrenceMap(options.hostReference);
   const actualByOccurrence = buildNodeByOccurrenceMap(options.actualStructure);
+  const actualOccurrenceKeys = buildOccurrenceKeyMap(options.actualStructure);
   const output: DiffEntry[] = [];
   let suppressedCount = 0;
   let rebasedCount = 0;
@@ -86,7 +94,15 @@ export function applyContractAwareDiffs(
   for (const diff of diffs) {
     const property = diff.details?.property ?? null;
     const rule = findAllowedOverrideRule(diff, property, allowedOverrides, contract);
-    const expectedBaseline = rule
+    const linkedVariantBaseline = resolveLinkedVariantBaseline(
+      diff,
+      property,
+      contract,
+      options.actualStructure,
+      actualByOccurrence,
+      actualOccurrenceKeys,
+    );
+    const expectedBaseline = linkedVariantBaseline ?? (rule
       ? resolveExpectedBaseline(rule, diff, {
           hostReferenceByOccurrence,
           actualByOccurrence,
@@ -97,7 +113,7 @@ export function applyContractAwareDiffs(
           hostReferenceByOccurrence,
           actualByOccurrence,
           resolveStyleLabel: options.resolveStyleLabel,
-        });
+        }));
 
     if (!expectedBaseline || property === null) {
       output.push(diff);
@@ -122,6 +138,110 @@ export function applyContractAwareDiffs(
     rebasedCount,
     matchedContractKeys: getMatchedContractKeys(contract),
   };
+}
+
+function resolveLinkedVariantBaseline(
+  diff: DiffEntry,
+  property: string | null,
+  contract: CompositionContract,
+  actualStructure: DSStructureNode[],
+  actualByOccurrence: Map<string, DSStructureNode>,
+  occurrenceKeys: Map<DSStructureNode, string>,
+): DiffValueDetails | null {
+  if (property !== 'variant.SingleIcon') {
+    return null;
+  }
+
+  const policy = contract.compositionPolicy?.singleIcon;
+  if (!policy?.enabledBy) {
+    return null;
+  }
+
+  const linkedCondition = parseVariantCondition(policy.enabledBy);
+  if (!linkedCondition) {
+    return null;
+  }
+
+  const occurrenceKey = findOccurrenceKeyForDiff(diff, actualByOccurrence);
+  const actualNode = occurrenceKey
+    ? actualByOccurrence.get(occurrenceKey) ?? null
+    : null;
+  if (!actualNode || !variantConditionIsEnabled(diff, actualStructure, linkedCondition)) {
+    return null;
+  }
+
+  const siblings = actualStructure.filter((node) => {
+    if (node.visible === false || node.parentId !== actualNode.parentId) {
+      return false;
+    }
+    return readCaseInsensitiveProperty(
+      node.componentInstance?.variantProperties ?? null,
+      'SingleIcon',
+    ) !== null;
+  });
+  const minimumButtonCount = policy.minimumButtonCount ?? 1;
+  if (siblings.length < minimumButtonCount) {
+    return null;
+  }
+
+  if (normalizeComparableValue(policy.requiredPosition ?? '') === 'last') {
+    const lastSibling = siblings[siblings.length - 1] ?? null;
+    if (!lastSibling || occurrenceKeys.get(lastSibling) !== occurrenceKey) {
+      return null;
+    }
+  }
+
+  return { value: 'True' };
+}
+
+function parseVariantCondition(
+  value: string,
+): { property: string; value: string } | null {
+  const separator = value.indexOf('=');
+  if (separator <= 0 || separator >= value.length - 1) {
+    return null;
+  }
+  const property = value.slice(0, separator).trim();
+  const expectedValue = value.slice(separator + 1).trim();
+  if (!property || !expectedValue) {
+    return null;
+  }
+  return { property, value: expectedValue };
+}
+
+function variantConditionIsEnabled(
+  diff: DiffEntry,
+  actualStructure: DSStructureNode[],
+  condition: { property: string; value: string },
+): boolean {
+  const ownerPath = diff.context.actualNestedOwnerPath ?? null;
+  for (const node of actualStructure) {
+    if (ownerPath && node.path !== ownerPath) {
+      continue;
+    }
+    const actualValue = readCaseInsensitiveProperty(
+      node.componentInstance?.variantProperties ?? null,
+      condition.property,
+    );
+    if (actualValue !== null && valuesEqual(actualValue, condition.value)) {
+      return true;
+    }
+  }
+
+  const path = ownerPath ?? diff.nodePath;
+  const rootSegment = normalizePath(path).split(' / ')[0] ?? '';
+  for (const part of rootSegment.split(',')) {
+    const parsed = parseVariantCondition(part.trim());
+    if (
+      parsed &&
+      normalizeComparableValue(parsed.property) ===
+        normalizeComparableValue(condition.property) &&
+      valuesEqual(parsed.value, condition.value)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function resolveCompositionContract(hostComponentName: string | null): CompositionContract | null {

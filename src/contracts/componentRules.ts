@@ -54,6 +54,11 @@ export type ComponentContractRule = {
   forbiddenVariant?: Record<string, string>;
   requiredVariantByContext?: Record<string, Record<string, string>>;
   requiredValues?: Record<string, string | number | boolean | null>;
+  numericConstraint?: {
+    minimum?: number;
+    maximum?: number;
+    recommended?: number;
+  };
   requiredTokenSource?: {
     path?: string;
     collection?: string;
@@ -78,6 +83,7 @@ type ComponentRulesFile = {
 
 type ComponentRuleRegistryEntry = {
   componentKey: string;
+  packageName?: string;
   aliases: string[];
   figmaKeys?: string[];
   rulesFile: ComponentRulesFile;
@@ -231,6 +237,39 @@ export function hasRequiredComponentSizingRules(
             Boolean(
               readRequiredSizing(rule.requiredValues ?? {}, 'vertical'),
             )),
+      )
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function hasNumericConstraintRules(
+  componentKey: string | null | undefined,
+  componentNames: Array<string | null | undefined> = [],
+): boolean {
+  const normalizedKey = componentKey ?? '';
+  const normalizedNames = componentNames
+    .map((name) => normalizePathSegment(name ?? ''))
+    .filter(Boolean);
+
+  for (const entry of getComponentRuleRegistry()) {
+    const matchesKey =
+      normalizedKey === entry.componentKey ||
+      (entry.figmaKeys ?? []).includes(normalizedKey);
+    const matchesAlias = entry.aliases.some((alias) =>
+      normalizedNames.includes(normalizePathSegment(alias)),
+    );
+    if (!matchesKey && !matchesAlias) continue;
+
+    if (
+      (entry.rulesFile.rules ?? []).some(
+        (rule) =>
+          isUsableRule(rule) &&
+          Boolean(rule.numericConstraint) &&
+          readNumericLayoutProperties(rule.appliesTo).length > 0,
       )
     ) {
       return true;
@@ -410,6 +449,73 @@ export function createRequiredComponentSizingDiffs(
   return result;
 }
 
+export function createNumericConstraintRuleDiffs(
+  actualNodes: DSStructureNode[],
+  existingDiffs: DiffEntry[] = [],
+): DiffEntry[] {
+  if (!actualNodes.length) return [];
+
+  const existingKeys = new Set(existingDiffs.map(makeDiffKey));
+  const nodesById = new Map(actualNodes.map((node) => [node.id, node]));
+  const result: DiffEntry[] = [];
+
+  for (const node of actualNodes) {
+    const owner = findNearestInstanceOwner(node, nodesById);
+    const context = buildActualDiffContext(node, owner);
+
+    for (const entry of getComponentRuleRegistry()) {
+      const rules = entry.rulesFile.rules ?? [];
+      for (const rule of rules) {
+        if (!isUsableRule(rule) || !rule.numericConstraint) continue;
+
+        for (const property of readNumericLayoutProperties(rule.appliesTo)) {
+          const actual = readNumericLayoutValue(node, property);
+          if (actual === null) continue;
+
+          const reference = findRecommendedNumericReference(rules, property) ??
+            rule.numericConstraint.maximum ??
+            rule.numericConstraint.minimum ??
+            null;
+          if (reference === null) continue;
+
+          const diff: DiffEntry = {
+            message: `${getNumericLayoutLabel(property)}: ${reference} → ${actual}`,
+            nodePath: node.path,
+            nodeName: node.name,
+            nodeId: node.nodeId,
+            visible: node.visible,
+            context,
+            diffKind: 'layout',
+            details: {
+              property,
+              reference: { value: reference },
+              actual: { value: actual },
+            },
+          };
+
+          const key = makeDiffKey(diff);
+          if (
+            existingKeys.has(key) ||
+            !diffTargetsComponent(diff, entry) ||
+            !ruleMatchesDiff(rule, diff, property, entry)
+          ) {
+            continue;
+          }
+
+          const violation = findComponentContractViolationForDiff(diff);
+          if (violation) {
+            diff.assessment = createRuleViolationAssessment(violation);
+          }
+          existingKeys.add(key);
+          result.push(diff);
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
 export function createVariableModeRuleDiffs(
   actualNodes: DSStructureNode[],
   existingDiffs: DiffEntry[] = [],
@@ -530,6 +636,62 @@ function readVariableModeCollections(appliesTo: string): string[] {
     if (collectionName) result.push(collectionName);
   }
   return result;
+}
+
+function readNumericLayoutProperties(appliesTo: string): string[] {
+  const supported = new Set([
+    'layout.width',
+    'layout.height',
+    'layout.minWidth',
+    'layout.maxWidth',
+    'layout.minHeight',
+    'layout.maxHeight',
+  ]);
+  return appliesTo
+    .split('|')
+    .map((property) => property.trim())
+    .filter((property) => supported.has(property));
+}
+
+function readNumericLayoutValue(
+  node: DSStructureNode,
+  property: string,
+): number | null {
+  const layout = node.layout ?? null;
+  if (!layout) return null;
+  if (property === 'layout.width') return layout.width ?? null;
+  if (property === 'layout.height') return layout.height ?? null;
+  if (property === 'layout.minWidth') return layout.minWidth ?? null;
+  if (property === 'layout.maxWidth') return layout.maxWidth ?? null;
+  if (property === 'layout.minHeight') return layout.minHeight ?? null;
+  if (property === 'layout.maxHeight') return layout.maxHeight ?? null;
+  return null;
+}
+
+function findRecommendedNumericReference(
+  rules: ComponentContractRule[],
+  property: string,
+): number | null {
+  for (const rule of rules) {
+    if (
+      rule.numericConstraint &&
+      readNumericLayoutProperties(rule.appliesTo).includes(property) &&
+      typeof rule.numericConstraint.recommended === 'number'
+    ) {
+      return rule.numericConstraint.recommended;
+    }
+  }
+  return null;
+}
+
+function getNumericLayoutLabel(property: string): string {
+  if (property === 'layout.width') return 'Ширина';
+  if (property === 'layout.height') return 'Высота';
+  if (property === 'layout.minWidth') return 'Минимальная ширина';
+  if (property === 'layout.maxWidth') return 'Максимальная ширина';
+  if (property === 'layout.minHeight') return 'Минимальная высота';
+  if (property === 'layout.maxHeight') return 'Максимальная высота';
+  return property;
 }
 
 function buildVariableModeEvidence(
@@ -716,6 +878,10 @@ function ruleMatchesDiff(
     return false;
   }
 
+  if (!numericConstraintMatchesDiff(rule.numericConstraint, diff)) {
+    return false;
+  }
+
   if (!requiredTokenEvidenceMatches(rule, diff)) {
     return false;
   }
@@ -789,6 +955,41 @@ function ruleMatchesDiff(
   }
 
   return true;
+}
+
+function numericConstraintMatchesDiff(
+  constraint: ComponentContractRule['numericConstraint'],
+  diff: DiffEntry,
+): boolean {
+  if (!constraint) return true;
+
+  const actual = readNumericDiffValue(diff.details?.actual.value);
+  if (actual === null) return false;
+
+  const checks: boolean[] = [];
+  if (typeof constraint.minimum === 'number') {
+    checks.push(actual < constraint.minimum);
+  }
+  if (typeof constraint.maximum === 'number') {
+    checks.push(actual > constraint.maximum);
+  }
+  if (typeof constraint.recommended === 'number') {
+    checks.push(actual !== constraint.recommended);
+  }
+  return checks.length > 0 && checks.some(Boolean);
+}
+
+function readNumericDiffValue(value: unknown): number | null {
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : null;
+  }
+  if (typeof value !== 'string') return null;
+
+  const normalized = value.trim().replace(',', '.');
+  const match = normalized.match(/^(-?\d+(?:\.\d+)?)\s*(?:px)?$/i);
+  if (!match) return null;
+  const parsed = Number(match[1]);
+  return Number.isFinite(parsed) ? parsed : null;
 }
 
 function parsedTargetHasSelectors(target: ParsedRuleTarget): boolean {
@@ -1238,6 +1439,12 @@ function genericComponentSelectorMatchesIdentity(
 ): boolean {
   const normalizedSelector = normalizePathSegment(selector);
   if (normalizePathSegment(entry.componentKey) === normalizedSelector) {
+    return identityBelongsToEntry(identity, entry);
+  }
+  if (
+    entry.packageName &&
+    normalizePathSegment(entry.packageName) === normalizedSelector
+  ) {
     return identityBelongsToEntry(identity, entry);
   }
   if (identity.key === selector) {

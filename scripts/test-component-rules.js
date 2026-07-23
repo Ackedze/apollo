@@ -399,6 +399,54 @@ function main() {
     forbiddenVariant: { Style: 'Muted' },
     ruleText: 'Muted is forbidden on a grey surface.',
   };
+  const buttonsGroupSpacingRule = {
+    ruleId: 'component:web-corp.buttons-group.spacing-uses-effective-baseline',
+    severity: 'error',
+    source: 'component-contract',
+    appliesTo: 'layout.itemSpacing|layout.itemSpacingToken',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'ButtonGroup [D]',
+      layers: ['[D] ButtonsGroup', '[M] ButtonsGroup'],
+    },
+    requiredConfiguration: {
+      manualItemSpacingAllowed: false,
+    },
+    ruleText: 'ButtonsGroup spacing must use the effective baseline.',
+  };
+  const onboardingHintRecommendedWidthRule = {
+    ruleId: 'component:web-corp.onboarding-hint.recommended-width',
+    severity: 'warning',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'layout.width',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'Onboarding Hint [D]',
+    },
+    numericConstraint: {
+      recommended: 360,
+    },
+    ruleText: 'Recommended width is 360 px.',
+  };
+  const onboardingHintMaximumWidthRule = {
+    ruleId: 'component:web-corp.onboarding-hint.maximum-width',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'layout.width',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'Onboarding Hint [D]',
+    },
+    numericConstraint: {
+      maximum: 420,
+    },
+    ruleText: 'Maximum width is 420 px.',
+  };
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [
     {
       componentKey: 'web-corp.background-plate',
@@ -472,6 +520,29 @@ function main() {
         rules: [statusContrastRule],
       },
     },
+    {
+      componentKey: 'web-corp.buttons-group',
+      packageName: 'ButtonGroup [D]',
+      aliases: ['[D] ButtonsGroup', '[M] ButtonsGroup', 'ButtonGroup [D]'],
+      figmaKeys: ['buttons-group-variant-key'],
+      rulesFile: {
+        componentKey: 'web-corp.buttons-group',
+        rules: [buttonsGroupSpacingRule],
+      },
+    },
+    {
+      componentKey: 'web-corp.onboarding-hint',
+      packageName: 'Onboarding Hint [D]',
+      aliases: ['Onboarding Hint', 'Onboarding Hint [D]'],
+      figmaKeys: ['onboarding-hint-key'],
+      rulesFile: {
+        componentKey: 'web-corp.onboarding-hint',
+        rules: [
+          onboardingHintRecommendedWidthRule,
+          onboardingHintMaximumWidthRule,
+        ],
+      },
+    },
   ];
   globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__ = {
     'background-plate-key': '[D] BackgroundPlateSlot',
@@ -484,6 +555,8 @@ function main() {
     'transition-name-key': '[T] CorporateContent',
     'title-view-key': '[D] TitleView',
     'status-preset-key': '[D] StatusPreset',
+    'buttons-group-variant-key': 'Size=56, Overflow=true',
+    'onboarding-hint-key': 'Onboarding Hint',
   };
 
   const actualNodes = [
@@ -564,6 +637,26 @@ function main() {
     rules.findComponentContractViolationForDiff(rawPadding)?.ruleId,
     paddingTokenRule.ruleId,
     'A changed padding with explicit missing binding remains a token violation',
+  );
+
+  const buttonsGroupSpacing = scopedDiff(
+    'Size=56, Overflow=true',
+    '[D] ButtonsGroup',
+    'layout.itemSpacing',
+    scopedContext({ actualComponentKey: 'buttons-group-variant-key' }),
+  );
+  buttonsGroupSpacing.details.bindingStatus = 'different-binding';
+  assert.deepEqual(
+    rules
+      .findComponentContractRulesForDiff(buttonsGroupSpacing)
+      .map((rule) => rule.ruleId),
+    [buttonsGroupSpacingRule.ruleId],
+    'A package alias selector must match every Figma variant key owned by the package',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(buttonsGroupSpacing)?.ruleId,
+    buttonsGroupSpacingRule.ruleId,
+    'A manual itemSpacing substitution must be a deterministic contract violation',
   );
 
   const unrelatedOwner = diff(
@@ -831,6 +924,115 @@ function main() {
     publicStatusAssessment.assessment.ruleId,
     titleStatusTypeRule.ruleId,
     'A published nested StatusPreset Type must be allowed by the TitleView host contract',
+  );
+
+  const recommendedWidth = diff(
+    'Onboarding Hint',
+    'Onboarding Hint',
+    'layout.width',
+    360,
+    null,
+    'onboarding-hint-key',
+  );
+  assert.deepEqual(
+    rules.findComponentContractRulesForDiff(recommendedWidth),
+    [],
+    'The recommended width must not produce a component rule finding',
+  );
+
+  const allowedWidth = diff(
+    'Onboarding Hint',
+    'Onboarding Hint',
+    'layout.width',
+    400,
+    null,
+    'onboarding-hint-key',
+  );
+  assert.deepEqual(
+    rules
+      .findComponentContractRulesForDiff(allowedWidth)
+      .map((rule) => rule.ruleId),
+    [onboardingHintRecommendedWidthRule.ruleId],
+    'A non-recommended width below the maximum must only produce a recommendation',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(allowedWidth),
+    null,
+    'A width below the maximum must remain allowed',
+  );
+
+  const excessiveWidth = diff(
+    'Onboarding Hint',
+    'Onboarding Hint',
+    'layout.width',
+    '421 px',
+    null,
+    'onboarding-hint-key',
+  );
+  assert.deepEqual(
+    rules
+      .findComponentContractRulesForDiff(excessiveWidth)
+      .map((rule) => rule.ruleId),
+    [
+      onboardingHintRecommendedWidthRule.ruleId,
+      onboardingHintMaximumWidthRule.ruleId,
+    ],
+    'A width above the maximum must produce recommendation and maximum rules',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(excessiveWidth)?.ruleId,
+    onboardingHintMaximumWidthRule.ruleId,
+    'A width above 420 px must be an exact component violation',
+  );
+  assert.equal(
+    rules.hasNumericConstraintRules(
+      'onboarding-hint-key',
+      ['Onboarding Hint'],
+    ),
+    true,
+    'Apollo must request a snapshot when the component has numeric rules',
+  );
+
+  const widthNode = (width) => ({
+    id: 1,
+    parentId: null,
+    path: 'Onboarding Hint',
+    type: 'INSTANCE',
+    name: 'Onboarding Hint',
+    visible: true,
+    radius: null,
+    layout: { width },
+    componentInstance: {
+      componentKey: 'onboarding-hint-key',
+    },
+  });
+  assert.deepEqual(
+    rules.createNumericConstraintRuleDiffs([widthNode(360)]),
+    [],
+    'The recommended width must not produce a runtime diff',
+  );
+
+  const allowedWidthDiffs =
+    rules.createNumericConstraintRuleDiffs([widthNode(400)]);
+  assert.equal(allowedWidthDiffs.length, 1);
+  assert.equal(allowedWidthDiffs[0].details.property, 'layout.width');
+  assert.equal(allowedWidthDiffs[0].details.reference.value, 360);
+  assert.equal(allowedWidthDiffs[0].details.actual.value, 400);
+  assert.equal(
+    allowedWidthDiffs[0].assessment,
+    undefined,
+    'A contextual width below the maximum must remain a recommendation',
+  );
+
+  const excessiveWidthDiffs =
+    rules.createNumericConstraintRuleDiffs([widthNode(421)]);
+  assert.equal(excessiveWidthDiffs.length, 1);
+  assert.equal(excessiveWidthDiffs[0].details.reference.value, 360);
+  assert.equal(excessiveWidthDiffs[0].details.actual.value, 421);
+  assert.equal(
+    excessiveWidthDiffs[0].assessment.ruleId,
+    onboardingHintMaximumWidthRule.ruleId,
+    'A runtime width above the maximum must receive the exact violation assessment',
   );
 
   const warnings = [];

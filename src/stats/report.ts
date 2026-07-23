@@ -365,6 +365,7 @@ function statsComponentRule(
     changeScope: rule.changeScope ?? null,
     ruleText: rule.ruleText,
     remediation: rule.remediation ?? null,
+    numericConstraint: rule.numericConstraint ?? null,
   };
 }
 

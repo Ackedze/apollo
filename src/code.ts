@@ -152,8 +152,10 @@ import {
   applyContextualComponentRuleAssessment,
   applyRequiredComponentSizingAssessment,
   applyVariableBindingAssessment,
+  createNumericConstraintRuleDiffs,
   createRequiredComponentSizingDiffs,
   createVariableModeRuleDiffs,
+  hasNumericConstraintRules,
   hasRequiredComponentSizingRules,
   hasVariableModeRules,
   type VariableCollectionMetadata,
@@ -1430,6 +1432,10 @@ async function classifyNode(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
   );
+  const requiresNumericConstraintAudit = hasNumericConstraintRules(
+    componentKey,
+    [ref?.name, ref?.displayName, node.name],
+  );
   const requiresVariableModeRuleAudit = hasVariableModeRules(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
@@ -1443,6 +1449,7 @@ async function classifyNode(
     (ref?.status !== 'current' ||
       instanceHasOverrides ||
       requiresSizingRuleAudit ||
+      requiresNumericConstraintAudit ||
       requiresVariableModeRuleAudit ||
       isInheritedFromLocalComponentContext);
   const actualStructure =
@@ -1482,11 +1489,20 @@ async function classifyNode(
           diffResult.diffs,
         )
       : [];
+  const numericConstraintDiffs =
+    shouldDiff && alignedActualStructure
+      ? createNumericConstraintRuleDiffs(
+          alignedActualStructure,
+          diffResult.diffs.concat(requiredSizingDiffs),
+        )
+      : [];
   const variableModeRuleDiffs =
     shouldDiff && alignedActualStructure
       ? createVariableModeRuleDiffs(
           alignedActualStructure,
-          diffResult.diffs.concat(requiredSizingDiffs),
+          diffResult.diffs
+            .concat(requiredSizingDiffs)
+            .concat(numericConstraintDiffs),
           resolveVariableCollectionMetadataForDiff,
         )
       : [];
@@ -1496,6 +1512,7 @@ async function classifyNode(
   );
   const rawDiffs = diffResult.diffs
     .concat(requiredSizingDiffs)
+    .concat(numericConstraintDiffs)
     .concat(variableModeRuleDiffs)
     .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)

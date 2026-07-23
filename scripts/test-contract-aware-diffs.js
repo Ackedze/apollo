@@ -148,6 +148,13 @@ function main() {
           name: 'ButtonGroup [D]',
           library: 'Web _ Corp Components',
         },
+        compositionPolicy: {
+          singleIcon: {
+            minimumButtonCount: 2,
+            requiredPosition: 'last',
+            enabledBy: 'Overflow=true',
+          },
+        },
       },
     },
     {
@@ -475,6 +482,88 @@ function main() {
   assert.deepEqual(buttonsGroupSuppressed.matchedContractKeys, [
     'web-corp.buttons-group',
   ]);
+
+  const overflowReference = [
+    makeNode(1, 'Size=56, Overflow=true', 'Size=56, Overflow=true', {
+      type: 'INSTANCE',
+      componentInstance: {
+        variantProperties: { Size: '56', Overflow: 'true' },
+      },
+    }),
+    makeNode(2, 'Size=56, Overflow=true / [D] Button', '[D] Button', {
+      type: 'INSTANCE',
+      componentInstance: { variantProperties: { SingleIcon: 'False' } },
+    }),
+    makeNode(3, 'Size=56, Overflow=true / [D] Button', '[D] Button', {
+      type: 'INSTANCE',
+      componentInstance: { variantProperties: { SingleIcon: 'False' } },
+    }),
+    makeNode(4, 'Size=56, Overflow=true / [D] Button', '[D] Button', {
+      type: 'INSTANCE',
+      componentInstance: { variantProperties: { SingleIcon: 'False' } },
+    }),
+  ];
+  const overflowActual = overflowReference.map((node) =>
+    Object.assign({}, node, {
+      componentInstance: node.componentInstance
+        ? Object.assign({}, node.componentInstance, {
+            variantProperties: Object.assign(
+              {},
+              node.componentInstance.variantProperties,
+            ),
+          })
+        : null,
+    }),
+  );
+  overflowActual[3].componentInstance.variantProperties.SingleIcon = 'True';
+
+  const linkedSingleIconSuppressed = applyContractAwareDiffs(
+    [
+      makeDiff(
+        'Size=56, Overflow=true / [D] Button@@3',
+        'variant.SingleIcon',
+        'False',
+        'True',
+      ),
+    ],
+    {
+      enabled: true,
+      hostComponentKey: 'buttons-group-key',
+      hostComponentName: '[D] ButtonsGroup',
+      actualStructure: overflowActual,
+      hostReference: overflowReference,
+      resolveStyleLabel: () => null,
+    },
+  );
+  assert.equal(
+    linkedSingleIconSuppressed.diffs.length,
+    0,
+    'Overflow=true must suppress the generated SingleIcon=true diff on the last button',
+  );
+
+  const firstSingleIconStillReported = applyContractAwareDiffs(
+    [
+      makeDiff(
+        'Size=56, Overflow=true / [D] Button',
+        'variant.SingleIcon',
+        'False',
+        'True',
+      ),
+    ],
+    {
+      enabled: true,
+      hostComponentKey: 'buttons-group-key',
+      hostComponentName: '[D] ButtonsGroup',
+      actualStructure: overflowActual,
+      hostReference: overflowReference,
+      resolveStyleLabel: () => null,
+    },
+  );
+  assert.equal(
+    firstSingleIconStillReported.diffs.length,
+    1,
+    'Overflow must not hide a manual SingleIcon change on a non-last button',
+  );
 
   const backgroundPlateReference = [
     makeNode(1, 'Position=Level 1 (outer)', 'Position=Level 1 (outer)', {

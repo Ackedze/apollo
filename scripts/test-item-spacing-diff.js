@@ -380,6 +380,65 @@ function main() {
     'Amount/Account-like body cell variants must not be hidden by the generic Text itemSpacing suppression',
   );
 
+  const referenceChangedValue = [
+    createLayoutNode({
+      id: 1,
+      parentId: null,
+      path: 'ButtonsGroup',
+      name: 'ButtonsGroup',
+      itemSpacing: 16,
+      itemSpacingToken: 'spacing-16',
+    }),
+    createLayoutNode({
+      id: 2,
+      parentId: 1,
+      path: 'ButtonsGroup / Button',
+      name: 'Button',
+      itemSpacing: 0,
+    }),
+    createLayoutNode({
+      id: 3,
+      parentId: 1,
+      path: 'ButtonsGroup / Button',
+      name: 'Button',
+      itemSpacing: 0,
+    }),
+  ];
+  const actualChangedValue = [
+    createLayoutNode({
+      id: 1,
+      parentId: null,
+      path: 'ButtonsGroup',
+      name: 'ButtonsGroup',
+      itemSpacing: 32,
+      itemSpacingToken: 'spacing-32',
+    }),
+    createLayoutNode({
+      id: 2,
+      parentId: 1,
+      path: 'ButtonsGroup / Button',
+      name: 'Button',
+      itemSpacing: 0,
+    }),
+    createLayoutNode({
+      id: 3,
+      parentId: 1,
+      path: 'ButtonsGroup / Button',
+      name: 'Button',
+      itemSpacing: 0,
+    }),
+  ];
+  const changedValueResult = diffStructures(
+    actualChangedValue,
+    referenceChangedValue,
+    { strict: true },
+  );
+  assert.deepEqual(
+    changedValueResult.diffs.map((entry) => entry.details?.property),
+    ['layout.itemSpacing'],
+    'A changed itemSpacing value must carry binding evidence in one diff instead of adding a token companion diff',
+  );
+
   const tokenLabels = new Map([
     ['VariableID:ref-padding', 'spacing/m'],
     ['VariableID:actual-padding', 'spacing/l'],
@@ -434,7 +493,6 @@ function main() {
       resolveTokenLabel: (token) => tokenLabels.get(token) ?? null,
     },
   );
-
   assert.ok(
     tokenizedLayoutResult.diffs.some(
       (diff) => diff.message === 'Паддинг top (токен): spacing/m → spacing/l',

@@ -52,6 +52,7 @@ type RemoteComponentContractIndex = {
 
 type RuntimeComponentRuleRegistryEntry = {
   componentKey: string;
+  packageName?: string;
   aliases: string[];
   figmaKeys: string[];
   rulesFile: {
@@ -482,6 +483,7 @@ async function loadPackageArtifacts(
       if (componentKey && rules.length) {
         state.rulesEntry = {
           componentKey,
+          packageName: entry.packageName,
           aliases,
           figmaKeys: Array.isArray(entry.figmaKeys) ? entry.figmaKeys : [],
           rulesFile: {

@@ -132,10 +132,8 @@ import {
 } from './contracts/contractAwareDiffs';
 import {
   ensureContractPackageIndexLoaded,
-  ensureContractExamplesForHints,
   ensureContractArtifactsForHints,
   getContractPackageKeyForHint,
-  getComponentExamplesForKeys,
   type ContractArtifactHint,
 } from './contracts/runtimeContractRegistry';
 import {
@@ -169,10 +167,11 @@ const APOLLO_PROXY_URL = 'http://localhost:3001/analyze';
 figma.showUI(__html__, { width: 800, height: 860 });
 console.log('[Apollo] plugin version', { version: APOLLO_VERSION });
 const EXPANDED_UI_SIZE = { width: 800, height: 860 };
-const COMPACT_UI_SIZE = { width: 263, height: 860 };
+const COMPACT_UI_SIZE = { width: 400, height: 860 };
 let lastApolloAgentReport: ApolloAgentReport | null = null;
 let lastContractArtifactHints: ContractArtifactHint[] = [];
 let activeApolloAgentRequestId: string | null = null;
+const apolloDialogueSessionNonce = Date.now().toString(36);
 let lastGenerationExampleAuditEvidence: GenerationExampleAuditEvidence | null =
   null;
 let generationExampleCaptureInProgress = false;
@@ -927,15 +926,15 @@ async function sendApolloAgentReport(
   });
 
   try {
-    const contextualAgentInputText = agentInputText
-      ? await buildContextualApolloAgentInput(agentInputText, report)
+    const dialogueAgentInputText = agentInputText
+      ? buildDialogueApolloAgentInput(agentInputText)
       : null;
     const requestBody = {
       component: 'apollo-agent-report',
       action: isDirectUserQuestion ? 'user-question' : 'audit-report',
-      session_id: report
-        ? createApolloAgentSessionId(report)
-        : createApolloAgentFallbackSessionId(),
+      session_id: isDirectUserQuestion
+        ? createApolloAgentDialogueSessionId()
+        : createApolloAgentSessionId(report!),
     } as {
       component: string;
       action: string;
@@ -944,8 +943,8 @@ async function sendApolloAgentReport(
       text?: string;
     };
 
-    if (contextualAgentInputText) {
-      requestBody.text = contextualAgentInputText;
+    if (dialogueAgentInputText) {
+      requestBody.text = dialogueAgentInputText;
     } else if (report) {
       requestBody.report = report;
     }
@@ -1009,28 +1008,17 @@ async function sendApolloAgentReport(
   }
 }
 
-async function buildContextualApolloAgentInput(
-  question: string,
-  report: ApolloAgentReport | null,
-): Promise<string> {
-  const componentKeys = report
-    ? report.findings.map((finding) => finding.component?.key ?? null)
-    : [];
-  const keySet = new Set(
-    componentKeys.filter((key): key is string => Boolean(key)),
-  );
-  const relevantHints = lastContractArtifactHints.filter((hint) =>
-    hint.figmaKey ? keySet.has(hint.figmaKey) : false,
-  );
-  if (relevantHints.length) {
-    await ensureContractExamplesForHints(relevantHints);
-  }
+function buildDialogueApolloAgentInput(question: string): string {
   return JSON.stringify({
+    schemaVersion: 1,
+    mode: 'design-dialogue',
     question,
-    auditReport: report,
-    componentExamples: getComponentExamplesForKeys(componentKeys),
-    evidencePolicy:
-      'Examples are contextual evidence, not rules. Use exact rules for violations.',
+    context: {
+      selection: null,
+      finding: null,
+      auditReport: null,
+      componentContext: null,
+    },
   });
 }
 
@@ -1059,10 +1047,12 @@ function createApolloAgentSessionId(report: ApolloAgentReport): string {
   return sanitized || 'apollo-agent-report';
 }
 
-function createApolloAgentFallbackSessionId(): string {
+function createApolloAgentDialogueSessionId(): string {
   const base = [
     figma.currentUser?.id || 'unknown-user',
     figma.currentUser?.name || 'apollo-user-question',
+    'dialogue',
+    apolloDialogueSessionNonce,
   ].join('__');
   const sanitized = base
     .normalize('NFKC')
@@ -1070,7 +1060,7 @@ function createApolloAgentFallbackSessionId(): string {
     .replace(/-+/g, '-')
     .replace(/^[-_.]+|[-_.]+$/g, '')
     .slice(0, 180);
-  return sanitized || 'apollo-user-question';
+  return sanitized || `apollo-user-question-${apolloDialogueSessionNonce}`;
 }
 
 /**

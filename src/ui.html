@@ -25,7 +25,7 @@
         overflow: hidden;
       }
       .shell.compact {
-        width: 263px;
+        width: 400px;
       }
 
       .header {
@@ -60,11 +60,11 @@
         grid-template-columns: 1fr;
         gap: 0;
       }
-      .workspace.chat-active {
+      .workspace.agent-active {
         grid-template-columns: 1fr;
         gap: 0;
       }
-      .workspace.chat-active .sidebar {
+      .workspace.agent-active .sidebar {
         display: none;
       }
       .sidebar {
@@ -75,6 +75,7 @@
         box-sizing: border-box;
       }
       .workspace.compact .sidebar {
+        width: 100%;
         padding-right: 12px;
       }
       .main {
@@ -83,14 +84,14 @@
         min-width: 0;
         min-height: 0;
       }
-      .main.chat-active .results-pane {
+      .main.agent-active .results-pane {
         display: none !important;
       }
       .workspace.compact .main {
         display: none;
       }
-      .workspace.compact.chat-active .main,
-      .workspace.chat-active .main {
+      .workspace.compact.agent-active .main,
+      .workspace.agent-active .main {
         display: flex;
       }
       .placeholder {
@@ -173,8 +174,7 @@
         min-height: 32px;
         padding: 2px 6px;
       }
-      .view-segmented-control.compact .view-segment svg,
-      .view-segmented-control.compact #agent-chat-fab svg {
+      .view-segmented-control.compact .view-segment svg {
         width: 20px;
         height: 20px;
       }
@@ -195,6 +195,7 @@
         display: flex;
       }
       .agent-chat-panel {
+        position: relative;
         flex: 1;
         min-width: 0;
         min-height: 0;
@@ -203,49 +204,22 @@
         overflow: hidden;
         background: #f5f5f5;
       }
+      .agent-chat-panel::before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: min(100%, 376px);
+        height: 48px;
+        pointer-events: none;
+        background: linear-gradient(180deg, #f5f5f5 0%, rgba(245, 245, 245, 0) 100%);
+      }
       .agent-chat-panel,
       .agent-chat-panel *,
       .agent-chat-panel *::before,
       .agent-chat-panel *::after {
         box-sizing: border-box;
-      }
-      .agent-chat-header {
-        flex: 0 0 auto;
-        display: none;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        min-height: 52px;
-        padding: 12px 20px;
-        border-bottom: 1px solid #e7e7e7;
-        background: #f3f4f7;
-      }
-      .agent-chat-title {
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 600;
-        color: rgba(3, 3, 6, 0.88);
-      }
-      .agent-chat-meta {
-        margin-top: 2px;
-        font-size: 11px;
-        line-height: 14px;
-        color: rgba(5, 8, 29, 0.45);
-      }
-      .agent-chat-close {
-        width: 28px;
-        height: 28px;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        border: 0;
-        border-radius: 8px;
-        background: transparent;
-        color: rgba(3, 3, 6, 0.72);
-        cursor: pointer;
-      }
-      .agent-chat-close:hover {
-        background: rgba(30, 43, 68, 0.08);
       }
       .agent-conversation {
         flex: 1;
@@ -254,6 +228,10 @@
         overflow-x: hidden;
         overscroll-behavior: contain;
         padding: 8px 20px 20px;
+      }
+      .workspace.compact .agent-conversation {
+        padding-right: 12px;
+        padding-left: 12px;
       }
       .agent-conversation-inner {
         min-height: 100%;
@@ -715,21 +693,7 @@
             class="agent-chat-overlay"
             aria-hidden="true"
           >
-            <div class="agent-chat-panel" role="region" aria-label="Рекомендации Apollo агента">
-              <header class="agent-chat-header">
-                <div>
-                  <div class="agent-chat-title">Apollo agent</div>
-                  <div id="agent-chat-meta" class="agent-chat-meta">Отчёт ещё не отправлен</div>
-                </div>
-                <button
-                  id="agent-chat-close"
-                  class="agent-chat-close"
-                  type="button"
-                  aria-label="Закрыть рекомендации агента"
-                >
-                  ×
-                </button>
-              </header>
+            <div class="agent-chat-panel" role="region" aria-label="Apollo agent">
               <section id="agent-conversation" class="agent-conversation" aria-live="polite">
                 <div id="agent-conversation-inner" class="agent-conversation-inner"></div>
               </section>
@@ -738,7 +702,7 @@
                   id="agent-composer-input"
                   class="agent-composer-input"
                   rows="1"
-                  placeholder="Задать вопрос по отчёту"
+                  placeholder="Введи или выбери текст"
                 ></textarea>
                 <button
                   id="agent-composer-submit"
@@ -791,10 +755,35 @@
         </svg>
       </button>
       <button
+        id="agent-report-fab"
+        class="view-segment"
+        type="button"
+        aria-label="Показать отчёт агента"
+        aria-pressed="false"
+      >
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path
+            d="M6 2.75h5.25l3.25 3.25v10.25a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3.75a1 1 0 0 1 1-1Z"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M11.25 2.75V6h3.25M7.5 9h5M7.5 11.75h5M7.5 14.5h3.25"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+      <button
         id="agent-chat-fab"
         class="view-segment"
         type="button"
-        aria-label="Открыть рекомендации агента"
+        aria-label="Открыть диалог с агентом"
         aria-pressed="false"
       >
         <svg viewBox="0 0 20 20" aria-hidden="true">
@@ -933,12 +922,13 @@
         let currentPickerLabel = 'Desktop';
         let shellAuditEnabled = false;
         let agentReportMeta = null;
-        let agentChatOpen = false;
+        let activeApolloView = 'audit';
         let agentRequestInProgress = false;
         let agentActiveRequestId = null;
         let agentActiveRequestKind = null;
-        let agentLastSentReportId = null;
-        let agentMessages = [];
+        let agentReportMessages = [];
+        let agentDialogueMessages = [];
+        let agentLastQuestion = '';
         let agentMessageSequence = 0;
         let agentRetryTimerId = null;
 
@@ -955,10 +945,9 @@
           '.view-segmented-control',
         );
         const agentTableFab = document.getElementById('agent-table-fab');
+        const agentReportFab = document.getElementById('agent-report-fab');
         const agentChatFab = document.getElementById('agent-chat-fab');
         const agentChatOverlay = document.getElementById('agent-chat-overlay');
-        const agentChatClose = document.getElementById('agent-chat-close');
-        const agentChatMeta = document.getElementById('agent-chat-meta');
         const agentConversation = document.getElementById('agent-conversation');
         const agentConversationInner = document.getElementById(
           'agent-conversation-inner',
@@ -1012,11 +1001,11 @@
 
         applyCompactMode();
         setScanningState(false);
-        syncAgentChatState();
+        syncAgentViewState();
 
-        agentTableFab?.addEventListener('click', closeAgentChat);
-        agentChatFab?.addEventListener('click', openAgentChat);
-        agentChatClose?.addEventListener('click', closeAgentChat);
+        agentTableFab?.addEventListener('click', () => setActiveApolloView('audit'));
+        agentReportFab?.addEventListener('click', () => setActiveApolloView('report'));
+        agentChatFab?.addEventListener('click', () => setActiveApolloView('dialogue'));
         agentComposer?.addEventListener('submit', handleAgentComposerSubmit);
         agentConversationInner?.addEventListener('click', (event) => {
           const target = event.target;
@@ -1024,12 +1013,12 @@
             target instanceof Element &&
             target.closest('[data-agent-retry-button]')
           ) {
-            retryAgentReport();
+            retryActiveAgentRequest();
           }
         });
         agentComposerInput?.addEventListener('input', () => {
           resizeAgentComposerInput();
-          syncAgentChatState();
+          syncAgentViewState();
         });
         agentComposerInput?.addEventListener('keydown', (event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
@@ -1951,17 +1940,16 @@
             setScanningState(true);
             scanCompleted = false;
             agentReportMeta = null;
-            agentLastSentReportId = null;
             agentRequestInProgress = false;
             agentActiveRequestId = null;
             agentActiveRequestKind = null;
-            agentMessages = [];
-            agentChatOpen = false;
+            agentReportMessages = [];
+            activeApolloView = 'audit';
             if (agentComposerInput) {
               agentComposerInput.value = '';
               resizeAgentComposerInput();
             }
-            syncAgentChatState();
+            syncAgentViewState();
             renderAgentMessages();
           }
 
@@ -1985,7 +1973,7 @@
           if (msg.type === 'scan-result') {
             currentResults = msg.payload;
             scanCompleted = true;
-            syncAgentChatState();
+            syncAgentViewState();
             updateActiveTabClasses();
             renderList();
             showToast(
@@ -1999,8 +1987,8 @@
             showToast(msg.payload?.message ?? 'Не удалось выполнить проверку');
             scanCompleted = false;
             agentReportMeta = null;
-            agentChatOpen = false;
-            syncAgentChatState();
+            activeApolloView = 'audit';
+            syncAgentViewState();
             return;
           }
 
@@ -2030,7 +2018,7 @@
 
           if (msg.type === 'apollo-agent-report-ready') {
             agentReportMeta = msg.payload || null;
-            syncAgentChatState();
+            syncAgentViewState();
             return;
           }
 
@@ -2045,11 +2033,12 @@
           }
 
           if (msg.type === 'apollo-agent-cancelled') {
+            const cancelledKind = agentActiveRequestKind || 'report';
             agentRequestInProgress = false;
             agentActiveRequestId = null;
             agentActiveRequestKind = null;
-            removeAgentLoadingMessage();
-            syncAgentChatState();
+            removeAgentLoadingMessage(cancelledKind);
+            syncAgentViewState();
             return;
           }
 
@@ -2138,48 +2127,48 @@
           return `${text.slice(0, Math.max(0, maxLength - 1))}…`;
         }
 
-        function openAgentChat() {
-          agentChatOpen = true;
-          syncAgentChatState();
-
-          if (!agentMessages.length && agentReportMeta) {
-            addAgentMessage({
-              role: 'user',
-              text: agentReportMeta?.suggestedFileName
-                ? `Отправить агенту отчёт ${agentReportMeta.suggestedFileName}`
-                : 'Отправить агенту последний отчёт Apollo',
-            });
-          }
-
-          if (!agentReportMeta) {
-            return;
-          }
-
+        function setActiveApolloView(nextView) {
           if (
-            agentLastSentReportId !== agentReportMeta.reportId &&
-            !agentRequestInProgress
+            nextView !== 'audit' &&
+            nextView !== 'report' &&
+            nextView !== 'dialogue'
           ) {
-            sendAgentReportToProxy();
-          }
-        }
-
-        function closeAgentChat() {
-          agentChatOpen = false;
-          syncAgentChatState();
-        }
-
-        function retryAgentReport() {
-          if (agentRequestInProgress || !agentReportMeta) {
             return;
           }
-          sendAgentReportToProxy();
+
+          activeApolloView = nextView;
+          renderAgentMessages();
+          syncAgentViewState();
+        }
+
+        function retryActiveAgentRequest() {
+          if (agentRequestInProgress) {
+            return;
+          }
+
+          if (activeApolloView === 'report') {
+            if (agentReportMeta) {
+              sendAgentReportToProxy();
+            }
+            return;
+          }
+
+          if (activeApolloView === 'dialogue' && agentLastQuestion) {
+            sendAgentReportToProxy(agentLastQuestion);
+          }
         }
 
         function handleAgentComposerSubmit(event) {
           event?.preventDefault?.();
 
+          if (activeApolloView !== 'dialogue') {
+            return;
+          }
+
           if (agentRequestInProgress) {
-            cancelAgentReportRequest();
+            if (agentActiveRequestKind === 'question') {
+              cancelAgentReportRequest();
+            }
             return;
           }
 
@@ -2188,10 +2177,11 @@
             return;
           }
 
+          agentLastQuestion = userMessage;
           addAgentMessage({
             role: 'user',
             text: userMessage,
-          });
+          }, 'question');
 
           if (agentComposerInput) {
             agentComposerInput.value = '';
@@ -2243,8 +2233,13 @@
             return;
           }
 
-          if (requestKind === 'report' && hasAgentSystemState()) {
-            agentMessages = [];
+          if (requestKind === 'report' && hasAgentSystemState('report')) {
+            agentReportMessages = [];
+            renderAgentMessages();
+          }
+
+          if (requestKind === 'question' && hasAgentSystemState('question')) {
+            agentDialogueMessages = [];
             renderAgentMessages();
           }
 
@@ -2253,7 +2248,7 @@
           agentActiveRequestId = requestId;
           agentActiveRequestKind = requestKind;
           agentRequestInProgress = true;
-          syncAgentChatState();
+          syncAgentViewState();
 
           parent.postMessage(
             {
@@ -2272,8 +2267,7 @@
           }
           agentActiveRequestKind = payload.requestKind || agentActiveRequestKind || 'report';
           agentRequestInProgress = true;
-          ensureAgentUserMessage(payload);
-          syncAgentChatState();
+          syncAgentViewState();
 
           replaceAgentLoadingMessage({
             role: 'assistant',
@@ -2282,29 +2276,7 @@
               agentActiveRequestKind === 'question'
                 ? 'Apollo думает'
                 : 'Агент анализирует отчёт',
-          });
-        }
-
-        function ensureAgentUserMessage(payload) {
-          if (payload.requestKind === 'question') {
-            return;
-          }
-
-          const hasUserMessage = agentMessages.some(
-            (message) => message.role === 'user',
-          );
-          if (hasUserMessage) {
-            return;
-          }
-
-          addAgentMessage({
-            role: 'user',
-            text: payload.suggestedFileName
-              ? `Отправить агенту отчёт ${payload.suggestedFileName}`
-              : agentReportMeta?.suggestedFileName
-                ? `Отправить агенту отчёт ${agentReportMeta.suggestedFileName}`
-                : 'Отправить агенту последний отчёт Apollo',
-          });
+          }, agentActiveRequestKind);
         }
 
         function handleAgentResult(payload) {
@@ -2316,53 +2288,73 @@
             return;
           }
 
+          const requestKind =
+            payload.requestKind || agentActiveRequestKind || 'report';
           agentRequestInProgress = false;
           agentActiveRequestId = null;
           agentActiveRequestKind = null;
 
-          removeAgentLoadingMessage();
+          removeAgentLoadingMessage(requestKind);
 
           if (payload.error) {
             agentMessageSequence += 1;
-            agentMessages = [
+            setAgentMessages(requestKind, [
               {
                 id: `agent-message-${agentMessageSequence}`,
                 role: 'error',
                 text:
                   'Агент сейчас недоступен\nПроверь подключение прокси и попробуй ещё раз',
               },
-            ];
+            ]);
             renderAgentMessages();
           } else {
-            agentLastSentReportId =
-              payload.reportId || agentReportMeta?.reportId || agentLastSentReportId;
             addAgentMessage({
               role: 'assistant',
               text: payload.text || 'Агент вернул пустой ответ.',
-            });
+            }, requestKind);
           }
 
-          syncAgentChatState();
+          syncAgentViewState();
         }
 
-        function addAgentMessage(message) {
+        function getAgentMessages(requestKind) {
+          return requestKind === 'question'
+            ? agentDialogueMessages
+            : agentReportMessages;
+        }
+
+        function setAgentMessages(requestKind, messages) {
+          if (requestKind === 'question') {
+            agentDialogueMessages = messages;
+          } else {
+            agentReportMessages = messages;
+          }
+        }
+
+        function getVisibleAgentRequestKind() {
+          return activeApolloView === 'dialogue' ? 'question' : 'report';
+        }
+
+        function addAgentMessage(message, requestKind) {
+          const targetKind = requestKind || getVisibleAgentRequestKind();
           agentMessageSequence += 1;
-          agentMessages.push({
+          getAgentMessages(targetKind).push({
             id: `agent-message-${agentMessageSequence}`,
             ...message,
           });
           renderAgentMessages();
         }
 
-        function replaceAgentLoadingMessage(message) {
-          removeAgentLoadingMessage();
-          addAgentMessage(message);
+        function replaceAgentLoadingMessage(message, requestKind) {
+          removeAgentLoadingMessage(requestKind);
+          addAgentMessage(message, requestKind);
         }
 
-        function removeAgentLoadingMessage() {
-          agentMessages = agentMessages.filter(
+        function removeAgentLoadingMessage(requestKind) {
+          const targetKind = requestKind || getVisibleAgentRequestKind();
+          setAgentMessages(targetKind, getAgentMessages(targetKind).filter(
             (message) => message.variant !== 'loading',
-          );
+          ));
           renderAgentMessages();
         }
 
@@ -2371,12 +2363,16 @@
             return;
           }
 
+          const visibleMessages =
+            activeApolloView === 'audit'
+              ? []
+              : getAgentMessages(getVisibleAgentRequestKind());
           const hasSystemState = hasAgentSystemState();
           agentConversationInner.classList.toggle(
             'system-state-visible',
             hasSystemState,
           );
-          agentConversationInner.innerHTML = agentMessages
+          agentConversationInner.innerHTML = visibleMessages
             .map((message) => renderAgentMessage(message))
             .join('');
 
@@ -2385,14 +2381,16 @@
           }
         }
 
-        function hasAgentSystemState() {
-          return agentMessages.length === 1 && agentMessages[0]?.role === 'error';
+        function hasAgentSystemState(requestKind) {
+          const targetKind = requestKind || getVisibleAgentRequestKind();
+          const messages = getAgentMessages(targetKind);
+          return messages.length === 1 && messages[0]?.role === 'error';
         }
 
         function updateAgentRetryTimer() {
           const shouldRetry =
-            agentChatOpen &&
-            hasAgentSystemState() &&
+            activeApolloView === 'report' &&
+            hasAgentSystemState('report') &&
             Boolean(agentReportMeta) &&
             !agentRequestInProgress;
 
@@ -2410,12 +2408,12 @@
 
           agentRetryTimerId = setInterval(() => {
             if (
-              agentChatOpen &&
-              hasAgentSystemState() &&
+              activeApolloView === 'report' &&
+              hasAgentSystemState('report') &&
               agentReportMeta &&
               !agentRequestInProgress
             ) {
-              retryAgentReport();
+              retryActiveAgentRequest();
             }
           }, 30000);
         }
@@ -2443,71 +2441,73 @@
           )}</div></div></div></article>`;
         }
 
-        function syncAgentChatState() {
+        function syncAgentViewState() {
+          const agentViewActive = activeApolloView !== 'audit';
           if (agentTableFab) {
-            agentTableFab.classList.toggle('active', !agentChatOpen);
+            agentTableFab.classList.toggle('active', activeApolloView === 'audit');
             agentTableFab.setAttribute(
               'aria-pressed',
-              agentChatOpen ? 'false' : 'true',
+              activeApolloView === 'audit' ? 'true' : 'false',
+            );
+          }
+          if (agentReportFab) {
+            agentReportFab.disabled = false;
+            agentReportFab.classList.toggle(
+              'active',
+              activeApolloView === 'report',
+            );
+            agentReportFab.setAttribute(
+              'aria-pressed',
+              activeApolloView === 'report' ? 'true' : 'false',
             );
           }
           if (agentChatFab) {
             agentChatFab.disabled = false;
-            agentChatFab.classList.toggle('active', agentChatOpen);
+            agentChatFab.classList.toggle(
+              'active',
+              activeApolloView === 'dialogue',
+            );
             agentChatFab.setAttribute(
               'aria-pressed',
-              agentChatOpen ? 'true' : 'false',
+              activeApolloView === 'dialogue' ? 'true' : 'false',
             );
           }
           if (agentChatOverlay) {
-            agentChatOverlay.classList.toggle('visible', agentChatOpen);
+            agentChatOverlay.classList.toggle('visible', agentViewActive);
             agentChatOverlay.setAttribute(
               'aria-hidden',
-              agentChatOpen ? 'false' : 'true',
+              agentViewActive ? 'false' : 'true',
             );
           }
           if (mainEl) {
-            mainEl.classList.toggle('chat-active', agentChatOpen);
+            mainEl.classList.toggle('agent-active', agentViewActive);
           }
           if (workspaceEl) {
-            workspaceEl.classList.toggle('chat-active', agentChatOpen);
-          }
-          if (agentChatMeta) {
-            if (agentRequestInProgress) {
-              agentChatMeta.textContent =
-                agentActiveRequestKind === 'question'
-                  ? 'Apollo думает'
-                  : 'Отправляем отчёт агенту';
-            } else if (agentReportMeta?.suggestedFileName) {
-              const count =
-                typeof agentReportMeta.findingCount === 'number'
-                  ? `, findings: ${agentReportMeta.findingCount}`
-                  : '';
-              agentChatMeta.textContent = `${agentReportMeta.suggestedFileName}${count}`;
-            } else if (scanCompleted) {
-              agentChatMeta.textContent = 'Agent report готовится';
-            } else {
-              agentChatMeta.textContent = 'Отчёт ещё не отправлен';
-            }
+            workspaceEl.classList.toggle('agent-active', agentViewActive);
           }
           if (agentComposerInput) {
             agentComposerInput.disabled = agentRequestInProgress;
           }
           if (agentComposer) {
-            agentComposer.classList.toggle('hidden', hasAgentSystemState());
+            agentComposer.classList.toggle(
+              'hidden',
+              activeApolloView !== 'dialogue',
+            );
           }
           if (agentComposerSubmit) {
             const hasDraft = Boolean(agentComposerInput?.value?.trim());
-            agentComposerSubmit.classList.toggle('is-stop', agentRequestInProgress);
+            const canStopQuestion =
+              agentRequestInProgress && agentActiveRequestKind === 'question';
+            agentComposerSubmit.classList.toggle('is-stop', canStopQuestion);
             agentComposerSubmit.classList.toggle(
               'hidden',
-              !agentRequestInProgress && !hasDraft,
+              !canStopQuestion && !hasDraft,
             );
             agentComposerSubmit.disabled =
-              !agentRequestInProgress && !hasDraft;
+              agentRequestInProgress ? !canStopQuestion : !hasDraft;
             agentComposerSubmit.setAttribute(
               'aria-label',
-              agentRequestInProgress ? 'Остановить ответ' : 'Отправить агенту',
+              canStopQuestion ? 'Остановить ответ' : 'Отправить агенту',
             );
           }
           updateAgentRetryTimer();

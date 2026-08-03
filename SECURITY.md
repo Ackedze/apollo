@@ -10,6 +10,8 @@
 
 Security fixes выпускаются для текущей опубликованной версии Apollo. Старые development builds отдельно не поддерживаются.
 
+Dependabot security updates включены на уровне репозитория и создают PR только при обнаружении известной уязвимости. Плановые version updates отключены; обновление toolchain и runtime dependencies выполняется отдельной задачей с полной валидацией Apollo.
+
 ## Sensitive areas
 
 Особого ревью требуют:

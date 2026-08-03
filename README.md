@@ -279,6 +279,7 @@ Apollo принимает внешние изменения через fork и p
 - Уязвимости передаются приватно по правилам [`SECURITY.md`](./SECURITY.md).
 - `CODEOWNERS` требует участия владельца Apollo, а workflow `Review policy` требует один approval для R0/R1 и два актуальных approvals для R2/R3.
 - Каждый PR обязан пройти `npm run validate`, содержать regression coverage для исправлений и раскрывать использование AI.
+- Плановые Dependabot version updates отключены, чтобы не создавать массовые PR без продуктового контекста. Автоматически создаются только security updates; обычное обновление зависимостей выполняется отдельной согласованной задачей.
 
 Внешним контрибьюторам не нужны release credentials и доступ к пользовательской статистике. Изменения каталогов и cross-repo contracts оформляются отдельно в Athena/design-system_ab и связываются с Apollo PR.
 

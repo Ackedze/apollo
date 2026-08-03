@@ -104,7 +104,7 @@ function ResultsPane({
             title={item.title}
             caption={item.caption}
             showFocus={Boolean(item.id)}
-            onFocus={() => onFocusItem(item.id)}
+            onFocus={() => onFocusItem(item.focusId ?? item.id)}
           />
         );
       })}

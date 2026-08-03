@@ -18,6 +18,7 @@
     "test:audit-policies": "node scripts/test-audit-policies.js",
     "test:component-key-cache": "node scripts/test-component-key-cache.js",
     "test:library-component-freshness": "node scripts/test-library-component-freshness.js",
+    "test:library-update-results": "node scripts/test-library-update-results.js",
     "test:local-component-dependency-audit": "node scripts/test-local-component-dependency-audit.js",
     "test:item-spacing-diff": "node scripts/test-item-spacing-diff.js",
     "test:variant-state-diff": "node scripts/test-variant-state-diff.js",

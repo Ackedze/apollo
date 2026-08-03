@@ -1394,6 +1394,7 @@
           const reactItems = items.map((item) => ({
             kind: 'audit',
             id: item.id,
+            focusId: item.focusNodeId || item.id,
             title: item.name ?? 'Без названия',
             caption: getAuditItemCaption(item) ?? undefined,
           }));
@@ -1905,12 +1906,14 @@
             : [];
           if (updateReasons.includes('library-update-available')) {
             const ownerName = item.localComponentOwner?.name;
+            const variantName = item.resolvedReferenceVariantName;
+            const variantCaption = variantName ? ` · ${variantName}` : '';
             const freshnessCaption = libraryName
               ? `Доступна новая версия · ${libraryName}`
               : 'Доступна новая версия';
             return ownerName
-              ? `${freshnessCaption} · внутри ${ownerName}`
-              : freshnessCaption;
+              ? `${freshnessCaption}${variantCaption} · внутри ${ownerName}`
+              : `${freshnessCaption}${variantCaption}`;
           }
           return libraryName;
         }

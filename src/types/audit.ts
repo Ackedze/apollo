@@ -30,6 +30,8 @@ export interface AuditItem {
   comparisonIssues?: string[];
   updateReasons?: UpdateReason[];
   libraryFreshness?: LibraryComponentFreshness | null;
+  focusNodeId?: string | null;
+  sourceOwnerOccurrenceIds?: string[];
   localComponentOwner?: {
     id: string;
     name: string;

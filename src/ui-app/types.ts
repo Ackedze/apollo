@@ -55,6 +55,7 @@ export type ChromeBridgeOptions = {
 export type AuditResultItem = {
   kind: 'audit' | 'customStyle';
   id: string;
+  focusId?: string;
   title: string;
   caption?: string;
 };

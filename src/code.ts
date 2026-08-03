@@ -66,6 +66,10 @@ import {
   type LibraryComponentFreshnessChecker,
 } from './services/libraryComponentFreshness';
 import {
+  excludeLibraryUpdatesFromCurrent,
+  resolveLibraryUpdateFocusNodeId,
+} from './services/libraryUpdateResults';
+import {
   extractInstanceSublayerSourceNodeIds,
   resolveLocalComponentDefinition,
   walkLocalComponentDependencies,
@@ -1180,6 +1184,7 @@ async function collectTargets(
 ) {
   const themizationEnabled = supportsThemizationForChannel(selectedChannel);
   const localComponentDefinitions = new Map<string, ComponentNode>();
+  const localComponentFocusNodeIds = new Map<string, Set<string>>();
   const resolvedFlattenedSourceIds = new Set<string>();
   const rejectedFlattenedSourceIds = new Set<string>();
   const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
@@ -1220,7 +1225,12 @@ async function collectTargets(
           isRemoteComponent: (component) => component.remote,
         });
         if (localDefinition) {
-          registerComponentDefinition(localComponentDefinitions, localDefinition);
+          registerComponentDefinition(
+            localComponentDefinitions,
+            localComponentFocusNodeIds,
+            localDefinition,
+            node.id,
+          );
         }
 
         const item = await classifyNode(
@@ -1249,7 +1259,12 @@ async function collectTargets(
             includeRemoteDefinition: true,
           });
           if (localDefinition) {
-            registerComponentDefinition(localComponentDefinitions, localDefinition);
+            registerComponentDefinition(
+              localComponentDefinitions,
+              localComponentFocusNodeIds,
+              localDefinition,
+              node.id,
+            );
           }
         }
 
@@ -1264,6 +1279,7 @@ async function collectTargets(
           await registerFlattenedLocalComponentDefinition(
             node,
             localComponentDefinitions,
+            localComponentFocusNodeIds,
             resolvedFlattenedSourceIds,
             rejectedFlattenedSourceIds,
           );
@@ -1416,12 +1432,16 @@ async function collectTargets(
       isRemoteComponent: (component) => component.remote,
       isVisible: isNodeVisibleSafe,
       onRemoteDependency: async (node, owner, index) => {
+        const ownerIdentity = getComponentDefinitionIdentity(owner);
         const dependency = await classifyLocalComponentDependency(
           node as InstanceNode,
           owner,
           componentKeyCache,
           libraryComponentFreshnessChecker,
           localDependencyKeys,
+          Array.from(
+            localComponentFocusNodeIds.get(ownerIdentity) ?? [owner.id],
+          ),
           throwIfCancelled,
         );
         if (
@@ -1441,11 +1461,22 @@ async function collectTargets(
   const existingUpdateIds = new Set(
     checkState.relevanceBuckets.update.map((item) => item.id),
   );
+  const usedUpdateFocusNodeIds = new Set<string>();
   for (const dependency of localDependencyResults) {
     if (!dependency || existingUpdateIds.has(dependency.id)) continue;
+    dependency.focusNodeId = resolveLibraryUpdateFocusNodeId(
+      dependency,
+      checkState.relevanceBuckets.current,
+      usedUpdateFocusNodeIds,
+    );
+    usedUpdateFocusNodeIds.add(dependency.focusNodeId);
     existingUpdateIds.add(dependency.id);
     checkState.relevanceBuckets.update.push(dependency);
   }
+  checkState.relevanceBuckets.current = excludeLibraryUpdatesFromCurrent(
+    checkState.relevanceBuckets.current,
+    checkState.relevanceBuckets.update,
+  );
 
   const freshnessStatsAfter = libraryComponentFreshnessChecker.getStats();
   logAuditMetric('local-component-dependency-audit', {
@@ -1473,9 +1504,15 @@ function getComponentDefinitionIdentity(component: ComponentNode): string {
 
 function registerComponentDefinition(
   definitions: Map<string, ComponentNode>,
+  focusNodeIds: Map<string, Set<string>>,
   component: ComponentNode,
+  focusNodeId: string,
 ): void {
-  definitions.set(getComponentDefinitionIdentity(component), component);
+  const identity = getComponentDefinitionIdentity(component);
+  definitions.set(identity, component);
+  const occurrences = focusNodeIds.get(identity) ?? new Set<string>();
+  occurrences.add(focusNodeId);
+  focusNodeIds.set(identity, occurrences);
 }
 
 function findLocalComponentAncestor(node: BaseNode): ComponentNode | null {
@@ -1492,6 +1529,7 @@ function findLocalComponentAncestor(node: BaseNode): ComponentNode | null {
 async function registerFlattenedLocalComponentDefinition(
   renderedNode: InstanceNode,
   definitions: Map<string, ComponentNode>,
+  focusNodeIds: Map<string, Set<string>>,
   resolvedSourceIds: Set<string>,
   rejectedSourceIds: Set<string>,
 ): Promise<void> {
@@ -1520,7 +1558,12 @@ async function registerFlattenedLocalComponentDefinition(
     }
 
     resolvedSourceIds.add(sourceId);
-    registerComponentDefinition(definitions, owner);
+    registerComponentDefinition(
+      definitions,
+      focusNodeIds,
+      owner,
+      renderedNode.id,
+    );
     traceAudit('flattened-local-component-source-resolved', {
       renderedNodeId: renderedNode.id,
       renderedNodeName: renderedNode.name,
@@ -1539,6 +1582,7 @@ async function classifyLocalComponentDependency(
   componentKeyCache: Map<string, string | null>,
   libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
   observedComponentKeys: Set<string>,
+  focusNodeIds: string[],
   throwIfCancelled: () => void,
 ): Promise<AuditItem | null> {
   throwIfCancelled();
@@ -1595,6 +1639,8 @@ async function classifyLocalComponentDependency(
     comparisonIssues: [],
     updateReasons: ['library-update-available'],
     libraryFreshness,
+    focusNodeId: focusNodeIds[0] ?? owner.id,
+    sourceOwnerOccurrenceIds: focusNodeIds,
     localComponentOwner: {
       id: owner.id,
       name: owner.name,

@@ -543,8 +543,8 @@ function main() {
     },
     scan: {
       channel: 'Desktop',
-      startedAt: new Date('2026-06-06T09:00:00.000Z'),
-      finishedAt: new Date('2026-06-06T09:00:01.500Z'),
+      startedAt: new Date(2026, 5, 6, 12, 0, 0, 0),
+      finishedAt: new Date(2026, 5, 6, 12, 0, 1, 500),
       selection: [],
       settings: {
         shellAuditEnabled: false,

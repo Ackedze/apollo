@@ -10,10 +10,12 @@
 | --- | --- | --- |
 | R0 | Документация, шаблоны, комментарии без изменения runtime | 1 approval |
 | R1 | Изолированный UI, стили, developer tooling без изменения audit semantics | 1 approval и Figma evidence для UI |
-| R2 | Audit classification, snapshot/diff, assessment, filters, policies, reference loading, contracts, stats, Agent | 2 актуальных approvals, один от code owner |
-| R3 | Manifest permissions/domains, network transport, dependencies, workflows, build/release и privacy boundary | 2 актуальных approvals, один от code owner, явная security-проверка |
+| R2 | Audit classification, snapshot/diff, assessment, filters, policies, reference loading, contracts, stats, Agent | 1 актуальный trusted approval от code owner |
+| R3 | Manifest permissions/domains, network transport, dependencies, workflows, build/release и privacy boundary | 1 актуальный trusted approval от code owner и явная security-проверка |
 
 Workflow `Review policy` вычисляет риск по изменённым путям. Approval считается актуальным, только если он относится к текущему head commit PR и оставлен участником с `write`, `maintain` или `admin` permission. Более строгая классификация имеет приоритет.
+
+Сейчас Apollo работает в single-maintainer mode: для любого уровня риска требуется один актуальный trusted approval. После назначения второго независимого maintainer с `write`, `maintain` или `admin` требование для R2/R3 должно быть возвращено к двум approvals; до этого порог `2` делает policy технически невыполнимой и вынуждает использовать admin bypass.
 
 ## Проверка автором
 

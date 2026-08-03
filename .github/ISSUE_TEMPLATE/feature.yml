@@ -1,0 +1,55 @@
+name: Feature request
+description: Предложение новой функции или изменения поведения Apollo
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Пользовательский сценарий
+      description: Кто, в каком контексте и какую задачу решает?
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Проблема текущего поведения
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Ожидаемый результат
+      description: Опишите поведение, а не внутреннюю реализацию.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предлагаемое решение
+      description: Необязательно. Укажите альтернативы и trade-offs, если они известны.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Область
+      options:
+        - Audit и категории
+        - Кастомизации и reset
+        - Каталоги и contracts
+        - UI
+        - Статистика
+        - Agent
+        - Performance
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии приёмки
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true

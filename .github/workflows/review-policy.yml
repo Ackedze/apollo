@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check risk and current approvals
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const pull = context.payload.pull_request;
@@ -59,7 +59,9 @@ jobs:
 
             const matchesAny = (patterns) => paths.some((path) => patterns.some((pattern) => pattern.test(path)));
             const risk = matchesAny(r3Patterns) ? 'R3' : matchesAny(r2Patterns) ? 'R2' : paths.some((path) => path.startsWith('src/')) ? 'R1' : 'R0';
-            const requiredApprovals = risk === 'R2' || risk === 'R3' ? 2 : 1;
+            // Apollo currently has one trusted maintainer. Keep the gate enforceable
+            // until a second maintainer can provide an independent trusted approval.
+            const requiredApprovals = 1;
 
             const reviews = await github.paginate(github.rest.pulls.listReviews, {
               owner,
@@ -93,6 +95,7 @@ jobs:
                 [{ data: 'Risk', header: true }, { data: 'Required approvals', header: true }, { data: 'Current approvals', header: true }],
                 [risk, String(requiredApprovals), String(approvals.length)],
               ])
+              .addRaw('\nSingle-maintainer mode: one current trusted approval is required for every risk level.\n')
               .addDetails('Changed files', paths.map((path) => `- ${path}`).join('\n'))
               .write();
 

@@ -277,7 +277,7 @@ Apollo принимает внешние изменения через fork и p
 - Уровни риска, требуемые approvals и критерии code review заданы в [`docs/REVIEW_POLICY.md`](./docs/REVIEW_POLICY.md).
 - Автоматические и ручные Figma-проверки описаны в [`docs/TESTING.md`](./docs/TESTING.md).
 - Уязвимости передаются приватно по правилам [`SECURITY.md`](./SECURITY.md).
-- `CODEOWNERS` требует участия владельца Apollo, а workflow `Review policy` требует один approval для R0/R1 и два актуальных approvals для R2/R3.
+- `CODEOWNERS` требует участия владельца Apollo, а workflow `Review policy` в текущем single-maintainer mode требует один актуальный trusted approval от code owner для любого уровня риска. После назначения второго maintainer порог R2/R3 должен быть возвращён к двум approvals.
 - Каждый PR обязан пройти `npm run validate`, содержать regression coverage для исправлений и раскрывать использование AI.
 - Плановые Dependabot version updates отключены, чтобы не создавать массовые PR без продуктового контекста. Автоматически создаются только security updates; обычное обновление зависимостей выполняется отдельной согласованной задачей.
 

@@ -6,6 +6,10 @@ import type {
   ThemeAuditEntry,
 } from '../types/audit';
 import type {
+  LibraryComponentFreshness,
+} from '../services/libraryComponentFreshness';
+import type { UpdateReason } from '../types/audit';
+import type {
   RuntimeAuditPresentation,
   RuntimeComponentAgentContext,
 } from '../contracts/artifactContext';
@@ -65,6 +69,9 @@ export type StatsComponentItem = {
   component: StatsResource;
   variant: StatsResource | null;
   comparisonIssues: string[];
+  updateReasons: UpdateReason[];
+  libraryFreshness: LibraryComponentFreshness | null;
+  localComponentOwner: StatsNode | null;
 };
 
 export type StatsCustomizationChange = {
@@ -228,6 +235,9 @@ export type ApolloAgentFinding = {
   kind?: string;
   recommendation?: string;
   comparisonIssues?: string[];
+  updateReasons?: UpdateReason[];
+  libraryFreshness?: LibraryComponentFreshness | null;
+  localComponentOwner?: StatsNode | null;
   changes?: Array<{
     node: StatsNode;
     kind: string;

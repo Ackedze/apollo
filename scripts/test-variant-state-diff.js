@@ -92,7 +92,7 @@ function main() {
   assert.equal(diffs.length, 1);
   assert.equal(diffs[0].nodeId, '1:button');
   assert.equal(diffs[0].nodeName, '[D] Button');
-  assert.equal(diffs[0].message, 'singleIcon: false → true');
+  assert.equal(diffs[0].message, 'singleIcon: False → True');
   assert.equal(diffs[0].details.property, 'variant.SingleIcon');
   assert.equal(diffs[0].details.reference.value, 'False');
   assert.equal(diffs[0].details.actual.value, 'True');
@@ -151,7 +151,7 @@ function main() {
   );
   assert.deepEqual(
     duplicateButtonDiffs.map((diff) => `${diff.nodeId}:${diff.message}`),
-    ['dup:button:3:singleIcon: false → true'],
+    ['dup:button:3:singleIcon: False → True'],
     'Explicit nested variant state diff must preserve the third duplicate Button occurrence',
   );
   assert.equal(
@@ -186,7 +186,7 @@ function main() {
   const mixedCaseDiffs = diffStructures(mixedCaseActual, reference).diffs;
   assert.deepEqual(
     mixedCaseDiffs.map((diff) => diff.message),
-    ['singleIcon: false → true'],
+    ['singleIcon: False → True'],
     'Variant property comparison must match reference and actual keys case-insensitively',
   );
   assert.equal(mixedCaseDiffs[0].details.property, 'variant.SingleIcon');
@@ -325,7 +325,7 @@ function main() {
     ['variant.SingleIcon'],
     'Default variant states should be suppressed, but changed SingleIcon=True must stay visible',
   );
-  assert.equal(unanchored[0].message, 'singleIcon: false → true');
+  assert.equal(unanchored[0].message, 'singleIcon: False → True');
   assert.equal(unanchored[0].details.reference.value, 'False');
   assert.equal(unanchored[0].details.actual.value, 'True');
 

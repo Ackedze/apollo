@@ -1,7 +1,9 @@
 import type { LibraryComponent } from '../reference/libraryTypes';
+import type { LibraryComponentFreshness } from '../services/libraryComponentFreshness';
 import type { DiffEntry } from '../structure/diff';
 
 export type RelevanceStatus = 'technical' | 'deprecated' | 'update' | 'current' | 'unknown';
+export type UpdateReason = 'catalog-lifecycle' | 'library-update-available';
 export type ThemeAuditKind = 'corporateComponent' | 'missingThemeMode';
 
 export interface PathSegment {
@@ -26,6 +28,14 @@ export interface AuditItem {
   componentKey: string | null;
   diffs: DiffEntry[];
   comparisonIssues?: string[];
+  updateReasons?: UpdateReason[];
+  libraryFreshness?: LibraryComponentFreshness | null;
+  localComponentOwner?: {
+    id: string;
+    name: string;
+    pageName: string;
+    fullPath: string;
+  } | null;
   customStyleReasons?: string[];
   forcedCategory?: 'technical' | 'deprecated' | null;
   forcedCategoryReason?: string | null;

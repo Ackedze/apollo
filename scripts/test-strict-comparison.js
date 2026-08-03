@@ -104,6 +104,64 @@ function main() {
     'An available overridden instance-root fill must still be reported as a customization',
   );
 
+  const samePublishedFillStyle = diffStructures(
+    [
+      node('INSTANCE', {
+        styles: {
+          fill: {
+            styleKey:
+              'S:27ba925a81fd8c8a03755940253f21d1c9099141,317:32',
+          },
+        },
+      }),
+    ],
+    [
+      node('COMPONENT', {
+        styles: {
+          fill: {
+            styleKey:
+              'S:27ba925a81fd8c8a03755940253f21d1c9099141,3:5352',
+          },
+        },
+      }),
+    ],
+    {
+      strict: true,
+      resolveStyleLabel: (styleId) => styleId,
+    },
+  );
+  assert.equal(
+    samePublishedFillStyle.diffs.some(
+      (entry) => entry.details?.property === 'styles.fill',
+    ),
+    false,
+    'The same published style key with different document-local suffixes must not create a customization',
+  );
+
+  const changedPublishedFillStyle = diffStructures(
+    [
+      node('INSTANCE', {
+        styles: { fill: { styleKey: 'S:actual-style-key,317:32' } },
+      }),
+    ],
+    [
+      node('COMPONENT', {
+        styles: { fill: { styleKey: 'S:reference-style-key,3:5352' } },
+      }),
+    ],
+    {
+      strict: true,
+      resolveStyleLabel: (styleId) => styleId,
+    },
+  );
+  assert.equal(
+    changedPublishedFillStyle.diffs.some(
+      (entry) => entry.details?.property === 'styles.fill',
+    ),
+    true,
+    'Different published style keys must remain visible as customizations',
+  );
+
   console.log('Strict comparison regression checks passed');
 }
 

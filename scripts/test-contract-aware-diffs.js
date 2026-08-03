@@ -167,6 +167,16 @@ function main() {
         },
       },
     },
+    {
+      aliases: ['PlatePresets', '[D] PlatePresets'],
+      contract: {
+        componentKey: 'web-core-notification.plate-presets',
+        component: {
+          name: 'PlatePresets',
+          library: 'Web :: Core Notification',
+        },
+      },
+    },
   ];
 
   const hostReference = [
@@ -598,6 +608,85 @@ function main() {
   assert.deepEqual(backgroundPlateSuppressed.matchedContractKeys, [
     'web-corp.background-plate',
   ]);
+
+  const referenceTokenId =
+    'VariableID:446796436fc66df888a34eb47bed90e03f35a09b/3:5352';
+  const actualTokenId =
+    'VariableID:1dbf6f949ab6753565f96f80d91562f0660536f0/317:32';
+  const plateReference = [
+    makeNode(1, 'View=Common, BorderRadius=16, Border=False', '[D] PlatePresets', {
+      type: 'COMPONENT',
+      fill: { color: '#F2F3F5', token: referenceTokenId },
+    }),
+  ];
+  const plateActual = [
+    makeNode(1, 'View=Common, BorderRadius=16, Border=False', '[D] PlatePresets', {
+      type: 'INSTANCE',
+      fill: { color: '#FFFFFF', token: actualTokenId },
+    }),
+  ];
+  const tokenBindingDiff = makeDiff(
+    'View=Common, BorderRadius=16, Border=False',
+    'fill',
+    'neutral-translucent/200',
+    'neutral/0',
+  );
+  tokenBindingDiff.details.reference = {
+    value: 'neutral-translucent/200',
+    resourceType: 'token',
+    resourceId: referenceTokenId,
+    displayName: 'neutral-translucent/200',
+    binding: {
+      id: referenceTokenId,
+      key: '446796436fc66df888a34eb47bed90e03f35a09b',
+      name: 'neutral-translucent/200',
+      collectionId: 'colors',
+      collectionName: 'Interface Dynamic',
+      resolvedModeId: 'light',
+      resolvedModeName: 'Light',
+      explicitModeId: null,
+      explicitModeName: null,
+      modeSource: 'resolved',
+      modeOwnerNodeId: null,
+      modeOwnerName: null,
+      modeOwnerPath: null,
+    },
+  };
+  tokenBindingDiff.details.actual = {
+    value: 'neutral/0',
+    resourceType: 'token',
+    resourceId: actualTokenId,
+    displayName: 'neutral/0',
+  };
+  tokenBindingDiff.details.bindingStatus = 'different-binding';
+
+  const preservedTokenBinding = applyContractAwareDiffs([tokenBindingDiff], {
+    enabled: true,
+    hostComponentKey: 'plate-presets-key',
+    hostComponentName: '[D] PlatePresets',
+    actualStructure: plateActual,
+    hostReference: plateReference,
+    resolveStyleLabel: () => null,
+  });
+
+  assert.equal(
+    preservedTokenBinding.rebasedCount,
+    0,
+    'A human-readable token reference must not be rebased when it already identifies the host token',
+  );
+  assert.equal(
+    preservedTokenBinding.diffs[0].details.reference.displayName,
+    'neutral-translucent/200',
+  );
+  assert.equal(
+    preservedTokenBinding.diffs[0].details.bindingStatus,
+    'different-binding',
+    'Contract processing must preserve variable-binding evidence',
+  );
+  assert.equal(
+    preservedTokenBinding.diffs[0].message,
+    'fill: neutral-translucent/200 → neutral/0',
+  );
 
   console.log('Contract-aware diff regression checks passed');
 }

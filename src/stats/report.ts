@@ -200,6 +200,18 @@ function componentItem(item: AuditItem): StatsComponentItem {
           }
         : null,
     comparisonIssues: item.comparisonIssues ?? [],
+    updateReasons: item.updateReasons ?? [],
+    libraryFreshness: item.libraryFreshness ?? null,
+    localComponentOwner: item.localComponentOwner
+      ? {
+          id: item.localComponentOwner.id,
+          name: item.localComponentOwner.name,
+          type: 'COMPONENT',
+          pageName: item.localComponentOwner.pageName,
+          path: item.localComponentOwner.fullPath,
+          visible: true,
+        }
+      : null,
   };
 }
 
@@ -213,6 +225,9 @@ function customizationItem(
     component: component.component,
     variant: component.variant,
     comparisonIssues: component.comparisonIssues,
+    updateReasons: component.updateReasons,
+    libraryFreshness: component.libraryFreshness,
+    localComponentOwner: component.localComponentOwner,
     changes: (item.diffs ?? []).map((diff) =>
       customizationChange(diff, item, input),
     ),

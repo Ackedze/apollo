@@ -914,7 +914,7 @@ function variantValuesEqual(left: string | null, right: string | null): boolean 
 }
 
 function formatVariantValue(value: string | null): string {
-  return value ? value.toLowerCase() : '—';
+  return value || '—';
 }
 
 function comparePadding(
@@ -1148,6 +1148,13 @@ function compareStyle(
   if (reference === undefined) return false;
 
   if ((actual ?? null) === (reference ?? null)) return false;
+  if (
+    actual &&
+    reference &&
+    canonicalStyleIdentity(actual) === canonicalStyleIdentity(reference)
+  ) {
+    return false;
+  }
 
   const formatStyle = (styleKey: string | null | undefined) => {
     if (!styleKey) return '—';
@@ -1213,6 +1220,14 @@ function compareStyle(
   );
 
   return true;
+}
+
+function canonicalStyleIdentity(styleId: string): string {
+  const normalized = styleId.trim();
+  if (!normalized.startsWith('S:')) {
+    return normalized;
+  }
+  return normalized.slice(2).split(',')[0].trim();
 }
 
 function describePaintValue(

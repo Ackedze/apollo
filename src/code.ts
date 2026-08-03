@@ -42,7 +42,12 @@ import {
   makeOccurrenceKey,
 } from './structure/occurrenceKeys';
 import type { DSStructureNode } from './types/structures';
-import type { AuditItem, PathSegment, RelevanceStatus } from './types/audit';
+import type {
+  AuditItem,
+  PathSegment,
+  RelevanceStatus,
+  UpdateReason,
+} from './types/audit';
 import { LEFT_SECTION_ORDER, tabDefinitions } from './config/tabs';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
@@ -55,6 +60,16 @@ import {
   collectDeprecatedStyleUsages,
   type DeprecatedStyleCollectionOptions,
 } from './services/deprecatedStyleAudit';
+import {
+  createLibraryComponentFreshnessChecker,
+  getLibraryComponentFreshnessScope,
+  type LibraryComponentFreshnessChecker,
+} from './services/libraryComponentFreshness';
+import {
+  extractInstanceSublayerSourceNodeIds,
+  resolveLocalComponentDefinition,
+  walkLocalComponentDependencies,
+} from './services/localComponentDependencyAudit';
 import {
   ensureStyleMetadataLoaded,
   extractStyleKey,
@@ -305,6 +320,7 @@ let lastAuditChannel: AuditChannel = 'Desktop';
 const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
+const LOCAL_DEPENDENCY_CONCURRENCY = 4;
 
 class AuditCancelledError extends Error {
   constructor() {
@@ -487,6 +503,10 @@ async function runAudit(
     const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
     const localComponentContextCache = new Map<string, boolean>();
     const checkedComponentNodesList = new Set<string>();
+    const libraryComponentFreshnessChecker =
+      createLibraryComponentFreshnessChecker((componentKey) =>
+        figma.importComponentByKeyAsync(componentKey),
+      );
 
     const customStyleReasonOptions: CustomStyleCollectionOptions = {
       tokenLabelMap: tokenLabelMap ?? new Map(),
@@ -508,6 +528,7 @@ async function runAudit(
       customStyleReasonOptions,
       deprecatedStyleOptions,
       checkedComponentNodesList,
+      libraryComponentFreshnessChecker,
       Boolean(options?.shellAuditEnabled),
       throwIfCancelled,
     );
@@ -1153,10 +1174,14 @@ async function collectTargets(
   customStyleReasonOptions: CustomStyleCollectionOptions,
   deprecatedStyleOptions: DeprecatedStyleCollectionOptions,
   checkedComponentNodesList: Set<string>,
+  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
   shellAuditEnabled: boolean,
   throwIfCancelled: () => void,
 ) {
   const themizationEnabled = supportsThemizationForChannel(selectedChannel);
+  const localComponentDefinitions = new Map<string, ComponentNode>();
+  const resolvedFlattenedSourceIds = new Set<string>();
+  const rejectedFlattenedSourceIds = new Set<string>();
   const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
     try {
       return 'visible' in candidate ? (candidate as SceneNode & { visible: boolean }).visible !== false : true;
@@ -1183,15 +1208,66 @@ async function collectTargets(
       let subtreeForcedCategory: 'technical' | 'deprecated' | null = null;
 
       if (nodeIsComponent) {
+        let localDefinition = await resolveLocalComponentDefinition<
+          SceneNode,
+          ComponentNode
+        >(node, {
+          getNodeType: (candidate) => candidate.type,
+          getMainComponent: async (candidate) =>
+            candidate.type === 'INSTANCE'
+              ? await (candidate as InstanceNode).getMainComponentAsync()
+              : null,
+          isRemoteComponent: (component) => component.remote,
+        });
+        if (localDefinition) {
+          registerComponentDefinition(localComponentDefinitions, localDefinition);
+        }
+
         const item = await classifyNode(
           node,
+          localDefinition,
           referenceStructureCache,
           componentKeyCache,
           localComponentContextCache,
           checkedComponentNodesList,
+          libraryComponentFreshnessChecker,
           throwIfCancelled,
         );
         throwIfCancelled();
+
+        if (!localDefinition && item.isLocal) {
+          localDefinition = await resolveLocalComponentDefinition<
+            SceneNode,
+            ComponentNode
+          >(node, {
+            getNodeType: (candidate) => candidate.type,
+            getMainComponent: async (candidate) =>
+              candidate.type === 'INSTANCE'
+                ? await (candidate as InstanceNode).getMainComponentAsync()
+                : null,
+            isRemoteComponent: (component) => component.remote,
+            includeRemoteDefinition: true,
+          });
+          if (localDefinition) {
+            registerComponentDefinition(localComponentDefinitions, localDefinition);
+          }
+        }
+
+        if (item.isLocal) {
+          checkState.localLibraryItems.push(item);
+        }
+
+        if (
+          node.type === 'INSTANCE' &&
+          getLibraryComponentFreshnessScope(node) === 'instance-sublayer'
+        ) {
+          await registerFlattenedLocalComponentDefinition(
+            node,
+            localComponentDefinitions,
+            resolvedFlattenedSourceIds,
+            rejectedFlattenedSourceIds,
+          );
+        }
 
         if (!shellAuditEnabled && isShellComponentAuditExcluded(item)) {
           traceAudit('shell-subtree-skipped', {
@@ -1234,10 +1310,6 @@ async function collectTargets(
 
         if (!subtreeForcedCategory && item.reference && wrongChannel) {
           checkState.wrongChannelEntries.push(item);
-        }
-
-        if (!subtreeForcedCategory && item.isLocal) {
-          checkState.localLibraryItems.push(item);
         }
 
         if (!subtreeForcedCategory && isPresetCandidate(item)) {
@@ -1323,6 +1395,229 @@ async function collectTargets(
     throwIfCancelled();
     await visit(node as SceneNode);
   }
+
+  const localDependencyStartedAt = getTimestamp();
+  const freshnessStatsBefore = libraryComponentFreshnessChecker.getStats();
+  const localDependencyKeys = new Set<string>();
+  const localDependencyResults: Array<AuditItem | null | undefined> = [];
+  const localDependencyStats = await walkLocalComponentDependencies<SceneNode, ComponentNode>(
+    Array.from(localComponentDefinitions.values()),
+    {
+      getNodeId: (node) => node.id,
+      getNodeType: (node) => node.type,
+      getChildren: (node) =>
+        'children' in node
+          ? Array.from(node.children) as SceneNode[]
+          : [],
+      getMainComponent: async (node) =>
+        node.type === 'INSTANCE'
+          ? await (node as InstanceNode).getMainComponentAsync()
+          : null,
+      isRemoteComponent: (component) => component.remote,
+      isVisible: isNodeVisibleSafe,
+      onRemoteDependency: async (node, owner, index) => {
+        const dependency = await classifyLocalComponentDependency(
+          node as InstanceNode,
+          owner,
+          componentKeyCache,
+          libraryComponentFreshnessChecker,
+          localDependencyKeys,
+          throwIfCancelled,
+        );
+        if (
+          dependency &&
+          (!shellAuditEnabled && isShellComponentAuditExcluded(dependency))
+        ) {
+          localDependencyResults[index] = null;
+          return;
+        }
+        localDependencyResults[index] = dependency;
+      },
+      dependencyConcurrency: LOCAL_DEPENDENCY_CONCURRENCY,
+      throwIfCancelled,
+    },
+  );
+
+  const existingUpdateIds = new Set(
+    checkState.relevanceBuckets.update.map((item) => item.id),
+  );
+  for (const dependency of localDependencyResults) {
+    if (!dependency || existingUpdateIds.has(dependency.id)) continue;
+    existingUpdateIds.add(dependency.id);
+    checkState.relevanceBuckets.update.push(dependency);
+  }
+
+  const freshnessStatsAfter = libraryComponentFreshnessChecker.getStats();
+  logAuditMetric('local-component-dependency-audit', {
+    totalMs: Number((getTimestamp() - localDependencyStartedAt).toFixed(1)),
+    registeredDefinitions: localComponentDefinitions.size,
+    ownerDefinitions: localDependencyStats.ownerDefinitions,
+    visitedSourceNodes: localDependencyStats.visitedSourceNodes,
+    remoteDependencies: localDependencyStats.remoteDependencies,
+    uniqueDependencyKeys: localDependencyKeys.size,
+    updateFindings: localDependencyResults.filter(Boolean).length,
+    concurrency: LOCAL_DEPENDENCY_CONCURRENCY,
+    freshnessChecks:
+      freshnessStatsAfter.checks - freshnessStatsBefore.checks,
+    importCacheHits:
+      freshnessStatsAfter.importCacheHits - freshnessStatsBefore.importCacheHits,
+    importCacheMisses:
+      freshnessStatsAfter.importCacheMisses - freshnessStatsBefore.importCacheMisses,
+  });
+}
+
+function getComponentDefinitionIdentity(component: ComponentNode): string {
+  const componentKey = component.key.trim();
+  return componentKey ? `key:${componentKey}` : `id:${component.id}`;
+}
+
+function registerComponentDefinition(
+  definitions: Map<string, ComponentNode>,
+  component: ComponentNode,
+): void {
+  definitions.set(getComponentDefinitionIdentity(component), component);
+}
+
+function findLocalComponentAncestor(node: BaseNode): ComponentNode | null {
+  let current: BaseNode | null = node.parent;
+  while (current) {
+    if (current.type === 'COMPONENT') {
+      return current.remote ? null : current;
+    }
+    current = current.parent;
+  }
+  return null;
+}
+
+async function registerFlattenedLocalComponentDefinition(
+  renderedNode: InstanceNode,
+  definitions: Map<string, ComponentNode>,
+  resolvedSourceIds: Set<string>,
+  rejectedSourceIds: Set<string>,
+): Promise<void> {
+  const sourceIds = extractInstanceSublayerSourceNodeIds(renderedNode.id);
+  for (const sourceId of sourceIds) {
+    if (resolvedSourceIds.has(sourceId)) return;
+    if (rejectedSourceIds.has(sourceId)) continue;
+
+    let sourceNode: BaseNode | null = null;
+    try {
+      sourceNode = await figma.getNodeByIdAsync(sourceId);
+    } catch (_error) {
+      rejectedSourceIds.add(sourceId);
+      continue;
+    }
+
+    if (!sourceNode || !('parent' in sourceNode)) {
+      rejectedSourceIds.add(sourceId);
+      continue;
+    }
+
+    const owner = findLocalComponentAncestor(sourceNode);
+    if (!owner) {
+      rejectedSourceIds.add(sourceId);
+      continue;
+    }
+
+    resolvedSourceIds.add(sourceId);
+    registerComponentDefinition(definitions, owner);
+    traceAudit('flattened-local-component-source-resolved', {
+      renderedNodeId: renderedNode.id,
+      renderedNodeName: renderedNode.name,
+      sourceNodeId: sourceId,
+      sourceNodeName: 'name' in sourceNode ? sourceNode.name : null,
+      ownerComponentId: owner.id,
+      ownerComponentName: owner.name,
+    });
+    return;
+  }
+}
+
+async function classifyLocalComponentDependency(
+  node: InstanceNode,
+  owner: ComponentNode,
+  componentKeyCache: Map<string, string | null>,
+  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
+  observedComponentKeys: Set<string>,
+  throwIfCancelled: () => void,
+): Promise<AuditItem | null> {
+  throwIfCancelled();
+  const componentKey = await getComponentKeyCached(node, componentKeyCache, {
+    retryIfMissing: true,
+  });
+  if (!componentKey) return null;
+  observedComponentKeys.add(componentKey);
+
+  let ref = findComponent(componentKey);
+  if (!ref) {
+    await ensureReferenceCatalogsForKeys([componentKey]);
+    ref = findComponent(componentKey);
+  }
+  if (!ref || getForcedAuditCategory(ref)) return null;
+
+  const libraryFreshness = await libraryComponentFreshnessChecker.check(
+    node,
+    'independent-instance',
+  );
+  throwIfCancelled();
+  if (libraryFreshness.status !== 'update-available') return null;
+
+  const nodeSegments = buildNodeSegments(node);
+  const pathSegments =
+    nodeSegments.length > 1
+      ? nodeSegments.slice(1)
+      : nodeSegments.length
+        ? nodeSegments
+        : [{ id: node.id, label: node.name, nodeType: node.type, visible: true }];
+  const instanceVariantProperties = node.variantProperties ?? null;
+  const resolvedReferenceVariantKey = resolveVariantKeyForInstance(
+    ref,
+    componentKey,
+    instanceVariantProperties,
+  );
+  const resolvedReferenceVariantName =
+    ref.variants?.find((variant) => variant?.key === resolvedReferenceVariantKey)?.name ?? null;
+
+  const item: AuditItem = {
+    id: node.id,
+    name: node.name,
+    nodeType: node.type,
+    pageName: getPageName(node),
+    pathSegments,
+    fullPath: buildNodePath(node),
+    relevance: 'update',
+    librarySource: ref.source ?? null,
+    librarySourceFile: ref.sourceFile ?? null,
+    isLocal: false,
+    reference: ref,
+    componentKey,
+    diffs: [],
+    comparisonIssues: [],
+    updateReasons: ['library-update-available'],
+    libraryFreshness,
+    localComponentOwner: {
+      id: owner.id,
+      name: owner.name,
+      pageName: getPageName(owner),
+      fullPath: buildNodePath(owner),
+    },
+    resolvedReferenceVariantKey,
+    resolvedReferenceVariantName,
+  };
+
+  traceAudit('local-component-library-dependency', {
+    nodeId: node.id,
+    nodeName: node.name,
+    componentKey,
+    ownerComponentId: owner.id,
+    ownerComponentName: owner.name,
+    status: libraryFreshness.status,
+    currentComponentId: libraryFreshness.currentComponentId,
+    latestComponentId: libraryFreshness.latestComponentId,
+    categoryDecision: 'update',
+  });
+
+  return item;
 }
 
 /**
@@ -1331,10 +1626,12 @@ async function collectTargets(
  */
 async function classifyNode(
   node: SceneNode,
+  nativeLocalDefinition: ComponentNode | null,
   referenceStructureCache: Map<string, DSStructureNode[] | null>,
   componentKeyCache: Map<string, string | null>,
   localComponentContextCache: Map<string, boolean>,
   checkedComponentNodesList: Set<string>,
+  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
   throwIfCancelled: () => void,
 ): Promise<AuditItem> {
   throwIfCancelled();
@@ -1362,14 +1659,13 @@ async function classifyNode(
 
   if (!componentKey || !ref) {
     reportMissingReference(node.name, componentKey);
-    const isRemoteLibraryNode = await getIsRemoteLibraryNode(node);
 
     return {
       id: node.id,
       name: node.name,
       nodeType: node.type,
       relevance: 'unknown',
-      isLocal: !isRemoteLibraryNode,
+      isLocal: true,
       pageName,
       pathSegments,
       fullPath,
@@ -1380,6 +1676,15 @@ async function classifyNode(
       diffs: []
     }
   }
+
+  const libraryFreshness =
+    node.type === 'INSTANCE'
+      ? await libraryComponentFreshnessChecker.check(
+          node as InstanceNode,
+          getLibraryComponentFreshnessScope(node),
+        )
+      : null;
+  throwIfCancelled();
 
   const comparisonIssues: string[] = [];
   const instanceVariantProperties =
@@ -1675,7 +1980,32 @@ async function classifyNode(
     });
   }
 
-  const relevance = forcedCategory ?? normalizeRelevanceStatus(ref.status);
+  const catalogRelevance = normalizeRelevanceStatus(ref.status);
+  const updateReasons: UpdateReason[] = [];
+  if (catalogRelevance === 'update') {
+    updateReasons.push('catalog-lifecycle');
+  }
+  if (libraryFreshness?.status === 'update-available') {
+    updateReasons.push('library-update-available');
+  }
+  const relevance =
+    forcedCategory ??
+    (libraryFreshness?.status === 'update-available'
+      ? 'update'
+      : catalogRelevance);
+
+  if (libraryFreshness && libraryFreshness.status !== 'not-applicable') {
+    traceAudit('library-component-freshness', {
+      nodeId: node.id,
+      nodeName: node.name,
+      componentKey,
+      status: libraryFreshness.status,
+      reason: libraryFreshness.reason,
+      currentComponentId: libraryFreshness.currentComponentId,
+      latestComponentId: libraryFreshness.latestComponentId,
+      categoryDecision: relevance,
+    });
+  }
 
   return {
     id: node.id,
@@ -1687,11 +2017,13 @@ async function classifyNode(
     relevance,
     librarySource: ref?.source ?? null,
     librarySourceFile: ref?.sourceFile ?? null,
-    isLocal: false,
+    isLocal: Boolean(nativeLocalDefinition),
     reference: ref,
     componentKey,
     diffs,
     comparisonIssues,
+    updateReasons,
+    libraryFreshness,
     forcedCategory,
     forcedCategoryReason,
     resolvedReferenceVariantKey,
@@ -1710,23 +2042,6 @@ async function getComponentKey(node: SceneNode): Promise<string | null> {
   }
 
   return null;
-}
-
-async function getIsRemoteLibraryNode(node: SceneNode): Promise<boolean> {
-  try {
-    if (node.type === 'INSTANCE') {
-      const mainComponent = await node.getMainComponentAsync();
-      return mainComponent?.remote === true;
-    }
-
-    if (node.type === 'COMPONENT') {
-      return node.remote === true;
-    }
-  } catch (_error) {
-    return false;
-  }
-
-  return false;
 }
 
 async function getComponentKeyCached(

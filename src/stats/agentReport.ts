@@ -183,8 +183,11 @@ function buildFindings(report: ApolloStatsReport): ApolloAgentFinding[] {
     );
   }
   for (const item of report.categories.updates.items) {
+    const title = item.updateReasons.includes('library-update-available')
+      ? 'Доступна новая версия компонента'
+      : 'Компонент требует обновления';
     findings.push(
-      componentFinding('updates', item, 'Компонент требует обновления'),
+      componentFinding('updates', item, title),
     );
   }
   for (const item of report.categories.customizations.items) {
@@ -305,6 +308,9 @@ function componentFinding(
     component: compactResource(item.component),
     variant: compactVariant(item.variant),
     comparisonIssues: item.comparisonIssues,
+    updateReasons: item.updateReasons,
+    libraryFreshness: item.libraryFreshness,
+    localComponentOwner: item.localComponentOwner,
   };
 }
 

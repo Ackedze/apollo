@@ -1395,7 +1395,7 @@
             kind: 'audit',
             id: item.id,
             title: item.name ?? 'Без названия',
-            caption: getItemLibraryName(item) ?? undefined,
+            caption: getAuditItemCaption(item) ?? undefined,
           }));
 
           try {
@@ -1568,6 +1568,40 @@
           };
         }
 
+        function getCustomizationDetailDisplayValue(detail) {
+          if (!detail || typeof detail !== 'object') {
+            return null;
+          }
+
+          const candidates = [
+            detail.displayName,
+            detail.binding && detail.binding.name,
+            detail.resource && detail.resource.name,
+            detail.value,
+          ];
+          for (const candidate of candidates) {
+            if (typeof candidate === 'number') {
+              return String(candidate);
+            }
+            if (typeof candidate === 'string' && candidate.trim()) {
+              return candidate.trim();
+            }
+          }
+          return null;
+        }
+
+        function getCustomizationStructuredValues(diff) {
+          const details = diff && diff.details;
+          if (!details || !details.reference || !details.actual) {
+            return null;
+          }
+
+          return [
+            getCustomizationDetailDisplayValue(details.reference) || '—',
+            getCustomizationDetailDisplayValue(details.actual) || '—',
+          ];
+        }
+
         function renderCustomizationReactResults(items) {
           if (!resultsBridge || !resultsBridgeMounted || !items.length) {
             return false;
@@ -1589,6 +1623,7 @@
                   `${item.id}:diff:${index}`;
                 const existing = groupsMap.get(groupId);
                 const parsed = parseCustomizationDiffMessage(diff.message);
+                const structuredValues = getCustomizationStructuredValues(diff);
                 const isVariantDiff =
                   typeof diff.details?.property === 'string' &&
                   diff.details.property.indexOf('variant.') === 0;
@@ -1604,11 +1639,13 @@
                 const line = parsed
                   ? {
                       ...parsed,
+                      values: structuredValues || parsed.values,
                       marker,
                     }
                   : {
                       label: 'Изменение',
-                      values: [(diff.message || '').trim() || '—'],
+                      values:
+                        structuredValues || [(diff.message || '').trim() || '—'],
                       marker,
                     };
                 const canReset =
@@ -1859,6 +1896,23 @@
             return 'Локальный';
           }
           return null;
+        }
+
+        function getAuditItemCaption(item) {
+          const libraryName = getItemLibraryName(item);
+          const updateReasons = Array.isArray(item.updateReasons)
+            ? item.updateReasons
+            : [];
+          if (updateReasons.includes('library-update-available')) {
+            const ownerName = item.localComponentOwner?.name;
+            const freshnessCaption = libraryName
+              ? `Доступна новая версия · ${libraryName}`
+              : 'Доступна новая версия';
+            return ownerName
+              ? `${freshnessCaption} · внутри ${ownerName}`
+              : freshnessCaption;
+          }
+          return libraryName;
         }
 
         function formatCustomStyleReason(reason) {

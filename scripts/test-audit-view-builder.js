@@ -45,8 +45,9 @@ function makeAuditItem(nodeType, name, diffs, visible = true) {
   };
 }
 
-function main() {
-  const { computeChangesResults } = loadAuditViewBuilder();
+async function main() {
+  const { computeChangesResults, describeCustomStyleReasons } =
+    loadAuditViewBuilder();
 
   const componentItem = makeAuditItem('COMPONENT', '[D] BackgroundPlate', [
     {
@@ -88,7 +89,39 @@ function main() {
     'FRAME nodes must stay excluded from customization results',
   );
 
+  globalThis.figma = { mixed: Symbol('mixed') };
+  const customStyleReasons = await describeCustomStyleReasons(
+    {
+      id: '1:custom-style',
+      name: '[D] SpotlightBar',
+      type: 'RECTANGLE',
+      parent: null,
+      fills: [
+        {
+          type: 'SOLID',
+          visible: true,
+          color: { r: 1, g: 1, b: 1 },
+        },
+      ],
+      fillStyleId:
+        'S:27ba925a81fd8c8a03755940253f21d1c9099141,317:32',
+    },
+    {
+      tokenLabelMap: new Map(),
+      isKnownStyleId: async () => false,
+      resolveStyleMetadata: async () => null,
+    },
+  );
+  assert.deepEqual(
+    customStyleReasons,
+    ['fill'],
+    'An unresolved custom style must remain visible in the separate custom-styles audit',
+  );
+
   console.log('Audit view builder regression checks passed');
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

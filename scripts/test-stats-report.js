@@ -831,6 +831,83 @@ function main() {
     'component:web-corp.background-plate.slot-sizing-fill-width-hug-height',
   );
 
+  const freshnessReport = buildApolloStatsReport({
+    pluginVersion: '0.1.0',
+    user: { id: 'user-id', name: 'User Name' },
+    figma: {
+      fileKey: 'file-key',
+      fileName: 'Freshness test',
+      editorType: 'figma',
+    },
+    scan: {
+      channel: 'Desktop',
+      startedAt: new Date(2026, 5, 6, 12, 0, 0, 0),
+      finishedAt: new Date(2026, 5, 6, 12, 0, 1, 0),
+      selection: [],
+      settings: { shellAuditEnabled: false },
+      scannedComponents: 1,
+    },
+    views: {
+      deprecatedComponents: [],
+      deprecatedStyles: [],
+      customStyles: [],
+      updates: [
+        componentItem({
+          relevance: 'update',
+          updateReasons: ['library-update-available'],
+          libraryFreshness: {
+            status: 'update-available',
+            reason: 'remote-component-update-available',
+            componentKey: 'tag-key',
+            currentComponentId: 'I1:old',
+            latestComponentId: 'I1:new',
+          },
+          localComponentOwner: {
+            id: '10:20',
+            name: 'Строка платежа',
+            pageName: 'Local components',
+            fullPath: 'Local components / Строка платежа',
+          },
+        }),
+      ],
+      customizations: [],
+      localComponents: [],
+      detachedComponents: [],
+      presets: [],
+      technicalComponents: [],
+      currentComponents: [],
+      wrongChannel: [],
+      themization: [],
+    },
+    resolveStyleResource: () => null,
+    resolveTokenResource: () => null,
+  });
+  assert.deepEqual(
+    freshnessReport.categories.updates.items[0].updateReasons,
+    ['library-update-available'],
+  );
+  assert.equal(
+    freshnessReport.categories.updates.items[0].libraryFreshness.latestComponentId,
+    'I1:new',
+  );
+  assert.equal(
+    freshnessReport.categories.updates.items[0].localComponentOwner.name,
+    'Строка платежа',
+  );
+  const freshnessAgentReport = buildApolloAgentReport(freshnessReport);
+  assert.equal(
+    freshnessAgentReport.findings[0].title,
+    'Доступна новая версия компонента',
+  );
+  assert.deepEqual(
+    freshnessAgentReport.findings[0].updateReasons,
+    ['library-update-available'],
+  );
+  assert.equal(
+    freshnessAgentReport.findings[0].localComponentOwner.path,
+    'Local components / Строка платежа',
+  );
+
   console.log('Stats report regression checks passed');
 }
 

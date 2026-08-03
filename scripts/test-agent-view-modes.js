@@ -56,6 +56,31 @@ assertIncludes(
   'let agentDialogueMessages = [];',
   'Dialogue messages must have isolated state.',
 );
+assertIncludes(
+  uiSource,
+  'function getCustomizationStructuredValues(diff)',
+  'Customization UI must prefer structured reference and actual values.',
+);
+assertIncludes(
+  uiSource,
+  'values: structuredValues || parsed.values',
+  'Customization UI must not render raw ids from a stale message when structured labels exist.',
+);
+assertIncludes(
+  uiSource,
+  'function getAuditItemCaption(item)',
+  'Audit cards must have a typed caption formatter for native library updates.',
+);
+assertIncludes(
+  uiSource,
+  'Доступна новая версия ·',
+  'Native library updates must be distinguishable from catalog lifecycle updates.',
+);
+assertIncludes(
+  uiSource,
+  '· внутри ${ownerName}',
+  'Native updates discovered in local component definitions must identify their owner.',
+);
 
 if (uiSource.includes('agentChatOpen')) {
   throw new Error('Legacy binary chat state is still present.');

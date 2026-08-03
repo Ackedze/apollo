@@ -680,6 +680,30 @@ Acceptance criteria:
 - Repeated capture of the same unchanged selection and settings produces the same composition and resource payload apart from timestamps.
 - Promotion to an approved example is impossible inside Apollo runtime.
 
+### P0. Separate Figma resource identity from catalog admissibility
+
+Problem exposed by Apollo 0.1.62 report `03-08-2026_11-53-12`: Figma serialized the same SpotlightBar style as `S:<published-key>,<reference-local-id>` and `S:<published-key>,<document-local-id>`. Apollo compared the full ids and produced a misleading `style A -> style A` customization. In the same report, contract-aware rebasing of a real PlatePresets token substitution compared a human label with a raw token id, rebuilt `DiffDetails` and lost `bindingStatus=different-binding`; the UI then rendered `VariableID` from the message and grouped the change as a layer property. Variant messages also lowercased source values such as `BigTitle` and `LightTitle`.
+
+- [x] Compare style identity by canonical published key and ignore only the document-local suffix.
+- [x] Keep style admissibility independent: an unknown canonical key remains a `customStyles` finding even when it creates no customization against the same reference style.
+- [x] Treat matching token/style resource identities as an already-correct effective baseline even when one side contains a label and the other a raw id.
+- [x] Preserve `bindingStatus`, binding evidence and human labels by avoiding unnecessary contract rebase.
+- [x] Render customization values from structured `DiffDetails`; parse `message` only for legacy fallback.
+- [x] Preserve the authored case of variant values in messages and UI.
+- [x] Add regressions for same/different canonical style keys, unresolved custom-style retention, PlatePresets token binding evidence and variant case.
+- [x] Verify the patch in Figma against the original SpotlightBar and PlatePresets selection.
+
+Implementation status (2026-08-03): source fixes and automated regressions are complete. Canonical identity comparison no longer creates a fake style customization when reference and actual share the same published key. This does not suppress a real change from a reference token or another style to the custom SpotlightBar style, and it does not make an unknown style admissible. PlatePresets keeps the real token substitution and exposes its two readable token names under `Переменные`, while component property values retain exact Figma casing.
+
+Field verification (Apollo 0.1.62, report `Alexey-Kukhta-CORP-Lead-Designer_03-08-2026_15-20-18_agent.json`): the four former SpotlightBar `styles.fill` rows with identical canonical keys are absent. The remaining SpotlightBar root fill is a legitimate `decorative-muted-alt/indigo -> S:27ba925...` change with `bindingStatus=unbound`, not the removed `style A -> style A` duplicate. PlatePresets reports `neutral-translucent/200 -> neutral/0` with both catalog resources, both bindings and `bindingStatus=different-binding`. Its nested component property is serialized as `BigTitle -> LightTitle` without lowercasing.
+
+Acceptance criteria:
+
+- `S:<key>,3:5352 -> S:<key>,317:32` produces no customization when `<key>` is identical.
+- The same unknown `<key>` still produces a custom-style finding until it is published in an allowed style catalog or removed from the design.
+- `neutral-translucent/200 -> neutral/0` remains a real `different-binding` finding and never renders a raw `VariableID` when metadata is available.
+- `BigTitle -> LightTitle` keeps source casing in UI, full stats and agent report.
+
 ### P1. Define per-change scope for targetless component rules
 
 - [x] Treat targetless composition and screen rules as package/agent context by default, not as unconstrained rules for every atomic diff in that package.

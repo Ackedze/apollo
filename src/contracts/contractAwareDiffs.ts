@@ -445,7 +445,7 @@ function resolveContractEffectiveBaseline(
     return null;
   }
 
-  const referenceValue = diff.details?.reference?.value ?? null;
+  const referenceDetails = diff.details?.reference ?? null;
   const occurrenceKey = findOccurrenceKeyForDiff(diff, options.actualByOccurrence);
   const hostReferenceNode = occurrenceKey
     ? options.hostReferenceByOccurrence.get(occurrenceKey) ?? null
@@ -459,11 +459,47 @@ function resolveContractEffectiveBaseline(
     property,
     options.resolveStyleLabel,
   );
-  if (!hostBaseline || valuesEqual(hostBaseline.value, referenceValue)) {
+  if (!hostBaseline || diffValueDetailsEqual(hostBaseline, referenceDetails)) {
     return null;
   }
 
   return hostBaseline;
+}
+
+function diffValueDetailsEqual(
+  left: DiffValueDetails,
+  right: DiffValueDetails | null,
+): boolean {
+  if (!right) {
+    return false;
+  }
+
+  if (
+    left.resourceType &&
+    left.resourceType === right.resourceType &&
+    left.resourceId &&
+    right.resourceId &&
+    canonicalResourceIdentity(left.resourceType, left.resourceId) ===
+      canonicalResourceIdentity(right.resourceType, right.resourceId)
+  ) {
+    return true;
+  }
+
+  return valuesEqual(left.value, right.value);
+}
+
+function canonicalResourceIdentity(
+  resourceType: NonNullable<DiffValueDetails['resourceType']>,
+  resourceId: string,
+): string {
+  const normalized = resourceId.trim();
+  if (resourceType === 'style' && normalized.startsWith('S:')) {
+    return normalized.slice(2).split(',')[0].trim();
+  }
+  if (resourceType === 'token' && normalized.startsWith('VariableID:')) {
+    return normalized.slice('VariableID:'.length).split('/')[0].trim();
+  }
+  return normalized;
 }
 
 function readNodePropertyAsDiffValue(

@@ -108,10 +108,18 @@ async function loadAllCatalogs(): Promise<void> {
   const hydrateDurationMs = getTimestamp() - hydrateStartedAt;
 
   const tokenLoadStartedAt = getTimestamp();
-  await loadTokenCatalogs(sources.filter(isTokenCatalogSource));
+  const tokenSources = sources.filter(isTokenCatalogSource);
+  if (!tokenSources.length) {
+    throw new Error('Reference manifest does not contain token catalogs');
+  }
+  await loadTokenCatalogs(tokenSources);
   const tokenLoadDurationMs = getTimestamp() - tokenLoadStartedAt;
   const styleLoadStartedAt = getTimestamp();
-  await loadStyleCatalogs(sources.filter(isStyleCatalogSource));
+  const styleSources = sources.filter(isStyleCatalogSource);
+  if (!styleSources.length) {
+    throw new Error('Reference manifest does not contain style catalogs');
+  }
+  await loadStyleCatalogs(styleSources);
   const styleLoadDurationMs = getTimestamp() - styleLoadStartedAt;
 
   componentIndexLoadPromise = loadComponentIndexes(componentSources)
@@ -245,19 +253,25 @@ function resolveCatalogPathsForKeys(
 
 async function ensureComponentIndexesLoaded(): Promise<void> {
   if (componentIndexLoadPromise) {
-    return componentIndexLoadPromise;
+    await componentIndexLoadPromise;
+  } else if (!componentIndexesLoaded) {
+    const sources = await ensureCatalogSourceList();
+    componentIndexLoadPromise = loadComponentIndexes(sources.filter(isComponentCatalogSource))
+      .finally(() => {
+        componentIndexLoadPromise = null;
+      });
+    await componentIndexLoadPromise;
   }
 
-  if (componentIndexesLoaded) {
-    return;
+  if (failedComponentIndexSources.size) {
+    await retryFailedComponentIndexes();
   }
-
-  const sources = await ensureCatalogSourceList();
-  componentIndexLoadPromise = loadComponentIndexes(sources.filter(isComponentCatalogSource))
-    .finally(() => {
-      componentIndexLoadPromise = null;
-    });
-  return componentIndexLoadPromise;
+  if (failedComponentIndexSources.size) {
+    const failedPaths = Array.from(failedComponentIndexSources.keys()).slice(0, 10);
+    throw new Error(
+      `Reference component indexes are incomplete (${failedComponentIndexSources.size} failed): ${failedPaths.join(', ')}`,
+    );
+  }
 }
 
 async function retryFailedComponentIndexes(): Promise<void> {
@@ -403,6 +417,7 @@ async function loadTokenCatalogs(
   sources: ReferenceCatalogSource[],
 ): Promise<void> {
   tokenCatalogs.length = 0;
+  const failures: string[] = [];
 
   for (const source of sources) {
     try {
@@ -429,7 +444,11 @@ async function loadTokenCatalogs(
           : String(error ?? 'Unknown error');
 
       logCatalogEvent(source, `failed: ${message}`);
+      failures.push(`${source.fileName}: ${message}`);
     }
+  }
+  if (failures.length) {
+    throw new Error(`Failed to load token catalogs: ${failures.join('; ')}`);
   }
 }
 
@@ -437,6 +456,7 @@ async function loadStyleCatalogs(
   sources: ReferenceCatalogSource[],
 ): Promise<void> {
   styleCatalogs.length = 0;
+  const failures: string[] = [];
 
   for (const source of sources) {
     try {
@@ -470,7 +490,11 @@ async function loadStyleCatalogs(
           : String(error ?? 'Unknown error');
 
       logCatalogEvent(source, `failed: ${message}`);
+      failures.push(`${source.fileName}: ${message}`);
     }
+  }
+  if (failures.length) {
+    throw new Error(`Failed to load style catalogs: ${failures.join('; ')}`);
   }
 }
 

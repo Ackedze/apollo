@@ -232,16 +232,18 @@ function findSelectedReferenceNode(
     return null;
   }
   const key = makeDiffPropertyKey(diff);
+  let matchedReference: DSStructureNode | null = null;
   for (const context of contexts) {
-    if (!context.matchedNodeIds.has(diff.nodeId) || !context.diffKeys.has(key)) {
+    if (!context.matchedNodeIds.has(diff.nodeId)) {
       continue;
     }
     const referenceNode = context.referenceByNodeId.get(diff.nodeId);
-    if (referenceNode) {
+    if (referenceNode && context.diffKeys.has(key)) {
       return referenceNode;
     }
+    matchedReference ??= referenceNode ?? null;
   }
-  return null;
+  return matchedReference;
 }
 
 export function selectedReferenceValue(
@@ -657,10 +659,9 @@ export function assessCustomizationDiffs(
     const isVariantDiff = isVariantPropertyDiff(diff);
     const nestedContextExplains =
       !isVariantDiff && options.nestedContextEvidence?.explains(diff);
-    const selectedReference =
-      !isVariantDiff && !nestedContextExplains
-        ? options.nestedContextEvidence?.selectedReference(diff) ?? null
-        : null;
+    const selectedReference = !isVariantDiff
+      ? options.nestedContextEvidence?.selectedReference(diff) ?? null
+      : null;
 
     if (selectedReference) {
       diff = withSelectedReference(diff, selectedReference);

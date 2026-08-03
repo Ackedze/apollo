@@ -73,6 +73,9 @@ export const apolloReferenceCatalogListUrl =
 export function buildReferenceCatalogSources(
   payload: RemoteReferenceCatalogList,
 ): ReferenceCatalogSource[] {
+  if (payload.schemaVersion !== undefined) {
+    validateReferenceCatalogList(payload);
+  }
   const baseUrl = (payload.baseUrl ?? '').trim();
   const entries = normalizeCatalogEntries(payload);
 
@@ -84,6 +87,44 @@ export function buildReferenceCatalogSources(
     kind: inferCatalogKind(entry),
     indexUrl: buildIndexUrl(baseUrl, entry),
   }));
+}
+
+export function validateReferenceCatalogList(
+  payload: RemoteReferenceCatalogList,
+): void {
+  if (payload.schemaVersion !== 2) {
+    throw new Error(
+      `Unsupported reference manifest schemaVersion: ${String(payload.schemaVersion)}`,
+    );
+  }
+  if (!/^https?:\/\//i.test((payload.baseUrl ?? '').trim())) {
+    throw new Error('Reference manifest baseUrl must be an absolute HTTP(S) URL');
+  }
+
+  const entries = normalizeCatalogEntries(payload);
+  if (!entries.length) {
+    throw new Error('Reference manifest does not contain catalogs');
+  }
+
+  const paths = new Set<string>();
+  for (const [index, entry] of entries.entries()) {
+    const entryPath = normalizePath(entry.path);
+    if (!entryPath || !entry.fileName) {
+      throw new Error(`Reference manifest catalog[${index}] requires fileName and path`);
+    }
+    if (paths.has(entryPath)) {
+      throw new Error(`Reference manifest contains duplicate catalog path: ${entryPath}`);
+    }
+    paths.add(entryPath);
+
+    const kind = entry.source?.kind;
+    if (kind !== 'components' && kind !== 'tokens' && kind !== 'styles') {
+      throw new Error(`Reference manifest catalog ${entryPath} has invalid source.kind`);
+    }
+    if (kind === 'components' && !normalizePath(entry.source?.indexPath ?? '')) {
+      throw new Error(`Reference manifest component catalog has no indexPath: ${entryPath}`);
+    }
+  }
 }
 
 function normalizeCatalogEntries(

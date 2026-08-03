@@ -23,7 +23,9 @@
 
 Если запрос списка reference-источников целиком не удался, Apollo останавливает загрузку справочников и показывает ошибку. Bundled fallback больше не используется, чтобы не скрывать рассинхрон runtime-данных и component indexes.
 
-Важно: Apollo работает с component-каталогами через index-only lazy loading. После первой проверки он не должен скачивать все component-каталоги подряд; отсутствующий ключ в index логируется как диагностическая проблема данных. Если schema v2 reference manifest опубликован без `source.indexPath`, Apollo безопасно восстанавливает стандартный index path из пути raw-каталога; agent artifacts (`rules.json`, `agent-context.json` и остальные) из этого fallback исключены.
+Важно: Apollo работает с component-каталогами через index-only lazy loading. После первой проверки он не должен скачивать все component-каталоги подряд. Reference manifest schema v2 обязан явно содержать `source.indexPath` для каждого component-каталога; отсутствующий или недоступный index останавливает проверку, а не включает inferred fallback.
+
+Component contracts загружаются только через `componentContractIndex.json` schema v2. Индекс задаёт явную политику покрытия `required | optional | none`; обязательные пакеты должны объявлять `rules` и `composition`, а поиск пакета выполняется в порядке Figma key, source catalog path, уникальный alias. Дубликаты и двусмысленные alias считаются ошибкой данных. Текущий архитектурный бэклог зафиксирован в [`docs/ARCHITECTURE_BACKLOG.md`](./docs/ARCHITECTURE_BACKLOG.md).
 
 ## Табы аудита
 Конфигурация табов хранится в [`src/config/tabs.ts`](./src/config/tabs.ts).
@@ -193,9 +195,7 @@ Targetless rules имеют отдельную scope-политику. `matchKin
 ## Правило проверки
 
 После любых изменений в Apollo перед завершением работы обязательно:
-- запустить `npm run type-check`;
-- запустить релевантные regression-check’и для затронутого поведения;
-- пересобрать проект через `npm run build`.
+- запустить `npm run validate`, который выполняет type-check, production build, Figma runtime check и все `scripts/test-*.js` regression-тесты.
 
 Изменение не считается завершённым, пока эти шаги не выполнены или пока явно не зафиксировано, почему какой-то из них нельзя выполнить.
 

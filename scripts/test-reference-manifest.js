@@ -42,11 +42,6 @@ function main() {
               indexPath: 'indexes/web/components/Test.index.json',
             },
           },
-          {
-            fileName: 'web/components/Missing.json',
-            path: 'web/components/Missing.json',
-            source: { kind: 'components' },
-          },
         ],
       },
     ],
@@ -55,10 +50,40 @@ function main() {
     explicit[0].indexUrl,
     `${baseUrl}indexes/web/components/Test.index.json`,
   );
-  assert.equal(
-    explicit[1].indexUrl,
-    `${baseUrl}indexes/web/components/Missing.index.json`,
-    'Schema v2 manifests must retain a safe inferred index fallback while publication catches up',
+  assert.throws(
+    () =>
+      buildReferenceCatalogSources({
+        schemaVersion: 2,
+        baseUrl,
+        catalogs: [
+          {
+            fileName: 'web/components/Missing.json',
+            path: 'web/components/Missing.json',
+            source: { kind: 'components' },
+          },
+        ],
+      }),
+    /has no indexPath/,
+  );
+  assert.throws(
+    () =>
+      buildReferenceCatalogSources({
+        schemaVersion: 2,
+        baseUrl,
+        catalogs: [
+          {
+            fileName: 'tokens/Duplicate.json',
+            path: 'tokens/Duplicate.json',
+            source: { kind: 'tokens' },
+          },
+          {
+            fileName: 'tokens/Duplicate.json',
+            path: 'tokens/Duplicate.json',
+            source: { kind: 'tokens' },
+          },
+        ],
+      }),
+    /duplicate catalog path/,
   );
 
   const legacy = buildReferenceCatalogSources({

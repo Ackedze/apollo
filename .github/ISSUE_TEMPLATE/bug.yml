@@ -1,0 +1,64 @@
+name: Bug report
+description: Воспроизводимая ошибка Apollo
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: Не прикладывайте реальные пользовательские отчёты, токены и приватные каталоги.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что произошло?
+      description: Опишите наблюдаемое поведение и влияние на пользователя.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Ожидаемое поведение
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Шаги воспроизведения
+      description: Укажите минимальный Figma-сценарий, тип компонента и последовательность действий.
+      placeholder: |
+        1. Выделить...
+        2. Нажать «Проверить»...
+        3. Открыть категорию...
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Обезличенное доказательство
+      description: Скриншот, console fragment или минимальный report fragment без приватных данных.
+  - type: input
+    id: version
+    attributes:
+      label: Версия Apollo
+      placeholder: 0.1.62
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Канал проверки
+      options:
+        - Desktop
+        - MobileWeb
+        - iOS
+        - Android
+        - Не применимо
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: Я удалил персональные данные, file keys, закрытые ссылки и секреты.
+          required: true

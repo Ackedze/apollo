@@ -269,6 +269,19 @@ Ackedze/design-system_ab/apollo/stats/<figma-user>/dd-mm-yyyy/
 
 Каталоги и indexes загружаются только из `Ackedze/design-system_ab`. Локальный каталог `JSONS` в репозитории Apollo не используется.
 
+## Внешний контрибьютинг
+
+Apollo принимает внешние изменения через fork и pull request. Прямые изменения `main` не являются штатным способом разработки.
+
+- Полный процесс подготовки изменения описан в [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+- Уровни риска, требуемые approvals и критерии code review заданы в [`docs/REVIEW_POLICY.md`](./docs/REVIEW_POLICY.md).
+- Автоматические и ручные Figma-проверки описаны в [`docs/TESTING.md`](./docs/TESTING.md).
+- Уязвимости передаются приватно по правилам [`SECURITY.md`](./SECURITY.md).
+- `CODEOWNERS` требует участия владельца Apollo, а workflow `Review policy` требует один approval для R0/R1 и два актуальных approvals для R2/R3.
+- Каждый PR обязан пройти `npm run validate`, содержать regression coverage для исправлений и раскрывать использование AI.
+
+Внешним контрибьюторам не нужны release credentials и доступ к пользовательской статистике. Изменения каталогов и cross-repo contracts оформляются отдельно в Athena/design-system_ab и связываются с Apollo PR.
+
 ## Структура проекта
 - [`src/code.ts`](./src/code.ts) — основной runtime плагина.
 - [`src/ui.html`](./src/ui.html) — интерфейс и клиентская логика панели.

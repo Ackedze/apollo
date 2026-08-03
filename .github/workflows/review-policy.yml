@@ -1,0 +1,102 @@
+name: Review policy
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  approvals:
+    name: Required approvals
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check risk and current approvals
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pull = context.payload.pull_request;
+            if (!pull) {
+              core.setFailed('Review policy requires a pull_request payload.');
+              return;
+            }
+
+            if (pull.draft) {
+              core.notice('Draft pull request: approval gate is deferred.');
+              return;
+            }
+
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pull_number = pull.number;
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner,
+              repo,
+              pull_number,
+              per_page: 100,
+            });
+            const paths = files.map((file) => file.filename);
+
+            const r3Patterns = [
+              /^\.github\/workflows\//,
+              /^manifest\.json$/,
+              /^package(-lock)?\.json$/,
+              /^build\.js$/,
+              /^SECURITY\.md$/,
+              /^src\/utils\/networkFetch\.ts$/,
+            ];
+            const r2Patterns = [
+              /^src\/code\.ts$/,
+              /^src\/create-check-state\.ts$/,
+              /^src\/(assessment|config|contracts|filters|policies|reference|services|stats|structure|types)\//,
+              /^src\/ui-app\/bridge\//,
+              /^src\/utils\/(componentKeyCache|nodeHelpers|variableBindingReset|variableCollectionId|variantProperties)\.ts$/,
+            ];
+
+            const matchesAny = (patterns) => paths.some((path) => patterns.some((pattern) => pattern.test(path)));
+            const risk = matchesAny(r3Patterns) ? 'R3' : matchesAny(r2Patterns) ? 'R2' : paths.some((path) => path.startsWith('src/')) ? 'R1' : 'R0';
+            const requiredApprovals = risk === 'R2' || risk === 'R3' ? 2 : 1;
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number,
+              per_page: 100,
+            });
+            const decisiveStates = new Set(['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED']);
+            const latestByReviewer = new Map();
+            for (const review of reviews) {
+              if (!review.user || review.user.login.endsWith('[bot]') || !decisiveStates.has(review.state)) continue;
+              latestByReviewer.set(review.user.login, review);
+            }
+            const currentApprovals = Array.from(latestByReviewer.values()).filter(
+              (review) => review.state === 'APPROVED' && review.commit_id === pull.head.sha,
+            );
+            const trustedPermissions = new Set(['write', 'maintain', 'admin']);
+            const approvals = [];
+            for (const review of currentApprovals) {
+              const permission = await github.rest.repos.getCollaboratorPermissionLevel({
+                owner,
+                repo,
+                username: review.user.login,
+              });
+              if (trustedPermissions.has(permission.data.permission)) approvals.push(review);
+            }
+
+            await core.summary
+              .addHeading('Apollo review policy')
+              .addTable([
+                [{ data: 'Risk', header: true }, { data: 'Required approvals', header: true }, { data: 'Current approvals', header: true }],
+                [risk, String(requiredApprovals), String(approvals.length)],
+              ])
+              .addDetails('Changed files', paths.map((path) => `- ${path}`).join('\n'))
+              .write();
+
+            core.notice(`Apollo review risk ${risk}: ${approvals.length}/${requiredApprovals} current trusted approvals.`);
+            if (approvals.length < requiredApprovals) {
+              core.setFailed(`${risk} requires ${requiredApprovals} trusted approval(s) for head ${pull.head.sha}; found ${approvals.length}.`);
+            }

@@ -1,0 +1,19 @@
+# Apollo owner is required for every contribution.
+* @Ackedze
+
+# Runtime and high-risk boundaries.
+/src/code.ts @Ackedze
+/src/reference/ @Ackedze
+/src/structure/ @Ackedze
+/src/assessment/ @Ackedze
+/src/contracts/ @Ackedze
+/src/filters/ @Ackedze
+/src/policies/ @Ackedze
+/src/stats/ @Ackedze
+/src/utils/networkFetch.ts @Ackedze
+/src/ui-app/bridge/ @Ackedze
+/manifest.json @Ackedze
+/package.json @Ackedze
+/package-lock.json @Ackedze
+/build.js @Ackedze
+/.github/workflows/ @Ackedze

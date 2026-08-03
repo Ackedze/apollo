@@ -4,7 +4,8 @@
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm run test:variant-structure-paths && npm run test:shell-component-policy && npm run test:stats-report && npm run test:contract-aware-diffs",
+    "validate": "npm run type-check && npm run build && npm run check:figma-runtime && npm test",
+    "test": "node scripts/run-tests.js",
     "type-check": "tsc --noEmit",
     "check:figma-runtime": "node scripts/check-figma-runtime.js",
     "test:themization": "node scripts/test-themization.js",

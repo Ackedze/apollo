@@ -21,6 +21,7 @@ type ResultSubCardProps = {
   showFocus?: boolean;
   onFocus?: () => void;
   actions?: ResultAction[];
+  actionSlot?: React.ReactNode;
   valueLabel?: string;
   valueParts?: string[];
   valueLines?: ResultValueLine[];
@@ -47,6 +48,7 @@ export function ResultSubCard({
   showFocus = false,
   onFocus,
   actions = [],
+  actionSlot,
   valueLabel,
   valueParts = [],
   valueLines = [],
@@ -94,8 +96,9 @@ export function ResultSubCard({
             </div>
           ) : null}
         </div>
-        {actions.length ? (
+        {actionSlot || actions.length ? (
           <div className={styles.actions}>
+            {actionSlot}
             {actions.map((action, index) => (
               <div
                 key={`${action.label ?? 'icon'}:${index}`}

@@ -12,6 +12,7 @@ type PickerButtonProps = {
   open?: boolean;
   selected?: boolean;
   disabled?: boolean;
+  compact?: boolean;
   leadingIcon?: React.ReactNode;
   className?: string;
   onPress?: () => void;
@@ -22,11 +23,18 @@ export function PickerButton({
   open = false,
   selected = false,
   disabled = false,
+  compact = false,
   leadingIcon,
   className,
   onPress,
 }: PickerButtonProps): React.JSX.Element {
-  const buttonClassName = [styles.button, className].filter(Boolean).join(' ');
+  const buttonClassName = [
+    styles.button,
+    compact ? styles.compact : '',
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
   const chevronIcon = open ? <PickerChevronUpIcon /> : <PickerChevronDownIcon />;
   const selectedIcon = leadingIcon ?? <PickerDiamondsIcon />;
 

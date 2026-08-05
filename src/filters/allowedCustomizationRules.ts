@@ -538,55 +538,6 @@ export function applyAllowedCustomizationRules(
 
     if (!rule) {
       if (shouldTraceAllowedCustomizationMiss(diff, parsedDiff, nestedComponentName)) {
-        console.log('[Apollo][debug] allowed-customization-miss', {
-          nodeId: diff.nodeId ?? null,
-          nodeName: diff.nodeName,
-          nodePath: diff.nodePath,
-          libraryName: context.libraryName,
-          componentName: context.referenceComponentName ?? context.componentName,
-          property: parsedDiff.property,
-          expected: parsedDiff.expected,
-          actual: parsedDiff.actual,
-          nestedComponentName,
-          actualNestedOwnerComponentKey: diff.context.actualNestedOwnerComponentKey ?? null,
-          actualNestedOwnerPath: diff.context.actualNestedOwnerPath ?? null,
-          actualNestedOwnerRelativePath:
-            diff.context.actualNestedOwnerRelativePath ?? null,
-          nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey ?? null,
-          nestedOwnerPath: diff.context.nestedOwnerPath ?? null,
-          nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath ?? null,
-          candidateRules: getAllowedCustomizationDebugCandidates(
-            parsedDiff.property,
-            diff.nodeName,
-            nestedComponentName,
-          ),
-        });
-        console.log(
-          '[Apollo][debug-json] allowed-customization-miss',
-          JSON.stringify({
-            nodeId: diff.nodeId ?? null,
-            nodeName: diff.nodeName,
-            nodePath: diff.nodePath,
-            libraryName: context.libraryName,
-            componentName: context.referenceComponentName ?? context.componentName,
-            property: parsedDiff.property,
-            expected: parsedDiff.expected,
-            actual: parsedDiff.actual,
-            nestedComponentName,
-            actualNestedOwnerComponentKey: diff.context.actualNestedOwnerComponentKey ?? null,
-            actualNestedOwnerPath: diff.context.actualNestedOwnerPath ?? null,
-            actualNestedOwnerRelativePath:
-              diff.context.actualNestedOwnerRelativePath ?? null,
-            nestedOwnerComponentKey: diff.context.nestedOwnerComponentKey ?? null,
-            nestedOwnerPath: diff.context.nestedOwnerPath ?? null,
-            nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath ?? null,
-            candidateRules: getAllowedCustomizationDebugCandidates(
-              parsedDiff.property,
-              diff.nodeName,
-              nestedComponentName,
-            ),
-          }),
-        );
         traceAudit('allowed-customization-miss', {
           nodeId: diff.nodeId ?? null,
           nodeName: diff.nodeName,

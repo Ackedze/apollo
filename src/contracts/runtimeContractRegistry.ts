@@ -1,71 +1,39 @@
 import {
-  appendCacheBustingQuery,
-  fetchDirect,
-} from '../utils/networkFetch';
-import {
-  normalizePath,
-  resolveCatalogUrl,
-} from '../reference/referenceList';
-import type { ComponentContractRule } from './componentRules';
-import {
-  compactAgentContext,
-  compactExamples,
   resolveAuditPresentation,
   type RuntimeAuditPresentation,
   type RuntimeComponentAgentContext,
   type RuntimeComponentExample,
 } from './artifactContext';
-import { compilePublicArtifact } from './publicArtifact';
 import {
   validateRemoteContractIndex,
   type ContractCoveragePolicy,
+  type RemoteComponentContractIndex,
   type RemoteContractPackage,
 } from './contractIndex';
+import {
+  compileContractAgentContextArtifact,
+  compileContractAuditMappingArtifact,
+  compileContractCompositionArtifact,
+  compileContractExamplesArtifact,
+  compileContractOverridesArtifact,
+  compileContractRulesArtifact,
+  type RuntimeComponentRuleRegistryEntry,
+  type RuntimeCompositionRegistryEntry,
+} from './contractArtifactCompiler';
+import {
+  buildContractPackageAliases,
+  describeContractArtifactHint,
+  resolveContractPackageArtifactPaths,
+  resolveContractPackageForHint,
+  type ContractArtifactHint,
+} from './contractIndexResolver';
+import {
+  fetchRemoteContractArtifactPayload,
+  fetchRemoteContractIndexPayload,
+} from './contractTransport';
+import { AsyncResourceLifecycle } from '../services/asyncResourceLifecycle';
 
-type RuntimeComponentRuleRegistryEntry = {
-  componentKey: string;
-  packageName?: string;
-  aliases: string[];
-  figmaKeys: string[];
-  rulesFile: {
-    componentKey: string;
-    rules: ComponentContractRule[];
-  };
-};
-
-type RuntimeCompositionContract = {
-  componentKey?: string;
-  component?: {
-    name?: string;
-    library?: string;
-  };
-  allowedOverrides?: Array<{
-    targetPathPattern?: string;
-    property?: string;
-    expectedOverride?: string | number | null;
-    scope?: string;
-    reason?: string;
-  }>;
-  standaloneBaselines?: Array<{
-    targetPathPattern?: string;
-    property?: string;
-    expectedValue?: string | number | null;
-    styleKey?: string | null;
-    scope?: string;
-  }>;
-};
-
-type RuntimeCompositionRegistryEntry = {
-  contract: RuntimeCompositionContract;
-  aliases: string[];
-};
-
-export type ContractArtifactHint = {
-  figmaKey?: string | null;
-  componentName?: string | null;
-  displayName?: string | null;
-  sourceFile?: string | null;
-};
+export type { ContractArtifactHint } from './contractIndexResolver';
 
 type RuntimeContractPackageState = {
   indexEntry: RemoteContractPackage;
@@ -76,19 +44,16 @@ type RuntimeContractPackageState = {
   auditMapping: any | null;
   overridesPayload: any | null;
   examples: RuntimeComponentExample[] | null;
-  examplesLoading: Promise<void> | null;
-  loading: Promise<void> | null;
-  loaded: boolean;
+  artifactsLifecycle: AsyncResourceLifecycle;
+  examplesLifecycle: AsyncResourceLifecycle;
 };
 
 let remoteContractIndexUrl: string | null = null;
 let remoteContractsBaseUrl = '';
 let remoteContractsCacheBust = Date.now();
-let indexPromise: Promise<void> | null = null;
-let indexLoaded = false;
-let indexUnavailable = false;
 let packageStates: RuntimeContractPackageState[] = [];
 let defaultCoveragePolicy: ContractCoveragePolicy = 'none';
+const contractIndexLifecycle = new AsyncResourceLifecycle();
 
 const STRICT_REMOTE_CONTRACT_ARTIFACTS = true;
 
@@ -118,9 +83,7 @@ export function configureRemoteContractIndexSource(
   remoteContractIndexUrl = indexUrl;
   remoteContractsBaseUrl = baseUrl;
   remoteContractsCacheBust = Date.now();
-  indexPromise = null;
-  indexLoaded = false;
-  indexUnavailable = false;
+  contractIndexLifecycle.reset();
   packageStates = [];
   defaultCoveragePolicy = 'none';
 }
@@ -129,7 +92,7 @@ export async function ensureContractArtifactsForHints(
   hints: ContractArtifactHint[],
 ): Promise<void> {
   await ensureRemoteContractIndexLoaded();
-  if (!indexLoaded || indexUnavailable || !packageStates.length) {
+  if (!contractIndexLifecycle.isReady() || !packageStates.length) {
     if (STRICT_REMOTE_CONTRACT_ARTIFACTS && hints.length) {
       throw new Error('Apollo strict mode: remote component contract index is unavailable');
     }
@@ -138,11 +101,13 @@ export async function ensureContractArtifactsForHints(
 
   const matchedPackages = new Set<RuntimeContractPackageState>();
   for (const hint of hints) {
-    const state = findPackageStateForHint(hint);
+    const state = resolveContractPackageForHint(packageStates, hint);
     if (state && state.indexEntry.coverage !== 'none') {
       matchedPackages.add(state);
     } else if (!state && defaultCoveragePolicy === 'required') {
-      throw new Error(`Apollo strict mode: no required contract package for ${describeHint(hint)}`);
+      throw new Error(
+        `Apollo strict mode: no required contract package for ${describeContractArtifactHint(hint)}`,
+      );
     }
   }
 
@@ -314,7 +279,7 @@ export async function ensureContractExamplesForHints(
   const matched = Array.from(
     new Set(
       hints
-        .map(findPackageStateForHint)
+        .map((hint) => resolveContractPackageForHint(packageStates, hint))
         .filter((state): state is RuntimeContractPackageState => Boolean(state)),
     ),
   );
@@ -344,7 +309,7 @@ export function getComponentExamplesForKeys(
 export function getContractPackageKeyForHint(
   hint: ContractArtifactHint,
 ): string | null {
-  const state = findPackageStateForHint(hint);
+  const state = resolveContractPackageForHint(packageStates, hint);
   return state?.indexEntry.componentKey ?? null;
 }
 
@@ -353,65 +318,32 @@ export async function ensureContractPackageIndexLoaded(): Promise<void> {
 }
 
 async function ensureRemoteContractIndexLoaded(): Promise<void> {
-  if (!remoteContractIndexUrl || indexUnavailable || indexLoaded) {
-    return;
-  }
-
-  if (!indexPromise) {
-    indexPromise = loadRemoteContractIndex().finally(() => {
-      indexPromise = null;
-    });
-  }
-
-  return indexPromise;
-}
-
-async function loadRemoteContractIndex(): Promise<void> {
   if (!remoteContractIndexUrl) {
     return;
   }
 
+  const indexUrl = remoteContractIndexUrl;
+  const cacheBust = remoteContractsCacheBust;
+  return contractIndexLifecycle.ensure(
+    () => loadRemoteContractIndex(indexUrl, cacheBust),
+    (index) => applyRemoteContractIndex(index, indexUrl),
+  );
+}
+
+async function loadRemoteContractIndex(
+  indexUrl: string,
+  cacheBust: number,
+): Promise<RemoteComponentContractIndex> {
   try {
-    const raw = await fetchDirect(
-      appendCacheBustingQuery(
-        remoteContractIndexUrl,
-        'apolloContractIndex',
-        remoteContractsCacheBust,
+    return validateRemoteContractIndex(
+      await fetchRemoteContractIndexPayload(
+        indexUrl,
+        cacheBust,
       ),
     );
-    const index = validateRemoteContractIndex(JSON.parse(raw));
-    const entries = index.packages;
-
-    packageStates = entries
-      .filter((entry) => Boolean(entry.componentKey || entry.packageName))
-      .map((entry) => ({
-        indexEntry: entry,
-        aliases: buildPackageAliases(entry),
-        rulesEntry: null,
-        compositionEntry: null,
-        agentContext: null,
-        auditMapping: null,
-        overridesPayload: null,
-        examples: null,
-        examplesLoading: null,
-        loading: null,
-        loaded: false,
-      }));
-    if (index.baseUrl) {
-      remoteContractsBaseUrl = index.baseUrl;
-    }
-    defaultCoveragePolicy = index.coverage.defaultPolicy;
-    indexLoaded = true;
-
-    console.log('[Apollo][contracts] index loaded', {
-      url: remoteContractIndexUrl,
-      generatedAt: index.generatedAt ?? null,
-      packageCount: packageStates.length,
-    });
   } catch (error) {
-    indexUnavailable = true;
     const payload = {
-      url: remoteContractIndexUrl,
+      url: indexUrl,
       error:
         error && typeof error === 'object' && 'message' in error
           ? String((error as { message?: string }).message)
@@ -421,239 +353,152 @@ async function loadRemoteContractIndex(): Promise<void> {
     if (STRICT_REMOTE_CONTRACT_ARTIFACTS) {
       throw new Error(`Apollo strict mode: failed to load remote component contract index: ${payload.error}`);
     }
+    throw error;
   }
+}
+
+function applyRemoteContractIndex(
+  index: RemoteComponentContractIndex,
+  indexUrl: string,
+): void {
+  packageStates = index.packages
+    .filter((entry) => Boolean(entry.componentKey || entry.packageName))
+    .map((entry) => ({
+      indexEntry: entry,
+      aliases: buildContractPackageAliases(entry),
+      rulesEntry: null,
+      compositionEntry: null,
+      agentContext: null,
+      auditMapping: null,
+      overridesPayload: null,
+      examples: null,
+      artifactsLifecycle: new AsyncResourceLifecycle({ retryFailed: true }),
+      examplesLifecycle: new AsyncResourceLifecycle({ retryFailed: true }),
+    }));
+  if (index.baseUrl) {
+    remoteContractsBaseUrl = index.baseUrl;
+  }
+  defaultCoveragePolicy = index.coverage.defaultPolicy;
+
+  console.log('[Apollo][contracts] index loaded', {
+    url: indexUrl,
+    generatedAt: index.generatedAt ?? null,
+    packageCount: packageStates.length,
+  });
 }
 
 async function loadPackageArtifacts(
   state: RuntimeContractPackageState,
 ): Promise<void> {
-  if (state.loaded) {
-    return;
-  }
-  if (state.loading) {
-    return state.loading;
-  }
+  return state.artifactsLifecycle.ensure(async () => {
+    try {
+      const entry = state.indexEntry;
+      const componentKey = entry.componentKey;
+      const aliases = state.aliases;
+      const artifactPaths = resolveContractPackageArtifactPaths(entry);
+      const transportOptions = {
+        baseUrl: remoteContractsBaseUrl,
+        cacheBust: remoteContractsCacheBust,
+      };
 
-  state.loading = (async () => {
-    const entry = state.indexEntry;
-    const componentKey = entry.componentKey;
-    const aliases = state.aliases;
+      if (artifactPaths.rules) {
+        const payload = await fetchRemoteContractArtifactPayload(
+          artifactPaths.rules,
+          transportOptions,
+        );
+        state.rulesEntry = compileContractRulesArtifact(
+          payload,
+          entry,
+          aliases,
+        );
+      }
 
-    const rulesPath = getPackageArtifactPath(
-      entry,
-      entry.rulesPath ?? entry.rulesFile ?? entry.artifacts?.rules ?? '',
-    );
-    if (rulesPath) {
-      const rulesPayload = await loadJsonArtifact(rulesPath);
-      const rules = Array.isArray(rulesPayload?.rules)
-        ? rulesPayload.rules
-        : [];
-      if (componentKey && rules.length) {
-        state.rulesEntry = {
+      if (artifactPaths.composition) {
+        const payload = await fetchRemoteContractArtifactPayload(
+          artifactPaths.composition,
+          transportOptions,
+        );
+        state.compositionEntry = compileContractCompositionArtifact(
+          payload,
+          aliases,
+        );
+      }
+
+      state.overridesPayload = artifactPaths.overrides
+        ? compileContractOverridesArtifact(
+            await fetchRemoteContractArtifactPayload(
+              artifactPaths.overrides,
+              transportOptions,
+            ),
+          )
+        : null;
+
+      if (artifactPaths.agentContext) {
+        const payload = await fetchRemoteContractArtifactPayload(
+          artifactPaths.agentContext,
+          transportOptions,
+        );
+        state.agentContext = compileContractAgentContextArtifact(
+          payload,
           componentKey,
-          packageName: entry.packageName,
-          aliases,
-          figmaKeys: Array.isArray(entry.figmaKeys) ? entry.figmaKeys : [],
-          rulesFile: {
-            componentKey,
-            rules: rules as ComponentContractRule[],
-          },
-        };
+          state.overridesPayload,
+        );
       }
-    }
 
-    const compositionPath = getPackageArtifactPath(
-      entry,
-      entry.compositionPath ??
-        entry.compositionFile ??
-        entry.artifacts?.composition ??
-        '',
-    );
-    if (compositionPath) {
-      const contract = await loadJsonArtifact(compositionPath);
-      if (contract && typeof contract === 'object') {
-        state.compositionEntry = {
-          contract: contract as RuntimeCompositionContract,
-          aliases,
-        };
-      }
-    }
-
-    const overridesPath = getPackageArtifactPath(
-      entry,
-      entry.artifacts.overrides ?? '',
-    );
-    state.overridesPayload = overridesPath
-      ? await loadJsonArtifact(overridesPath)
-      : null;
-
-    const agentContextPath = getPackageArtifactPath(
-      entry,
-      entry.agentContextPath ?? entry.artifacts?.agentContext ?? '',
-    );
-    if (agentContextPath) {
-      const payload = await loadJsonArtifact(agentContextPath);
-      state.agentContext = compactAgentContext(
+      state.auditMapping = artifactPaths.auditMapping
+        ? compileContractAuditMappingArtifact(
+            await fetchRemoteContractArtifactPayload(
+              artifactPaths.auditMapping,
+              transportOptions,
+            ),
+          )
+        : null;
+    } catch (error) {
+      const payload = {
+        componentKey: state.indexEntry.componentKey ?? null,
+        packageName: state.indexEntry.packageName ?? null,
+        error:
+          error && typeof error === 'object' && 'message' in error
+            ? String((error as { message?: string }).message)
+            : String(error ?? 'Unknown error'),
+      };
+      console.warn(
+        '[Apollo][contracts] failed to load package artifacts',
         payload,
-        componentKey,
-        state.overridesPayload,
       );
+      if (state.indexEntry.coverage === 'required') {
+        throw new Error(
+          `Apollo strict mode: failed to load remote component artifacts: ${payload.error}`,
+        );
+      }
     }
-
-    const auditMappingPath = getPackageArtifactPath(
-      entry,
-      entry.artifacts.auditMapping ?? '',
-    );
-    state.auditMapping = auditMappingPath
-      ? await loadJsonArtifact(auditMappingPath)
-      : null;
-
-    state.loaded = true;
-  })().catch((error) => {
-    const payload = {
-      componentKey: state.indexEntry.componentKey ?? null,
-      packageName: state.indexEntry.packageName ?? null,
-      error:
-        error && typeof error === 'object' && 'message' in error
-          ? String((error as { message?: string }).message)
-          : String(error ?? 'Unknown error'),
-    };
-    console.warn('[Apollo][contracts] failed to load package artifacts', payload);
-    if (state.indexEntry.coverage === 'required') {
-      throw new Error(`Apollo strict mode: failed to load remote component artifacts: ${payload.error}`);
-    }
-    state.loaded = true;
-  }).finally(() => {
-    state.loading = null;
   });
-
-  return state.loading;
 }
 
 async function loadPackageExamples(
   state: RuntimeContractPackageState,
 ): Promise<void> {
-  if (state.examples !== null) return;
-  if (state.examplesLoading) return state.examplesLoading;
-  state.examplesLoading = (async () => {
-    const path = getPackageArtifactPath(
-      state.indexEntry,
-      state.indexEntry.artifacts.examples ?? '',
-    );
-    const payload = path ? await loadJsonArtifact(path) : null;
-    state.examples = compactExamples(payload);
-  })().catch((error) => {
-    state.examples = [];
-    console.warn('[Apollo][contracts] optional examples unavailable', {
-      componentKey: state.indexEntry.componentKey ?? null,
-      error: error instanceof Error ? error.message : String(error ?? 'Unknown error'),
-    });
-  }).finally(() => {
-    state.examplesLoading = null;
+  return state.examplesLifecycle.ensure(async () => {
+    try {
+      const path = resolveContractPackageArtifactPaths(
+        state.indexEntry,
+      ).examples;
+      const payload = path
+        ? await fetchRemoteContractArtifactPayload(path, {
+            baseUrl: remoteContractsBaseUrl,
+            cacheBust: remoteContractsCacheBust,
+          })
+        : null;
+      state.examples = compileContractExamplesArtifact(payload);
+    } catch (error) {
+      state.examples = [];
+      console.warn('[Apollo][contracts] optional examples unavailable', {
+        componentKey: state.indexEntry.componentKey ?? null,
+        error:
+          error instanceof Error
+            ? error.message
+            : String(error ?? 'Unknown error'),
+      });
+    }
   });
-  return state.examplesLoading;
-}
-
-async function loadJsonArtifact(path: string): Promise<any> {
-  const url = resolveArtifactUrl(path);
-  const raw = await fetchDirect(
-    appendCacheBustingQuery(url, 'apolloContractArtifact', remoteContractsCacheBust),
-  );
-  return compilePublicArtifact(JSON.parse(raw));
-}
-
-function resolveArtifactUrl(path: string): string {
-  if (/^https?:\/\//i.test(path)) {
-    return path;
-  }
-  return resolveCatalogUrl(remoteContractsBaseUrl, path);
-}
-
-function getPackageArtifactPath(
-  entry: RemoteContractPackage,
-  artifactPath: string,
-): string {
-  if (!artifactPath || /^https?:\/\//i.test(artifactPath)) {
-    return artifactPath;
-  }
-  if (artifactPath.includes('/')) {
-    return artifactPath;
-  }
-  if (!entry.packagePath) {
-    return artifactPath;
-  }
-  return `${normalizePath(entry.packagePath)}/${artifactPath}`;
-}
-
-function buildPackageAliases(entry: RemoteContractPackage): string[] {
-  const aliases = new Set<string>();
-  addAlias(aliases, entry.packageName);
-  addAlias(aliases, entry.componentKey);
-  for (const alias of entry.aliases ?? []) {
-    addAlias(aliases, alias);
-  }
-  return Array.from(aliases);
-}
-
-function addAlias(aliases: Set<string>, value: string | null | undefined): void {
-  if (value) {
-    aliases.add(value);
-  }
-}
-
-function findPackageStateForHint(
-  hint: ContractArtifactHint,
-): RuntimeContractPackageState | null {
-  const figmaKey = hint.figmaKey ?? '';
-  if (figmaKey) {
-    const match = packageStates.find((state) =>
-      state.indexEntry.figmaKeys.includes(figmaKey),
-    );
-    if (match) return match;
-  }
-
-  const sourceFile = normalizeComparablePath(hint.sourceFile ?? '');
-  if (sourceFile) {
-    const match = packageStates.find(
-      (state) =>
-        normalizeComparablePath(state.indexEntry.sourceCatalogPath ?? '') === sourceFile,
-    );
-    if (match) return match;
-  }
-
-  const names = new Set(
-    [hint.componentName ?? '', hint.displayName ?? '']
-      .map(normalizeAlias)
-      .filter(Boolean),
-  );
-  if (!names.size) return null;
-  const matches = packageStates.filter((state) =>
-    state.aliases.some((alias) => names.has(normalizeAlias(alias))),
-  );
-  if (matches.length > 1) {
-    throw new Error(
-      `Apollo strict mode: ambiguous contract package alias for ${describeHint(hint)}: ${matches
-        .map((state) => state.indexEntry.componentKey)
-        .join(', ')}`,
-    );
-  }
-  return matches[0] ?? null;
-}
-
-function describeHint(hint: ContractArtifactHint): string {
-  return (
-    hint.figmaKey ??
-    hint.sourceFile ??
-    hint.componentName ??
-    hint.displayName ??
-    'unknown component'
-  );
-}
-
-function normalizeAlias(value: string): string {
-  return value.trim().toLowerCase().replace(/\s+/g, ' ');
-}
-
-function normalizeComparablePath(value: string): string {
-  return normalizePath(value).toLowerCase();
 }

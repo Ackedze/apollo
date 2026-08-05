@@ -55,6 +55,47 @@ function main() {
     __test_resolveRuleComponentName,
   } = loadAllowedCustomizationModule();
 
+  const debugMiss = makeDiff(
+    'PaintMe',
+    'заливка: Button/Desktop/Colors/Primary/text → decorative/green',
+  );
+  const debugContext = {
+    libraryName: 'Web :: Core',
+    componentName: '[D] Button',
+    referenceComponentName: '[D] Button',
+  };
+  const captureLogs = (callback) => {
+    const messages = [];
+    const originalLog = console.log;
+    console.log = (...args) => messages.push(args);
+    try {
+      callback();
+    } finally {
+      console.log = originalLog;
+    }
+    return messages;
+  };
+  const defaultLogs = captureLogs(() =>
+    applyAllowedCustomizationRules([debugMiss], debugContext),
+  );
+  assert.equal(
+    defaultLogs.length,
+    0,
+    'Allowed-customization misses must not log when audit trace is disabled',
+  );
+
+  globalThis.figma = {
+    root: {
+      getPluginData: () => '1',
+    },
+  };
+  const traceLogs = captureLogs(() =>
+    applyAllowedCustomizationRules([debugMiss], debugContext),
+  );
+  delete globalThis.figma;
+  assert.equal(traceLogs.length, 1);
+  assert.equal(traceLogs[0][0], '[Apollo][trace] allowed-customization-miss');
+
   assert.equal(
     __test_resolveRuleComponentName({
       displayName: '🔩 Content',

@@ -58,6 +58,14 @@ export type AuditResultItem = {
   focusId?: string;
   title: string;
   caption?: string;
+  actions?: ResultFindingAction[];
+};
+
+export type ResultFindingAction = {
+  id: string;
+  label: string;
+  targetName: string;
+  onPress: () => void;
 };
 
 export type DetachedResultItem = {
@@ -81,6 +89,7 @@ export type DeprecatedStyleUsageItem = {
   id: string;
   name: string;
   onFocus?: () => void;
+  actions?: ResultFindingAction[];
 };
 
 export type DeprecatedStyleResultItem = {

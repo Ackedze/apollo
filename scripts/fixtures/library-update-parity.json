@@ -1,0 +1,70 @@
+{
+  "ownerOccurrenceId": "11281:68687",
+  "ownerSourceId": "11281:68605",
+  "dependencies": [
+    {
+      "key": "body-control-key",
+      "currentComponentId": "body-control-old",
+      "latestComponentId": "body-control-new",
+      "detachedId": "11301:64484",
+      "sourceId": "11281:68607",
+      "renderedId": "I11281:68687;14:67165"
+    },
+    {
+      "key": "body-text-key",
+      "currentComponentId": "body-text-old",
+      "latestComponentId": "body-text-new",
+      "detachedId": "11301:64485",
+      "sourceId": "11281:68608",
+      "renderedId": "I11281:68687;14:67168"
+    },
+    {
+      "key": "body-text-key",
+      "currentComponentId": "body-text-old",
+      "latestComponentId": "body-text-new",
+      "detachedId": "11301:64486",
+      "sourceId": "11281:68609",
+      "renderedId": "I11281:68687;14:67167"
+    },
+    {
+      "key": "body-text-key",
+      "currentComponentId": "body-text-old",
+      "latestComponentId": "body-text-new",
+      "detachedId": "11301:64487",
+      "sourceId": "11281:68610",
+      "renderedId": "I11281:68687;14:73659"
+    },
+    {
+      "key": "body-status-key",
+      "currentComponentId": "body-status-old",
+      "latestComponentId": "body-status-new",
+      "detachedId": "11301:64488",
+      "sourceId": "11281:68611",
+      "renderedId": "I11281:68687;14:67169"
+    },
+    {
+      "key": "body-text-key",
+      "currentComponentId": "body-text-old",
+      "latestComponentId": "body-text-new",
+      "detachedId": "11301:64490",
+      "sourceId": "11281:68613",
+      "renderedId": "I11281:68687;14:67171"
+    },
+    {
+      "key": "body-action-key",
+      "currentComponentId": "body-action-old",
+      "latestComponentId": "body-action-new",
+      "detachedId": "11301:64491",
+      "sourceId": "11281:68614",
+      "renderedId": "I11281:68687;14:67172"
+    },
+    {
+      "key": "border-key",
+      "currentComponentId": "border-old",
+      "latestComponentId": "border-new",
+      "detachedId": "11301:64492",
+      "sourceId": "11281:68615",
+      "renderedId": "I11281:68687;14:67173"
+    }
+  ]
+}

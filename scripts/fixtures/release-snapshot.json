@@ -1,0 +1,241 @@
+{
+  "snapshotVersion": 1,
+  "bootstrapUrl": "https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json",
+  "releaseBaseUrl": "https://release.test/JSONS/",
+  "rootFile": "referenceSourcesMVP.json",
+  "files": {
+    "referenceSourcesMVP.json": {
+      "schemaVersion": 2,
+      "generatedAt": "2026-08-04T00:00:00.000Z",
+      "baseUrl": "https://release.test/JSONS/",
+      "apollo": {
+        "patternRulesPath": "apollo/patternRules.json",
+        "componentContractIndexPath": "apollo/indexes/componentContractIndex.json",
+        "remediationConfigPath": "apollo/remediations.json"
+      },
+      "libraries": [
+        {
+          "name": "Release Fixture",
+          "catalogs": [
+            {
+              "fileName": "tokens/Base.json",
+              "path": "tokens/Base.json",
+              "source": {
+                "kind": "tokens",
+                "pageName": "Base Tokens"
+              }
+            },
+            {
+              "fileName": "styles/Base.json",
+              "path": "styles/Base.json",
+              "source": {
+                "kind": "styles",
+                "pageName": "Base Styles"
+              }
+            },
+            {
+              "fileName": "components/Test.json",
+              "path": "components/Test.json",
+              "source": {
+                "kind": "components",
+                "pageName": "Test",
+                "indexPath": "indexes/components/Test.index.json"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "apollo/patternRules.json": {
+      "schemaVersion": 1,
+      "rules": []
+    },
+    "apollo/remediations.json": {
+      "schemaVersion": 1,
+      "components": {},
+      "styles": {}
+    },
+    "tokens/Base.json": {
+      "meta": {
+        "fileName": "Base Tokens",
+        "library": "Release Fixture"
+      },
+      "collections": [
+        {
+          "id": "VariableCollectionId:test",
+          "key": "token-collection-test",
+          "name": "Base",
+          "defaultModeId": "mode-light",
+          "modes": [
+            {
+              "modeId": "mode-light",
+              "name": "Light"
+            }
+          ],
+          "variables": [
+            {
+              "id": "VariableID:test",
+              "key": "token-test",
+              "name": "color/text/primary",
+              "tokenName": "primary",
+              "groupName": "color/text",
+              "resolvedType": "COLOR",
+              "variableCollectionId": "VariableCollectionId:test",
+              "valuesByMode": {
+                "mode-light": {
+                  "r": 0,
+                  "g": 0,
+                  "b": 0,
+                  "a": 1
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "styles/Base.json": {
+      "meta": {
+        "fileName": "Base Styles",
+        "library": "Release Fixture"
+      },
+      "styles": [
+        {
+          "key": "style-test",
+          "name": "Text/Primary",
+          "group": "Text",
+          "type": "paint"
+        }
+      ]
+    },
+    "indexes/components/Test.index.json": {
+      "kind": "component-index",
+      "version": 1,
+      "generatedAt": "2026-08-04T00:00:00.000Z",
+      "catalogName": "Test",
+      "fileName": "Test.json",
+      "library": "Release Fixture",
+      "pageName": "Test",
+      "components": [
+        {
+          "key": "figma-test",
+          "name": "[D] Test",
+          "role": "main",
+          "status": "active",
+          "platform": "desktop",
+          "category": "Test",
+          "variants": [],
+          "catalogPath": "components/Test.json",
+          "indexPath": "indexes/components/Test.index.json"
+        }
+      ]
+    },
+    "components/Test.json": {
+      "kind": "catalog",
+      "source": {
+        "library": "Release Fixture",
+        "file": "Test",
+        "generatedAt": "2026-08-04T00:00:00.000Z"
+      },
+      "elements": [
+        {
+          "id": 1,
+          "path": "[D] Test",
+          "type": "COMPONENT",
+          "componentKey": "figma-test",
+          "visible": true
+        }
+      ],
+      "components": [
+        {
+          "key": "figma-test",
+          "name": "[D] Test",
+          "status": "active",
+          "role": "main",
+          "platform": "desktop",
+          "category": "Test"
+        }
+      ]
+    },
+    "apollo/indexes/componentContractIndex.json": {
+      "schemaVersion": 2,
+      "documentType": "component-contract-index",
+      "generatedAt": "2026-08-04T00:00:00.000Z",
+      "baseUrl": "https://release.test/JSONS/",
+      "coverage": {
+        "defaultPolicy": "none"
+      },
+      "packages": [
+        {
+          "componentKey": "web.test",
+          "packageName": "Test",
+          "packagePath": "apollo/contracts/Test",
+          "coverage": "required",
+          "aliases": [
+            "[D] Test"
+          ],
+          "figmaKeys": [
+            "figma-test"
+          ],
+          "sourceCatalogPath": "components/Test.json",
+          "artifacts": {
+            "rules": "rules.json",
+            "composition": "composition-contract.json",
+            "agentContext": "agent-context.json",
+            "examples": "examples.json"
+          }
+        }
+      ]
+    },
+    "apollo/contracts/Test/rules.json": {
+      "schemaVersion": 1,
+      "documentType": "component-rules",
+      "componentKey": "web.test",
+      "rules": [
+        {
+          "ruleId": "test.view",
+          "property": "variant.View",
+          "expected": "Primary"
+        }
+      ]
+    },
+    "apollo/contracts/Test/composition-contract.json": {
+      "schemaVersion": 1,
+      "documentType": "composition-contract",
+      "componentKey": "web.test",
+      "component": {
+        "name": "[D] Test",
+        "library": "Release Fixture"
+      },
+      "allowedOverrides": [],
+      "standaloneBaselines": []
+    },
+    "apollo/contracts/Test/agent-context.json": {
+      "schemaVersion": 1,
+      "documentType": "component-agent-context",
+      "componentKey": "web.test",
+      "summary": "Release fixture component",
+      "agentInstructions": [
+        "Use the published contract."
+      ],
+      "includedComponents": [
+        "[D] Test"
+      ]
+    },
+    "apollo/contracts/Test/examples.json": {
+      "schemaVersion": 1,
+      "documentType": "component-examples",
+      "componentKey": "web.test",
+      "examples": [
+        {
+          "exampleId": "primary-view",
+          "title": "Primary view",
+          "inputChange": {
+            "property": "variant.View",
+            "value": "Primary"
+          }
+        }
+      ]
+    }
+  }
+}

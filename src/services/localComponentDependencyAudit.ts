@@ -1,4 +1,22 @@
 import { forEachWithConcurrency } from '../utils/promisePool';
+import type { AuditItem } from '../types/audit';
+import type {
+  LibraryComponentFreshnessChecker,
+  LibraryComponentFreshnessStats,
+} from './libraryComponentFreshness';
+import { reconcileLibraryUpdateResults } from './libraryUpdateResults';
+import {
+  getTimestamp,
+  logAuditMetric,
+  traceAudit,
+} from '../utils/auditInstrumentation';
+import {
+  ensureReferenceCatalogsForKeys,
+  findComponent,
+  resolveVariantKeyForInstance,
+} from '../reference/library';
+import { getForcedAuditCategory } from '../policies/componentAuditPolicy';
+import { buildNodePath, getPageName } from '../utils/nodeHelpers';
 
 export interface LocalComponentDependencyWalkOptions<
   TNode,
@@ -23,6 +41,244 @@ export interface LocalComponentDependencyWalkStats {
   ownerDefinitions: number;
   visitedSourceNodes: number;
   remoteDependencies: number;
+}
+
+export interface AuditLocalComponentDependenciesOptions<
+  TNode,
+  TComponent extends TNode,
+> extends Omit<
+    LocalComponentDependencyWalkOptions<TNode, TComponent>,
+    'onRemoteDependency' | 'dependencyConcurrency'
+  > {
+  componentFocusNodeIds: ReadonlyMap<string, ReadonlySet<string>>;
+  getComponentIdentity(component: TComponent): string;
+  classifyDependency(
+    instance: TNode,
+    owner: TComponent,
+    focusNodeIds: string[],
+    observedComponentKeys: Set<string>,
+  ): Promise<AuditItem | null>;
+  shouldExclude(item: AuditItem): boolean;
+  freshnessChecker: LibraryComponentFreshnessChecker;
+  dependencyConcurrency: number;
+}
+
+export interface AuditLocalComponentDependenciesResult {
+  currentItems: AuditItem[];
+  updateItems: AuditItem[];
+  walkStats: LocalComponentDependencyWalkStats;
+}
+
+export interface ClassifyLocalComponentDependencyOptions {
+  componentKeyCache: Map<string, string | null>;
+  freshnessChecker: LibraryComponentFreshnessChecker;
+  observedComponentKeys: Set<string>;
+  focusNodeIds: string[];
+  getComponentKeyCached(
+    node: SceneNode,
+    cache: Map<string, string | null>,
+    options: { retryIfMissing: boolean },
+  ): Promise<string | null>;
+  buildNodeSegments(node: SceneNode): AuditItem['pathSegments'];
+  throwIfCancelled(): void;
+}
+
+export async function classifyLocalComponentDependency(
+  node: InstanceNode,
+  owner: ComponentNode,
+  options: ClassifyLocalComponentDependencyOptions,
+): Promise<AuditItem | null> {
+  options.throwIfCancelled();
+  const componentKey = await options.getComponentKeyCached(
+    node,
+    options.componentKeyCache,
+    { retryIfMissing: true },
+  );
+  if (!componentKey) return null;
+  options.observedComponentKeys.add(componentKey);
+
+  let reference = findComponent(componentKey);
+  if (!reference) {
+    await ensureReferenceCatalogsForKeys([componentKey]);
+    reference = findComponent(componentKey);
+  }
+  if (!reference || getForcedAuditCategory(reference)) return null;
+
+  const libraryFreshness = await options.freshnessChecker.check(
+    node,
+    'independent-instance',
+  );
+  options.throwIfCancelled();
+  if (libraryFreshness.status !== 'update-available') return null;
+
+  const nodeSegments = options.buildNodeSegments(node);
+  const pathSegments =
+    nodeSegments.length > 1
+      ? nodeSegments.slice(1)
+      : nodeSegments.length
+        ? nodeSegments
+        : [
+            {
+              id: node.id,
+              label: node.name,
+              nodeType: node.type,
+              visible: true,
+            },
+          ];
+  const resolvedReferenceVariantKey = resolveVariantKeyForInstance(
+    reference,
+    componentKey,
+    node.variantProperties ?? null,
+  );
+  const resolvedReferenceVariantName =
+    reference.variants?.find(
+      (variant) => variant?.key === resolvedReferenceVariantKey,
+    )?.name ?? null;
+
+  const item: AuditItem = {
+    id: node.id,
+    name: node.name,
+    nodeType: node.type,
+    pageName: getPageName(node),
+    pathSegments,
+    fullPath: buildNodePath(node),
+    relevance: 'update',
+    librarySource: reference.source ?? null,
+    librarySourceFile: reference.sourceFile ?? null,
+    isLocal: false,
+    reference,
+    componentKey,
+    diffs: [],
+    comparisonIssues: [],
+    updateReasons: ['library-update-available'],
+    libraryFreshness,
+    focusNodeId: options.focusNodeIds[0] ?? owner.id,
+    sourceOwnerOccurrenceIds: options.focusNodeIds,
+    localComponentOwner: {
+      id: owner.id,
+      name: owner.name,
+      pageName: getPageName(owner),
+      fullPath: buildNodePath(owner),
+    },
+    resolvedReferenceVariantKey,
+    resolvedReferenceVariantName,
+  };
+
+  traceAudit('local-component-library-dependency', {
+    nodeId: node.id,
+    nodeName: node.name,
+    componentKey,
+    ownerComponentId: owner.id,
+    ownerComponentName: owner.name,
+    status: libraryFreshness.status,
+    currentComponentId: libraryFreshness.currentComponentId,
+    latestComponentId: libraryFreshness.latestComponentId,
+    categoryDecision: 'update',
+  });
+
+  return item;
+}
+
+export async function auditLocalComponentDependencies<
+  TNode,
+  TComponent extends TNode,
+>(
+  initialComponents: readonly TComponent[],
+  currentItems: readonly AuditItem[],
+  updateItems: readonly AuditItem[],
+  options: AuditLocalComponentDependenciesOptions<TNode, TComponent>,
+): Promise<AuditLocalComponentDependenciesResult> {
+  const startedAt = getTimestamp();
+  const freshnessBefore = options.freshnessChecker.getStats();
+  const dependencyResults: Array<AuditItem | null | undefined> = [];
+  const observedComponentKeys = new Set<string>();
+
+  const walkStats = await walkLocalComponentDependencies(
+    initialComponents,
+    {
+      getNodeId: options.getNodeId,
+      getNodeType: options.getNodeType,
+      getChildren: options.getChildren,
+      getMainComponent: options.getMainComponent,
+      isRemoteComponent: options.isRemoteComponent,
+      isVisible: options.isVisible,
+      onRemoteDependency: async (node, owner, index) => {
+        const identity = options.getComponentIdentity(owner);
+        const focusNodeIds = Array.from(
+          options.componentFocusNodeIds.get(identity) ?? [
+            options.getNodeId(owner),
+          ],
+        );
+        const dependency = await options.classifyDependency(
+          node,
+          owner,
+          focusNodeIds,
+          observedComponentKeys,
+        );
+        dependencyResults[index] =
+          dependency && !options.shouldExclude(dependency) ? dependency : null;
+      },
+      dependencyConcurrency: options.dependencyConcurrency,
+      throwIfCancelled: options.throwIfCancelled,
+    },
+  );
+
+  const dependencies = dependencyResults.filter(
+    (item): item is AuditItem => Boolean(item),
+  );
+  const reconciled = reconcileLibraryUpdateResults(
+    currentItems,
+    updateItems,
+    dependencies,
+  );
+  const freshnessAfter = options.freshnessChecker.getStats();
+
+  logLocalDependencyMetrics({
+    startedAt,
+    registeredDefinitions: initialComponents.length,
+    walkStats,
+    uniqueDependencyKeys: observedComponentKeys.size,
+    updateFindings: dependencies.length,
+    concurrency: options.dependencyConcurrency,
+    freshnessBefore,
+    freshnessAfter,
+  });
+
+  return {
+    currentItems: reconciled.currentItems,
+    updateItems: reconciled.updateItems,
+    walkStats,
+  };
+}
+
+function logLocalDependencyMetrics(input: {
+  startedAt: number;
+  registeredDefinitions: number;
+  walkStats: LocalComponentDependencyWalkStats;
+  uniqueDependencyKeys: number;
+  updateFindings: number;
+  concurrency: number;
+  freshnessBefore: LibraryComponentFreshnessStats;
+  freshnessAfter: LibraryComponentFreshnessStats;
+}): void {
+  logAuditMetric('local-component-dependency-audit', {
+    totalMs: Number((getTimestamp() - input.startedAt).toFixed(1)),
+    registeredDefinitions: input.registeredDefinitions,
+    ownerDefinitions: input.walkStats.ownerDefinitions,
+    visitedSourceNodes: input.walkStats.visitedSourceNodes,
+    remoteDependencies: input.walkStats.remoteDependencies,
+    uniqueDependencyKeys: input.uniqueDependencyKeys,
+    updateFindings: input.updateFindings,
+    concurrency: input.concurrency,
+    freshnessChecks:
+      input.freshnessAfter.checks - input.freshnessBefore.checks,
+    importCacheHits:
+      input.freshnessAfter.importCacheHits -
+      input.freshnessBefore.importCacheHits,
+    importCacheMisses:
+      input.freshnessAfter.importCacheMisses -
+      input.freshnessBefore.importCacheMisses,
+  });
 }
 
 /**

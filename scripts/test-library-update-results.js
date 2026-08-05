@@ -40,7 +40,10 @@ function item(id, componentKey, options = {}) {
 
 function main() {
   const {
+    assertLibraryUpdateCategoriesExclusive,
     excludeLibraryUpdatesFromCurrent,
+    findLibraryUpdateCurrentOverlaps,
+    reconcileLibraryUpdateResults,
     resolveLibraryUpdateFocusNodeId,
   } = loadModule();
 
@@ -135,6 +138,94 @@ function main() {
       'I20:30;40:50',
     ],
     'Only owner-scoped source-update sublayers and exact update ids leave current',
+  );
+
+  assert.throws(
+    () => assertLibraryUpdateCategoriesExclusive([renderedCell], [sourceUpdate]),
+    /update\/current invariant failed/,
+  );
+  assert.equal(
+    findLibraryUpdateCurrentOverlaps(reconciled, [sourceUpdate]).length,
+    0,
+  );
+
+  const fixture = JSON.parse(
+    fs.readFileSync(
+      path.resolve(__dirname, 'fixtures/library-update-parity.json'),
+      'utf8',
+    ),
+  );
+  const baselineCurrent = Array.from({ length: 24 }, (_value, index) =>
+    item(`baseline-current-${index + 1}`, `baseline-key-${index + 1}`, {
+      libraryFreshness: { reason: 'remote-component-current' },
+    }),
+  );
+  const detachedUpdates = fixture.dependencies.map((dependency) =>
+    item(dependency.detachedId, dependency.key, {
+      libraryFreshness: {
+        reason: 'remote-component-update-available',
+        currentComponentId: dependency.currentComponentId,
+        latestComponentId: dependency.latestComponentId,
+      },
+    }),
+  );
+  const detachedResult = reconcileLibraryUpdateResults(
+    baselineCurrent,
+    detachedUpdates,
+    [],
+  );
+
+  const renderedDependencies = fixture.dependencies.map((dependency) =>
+    item(dependency.renderedId, dependency.key, {
+      libraryFreshness: { reason: 'instance-sublayer' },
+    }),
+  );
+  const sourceUpdates = fixture.dependencies.map((dependency) =>
+    item(dependency.sourceId, dependency.key, {
+      focusNodeId: fixture.ownerOccurrenceId,
+      sourceOwnerOccurrenceIds: [fixture.ownerOccurrenceId],
+      localComponentOwner: { id: fixture.ownerSourceId },
+      libraryFreshness: {
+        reason: 'remote-component-update-available',
+        currentComponentId: dependency.currentComponentId,
+        latestComponentId: dependency.latestComponentId,
+      },
+    }),
+  );
+  const instanceResult = reconcileLibraryUpdateResults(
+    baselineCurrent.concat(renderedDependencies),
+    [],
+    sourceUpdates,
+  );
+
+  const versionSignatures = (entries) =>
+    entries.map((entry) =>
+      [
+        entry.componentKey,
+        entry.libraryFreshness.currentComponentId,
+        entry.libraryFreshness.latestComponentId,
+      ].join(':'),
+    );
+  assert.equal(detachedResult.updateItems.length, 8);
+  assert.equal(instanceResult.updateItems.length, 8);
+  assert.equal(detachedResult.currentItems.length, 24);
+  assert.equal(instanceResult.currentItems.length, 24);
+  assert.deepEqual(
+    versionSignatures(instanceResult.updateItems),
+    versionSignatures(detachedResult.updateItems),
+    'Detached and local-instance scans must expose the same update occurrences',
+  );
+  assert.equal(
+    new Set(instanceResult.updateItems.map((entry) => entry.focusNodeId)).size,
+    8,
+    'Every source update occurrence must focus a distinct rendered instance',
+  );
+  assert.equal(
+    findLibraryUpdateCurrentOverlaps(
+      instanceResult.currentItems,
+      instanceResult.updateItems,
+    ).length,
+    0,
   );
 
   console.log('Library update result reconciliation checks passed');

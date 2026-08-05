@@ -5,107 +5,50 @@ import {
   ensureReferenceCatalogsForKeys,
   ensureReferenceCatalogsLoaded,
   findComponent,
-  getCorporateCounterpart,
   getTokenCatalogs,
-  isNestedComponentLayoutPathHostControlled,
-  isNestedComponentPaintPathHostControlled,
-  isNestedComponentTextPathHostControlled,
   reportMissingReference,
   resolveStructure,
   resolveStructureForInstance,
-  resolveVariantKeyForInstance,
 } from './reference/library';
-import {
-  alignMaterializedReferenceInstancePaths,
-  applyMaterializedHostVariantBaselines,
-  applyMaterializedHostVariantBaselineToNode,
-  getMaterializedInstanceReferenceDecision,
-  mergeMaterializedInstanceReferenceNode,
-  selectMaterializedInstanceMergeSource,
-} from './reference/nestedReferenceMerge';
 import { LibraryComponent } from './reference/libraryTypes';
 import { snapshotTree } from './structure/snapshot';
 import {
-  diffExplicitNestedVariantStates,
   diffStructures,
   type DiffEntry,
   type VariableMetadata,
 } from './structure/diff';
-import { setNodeStrokeAlignment } from './structure/strokeAlignment';
 import {
-  setNodeLayoutSizing,
-  type LayoutSizingAxis,
-} from './structure/layoutSizing';
-import {
-  buildOccurrenceIndexMap,
   buildOccurrenceKeyMap,
-  makeOccurrenceKey,
 } from './structure/occurrenceKeys';
 import type { DSStructureNode } from './types/structures';
 import type {
   AuditItem,
   PathSegment,
   RelevanceStatus,
-  UpdateReason,
 } from './types/audit';
 import { LEFT_SECTION_ORDER, tabDefinitions } from './config/tabs';
 import { buildNodePath, clampColorComponent, extractAliasKey, getPageName } from './utils/nodeHelpers';
 import {
-  collectCustomStyles,
-  collectDetachedEntry,
-  computeChangesResults,
-  type CustomStyleCollectionOptions,
-} from './services/auditViewBuilder';
-import {
-  collectDeprecatedStyleUsages,
-  type DeprecatedStyleCollectionOptions,
-} from './services/deprecatedStyleAudit';
-import {
-  createLibraryComponentFreshnessChecker,
-  getLibraryComponentFreshnessScope,
-  type LibraryComponentFreshnessChecker,
-} from './services/libraryComponentFreshness';
-import {
-  excludeLibraryUpdatesFromCurrent,
-  resolveLibraryUpdateFocusNodeId,
-} from './services/libraryUpdateResults';
-import {
-  extractInstanceSublayerSourceNodeIds,
-  resolveLocalComponentDefinition,
-  walkLocalComponentDependencies,
-} from './services/localComponentDependencyAudit';
-import {
   ensureStyleMetadataLoaded,
   extractStyleKey,
+  findExactPaintStyleMatches,
+  findExactTypographyStyleMatches,
+  getNodePaintFingerprint,
+  getNodeTypographyFingerprint,
+  getPaintStyleFingerprint,
   getStyleMetadataFromKnownKey,
   isKnownStyleId,
-  normalizeStyleId,
-  resolveStyleLabelForDiff,
   resolveStyleMetadata,
 } from './services/styleMetadata';
-import { CheckState, createCheckState } from './create-check-state';
-import { applyAllowedCustomizationRules } from './filters/allowedCustomizationRules';
-import { applyCustomizationFilters } from './filters/customizationFilters';
-import { filterIgnoredLocalLibraryItems } from './filters/ignoredComponentFilters';
-import { markSuppressedDiff, createRuntimeSuppressionDependencies } from './filters/suppressionPolicy';
+import { createCheckState } from './create-check-state';
 import {
-  getForcedAuditCategory,
-  getForcedAuditCategoryReason,
   getHiddenTabsForChannel,
   supportsThemizationForChannel,
 } from './policies/componentAuditPolicy';
 import {
-  getShellComponentAuditReason,
-  isShellComponentAuditExcluded,
-  isShellDetachedEntryExcluded,
-} from './policies/shellComponentAuditPolicy';
-import {
-  buildCorporateThemizationEntry,
   buildPageThemizationEntry,
-  getContainingPage,
 } from './services/themeAudit';
 import {
-  isWrongChannelComponent,
   parseAuditChannel,
   type AuditChannel,
 } from './services/channelAudit';
@@ -117,38 +60,12 @@ import {
   traceAudit,
 } from './utils/auditInstrumentation';
 import { resolveCachedComponentKey } from './utils/componentKeyCache';
-import { getVariableBindingResetField } from './utils/variableBindingReset';
 import {
   extractVariableCollectionKey,
   getVariableCollectionLookupKeys,
 } from './utils/variableCollectionId';
-import {
-  countVariantPropertyMatches,
-  parseVariantName,
-  variantMatchesSourceWithDefaultExtras,
-  variantPropertiesEqual,
-} from './utils/variantProperties';
-import { buildApolloAgentReport, buildApolloStatsReport } from './stats/report';
 import { submitApolloStatsReport } from './stats/collector';
 import type { ApolloAgentReport, StatsResource } from './stats/types';
-import {
-  applyAssessmentPresentation,
-  assessCustomizationDiffs,
-  collapseVisualDiffsUnderVariantChanges,
-  collapsePatternViolationDiffs,
-  collapseConfiguredSemanticVariantDiffs,
-  collapseSemanticVariantDiffs,
-  createNestedContextEvidence,
-  createPatternContextResolver,
-} from './assessment/customizationAssessment';
-import {
-  resolveSurfaceContext,
-  type SurfaceContextEvidence,
-} from './assessment/surfaceContext';
-import {
-  APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
-  applyContractAwareDiffs,
-} from './contracts/contractAwareDiffs';
 import {
   ensureContractPackageIndexLoaded,
   ensureContractArtifactsForHints,
@@ -166,17 +83,40 @@ import {
 } from './examples/generationExampleCandidate';
 import { resolveGenerationExampleSourceIdentity } from './examples/generationExampleSource';
 import {
-  applyContextualComponentRuleAssessment,
-  applyRequiredComponentSizingAssessment,
-  applyVariableBindingAssessment,
-  createNumericConstraintRuleDiffs,
-  createRequiredComponentSizingDiffs,
-  createVariableModeRuleDiffs,
-  hasNumericConstraintRules,
-  hasRequiredComponentSizingRules,
-  hasVariableModeRules,
   type VariableCollectionMetadata,
 } from './contracts/componentRules';
+import { focusNode } from './actions/focusNode';
+import { applyCorporateComponentReplacement } from './actions/corporateComponentAction';
+import {
+  createCustomizationResetAction,
+  type CustomizationResetPayload,
+} from './actions/customizationResetAction';
+import { createCustomizationResetMutations } from './actions/customizationResetMutations';
+import { applyPageThemeMode } from './actions/pageThemizationAction';
+import { executeFindingAction } from './actions/findingAction';
+import { createApolloPluginMessageRouter } from './plugin/messageRouter';
+import {
+  AuditCancelledError,
+  AuditLifecycle,
+} from './services/auditLifecycle';
+import {
+  createAuditTraversalContext,
+} from './services/auditTraversalContext';
+import {
+  buildAuditResultViews,
+  prepareAuditReport,
+} from './services/auditResults';
+import {
+  alignStructurePaths,
+  expandReferenceWithInstanceComponents,
+} from './services/nestedReferencePreparation';
+import { collectAuditTargets } from './services/auditTargetCollector';
+import { FindingActionRegistry } from './remediation/findingActionRegistry';
+import { attachFindingActions } from './remediation/findingActionResolver';
+import {
+  ensureColorTokenValueIndexLoaded,
+  findColorTokenValueCandidates,
+} from './services/colorTokenValueIndex';
 
 declare const __APOLLO_VERSION__: string;
 
@@ -195,6 +135,7 @@ let lastGenerationExampleAuditEvidence: GenerationExampleAuditEvidence | null =
   null;
 let generationExampleCaptureInProgress = false;
 const MAX_GENERATION_EXAMPLE_SOURCE_NODES = 25000;
+const findingActionRegistry = new FindingActionRegistry();
 // Передаём UI конфигурацию табов из централизованного источника.
 figma.ui.postMessage({
   type: 'tab-config',
@@ -206,132 +147,54 @@ figma.ui.postMessage({
 
 startCatalogPreload();
 
-figma.ui.onmessage = (msg) => {
-  if (msg.type === 'ping') {
-    figma.ui.postMessage({ type: 'pong' });
-    return;
-  }
-
-  if (msg.type === 'scan-selection') {
-    void runAudit(undefined, parseAuditChannel(msg.payload?.pickerLabel), {
-      shellAuditEnabled: msg.payload?.shellAuditEnabled === true,
+figma.ui.onmessage = createApolloPluginMessageRouter({
+  postMessage: (message) => figma.ui.postMessage(message),
+  notify: (message) => figma.notify(message),
+  scanSelection: (payload) => {
+    void runAudit(undefined, parseAuditChannel(payload?.pickerLabel), {
+      shellAuditEnabled: payload?.shellAuditEnabled === true,
     });
-    return;
-  }
-
-  if (msg.type === 'capture-generation-example') {
-    void captureGenerationExample(msg.payload).catch((error) => {
-      console.error('[Apollo][examples] unhandled capture error', error);
-    });
-    return;
-  }
-
-  if (msg.type === 'cancel-scan') {
-    if (scanInProgress) {
-      cancelRequested = true;
-    }
-    return;
-  }
-
-  if (msg.type === 'send-apollo-agent-report') {
-    void sendApolloAgentReport(
-      msg.payload?.requestId,
-      msg.payload?.userMessage,
-    ).catch((error) => {
-      console.error('[Apollo] failed to send agent report', error);
-      figma.ui.postMessage({
-        type: 'apollo-agent-result',
-        payload: {
-          requestId: msg.payload?.requestId ?? null,
-          error:
-            error instanceof Error
-              ? error.message
-              : 'Не удалось отправить отчёт агенту.',
-        },
-      });
-    });
-    return;
-  }
-
-  if (msg.type === 'cancel-apollo-agent-report') {
-    if (
-      !msg.payload?.requestId ||
-      msg.payload.requestId === activeApolloAgentRequestId
-    ) {
+  },
+  captureGenerationExample,
+  cancelScan: () => {
+    auditLifecycle.requestCancel();
+  },
+  sendAgentReport: sendApolloAgentReport,
+  cancelAgentReport: (requestId) => {
+    if (!requestId || requestId === activeApolloAgentRequestId) {
       activeApolloAgentRequestId = null;
-      figma.ui.postMessage({
-        type: 'apollo-agent-cancelled',
-        payload: { requestId: msg.payload?.requestId ?? null },
-      });
+      return true;
     }
-    return;
-  }
-
-  if (msg.type === 'set-ui-compact') {
-    const compact = msg.payload?.compact === true;
+    return false;
+  },
+  resizeUi: (compact) => {
     const targetSize = compact ? COMPACT_UI_SIZE : EXPANDED_UI_SIZE;
     figma.ui.resize(targetSize.width, targetSize.height);
-    return;
-  }
+  },
+  focusNode,
+  resetCustomizationGroup,
+  applyThemizationAction,
+  executeFindingAction: (actionId) =>
+    executeFindingAction(actionId, {
+      registry: findingActionRegistry,
+      rerunAudit: rerunLastAuditWithFallback,
+      notify: (message) => figma.notify(message),
+    }),
+  setDebugAudit: (enabled) => {
+    setAuditTraceEnabled(enabled);
+    return isAuditTraceEnabled();
+  },
+  getDebugAudit: isAuditTraceEnabled,
+  logError: (message, error) => console.error(message, error),
+});
 
-  if (msg.type === 'focus-node') {
-    focusNode(msg.payload?.id).catch((error) => {
-      console.error('Failed to focus node', error);
-      figma.notify('Не удалось перейти к слою.');
-    });
-    return;
-  }
-
-  if (msg.type === 'reset-customization-group') {
-    void resetCustomizationGroup(msg.payload).catch((error) => {
-      console.error('Failed to reset customization group', error);
-      figma.notify('Не удалось сбросить изменения.');
-    });
-    return;
-  }
-
-  if (msg.type === 'apply-themization-action') {
-    void applyThemizationAction(msg.payload).catch((error) => {
-      console.error('Failed to apply themization action', error);
-      figma.notify('Не удалось применить изменения темизации.');
-    });
-    return;
-  }
-
-  if (msg.type === 'set-debug-audit') {
-    setAuditTraceEnabled(msg.payload?.enabled === true);
-    figma.ui.postMessage({
-      type: 'debug-audit-state',
-      payload: { enabled: isAuditTraceEnabled() },
-    });
-    return;
-  }
-
-  if (msg.type === 'get-debug-audit') {
-    figma.ui.postMessage({
-      type: 'debug-audit-state',
-      payload: { enabled: isAuditTraceEnabled() },
-    });
-    return;
-  }
-};
-
-let scanInProgress = false;
-let cancelRequested = false;
+const auditLifecycle = new AuditLifecycle();
 let catalogPreloadStarted = false;
 let lastAuditSelectionIds: string[] = [];
 let lastAuditChannel: AuditChannel = 'Desktop';
-const STRICT_COMPARISON = true;
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
 const LOCAL_DEPENDENCY_CONCURRENCY = 4;
-
-class AuditCancelledError extends Error {
-  constructor() {
-    super('AUDIT_CANCELLED');
-    this.name = 'AuditCancelledError';
-  }
-}
 
 type TokenLabelEntry = {
   label: string;
@@ -352,11 +215,19 @@ let variableCollectionMetadataMap: Map<
 > | null = null;
 let tokenLabelLoadPromise: Promise<void> | null = null;
 
-const runtimeSuppressionDependencies = createRuntimeSuppressionDependencies(
-  isNestedComponentPaintPathHostControlled,
-  isNestedComponentTextPathHostControlled,
-  isNestedComponentLayoutPathHostControlled,
-);
+const customizationResetMutations = createCustomizationResetMutations({
+  resolveVariableMetadata: resolveVariableMetadataForDiff,
+  getSceneNodeById,
+});
+const customizationResetAction = createCustomizationResetAction({
+  ensureReferencesLoaded: ensureReferenceCatalogsLoaded,
+  getSceneNodeById,
+  resolveReferenceNode: resolveCustomizationResetReferenceNode,
+  rerunAudit: rerunLastAuditWithFallback,
+  mutations: customizationResetMutations,
+  notify: (message) => figma.notify(message),
+  log: (message, payload) => console.log(message, payload),
+});
 
 /**
  * Запускает полный аудит текущего выделения: проверяет готовность справочников,
@@ -373,16 +244,15 @@ async function runAudit(
     figma.notify('Сначала дождитесь подготовки примера.');
     return;
   }
-  if (scanInProgress) {
+  if (!auditLifecycle.tryBegin()) {
     figma.notify('Проверка уже выполняется.');
     return;
   }
-  scanInProgress = true;
-  cancelRequested = false;
   lastApolloAgentReport = null;
   lastGenerationExampleAuditEvidence = null;
   lastContractArtifactHints = [];
   activeApolloAgentRequestId = null;
+  findingActionRegistry.reset();
 
   figma.ui.postMessage({ type: 'scan-started' });
 
@@ -402,9 +272,7 @@ async function runAudit(
       figma.ui.postMessage({ type: 'scan-finished' });
     }
 
-    scanInProgress = false;
-
-    cancelRequested = false;
+    auditLifecycle.finish();
 
     console.log(
       `[Apollo] audit total: ${(getTimestamp() - auditStart).toFixed(
@@ -413,11 +281,7 @@ async function runAudit(
     );
   };
 
-  const throwIfCancelled = () => {
-    if (cancelRequested) {
-      throw new AuditCancelledError();
-    }
-  };
+  const throwIfCancelled = () => auditLifecycle.throwIfCancelled();
 
   try {
     if (!areReferenceCatalogsReady()) {
@@ -428,6 +292,7 @@ async function runAudit(
     await ensureReferenceCatalogsLoaded();
     await ensureTokenLabelMapLoaded();
     await ensureStyleMetadataLoaded();
+    await ensureColorTokenValueIndexLoaded();
     logAuditMetric('audit-reference-ready', {
       totalMs: Number((getTimestamp() - preloadStartedAt).toFixed(1)),
     });
@@ -473,11 +338,22 @@ async function runAudit(
     lastAuditSelectionIds = selection.map((node) => node.id);
     lastAuditChannel = selectedChannel;
 
-    const componentKeyCache = new Map<string, string | null>();
+    const traversalContext = createAuditTraversalContext({
+      importComponentByKey: (componentKey) =>
+        figma.importComponentByKeyAsync(componentKey),
+      customStyleOptions: {
+        tokenLabelMap: tokenLabelMap ?? new Map(),
+        isKnownStyleId,
+        resolveStyleMetadata,
+      },
+      deprecatedStyleOptions: {
+        resolveStyleMetadata,
+      },
+    });
     const keyCollectStartedAt = getTimestamp();
     const selectionComponentKeys = await collectComponentKeys(
       selection,
-      componentKeyCache,
+      traversalContext.componentKeyCache,
       throwIfCancelled,
     );
     await ensureReferenceCatalogsForKeys(selectionComponentKeys);
@@ -504,37 +380,32 @@ async function runAudit(
       });
     }
 
-    const referenceStructureCache = new Map<string, DSStructureNode[] | null>();
-    const localComponentContextCache = new Map<string, boolean>();
-    const checkedComponentNodesList = new Set<string>();
-    const libraryComponentFreshnessChecker =
-      createLibraryComponentFreshnessChecker((componentKey) =>
-        figma.importComponentByKeyAsync(componentKey),
-      );
-
-    const customStyleReasonOptions: CustomStyleCollectionOptions = {
-      tokenLabelMap: tokenLabelMap ?? new Map(),
-      isKnownStyleId,
-      resolveStyleMetadata,
-    };
-    const deprecatedStyleOptions: DeprecatedStyleCollectionOptions = {
-      resolveStyleMetadata,
-    };
-
     const collectStartedAt = getTimestamp();
-    await collectTargets(
+    await collectAuditTargets(
       selection,
       checkState,
       selectedChannel,
-      referenceStructureCache,
-      componentKeyCache,
-      localComponentContextCache,
-      customStyleReasonOptions,
-      deprecatedStyleOptions,
-      checkedComponentNodesList,
-      libraryComponentFreshnessChecker,
-      Boolean(options?.shellAuditEnabled),
-      throwIfCancelled,
+      traversalContext,
+      {
+        shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+        dependencyConcurrency: LOCAL_DEPENDENCY_CONCURRENCY,
+      },
+      {
+        getComponentKeyCached,
+        buildNodeSegments,
+        getReferenceStructureCached,
+        isInsideLocalComponentContext,
+        resolveTokenLabel: resolveTokenLabelForDiff,
+        isPaintToken: isColorTokenForPaintDiff,
+        resolveVariableMetadata: resolveVariableMetadataForDiff,
+        resolveVariableCollectionMetadata:
+          resolveVariableCollectionMetadataForDiff,
+        normalizeRelevanceStatus,
+        reportMissingReference,
+        debugDiffPipeline: debugPaintMeDiffPipeline,
+        throwIfCancelled,
+        getNodeById: (nodeId) => figma.getNodeByIdAsync(nodeId),
+      },
     );
     logAuditMetric('audit-diff-phase', {
       totalMs: Number((getTimestamp() - collectStartedAt).toFixed(1)),
@@ -551,22 +422,24 @@ async function runAudit(
 
     throwIfCancelled();
 
-    const changesResults = computeChangesResults(checkState.relevanceBuckets.current);
-    const visibleLocalItems = filterIgnoredLocalLibraryItems(
-      checkState.localLibraryItems,
+    await attachFindingActions(
+      checkState,
+      selectedChannel,
+      findingActionRegistry,
+      {
+        getNodeById: async (nodeId) =>
+          traversalContext.sceneNodeById.get(nodeId) ??
+          figma.getNodeByIdAsync(nodeId),
+        findExactPaintStyleMatches,
+        findExactTypographyStyleMatches,
+        findColorTokenValueCandidates,
+        getNodePaintFingerprint,
+        getNodeTypographyFingerprint,
+        getPaintStyleFingerprint,
+      },
     );
 
-    const visibleViews = {
-      relevance: checkState.relevanceBuckets,
-      themization: checkState.themizationEntries,
-      wrongChannel: checkState.wrongChannelEntries,
-      local: visibleLocalItems,
-      deprecatedStyles: checkState.deprecatedStyleEntries,
-      customStyles: checkState.customStyleEntries,
-      detached: checkState.detachedEntries,
-      presets: checkState.presetItems,
-      changes: changesResults,
-    };
+    const auditResultViews = buildAuditResultViews(checkState);
 
     figma.ui.postMessage({
       type: 'scan-result',
@@ -577,25 +450,13 @@ async function runAudit(
         ui: {
           hiddenTabIds: getHiddenTabsForChannel(selectedChannel),
         },
-        visibleViews,
+        visibleViews: auditResultViews.visibleViews,
       },
     });
 
     try {
       const currentUser = figma.currentUser;
-      const selectionStats = await Promise.all(
-        selection.map(async (node) => ({
-          nodeId: node.id,
-          name: node.name,
-          nodeType: node.type,
-          path: buildNodePath(node),
-          componentKey:
-            node.type === 'INSTANCE' || node.type === 'COMPONENT'
-              ? await getComponentKeyCached(node, componentKeyCache)
-              : null,
-        })),
-      );
-      const report = buildApolloStatsReport({
+      const { report, agentReport } = await prepareAuditReport({
         pluginVersion: APOLLO_VERSION,
         user: {
           id: currentUser?.id ?? null,
@@ -610,32 +471,22 @@ async function runAudit(
           channel: selectedChannel,
           startedAt: auditStartedAt,
           finishedAt: new Date(),
-          selection: selectionStats,
-          settings: {
-            shellAuditEnabled: Boolean(options?.shellAuditEnabled),
-          },
-          scannedComponents: checkState.totalItems,
+          shellAuditEnabled: Boolean(options?.shellAuditEnabled),
         },
-        views: {
-          deprecatedComponents: checkState.relevanceBuckets.deprecated,
-          deprecatedStyles: checkState.deprecatedStyleEntries,
-          customStyles: checkState.customStyleEntries,
-          updates: checkState.relevanceBuckets.update,
-          customizations: changesResults,
-          localComponents: visibleLocalItems,
-          detachedComponents: checkState.detachedEntries,
-          presets: checkState.presetItems,
-          technicalComponents: checkState.relevanceBuckets.technical,
-          currentComponents: checkState.relevanceBuckets.current,
-          wrongChannel: checkState.wrongChannelEntries,
-          themization: checkState.themizationEntries,
-        },
+        selection,
+        checkState,
+        views: auditResultViews,
+        resolveNodePath: buildNodePath,
+        resolveComponentKey: (node) =>
+          getComponentKeyCached(
+            node as SceneNode,
+            traversalContext.componentKeyCache,
+          ),
         resolveStyleResource: resolveStyleStatsResource,
         resolveTokenResource: resolveTokenStatsResource,
       });
       lastGenerationExampleAuditEvidence =
         createGenerationExampleAuditEvidence(report);
-      const agentReport = buildApolloAgentReport(report);
       lastApolloAgentReport = agentReport;
       figma.ui.postMessage({
         type: 'apollo-agent-report-ready',
@@ -671,7 +522,7 @@ async function runAudit(
 }
 
 async function captureGenerationExample(rawOptions: unknown): Promise<void> {
-  if (scanInProgress) {
+  if (auditLifecycle.isRunning()) {
     const message = 'Сначала дождитесь завершения проверки Apollo.';
     figma.notify(message);
     figma.ui.postMessage({
@@ -1168,915 +1019,6 @@ function buildContractArtifactHints(
   return hints;
 }
 
-async function collectTargets(
-  selection: readonly SceneNode[], 
-  checkState: CheckState, 
-  selectedChannel: AuditChannel,
-  referenceStructureCache: Map<string, DSStructureNode[] | null>,
-  componentKeyCache: Map<string, string | null>,
-  localComponentContextCache: Map<string, boolean>,
-  customStyleReasonOptions: CustomStyleCollectionOptions,
-  deprecatedStyleOptions: DeprecatedStyleCollectionOptions,
-  checkedComponentNodesList: Set<string>,
-  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
-  shellAuditEnabled: boolean,
-  throwIfCancelled: () => void,
-) {
-  const themizationEnabled = supportsThemizationForChannel(selectedChannel);
-  const localComponentDefinitions = new Map<string, ComponentNode>();
-  const localComponentFocusNodeIds = new Map<string, Set<string>>();
-  const resolvedFlattenedSourceIds = new Set<string>();
-  const rejectedFlattenedSourceIds = new Set<string>();
-  const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
-    try {
-      return 'visible' in candidate ? (candidate as SceneNode & { visible: boolean }).visible !== false : true;
-    } catch (_error) {
-      return false;
-    }
-  };
-
-  const visit = async (
-    node: SceneNode,
-    inheritedForcedCategory: 'technical' | 'deprecated' | null = null,
-  ): Promise<void> => {
-      throwIfCancelled();
-
-      if (!isNodeVisibleSafe(node)) {
-        return;
-      }
-
-      if (inheritedForcedCategory) {
-        return;
-      }
-
-      const nodeIsComponent = node.type === 'INSTANCE' || node.type === 'COMPONENT'
-      let subtreeForcedCategory: 'technical' | 'deprecated' | null = null;
-
-      if (nodeIsComponent) {
-        let localDefinition = await resolveLocalComponentDefinition<
-          SceneNode,
-          ComponentNode
-        >(node, {
-          getNodeType: (candidate) => candidate.type,
-          getMainComponent: async (candidate) =>
-            candidate.type === 'INSTANCE'
-              ? await (candidate as InstanceNode).getMainComponentAsync()
-              : null,
-          isRemoteComponent: (component) => component.remote,
-        });
-        if (localDefinition) {
-          registerComponentDefinition(
-            localComponentDefinitions,
-            localComponentFocusNodeIds,
-            localDefinition,
-            node.id,
-          );
-        }
-
-        const item = await classifyNode(
-          node,
-          localDefinition,
-          referenceStructureCache,
-          componentKeyCache,
-          localComponentContextCache,
-          checkedComponentNodesList,
-          libraryComponentFreshnessChecker,
-          throwIfCancelled,
-        );
-        throwIfCancelled();
-
-        if (!localDefinition && item.isLocal) {
-          localDefinition = await resolveLocalComponentDefinition<
-            SceneNode,
-            ComponentNode
-          >(node, {
-            getNodeType: (candidate) => candidate.type,
-            getMainComponent: async (candidate) =>
-              candidate.type === 'INSTANCE'
-                ? await (candidate as InstanceNode).getMainComponentAsync()
-                : null,
-            isRemoteComponent: (component) => component.remote,
-            includeRemoteDefinition: true,
-          });
-          if (localDefinition) {
-            registerComponentDefinition(
-              localComponentDefinitions,
-              localComponentFocusNodeIds,
-              localDefinition,
-              node.id,
-            );
-          }
-        }
-
-        if (item.isLocal) {
-          checkState.localLibraryItems.push(item);
-        }
-
-        if (
-          node.type === 'INSTANCE' &&
-          getLibraryComponentFreshnessScope(node) === 'instance-sublayer'
-        ) {
-          await registerFlattenedLocalComponentDefinition(
-            node,
-            localComponentDefinitions,
-            localComponentFocusNodeIds,
-            resolvedFlattenedSourceIds,
-            rejectedFlattenedSourceIds,
-          );
-        }
-
-        if (!shellAuditEnabled && isShellComponentAuditExcluded(item)) {
-          traceAudit('shell-subtree-skipped', {
-            nodeId: node.id,
-            nodeName: node.name,
-            libraryName: item.librarySource ?? null,
-            componentName:
-              item.reference?.displayName ?? item.reference?.name ?? item.name,
-            categoryDecision: 'skipped-check',
-            matchedRule: 'shell-audit-disabled',
-            property: null,
-            expected: null,
-            actual: null,
-            reason: getShellComponentAuditReason(item),
-          });
-          return;
-        }
-
-        checkState.totalItems++;
-        subtreeForcedCategory = item.forcedCategory ?? null;
-
-        const wrongChannel =
-          item.reference != null &&
-          isWrongChannelComponent(item.reference, selectedChannel);
-
-        if (item.relevance && !(wrongChannel && item.relevance === 'current')) {
-          checkState.relevanceBuckets[item.relevance].push(item);
-        }
-
-        if (!subtreeForcedCategory && item.reference && themizationEnabled) {
-          const themizationEntry = buildCorporateThemizationEntry(
-            node,
-            item.reference,
-          );
-          if (themizationEntry) {
-            checkState.themizationEntries.push(themizationEntry);
-          }
-
-        }
-
-        if (!subtreeForcedCategory && item.reference && wrongChannel) {
-          checkState.wrongChannelEntries.push(item);
-        }
-
-        if (!subtreeForcedCategory && isPresetCandidate(item)) {
-          checkState.presetItems.push(item);
-        }
-
-        if (subtreeForcedCategory) {
-          traceAudit('category-subtree-skipped', {
-            nodeId: node.id,
-            nodeName: node.name,
-            libraryName: item.librarySource ?? null,
-            componentName:
-              item.reference?.displayName ?? item.reference?.name ?? item.name,
-            categoryDecision: subtreeForcedCategory,
-            matchedRule: subtreeForcedCategory,
-            property: null,
-            expected: null,
-            actual: null,
-            reason:
-              item.forcedCategoryReason ??
-              'component subtree is excluded from deep audit by policy',
-          });
-          return;
-        }
-      }
-
-      if (node.type === 'FRAME' ||  node.type === 'GROUP') { 
-        const item = collectDetachedEntry(node);
-
-        if (item) {
-          if (!shellAuditEnabled && isShellDetachedEntryExcluded(item)) {
-            traceAudit('shell-detached-subtree-skipped', {
-              nodeId: node.id,
-              nodeName: node.name,
-              libraryName: item.libraryName,
-              componentName: item.componentName,
-              componentKey: item.componentKey,
-              categoryDecision: 'skipped-check',
-              matchedRule: 'shell-audit-disabled',
-              property: null,
-              expected: null,
-              actual: null,
-              reason: `detached component ${item.componentName ?? item.componentKey} is excluded by Apollo shell settings`,
-            });
-            return;
-          }
-
-          checkState.detachedEntries.push(item);
-        }
-      }
-
-      if (node.type !== 'SECTION') {
-          const customStyleReasons = await collectCustomStyles(node, customStyleReasonOptions);
-          const deprecatedStyleEntries = await collectDeprecatedStyleUsages(
-            node,
-            deprecatedStyleOptions,
-          );
-
-          if (customStyleReasons.length) {
-            checkState.customStyleEntries = [
-              ...checkState.customStyleEntries, 
-              ...customStyleReasons
-            ];
-          }
-
-          if (deprecatedStyleEntries.length) {
-            checkState.deprecatedStyleEntries = [
-              ...checkState.deprecatedStyleEntries,
-              ...deprecatedStyleEntries,
-            ];
-          }
-      }
-
-      if ('children' in node && node.children.length > 0) {
-        for (const child of node.children) {
-          throwIfCancelled();
-          await visit(child as SceneNode, subtreeForcedCategory);
-        }
-      }
-  };
-
-  for (const node of selection) {
-    throwIfCancelled();
-    await visit(node as SceneNode);
-  }
-
-  const localDependencyStartedAt = getTimestamp();
-  const freshnessStatsBefore = libraryComponentFreshnessChecker.getStats();
-  const localDependencyKeys = new Set<string>();
-  const localDependencyResults: Array<AuditItem | null | undefined> = [];
-  const localDependencyStats = await walkLocalComponentDependencies<SceneNode, ComponentNode>(
-    Array.from(localComponentDefinitions.values()),
-    {
-      getNodeId: (node) => node.id,
-      getNodeType: (node) => node.type,
-      getChildren: (node) =>
-        'children' in node
-          ? Array.from(node.children) as SceneNode[]
-          : [],
-      getMainComponent: async (node) =>
-        node.type === 'INSTANCE'
-          ? await (node as InstanceNode).getMainComponentAsync()
-          : null,
-      isRemoteComponent: (component) => component.remote,
-      isVisible: isNodeVisibleSafe,
-      onRemoteDependency: async (node, owner, index) => {
-        const ownerIdentity = getComponentDefinitionIdentity(owner);
-        const dependency = await classifyLocalComponentDependency(
-          node as InstanceNode,
-          owner,
-          componentKeyCache,
-          libraryComponentFreshnessChecker,
-          localDependencyKeys,
-          Array.from(
-            localComponentFocusNodeIds.get(ownerIdentity) ?? [owner.id],
-          ),
-          throwIfCancelled,
-        );
-        if (
-          dependency &&
-          (!shellAuditEnabled && isShellComponentAuditExcluded(dependency))
-        ) {
-          localDependencyResults[index] = null;
-          return;
-        }
-        localDependencyResults[index] = dependency;
-      },
-      dependencyConcurrency: LOCAL_DEPENDENCY_CONCURRENCY,
-      throwIfCancelled,
-    },
-  );
-
-  const existingUpdateIds = new Set(
-    checkState.relevanceBuckets.update.map((item) => item.id),
-  );
-  const usedUpdateFocusNodeIds = new Set<string>();
-  for (const dependency of localDependencyResults) {
-    if (!dependency || existingUpdateIds.has(dependency.id)) continue;
-    dependency.focusNodeId = resolveLibraryUpdateFocusNodeId(
-      dependency,
-      checkState.relevanceBuckets.current,
-      usedUpdateFocusNodeIds,
-    );
-    usedUpdateFocusNodeIds.add(dependency.focusNodeId);
-    existingUpdateIds.add(dependency.id);
-    checkState.relevanceBuckets.update.push(dependency);
-  }
-  checkState.relevanceBuckets.current = excludeLibraryUpdatesFromCurrent(
-    checkState.relevanceBuckets.current,
-    checkState.relevanceBuckets.update,
-  );
-
-  const freshnessStatsAfter = libraryComponentFreshnessChecker.getStats();
-  logAuditMetric('local-component-dependency-audit', {
-    totalMs: Number((getTimestamp() - localDependencyStartedAt).toFixed(1)),
-    registeredDefinitions: localComponentDefinitions.size,
-    ownerDefinitions: localDependencyStats.ownerDefinitions,
-    visitedSourceNodes: localDependencyStats.visitedSourceNodes,
-    remoteDependencies: localDependencyStats.remoteDependencies,
-    uniqueDependencyKeys: localDependencyKeys.size,
-    updateFindings: localDependencyResults.filter(Boolean).length,
-    concurrency: LOCAL_DEPENDENCY_CONCURRENCY,
-    freshnessChecks:
-      freshnessStatsAfter.checks - freshnessStatsBefore.checks,
-    importCacheHits:
-      freshnessStatsAfter.importCacheHits - freshnessStatsBefore.importCacheHits,
-    importCacheMisses:
-      freshnessStatsAfter.importCacheMisses - freshnessStatsBefore.importCacheMisses,
-  });
-}
-
-function getComponentDefinitionIdentity(component: ComponentNode): string {
-  const componentKey = component.key.trim();
-  return componentKey ? `key:${componentKey}` : `id:${component.id}`;
-}
-
-function registerComponentDefinition(
-  definitions: Map<string, ComponentNode>,
-  focusNodeIds: Map<string, Set<string>>,
-  component: ComponentNode,
-  focusNodeId: string,
-): void {
-  const identity = getComponentDefinitionIdentity(component);
-  definitions.set(identity, component);
-  const occurrences = focusNodeIds.get(identity) ?? new Set<string>();
-  occurrences.add(focusNodeId);
-  focusNodeIds.set(identity, occurrences);
-}
-
-function findLocalComponentAncestor(node: BaseNode): ComponentNode | null {
-  let current: BaseNode | null = node.parent;
-  while (current) {
-    if (current.type === 'COMPONENT') {
-      return current.remote ? null : current;
-    }
-    current = current.parent;
-  }
-  return null;
-}
-
-async function registerFlattenedLocalComponentDefinition(
-  renderedNode: InstanceNode,
-  definitions: Map<string, ComponentNode>,
-  focusNodeIds: Map<string, Set<string>>,
-  resolvedSourceIds: Set<string>,
-  rejectedSourceIds: Set<string>,
-): Promise<void> {
-  const sourceIds = extractInstanceSublayerSourceNodeIds(renderedNode.id);
-  for (const sourceId of sourceIds) {
-    if (resolvedSourceIds.has(sourceId)) return;
-    if (rejectedSourceIds.has(sourceId)) continue;
-
-    let sourceNode: BaseNode | null = null;
-    try {
-      sourceNode = await figma.getNodeByIdAsync(sourceId);
-    } catch (_error) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    if (!sourceNode || !('parent' in sourceNode)) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    const owner = findLocalComponentAncestor(sourceNode);
-    if (!owner) {
-      rejectedSourceIds.add(sourceId);
-      continue;
-    }
-
-    resolvedSourceIds.add(sourceId);
-    registerComponentDefinition(
-      definitions,
-      focusNodeIds,
-      owner,
-      renderedNode.id,
-    );
-    traceAudit('flattened-local-component-source-resolved', {
-      renderedNodeId: renderedNode.id,
-      renderedNodeName: renderedNode.name,
-      sourceNodeId: sourceId,
-      sourceNodeName: 'name' in sourceNode ? sourceNode.name : null,
-      ownerComponentId: owner.id,
-      ownerComponentName: owner.name,
-    });
-    return;
-  }
-}
-
-async function classifyLocalComponentDependency(
-  node: InstanceNode,
-  owner: ComponentNode,
-  componentKeyCache: Map<string, string | null>,
-  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
-  observedComponentKeys: Set<string>,
-  focusNodeIds: string[],
-  throwIfCancelled: () => void,
-): Promise<AuditItem | null> {
-  throwIfCancelled();
-  const componentKey = await getComponentKeyCached(node, componentKeyCache, {
-    retryIfMissing: true,
-  });
-  if (!componentKey) return null;
-  observedComponentKeys.add(componentKey);
-
-  let ref = findComponent(componentKey);
-  if (!ref) {
-    await ensureReferenceCatalogsForKeys([componentKey]);
-    ref = findComponent(componentKey);
-  }
-  if (!ref || getForcedAuditCategory(ref)) return null;
-
-  const libraryFreshness = await libraryComponentFreshnessChecker.check(
-    node,
-    'independent-instance',
-  );
-  throwIfCancelled();
-  if (libraryFreshness.status !== 'update-available') return null;
-
-  const nodeSegments = buildNodeSegments(node);
-  const pathSegments =
-    nodeSegments.length > 1
-      ? nodeSegments.slice(1)
-      : nodeSegments.length
-        ? nodeSegments
-        : [{ id: node.id, label: node.name, nodeType: node.type, visible: true }];
-  const instanceVariantProperties = node.variantProperties ?? null;
-  const resolvedReferenceVariantKey = resolveVariantKeyForInstance(
-    ref,
-    componentKey,
-    instanceVariantProperties,
-  );
-  const resolvedReferenceVariantName =
-    ref.variants?.find((variant) => variant?.key === resolvedReferenceVariantKey)?.name ?? null;
-
-  const item: AuditItem = {
-    id: node.id,
-    name: node.name,
-    nodeType: node.type,
-    pageName: getPageName(node),
-    pathSegments,
-    fullPath: buildNodePath(node),
-    relevance: 'update',
-    librarySource: ref.source ?? null,
-    librarySourceFile: ref.sourceFile ?? null,
-    isLocal: false,
-    reference: ref,
-    componentKey,
-    diffs: [],
-    comparisonIssues: [],
-    updateReasons: ['library-update-available'],
-    libraryFreshness,
-    focusNodeId: focusNodeIds[0] ?? owner.id,
-    sourceOwnerOccurrenceIds: focusNodeIds,
-    localComponentOwner: {
-      id: owner.id,
-      name: owner.name,
-      pageName: getPageName(owner),
-      fullPath: buildNodePath(owner),
-    },
-    resolvedReferenceVariantKey,
-    resolvedReferenceVariantName,
-  };
-
-  traceAudit('local-component-library-dependency', {
-    nodeId: node.id,
-    nodeName: node.name,
-    componentKey,
-    ownerComponentId: owner.id,
-    ownerComponentName: owner.name,
-    status: libraryFreshness.status,
-    currentComponentId: libraryFreshness.currentComponentId,
-    latestComponentId: libraryFreshness.latestComponentId,
-    categoryDecision: 'update',
-  });
-
-  return item;
-}
-
-/**
- * Приводит SceneNode к `AuditItem`: ищет компонент в каталогах, делает снапшот,
- * сравнивает структуру и собирает diff-последствия, статус темы и причины кастомизации.
- */
-async function classifyNode(
-  node: SceneNode,
-  nativeLocalDefinition: ComponentNode | null,
-  referenceStructureCache: Map<string, DSStructureNode[] | null>,
-  componentKeyCache: Map<string, string | null>,
-  localComponentContextCache: Map<string, boolean>,
-  checkedComponentNodesList: Set<string>,
-  libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker,
-  throwIfCancelled: () => void,
-): Promise<AuditItem> {
-  throwIfCancelled();
-  const nodeSegments = buildNodeSegments(node);
-
-  const pathSegments =
-    nodeSegments.length > 1
-      ? nodeSegments.slice(1)
-      : nodeSegments.length
-        ? nodeSegments
-        : [{ id: node.id, label: node.name, nodeType: node.type, visible: true }];
-
-  const pageName = getPageName(node);
-  const fullPath = buildNodePath(node);
-  const componentKey = await getComponentKeyCached(node, componentKeyCache, {
-    retryIfMissing: true,
-  });
-  throwIfCancelled();
-  let ref = componentKey ? findComponent(componentKey) : null;
-
-  if (componentKey && !ref) {
-    await ensureReferenceCatalogsForKeys([componentKey]);
-    ref = findComponent(componentKey);
-  }
-
-  if (!componentKey || !ref) {
-    reportMissingReference(node.name, componentKey);
-
-    return {
-      id: node.id,
-      name: node.name,
-      nodeType: node.type,
-      relevance: 'unknown',
-      isLocal: true,
-      pageName,
-      pathSegments,
-      fullPath,
-      librarySource: null,
-      librarySourceFile: null,
-      componentKey,
-      comparisonIssues: [],
-      diffs: []
-    }
-  }
-
-  const libraryFreshness =
-    node.type === 'INSTANCE'
-      ? await libraryComponentFreshnessChecker.check(
-          node as InstanceNode,
-          getLibraryComponentFreshnessScope(node),
-        )
-      : null;
-  throwIfCancelled();
-
-  const comparisonIssues: string[] = [];
-  const instanceVariantProperties =
-    node.type === 'INSTANCE' ? ((node as InstanceNode).variantProperties ?? null) : null;
-  const resolvedReferenceVariantKey =
-    node.type === 'INSTANCE'
-      ? resolveVariantKeyForInstance(ref, componentKey, instanceVariantProperties)
-      : componentKey;
-  const resolvedReferenceVariantName =
-    ref.variants?.find((item) => item?.key === resolvedReferenceVariantKey)?.name ?? null;
-  const forcedCategory = getForcedAuditCategory(ref);
-  const forcedCategoryReason =
-    forcedCategory ? getForcedAuditCategoryReason(forcedCategory, ref) : null;
-
-  let referenceStructure = getReferenceStructureCached(
-    ref,
-    componentKey,
-    instanceVariantProperties,
-    referenceStructureCache,
-  );
-
-  if (ref && componentKey && Array.isArray(ref.variants) && ref.variants.length) {
-    const variant = ref.variants.find((item) => item?.key === resolvedReferenceVariantKey);
-    if (!variant) {
-      comparisonIssues.push(
-        `Вариант ${resolvedReferenceVariantKey ?? componentKey} не найден в каталоге для «${ref.name ?? node.name}»`,
-      );
-      referenceStructure = null;
-    } else if (!ref.variantStructures || !ref.variantStructures[variant.key]) {
-      comparisonIssues.push(
-        `Нет variantStructures для «${variant.name ?? resolvedReferenceVariantKey ?? componentKey}» (${ref.name ?? node.name})`,
-      );
-      referenceStructure = null;
-    }
-  }
-  const needsDiff = Boolean(referenceStructure) && !checkedComponentNodesList.has(node.id);
-  const instanceHasOverrides =
-    node.type === 'INSTANCE' && hasInstanceOverrides(node as InstanceNode);
-  const requiresSizingRuleAudit = hasRequiredComponentSizingRules(
-    componentKey,
-    [ref?.name, ref?.displayName, node.name],
-  );
-  const requiresNumericConstraintAudit = hasNumericConstraintRules(
-    componentKey,
-    [ref?.name, ref?.displayName, node.name],
-  );
-  const requiresVariableModeRuleAudit = hasVariableModeRules(
-    componentKey,
-    [ref?.name, ref?.displayName, node.name],
-  );
-  const isInheritedFromLocalComponentContext =
-    node.type === 'INSTANCE' &&
-    (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
-  const shouldDiff =
-    !forcedCategory &&
-    needsDiff &&
-    (ref?.status !== 'current' ||
-      instanceHasOverrides ||
-      requiresSizingRuleAudit ||
-      requiresNumericConstraintAudit ||
-      requiresVariableModeRuleAudit ||
-      isInheritedFromLocalComponentContext);
-  const actualStructure =
-    shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
-  throwIfCancelled();
-  const alignedActualStructure =
-    referenceStructure && actualStructure
-      ? alignStructurePaths(actualStructure, referenceStructure)
-      : actualStructure;
-  const expandedReferenceStructure =
-    shouldDiff &&
-    referenceStructure &&
-    alignedActualStructure &&
-    COMPARE_NESTED_INSTANCES_BY_COMPONENT
-      ? expandReferenceWithInstanceComponents(referenceStructure, alignedActualStructure)
-      : referenceStructure;
-
-  const diffStartedAt = getTimestamp();
-  const diffResult =
-    shouldDiff && expandedReferenceStructure && alignedActualStructure
-      ? diffStructures(alignedActualStructure, expandedReferenceStructure, {
-          strict: STRICT_COMPARISON,
-          resolveTokenLabel: resolveTokenLabelForDiff,
-          resolveStyleLabel: resolveStyleLabelForDiff,
-          isPaintToken: isColorTokenForPaintDiff,
-          resolveVariableMetadata: resolveVariableMetadataForDiff,
-        })
-      : { diffs: [], issues: [] };
-  if (diffResult.issues.length) {
-    comparisonIssues.push(...diffResult.issues);
-  }
-
-  const requiredSizingDiffs =
-    shouldDiff && alignedActualStructure
-      ? createRequiredComponentSizingDiffs(
-          alignedActualStructure,
-          diffResult.diffs,
-        )
-      : [];
-  const numericConstraintDiffs =
-    shouldDiff && alignedActualStructure
-      ? createNumericConstraintRuleDiffs(
-          alignedActualStructure,
-          diffResult.diffs.concat(requiredSizingDiffs),
-        )
-      : [];
-  const variableModeRuleDiffs =
-    shouldDiff && alignedActualStructure
-      ? createVariableModeRuleDiffs(
-          alignedActualStructure,
-          diffResult.diffs
-            .concat(requiredSizingDiffs)
-            .concat(numericConstraintDiffs),
-          resolveVariableCollectionMetadataForDiff,
-        )
-      : [];
-  const surfaceContext = resolveSurfaceContext(
-    node,
-    resolveTokenLabelForDiff,
-  );
-  const rawDiffs = diffResult.diffs
-    .concat(requiredSizingDiffs)
-    .concat(numericConstraintDiffs)
-    .concat(variableModeRuleDiffs)
-    .map((diff) => attachSurfaceContext(diff, surfaceContext))
-    .map(applyRequiredComponentSizingAssessment)
-    .map(applyVariableBindingAssessment);
-  const markedDiffs = rawDiffs.map((diff) =>
-    markSuppressedDiff(diff, runtimeSuppressionDependencies),
-  );
-  const explicitVariantStateDiffs =
-    shouldDiff && referenceStructure && alignedActualStructure
-      ? diffExplicitNestedVariantStates(
-          alignedActualStructure,
-          referenceStructure,
-          markedDiffs,
-        )
-          .map((diff) => attachSurfaceContext(diff, surfaceContext))
-          .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
-      : [];
-  const diffsForAssessment = markedDiffs.concat(explicitVariantStateDiffs);
-  const hostDiffs =
-    shouldDiff && referenceStructure && alignedActualStructure
-      ? diffStructures(alignedActualStructure, referenceStructure, {
-          strict: STRICT_COMPARISON,
-          resolveTokenLabel: resolveTokenLabelForDiff,
-          resolveStyleLabel: resolveStyleLabelForDiff,
-          isPaintToken: isColorTokenForPaintDiff,
-          resolveVariableMetadata: resolveVariableMetadataForDiff,
-        }).diffs
-      : [];
-  const assessedDiffs = assessCustomizationDiffs(diffsForAssessment, {
-    hostDiffs,
-    hostReference: referenceStructure ?? [],
-    nestedContextEvidence: alignedActualStructure
-      ? createNestedContextEvidence(
-          alignedActualStructure,
-          (instance) => {
-            const nestedReference = findComponent(
-              instance.componentInstance?.componentKey ?? '',
-            );
-            return resolveStructureForInstance(
-              nestedReference,
-              instance.componentInstance ?? null,
-            );
-          },
-          diffsForAssessment,
-          (nestedComponentKey) =>
-            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
-          {
-            resolveTokenLabel: resolveTokenLabelForDiff,
-            resolveStyleLabel: resolveStyleLabelForDiff,
-            isPaintToken: isColorTokenForPaintDiff,
-            resolveVariableMetadata: resolveVariableMetadataForDiff,
-          },
-        )
-      : undefined,
-    resolvePatternContext:
-      alignedActualStructure && referenceStructure
-        ? createPatternContextResolver({
-            actualStructure: alignedActualStructure,
-            hostReference: referenceStructure,
-            hostComponentKey: ref?.key ?? componentKey ?? null,
-            hostComponentName:
-              ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
-            resolveComponent: findComponent,
-          })
-        : undefined,
-  }).map(applyContextualComponentRuleAssessment);
-  const semanticDiffs = collapsePatternViolationDiffs(
-    collapseVisualDiffsUnderVariantChanges(
-      applyAssessmentPresentation(
-        collapseSemanticVariantDiffs(
-          collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
-            actualStructure: alignedActualStructure ?? [],
-            hostReference: referenceStructure ?? [],
-            hostComponentKey: ref?.key ?? componentKey ?? null,
-            resolveFamilyKey: (nestedComponentKey) =>
-              findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
-          }),
-          alignedActualStructure ?? [],
-        ),
-      ),
-      alignedActualStructure ?? [],
-    ),
-    alignedActualStructure ?? [],
-  );
-  const allowlistedDiffs = applyAllowedCustomizationRules(semanticDiffs, {
-    libraryName: ref?.source ?? null,
-    componentName: node.name,
-    referenceComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? null,
-  });
-  const contractAwareResult = applyContractAwareDiffs(allowlistedDiffs, {
-    enabled: APOLLO_CONTRACT_AWARE_AUDIT_ENABLED,
-    hostComponentKey: ref?.key ?? componentKey ?? null,
-    hostComponentName: ref?.displayName ?? ref?.name ?? node.name,
-    actualStructure: alignedActualStructure ?? [],
-    hostReference: referenceStructure ?? [],
-    resolveStyleLabel: resolveStyleLabelForDiff,
-  });
-  if (contractAwareResult.applied) {
-    console.log('[Apollo][contracts] applied composition contract', {
-      componentName: ref?.displayName ?? ref?.name ?? node.name,
-      matchedContracts: contractAwareResult.matchedContractKeys,
-      suppressedCount: contractAwareResult.suppressedCount,
-      rebasedCount: contractAwareResult.rebasedCount,
-    });
-    traceAudit('contract-aware-diffs', {
-      nodeId: node.id,
-      nodeName: node.name,
-      componentKey: ref?.key ?? componentKey ?? null,
-      matchedContracts: contractAwareResult.matchedContractKeys,
-      suppressedCount: contractAwareResult.suppressedCount,
-      rebasedCount: contractAwareResult.rebasedCount,
-    });
-  }
-  const diffs = applyCustomizationFilters(contractAwareResult.diffs, {
-    libraryName: ref?.source ?? null,
-    componentName: ref?.displayName ?? ref?.name ?? node.name,
-  });
-  debugPaintMeDiffPipeline({
-    componentName: ref?.displayName ?? ref?.name ?? node.name,
-    alignedActualStructure,
-    expandedReferenceStructure,
-    rawDiffs,
-    markedDiffs: assessedDiffs,
-    allowlistedDiffs,
-    finalDiffs: diffs,
-  });
-
-  traceAudit('reference-resolution', {
-    nodeId: node.id,
-    nodeName: node.name,
-    componentKey,
-    actualVariantProperties:
-      node.type === 'INSTANCE' ? (node as InstanceNode).variantProperties ?? null : null,
-    referenceKey: ref.key ?? null,
-    referenceStatus: ref.status,
-    referenceVariantKey: resolvedReferenceVariantKey,
-    referenceVariantName: resolvedReferenceVariantName,
-    categoryDecision: forcedCategory ?? 'default',
-    shouldDiff,
-    referenceNodes: expandedReferenceStructure?.length ?? 0,
-    actualNodes: alignedActualStructure?.length ?? 0,
-    rawDiffs: rawDiffs.length,
-    allowlistedDiffs: diffsForAssessment.length - allowlistedDiffs.length,
-    filteredDiffs: diffs.length,
-    diffDurationMs: Number((getTimestamp() - diffStartedAt).toFixed(1)),
-  });
-
-  if (forcedCategory) {
-    traceAudit('category-decision', {
-      nodeId: node.id,
-      nodeName: node.name,
-      libraryName: ref?.source ?? null,
-      componentName: ref?.displayName ?? ref?.name ?? node.name,
-      categoryDecision: forcedCategory,
-      matchedRule: forcedCategory,
-      property: null,
-      expected: null,
-      actual: null,
-      reason: forcedCategoryReason,
-    });
-  }
-
-  if (comparisonIssues.length) {
-    console.warn('[Apollo] comparison issues', {
-      nodeId: node.id,
-      name: node.name,
-      issues: comparisonIssues.slice(0, 8),
-      issuesText: comparisonIssues.slice(0, 8).join(' | '),
-      total: comparisonIssues.length,
-    });
-  }
-
-  const catalogRelevance = normalizeRelevanceStatus(ref.status);
-  const updateReasons: UpdateReason[] = [];
-  if (catalogRelevance === 'update') {
-    updateReasons.push('catalog-lifecycle');
-  }
-  if (libraryFreshness?.status === 'update-available') {
-    updateReasons.push('library-update-available');
-  }
-  const relevance =
-    forcedCategory ??
-    (libraryFreshness?.status === 'update-available'
-      ? 'update'
-      : catalogRelevance);
-
-  if (libraryFreshness && libraryFreshness.status !== 'not-applicable') {
-    traceAudit('library-component-freshness', {
-      nodeId: node.id,
-      nodeName: node.name,
-      componentKey,
-      status: libraryFreshness.status,
-      reason: libraryFreshness.reason,
-      currentComponentId: libraryFreshness.currentComponentId,
-      latestComponentId: libraryFreshness.latestComponentId,
-      categoryDecision: relevance,
-    });
-  }
-
-  return {
-    id: node.id,
-    name: node.name,
-    nodeType: node.type,
-    pageName,
-    pathSegments,
-    fullPath,
-    relevance,
-    librarySource: ref?.source ?? null,
-    librarySourceFile: ref?.sourceFile ?? null,
-    isLocal: Boolean(nativeLocalDefinition),
-    reference: ref,
-    componentKey,
-    diffs,
-    comparisonIssues,
-    updateReasons,
-    libraryFreshness,
-    forcedCategory,
-    forcedCategoryReason,
-    resolvedReferenceVariantKey,
-    resolvedReferenceVariantName,
-  };
-}
-
 async function getComponentKey(node: SceneNode): Promise<string | null> {
   if (node.type === 'INSTANCE') {
     const mainComponent = await node.getMainComponentAsync();
@@ -2154,201 +1096,77 @@ function hasInstanceOverrides(instance: InstanceNode): boolean {
   return Array.isArray(overrides) && overrides.length > 0;
 }
 
-async function focusNode(nodeId: string | undefined) {
-  if (!nodeId) return;
-  const node = await figma.getNodeByIdAsync(nodeId);
-
-  if (!node || node.type === 'DOCUMENT') {
-    figma.notify('Не удалось найти слой для перехода');
-    return;
-  }
-
-  let page: PageNode | null = null;
-  let current: BaseNode | null = node;
-
-  while (current) {
-    if (current.type === 'PAGE') {
-
-      page = current as PageNode;
-      break;
-    }
-    current = current.parent as BaseNode | null;
-  }
-
-  if (!page) {
-    figma.notify('Не удалось определить страницу для этого слоя');
-    return;
-  }
-
-  try {
-    await figma.setCurrentPageAsync(page)
-  } catch (error) {
-    console.error('Failed to switch page asynchronously', error);
-    figma.notify('Не удалось перейти на страницу слоя');
-    return;
-  }
-
-  try {
-    figma.currentPage.selection = [node as SceneNode];
-    figma.viewport.scrollAndZoomIntoView([node as SceneNode]);
-  } catch (error) {
-    console.error('Failed to focus node on page', error);
-    figma.notify('Не удалось перейти к слою на этой странице');
-  }
+async function resetCustomizationGroup(
+  payload: CustomizationResetPayload,
+): Promise<void> {
+  await customizationResetAction(payload);
 }
 
-async function resetCustomizationGroup(payload: {
-  rootId?: string;
-  nodeId?: string;
-  messages?: string[];
-  details?: Array<{
-    property?: string;
-    reference?: {
-      value?: string | number | null;
-      resourceType?: 'style' | 'token' | 'color';
-      resourceId?: string | null;
-      displayName?: string | null;
-    };
-    message?: string;
-  }>;
-  remediations?: Array<{
-    kind?: string;
-    nodeId?: string;
-    properties?: Record<string, string>;
-  }>;
-}) {
-  const rootId = typeof payload?.rootId === 'string' ? payload.rootId : '';
-  const nodeId = typeof payload?.nodeId === 'string' ? payload.nodeId : '';
-  const messages = Array.isArray(payload?.messages)
-    ? payload.messages.filter(
-        (message): message is string =>
-          typeof message === 'string' && message.trim().length > 0,
-      )
-    : [];
-  const details = Array.isArray(payload?.details)
-    ? payload.details.filter(
-        (detail) =>
-          detail &&
-          typeof detail.property === 'string' &&
-          detail.property.length > 0 &&
-          detail.reference &&
-          typeof detail.reference === 'object',
-      )
-    : [];
-  const remediations = Array.isArray(payload?.remediations)
-    ? payload.remediations.filter(
-        (item) =>
-          item?.kind === 'set-variant-properties' &&
-          typeof item.nodeId === 'string' &&
-          item.nodeId.length > 0 &&
-          item.properties &&
-          typeof item.properties === 'object',
-      )
-    : [];
-
-  if (!rootId || !nodeId || (!messages.length && !details.length && !remediations.length)) {
-    figma.notify('Недостаточно данных для сброса изменений.');
-    return;
-  }
-
-  await ensureReferenceCatalogsLoaded();
-
-  const rootNode = await getSceneNodeById(rootId);
-  const targetNode = await getSceneNodeById(nodeId);
-
-  if (!rootNode || !targetNode) {
-    figma.notify('Не удалось найти узел для сброса изменений.');
-    return;
-  }
-
-  if (remediations.length) {
-    for (const remediation of remediations) {
-      const variantNode = await getSceneNodeById(remediation.nodeId!);
-      if (variantNode?.type !== 'INSTANCE') {
-        figma.notify('Не удалось найти вложенный компонент для смены варианта.');
-        return;
-      }
-      variantNode.setProperties(remediation.properties!);
-    }
-
-    if (!messages.length && !details.length) {
-      figma.notify('Параметры компонента восстановлены.');
-      await rerunLastAuditWithFallback([rootNode]);
-      return;
-    }
-  }
-
-  if (details.length && !messages.length && !remediations.length) {
-    const resetStartedAt = getTimestamp();
-    await applyReferenceResetByDetails(targetNode, details);
-    console.log('[Apollo] customization detail reset complete', {
-      nodeId: targetNode.id,
-      totalMs: Number((getTimestamp() - resetStartedAt).toFixed(1)),
-      detailCount: details.length,
-    });
-    figma.notify('Изменения сброшены.');
-    void runAudit([targetNode], lastAuditChannel);
-    return;
-  }
-
+async function resolveCustomizationResetReferenceNode(
+  rootNode: SceneNode,
+  nodeId: string,
+) {
   const componentKey = await getComponentKey(rootNode);
   await ensureReferenceCatalogsForKeys([componentKey]);
-  const ref = componentKey ? findComponent(componentKey) : null;
+  const reference = componentKey ? findComponent(componentKey) : null;
   const instanceVariantProperties =
     rootNode.type === 'INSTANCE' ? (rootNode.variantProperties ?? null) : null;
   const referenceStructure = getReferenceStructure(
-    ref,
+    reference,
     componentKey,
     instanceVariantProperties,
   );
 
   if (!referenceStructure?.length) {
-    figma.notify('Не удалось загрузить эталонную структуру компонента.');
-    return;
+    return {
+      ok: false as const,
+      message: 'Не удалось загрузить эталонную структуру компонента.',
+    };
   }
 
-  const checkedComponentNodesList = new Set<string>();
-  const actualStructure = await snapshotTree(rootNode, checkedComponentNodesList);
-  const alignedActualStructure = alignStructurePaths(actualStructure, referenceStructure);
-  const expandedReferenceStructure =
-    COMPARE_NESTED_INSTANCES_BY_COMPONENT
-      ? expandReferenceWithInstanceComponents(referenceStructure, alignedActualStructure)
-      : referenceStructure;
+  const actualStructure = await snapshotTree(rootNode, new Set<string>());
+  const alignedActualStructure = alignStructurePaths(
+    actualStructure,
+    referenceStructure,
+  );
+  const expandedReferenceStructure = COMPARE_NESTED_INSTANCES_BY_COMPONENT
+    ? expandReferenceWithInstanceComponents(
+        referenceStructure,
+        alignedActualStructure,
+      )
+    : referenceStructure;
 
-  const actualEntry = alignedActualStructure.find((entry) => entry.nodeId === nodeId);
+  const actualEntry = alignedActualStructure.find(
+    (entry) => entry.nodeId === nodeId,
+  );
   if (!actualEntry) {
-    figma.notify('Не удалось сопоставить изменённый узел со структурой компонента.');
-    return;
+    return {
+      ok: false as const,
+      message:
+        'Не удалось сопоставить изменённый узел со структурой компонента.',
+    };
   }
 
   const actualOccurrenceKeys = buildOccurrenceKeyMap(alignedActualStructure);
-  const expandedReferenceOccurrenceKeys = buildOccurrenceKeyMap(expandedReferenceStructure);
-  const actualOccurrenceKey = actualOccurrenceKeys.get(actualEntry) ?? actualEntry.path;
-
+  const referenceOccurrenceKeys = buildOccurrenceKeyMap(
+    expandedReferenceStructure,
+  );
+  const actualOccurrenceKey =
+    actualOccurrenceKeys.get(actualEntry) ?? actualEntry.path;
   const referenceNode = expandedReferenceStructure.find(
     (entry) =>
-      (expandedReferenceOccurrenceKeys.get(entry) ?? entry.path) === actualOccurrenceKey,
+      (referenceOccurrenceKeys.get(entry) ?? entry.path) ===
+      actualOccurrenceKey,
   );
+
   if (!referenceNode) {
-    figma.notify('Не удалось найти эталонные значения для этого узла.');
-    return;
+    return {
+      ok: false as const,
+      message: 'Не удалось найти эталонные значения для этого узла.',
+    };
   }
 
-  if (details.length) {
-    await applyReferenceResetByDetails(targetNode, details);
-  }
-  if (messages.length) {
-    await applyReferenceResetByMessages(targetNode, referenceNode, messages);
-  }
-
-  figma.notify('Изменения сброшены.');
-
-  const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
-  if (rerunSelection.length) {
-    void runAudit(rerunSelection, lastAuditChannel);
-  } else {
-    void runAudit([rootNode], lastAuditChannel);
-  }
+  return { ok: true as const, referenceNode };
 }
 
 async function getSceneNodeById(nodeId: string): Promise<SceneNode | null> {
@@ -2365,11 +1183,12 @@ async function resolveSceneNodesByIds(nodeIds: string[]): Promise<SceneNode[]> {
 }
 
 async function rerunLastAuditWithFallback(fallbackSelection: SceneNode[]) {
+  await auditLifecycle.waitUntilIdle();
   const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
   if (rerunSelection.length) {
-    void runAudit(rerunSelection, lastAuditChannel);
+    await runAudit(rerunSelection, lastAuditChannel);
   } else if (fallbackSelection.length) {
-    void runAudit(fallbackSelection, lastAuditChannel);
+    await runAudit(fallbackSelection, lastAuditChannel);
   }
 }
 
@@ -2398,1218 +1217,32 @@ async function applyThemizationAction(payload: {
   await ensureReferenceCatalogsLoaded();
 
   if (kind === 'corporateComponent') {
-    const node = await getSceneNodeById(nodeId);
-    if (!node || node.type !== 'INSTANCE') {
-      figma.notify('Не удалось найти инстанс для замены.');
-      return;
-    }
-
-    const replaced = await replaceCorporateInstance(
-      node,
-      replacementComponentKey || null,
-    );
-    if (!replaced) {
-      figma.notify('Не удалось заменить компонент на базовую версию.');
+    const corporateResult = await applyCorporateComponentReplacement({
+      nodeId,
+      replacementComponentKey: replacementComponentKey || null,
+    });
+    if (!corporateResult.ok) {
+      figma.notify(corporateResult.message);
       return;
     }
 
     figma.notify('Компонент заменён.');
-    await rerunLastAuditWithFallback([node]);
+    await rerunLastAuditWithFallback([corporateResult.node]);
     return;
   }
 
-  const focusNode = await getSceneNodeById(nodeId);
-  if (!focusNode) {
-    figma.notify('Не удалось найти узел для смены темизации.');
+  const pageThemeResult = await applyPageThemeMode({
+    nodeId,
+    themeCollectionId,
+    targetModeId,
+  });
+  if (!pageThemeResult.ok) {
+    figma.notify(pageThemeResult.message);
     return;
   }
 
-  const page = getContainingPage(focusNode);
-  if (!page) {
-    figma.notify('Не удалось определить страницу для смены темизации.');
-    return;
-  }
-
-  if (!themeCollectionId || !targetModeId) {
-    figma.notify('Недостаточно данных для смены mode Theme.');
-    return;
-  }
-
-  const collection = await figma.variables.getVariableCollectionByIdAsync(themeCollectionId);
-  if (!collection) {
-    figma.notify('Не удалось получить collection Theme для страницы.');
-    return;
-  }
-
-  if (!collection.modes.some((mode) => mode.modeId === targetModeId)) {
-    figma.notify('Mode Corp не найден в коллекции Theme.');
-    return;
-  }
-
-  page.setExplicitVariableModeForCollection(collection, targetModeId);
   figma.notify('Темизация переключена на Corp.');
-  await rerunLastAuditWithFallback([focusNode]);
-}
-
-async function replaceCorporateInstance(
-  instance: InstanceNode,
-  replacementComponentKey?: string | null,
-): Promise<boolean> {
-  const sourceProperties = snapshotInstanceComponentProperties(instance);
-  const componentKey = await getComponentKey(instance);
-  await ensureReferenceCatalogsForKeys([componentKey, replacementComponentKey]);
-  const ref = componentKey ? findComponent(componentKey) : null;
-  if (!ref) {
-    return false;
-  }
-
-  const replacementRef =
-    replacementComponentKey ? findComponent(replacementComponentKey) : null;
-  const pair = replacementRef ? null : getCorporateCounterpart(ref);
-  const baseComponent = replacementRef ?? pair?.base ?? null;
-  if (!baseComponent) {
-    return false;
-  }
-
-  const currentVariantName =
-    ref.variants?.find((variant) => variant.key === componentKey)?.name ?? null;
-  const candidateVariantKey =
-    currentVariantName && baseComponent.variants?.length
-      ? findBestCatalogVariantKey(baseComponent, currentVariantName)
-      : null;
-
-  if (candidateVariantKey) {
-    try {
-      const targetVariant = await figma.importComponentByKeyAsync(candidateVariantKey);
-      instance.swapComponent(targetVariant);
-      restoreCompatibleInstanceProperties(instance, sourceProperties);
-      return true;
-    } catch (error) {
-      console.warn('[Apollo] failed to import base variant directly, trying component set fallback', {
-        nodeId: instance.id,
-        candidateVariantKey,
-        error,
-      });
-    }
-  }
-
-  const baseComponentKey = baseComponent.key ?? null;
-  if (!baseComponentKey) {
-    return false;
-  }
-
-  if (baseComponent.variants?.length) {
-    try {
-      const componentSet = await figma.importComponentSetByKeyAsync(baseComponentKey);
-      const targetVariant = findMatchingVariantInSet(componentSet, instance, currentVariantName);
-
-      if (!targetVariant) {
-        console.error('[Apollo] failed to find matching base variant in component set', {
-          nodeId: instance.id,
-          baseComponentKey,
-          currentVariantName,
-          instanceVariantProperties: instance.variantProperties,
-        });
-        return false;
-      }
-
-      instance.swapComponent(targetVariant);
-      restoreCompatibleInstanceProperties(instance, sourceProperties);
-      return true;
-    } catch (fallbackError) {
-      console.error('[Apollo] failed to swap corporate component', {
-        nodeId: instance.id,
-        baseComponentKey,
-        error:
-          fallbackError && typeof fallbackError === 'object' && 'message' in fallbackError
-            ? String((fallbackError as { message?: string }).message)
-            : String(fallbackError ?? 'Unknown error'),
-      });
-    }
-  }
-
-  try {
-    const targetComponent = await figma.importComponentByKeyAsync(baseComponentKey);
-    instance.swapComponent(targetComponent);
-    restoreCompatibleInstanceProperties(instance, sourceProperties);
-    return true;
-  } catch (error) {
-    console.error('[Apollo] failed to import replacement component', {
-      nodeId: instance.id,
-      baseComponentKey,
-      error:
-        error && typeof error === 'object' && 'message' in error
-          ? String((error as { message?: string }).message)
-          : String(error ?? 'Unknown error'),
-    });
-    return false;
-  }
-}
-
-function findMatchingVariantInSet(
-  componentSet: ComponentSetNode,
-  instance: InstanceNode,
-  currentVariantName: string | null,
-): ComponentNode | null {
-  const instanceVariantProperties = instance.variantProperties ?? {};
-  const defaultVariantProperties = getDefaultVariantProperties(componentSet);
-  const variants = componentSet.children.filter(
-    (child): child is ComponentNode => child.type === 'COMPONENT',
-  );
-
-  const exactByName =
-    currentVariantName
-      ? variants.find((variant) => variant.name === currentVariantName) ?? null
-      : null;
-  if (exactByName) {
-    return exactByName;
-  }
-
-  const byCurrentVariantName = currentVariantName
-    ? chooseBestVariantByName(
-        variants,
-        currentVariantName,
-        defaultVariantProperties,
-      )
-    : null;
-  if (byCurrentVariantName) {
-    return byCurrentVariantName;
-  }
-
-  const exactByProperties = variants.find((variant) =>
-    variantPropertiesEqual(variant.variantProperties ?? {}, instanceVariantProperties),
-  );
-  if (exactByProperties) {
-    return exactByProperties;
-  }
-
-  const defaultCompatible = variants.find((variant) =>
-    variantMatchesSourceWithDefaultExtras(
-      variant.variantProperties ?? {},
-      instanceVariantProperties,
-      defaultVariantProperties,
-    ),
-  );
-  if (defaultCompatible) {
-    return defaultCompatible;
-  }
-
-  const bestByOverlap = variants
-    .map((variant) => ({
-      variant,
-      score: countVariantPropertyMatches(variant.variantProperties ?? {}, instanceVariantProperties),
-    }))
-    .filter((entry) => entry.score > 0)
-    .sort((left, right) => right.score - left.score)[0]?.variant;
-  if (bestByOverlap) {
-    return bestByOverlap;
-  }
-
-  return variants[0] ?? null;
-}
-
-function findBestCatalogVariantKey(
-  component: LibraryComponent,
-  sourceVariantName: string,
-): string | null {
-  const variants = component.variants ?? [];
-  if (!variants.length) {
-    return null;
-  }
-
-  const exactMatch = variants.find((variant) => variant.name === sourceVariantName);
-  if (exactMatch?.key) {
-    return exactMatch.key;
-  }
-
-  const defaultVariantKey =
-    typeof (component as { defaultVariant?: unknown }).defaultVariant === 'string'
-      ? ((component as { defaultVariant?: string }).defaultVariant ?? null)
-      : null;
-  const defaultVariantName =
-    variants.find((variant) => variant.key === defaultVariantKey)?.name ??
-    variants[0]?.name ??
-    '';
-  const defaultVariantProperties = parseVariantName(defaultVariantName);
-  const compatibleVariant = chooseBestVariantByName(
-    variants,
-    sourceVariantName,
-    defaultVariantProperties,
-  );
-
-  return compatibleVariant?.key ?? null;
-}
-
-function chooseBestVariantByName<T extends { name?: string | null }>(
-  variants: T[],
-  sourceVariantName: string,
-  defaultVariantProperties: Record<string, string>,
-): T | null {
-  const sourceVariantProperties = parseVariantName(sourceVariantName);
-  const sourceEntries = Object.entries(sourceVariantProperties);
-
-  if (!sourceEntries.length) {
-    return null;
-  }
-
-  const compatible = variants
-    .map((variant) => {
-      const targetProperties = parseVariantName(variant.name ?? '');
-      const targetEntries = Object.entries(targetProperties);
-
-      if (!targetEntries.length) {
-        return null;
-      }
-
-      for (const [key, value] of sourceEntries) {
-        if (targetProperties[key] !== value) {
-          return null;
-        }
-      }
-
-      let nonDefaultExtraCount = 0;
-      let extraCount = 0;
-      for (const [key, value] of targetEntries) {
-        if (key in sourceVariantProperties) {
-          continue;
-        }
-
-        extraCount += 1;
-        if (defaultVariantProperties[key] !== value) {
-          nonDefaultExtraCount += 1;
-        }
-      }
-
-      return {
-        variant,
-        nonDefaultExtraCount,
-        extraCount,
-        name: String(variant.name ?? ''),
-      };
-    })
-    .filter((entry): entry is {
-      variant: T;
-      nonDefaultExtraCount: number;
-      extraCount: number;
-      name: string;
-    } => Boolean(entry))
-    .sort((left, right) => {
-      if (left.nonDefaultExtraCount !== right.nonDefaultExtraCount) {
-        return left.nonDefaultExtraCount - right.nonDefaultExtraCount;
-      }
-
-      if (left.extraCount !== right.extraCount) {
-        return left.extraCount - right.extraCount;
-      }
-
-      return left.name.localeCompare(right.name);
-    });
-
-  return compatible[0]?.variant ?? null;
-}
-
-function getDefaultVariantProperties(
-  componentSet: ComponentSetNode,
-): Record<string, string> {
-  const defaults: Record<string, string> = {};
-
-  for (const [propertyName, definition] of Object.entries(
-    componentSet.componentPropertyDefinitions ?? {},
-  )) {
-    if (definition.type !== 'VARIANT') {
-      continue;
-    }
-
-    if (typeof definition.defaultValue === 'string') {
-      defaults[propertyName] = definition.defaultValue;
-    }
-  }
-
-  return defaults;
-}
-
-type InstanceComponentPropertySnapshot = {
-  sourceKey: string;
-  canonicalName: string;
-  type: ComponentPropertyType;
-  value: string | boolean | VariableAlias;
-};
-
-type InstanceComponentPropertyDefinition = ComponentProperties[string];
-
-function snapshotInstanceComponentProperties(
-  instance: InstanceNode,
-): InstanceComponentPropertySnapshot[] {
-  return Object.entries(instance.componentProperties ?? {})
-    .map(([key, definition]): InstanceComponentPropertySnapshot | null => {
-      const value = definition?.value;
-      if (value === undefined) {
-        return null;
-      }
-
-      return {
-        sourceKey: key,
-        canonicalName: canonicalComponentPropertyName(key),
-        type: definition.type,
-        value,
-      } satisfies InstanceComponentPropertySnapshot;
-    })
-    .filter((entry): entry is InstanceComponentPropertySnapshot => Boolean(entry));
-}
-
-function restoreCompatibleInstanceProperties(
-  instance: InstanceNode,
-  sourceProperties: InstanceComponentPropertySnapshot[],
-): void {
-  if (!sourceProperties.length) {
-    return;
-  }
-
-  const updates: Record<string, string | boolean | VariableAlias> = {};
-  const targetProperties = Object.entries(instance.componentProperties ?? {});
-
-  for (const [targetKey, targetDefinition] of targetProperties) {
-    const targetCanonicalName = canonicalComponentPropertyName(targetKey);
-    const source =
-      sourceProperties.find(
-        (entry) => entry.sourceKey === targetKey && entry.type === targetDefinition.type,
-      ) ??
-      sourceProperties.find(
-        (entry) =>
-          entry.canonicalName === targetCanonicalName && entry.type === targetDefinition.type,
-      );
-
-    if (!source) {
-      continue;
-    }
-
-    if (!isCompatibleComponentPropertyValue(source.value, targetDefinition)) {
-      continue;
-    }
-
-    updates[targetKey] = source.value;
-  }
-
-  if (!Object.keys(updates).length) {
-    return;
-  }
-
-  instance.setProperties(updates);
-}
-
-function canonicalComponentPropertyName(propertyName: string): string {
-  return propertyName.replace(/#.+$/, '').trim();
-}
-
-function isCompatibleComponentPropertyValue(
-  value: string | boolean | VariableAlias,
-  definition: InstanceComponentPropertyDefinition,
-): boolean {
-  switch (definition.type) {
-    case 'BOOLEAN':
-      return typeof value === 'boolean';
-    case 'TEXT':
-      return typeof value === 'string';
-    case 'INSTANCE_SWAP':
-      return typeof value === 'string';
-    case 'VARIANT':
-      return typeof value === 'string';
-    default:
-      return false;
-  }
-}
-
-async function applyReferenceResetByMessages(
-  node: SceneNode,
-  referenceNode: DSStructureNode,
-  messages: string[],
-) {
-  const uniqueMessages = Array.from(new Set(messages));
-
-  for (const message of uniqueMessages) {
-    const trimmed = message.trim();
-    const paddingMatch = trimmed.match(/^(?:Token )?padding (top|right|bottom|left):/i);
-
-    if (
-      trimmed.startsWith('Паддинг ') ||
-      trimmed.startsWith('Переменная padding ') ||
-      paddingMatch
-    ) {
-      const side = extractPaddingSide(trimmed);
-      if (side) {
-        await resetPaddingSide(node, referenceNode, side);
-      }
-      continue;
-    }
-
-    if (
-      trimmed.startsWith('Отступ между элементами') ||
-      trimmed.startsWith('Переменная itemSpacing:') ||
-      trimmed.startsWith('Token itemSpacing:')
-    ) {
-      await resetItemSpacing(node, referenceNode);
-      continue;
-    }
-
-    if (trimmed.startsWith('Ширина в auto-layout:')) {
-      resetLayoutSizing(node, referenceNode, 'horizontal');
-      continue;
-    }
-
-    if (trimmed.startsWith('Высота в auto-layout:')) {
-      resetLayoutSizing(node, referenceNode, 'vertical');
-      continue;
-    }
-
-    if (trimmed.startsWith('Стиль заливка:')) {
-      await resetStyle(node, referenceNode, 'fill');
-      continue;
-    }
-
-    if (trimmed.startsWith('Стиль обводка:')) {
-      await resetStyle(node, referenceNode, 'stroke');
-      continue;
-    }
-
-    if (trimmed.startsWith('Стиль текст:')) {
-      await resetStyle(node, referenceNode, 'text');
-      continue;
-    }
-
-    if (
-      trimmed.startsWith('заливка:') ||
-      trimmed.startsWith('Переменная заливки:')
-    ) {
-      await resetPaint(node, referenceNode, 'fill');
-      continue;
-    }
-
-    if (
-      trimmed.startsWith('обводка:') ||
-      trimmed.startsWith('Переменная обводки:')
-    ) {
-      await resetPaint(node, referenceNode, 'stroke');
-      continue;
-    }
-
-    if (trimmed.startsWith('Толщина обводки:')) {
-      resetStrokeWeight(node, referenceNode);
-      continue;
-    }
-
-    if (trimmed.startsWith('Положение обводки:')) {
-      resetStrokeAlign(node, referenceNode);
-      continue;
-    }
-
-    if (
-      trimmed.startsWith('Token radius:') ||
-      trimmed.startsWith('Скругления') ||
-      trimmed.startsWith('Переменная скругления:')
-    ) {
-      await resetRadius(node, referenceNode);
-      continue;
-    }
-
-    if (
-      trimmed.startsWith('Token opacity:') ||
-      trimmed.startsWith('Прозрачность') ||
-      trimmed.startsWith('Переменная opacity:')
-    ) {
-      await resetOpacity(node, referenceNode);
-    }
-  }
-}
-
-async function applyReferenceResetByDetails(
-  node: SceneNode,
-  details: Array<{
-    property?: string;
-    reference?: {
-      value?: string | number | null;
-      resourceType?: 'style' | 'token' | 'color';
-      resourceId?: string | null;
-      displayName?: string | null;
-    };
-  }>,
-) {
-  for (const detail of details) {
-    const property = detail.property;
-    const reference = detail.reference;
-    if (!property || !reference) {
-      continue;
-    }
-
-    if (property === 'fill' || property === 'stroke') {
-      await resetPaintByDiffReference(node, property, reference);
-      continue;
-    }
-
-    if (property === 'styles.fill') {
-      await resetStyleById(node, 'fill', reference.resourceId ?? null);
-      continue;
-    }
-
-    if (property === 'styles.stroke') {
-      await resetStyleById(node, 'stroke', reference.resourceId ?? null);
-      continue;
-    }
-
-    if (property === 'styles.text') {
-      await resetStyleById(node, 'text', reference.resourceId ?? null);
-      continue;
-    }
-
-    const variableBindingField = getVariableBindingResetField(property);
-    if (
-      variableBindingField &&
-      reference.resourceType === 'token' &&
-      reference.resourceId
-    ) {
-      const rebound = await bindNodeVariable(
-        node,
-        variableBindingField,
-        reference.resourceId,
-      );
-      if (!rebound) {
-        throw new Error(
-          `Apollo failed to restore ${variableBindingField} variable binding`,
-        );
-      }
-      continue;
-    }
-
-    const paddingSide = property.match(/^layout\.padding\.(top|right|bottom|left)$/)?.[1] as
-      | 'top'
-      | 'right'
-      | 'bottom'
-      | 'left'
-      | undefined;
-    if (paddingSide && typeof reference.value === 'number') {
-      if (reference.resourceType === 'token' && reference.resourceId) {
-        const paddingFieldMap = {
-          top: 'paddingTop',
-          right: 'paddingRight',
-          bottom: 'paddingBottom',
-          left: 'paddingLeft',
-        };
-        const rebound = await bindNodeVariable(
-          node,
-          paddingFieldMap[paddingSide],
-          reference.resourceId,
-        );
-        if (!rebound) {
-          throw new Error(
-            `Apollo failed to restore ${paddingFieldMap[paddingSide]} variable binding`,
-          );
-        }
-        continue;
-      }
-      setLayoutPaddingSide(node, paddingSide, reference.value);
-      continue;
-    }
-
-    if (property === 'layout.itemSpacing' && typeof reference.value === 'number') {
-      if (reference.resourceType === 'token' && reference.resourceId) {
-        const rebound = await bindNodeVariable(
-          node,
-          'itemSpacing',
-          reference.resourceId,
-        );
-        if (!rebound) {
-          throw new Error('Apollo failed to restore itemSpacing variable binding');
-        }
-        continue;
-      }
-      setLayoutItemSpacing(node, reference.value);
-      continue;
-    }
-
-    if (
-      property === 'layout.sizing.horizontal' &&
-      typeof reference.value === 'string'
-    ) {
-      setNodeLayoutSizing(node, 'horizontal', reference.value);
-      continue;
-    }
-
-    if (
-      property === 'layout.sizing.vertical' &&
-      typeof reference.value === 'string'
-    ) {
-      setNodeLayoutSizing(node, 'vertical', reference.value);
-      continue;
-    }
-
-    if (property === 'stroke.align' && typeof reference.value === 'string') {
-      setNodeStrokeAlignment(node, reference.value);
-      continue;
-    }
-
-    if (property === 'radius') {
-      if (reference.resourceType === 'token' && reference.resourceId) {
-        const rebound = await bindNodeVariable(
-          node,
-          'cornerRadius',
-          reference.resourceId,
-        );
-        if (!rebound) {
-          throw new Error('Apollo failed to restore cornerRadius variable binding');
-        }
-        continue;
-      }
-      await setRadiusFromValue(node, reference.value);
-      continue;
-    }
-
-    if (property === 'opacity' && typeof reference.value === 'number' && 'opacity' in node) {
-      if (reference.resourceType === 'token' && reference.resourceId) {
-        const rebound = await bindNodeVariable(
-          node,
-          'opacity',
-          reference.resourceId,
-        );
-        if (!rebound) {
-          throw new Error('Apollo failed to restore opacity variable binding');
-        }
-        continue;
-      }
-      (node as SceneNode & { opacity: number }).opacity = reference.value;
-    }
-  }
-}
-
-function extractPaddingSide(message: string): 'top' | 'right' | 'bottom' | 'left' | null {
-  const match = message.match(/(top|right|bottom|left)/i);
-  if (!match) return null;
-  const side = match[1].toLowerCase();
-  if (
-    side === 'top' ||
-    side === 'right' ||
-    side === 'bottom' ||
-    side === 'left'
-  ) {
-    return side;
-  }
-  return null;
-}
-
-async function resetPaddingSide(
-  node: SceneNode,
-  referenceNode: DSStructureNode,
-  side: 'top' | 'right' | 'bottom' | 'left',
-) {
-  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
-    return;
-  }
-
-  const layout = referenceNode.layout;
-  const padding = layout?.padding;
-  if (!padding) {
-    return;
-  }
-
-  const fieldMap = {
-    top: 'paddingTop',
-    right: 'paddingRight',
-    bottom: 'paddingBottom',
-    left: 'paddingLeft',
-  } as const;
-  const field = fieldMap[side];
-  const value = padding[side] ?? 0;
-  (node as any)[field] = value;
-
-  await bindNodeVariable(node, field, layout?.paddingTokens?.[side] ?? null);
-}
-
-async function resetItemSpacing(node: SceneNode, referenceNode: DSStructureNode) {
-  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
-    return;
-  }
-  const value = referenceNode.layout?.itemSpacing ?? 0;
-  (node as any).itemSpacing = value;
-  await bindNodeVariable(
-    node,
-    'itemSpacing',
-    referenceNode.layout?.itemSpacingToken ?? null,
-  );
-}
-
-function setLayoutPaddingSide(
-  node: SceneNode,
-  side: 'top' | 'right' | 'bottom' | 'left',
-  value: number,
-) {
-  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
-    return;
-  }
-  const fieldMap = {
-    top: 'paddingTop',
-    right: 'paddingRight',
-    bottom: 'paddingBottom',
-    left: 'paddingLeft',
-  } as const;
-  (node as any)[fieldMap[side]] = value;
-}
-
-function setLayoutItemSpacing(node: SceneNode, value: number) {
-  if (!('layoutMode' in node) || (node as AutoLayoutMixin).layoutMode === 'NONE') {
-    return;
-  }
-  (node as any).itemSpacing = value;
-}
-
-function resetLayoutSizing(
-  node: SceneNode,
-  referenceNode: DSStructureNode,
-  axis: LayoutSizingAxis,
-) {
-  setNodeLayoutSizing(node, axis, referenceNode.layout?.sizing?.[axis] ?? null);
-}
-
-async function resetStyleById(
-  node: SceneNode,
-  target: 'fill' | 'stroke' | 'text',
-  styleKey: string | null,
-) {
-  if (target === 'text') {
-    if (node.type !== 'TEXT') return;
-    const style = styleKey ? await importStyleById(styleKey) : null;
-    await (node as TextNode).setTextStyleIdAsync(style?.id ?? '');
-    return;
-  }
-
-  const mutableNode = node as any;
-  const style = styleKey ? await importStyleById(styleKey) : null;
-  const styleId = style?.id ?? '';
-
-  if (target === 'fill') {
-    if (typeof mutableNode.setFillStyleIdAsync === 'function') {
-      await mutableNode.setFillStyleIdAsync(styleId);
-    }
-    return;
-  }
-
-  if (typeof mutableNode.setStrokeStyleIdAsync === 'function') {
-    await mutableNode.setStrokeStyleIdAsync(styleId);
-  }
-}
-
-async function resetStyle(
-  node: SceneNode,
-  referenceNode: DSStructureNode,
-  target: 'fill' | 'stroke' | 'text',
-) {
-  const styleKey =
-    target === 'text'
-      ? referenceNode.styles?.text?.styleKey
-      : target === 'fill'
-        ? referenceNode.styles?.fill?.styleKey
-        : referenceNode.styles?.stroke?.styleKey;
-
-  await resetStyleById(node, target, styleKey ?? null);
-}
-
-async function resetPaintByDiffReference(
-  node: SceneNode,
-  target: 'fill' | 'stroke',
-  reference: {
-    value?: string | number | null;
-    resourceType?: 'style' | 'token' | 'color';
-    resourceId?: string | null;
-  },
-) {
-  const resourceId =
-    typeof reference.resourceId === 'string' && reference.resourceId.length
-      ? reference.resourceId
-      : null;
-
-  if (reference.resourceType === 'style') {
-    await resetStyleById(node, target, resourceId);
-    return;
-  }
-
-  const prop = target === 'fill' ? 'fills' : 'strokes';
-  if (!(prop in (node as any))) {
-    return;
-  }
-
-  const mutableNode = node as any;
-  if (target === 'fill' && typeof mutableNode.setFillStyleIdAsync === 'function') {
-    await mutableNode.setFillStyleIdAsync('');
-  } else if (
-    target === 'stroke' &&
-    typeof mutableNode.setStrokeStyleIdAsync === 'function'
-  ) {
-    await mutableNode.setStrokeStyleIdAsync('');
-  }
-
-  const token =
-    reference.resourceType === 'token'
-      ? resourceId ?? (typeof reference.value === 'string' ? reference.value : null)
-      : null;
-  const color =
-    reference.resourceType === 'color' && typeof reference.value === 'string'
-      ? reference.value
-      : null;
-  const paint = await buildSolidPaintFromReference({ token, color });
-
-  if (!paint) {
-    return;
-  }
-
-  mutableNode[prop] = [paint];
-
-  if (target === 'stroke') {
-    const weight =
-      typeof (mutableNode as { strokeWeight?: unknown }).strokeWeight === 'number'
-        ? (mutableNode as { strokeWeight: number }).strokeWeight
-        : 1;
-    mutableNode.strokeWeight = weight;
-  }
-}
-
-async function resetPaint(
-  node: SceneNode,
-  referenceNode: DSStructureNode,
-  target: 'fill' | 'stroke',
-) {
-  const styleKey =
-    target === 'fill'
-      ? referenceNode.styles?.fill?.styleKey
-      : referenceNode.styles?.stroke?.styleKey;
-  if (styleKey) {
-    await resetStyle(node, referenceNode, target);
-    if (target === 'stroke') {
-      resetStrokeWeight(node, referenceNode);
-    }
-    return;
-  }
-
-  const prop = target === 'fill' ? 'fills' : 'strokes';
-  if (!(prop in (node as any))) {
-    return;
-  }
-
-  const mutableNode = node as any;
-  if (target === 'fill' && typeof mutableNode.setFillStyleIdAsync === 'function') {
-    await mutableNode.setFillStyleIdAsync('');
-  } else if (
-    target === 'stroke' &&
-    typeof mutableNode.setStrokeStyleIdAsync === 'function'
-  ) {
-    await mutableNode.setStrokeStyleIdAsync('');
-  }
-
-  const referencePaint = target === 'fill' ? referenceNode.fill : referenceNode.stroke;
-
-  if (!referencePaint) {
-    mutableNode[prop] = [];
-    if (target === 'stroke' && 'strokeWeight' in mutableNode) {
-      mutableNode.strokeWeight = 0;
-    }
-    return;
-  }
-
-  const paint = await buildSolidPaintFromReference(referencePaint);
-  if (!paint) {
-    return;
-  }
-
-  mutableNode[prop] = [paint];
-
-  if (target === 'stroke') {
-    resetStrokeWeight(node, referenceNode);
-  }
-}
-
-function resetStrokeWeight(node: SceneNode, referenceNode: DSStructureNode) {
-  if (!('strokeWeight' in (node as any))) {
-    return;
-  }
-  const weight = referenceNode.stroke?.weight;
-  (node as any).strokeWeight = typeof weight === 'number' ? weight : 0;
-}
-
-function resetStrokeAlign(node: SceneNode, referenceNode: DSStructureNode) {
-  setNodeStrokeAlignment(node, referenceNode.stroke?.align ?? null);
-}
-
-async function resetRadius(node: SceneNode, referenceNode: DSStructureNode) {
-  await bindNodeVariable(node, 'cornerRadius', referenceNode.radiusToken ?? null);
-
-  const radius = referenceNode.radius;
-  if (radius === null || !('cornerRadius' in (node as any))) {
-    return;
-  }
-
-  if (typeof radius === 'number') {
-    (node as any).cornerRadius = radius;
-    return;
-  }
-
-  const mutableNode = node as any;
-  if (
-    'topLeftRadius' in mutableNode &&
-    'topRightRadius' in mutableNode &&
-    'bottomRightRadius' in mutableNode &&
-    'bottomLeftRadius' in mutableNode
-  ) {
-    mutableNode.topLeftRadius = radius.topLeft;
-    mutableNode.topRightRadius = radius.topRight;
-    mutableNode.bottomRightRadius = radius.bottomRight;
-    mutableNode.bottomLeftRadius = radius.bottomLeft;
-  }
-}
-
-async function setRadiusFromValue(
-  node: SceneNode,
-  value: string | number | null | undefined,
-) {
-  if (!('cornerRadius' in (node as any))) {
-    return;
-  }
-  const numericValue =
-    typeof value === 'number'
-      ? value
-      : typeof value === 'string'
-        ? Number.parseFloat(value)
-        : Number.NaN;
-  if (!Number.isFinite(numericValue)) {
-    return;
-  }
-  await bindNodeVariable(node, 'cornerRadius', null);
-  (node as any).cornerRadius = numericValue;
-}
-
-async function resetOpacity(node: SceneNode, referenceNode: DSStructureNode) {
-  if (!('opacity' in (node as any))) {
-    return;
-  }
-
-  const opacity =
-    typeof referenceNode.opacity === 'number' ? referenceNode.opacity : 1;
-  (node as any).opacity = opacity;
-  await bindNodeVariable(node, 'opacity', referenceNode.opacityToken ?? null);
-}
-
-async function bindNodeVariable(
-  node: SceneNode,
-  field: string,
-  tokenId: string | null,
-): Promise<boolean> {
-  const bindingNode = await resolveBindableNode(node);
-  if (!bindingNode) {
-    console.warn('[Apollo] skip variable binding for missing node', {
-      nodeId: node.id,
-      field,
-      tokenId,
-    });
-    return false;
-  }
-
-  const mutableNode = bindingNode as any;
-  if (typeof mutableNode.setBoundVariable !== 'function') {
-    return false;
-  }
-  const variable = tokenId ? await importVariableByToken(tokenId) : null;
-  if (tokenId && !variable) {
-    console.warn('[Apollo] skip unresolved variable binding', {
-      nodeId: bindingNode.id,
-      field,
-      tokenId,
-    });
-    return false;
-  }
-  try {
-    mutableNode.setBoundVariable(field, variable);
-    return true;
-  } catch (error) {
-    if (isMissingNodeMutationError(error)) {
-      console.warn('[Apollo] skip variable binding for stale node', {
-        nodeId: bindingNode.id,
-        field,
-        tokenId,
-        error,
-      });
-      return false;
-    }
-    throw error;
-  }
-}
-
-async function resolveBindableNode(node: SceneNode): Promise<SceneNode | null> {
-  if (isRemovedNode(node)) {
-    return null;
-  }
-
-  try {
-    const freshNode = await getSceneNodeById(node.id);
-    return freshNode && !isRemovedNode(freshNode) ? freshNode : null;
-  } catch (error) {
-    console.warn('[Apollo] failed to refresh node before variable binding', {
-      nodeId: node.id,
-      error,
-    });
-    return null;
-  }
-}
-
-function isRemovedNode(node: SceneNode): boolean {
-  return (node as any).removed === true;
-}
-
-function isMissingNodeMutationError(error: unknown): boolean {
-  const message =
-    error && typeof error === 'object' && 'message' in error
-      ? String((error as { message?: string }).message)
-      : String(error ?? '');
-  return /does not exist|not found|removed/i.test(message);
-}
-
-async function importVariableByToken(tokenId: string): Promise<Variable | null> {
-  const aliasKey = extractAliasKey(tokenId);
-  const metadata = resolveVariableMetadataForDiff(tokenId);
-  const candidateIds = [tokenId, metadata?.variableId ?? null];
-  for (const candidateId of candidateIds) {
-    if (!candidateId) continue;
-    try {
-      const localVariable =
-        await figma.variables.getVariableByIdAsync(candidateId);
-      if (localVariable) {
-        return localVariable;
-      }
-    } catch (_error) {
-      // The value may be a published key or semantic catalog token.
-    }
-  }
-
-  const candidateKeys = [
-    metadata?.variableKey ?? null,
-    aliasKey,
-  ].filter((key): key is string => Boolean(key));
-  for (const key of Array.from(new Set(candidateKeys))) {
-    try {
-      return await figma.variables.importVariableByKeyAsync(key);
-    } catch (error) {
-      console.warn('[Apollo] failed to import variable by key', {
-        tokenId,
-        key,
-        error,
-      });
-    }
-  }
-  return null;
-}
-
-async function importStyleById(styleId: string): Promise<BaseStyle | null> {
-  const normalized = normalizeStyleId(styleId);
-  if (!normalized) {
-    return null;
-  }
-
-  const directKey = extractStyleKey(normalized) ?? normalized;
-  try {
-    return await figma.importStyleByKeyAsync(directKey);
-  } catch (error) {
-    console.warn('[Apollo] failed to import style by key', {
-      styleId: normalized,
-      key: directKey,
-      error,
-    });
-    return null;
-  }
-}
-
-async function buildSolidPaintFromReference(
-  referencePaint: { color?: string | null; token?: string | null },
-): Promise<SolidPaint | null> {
-  const color = referencePaint.color
-    ? parseRgbaToColor(referencePaint.color)
-    : null;
-  const variable = referencePaint.token
-    ? await importVariableByToken(referencePaint.token)
-    : null;
-
-  const basePaint: SolidPaint = {
-    type: 'SOLID',
-    visible: true,
-    opacity: color?.opacity ?? 1,
-    color: color?.rgb ?? colorFromVariable(variable) ?? { r: 0, g: 0, b: 0 },
-  };
-
-  if (!variable) {
-    return basePaint;
-  }
-
-  try {
-    return figma.variables.setBoundVariableForPaint(basePaint, 'color', variable);
-  } catch (error) {
-    console.warn('[Apollo] failed to bind variable for paint', {
-      token: referencePaint.token,
-      error,
-    });
-    return basePaint;
-  }
-}
-
-function parseRgbaToColor(
-  value: string,
-): { rgb: RGB; opacity: number } | null {
-  const compact = value.replace(/\s+/g, '');
-  const match = compact.match(
-    /^rgba\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)$/i,
-  );
-  if (!match) {
-    return null;
-  }
-
-  const [, rawR, rawG, rawB, rawA] = match;
-  const r = Number.parseFloat(rawR) / 255;
-  const g = Number.parseFloat(rawG) / 255;
-  const b = Number.parseFloat(rawB) / 255;
-  const opacity = Number.parseFloat(rawA);
-
-  if (
-    !Number.isFinite(r) ||
-    !Number.isFinite(g) ||
-    !Number.isFinite(b) ||
-    !Number.isFinite(opacity)
-  ) {
-    return null;
-  }
-
-  return {
-    rgb: {
-      r: Math.max(0, Math.min(1, r)),
-      g: Math.max(0, Math.min(1, g)),
-      b: Math.max(0, Math.min(1, b)),
-    },
-    opacity: Math.max(0, Math.min(1, opacity)),
-  };
-}
-
-function colorFromVariable(variable: Variable | null): RGB | null {
-  if (!variable || variable.resolvedType !== 'COLOR') {
-    return null;
-  }
-
-  const values = Object.values(variable.valuesByMode ?? {});
-  const firstValue = values[0];
-  if (!firstValue || typeof firstValue !== 'object') {
-    return null;
-  }
-
-  const color = firstValue as RGBA;
-  if (
-    typeof color.r !== 'number' ||
-    typeof color.g !== 'number' ||
-    typeof color.b !== 'number'
-  ) {
-    return null;
-  }
-
-  return { r: color.r, g: color.g, b: color.b };
+  await rerunLastAuditWithFallback([pageThemeResult.focusNode]);
 }
 
 function getReferenceStructure(
@@ -3696,239 +1329,6 @@ function normalizeRelevanceStatus(
   }
 }
 
-function alignStructurePaths(
-  actual: DSStructureNode[],
-  reference: DSStructureNode[],
-): DSStructureNode[] {
-  if (actual.length === 0 || reference.length === 0) return actual;
-  const actualRoot = actual[0].path;
-  const referenceRoot =
-    reference.find((node) => !node.path.includes(' / '))?.path ??
-    reference[0].path;
-  if (!actualRoot || !referenceRoot || actualRoot === referenceRoot) {
-    return actual;
-  }
-
-  const prefix = actualRoot;
-  const newPrefix = referenceRoot;
-  return actual.map((node) => {
-    const cloned = Object.assign({}, node);
-    cloned.path = replacePathPrefix(node.path, prefix, newPrefix);
-    return cloned;
-  });
-}
-
-function attachSurfaceContext(
-  diff: DiffEntry,
-  surfaceContext: SurfaceContextEvidence,
-): DiffEntry {
-  return Object.assign({}, diff, {
-    context: Object.assign({}, diff.context, { surfaceContext }),
-  });
-}
-
-function expandReferenceWithInstanceComponents(
-  reference: DSStructureNode[],
-  actual: DSStructureNode[],
-): DSStructureNode[] {
-  if (!reference.length || !actual.length) return reference;
-
-  const referenceEntries: DSStructureNode[] = reference.map((node) =>
-    Object.assign({}, node, {
-      referenceOrigin: node.referenceOrigin ?? 'host',
-    }),
-  );
-  let nextSyntheticReferenceId =
-    referenceEntries.reduce(
-      (maxId, entry) => (typeof entry.id === 'number' ? Math.max(maxId, entry.id) : maxId),
-      0,
-    ) + 1;
-  const referenceOccurrenceKeys = buildOccurrenceKeyMap(referenceEntries);
-  const referenceKeyToIndex = new Map<string, number>();
-  const hostReferenceByOccurrenceKey = new Map<string, DSStructureNode>();
-  for (let index = 0; index < referenceEntries.length; index += 1) {
-    const entry = referenceEntries[index];
-    const occurrenceKey = referenceOccurrenceKeys.get(entry) ?? entry.path;
-    referenceKeyToIndex.set(occurrenceKey, index);
-    hostReferenceByOccurrenceKey.set(occurrenceKey, entry);
-  }
-  const actualOccurrenceIndexMap = buildOccurrenceIndexMap(actual);
-  const actualRootPath = actual[0]?.path ?? '';
-  const visited = new Set<string>();
-
-  for (const node of actual) {
-    if (node.type !== 'INSTANCE') continue;
-    if (!node.componentInstance?.componentKey) continue;
-    if (node.path === actualRootPath) continue;
-
-    const componentKey = node.componentInstance.componentKey;
-    const visitKey = `${node.path}::${componentKey}`;
-    if (visited.has(visitKey)) continue;
-    visited.add(visitKey);
-
-    const componentRef = findComponent(componentKey);
-    const resolvedVariantProperties = node.componentInstance?.variantProperties ?? null;
-    const instanceStructure = resolveStructureForInstance(
-      componentRef,
-      node.componentInstance ?? null,
-    );
-    if (!instanceStructure || instanceStructure.length === 0) continue;
-    const ownerRole = componentRef?.role ?? null;
-    const actualOccurrenceIndex = actualOccurrenceIndexMap.get(node) ?? 1;
-
-    traceAudit('nested-reference-resolution', {
-      nodePath: node.path,
-      nestedComponentKey: componentKey,
-      variantProperties: resolvedVariantProperties,
-      resolvedReferenceRoot: instanceStructure[0]?.path ?? null,
-      referenceOrigin: 'nested-component',
-    });
-
-    const instanceRoot =
-      instanceStructure.find((item) => !item.path.includes(' / '))?.path ??
-      instanceStructure[0].path;
-
-    const aligned =
-      instanceRoot && instanceRoot !== node.path
-        ? instanceStructure.map((refNode) => {
-            const cloned = Object.assign({}, refNode);
-            cloned.path = replacePathPrefix(refNode.path, instanceRoot, node.path);
-            cloned.referenceOrigin = 'nested-component';
-            cloned.referenceOwnerComponentKey = componentKey;
-            cloned.referenceOwnerRole = ownerRole;
-            cloned.referenceOwnerPath = node.path;
-            cloned.referenceOwnerRelativePath = getRelativeReferenceOwnerPath(
-              node.path,
-              cloned.path,
-            );
-            cloned.referenceOwnerVariantProperties =
-              resolvedVariantProperties == null
-                ? null
-                : Object.assign({}, resolvedVariantProperties);
-            return cloned;
-          })
-        : instanceStructure.map((refNode) =>
-            Object.assign({}, refNode, {
-              referenceOrigin: 'nested-component',
-              referenceOwnerComponentKey: componentKey,
-              referenceOwnerRole: ownerRole,
-              referenceOwnerPath: node.path,
-              referenceOwnerRelativePath: getRelativeReferenceOwnerPath(
-                node.path,
-                refNode.path,
-              ),
-              referenceOwnerVariantProperties:
-                resolvedVariantProperties == null
-                  ? null
-                  : Object.assign({}, resolvedVariantProperties),
-            }),
-          );
-    const identityAligned = alignMaterializedReferenceInstancePaths(
-      aligned,
-      actual,
-      node.path,
-    );
-    const rebasedAligned = rebaseReferenceSubtreeIds(
-      identityAligned,
-      nextSyntheticReferenceId,
-    );
-    nextSyntheticReferenceId += rebasedAligned.length;
-
-    for (const rawRefNode of rebasedAligned) {
-      const occurrenceKey = makeOccurrenceKey(rawRefNode.path, actualOccurrenceIndex);
-      const existingIndex = referenceKeyToIndex.get(occurrenceKey);
-      const existingNode =
-        typeof existingIndex === 'number' ? referenceEntries[existingIndex] : null;
-      const hostBaselineNode =
-        hostReferenceByOccurrenceKey.get(occurrenceKey) ?? existingNode;
-      const refNode =
-        rawRefNode.path === node.path
-          ? applyMaterializedHostVariantBaselineToNode(rawRefNode, hostBaselineNode)
-          : rawRefNode;
-      const mergeDecision =
-        existingNode && typeof existingIndex === 'number'
-          ? getMaterializedInstanceReferenceDecision(
-              existingNode,
-              refNode,
-              node.path,
-              (ownerComponentKey, relativePath) =>
-                isNestedComponentPaintPathHostControlled(ownerComponentKey, relativePath) ||
-                isNestedComponentTextPathHostControlled(ownerComponentKey, relativePath) ||
-                isNestedComponentLayoutPathHostControlled(ownerComponentKey, relativePath),
-            )
-          : null;
-
-      if (
-        existingNode &&
-        typeof existingIndex === 'number' &&
-        mergeDecision?.preferCandidate === true
-      ) {
-        referenceEntries[existingIndex] = mergeMaterializedInstanceReferenceNode(
-          selectMaterializedInstanceMergeSource(
-            existingNode,
-            hostBaselineNode,
-            mergeDecision,
-          ),
-          refNode,
-          mergeDecision,
-        );
-        continue;
-      }
-
-      if (existingNode) {
-        continue;
-      }
-      referenceKeyToIndex.set(occurrenceKey, referenceEntries.length);
-      referenceEntries.push(refNode);
-    }
-  }
-
-  return applyMaterializedHostVariantBaselines(referenceEntries, reference);
-}
-
-function rebaseReferenceSubtreeIds(
-  nodes: DSStructureNode[],
-  startId: number,
-): DSStructureNode[] {
-  if (!nodes.length) {
-    return nodes;
-  }
-
-  const idMap = new Map<number, number>();
-  let nextId = startId;
-
-  for (const node of nodes) {
-    idMap.set(node.id, nextId);
-    nextId += 1;
-  }
-
-  return nodes.map((node) =>
-    Object.assign({}, node, {
-      id: idMap.get(node.id) ?? node.id,
-      parentId:
-        typeof node.parentId === 'number'
-          ? (idMap.get(node.parentId) ?? null)
-          : null,
-    }),
-  );
-}
-
-function getRelativeReferenceOwnerPath(
-  ownerPath: string,
-  fullPath: string,
-): string | null {
-  if (fullPath === ownerPath) {
-    return '';
-  }
-
-  const prefix = `${ownerPath} / `;
-  if (!fullPath.startsWith(prefix)) {
-    return null;
-  }
-
-  return fullPath.slice(prefix.length);
-}
-
 function isPresetCandidate(item: AuditItem): boolean {
   if (item.nodeType !== 'INSTANCE') return false;
   if (!item.reference) return false;
@@ -3948,15 +1348,6 @@ function hasLockSymbol(component: LibraryComponent): boolean {
   return false;
 }
 
-function replacePathPrefix(path: string, from: string, to: string): string {
-  if (path === from) return to;
-  const needle = `${from} / `;
-  if (path.startsWith(needle)) {
-    return `${to} / ${path.slice(needle.length)}`;
-  }
-  return path;
-}
-
 function debugPaintMeDiffPipeline(payload: {
   componentName: string | null | undefined;
   alignedActualStructure: DSStructureNode[] | null;
@@ -3966,6 +1357,9 @@ function debugPaintMeDiffPipeline(payload: {
   allowlistedDiffs: ReturnType<typeof diffStructures>['diffs'];
   finalDiffs: ReturnType<typeof diffStructures>['diffs'];
 }) {
+  if (!isAuditTraceEnabled()) {
+    return;
+  }
   const componentName = payload.componentName ?? '';
   if (!componentName.includes('[D] Button')) {
     return;
@@ -3995,20 +1389,17 @@ function debugPaintMeDiffPipeline(payload: {
     const allowlistedDiffs = getDiffsForPath(payload.allowlistedDiffs, actualNode.path);
     const finalDiffs = getDiffsForPath(payload.finalDiffs, actualNode.path);
 
-    console.log(
-      '[Apollo][debug-json] paintme-diff-pipeline',
-      JSON.stringify({
-        componentName,
-        path: actualNode.path,
-        occurrenceKey,
-        actual: describeDebugPaintNode(actualNode),
-        reference: referenceNode ? describeDebugPaintNode(referenceNode) : null,
-        rawDiffs: rawDiffs.map(describeDebugDiff),
-        markedDiffs: markedDiffs.map(describeDebugDiff),
-        allowlistedDiffs: allowlistedDiffs.map(describeDebugDiff),
-        finalDiffs: finalDiffs.map(describeDebugDiff),
-      }),
-    );
+    traceAudit('paintme-diff-pipeline', {
+      componentName,
+      path: actualNode.path,
+      occurrenceKey,
+      actual: describeDebugPaintNode(actualNode),
+      reference: referenceNode ? describeDebugPaintNode(referenceNode) : null,
+      rawDiffs: rawDiffs.map(describeDebugDiff),
+      markedDiffs: markedDiffs.map(describeDebugDiff),
+      allowlistedDiffs: allowlistedDiffs.map(describeDebugDiff),
+      finalDiffs: finalDiffs.map(describeDebugDiff),
+    });
   }
 }
 

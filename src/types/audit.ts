@@ -6,6 +6,26 @@ export type RelevanceStatus = 'technical' | 'deprecated' | 'update' | 'current' 
 export type UpdateReason = 'catalog-lifecycle' | 'library-update-available';
 export type ThemeAuditKind = 'corporateComponent' | 'missingThemeMode';
 
+export type FindingActionKind =
+  | 'swap-component'
+  | 'apply-library-update'
+  | 'bind-style'
+  | 'bind-variable';
+
+export interface FindingActionSummary {
+  id: string;
+  kind: FindingActionKind;
+  label: string;
+  targetName: string;
+  targetLibrary?: string | null;
+  scope:
+    | 'wrongChannel'
+    | 'deprecated'
+    | 'update'
+    | 'deprecatedStyles'
+    | 'customStyles';
+}
+
 export interface PathSegment {
   id: string;
   label: string;
@@ -43,6 +63,7 @@ export interface AuditItem {
   forcedCategoryReason?: string | null;
   resolvedReferenceVariantKey?: string | null;
   resolvedReferenceVariantName?: string | null;
+  actions?: FindingActionSummary[];
 }
 
 export interface DetachedEntry {
@@ -66,6 +87,7 @@ export interface CustomStyleEntry {
   visible: boolean;
   reason: string;
   resource: AuditResource;
+  actions?: FindingActionSummary[];
 }
 
 export interface DeprecatedStyleEntry {
@@ -81,6 +103,7 @@ export interface DeprecatedStyleEntry {
   styleLabel: string;
   sourceFile: string;
   sourceLibrary?: string;
+  actions?: FindingActionSummary[];
 }
 
 export interface AuditResource {

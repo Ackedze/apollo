@@ -26,7 +26,10 @@ function loadReferenceList() {
 }
 
 function main() {
-  const { buildReferenceCatalogSources } = loadReferenceList();
+  const {
+    buildReferenceCatalogSources,
+    resolveRemediationConfigUrl,
+  } = loadReferenceList();
   const baseUrl = 'https://ackedze.github.io/design-system_ab/JSONS/';
   const explicit = buildReferenceCatalogSources({
     schemaVersion: 2,
@@ -50,6 +53,14 @@ function main() {
     explicit[0].indexUrl,
     `${baseUrl}indexes/web/components/Test.index.json`,
   );
+  assert.equal(
+    resolveRemediationConfigUrl({
+      baseUrl,
+      apollo: { remediationConfigPath: 'apollo/remediations.json' },
+    }),
+    `${baseUrl}apollo/remediations.json`,
+  );
+  assert.equal(resolveRemediationConfigUrl({ baseUrl, apollo: {} }), null);
   assert.throws(
     () =>
       buildReferenceCatalogSources({

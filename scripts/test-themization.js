@@ -1,6 +1,37 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
+const esbuild = require('esbuild');
+
+function loadCorporateActionModule() {
+  const outfile = path.join(
+    os.tmpdir(),
+    `apollo-corporate-component-action-${process.pid}-${Date.now()}.cjs`,
+  );
+  esbuild.buildSync({
+    entryPoints: [
+      path.resolve(__dirname, '../src/actions/corporateComponentAction.ts'),
+    ],
+    outfile,
+    bundle: true,
+    platform: 'node',
+    format: 'cjs',
+    target: ['node18'],
+    logLevel: 'silent',
+  });
+  try {
+    return require(outfile);
+  } finally {
+    fs.rmSync(outfile, { force: true });
+  }
+}
+
+const {
+  findBestCatalogVariantKey,
+  restoreCompatibleInstanceProperties,
+  snapshotInstanceComponentProperties,
+} = loadCorporateActionModule();
 
 const fixtures = JSON.parse(
   fs.readFileSync(
@@ -49,84 +80,6 @@ function normalizePlatform(platform, name) {
 
 function buildIndexKey(name, platform, kind) {
   return `${normalizeCorporateName(name)}::${normalizePlatform(platform, name)}::${kind}`;
-}
-
-function parseVariantName(name) {
-  const result = {};
-
-  for (const rawSegment of String(name ?? '').split(',')) {
-    const segment = rawSegment.trim();
-    if (!segment) {
-      continue;
-    }
-
-    const separatorIndex = segment.indexOf('=');
-    if (separatorIndex === -1) {
-      continue;
-    }
-
-    const key = segment.slice(0, separatorIndex).trim();
-    const value = segment.slice(separatorIndex + 1).trim();
-
-    if (!key || !value) {
-      continue;
-    }
-
-    result[key] = value;
-  }
-
-  return result;
-}
-
-function chooseBestVariantByName(variants, sourceVariantName, defaultVariantName) {
-  const sourceProperties = parseVariantName(sourceVariantName);
-  const defaultProperties = parseVariantName(defaultVariantName);
-  const sourceEntries = Object.entries(sourceProperties);
-
-  const exact = variants.find((variant) => variant.name === sourceVariantName);
-  if (exact) {
-    return exact;
-  }
-
-  const compatible = variants
-    .map((variant) => {
-      const targetProperties = parseVariantName(variant.name);
-
-      for (const [key, value] of sourceEntries) {
-        if (targetProperties[key] !== value) {
-          return null;
-        }
-      }
-
-      let nonDefaultExtraCount = 0;
-      let extraCount = 0;
-      for (const [key, value] of Object.entries(targetProperties)) {
-        if (key in sourceProperties) {
-          continue;
-        }
-
-        extraCount += 1;
-        if (defaultProperties[key] !== value) {
-          nonDefaultExtraCount += 1;
-        }
-      }
-
-      return {
-        variant,
-        nonDefaultExtraCount,
-        extraCount,
-      };
-    })
-    .filter(Boolean)
-    .sort((left, right) => {
-      if (left.nonDefaultExtraCount !== right.nonDefaultExtraCount) {
-        return left.nonDefaultExtraCount - right.nonDefaultExtraCount;
-      }
-
-      return left.extraCount - right.extraCount;
-    });
-
-  return compatible[0]?.variant ?? null;
 }
 
 function testPlatformAwareCounterparts() {
@@ -186,22 +139,23 @@ function testVariantResolution() {
 
   const sourceButtonVariant =
     'View=Accent, Size=72, Shape=Rectangular, SingleIcon=False, DisabledState=True';
-  const matchedButtonVariant = chooseBestVariantByName(
-    desktopBaseButton.variants,
+  const matchedButtonKey = findBestCatalogVariantKey(
+    desktopBaseButton,
     sourceButtonVariant,
-    desktopBaseButton.variants[0].name,
+  );
+  const matchedButtonVariant = desktopBaseButton.variants.find(
+    (variant) => variant.key === matchedButtonKey,
   );
   assert.equal(matchedButtonVariant?.name, sourceButtonVariant);
 
   const sourceTagVariant =
     'View=Filled, Size=56, Shape=Rectangular, SelectedState=True, DisabledState=False';
-  const defaultDesktopTagVariant = desktopBaseTag.variants.find(
-    (variant) => variant.key === desktopBaseTag.defaultVariant,
-  );
-  const matchedTagVariant = chooseBestVariantByName(
-    desktopBaseTag.variants,
+  const matchedTagKey = findBestCatalogVariantKey(
+    desktopBaseTag,
     sourceTagVariant,
-    defaultDesktopTagVariant?.name ?? desktopBaseTag.variants[0].name,
+  );
+  const matchedTagVariant = desktopBaseTag.variants.find(
+    (variant) => variant.key === matchedTagKey,
   );
   assert.equal(
     matchedTagVariant?.name,
@@ -214,9 +168,42 @@ function testVariantResolution() {
   assert.ok(sourceCorporateTagVariant, 'Desktop corporate Tag fixture variant is missing');
 }
 
+function testCompatiblePropertyRestoration() {
+  const sourceInstance = {
+    componentProperties: {
+      'Label#source': { type: 'TEXT', value: 'Оплатить' },
+      'Disabled#source': { type: 'BOOLEAN', value: true },
+      'View#source': { type: 'VARIANT', value: 'Accent' },
+    },
+  };
+  const sourceProperties = snapshotInstanceComponentProperties(sourceInstance);
+  const appliedUpdates = [];
+  const targetInstance = {
+    componentProperties: {
+      'Label#target': { type: 'TEXT', value: 'Button' },
+      'Disabled#target': { type: 'BOOLEAN', value: false },
+      'View#target': { type: 'VARIANT', value: 'Primary' },
+      'Icon#target': { type: 'INSTANCE_SWAP', value: 'icon-key' },
+    },
+    setProperties(updates) {
+      appliedUpdates.push(updates);
+    },
+  };
+
+  restoreCompatibleInstanceProperties(targetInstance, sourceProperties);
+  assert.deepEqual(appliedUpdates, [
+    {
+      'Label#target': 'Оплатить',
+      'Disabled#target': true,
+      'View#target': 'Accent',
+    },
+  ]);
+}
+
 function main() {
   testPlatformAwareCounterparts();
   testVariantResolution();
+  testCompatiblePropertyRestoration();
   console.log('Themization regression checks passed');
 }
 

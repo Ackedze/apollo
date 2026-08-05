@@ -32,6 +32,7 @@ export type RemoteReferenceCatalogList = {
     patternRulesPath?: string;
     componentContractIndexPath?: string;
     contractsManifestPath?: string;
+    remediationConfigPath?: string;
   };
   catalogs?: RemoteReferenceCatalogEntry[];
   libraries?: RemoteReferenceLibrary[];
@@ -55,6 +56,16 @@ export function resolveComponentContractIndexUrl(
     payload.apollo?.contractsManifestPath ??
     ''
   ).trim();
+  if (!path) {
+    return null;
+  }
+  return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
+
+export function resolveRemediationConfigUrl(
+  payload: RemoteReferenceCatalogList,
+): string | null {
+  const path = payload.apollo?.remediationConfigPath?.trim();
   if (!path) {
     return null;
   }

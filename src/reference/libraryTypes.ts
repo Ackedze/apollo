@@ -146,7 +146,19 @@ export type TokenCatalog = {
       groupName?: string;
       resolvedType?: string;
       variableCollectionId?: string;
+      hiddenFromPublishing?: boolean;
+      scopes?: string[];
       valuesByMode?: Record<string, any>;
+      actualValuesByMode?: Record<string, any[]>;
+      actualHexByMode?: Record<string, string[]>;
+      resolutionByMode?: Record<
+        string,
+        {
+          status?: 'resolved' | 'partial' | 'unresolved';
+          aliasIds?: string[];
+          unresolvedAliasIds?: string[];
+        }
+      >;
     }>;
   } | null>;
 };
@@ -157,6 +169,23 @@ export type StyleCatalog = {
     key?: string;
     name?: string;
     group?: string;
+    type?: string;
+    value?: {
+      kind?: string;
+      data?: {
+        paints?: Array<{
+          type?: string;
+          color?: string;
+          opacity?: number;
+          visible?: boolean;
+          blendMode?: string;
+        }>;
+        fontName?: string;
+        fontSize?: number;
+        lineHeight?: string | number;
+        letterSpacing?: string | number;
+      };
+    };
   } | null>;
 };
 

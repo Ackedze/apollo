@@ -1089,7 +1089,7 @@
 
           if (
             shouldUseAuditReactResults(tab.id) &&
-            renderCurrentReactResults(items)
+            renderCurrentReactResults(items, tab.id)
           ) {
             return;
           }
@@ -1173,6 +1173,40 @@
             },
             '*',
           );
+        }
+
+        function requestFindingAction(actionId) {
+          if (!actionId) return;
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'execute-finding-action',
+                payload: { actionId },
+              },
+            },
+            '*',
+          );
+        }
+
+        function mapFindingActions(actions, scope) {
+          if (!Array.isArray(actions)) return [];
+          return actions
+            .filter(
+              (action) =>
+                action &&
+                action.id &&
+                action.targetName &&
+                (!scope || action.scope === scope),
+            )
+            .map((action) => ({
+              id: action.id,
+              label: action.label || 'Применить',
+              targetName:
+                scope === 'customStyles' && action.targetLibrary
+                  ? action.targetName + ' · ' + action.targetLibrary
+                  : action.targetName,
+              onPress: () => requestFindingAction(action.id),
+            }));
         }
 
         function requestCustomizationReset(
@@ -1386,7 +1420,7 @@
           }
         }
 
-        function renderCurrentReactResults(items) {
+        function renderCurrentReactResults(items, actionScope) {
           if (!resultsBridge || !resultsBridgeMounted || !items.length) {
             return false;
           }
@@ -1397,6 +1431,7 @@
             focusId: item.focusNodeId || item.id,
             title: item.name ?? 'Без названия',
             caption: getAuditItemCaption(item) ?? undefined,
+            actions: mapFindingActions(item.actions, actionScope),
           }));
 
           try {
@@ -1421,6 +1456,7 @@
             id: entry.id,
             title: entry.name || entry.pageName || 'Слой',
             caption: formatCustomStyleReason(entry.reason || '') || undefined,
+            actions: mapFindingActions(entry.actions, 'customStyles'),
           }));
 
           try {
@@ -1450,6 +1486,7 @@
               id: usage.id,
               name: formatDeprecatedStyleReason(usage.reason || ''),
               onFocus: usage.id ? () => focusNodeById(usage.id) : undefined,
+              actions: mapFindingActions(usage.actions, 'deprecatedStyles'),
             })),
           }));
 
@@ -1921,6 +1958,9 @@
         function formatCustomStyleReason(reason) {
           if (reason.startsWith('effect:')) {
             return reason.split(':')[1];
+          }
+          if (reason === 'typography') {
+            return 'Типографика';
           }
           switch (reason) {
             case 'fill':

@@ -5,10 +5,15 @@ import {
   normalizePath,
   resolveComponentContractIndexUrl,
   resolvePatternRulesUrl,
+  resolveRemediationConfigUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
 import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
 import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
+import {
+  configureRemoteRemediationConfigSource,
+  ensureRemediationConfigLoaded,
+} from '../remediation/remediationConfig';
 import {
   appendCacheBustingQuery,
   fetchDirect,
@@ -26,6 +31,7 @@ import type {
   StyleCatalog,
   TokenCatalog,
 } from './libraryTypes';
+import type { ComponentChannelCounterpart } from '../remediation/types';
 import type {
   DSPadding,
   DSStructureNode,
@@ -40,6 +46,7 @@ import {
 } from '../utils/variantProperties';
 import { getTimestamp, logAuditMetric } from '../utils/auditInstrumentation';
 import { forEachWithConcurrency } from '../utils/promisePool';
+import { AsyncResourceLifecycle } from '../services/asyncResourceLifecycle';
 
 const COMPONENT_INDEX_PRELOAD_CONCURRENCY = 8;
 
@@ -55,40 +62,33 @@ const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
 const componentCatalogSourcesByPath = new Map<string, ReferenceCatalogSource>();
 const componentCatalogPathByKey = new Map<string, string>();
+const componentChannelCounterpartByKey = new Map<
+  string,
+  ComponentChannelCounterpart
+>();
 const loadedComponentCatalogPaths = new Set<string>();
 const componentCatalogLoadPromises = new Map<string, Promise<void>>();
 const failedComponentIndexSources = new Map<string, ReferenceCatalogSource>();
-let componentIndexesLoaded = false;
-let componentIndexLoadPromise: Promise<void> | null = null;
-let componentIndexRetryPromise: Promise<void> | null = null;
 const catalogCacheBust = Date.now();
-
-const catalogLoadState: {
-  ready: boolean;
-  promise: Promise<void> | null;
-} = {
-  ready: false,
-  promise: null,
-};
+const referenceCatalogLifecycle = new AsyncResourceLifecycle({
+  retryFailed: true,
+});
+const componentIndexLifecycle = new AsyncResourceLifecycle({
+  retryFailed: true,
+});
+const componentIndexRetryLifecycle = new AsyncResourceLifecycle({
+  retryFailed: true,
+});
 
 const missingReferenceLog = new Set<string>();
 const missingIndexLog = new Set<string>();
 
 export function areReferenceCatalogsReady(): boolean {
-  return catalogLoadState.ready;
+  return referenceCatalogLifecycle.isReady();
 }
 
 export async function ensureReferenceCatalogsLoaded(): Promise<void> {
-  if (catalogLoadState.ready) {
-    return;
-  }
-
-  if (!catalogLoadState.promise) {
-    catalogLoadState.promise = loadAllCatalogs().finally(() => {
-      catalogLoadState.promise = null;
-    });
-  }
-  return catalogLoadState.promise;
+  return referenceCatalogLifecycle.ensure(loadAllCatalogs);
 }
 
 async function loadAllCatalogs(): Promise<void> {
@@ -122,15 +122,11 @@ async function loadAllCatalogs(): Promise<void> {
   await loadStyleCatalogs(styleSources);
   const styleLoadDurationMs = getTimestamp() - styleLoadStartedAt;
 
-  componentIndexLoadPromise = loadComponentIndexes(componentSources)
+  void componentIndexLifecycle
+    .ensure(() => loadComponentIndexes(componentSources))
     .catch((error) => {
       console.warn('[Apollo] component index preload failed', error);
-    })
-    .finally(() => {
-      componentIndexLoadPromise = null;
     });
-
-  catalogLoadState.ready = true;
   logAuditMetric('reference-preload', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
     componentFetchMs: 0,
@@ -252,16 +248,10 @@ function resolveCatalogPathsForKeys(
 }
 
 async function ensureComponentIndexesLoaded(): Promise<void> {
-  if (componentIndexLoadPromise) {
-    await componentIndexLoadPromise;
-  } else if (!componentIndexesLoaded) {
+  await componentIndexLifecycle.ensure(async () => {
     const sources = await ensureCatalogSourceList();
-    componentIndexLoadPromise = loadComponentIndexes(sources.filter(isComponentCatalogSource))
-      .finally(() => {
-        componentIndexLoadPromise = null;
-      });
-    await componentIndexLoadPromise;
-  }
+    await loadComponentIndexes(sources.filter(isComponentCatalogSource));
+  });
 
   if (failedComponentIndexSources.size) {
     await retryFailedComponentIndexes();
@@ -275,23 +265,20 @@ async function ensureComponentIndexesLoaded(): Promise<void> {
 }
 
 async function retryFailedComponentIndexes(): Promise<void> {
-  if (componentIndexRetryPromise) {
-    return componentIndexRetryPromise;
-  }
-
   const failedSources = Array.from(failedComponentIndexSources.values());
   if (!failedSources.length) {
     return;
   }
 
-  componentIndexRetryPromise = loadComponentIndexes(failedSources, {
-    preserveExistingKeys: true,
-    resetFailureState: false,
-  }).finally(() => {
-    componentIndexRetryPromise = null;
-  });
-
-  return componentIndexRetryPromise;
+  if (!componentIndexRetryLifecycle.isLoading()) {
+    componentIndexRetryLifecycle.reset();
+  }
+  return componentIndexRetryLifecycle.ensure(() =>
+    loadComponentIndexes(failedSources, {
+      preserveExistingKeys: true,
+      resetFailureState: false,
+    }),
+  );
 }
 
 async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
@@ -311,7 +298,12 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       resolveComponentContractIndexUrl(payload),
       getReferenceCatalogBaseUrl(payload),
     );
+    const remediationConfigUrl = resolveRemediationConfigUrl(payload);
+    configureRemoteRemediationConfigSource(remediationConfigUrl ?? '');
     await loadPatternRulesConfig(patternRulesUrl);
+    if (remediationConfigUrl) {
+      await ensureRemediationConfigLoaded();
+    }
     const sources = buildReferenceCatalogSources(payload);
 
     console.log('[Apollo] reference sources list loaded', {
@@ -500,10 +492,34 @@ async function loadStyleCatalogs(
 
 type ComponentIndexPayload = {
   catalogPath?: string;
+  library?: string;
   components?: Array<{
     key?: string;
-    variants?: Array<{ key?: string | null } | null>;
+    name?: string;
+    variants?: Array<{
+      key?: string | null;
+      channelCounterparts?: {
+        desktop?: {
+          componentKey?: string;
+          componentName?: string;
+        };
+        mobileWeb?: {
+          componentKey?: string;
+          componentName?: string;
+        };
+      };
+    } | null>;
     catalogPath?: string;
+    channelCounterparts?: {
+      desktop?: {
+        componentKey?: string;
+        componentName?: string;
+      };
+      mobileWeb?: {
+        componentKey?: string;
+        componentName?: string;
+      };
+    };
   } | null>;
   entries?: Array<{
     key?: string;
@@ -518,16 +534,10 @@ async function loadComponentIndexes(
     resetFailureState?: boolean;
   },
 ): Promise<void> {
-  if (componentIndexesLoaded) {
-    if (!options?.preserveExistingKeys) {
-      return;
-    }
-  }
-
   const startedAt = getTimestamp();
-  componentIndexesLoaded = true;
   if (!options?.preserveExistingKeys) {
     componentCatalogPathByKey.clear();
+    componentChannelCounterpartByKey.clear();
   }
   if (options?.resetFailureState !== false) {
     failedComponentIndexSources.clear();
@@ -560,8 +570,17 @@ async function loadComponentIndexes(
           for (const component of payload.components) {
             const catalogPath = component?.catalogPath || fallbackCatalogPath;
             registerComponentIndexKey(component?.key, catalogPath);
+            registerComponentChannelCounterparts(
+              component,
+              payload.library ?? null,
+            );
             for (const variant of component?.variants ?? []) {
               registerComponentIndexKey(variant?.key, catalogPath);
+              registerChannelCounterpartsForKey(
+                variant?.key,
+                variant?.channelCounterparts,
+                payload.library ?? null,
+              );
             }
           }
         }
@@ -592,6 +611,106 @@ async function loadComponentIndexes(
     indexSources: indexSourceCount,
     concurrency: COMPONENT_INDEX_PRELOAD_CONCURRENCY,
   });
+}
+
+function registerComponentChannelCounterparts(
+  component: NonNullable<ComponentIndexPayload['components']>[number],
+  library: string | null,
+): void {
+  registerChannelCounterpartsForKey(
+    component?.key,
+    component?.channelCounterparts,
+    library,
+  );
+}
+
+function registerChannelCounterpartsForKey(
+  sourceKey: string | null | undefined,
+  counterparts:
+    | {
+        desktop?: { componentKey?: string; componentName?: string };
+        mobileWeb?: { componentKey?: string; componentName?: string };
+      }
+    | null
+    | undefined,
+  library: string | null,
+): void {
+  if (!sourceKey || !counterparts) return;
+  registerComponentChannelCounterpart(
+    sourceKey,
+    'Desktop',
+    counterparts.desktop,
+    library,
+  );
+  registerComponentChannelCounterpart(
+    sourceKey,
+    'Mobile Web',
+    counterparts.mobileWeb,
+    library,
+  );
+}
+
+function registerComponentChannelCounterpart(
+  sourceKey: string,
+  platform: 'Desktop' | 'Mobile Web',
+  target:
+    | { componentKey?: string; componentName?: string }
+    | null
+    | undefined,
+  library: string | null,
+): void {
+  const targetKey = String(target?.componentKey ?? '').trim();
+  if (!targetKey || targetKey === sourceKey) {
+    return;
+  }
+
+  const lookupKey = buildChannelCounterpartLookupKey(sourceKey, platform);
+  componentChannelCounterpartByKey.set(lookupKey, {
+    componentKey: targetKey,
+    componentName:
+      String(target?.componentName ?? '').trim() || targetKey,
+    platform,
+    library,
+  });
+}
+
+function buildChannelCounterpartLookupKey(
+  componentKey: string,
+  platform: 'Desktop' | 'Mobile Web',
+): string {
+  return `${componentKey}:${platform}`;
+}
+
+export function getChannelCounterpart(
+  componentKey: string | null | undefined,
+  targetPlatform: 'Desktop' | 'Mobile Web',
+): ComponentChannelCounterpart | null {
+  if (!componentKey) {
+    return null;
+  }
+  return (
+    componentChannelCounterpartByKey.get(
+      buildChannelCounterpartLookupKey(componentKey, targetPlatform),
+    ) ?? null
+  );
+}
+
+export function __test_resetChannelCounterparts(): void {
+  componentChannelCounterpartByKey.clear();
+}
+
+export function __test_registerChannelCounterparts(
+  component: NonNullable<ComponentIndexPayload['components']>[number],
+  library: string | null,
+): void {
+  registerComponentChannelCounterparts(component, library);
+  for (const variant of component?.variants ?? []) {
+    registerChannelCounterpartsForKey(
+      variant?.key,
+      variant?.channelCounterparts,
+      library,
+    );
+  }
 }
 
 function registerComponentIndexKey(

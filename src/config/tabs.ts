@@ -79,8 +79,8 @@ export const tabDefinitions: TabDefinition[] = [
   },
   {
     id: 'customStyles',
-    title: 'Кастомные стили',
-    emptyMessage: 'Кастомных стилей не найдено',
+    title: 'Кастомные стили и токены',
+    emptyMessage: 'Кастомных стилей и токенов не найдено',
     ignoreComponentFilter: true,
   },
 ];

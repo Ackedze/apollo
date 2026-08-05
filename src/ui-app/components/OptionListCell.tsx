@@ -13,6 +13,7 @@ type OptionListCellProps = {
   disabled?: boolean;
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
+  showLeadingIcon?: boolean;
   className?: string;
   onPress?: () => void;
 };
@@ -24,6 +25,7 @@ export function OptionListCell({
   disabled = false,
   leadingIcon,
   trailingIcon,
+  showLeadingIcon = true,
   className,
   onPress,
 }: OptionListCellProps): React.JSX.Element {
@@ -46,7 +48,7 @@ export function OptionListCell({
       aria-selected={selected}
       onClick={onPress}
     >
-      <IconSlot size={16}>{leftAddon}</IconSlot>
+      {showLeadingIcon ? <IconSlot size={16}>{leftAddon}</IconSlot> : null}
       <span className={styles.labelWrap}>
         <span className={styles.label}>{label}</span>
       </span>

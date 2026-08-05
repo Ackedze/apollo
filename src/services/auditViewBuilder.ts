@@ -9,10 +9,15 @@ import type {
   DetachedEntry,
   PathSegment,
 } from '../types/audit';
-import type { StyleMetadataEntry } from './styleMetadata';
+import {
+  getNodeTypographyDisplayValue,
+  getNodeTypographyFingerprint,
+  type StyleMetadataEntry,
+} from './styleMetadata';
 import {
   applyCustomStyleFilters,
   shouldIgnorePaintCustomStyle,
+  shouldIgnoreTypographyCustomStyle,
 } from '../filters/customStyleFilters';
 import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
 import {
@@ -105,6 +110,15 @@ async function resolveCustomStyleResource(
     return {
       type: 'raw-value',
       name: reason.slice('effect:'.length) || 'Raw effect',
+      key: null,
+      library: null,
+    };
+  }
+
+  if (reason === 'typography' && node.type === 'TEXT') {
+    return {
+      type: 'raw-value',
+      name: getNodeTypographyDisplayValue(node) ?? 'Типографика',
       key: null,
       library: null,
     };
@@ -297,7 +311,52 @@ export async function describeCustomStyleReasons(
   }
   const effectReasons = await describeCustomEffects(node, options);
   reasons.push(...effectReasons);
+  const typographyReasons = await describeCustomTypography(node, options);
+  reasons.push(...typographyReasons);
   return reasons;
+}
+
+async function describeCustomTypography(
+  node: SceneNode,
+  options: CustomStyleCollectionOptions,
+): Promise<string[]> {
+  if (
+    node.type !== 'TEXT' ||
+    (await shouldIgnoreTypographyCustomStyle(node)) ||
+    (await hasKnownTextStyle(node, options))
+  ) {
+    return [];
+  }
+  return getNodeTypographyFingerprint(node) ? ['typography'] : [];
+}
+
+async function hasKnownTextStyle(
+  node: TextNode,
+  options: CustomStyleCollectionOptions,
+): Promise<boolean> {
+  if (
+    typeof node.textStyleId === 'string' &&
+    node.textStyleId &&
+    (await options.isKnownStyleId(node.textStyleId))
+  ) {
+    return true;
+  }
+  if (typeof node.getStyledTextSegments !== 'function') {
+    return false;
+  }
+  const styleIds = Array.from(
+    new Set(
+      node
+        .getStyledTextSegments(['textStyleId'])
+        .map((segment) => segment.textStyleId)
+        .filter((styleId): styleId is string => Boolean(styleId)),
+    ),
+  );
+  if (!styleIds.length) return false;
+  const known = await Promise.all(
+    styleIds.map((styleId) => options.isKnownStyleId(styleId)),
+  );
+  return known.every(Boolean);
 }
 
 async function describeCustomEffects(

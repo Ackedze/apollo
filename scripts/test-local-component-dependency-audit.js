@@ -50,6 +50,7 @@ function instance(id, mainComponent, children = []) {
 
 async function main() {
   const {
+    auditLocalComponentDependencies,
     extractInstanceSublayerSourceNodeIds,
     resolveLocalComponentDefinition,
     walkLocalComponentDependencies,
@@ -166,6 +167,77 @@ async function main() {
     visitedSourceNodes: 5,
     remoteDependencies: 2,
   });
+
+  const freshnessStats = {
+    checks: 0,
+    importCacheHits: 0,
+    importCacheMisses: 0,
+  };
+  const orchestrationResult = await auditLocalComponentDependencies(
+    [localRoot],
+    [],
+    [],
+    {
+      getNodeId: (node) => node.id,
+      getNodeType: (node) => node.type,
+      getChildren: (node) => node.children || [],
+      getMainComponent: (node) => node.getMainComponentAsync(),
+      isRemoteComponent: (node) => node.remote,
+      isVisible: (node) => node.visible !== false,
+      componentFocusNodeIds: new Map([
+        ['local-root', new Set(['rendered-local-root'])],
+        ['nested-local', new Set(['rendered-nested-local'])],
+      ]),
+      getComponentIdentity: (node) => node.id,
+      classifyDependency: async (
+        node,
+        owner,
+        focusNodeIds,
+        observedComponentKeys,
+      ) => {
+        const mainComponent = await node.getMainComponentAsync();
+        observedComponentKeys.add(mainComponent.id);
+        return {
+          id: node.id,
+          name: node.name,
+          nodeType: node.type,
+          pageName: 'Page',
+          pathSegments: [],
+          fullPath: `Page/${node.name}`,
+          relevance: 'update',
+          librarySource: 'Library',
+          isLocal: false,
+          reference: null,
+          componentKey: mainComponent.id,
+          diffs: [],
+          updateReasons: ['library-update-available'],
+          focusNodeId: focusNodeIds[0] || owner.id,
+          sourceOwnerOccurrenceIds: focusNodeIds,
+        };
+      },
+      shouldExclude: (item) => item.id === 'nested-source-cell',
+      freshnessChecker: {
+        check: async () => {
+          throw new Error('not used by orchestration fixture');
+        },
+        getStats: () => freshnessStats,
+      },
+      dependencyConcurrency: 2,
+      throwIfCancelled: () => {},
+    },
+  );
+
+  assert.equal(orchestrationResult.updateItems.length, 1);
+  assert.equal(orchestrationResult.updateItems[0].id, 'source-cell');
+  assert.equal(
+    orchestrationResult.updateItems[0].focusNodeId,
+    'rendered-local-root',
+  );
+  assert.deepEqual(
+    orchestrationResult.updateItems[0].sourceOwnerOccurrenceIds,
+    ['rendered-local-root'],
+  );
+  assert.equal(orchestrationResult.walkStats.remoteDependencies, 2);
 
   console.log('Local component dependency audit regression checks passed');
 }

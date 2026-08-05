@@ -99,8 +99,10 @@ function bindPaints(
     if (paint.type !== 'SOLID') {
       throw new Error('Only solid paints can receive a color variable');
     }
+    // The matched variable already contains the paint alpha. Resetting the
+    // detached paint opacity prevents the same transparency being applied twice.
     return figma.variables.setBoundVariableForPaint(
-      paint,
+      Object.assign({}, paint, { opacity: 1 }),
       'color',
       variable,
     );

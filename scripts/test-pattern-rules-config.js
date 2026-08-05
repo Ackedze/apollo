@@ -63,7 +63,7 @@ function main() {
   if (fs.existsSync(workspaceConfigPath)) {
     const workspace = setPatternRulesConfig(readJson(workspaceConfigPath));
     assert.equal(workspace.schemaVersion, 1);
-    assert.ok(Array.isArray(workspace.rules));
+    assert.ok(workspace.rules.length > 0);
   }
 
   assert.throws(

@@ -66,6 +66,7 @@ async function main() {
     ['bind', 'color', variable.key],
   ]);
   assert.equal(node.fills[0].boundVariables.color.id, variable.key);
+  assert.equal(node.fills[0].opacity, 1);
 
   const mixed = Symbol('mixed');
   const rangeCalls = [];
@@ -101,6 +102,7 @@ async function main() {
     rangeCalls[0][2][0].boundVariables.color.id,
     variable.key,
   );
+  assert.equal(rangeCalls[0][2][0].opacity, 1);
   delete globalThis.figma;
   console.log('Variable binding action regression checks passed');
 }

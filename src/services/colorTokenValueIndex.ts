@@ -157,7 +157,7 @@ function getUniformPaintColorKey(
   const keys = new Set<string>();
   for (const paint of paints) {
     if (!paint || paint.visible === false || paint.type !== 'SOLID') return null;
-    keys.add(buildColorKey(paint.color));
+    keys.add(buildColorKey(paint.color, paint.opacity ?? 1));
   }
   return keys.size === 1 ? Array.from(keys)[0] : null;
 }
@@ -171,11 +171,14 @@ function getCatalogColorKey(value: any): string | null {
   ) {
     return null;
   }
-  return buildColorKey(value);
+  return buildColorKey(value, typeof value.a === 'number' ? value.a : 1);
 }
 
-function buildColorKey(color: { r: number; g: number; b: number }): string {
-  return [color.r, color.g, color.b]
+function buildColorKey(
+  color: { r: number; g: number; b: number },
+  opacity: number,
+): string {
+  return [color.r, color.g, color.b, opacity]
     .map((value) => Number(value.toFixed(4)).toString())
     .join(':');
 }

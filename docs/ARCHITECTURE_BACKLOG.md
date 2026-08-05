@@ -33,6 +33,14 @@
 - [ ] Extend typography remediation with component-reference priority and deliberate mixed rich-text range selection; keep non-uniform rich text fail-closed.
 - [ ] Field-verify override preservation, local-owner dependency updates and stale-action rejection in Figma.
 
+## P0: deterministic rule safety
+
+- [ ] Reject or explicitly mark as `unsupported` every `checkType=deterministic` rule whose selector, condition or assertion is unknown to the Apollo runtime; never ignore unknown fields and continue with a broader match.
+- [ ] Prevent an unsupported `ruleKind=design-rule` from promoting an atomic customization diff to `violation`.
+- [ ] Define one versioned executable-rule schema shared by Athena and Apollo, with strict selectors, `when` predicates, assertions, evidence requirements and remediation metadata.
+- [ ] Make Athena publish a deterministic-rule coverage report with `executable | unsupported | manual | llm` status and block enforcement for invalid executable rules after the migration window.
+- [ ] Add release fixtures for conditional variants, structure/count/order rules, token binding, layout constraints and unsupported-rule fail-closed behavior.
+
 ## P1: module boundaries
 
 - [x] Split audit orchestration, Figma traversal and action handlers out of `src/code.ts`.
@@ -52,9 +60,21 @@
 - [x] Introduce one explicit lifecycle state machine for reference and contract caches.
 - [x] Add release-fixture integration tests covering manifest, indexes and contract packages as one snapshot.
 
+## P1: deterministic rule engine
+
+- [ ] Generalize the remote `patternRules` evaluator into one contract rule engine instead of adding component-specific runtime branches.
+- [ ] Support stable selectors by component key, semantic role, ancestry/path pattern, node type and occurrence.
+- [ ] Support scalar predicates `equals`, `notEquals`, `oneOf`, `exists`, `matches`, `between`, `boundToToken`, `componentIs` and `visible`.
+- [ ] Support relational predicates for descendant/sibling count, order, required or forbidden children and host-to-nested variant dependencies.
+- [ ] Compile executable checks from `rules.json`, `composition-contract.json` and the enforceable ownership portion of `contract.overrides.json`; keep generated `wraps` as evidence rather than treating every observed wrap as a global rule.
+- [ ] Migrate and regression-test the highest-value packages first: Button, ButtonGroup, BackgroundPlate, TitleView, CardImage and FAQ.
+- [ ] Emit deterministic findings through the existing `CustomizationAssessment` model with explicit `expected | allowed | violation | unknown` verdicts and stale-safe remediation actions.
+
 ## P2: maintenance
 
-- [ ] Generate shared runtime/publisher schema fixtures from one versioned contract definition.
+- [ ] Extend the audit snapshot with non-variant component properties, prototype reactions and explicit page/frame/viewport context required by deterministic rules.
+- [ ] Generate runtime/publisher schema fixtures from the shared executable-rule definition and verify backward-compatible migrations.
+- [ ] Re-author free-text-only deterministic rules as executable predicates or downgrade them to `manual`/`llm`; never infer executable semantics from `ruleText`.
 - [ ] Add bundle-size and module-size budgets to CI.
 - [ ] Remove compatibility fields from contract packages after all published indexes use schema v2.
 

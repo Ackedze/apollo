@@ -58,6 +58,13 @@ const catalogs = [
             scopes: ['ALL_SCOPES'],
             valuesByMode: { value: { r: 1, g: 0, b: 0, a: 1 } },
           },
+          {
+            key: 'translucent-red',
+            name: 'translucent/red',
+            resolvedType: 'COLOR',
+            scopes: ['ALL_SCOPES'],
+            valuesByMode: { value: { r: 1, g: 0, b: 0, a: 0.4 } },
+          },
         ],
       },
     ],
@@ -66,10 +73,17 @@ const catalogs = [
 
 const index = __test_buildColorTokenValueIndex(catalogs);
 assert.deepEqual(
-  index.get('1:0:0').map((entry) => entry.key),
+  index.get('1:0:0:1').map((entry) => entry.key),
   ['text-primary', 'legacy-direct'],
 );
-assert.equal(index.get('1:0:0').some((entry) => entry.key === 'hidden-primitive'), false);
+assert.deepEqual(
+  index.get('1:0:0:0.4').map((entry) => entry.key),
+  ['translucent-red'],
+);
+assert.equal(
+  index.get('1:0:0:1').some((entry) => entry.key === 'hidden-primitive'),
+  false,
+);
 
 const node = {
   type: 'RECTANGLE',
@@ -82,7 +96,13 @@ const node = {
     },
   ],
 };
-assert.equal(__test_getNodeUniformColorKey(node, 'fill'), '1:0:0');
+assert.equal(__test_getNodeUniformColorKey(node, 'fill'), '1:0:0:0.4');
+
+const opaqueNode = {
+  ...node,
+  fills: [{ ...node.fills[0], opacity: 1 }],
+};
+assert.equal(__test_getNodeUniformColorKey(opaqueNode, 'fill'), '1:0:0:1');
 
 const mixedTextNode = {
   type: 'TEXT',
@@ -92,6 +112,9 @@ const mixedTextNode = {
     { fills: node.fills },
   ],
 };
-assert.equal(__test_getNodeUniformColorKey(mixedTextNode, 'fill'), '1:0:0');
+assert.equal(
+  __test_getNodeUniformColorKey(mixedTextNode, 'fill'),
+  '1:0:0:0.4',
+);
 
 console.log('Color token value index regression checks passed');

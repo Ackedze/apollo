@@ -3,6 +3,7 @@ import {
   buildReferenceCatalogSources,
   getReferenceCatalogBaseUrl,
   normalizePath,
+  resolveAuditPolicyConfigUrl,
   resolveComponentContractIndexUrl,
   resolvePatternRulesUrl,
   resolveRemediationConfigUrl,
@@ -14,6 +15,10 @@ import {
   configureRemoteRemediationConfigSource,
   ensureRemediationConfigLoaded,
 } from '../remediation/remediationConfig';
+import {
+  configureRemoteAuditPolicySource,
+  ensureAuditPolicyConfigLoaded,
+} from '../policies/auditPolicyConfig';
 import {
   appendCacheBustingQuery,
   fetchDirect,
@@ -300,9 +305,14 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     );
     const remediationConfigUrl = resolveRemediationConfigUrl(payload);
     configureRemoteRemediationConfigSource(remediationConfigUrl ?? '');
+    const auditPolicyConfigUrl = resolveAuditPolicyConfigUrl(payload);
+    configureRemoteAuditPolicySource(auditPolicyConfigUrl ?? '');
     await loadPatternRulesConfig(patternRulesUrl);
     if (remediationConfigUrl) {
       await ensureRemediationConfigLoaded();
+    }
+    if (auditPolicyConfigUrl) {
+      await ensureAuditPolicyConfigLoaded();
     }
     const sources = buildReferenceCatalogSources(payload);
 
@@ -310,6 +320,7 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       url: apolloReferenceCatalogListUrl,
       baseUrl: payload?.baseUrl ?? '',
       patternRulesUrl,
+      auditPolicyConfigUrl,
       count: sources.length,
     });
 

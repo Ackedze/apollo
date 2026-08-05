@@ -28,7 +28,8 @@
 - [ ] Republish component catalogs with Athena so existing indexes receive Desktop/MobileWeb counterpart metadata.
 - [ ] Extend exact custom style binding to effect styles and mixed text ranges after canonical multi-value style serialization is published.
 - [x] Add typography style remediation MVP: emit one finding for a uniform unbound text layer, resolve published text styles by `fontSize + fontName.style + lineHeight + numbers style`, show an explicit candidate picker, revalidate the fingerprint, assign the style through the full text range, preserve explicit non-default `textCase`/`textDecoration` overrides and then rerun the audit.
-- [x] Exempt unbound typography inside the canonical Web Core `Status` component by stable component key because its nested Label variant intentionally owns uppercase behavior.
+- [x] Load scoped raw-typography exceptions from remote `apollo/auditPolicies.json`; cover canonical Web Core `Status` by stable component keys and a strict collapsed-sublayer ancestry path.
+- [ ] Field-verify that `Status / 🔩 Label / Label` is absent from custom typography findings after remote policy publication.
 - [ ] Extend typography remediation with component-reference priority and deliberate mixed rich-text range selection; keep non-uniform rich text fail-closed.
 - [ ] Field-verify override preservation, local-owner dependency updates and stale-action rejection in Figma.
 

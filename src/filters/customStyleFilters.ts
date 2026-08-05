@@ -1,5 +1,6 @@
 import type { CustomStyleEntry } from '../types/audit';
 import { findComponent } from '../reference/library';
+import { shouldIgnoreRawTypography } from '../policies/auditPolicyConfig';
 import { clampColorComponent } from '../utils/nodeHelpers';
 
 type CustomStyleFilterRule = {
@@ -12,12 +13,6 @@ const GLYPH_TECHNICAL_FILL_HEXES = new Set(['#747474']);
 // Technical fill color from JSONS/web/components/web-core/core/Web _ Core -- IconView.json.
 const ICON_VIEW_BGCOLOR_TECHNICAL_FILL_HEXES = new Set(['#F2F3F5']);
 const PAINT_IGNORED_LIBRARY_SOURCES = new Set(['Icons', 'Logotypes']);
-const TYPOGRAPHY_IGNORED_COMPONENT_KEYS = new Set([
-  // Web _ Core / Status controls Uppercase through its nested Label variant.
-  '349af184bee87341370ef007d5e8189c51bd31ff',
-  // Figma can expose only the nested component boundary for instance sublayers.
-  'a0c6e37a61cd5c5f5db767a5dfef09a9b6d2ece7',
-]);
 const paintLibraryIgnoreCache = new Map<string, Promise<boolean>>();
 const typographyIgnoreCache = new WeakMap<BaseNode, Promise<boolean>>();
 
@@ -125,46 +120,22 @@ async function resolveIgnoredPaintBoundary(node: SceneNode): Promise<boolean> {
 async function resolveIgnoredTypographyBoundary(
   node: SceneNode,
 ): Promise<boolean> {
-  if (hasStatusLabelTypographyBoundary(node)) {
-    return true;
-  }
-
-  let current: BaseNode | null = node.parent;
-
-  while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
-    const componentKey = await getNodeComponentKey(current);
-    if (
-      componentKey &&
-      TYPOGRAPHY_IGNORED_COMPONENT_KEYS.has(componentKey)
-    ) {
-      return true;
-    }
-    current = current.parent ?? null;
-  }
-
-  return false;
-}
-
-function hasStatusLabelTypographyBoundary(node: SceneNode): boolean {
-  if (node.type !== 'TEXT' || node.name !== 'Label') {
-    return false;
-  }
-
   const ancestorNames: string[] = [];
+  const componentKeys: string[] = [];
   let current: BaseNode | null = node.parent;
+
   while (current && current.type !== 'PAGE' && current.type !== 'DOCUMENT') {
     ancestorNames.push(current.name);
+    const componentKey = await getNodeComponentKey(current);
+    if (componentKey) componentKeys.push(componentKey);
     current = current.parent ?? null;
   }
 
-  const labelBoundaryIndex = ancestorNames.indexOf('🔩 Label');
-  if (labelBoundaryIndex < 0) {
-    return false;
-  }
-
-  return ancestorNames
-    .slice(labelBoundaryIndex + 1)
-    .some((name) => name === 'Status');
+  return shouldIgnoreRawTypography({
+    componentKeys,
+    nodeName: node.name,
+    ancestorNames,
+  });
 }
 
 async function getNodeComponentKey(node: BaseNode): Promise<string | null> {

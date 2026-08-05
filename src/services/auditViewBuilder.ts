@@ -20,6 +20,7 @@ import {
   shouldIgnoreTypographyCustomStyle,
 } from '../filters/customStyleFilters';
 import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
+export { __test_setAuditPolicyConfig } from '../policies/auditPolicyConfig';
 import {
   buildNodePath,
   extractAliasKey,

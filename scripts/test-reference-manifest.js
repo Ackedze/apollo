@@ -28,6 +28,7 @@ function loadReferenceList() {
 function main() {
   const {
     buildReferenceCatalogSources,
+    resolveAuditPolicyConfigUrl,
     resolveRemediationConfigUrl,
   } = loadReferenceList();
   const baseUrl = 'https://ackedze.github.io/design-system_ab/JSONS/';
@@ -61,6 +62,14 @@ function main() {
     `${baseUrl}apollo/remediations.json`,
   );
   assert.equal(resolveRemediationConfigUrl({ baseUrl, apollo: {} }), null);
+  assert.equal(
+    resolveAuditPolicyConfigUrl({
+      baseUrl,
+      apollo: { auditPolicyConfigPath: 'apollo/auditPolicies.json' },
+    }),
+    `${baseUrl}apollo/auditPolicies.json`,
+  );
+  assert.equal(resolveAuditPolicyConfigUrl({ baseUrl, apollo: {} }), null);
   assert.throws(
     () =>
       buildReferenceCatalogSources({

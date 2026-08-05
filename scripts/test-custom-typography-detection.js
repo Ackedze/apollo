@@ -17,7 +17,10 @@ esbuild.buildSync({
   target: ['node18'],
   logLevel: 'silent',
 });
-const { describeCustomStyleReasons } = require(outfile);
+const {
+  __test_setAuditPolicyConfig,
+  describeCustomStyleReasons,
+} = require(outfile);
 fs.rmSync(outfile, { force: true });
 
 const mixed = Symbol('mixed');
@@ -61,6 +64,23 @@ const options = {
 };
 
 async function main() {
+  __test_setAuditPolicyConfig({
+    schemaVersion: 1,
+    rawTypography: {
+      rules: [
+        {
+          id: 'web-core.status-label-uppercase',
+          componentKeys: [
+            '349af184bee87341370ef007d5e8189c51bd31ff',
+            'a0c6e37a61cd5c5f5db767a5dfef09a9b6d2ece7',
+          ],
+          nodeName: 'Label',
+          ancestorPath: ['Status', '🔩 Label'],
+          reasonCode: 'variant-owned-text-case',
+        },
+      ],
+    },
+  });
   const reasons = await describeCustomStyleReasons(createTextNode(), options);
   assert.deepEqual(reasons, ['typography']);
 

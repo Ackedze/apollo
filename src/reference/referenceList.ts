@@ -33,6 +33,7 @@ export type RemoteReferenceCatalogList = {
     componentContractIndexPath?: string;
     contractsManifestPath?: string;
     remediationConfigPath?: string;
+    auditPolicyConfigPath?: string;
   };
   catalogs?: RemoteReferenceCatalogEntry[];
   libraries?: RemoteReferenceLibrary[];
@@ -69,6 +70,14 @@ export function resolveRemediationConfigUrl(
   if (!path) {
     return null;
   }
+  return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
+
+export function resolveAuditPolicyConfigUrl(
+  payload: RemoteReferenceCatalogList,
+): string | null {
+  const path = payload.apollo?.auditPolicyConfigPath?.trim();
+  if (!path) return null;
   return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
 }
 

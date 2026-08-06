@@ -237,6 +237,7 @@ function buildContext(
       nodePath: root.path,
       componentKey: options.hostComponentKey,
       componentName: options.hostComponentName,
+      variantProperties: root.componentInstance?.variantProperties ?? {},
     },
     members,
   };

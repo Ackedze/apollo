@@ -4,6 +4,8 @@ import type {
   CompositionConstraintEvaluator,
   CompositionContractContext,
   CountBetweenConstraint,
+  PropertyEqualsFirstConstraint,
+  PropertyEqualsHostConstraint,
   PropertyDomainConstraint,
   ValuePositionConstraint,
 } from './compositionContractTypes';
@@ -152,10 +154,80 @@ const evaluateValuePosition: CompositionConstraintEvaluator<ValuePositionConstra
   return decisions;
 };
 
+const evaluatePropertyEqualsHost: CompositionConstraintEvaluator<PropertyEqualsHostConstraint> = (
+  constraint,
+  context,
+) => {
+  const hostProperty = constraint.hostProperty ?? constraint.property;
+  const expected = context.host.variantProperties[hostProperty];
+  if (!expected) {
+    return [];
+  }
+  return context.members.flatMap((member) => {
+    const actual = member.variantProperties[constraint.property];
+    if (!actual || actual === expected) {
+      return [];
+    }
+    return [propertyDecision({
+      verdict: 'violation',
+      context,
+      constraint,
+      member,
+      expected,
+      actual,
+      remediationValue: expected,
+      evidence: {
+        hostProperty,
+        hostValue: expected,
+        memberProperty: constraint.property,
+      },
+    })];
+  });
+};
+
+const evaluatePropertyEqualsFirst: CompositionConstraintEvaluator<PropertyEqualsFirstConstraint> = (
+  constraint,
+  context,
+) => {
+  const source = context.members.find(
+    (member) => Boolean(member.variantProperties[constraint.property]),
+  );
+  const expected = source?.variantProperties[constraint.property];
+  if (!source || !expected) {
+    return [];
+  }
+  return context.members.flatMap((member) => {
+    if (member.nodeId === source.nodeId) {
+      return [];
+    }
+    const actual = member.variantProperties[constraint.property];
+    if (!actual || actual === expected) {
+      return [];
+    }
+    return [propertyDecision({
+      verdict: 'violation',
+      context,
+      constraint,
+      member,
+      expected,
+      actual,
+      remediationValue: expected,
+      evidence: {
+        sourceNodeId: source.nodeId,
+        sourceNodeName: source.nodeName,
+        sourceValue: expected,
+        property: constraint.property,
+      },
+    })];
+  });
+};
+
 const evaluators = {
   countBetween: evaluateCountBetween,
   propertyDomain: evaluatePropertyDomain,
   valuePosition: evaluateValuePosition,
+  propertyEqualsHost: evaluatePropertyEqualsHost,
+  propertyEqualsFirst: evaluatePropertyEqualsFirst,
 };
 
 export function evaluateCompositionConstraint(
@@ -169,7 +241,11 @@ export function evaluateCompositionConstraint(
 function propertyDecision(options: {
   verdict: 'expected' | 'violation';
   context: CompositionContractContext;
-  constraint: PropertyDomainConstraint | ValuePositionConstraint;
+  constraint:
+    | PropertyDomainConstraint
+    | ValuePositionConstraint
+    | PropertyEqualsHostConstraint
+    | PropertyEqualsFirstConstraint;
   member: CompositionContractContext['members'][number];
   expected: string | null;
   actual: string;

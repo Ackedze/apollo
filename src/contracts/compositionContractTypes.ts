@@ -34,10 +34,27 @@ export type ValuePositionConstraint = {
   message: string;
 };
 
+export type PropertyEqualsHostConstraint = {
+  id: string;
+  op: 'propertyEqualsHost';
+  property: string;
+  hostProperty?: string;
+  message: string;
+};
+
+export type PropertyEqualsFirstConstraint = {
+  id: string;
+  op: 'propertyEqualsFirst';
+  property: string;
+  message: string;
+};
+
 export type CompositionConstraint =
   | CountBetweenConstraint
   | PropertyDomainConstraint
-  | ValuePositionConstraint;
+  | ValuePositionConstraint
+  | PropertyEqualsHostConstraint
+  | PropertyEqualsFirstConstraint;
 
 export type SubtreePropertyPolicy = {
   id: string;
@@ -86,6 +103,7 @@ export type CompositionContractContext = {
     nodePath: string;
     componentKey: string | null;
     componentName: string | null;
+    variantProperties: Record<string, string>;
   };
   members: CompositionContractMember[];
 };

@@ -37,7 +37,7 @@ function node(id, overrides = {}) {
     radius: null,
     componentInstance: {
       componentKey: id === 1 ? 'buttons-group-key' : 'button-key',
-      variantProperties: {},
+      variantProperties: id === 1 ? {Size: '56'} : {},
     },
     ...overrides,
   };
@@ -54,6 +54,7 @@ function structure(values) {
           variantProperties: {
             View: value.View,
             SingleIcon: value.SingleIcon ?? 'False',
+            ...(value.Size ? {Size: value.Size} : {}),
           },
         },
       }),
@@ -106,7 +107,7 @@ function main() {
     ['TitleView', '[D] TitleView', '[M] TitleView'],
   );
   assert.ok(titleViewComposition);
-  assert.equal(titleViewComposition.contract.contracts.length, 4);
+  assert.equal(titleViewComposition.contract.contracts.length, 5);
   const backgroundPlateContractPath = path.resolve(
     __dirname,
     '../../../shared/design-system_ab/JSONS/web/components/web-corp/BackgroundPlate/composition-contract.json',
@@ -191,6 +192,30 @@ function main() {
   );
   assert.equal(invalidViewDiff.assessment.verdict, 'violation');
   assert.equal(invalidViewDiff.assessment.remediation, null);
+
+  const mismatchedSize = audit(structure([
+    {View: 'Primary', Size: '56'},
+    {View: 'Secondary', Size: '48'},
+  ]));
+  const sizeDiff = mismatchedSize.diffs.find(
+    (diff) => diff.nodeId === 'node-3' && diff.details?.property === 'variant.Size',
+  );
+  assert.equal(sizeDiff.assessment.constraintId, 'uniform-size');
+  assert.equal(sizeDiff.assessment.verdict, 'violation');
+  assert.equal(sizeDiff.details.reference.value, '56');
+  assert.equal(sizeDiff.details.actual.value, '48');
+  assert.deepEqual(sizeDiff.assessment.remediation.properties, {Size: '56'});
+
+  const missingSizeEvidence = audit(structure([
+    {View: 'Primary'},
+    {View: 'Secondary'},
+  ]));
+  assert.equal(
+    missingSizeEvidence.diffs.some(
+      (diff) => diff.assessment?.constraintId === 'uniform-size',
+    ),
+    false,
+  );
 
   const misplacedPrimary = audit(structure([
     {View: 'Secondary'},
@@ -405,7 +430,7 @@ function main() {
   const titleViewStructure = (size, buttons = [
     {View: 'Primary', SingleIcon: 'False', Size: '56'},
     {View: 'Secondary', SingleIcon: 'False', Size: '56'},
-  ]) => [
+  ], titleStatusType = null) => [
     node(1, {
       name: '[D] TitleView',
       path: 'View=xLarge, Skeleton=False',
@@ -430,6 +455,14 @@ function main() {
         variantProperties: button,
       },
     })),
+    ...(titleStatusType ? [node(buttons.length + 3, {
+      name: '[D] TitleStatus',
+      path: 'View=xLarge, Skeleton=False / MainContent / [D] TitleStatus',
+      componentInstance: {
+        componentKey: 'title-status-key',
+        variantProperties: {Type: titleStatusType},
+      },
+    })] : []),
   ];
   const auditTitleView = (size, buttons, referenceButtons) => applyCompositionContracts([], {
     actualStructure: titleViewStructure(size, buttons),
@@ -440,16 +473,19 @@ function main() {
       key,
       displayName:
         key === 'status-preset-variant-key'
-          ? 'StatusPreset'
-          : key === 'title-view-button-key'
-            ? '[D] Button'
-            : '[D] TitleView',
+            ? 'StatusPreset'
+            : key === 'title-view-button-key'
+              ? '[D] Button'
+              : key === 'title-status-key'
+                ? '[D] TitleStatus'
+              : '[D] TitleView',
     }),
   });
 
   const validTitleView = auditTitleView('24');
   assert.deepEqual(validTitleView.matchedContractIds, [
     'title-view.status.composition',
+    'title-view.status-type-relation.composition',
     'title-view.button-group.composition',
     'title-view.desktop-button-size.composition',
   ]);
@@ -489,6 +525,36 @@ function main() {
   );
   assert.deepEqual(titleViewPrimaryViolation.assessment.remediation.properties, {
     View: 'Secondary',
+  });
+
+  const titleStatusMismatch = applyCompositionContracts([], {
+    actualStructure: titleViewStructure('24', undefined, 'Action'),
+    hostReference: titleViewStructure('24', undefined, 'Approved'),
+    hostComponentKey: desktopTitleViewKey,
+    hostComponentName: '[D] TitleView',
+    resolveComponent: (key) => ({
+      key,
+      displayName:
+        key === 'status-preset-variant-key'
+          ? 'StatusPreset'
+          : key === 'title-status-key'
+            ? '[D] TitleStatus'
+            : key === 'title-view-button-key'
+              ? '[D] Button'
+              : '[D] TitleView',
+    }),
+  });
+  const titleStatusTypeViolation = titleStatusMismatch.diffs.find(
+    (diff) =>
+      diff.nodeName === '[D] TitleStatus' &&
+      diff.assessment?.constraintId === 'matching-status-type',
+  );
+  assert.ok(titleStatusTypeViolation);
+  assert.equal(titleStatusTypeViolation.assessment.verdict, 'violation');
+  assert.equal(titleStatusTypeViolation.details.reference.value, 'Approved');
+  assert.equal(titleStatusTypeViolation.details.actual.value, 'Action');
+  assert.deepEqual(titleStatusTypeViolation.assessment.remediation.properties, {
+    Type: 'Approved',
   });
 
   assert.throws(

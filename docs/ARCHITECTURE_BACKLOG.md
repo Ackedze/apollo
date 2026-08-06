@@ -64,7 +64,8 @@
 
 - [x] Load package `contract.generated.json` as the target Component API, validate all published packages and emit deterministic violations for unknown variant properties, invalid values and invalid allowed combinations through the standard assessment/report pipeline.
 - [x] Move all executable composition rules to package-level `manual.contracts`, migrate ButtonsGroup, and remove the global `compositionContracts.json` bootstrap/runtime fallback.
-- [x] Add a trusted composition contract engine with remote declarative config and a pure function registry instead of component-specific runtime branches. Schema v1 covers count, property domain and value position; additional operators remain explicit code changes.
+- [x] Add a trusted composition contract engine with remote declarative config and a pure function registry instead of component-specific runtime branches. Schema v1 covers count, property domain, value position, member-to-host equality, first-member equality and subtree paint policies; additional operators remain explicit code changes.
+- [x] Add the first evidence-safe relational predicates: ButtonsGroup member Size follows host Size and TitleStatus Type follows visible StatusPreset Type. Missing source evidence remains non-enforcing.
 - [ ] Support stable selectors by component key, semantic role, ancestry/path pattern, node type and occurrence.
 - [ ] Support scalar predicates `equals`, `notEquals`, `oneOf`, `exists`, `matches`, `between`, `boundToToken`, `componentIs` and `visible`.
 - [ ] Support relational predicates for descendant/sibling count, order, required or forbidden children and host-to-nested variant dependencies.

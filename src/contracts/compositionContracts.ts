@@ -180,6 +180,17 @@ function validateConstraint(
     }
     return;
   }
+  if (constraint.op === 'propertyEqualsHost') {
+    requireIdentifier(constraint.property, `${prefix}.property`);
+    if (constraint.hostProperty !== undefined) {
+      requireIdentifier(constraint.hostProperty, `${prefix}.hostProperty`);
+    }
+    return;
+  }
+  if (constraint.op === 'propertyEqualsFirst') {
+    requireIdentifier(constraint.property, `${prefix}.property`);
+    return;
+  }
 
   throw new Error(`${prefix}.op is unsupported`);
 }

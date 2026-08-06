@@ -74,7 +74,7 @@ function main() {
     assert.equal(
       workspace.rules.some((rule) => rule.id === 'title-view.status-size-24'),
       false,
-      'TitleView Status size must be owned by compositionContracts.json only.',
+      'TitleView Status size must be owned by its component composition contract only.',
     );
   }
 

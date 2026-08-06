@@ -10,7 +10,6 @@
       "baseUrl": "https://release.test/JSONS/",
       "apollo": {
         "patternRulesPath": "apollo/patternRules.json",
-        "compositionContractsPath": "apollo/compositionContracts.json",
         "componentContractIndexPath": "apollo/indexes/componentContractIndex.json",
         "remediationConfigPath": "apollo/remediations.json",
         "auditPolicyConfigPath": "apollo/auditPolicies.json"
@@ -51,10 +50,6 @@
     "apollo/patternRules.json": {
       "schemaVersion": 1,
       "rules": []
-    },
-    "apollo/compositionContracts.json": {
-      "schemaVersion": 1,
-      "contracts": []
     },
     "apollo/remediations.json": {
       "schemaVersion": 1,

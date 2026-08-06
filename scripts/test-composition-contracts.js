@@ -80,23 +80,23 @@ function main() {
   const {
     applyCompositionContracts,
     hasMatchingCompositionContract,
-    setCompositionContractsConfig,
   } = loadModule(
       '../src/contracts/compositionContractEngine.ts',
     );
   const {collapseSemanticVariantDiffs} = loadModule(
     '../src/assessment/customizationAssessment.ts',
   );
-  const {resolveCompositionContractsUrl} = loadModule(
-    '../src/reference/referenceList.ts',
-  );
-  const configPath = path.resolve(
+  const buttonGroupContractPath = path.resolve(
     __dirname,
-    '../../../shared/design-system_ab/JSONS/apollo/compositionContracts.json',
+    '../../../shared/design-system_ab/JSONS/web/components/web-corp/ButtonGroup [D]/composition-contract.json',
   );
-  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const buttonGroupComposition = compileContractCompositionArtifact(
+    JSON.parse(fs.readFileSync(buttonGroupContractPath, 'utf8')),
+    ['ButtonGroup [D]', '[D] ButtonsGroup', '[M] ButtonsGroup'],
+  );
+  assert.ok(buttonGroupComposition);
+  const config = buttonGroupComposition.contract;
   assert.equal(validateCompositionContractsConfig(config).contracts.length, 1);
-  setCompositionContractsConfig(config);
   const titleViewContractPath = path.resolve(
     __dirname,
     '../../../shared/design-system_ab/JSONS/web/components/web-corp/TitleView/composition-contract.json',
@@ -124,6 +124,7 @@ function main() {
   assert.ok(backgroundPlateComposition);
   assert.equal(backgroundPlateComposition.contract.contracts.length, 1);
   globalThis.__APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__ = [
+    buttonGroupComposition,
     titleViewComposition,
     backgroundPlateComposition,
   ];
@@ -517,14 +518,6 @@ function main() {
     }),
     /contains an uncontrolled property/,
   );
-  assert.equal(
-    resolveCompositionContractsUrl({
-      baseUrl: 'https://ackedze.github.io/design-system_ab/JSONS/',
-      apollo: {compositionContractsPath: 'apollo/compositionContracts.json'},
-    }),
-    'https://ackedze.github.io/design-system_ab/JSONS/apollo/compositionContracts.json',
-  );
-
   delete globalThis.__APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__;
 
   console.log('Composition contract regression checks passed');

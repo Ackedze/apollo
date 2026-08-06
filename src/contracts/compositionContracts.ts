@@ -2,28 +2,10 @@ import type {
   CompositionConstraint,
   CompositionContractsConfig,
   CompositionPosition,
-  CompositionSubtreePropertyDecision,
   SubtreePropertyPolicy,
 } from './compositionContractTypes';
 
 export const COMPOSITION_CONTRACTS_SCHEMA_VERSION = 1;
-
-let runtimeCompositionContracts: CompositionContractsConfig = {
-  schemaVersion: 1,
-  contracts: [],
-};
-
-export function setCompositionContractsConfig(
-  payload: unknown,
-): CompositionContractsConfig {
-  const config = validateCompositionContractsConfig(payload);
-  runtimeCompositionContracts = config;
-  return config;
-}
-
-export function getCompositionContractsConfig(): CompositionContractsConfig {
-  return runtimeCompositionContracts;
-}
 
 export function validateCompositionContractsConfig(
   payload: unknown,
@@ -107,56 +89,6 @@ export function validateCompositionContractsConfig(
   };
 }
 
-export function evaluateCompositionSubtreePropertyPolicy(options: {
-  hostComponentKey: string | null;
-  hostComponentName: string | null;
-  nestedComponentKey: string | null;
-  nestedComponentName: string | null;
-  actualVariantProperties: Record<string, string>;
-  property: string;
-}): CompositionSubtreePropertyDecision | null {
-  for (const contract of runtimeCompositionContracts.contracts) {
-    if (!matchesIdentity(
-      options.hostComponentKey,
-      options.hostComponentName,
-      contract.match.hostComponentKeys,
-      contract.match.hostComponentNames,
-    ) || !matchesIdentity(
-      options.nestedComponentKey,
-      options.nestedComponentName,
-      contract.select.nestedComponentKeys,
-      contract.select.nestedComponentNames,
-    )) {
-      continue;
-    }
-
-    for (const policy of contract.subtreePropertyPolicies ?? []) {
-      if (!policy.controlledProperties.includes(options.property)) {
-        continue;
-      }
-      const variantValue = options.actualVariantProperties[policy.variantProperty];
-      const allowedProperties = variantValue
-        ? policy.allowedPropertiesByValue[variantValue]
-        : undefined;
-      if (!variantValue || !allowedProperties) {
-        continue;
-      }
-      const allowed = allowedProperties.includes(options.property);
-      return {
-        verdict: allowed ? 'expected' : 'violation',
-        contractId: contract.id,
-        policyId: policy.id,
-        message: allowed ? policy.allowedMessage : policy.violationMessage,
-        variantProperty: policy.variantProperty,
-        variantValue,
-        property: options.property,
-        allowedProperties: allowedProperties.slice(),
-      };
-    }
-  }
-  return null;
-}
-
 function validateSubtreePropertyPolicy(
   policy: SubtreePropertyPolicy,
   prefix: string,
@@ -197,21 +129,6 @@ function validateSubtreePropertyPolicy(
       !policy.violationMessage.trim()) {
     throw new Error(`${prefix} requires allowedMessage and violationMessage`);
   }
-}
-
-function matchesIdentity(
-  key: string | null,
-  name: string | null,
-  keys: string[] | undefined,
-  names: string[] | undefined,
-): boolean {
-  if (keys?.length && (!key || !keys.includes(key))) {
-    return false;
-  }
-  if (names?.length && (!name || !names.includes(name))) {
-    return false;
-  }
-  return true;
 }
 
 function validateConstraint(

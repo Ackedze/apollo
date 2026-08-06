@@ -18,5 +18,3 @@ export {
   getRemoteComponentRuleRegistry,
   getRemoteCompositionContractRegistry,
 } from '../../src/contracts/runtimeContractRegistry';
-
-export { getCompositionContractsConfig } from '../../src/contracts/compositionContracts';

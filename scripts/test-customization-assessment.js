@@ -67,10 +67,83 @@ function main() {
     createNestedContextEvidence,
     createPatternContextResolver,
     evaluatePatternRules,
-    setCompositionContractsConfig,
     setPatternRulesConfig,
   } = loadModule(
     '../src/assessment/customizationAssessment.ts',
+  );
+
+  const sharedTokenKey = '8981b6bfc89935b939b249245e60158b88ca252e';
+  const sharedTokenId = `VariableID:${sharedTokenKey}/3541:131`;
+  const equivalentSelectedReference = assessCustomizationDiffs(
+    [
+      {
+        ...makeDiff(),
+        details: {
+          property: 'fill',
+          reference: {
+            value: 'base-bg-alt/secondary',
+            resourceType: 'token',
+            resourceId: 'VariableID:previous-reference/1:1',
+          },
+          actual: {
+            value: 'neutral-translucent/100',
+            resourceType: 'token',
+            resourceId: sharedTokenId,
+            bindingId: sharedTokenId,
+            binding: {
+              id: sharedTokenId,
+              key: sharedTokenKey,
+              name: 'neutral-translucent/100',
+              collectionId: 'VariableCollectionId:868:9636',
+              collectionName: 'Interface Dynamic',
+              resolvedModeId: null,
+              resolvedModeName: null,
+              explicitModeId: null,
+              explicitModeName: null,
+              modeSource: 'unknown',
+              modeOwnerNodeId: null,
+              modeOwnerName: null,
+              modeOwnerPath: null,
+            },
+          },
+          bindingStatus: 'different-binding',
+        },
+      },
+    ],
+    {
+      hostDiffs: [],
+      hostReference: [],
+      nestedContextEvidence: {
+        explains: () => true,
+        selectedReference: () => ({
+          value: 'neutral-translucent/100',
+          resourceType: 'token',
+          resourceId: sharedTokenId,
+          bindingId: sharedTokenId,
+          binding: {
+            id: sharedTokenId,
+            key: sharedTokenKey,
+            name: 'neutral-translucent/100',
+            collectionId: null,
+            collectionName: 'Interface Dynamic',
+            resolvedModeId: null,
+            resolvedModeName: null,
+            explicitModeId: null,
+            explicitModeName: null,
+            modeSource: 'unknown',
+            modeOwnerNodeId: null,
+            modeOwnerName: null,
+            modeOwnerPath: null,
+          },
+        }),
+        hasControllingVariantMismatch: () => false,
+      },
+    },
+  );
+  assert.equal(
+    equivalentSelectedReference.length,
+    0,
+    'A selected nested reference with the same stable token key must remove the stale paint diff',
   );
   setPatternRulesConfig(
     JSON.parse(
@@ -80,10 +153,13 @@ function main() {
       ),
     ),
   );
-  setCompositionContractsConfig({
-    schemaVersion: 1,
-    contracts: [
-      {
+  globalThis.__APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__ = [
+    {
+      componentKey: 'web-corp.background-plate',
+      aliases: ['[D] BackgroundPlate'],
+      contract: {
+        schemaVersion: 1,
+        contracts: [{
         id: 'background-plate.composition',
         match: {hostComponentNames: ['[D] BackgroundPlate']},
         select: {nestedComponentNames: ['[D] Style Level 1']},
@@ -111,9 +187,10 @@ function main() {
             violationMessage: 'Forbidden surface paint',
           },
         ],
+        }],
       },
-    ],
-  });
+    },
+  ];
   const hostReference = [
     {
       id: 1,
@@ -1483,6 +1560,7 @@ function main() {
   assert.equal(collapsed[0].message, 'view: primary → accent');
   assert.equal(collapsed[0].details.property, 'variant.View');
 
+  delete globalThis.__APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__;
   console.log('Customization assessment regression checks passed');
 }
 

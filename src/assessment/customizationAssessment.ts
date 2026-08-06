@@ -13,10 +13,7 @@ import {
 } from '../structure/occurrenceKeys';
 import type { DSStructureNode } from '../types/structures';
 import type { CustomizationAssessment } from './types';
-import {
-  evaluateCompositionSubtreePropertyPolicy,
-  setCompositionContractsConfig,
-} from '../contracts/compositionContracts';
+import { evaluateCompositionSubtreePropertyPolicy } from '../contracts/compositionContractEngine';
 import {
   evaluatePatternRules,
   findSemanticVariantRule,
@@ -27,8 +24,6 @@ export {
   evaluatePatternRules,
   setPatternRulesConfig,
 } from './patternRules';
-export { setCompositionContractsConfig };
-
 export type CustomizationAssessmentOptions = {
   hostDiffs: DiffEntry[];
   hostReference: DSStructureNode[];
@@ -714,7 +709,7 @@ export function assessCustomizationDiffs(
   );
   const hostDiffKeys = new Set(options.hostDiffs.map(makeDiffPropertyKey));
 
-  return diffs.map((inputDiff) => {
+  return diffs.map((inputDiff): DiffEntry | null => {
     const existingComponentContractAssessment =
       inputDiff.assessment?.source === 'component-contract'
         ? inputDiff.assessment
@@ -736,6 +731,9 @@ export function assessCustomizationDiffs(
 
     if (selectedReference) {
       diff = withSelectedReference(diff, selectedReference);
+      if (diffDetailsAreEquivalent(diff)) {
+        return null;
+      }
     }
 
     const patternContext = options.resolvePatternContext?.(diff) ?? null;
@@ -878,7 +876,7 @@ export function assessCustomizationDiffs(
       remediation: null,
       presentation: 'show',
     });
-  });
+  }).filter((diff): diff is DiffEntry => diff !== null);
 }
 
 export function applyAssessmentPresentation(diffs: DiffEntry[]): DiffEntry[] {
@@ -1504,6 +1502,51 @@ function withSelectedReference(
     details,
     message: formatDiffMessageWithReference(diff, reference),
   });
+}
+
+function diffDetailsAreEquivalent(diff: DiffEntry): boolean {
+  const reference = diff.details?.reference;
+  const actual = diff.details?.actual;
+  if (!reference || !actual) {
+    return false;
+  }
+
+  const referenceIdentity = canonicalDiffResourceIdentity(reference);
+  const actualIdentity = canonicalDiffResourceIdentity(actual);
+  return Boolean(
+    referenceIdentity &&
+    actualIdentity &&
+    referenceIdentity === actualIdentity
+  );
+}
+
+function canonicalDiffResourceIdentity(value: DiffValueDetails): string | null {
+  const resourceType = value.resourceType ?? (value.bindingId || value.binding ? 'token' : null);
+  if (!resourceType || resourceType === 'color') {
+    return null;
+  }
+
+  const stableKey = value.binding?.key?.trim();
+  if (stableKey) {
+    return `${resourceType}:key:${stableKey}`;
+  }
+
+  const resourceId = value.resourceId ?? value.bindingId ?? value.binding?.id ?? null;
+  if (!resourceId) {
+    return null;
+  }
+
+  const normalized = resourceId.trim();
+  if (!normalized) {
+    return null;
+  }
+  if (resourceType === 'token' && normalized.startsWith('VariableID:')) {
+    return `token:key:${normalized.slice('VariableID:'.length).split('/')[0].trim()}`;
+  }
+  if (resourceType === 'style' && normalized.startsWith('S:')) {
+    return `style:key:${normalized.slice(2).split(',')[0].trim()}`;
+  }
+  return `${resourceType}:id:${normalized}`;
 }
 
 function formatDiffMessageWithReference(

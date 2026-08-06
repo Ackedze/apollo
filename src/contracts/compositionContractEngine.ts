@@ -3,14 +3,13 @@ import type { DiffContext, DiffEntry } from '../structure/diff';
 import { buildOccurrenceKeyMap } from '../structure/occurrenceKeys';
 import type { DSStructureNode } from '../types/structures';
 import { evaluateCompositionConstraint } from './compositionContractRegistry';
-import { getCompositionContractsConfig } from './compositionContracts';
 import { getRemoteCompositionContractRegistry } from './runtimeContractRegistry';
-export { setCompositionContractsConfig } from './compositionContracts';
 import type {
   CompositionConstraintDecision,
   CompositionContract,
   CompositionContractContext,
   CompositionContractMember,
+  CompositionSubtreePropertyDecision,
 } from './compositionContractTypes';
 
 export type CompositionContractEngineOptions = {
@@ -119,15 +118,77 @@ export function applyCompositionContracts(
 
 function getActiveCompositionContracts(): CompositionContract[] {
   const contractsById = new Map<string, CompositionContract>();
-  for (const contract of getCompositionContractsConfig().contracts) {
-    contractsById.set(contract.id, contract);
-  }
   for (const entry of getRemoteCompositionContractRegistry()) {
     for (const contract of entry.contract.contracts ?? []) {
       contractsById.set(contract.id, contract);
     }
   }
   return Array.from(contractsById.values());
+}
+
+export function evaluateCompositionSubtreePropertyPolicy(options: {
+  hostComponentKey: string | null;
+  hostComponentName: string | null;
+  nestedComponentKey: string | null;
+  nestedComponentName: string | null;
+  actualVariantProperties: Record<string, string>;
+  property: string;
+}): CompositionSubtreePropertyDecision | null {
+  for (const contract of getActiveCompositionContracts()) {
+    if (!matchesIdentity(
+      options.hostComponentKey,
+      options.hostComponentName,
+      contract.match.hostComponentKeys,
+      contract.match.hostComponentNames,
+    ) || !matchesIdentity(
+      options.nestedComponentKey,
+      options.nestedComponentName,
+      contract.select.nestedComponentKeys,
+      contract.select.nestedComponentNames,
+    )) {
+      continue;
+    }
+
+    for (const policy of contract.subtreePropertyPolicies ?? []) {
+      if (!policy.controlledProperties.includes(options.property)) {
+        continue;
+      }
+      const variantValue = options.actualVariantProperties[policy.variantProperty];
+      const allowedProperties = variantValue
+        ? policy.allowedPropertiesByValue[variantValue]
+        : undefined;
+      if (!variantValue || !allowedProperties) {
+        continue;
+      }
+      const allowed = allowedProperties.includes(options.property);
+      return {
+        verdict: allowed ? 'expected' : 'violation',
+        contractId: contract.id,
+        policyId: policy.id,
+        message: allowed ? policy.allowedMessage : policy.violationMessage,
+        variantProperty: policy.variantProperty,
+        variantValue,
+        property: options.property,
+        allowedProperties: allowedProperties.slice(),
+      };
+    }
+  }
+  return null;
+}
+
+function matchesIdentity(
+  key: string | null,
+  name: string | null,
+  keys: string[] | undefined,
+  names: string[] | undefined,
+): boolean {
+  if (keys?.length && (!key || !keys.includes(key))) {
+    return false;
+  }
+  if (names?.length && (!name || !names.includes(name))) {
+    return false;
+  }
+  return true;
 }
 
 function buildContext(

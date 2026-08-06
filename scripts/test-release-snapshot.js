@@ -76,8 +76,6 @@ async function main() {
     assert.equal(runtime.areReferenceCatalogsReady(), true);
     assert.equal(runtime.getTokenCatalogs().length, 1);
     assert.equal(runtime.getStyleCatalogs().length, 1);
-    assert.equal(runtime.getCompositionContractsConfig().contracts.length, 0);
-
     await runtime.ensureReferenceCatalogsForKeys(['figma-test']);
     const component = runtime.findComponent('figma-test');
     assert.equal(component.displayName, '[D] Test');

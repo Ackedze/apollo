@@ -5,15 +5,12 @@ import {
   normalizePath,
   resolveAuditPolicyConfigUrl,
   resolveComponentContractIndexUrl,
-  resolveCompositionContractsUrl,
   resolvePatternRulesUrl,
   resolveRemediationConfigUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
 import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
 import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
-import { loadCompositionContractsConfig } from '../contracts/compositionContractLoader';
-import { setCompositionContractsConfig } from '../contracts/compositionContracts';
 import {
   configureRemoteRemediationConfigSource,
   ensureRemediationConfigLoaded,
@@ -302,7 +299,6 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     const response = await requestCatalogSource(referenceListRequestUrl);
     const payload = JSON.parse(response);
     const patternRulesUrl = resolvePatternRulesUrl(payload);
-    const compositionContractsUrl = resolveCompositionContractsUrl(payload);
     configureRemoteContractIndexSource(
       resolveComponentContractIndexUrl(payload),
       getReferenceCatalogBaseUrl(payload),
@@ -312,11 +308,6 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     const auditPolicyConfigUrl = resolveAuditPolicyConfigUrl(payload);
     configureRemoteAuditPolicySource(auditPolicyConfigUrl ?? '');
     await loadPatternRulesConfig(patternRulesUrl);
-    if (compositionContractsUrl) {
-      await loadCompositionContractsConfig(compositionContractsUrl);
-    } else {
-      setCompositionContractsConfig({ schemaVersion: 1, contracts: [] });
-    }
     if (remediationConfigUrl) {
       await ensureRemediationConfigLoaded();
     }
@@ -329,7 +320,6 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       url: apolloReferenceCatalogListUrl,
       baseUrl: payload?.baseUrl ?? '',
       patternRulesUrl,
-      compositionContractsUrl,
       auditPolicyConfigUrl,
       count: sources.length,
     });

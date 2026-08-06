@@ -251,12 +251,45 @@ function customizationChange(
   );
   const componentContractViolation =
     findComponentContractViolationForDiff(diff);
+  const runtimeAssessmentIsAuthoritative =
+    diff.assessment && diff.assessment.verdict !== 'unknown';
   const componentKey = item.componentKey ?? 'local';
   const referenceSignature = resourceSignature(
     referenceResource,
     reference.value,
   );
   const actualSignature = resourceSignature(actualResource, actual.value);
+  const runtimeAssessment: StatsCustomizationChange['assessment'] =
+    diff.assessment
+      ? {
+          verdict: diff.assessment.verdict,
+          source: diff.assessment.source,
+          reasonCode: diff.assessment.reasonCode,
+          ruleId: diff.assessment.ruleId,
+          contractId: diff.assessment.contractId ?? null,
+          constraintId: diff.assessment.constraintId ?? null,
+          evidence: diff.assessment.evidence ?? null,
+          message: diff.assessment.message,
+          remediation: diff.assessment.remediation
+            ? {
+                kind: diff.assessment.remediation.kind,
+                nodeId: diff.assessment.remediation.nodeId,
+                properties: diff.assessment.remediation.properties,
+              }
+            : null,
+        }
+      : null;
+  const assessment: StatsCustomizationChange['assessment'] =
+    runtimeAssessmentIsAuthoritative || !componentContractViolation
+      ? runtimeAssessment
+      : {
+          verdict: 'violation',
+          source: 'component-contract',
+          reasonCode: 'component-contract-violation',
+          ruleId: componentContractViolation.ruleId,
+          message: componentContractViolation.ruleText,
+          remediation: null,
+        };
 
   return {
     node: diffNode(diff, item),
@@ -309,31 +342,7 @@ function customizationChange(
         item.componentKey,
       property,
     ),
-    assessment: componentContractViolation
-      ? {
-          verdict: 'violation',
-          source: 'component-contract',
-          reasonCode: 'component-contract-violation',
-          ruleId: componentContractViolation.ruleId,
-          message: componentContractViolation.ruleText,
-          remediation: null,
-        }
-      : diff.assessment
-      ? {
-          verdict: diff.assessment.verdict,
-          source: diff.assessment.source,
-          reasonCode: diff.assessment.reasonCode,
-          ruleId: diff.assessment.ruleId,
-          message: diff.assessment.message,
-          remediation: diff.assessment.remediation
-            ? {
-                kind: diff.assessment.remediation.kind,
-                nodeId: diff.assessment.remediation.nodeId,
-                properties: diff.assessment.remediation.properties,
-              }
-            : null,
-        }
-      : null,
+    assessment,
   };
 }
 

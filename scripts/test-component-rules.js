@@ -170,6 +170,78 @@ function main() {
       collection: 'Spacing',
     },
   };
+  const backgroundPlateRequiredPaintTokenRule = {
+    ruleId: 'component:web-corp.background-plate.colored-and-border-use-color-tokens',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'fill|stroke',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] Style Level 1'],
+      variant: { Type: ['Colored', 'Border'] },
+    },
+    requiredTokenBinding: {
+      byType: {
+        Colored: { properties: ['fill'], tokenType: 'color' },
+        Border: { properties: ['stroke'], tokenType: 'color' },
+      },
+    },
+    ruleText: 'Colored fill and Border stroke must use color tokens.',
+  };
+  const backgroundPlateBorderFillRule = {
+    ruleId: 'component:web-corp.background-plate.border-has-no-visible-fill',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'fill|styles.fill',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] Style Level 1'],
+      variant: { Type: 'Border' },
+    },
+    requiredPaintState: { fill: 'none-or-not-visible' },
+    classification: { resetSurface: 'layer' },
+    ruleText: 'Border must not have a visible fill.',
+  };
+  const backgroundPlateColoredPaintRule = {
+    ruleId: 'component:web-corp.background-plate.colored-uses-fill-without-stroke',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'fill|styles.fill|stroke|styles.stroke',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] Style Level 1'],
+      variant: { Type: 'Colored' },
+    },
+    requiredPaintState: {
+      fill: 'visible-and-tokenized',
+      stroke: 'none-or-not-visible',
+    },
+    ruleText: 'Colored must use tokenized fill without stroke.',
+  };
+  const backgroundPlateFixedPaintRule = {
+    ruleId: 'component:web-corp.background-plate.primary-secondary-paint-is-fixed',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'fill|styles.fill|stroke|styles.stroke',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] Style Level 1'],
+      variant: { Type: ['Primary', 'Secondary'] },
+    },
+    requiredPaintState: {
+      fill: 'effective-baseline',
+      stroke: 'effective-baseline',
+    },
+    ruleText: 'Primary and Secondary paint is fixed.',
+  };
   const corporateRootRule = {
     ruleId: 'component:web-corp.corporate-content.root-layout-protected',
     severity: 'error',
@@ -377,6 +449,20 @@ function main() {
     classification: { allPublicApiValuesAllowed: true },
     ruleText: 'Every published StatusPreset Type is allowed.',
   };
+  const titleStatusSizeRule = {
+    ruleId: 'component:web-corp.title-view.status-size-24',
+    severity: 'error',
+    source: 'pattern-link',
+    appliesTo: 'variant.Size',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    conditions: {
+      components: ['[D] TitleView', '[M] TitleView'],
+      slot: 'Status',
+    },
+    requiredVariant: {Size: '24'},
+    ruleText: 'TitleView StatusPreset must use Size=24.',
+  };
   const statusContrastRule = {
     ruleId: 'component:web-corp.status-property.status-preset-contrast-on-grey-surface',
     severity: 'error',
@@ -450,11 +536,19 @@ function main() {
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [
     {
       componentKey: 'web-corp.background-plate',
-      aliases: ['[D] BackgroundPlateSlot'],
-      figmaKeys: ['background-plate-key'],
+      aliases: ['[D] BackgroundPlateSlot', '[D] Style Level 1'],
+      figmaKeys: ['background-plate-key', 'style-level-key'],
       rulesFile: {
         componentKey: 'web-corp.background-plate',
-        rules: [sizingRule, sizingRule, paddingTokenRule],
+        rules: [
+          sizingRule,
+          sizingRule,
+          paddingTokenRule,
+          backgroundPlateRequiredPaintTokenRule,
+          backgroundPlateBorderFillRule,
+          backgroundPlateColoredPaintRule,
+          backgroundPlateFixedPaintRule,
+        ],
       },
     },
     {
@@ -508,7 +602,7 @@ function main() {
       figmaKeys: ['title-view-key'],
       rulesFile: {
         componentKey: 'web-corp.title-view',
-        rules: [titleStatusStyleRule, titleStatusTypeRule],
+        rules: [titleStatusStyleRule, titleStatusTypeRule, titleStatusSizeRule],
       },
     },
     {
@@ -546,6 +640,7 @@ function main() {
   ];
   globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__ = {
     'background-plate-key': '[D] BackgroundPlateSlot',
+    'style-level-key': '[D] Style Level 1',
     'corporate-content-key': '[D] CorporateContent',
     'section-key': '[D] Section',
     'body-key': 'Body',
@@ -558,6 +653,230 @@ function main() {
     'buttons-group-variant-key': 'Size=56, Overflow=true',
     'onboarding-hint-key': 'Onboarding Hint',
   };
+
+  const styleLevelPaintDiff = (
+    type,
+    property,
+    actualValue,
+    bindingStatus,
+    bindingId = null,
+  ) => ({
+    message: `${property}: reference → ${actualValue}`,
+    nodePath: `BackgroundColor=base-bg-alt, Type=${type} / [D] Style Level 1`,
+    nodeName: '[D] Style Level 1',
+    context: scopedContext({
+      actualComponentKey: 'style-level-key',
+      actualVariantProperties: {
+        BackgroundColor: 'base-bg-alt',
+        Type: type,
+        Skeleton: 'False',
+      },
+    }),
+    details: {
+      property,
+      reference: { value: 'reference-token', bindingId: 'reference-token' },
+      actual: {
+        value: actualValue,
+        bindingId,
+        resourceType: bindingId ? 'token' : undefined,
+        resourceId: bindingId,
+      },
+      bindingStatus,
+    },
+  });
+
+  assert.equal(
+    rules.findComponentContractViolationForDiff(
+      styleLevelPaintDiff(
+        'Border',
+        'stroke',
+        'neutral-translucent/1300',
+        'different-binding',
+        'border-token',
+      ),
+    ),
+    null,
+    'A tokenized Border stroke is an allowed customization, not a component-rule violation',
+  );
+  assert.equal(
+    rules.applyContextualComponentRuleAssessment(
+      styleLevelPaintDiff(
+        'Border',
+        'stroke',
+        'neutral-translucent/1300',
+        'different-binding',
+        'border-token',
+      ),
+    ).assessment?.verdict,
+    'expected',
+    'A tokenized Border stroke must be presented as Expected',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(
+      styleLevelPaintDiff('Border', 'fill', '#863131', 'unbound'),
+    )?.ruleId,
+    backgroundPlateBorderFillRule.ruleId,
+    'A visible Border fill must remain a violation',
+  );
+  const borderFillClassifiedAsDerivedExpected = styleLevelPaintDiff(
+    'Border',
+    'fill',
+    'neutral-translucent/100',
+    'different-binding',
+    'fill-token',
+  );
+  borderFillClassifiedAsDerivedExpected.assessment = {
+    verdict: 'expected',
+    source: 'catalog-host',
+    reasonCode: 'matches-selected-nested-context',
+    ruleId: null,
+    message: 'Derived from the selected nested variant',
+    remediation: null,
+  };
+  const forbiddenBorderFillResult =
+    rules.applyContextualComponentRuleAssessment(
+      borderFillClassifiedAsDerivedExpected,
+    );
+  assert.equal(
+    forbiddenBorderFillResult.assessment?.verdict,
+    'violation',
+    'A structured Border no-fill rule must override a derived Expected assessment',
+  );
+  assert.equal(
+    forbiddenBorderFillResult.assessment?.ruleId,
+    backgroundPlateBorderFillRule.ruleId,
+  );
+  assert.equal(
+    forbiddenBorderFillResult.details.reference.value,
+    null,
+    'A forbidden Border fill must use an empty reference state instead of the inherited host token',
+  );
+  assert.equal(forbiddenBorderFillResult.details.bindingStatus, null);
+  assert.match(forbiddenBorderFillResult.message, /заливка: — →/);
+  assert.equal(
+    rules.findComponentContractViolationForDiff(
+      styleLevelPaintDiff(
+        'Colored',
+        'fill',
+        'status/info',
+        'different-binding',
+        'fill-token',
+      ),
+    ),
+    null,
+    'A tokenized Colored fill is an allowed customization',
+  );
+  assert.equal(
+    rules.applyContextualComponentRuleAssessment(
+      styleLevelPaintDiff(
+        'Colored',
+        'fill',
+        'status/info',
+        'different-binding',
+        'fill-token',
+      ),
+    ).assessment?.verdict,
+    'expected',
+    'A tokenized Colored fill must be presented as Expected',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(
+      styleLevelPaintDiff('Colored', 'stroke', '#000000', 'unbound'),
+    )?.ruleId,
+    backgroundPlateColoredPaintRule.ruleId,
+    'Colored must still reject a visible stroke',
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(
+      styleLevelPaintDiff(
+        'Primary',
+        'fill',
+        'status/info',
+        'different-binding',
+        'fill-token',
+      ),
+    )?.ruleId,
+    backgroundPlateFixedPaintRule.ruleId,
+    'Primary and Secondary paint changes remain fixed-baseline violations',
+  );
+
+  const forbiddenBorderFillDiffs = rules.createRequiredPaintStateDiffs([
+    {
+      id: 1,
+      nodeId: 'style-level-border',
+      parentId: null,
+      path: 'BackgroundColor=base-bg-alt, Type=Border / [D] Style Level 1',
+      type: 'INSTANCE',
+      name: '[D] Style Level 1',
+      visible: true,
+      radius: 16,
+      fill: {color: '#FFFFFF'},
+      stroke: {token: 'border-token', color: '#000000'},
+      componentInstance: {
+        componentKey: 'style-level-key',
+        variantProperties: {
+          BackgroundColor: 'base-bg-alt',
+          Type: 'Border',
+          Skeleton: 'False',
+        },
+      },
+    },
+  ]);
+  assert.equal(
+    forbiddenBorderFillDiffs.length,
+    1,
+    'A visible Border fill must produce a violation even when the materialized host baseline inherited the same fill',
+  );
+  assert.equal(forbiddenBorderFillDiffs[0].details.property, 'fill');
+  assert.equal(forbiddenBorderFillDiffs[0].details.reference.value, null);
+  assert.equal(forbiddenBorderFillDiffs[0].assessment.verdict, 'violation');
+  assert.equal(
+    forbiddenBorderFillDiffs[0].assessment.evidence.resetSurface,
+    'layer',
+    'Layer-scoped paint rules must preserve their reset surface for the UI action',
+  );
+
+  const tokenizedForbiddenBorderFillDiffs = rules.createRequiredPaintStateDiffs(
+    [
+      {
+        id: 2,
+        nodeId: 'style-level-tokenized-border',
+        parentId: null,
+        path: 'BackgroundColor=base-bg-alt, Type=Border / [D] Style Level 1',
+        type: 'INSTANCE',
+        name: '[D] Style Level 1',
+        visible: true,
+        radius: 16,
+        fill: {token: 'VariableID:base-bg-alt-secondary'},
+        componentInstance: {
+          componentKey: 'style-level-key',
+          variantProperties: {
+            BackgroundColor: 'base-bg-alt',
+            Type: 'Border',
+            Skeleton: 'False',
+          },
+        },
+      },
+    ],
+    [],
+    (tokenId) =>
+      tokenId === 'VariableID:base-bg-alt-secondary'
+        ? 'base-bg-alt/secondary'
+        : null,
+  );
+  assert.equal(tokenizedForbiddenBorderFillDiffs.length, 1);
+  assert.equal(
+    tokenizedForbiddenBorderFillDiffs[0].details.actual.value,
+    'VariableID:base-bg-alt-secondary',
+  );
+  assert.equal(
+    tokenizedForbiddenBorderFillDiffs[0].details.actual.displayName,
+    'base-bg-alt/secondary',
+  );
+  assert.equal(
+    tokenizedForbiddenBorderFillDiffs[0].message,
+    'заливка: — → base-bg-alt/secondary',
+  );
 
   const actualNodes = [
     sceneNode(
@@ -909,6 +1228,38 @@ function main() {
     'Muted StatusPreset must be a deterministic violation on a gray surface',
   );
 
+  const catalogExpectedStatusSize = variantDiff(
+    'View=xLarge / MainContent / Status / StatusPreset',
+    'StatusPreset',
+    'variant.Size',
+    '24',
+    '32',
+    nestedStatusContext,
+  );
+  catalogExpectedStatusSize.assessment = {
+    verdict: 'expected',
+    source: 'catalog-host',
+    reasonCode: 'matches-selected-nested-context',
+    ruleId: null,
+    message: 'Selected nested catalog value',
+    remediation: null,
+    presentation: 'show',
+  };
+  assert.ok(
+    rules
+      .findComponentContractRulesForDiff(catalogExpectedStatusSize)
+      .some((rule) => rule.ruleId === titleStatusSizeRule.ruleId),
+    'The exact TitleView size rule must attach to the nested StatusPreset diff',
+  );
+  const titleStatusSizeAssessment =
+    rules.applyContextualComponentRuleAssessment(catalogExpectedStatusSize);
+  assert.equal(titleStatusSizeAssessment.assessment.verdict, 'violation');
+  assert.equal(
+    titleStatusSizeAssessment.assessment.ruleId,
+    titleStatusSizeRule.ruleId,
+    'An exact TitleView Size rule must override generic Expected evidence from the standalone StatusPreset catalog',
+  );
+
   const publicStatusType = variantDiff(
     'View=xLarge / MainContent / Status / StatusPreset',
     'StatusPreset',
@@ -1060,6 +1411,36 @@ function main() {
       .some((rule) => rule.ruleId === unsupportedPlaceholderRule.ruleId),
     false,
     'Unsupported target shapes must not attach to a diff',
+  );
+
+  const metadataWarnings = [];
+  const metadataOnlyRule = {
+    ruleId: 'component:web-corp.background-plate.background-plate-view-is-alias',
+    severity: 'info',
+    source: 'component-contract',
+    appliesTo: 'component.identity|codeExport.*',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'web-corp.background-plate',
+      codeExports: ['BackgroundPlateView'],
+      mapsTo: ['[D] BackgroundPlate'],
+    },
+    ruleText: 'BackgroundPlateView is a code alias.',
+  };
+  globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__[1].rulesFile.rules.push(
+    metadataOnlyRule,
+  );
+  console.warn = (...args) => metadataWarnings.push(args);
+  try {
+    rules.findComponentContractRulesForDiff(sectionRoot);
+  } finally {
+    console.warn = originalWarn;
+  }
+  assert.equal(
+    metadataWarnings.length,
+    0,
+    'Metadata-only code export rules must be ignored before target parsing',
   );
 
   console.log('Component rule scope regression checks passed');

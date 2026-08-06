@@ -92,6 +92,10 @@ export function applyContractAwareDiffs(
   let rebasedCount = 0;
 
   for (const diff of diffs) {
+    if (isProtectedContractAssessment(diff)) {
+      output.push(diff);
+      continue;
+    }
     const property = diff.details?.property ?? null;
     const rule = findAllowedOverrideRule(diff, property, allowedOverrides, contract);
     const linkedVariantBaseline = resolveLinkedVariantBaseline(
@@ -138,6 +142,14 @@ export function applyContractAwareDiffs(
     rebasedCount,
     matchedContractKeys: getMatchedContractKeys(contract),
   };
+}
+
+function isProtectedContractAssessment(diff: DiffEntry): boolean {
+  if (diff.assessment?.source === 'component-contract' &&
+      diff.assessment.verdict === 'violation') {
+    return true;
+  }
+  return diff.assessment?.reasonCode === 'composition-contract-expected';
 }
 
 function resolveLinkedVariantBaseline(

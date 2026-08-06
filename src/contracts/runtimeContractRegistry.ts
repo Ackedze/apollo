@@ -15,11 +15,16 @@ import {
   compileContractAuditMappingArtifact,
   compileContractCompositionArtifact,
   compileContractExamplesArtifact,
+  compileContractGeneratedApiArtifact,
   compileContractOverridesArtifact,
   compileContractRulesArtifact,
   type RuntimeComponentRuleRegistryEntry,
   type RuntimeCompositionRegistryEntry,
 } from './contractArtifactCompiler';
+import type {
+  RuntimeComponentApiContract,
+  RuntimeComponentApiRegistryEntry,
+} from './componentApiContracts';
 import {
   buildContractPackageAliases,
   describeContractArtifactHint,
@@ -38,6 +43,7 @@ export type { ContractArtifactHint } from './contractIndexResolver';
 type RuntimeContractPackageState = {
   indexEntry: RemoteContractPackage;
   aliases: string[];
+  apiEntry: RuntimeComponentApiRegistryEntry | null;
   rulesEntry: RuntimeComponentRuleRegistryEntry | null;
   compositionEntry: RuntimeCompositionRegistryEntry | null;
   agentContext: RuntimeComponentAgentContext | null;
@@ -60,6 +66,9 @@ const STRICT_REMOTE_CONTRACT_ARTIFACTS = true;
 declare global {
   var __APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__:
     | RuntimeComponentRuleRegistryEntry[]
+    | undefined;
+  var __APOLLO_TEST_REMOTE_COMPONENT_API_REGISTRY__:
+    | RuntimeComponentApiRegistryEntry[]
     | undefined;
   var __APOLLO_TEST_REMOTE_COMPOSITION_CONTRACT_REGISTRY__:
     | RuntimeCompositionRegistryEntry[]
@@ -124,6 +133,10 @@ export async function ensureContractArtifactsForHints(
   console.log('[Apollo][contracts] remote artifacts ready', {
     totalMs: Date.now() - startedAt,
     requestedPackages: matchedPackages.size,
+    apiContractCount: getRemoteComponentApiRegistry().reduce(
+      (count, entry) => count + entry.contracts.length,
+      0,
+    ),
     rulesCount: getRemoteComponentRuleRegistry().length,
     compositionCount: getRemoteCompositionContractRegistry().length,
     agentContextCount: getRemoteComponentAgentContexts().length,
@@ -138,6 +151,34 @@ export function getRemoteComponentRuleRegistry():
   return packageStates
     .map((state) => state.rulesEntry)
     .filter((entry): entry is RuntimeComponentRuleRegistryEntry => entry !== null);
+}
+
+export function getRemoteComponentApiRegistry(): RuntimeComponentApiRegistryEntry[] {
+  if (Array.isArray(globalThis.__APOLLO_TEST_REMOTE_COMPONENT_API_REGISTRY__)) {
+    return globalThis.__APOLLO_TEST_REMOTE_COMPONENT_API_REGISTRY__;
+  }
+  return packageStates
+    .map((state) => state.apiEntry)
+    .filter((entry): entry is RuntimeComponentApiRegistryEntry => entry !== null);
+}
+
+export function getComponentApiContractByFigmaKey(
+  figmaKey: string | null | undefined,
+): RuntimeComponentApiContract | null {
+  if (!figmaKey) return null;
+  for (const entry of getRemoteComponentApiRegistry()) {
+    for (const contract of entry.contracts) {
+      if (contract.componentKey === figmaKey) return contract;
+      if (
+        contract.figma.variants.variantKeys.some(
+          (variant) => variant.key === figmaKey,
+        )
+      ) {
+        return contract;
+      }
+    }
+  }
+  return null;
 }
 
 export function getRemoteCompositionContractRegistry():
@@ -366,6 +407,7 @@ function applyRemoteContractIndex(
     .map((entry) => ({
       indexEntry: entry,
       aliases: buildContractPackageAliases(entry),
+      apiEntry: null,
       rulesEntry: null,
       compositionEntry: null,
       agentContext: null,
@@ -400,6 +442,20 @@ async function loadPackageArtifacts(
         baseUrl: remoteContractsBaseUrl,
         cacheBust: remoteContractsCacheBust,
       };
+
+      if (artifactPaths.generatedContract) {
+        const payload = await fetchRemoteContractArtifactPayload(
+          artifactPaths.generatedContract,
+          transportOptions,
+        );
+        state.apiEntry = compileContractGeneratedApiArtifact(
+          payload,
+          entry,
+          aliases,
+        );
+      } else if (entry.coverage === 'required') {
+        throw new Error('required contract package has no generatedContract artifact');
+      }
 
       if (artifactPaths.rules) {
         const payload = await fetchRemoteContractArtifactPayload(

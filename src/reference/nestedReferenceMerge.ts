@@ -604,6 +604,21 @@ export function getMaterializedInstanceReferenceDecision(
     );
   }
 
+  if (
+    typeof isHostControlledPath === 'function' &&
+    isHostControlledPath(ownerComponentKey, relativePath)
+  ) {
+    return buildDecision(
+      false,
+      'keep-host-controlled-descendant',
+      existingOrigin,
+      candidateOrigin,
+      ownerComponentKey,
+      relativePath,
+      withinMaterializedSubtree,
+    );
+  }
+
   return buildDecision(
     true,
     'replace-instance-root',

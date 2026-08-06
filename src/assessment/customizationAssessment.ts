@@ -14,6 +14,10 @@ import {
 import type { DSStructureNode } from '../types/structures';
 import type { CustomizationAssessment } from './types';
 import {
+  evaluateCompositionSubtreePropertyPolicy,
+  setCompositionContractsConfig,
+} from '../contracts/compositionContracts';
+import {
   evaluatePatternRules,
   findSemanticVariantRule,
   type PatternRuleContext,
@@ -23,6 +27,7 @@ export {
   evaluatePatternRules,
   setPatternRulesConfig,
 } from './patternRules';
+export { setCompositionContractsConfig };
 
 export type CustomizationAssessmentOptions = {
   hostDiffs: DiffEntry[];
@@ -33,7 +38,8 @@ export type CustomizationAssessmentOptions = {
 
 export type NestedContextEvidence = {
   explains: (diff: DiffEntry) => boolean;
-  selectedReference: (diff: DiffEntry) => DiffValueDetails | null;
+  selectedReference?: (diff: DiffEntry) => DiffValueDetails | null;
+  hasControllingVariantMismatch?: (diff: DiffEntry) => boolean;
 };
 
 export type NestedContextEvidenceOptions = {
@@ -66,7 +72,7 @@ export function createPatternContextResolver(
       ? findNearestInstanceOwner(actualNode, actualById)
       : null;
     const actualOwnerPath =
-      diff.context.actualNestedOwnerPath ?? inferredOwner?.path ?? null;
+      inferredOwner?.path ?? diff.context.actualNestedOwnerPath ?? null;
     const hostOwnerPath = diff.context.nestedOwnerPath ?? actualOwnerPath;
     if (!actualOwnerPath || !hostOwnerPath || !inferredOwner) {
       return null;
@@ -122,6 +128,7 @@ export function createNestedContextEvidence(
     matchedNodeIds: Set<string>;
     diffKeys: Set<string>;
     referenceByNodeId: Map<string, DSStructureNode>;
+    ownerVariantProperties: Record<string, string>;
   }> = [];
   const rootId = actualStructure[0]?.id ?? null;
   const relevantInstanceIds = collectRelevantInstanceIds(
@@ -189,6 +196,8 @@ export function createNestedContextEvidence(
       matchedNodeIds,
       diffKeys: new Set(contextualDiffs.map(makeDiffPropertyKey)),
       referenceByNodeId,
+      ownerVariantProperties:
+        instance.componentInstance?.variantProperties ?? {},
     });
   }
 
@@ -196,6 +205,34 @@ export function createNestedContextEvidence(
     selectedReference(diff) {
       const referenceNode = findSelectedReferenceNode(contexts, diff);
       return referenceNode ? selectedReferenceValue(referenceNode, diff, options) : null;
+    },
+    hasControllingVariantMismatch(diff) {
+      const property = diff.details?.property ?? '';
+      if (!property.startsWith('variant.') || !diff.nodeId) {
+        return false;
+      }
+      const propertyName = property.slice('variant.'.length);
+      return contexts.some((context) => {
+        const referenceNode = context.referenceByNodeId.get(diff.nodeId!);
+        if (!referenceNode) return false;
+        const ownerValue = readVariantProperty(
+          context.ownerVariantProperties,
+          propertyName,
+        );
+        const referenceValue = readVariantProperty(
+          referenceNode.componentInstance?.variantProperties ?? {},
+          propertyName,
+        );
+        if (ownerValue === null || referenceValue === null) {
+          return false;
+        }
+        return (
+          normalizeComparableValue(ownerValue) ===
+            normalizeComparableValue(referenceValue) &&
+          normalizeComparableValue(diff.details?.actual.value) !==
+            normalizeComparableValue(referenceValue)
+        );
+      });
     },
     explains(diff) {
       if (!diff.nodeId) {
@@ -225,6 +262,7 @@ function findSelectedReferenceNode(
     matchedNodeIds: Set<string>;
     diffKeys: Set<string>;
     referenceByNodeId: Map<string, DSStructureNode>;
+    ownerVariantProperties: Record<string, string>;
   }>,
   diff: DiffEntry,
 ): DSStructureNode | null {
@@ -317,6 +355,14 @@ export function selectedReferenceValue(
         : null,
     );
   }
+  if (property.startsWith('variant.')) {
+    const propertyName = property.slice('variant.'.length);
+    const value = readVariantProperty(
+      referenceNode.componentInstance?.variantProperties ?? {},
+      propertyName,
+    );
+    return value === null ? null : primitiveReferenceValue(value);
+  }
 
   const paddingSide = property.match(/^layout\.padding\.(top|right|bottom|left)$/)?.[1] as
     | 'top'
@@ -329,6 +375,23 @@ export function selectedReferenceValue(
   }
 
   return null;
+}
+
+function readVariantProperty(
+  properties: Record<string, string>,
+  target: string,
+): string | null {
+  const normalizedTarget = target.trim().toLowerCase();
+  for (const [property, value] of Object.entries(properties)) {
+    if (property.trim().toLowerCase() === normalizedTarget) {
+      return value;
+    }
+  }
+  return null;
+}
+
+function normalizeComparableValue(value: unknown): string {
+  return String(value ?? '').trim().toLowerCase();
 }
 
 function variableReferenceValue(
@@ -652,24 +715,31 @@ export function assessCustomizationDiffs(
   const hostDiffKeys = new Set(options.hostDiffs.map(makeDiffPropertyKey));
 
   return diffs.map((inputDiff) => {
-    if (inputDiff.assessment?.source === 'component-contract') {
+    const existingComponentContractAssessment =
+      inputDiff.assessment?.source === 'component-contract'
+        ? inputDiff.assessment
+        : null;
+    if (
+      existingComponentContractAssessment?.contractId ||
+      existingComponentContractAssessment?.constraintId
+    ) {
       return inputDiff;
     }
     let diff = inputDiff;
     const isVariantDiff = isVariantPropertyDiff(diff);
-    const nestedContextExplains =
-      !isVariantDiff && options.nestedContextEvidence?.explains(diff);
-    const selectedReference = !isVariantDiff
-      ? options.nestedContextEvidence?.selectedReference(diff) ?? null
-      : null;
+    const nestedContextExplains = options.nestedContextEvidence?.explains(diff);
+    const selectedReference =
+      options.nestedContextEvidence?.selectedReference?.(diff) ?? null;
+    const hasControllingVariantMismatch =
+      options.nestedContextEvidence?.hasControllingVariantMismatch?.(diff) ??
+      false;
 
     if (selectedReference) {
       diff = withSelectedReference(diff, selectedReference);
     }
 
-    const patternDecision = evaluatePatternRules(
-      options.resolvePatternContext?.(diff) ?? null,
-    );
+    const patternContext = options.resolvePatternContext?.(diff) ?? null;
+    const patternDecision = evaluatePatternRules(patternContext);
 
     if (patternDecision?.verdict === 'violation') {
       return withAssessment(diff, {
@@ -681,6 +751,18 @@ export function assessCustomizationDiffs(
         remediation: patternDecision.remediation,
         presentation: patternDecision.presentation,
         semanticVariantChanges: patternDecision.variantChanges,
+      });
+    }
+
+    if (isVariantDiff && hasControllingVariantMismatch) {
+      return withAssessment(diff, {
+        verdict: 'violation',
+        source: 'catalog-host',
+        reasonCode: 'differs-from-selected-nested-context',
+        ruleId: null,
+        message: 'Значение не соответствует выбранной конфигурации родительского компонента',
+        remediation: null,
+        presentation: 'show',
       });
     }
 
@@ -699,6 +781,63 @@ export function assessCustomizationDiffs(
         presentation: patternDecision?.presentation ?? 'show',
         semanticVariantChanges: patternDecision?.variantChanges ?? [],
       });
+    }
+
+    if (patternDecision?.verdict === 'allowed') {
+      return withAssessment(diff, {
+        verdict: 'allowed',
+        source: 'pattern-rule',
+        reasonCode: 'pattern-allowed',
+        ruleId: patternDecision.ruleId,
+        message: patternDecision.message,
+        remediation: null,
+        presentation: patternDecision.presentation,
+        semanticVariantChanges: patternDecision.variantChanges,
+      });
+    }
+
+    const property = diff.details?.property ?? null;
+    const compositionPropertyDecision =
+      property && patternContext
+        ? evaluateCompositionSubtreePropertyPolicy({
+            hostComponentKey: patternContext.hostComponentKey,
+            hostComponentName: patternContext.hostComponentName,
+            nestedComponentKey: patternContext.nestedComponentKey,
+            nestedComponentName: patternContext.nestedComponentName,
+            actualVariantProperties: patternContext.actualVariantProperties,
+            property,
+          })
+        : null;
+    if (compositionPropertyDecision) {
+      return withAssessment(diff, {
+        verdict: compositionPropertyDecision.verdict,
+        source: 'component-contract',
+        reasonCode:
+          compositionPropertyDecision.verdict === 'expected'
+            ? 'composition-contract-expected'
+            : 'composition-contract-violation',
+        ruleId:
+          `${compositionPropertyDecision.contractId}.` +
+          compositionPropertyDecision.policyId,
+        contractId: compositionPropertyDecision.contractId,
+        constraintId: compositionPropertyDecision.policyId,
+        evidence: {
+          variantProperty: compositionPropertyDecision.variantProperty,
+          variantValue: compositionPropertyDecision.variantValue,
+          controlledProperty: compositionPropertyDecision.property,
+          allowedProperties: compositionPropertyDecision.allowedProperties,
+        },
+        message: compositionPropertyDecision.message,
+        remediation: null,
+        presentation:
+          compositionPropertyDecision.verdict === 'expected'
+            ? 'show-expected'
+            : 'show',
+      });
+    }
+
+    if (existingComponentContractAssessment) {
+      return diff;
     }
 
     if (!isVariantDiff && diff.suppressAsHostControlledNestedProperty === true) {
@@ -754,6 +893,7 @@ export function applyAssessmentPresentation(diffs: DiffEntry[]): DiffEntry[] {
 
     if (
       diff.assessment?.presentation !== 'semantic-variant' &&
+      diff.assessment?.presentation !== 'show-expected' &&
       (
         diff.assessment?.verdict === 'expected' ||
         diff.assessment?.verdict === 'allowed'
@@ -780,6 +920,40 @@ export function collapseVisualDiffsUnderVariantChanges(
       .filter((node) => Boolean(node.nodeId))
       .map((node) => [node.nodeId!, node]),
   );
+  const byId = new Map(actualStructure.map((node) => [node.id, node]));
+  const variantDiffsByNodeId = new Map<string, DiffEntry[]>();
+  for (const diff of variantDiffs) {
+    if (!diff.nodeId) continue;
+    const entries = variantDiffsByNodeId.get(diff.nodeId) ?? [];
+    entries.push(diff);
+    variantDiffsByNodeId.set(diff.nodeId, entries);
+  }
+  const derivedVariantDiffs = new Set<DiffEntry>();
+  for (const diff of variantDiffs) {
+    if (
+      !diff.nodeId ||
+      (diff.assessment?.verdict !== 'expected' &&
+        diff.assessment?.verdict !== 'allowed')
+    ) {
+      continue;
+    }
+    let node = byNodeId.get(diff.nodeId) ?? null;
+    while (node && typeof node.parentId === 'number') {
+      node = byId.get(node.parentId) ?? null;
+      if (!node?.nodeId) continue;
+      const ancestorDiffs = variantDiffsByNodeId.get(node.nodeId) ?? [];
+      if (
+        ancestorDiffs.some(
+          (ancestorDiff) =>
+            ancestorDiff.details?.property === diff.details?.property &&
+            ancestorDiff.details?.actual.value === diff.details?.actual.value,
+        )
+      ) {
+        derivedVariantDiffs.add(diff);
+        break;
+      }
+    }
+  }
   const collapsedNodeIds = new Set<string>();
 
   for (const diff of variantDiffs) {
@@ -803,11 +977,13 @@ export function collapseVisualDiffsUnderVariantChanges(
 
   return diffs.filter(
     (diff) =>
-      isVariantPropertyDiff(diff) ||
+      !derivedVariantDiffs.has(diff) &&
+      (isVariantPropertyDiff(diff) ||
       diff.assessment?.verdict === 'unknown' ||
       diff.assessment?.verdict === 'violation' ||
+      diff.assessment?.presentation === 'show-expected' ||
       !diff.nodeId ||
-      !collapsedNodeIds.has(diff.nodeId),
+      !collapsedNodeIds.has(diff.nodeId)),
   );
 }
 

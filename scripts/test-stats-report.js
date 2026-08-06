@@ -141,6 +141,26 @@ function main() {
         ],
       },
     },
+    {
+      componentKey: 'web-corp.allowed-only',
+      aliases: ['[D] AllowedOnly'],
+      rulesFile: {
+        componentKey: 'web-corp.allowed-only',
+        rules: [
+          {
+            ruleId: 'component:web-corp.allowed-only.generic-style-rule',
+            severity: 'error',
+            source: 'component-contract',
+            ruleKind: 'design-rule',
+            severityScope: 'design',
+            appliesTo: 'styles.text',
+            checkType: 'deterministic',
+            matchKind: 'exact_component_rule',
+            ruleText: 'Generic rule that must not override runtime evidence.',
+          },
+        ],
+      },
+    },
   ];
   globalThis.__APOLLO_TEST_REMOTE_AGENT_CONTEXTS__ = [
     {
@@ -295,6 +315,11 @@ function main() {
     diffs: [
       {
         ...customization.diffs[0],
+        context: {
+          ...customization.diffs[0].context,
+          actualComponentKey: 'web-corp.allowed-only',
+          referenceComponentKey: 'web-corp.allowed-only',
+        },
         assessment: {
           verdict: 'expected',
           source: 'catalog-host',
@@ -611,6 +636,17 @@ function main() {
   assert.equal(change.reference.resource.library, 'Web Typography');
   assert.equal(change.assessment.verdict, 'violation');
   assert.match(change.signature, /component:tag-key:text-style:styles\.text/);
+  const expectedChange = report.categories.customizations.items[1].changes[0];
+  assert.equal(expectedChange.componentRules.length, 1);
+  assert.equal(
+    expectedChange.componentRules[0].ruleId,
+    'component:web-corp.allowed-only.generic-style-rule',
+  );
+  assert.equal(
+    expectedChange.assessment.verdict,
+    'expected',
+    'Stats must preserve an authoritative runtime assessment.',
+  );
   const buttonTextStyleChange =
     report.categories.customizations.items[2].changes[0];
   assert.equal(

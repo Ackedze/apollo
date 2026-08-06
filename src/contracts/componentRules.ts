@@ -49,7 +49,21 @@ export type ComponentContractRule = {
   };
   classification?: {
     allPublicApiValuesAllowed?: boolean;
+    doNotTreatRequiredTokenizedPaintAsViolation?: boolean;
+    treatRawRequiredPaintAsViolation?: boolean;
+    treatAsViolation?: boolean;
+    resetSurface?: 'layer';
   };
+  requiredTokenBinding?: {
+    byType?: Record<
+      string,
+      {
+        properties?: string[];
+        tokenType?: string;
+      }
+    >;
+  };
+  requiredPaintState?: Record<string, string>;
   requiredVariant?: Record<string, string>;
   forbiddenVariant?: Record<string, string>;
   requiredVariantByContext?: Record<string, Record<string, string>>;
@@ -176,12 +190,127 @@ export function findComponentContractViolationForDiff(
     if (
       rule.severity === 'error' &&
       (rule.ruleKind === 'design-rule' ||
-        isDeterministicBindingViolation(rule, diff))
+        isDeterministicBindingViolation(rule, diff)) &&
+      ruleConfirmsViolation(rule, diff)
     ) {
       return rule;
     }
   }
   return null;
+}
+
+function ruleConfirmsViolation(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  if (rule.requiredTokenBinding?.byType) {
+    return requiredTokenBindingIsViolated(rule, diff);
+  }
+  if (rule.requiredPaintState) {
+    return requiredPaintStateIsViolated(rule, diff);
+  }
+  return true;
+}
+
+function requiredTokenBindingIsViolated(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  const requirement = findRequiredTokenBinding(rule, diff);
+  if (!requirement) return false;
+  return !diffActualHasTokenBinding(diff);
+}
+
+function findRequiredTokenBinding(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): { properties?: string[]; tokenType?: string } | null {
+  const variantProperties =
+    diff.context.actualVariantProperties ??
+    diff.context.referenceVariantProperties ??
+    null;
+  const type = variantProperties
+    ? readCaseInsensitiveValue(variantProperties, 'Type')
+    : null;
+  if (!type) return null;
+
+  const requirement = Object.entries(
+    rule.requiredTokenBinding?.byType ?? {},
+  ).find(([candidate]) =>
+    normalizeVariantValue(candidate) === normalizeVariantValue(type),
+  )?.[1];
+  if (!requirement) return null;
+
+  const property = normalizePaintProperty(diff.details?.property ?? '');
+  const requiredProperties = (requirement.properties ?? []).map(
+    normalizePaintProperty,
+  );
+  if (!property || !requiredProperties.includes(property)) {
+    return null;
+  }
+  return requirement;
+}
+
+function requiredPaintStateIsViolated(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  const property = normalizePaintProperty(diff.details?.property ?? '');
+  if (!property) return false;
+  const expectedState = rule.requiredPaintState?.[property] ?? null;
+  if (!expectedState) return false;
+
+  const normalizedState = normalizeRuleValue(expectedState);
+  if (normalizedState === 'effective-baseline') {
+    return true;
+  }
+  if (
+    normalizedState === 'none-or-not-visible' ||
+    normalizedState === 'none' ||
+    normalizedState === 'not-visible'
+  ) {
+    return diffActualHasVisiblePaint(diff);
+  }
+  if (
+    normalizedState === 'visible-and-tokenized' ||
+    normalizedState === 'tokenized'
+  ) {
+    return !diffActualHasVisiblePaint(diff) || !diffActualHasTokenBinding(diff);
+  }
+  return rule.classification?.treatAsViolation === true;
+}
+
+function normalizePaintProperty(property: string): string {
+  const normalized = property.trim().toLowerCase();
+  if (normalized === 'fill' || normalized === 'styles.fill') return 'fill';
+  if (normalized === 'stroke' || normalized === 'styles.stroke') return 'stroke';
+  return '';
+}
+
+function diffActualHasTokenBinding(diff: DiffEntry): boolean {
+  const actual = diff.details?.actual;
+  if (!actual) return false;
+  if (typeof actual.bindingId === 'string' && actual.bindingId.trim()) {
+    return true;
+  }
+  if (actual.resourceType === 'token' && actual.resourceId) {
+    return true;
+  }
+  return diff.details?.bindingStatus === 'different-binding';
+}
+
+function diffActualHasVisiblePaint(diff: DiffEntry): boolean {
+  const value = diff.details?.actual.value;
+  if (value === null || value === undefined) return false;
+  if (typeof value !== 'string') return true;
+  const normalized = normalizeRuleValue(value);
+  return ![
+    '',
+    'none',
+    'not-visible',
+    'hidden',
+    'transparent',
+  ].includes(normalized);
 }
 
 function isDeterministicBindingViolation(
@@ -357,16 +486,59 @@ export function applyVariableBindingAssessment(diff: DiffEntry): DiffEntry {
 export function applyContextualComponentRuleAssessment(
   diff: DiffEntry,
 ): DiffEntry {
-  if (
-    diff.assessment?.verdict === 'violation' ||
-    diff.assessment?.verdict === 'expected'
-  ) {
+  if (diff.assessment?.verdict === 'violation') {
     return diff;
   }
   const property = diff.details?.property ?? '';
+  const rules = findComponentContractRulesForDiff(diff);
+
+  if (property.startsWith('variant.')) {
+    for (const rule of rules) {
+      const contextual = contextualVariantAssessment(rule, diff, property);
+      if (contextual?.verdict === 'violation') {
+        return Object.assign({}, diff, {assessment: contextual});
+      }
+    }
+  }
+
+  const structuredViolation = rules.find(
+    (rule) =>
+      rule.severity === 'error' &&
+      rule.ruleKind === 'design-rule' &&
+      Boolean(rule.requiredPaintState || rule.requiredTokenBinding) &&
+      ruleConfirmsViolation(rule, diff),
+  );
+  if (structuredViolation) {
+    const normalizedDiff = normalizeStructuredPaintViolation(
+      diff,
+      structuredViolation,
+    );
+    return Object.assign({}, normalizedDiff, {
+      assessment: createRuleViolationAssessment(structuredViolation),
+    });
+  }
+
+  if (diff.assessment?.verdict === 'expected') {
+    return diff;
+  }
+  const paintRule = findComponentContractRulesForDiff(diff).find((rule) =>
+    ruleExplicitlyAllowsPaintDiff(rule, diff),
+  );
+  if (paintRule) {
+    return Object.assign({}, diff, {
+      assessment: {
+        verdict: 'expected' as const,
+        source: 'component-contract' as const,
+        reasonCode: 'component-contract-tokenized-paint',
+        ruleId: paintRule.ruleId,
+        message: paintRule.ruleText,
+        remediation: null,
+        presentation: 'show-expected' as const,
+      },
+    });
+  }
   if (!property.startsWith('variant.')) return diff;
 
-  const rules = findComponentContractRulesForDiff(diff);
   for (const rule of rules) {
     const contextual = contextualVariantAssessment(rule, diff, property);
     if (contextual) {
@@ -389,6 +561,57 @@ export function applyContextualComponentRuleAssessment(
     }
   }
   return diff;
+}
+
+function normalizeStructuredPaintViolation(
+  diff: DiffEntry,
+  rule: ComponentContractRule,
+): DiffEntry {
+  const property = normalizePaintProperty(diff.details?.property ?? '');
+  const expectedState = property
+    ? rule.requiredPaintState?.[property] ?? null
+    : null;
+  if (!property || !expectedState || !isNoVisiblePaintState(expectedState)) {
+    return diff;
+  }
+  const details = diff.details;
+  if (!details) return diff;
+
+  const actualValue =
+    details.actual.displayName ??
+    details.actual.binding?.name ??
+    details.actual.value ??
+    '—';
+  return Object.assign({}, diff, {
+    message: `${property === 'fill' ? 'заливка' : 'Обводка'}: — → ${actualValue}`,
+    details: Object.assign({}, details, {
+      reference: {value: null},
+      // A forbidden paint is a layer-state violation, not a missing binding.
+      bindingStatus: null,
+    }),
+  });
+}
+
+function ruleExplicitlyAllowsPaintDiff(
+  rule: ComponentContractRule,
+  diff: DiffEntry,
+): boolean {
+  if (findRequiredTokenBinding(rule, diff)) {
+    return diffActualHasVisiblePaint(diff) && diffActualHasTokenBinding(diff);
+  }
+
+  const property = normalizePaintProperty(diff.details?.property ?? '');
+  const expectedState = property
+    ? rule.requiredPaintState?.[property] ?? null
+    : null;
+  if (!expectedState) return false;
+  const normalizedState = normalizeRuleValue(expectedState);
+  return (
+    (normalizedState === 'visible-and-tokenized' ||
+      normalizedState === 'tokenized') &&
+    diffActualHasVisiblePaint(diff) &&
+    diffActualHasTokenBinding(diff)
+  );
 }
 
 export function createRequiredComponentSizingDiffs(
@@ -447,6 +670,115 @@ export function createRequiredComponentSizingDiffs(
   }
 
   return result;
+}
+
+export function createRequiredPaintStateDiffs(
+  actualNodes: DSStructureNode[],
+  existingDiffs: DiffEntry[] = [],
+  resolveTokenLabel?: (tokenId: string) => string | null,
+): DiffEntry[] {
+  if (!actualNodes.length) return [];
+
+  const existingKeys = new Set(existingDiffs.map(makeDiffKey));
+  const nodesById = new Map(actualNodes.map((node) => [node.id, node]));
+  const result: DiffEntry[] = [];
+
+  for (const node of actualNodes) {
+    const owner = findNearestInstanceOwner(node, nodesById);
+    const context = buildActualDiffContext(node, owner);
+
+    for (const entry of getComponentRuleRegistry()) {
+      for (const rule of entry.rulesFile.rules ?? []) {
+        if (!isUsableRule(rule) || !rule.requiredPaintState) continue;
+
+        for (const property of ['fill', 'stroke'] as const) {
+          const expectedState = rule.requiredPaintState[property] ?? null;
+          if (!expectedState || !isNoVisiblePaintState(expectedState)) continue;
+
+          const actual = readActualPaintValue(
+            node,
+            property,
+            resolveTokenLabel,
+          );
+          if (!actual) continue;
+
+          const actualDisplayValue = actual.displayName ?? actual.value;
+
+          const diff: DiffEntry = {
+            message: `${property === 'fill' ? 'заливка' : 'Обводка'}: — → ${actualDisplayValue}`,
+            nodePath: node.path,
+            nodeName: node.name,
+            nodeId: node.nodeId,
+            visible: node.visible,
+            context,
+            diffKind: 'paint',
+            details: {
+              property,
+              reference: {value: null},
+              actual,
+              bindingStatus: null,
+            },
+          };
+          const key = makeDiffKey(diff);
+          if (
+            existingKeys.has(key) ||
+            !diffTargetsComponent(diff, entry) ||
+            !ruleMatchesDiff(rule, diff, property, entry) ||
+            !requiredPaintStateIsViolated(rule, diff)
+          ) {
+            continue;
+          }
+
+          diff.assessment = createRuleViolationAssessment(rule);
+          existingKeys.add(key);
+          result.push(diff);
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+function isNoVisiblePaintState(value: string): boolean {
+  return [
+    'none-or-not-visible',
+    'none',
+    'not-visible',
+  ].includes(normalizeRuleValue(value));
+}
+
+function readActualPaintValue(
+  node: DSStructureNode,
+  property: 'fill' | 'stroke',
+  resolveTokenLabel?: (tokenId: string) => string | null,
+): NonNullable<DiffEntry['details']>['actual'] | null {
+  const paint = property === 'fill' ? node.fill : node.stroke;
+  const styleKey = node.styles?.[property]?.styleKey ?? null;
+  if (paint?.token) {
+    return {
+      value: paint.token,
+      resourceType: 'token',
+      resourceId: paint.token,
+      displayName: resolveTokenLabel?.(paint.token) ?? null,
+      bindingId: paint.token,
+    };
+  }
+  if (styleKey) {
+    return {
+      value: styleKey,
+      resourceType: 'style',
+      resourceId: styleKey,
+    };
+  }
+  if (paint?.color) {
+    return {
+      value: paint.color,
+      resourceType: 'color',
+      resourceId: null,
+    };
+  }
+  return null;
 }
 
 export function createNumericConstraintRuleDiffs(
@@ -735,11 +1067,13 @@ function normalizeRuleValue(value: string): string {
 function createRuleViolationAssessment(
   rule: ComponentContractRule,
 ): NonNullable<DiffEntry['assessment']> {
+  const resetSurface = rule.classification?.resetSurface;
   return {
     verdict: 'violation',
     source: 'component-contract',
     reasonCode: 'component-contract-violation',
     ruleId: rule.ruleId,
+    evidence: resetSurface ? {resetSurface} : null,
     message: rule.ruleText,
     remediation: null,
     presentation: 'show',
@@ -864,6 +1198,11 @@ function ruleMatchesDiff(
   property: string,
   entry: ComponentRuleRegistryEntry,
 ): boolean {
+  // Metadata-only rules must be rejected by their domain before parsing selectors
+  // that are intentionally unsupported by the Figma property-diff evaluator.
+  if (!appliesToMatchesDiff(rule.appliesTo, property, diff)) {
+    return false;
+  }
   const target = parseRuleTarget(rule);
   if (!target) {
     return false;
@@ -874,10 +1213,6 @@ function ruleMatchesDiff(
   ) {
     return false;
   }
-  if (!appliesToMatchesDiff(rule.appliesTo, property, diff)) {
-    return false;
-  }
-
   if (!numericConstraintMatchesDiff(rule.numericConstraint, diff)) {
     return false;
   }
@@ -1043,7 +1378,9 @@ function ruleHasContextualVariantEvidence(
   return Boolean(
     rule.requiredVariantByContext ||
       ((rule.requiredVariant || rule.forbiddenVariant) &&
-        rule.conditions?.backgroundSurface?.length),
+        (rule.conditions?.backgroundSurface?.length ||
+          rule.conditions?.components?.length ||
+          rule.conditions?.slot)),
   );
 }
 

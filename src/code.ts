@@ -1105,6 +1105,7 @@ async function resetCustomizationGroup(
 async function resolveCustomizationResetReferenceNode(
   rootNode: SceneNode,
   nodeId: string,
+  options?: { preferSelectedComponentVariant?: boolean },
 ) {
   const componentKey = await getComponentKey(rootNode);
   await ensureReferenceCatalogsForKeys([componentKey]);
@@ -1145,6 +1146,27 @@ async function resolveCustomizationResetReferenceNode(
       message:
         'Не удалось сопоставить изменённый узел со структурой компонента.',
     };
+  }
+
+  if (
+    options?.preferSelectedComponentVariant &&
+    actualEntry.type === 'INSTANCE' &&
+    actualEntry.componentInstance?.componentKey
+  ) {
+    const selectedComponent = findComponent(
+      actualEntry.componentInstance.componentKey,
+    );
+    const selectedStructure = resolveStructureForInstance(
+      selectedComponent,
+      actualEntry.componentInstance,
+    );
+    const selectedRoot =
+      selectedStructure?.find((entry) => entry.parentId === null) ??
+      selectedStructure?.[0] ??
+      null;
+    if (selectedRoot) {
+      return { ok: true as const, referenceNode: selectedRoot };
+    }
   }
 
   const actualOccurrenceKeys = buildOccurrenceKeyMap(alignedActualStructure);

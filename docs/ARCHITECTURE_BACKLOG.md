@@ -62,12 +62,14 @@
 
 ## P1: deterministic rule engine
 
-- [ ] Generalize the remote `patternRules` evaluator into one contract rule engine instead of adding component-specific runtime branches.
+- [x] Load package `contract.generated.json` as the target Component API, validate all published packages and emit deterministic violations for unknown variant properties, invalid values and invalid allowed combinations through the standard assessment/report pipeline.
+- [x] Add a trusted composition contract engine with remote declarative config and a pure function registry instead of component-specific runtime branches. Schema v1 covers count, property domain and value position; additional operators remain explicit code changes.
 - [ ] Support stable selectors by component key, semantic role, ancestry/path pattern, node type and occurrence.
 - [ ] Support scalar predicates `equals`, `notEquals`, `oneOf`, `exists`, `matches`, `between`, `boundToToken`, `componentIs` and `visible`.
 - [ ] Support relational predicates for descendant/sibling count, order, required or forbidden children and host-to-nested variant dependencies.
-- [ ] Compile executable checks from `rules.json`, `composition-contract.json` and the enforceable ownership portion of `contract.overrides.json`; keep generated `wraps` as evidence rather than treating every observed wrap as a global rule.
-- [ ] Migrate and regression-test the highest-value packages first: Button, ButtonGroup, BackgroundPlate, TitleView, CardImage and FAQ.
+- [ ] Compile additional executable checks from package `rules.json`, `composition-contract.json` and the enforceable ownership portion of `contract.overrides.json` into the trusted registry; keep generated anatomy and `wraps` as evidence rather than treating every observed structure as a global rule.
+- [x] Migrate and regression-test the schema-v1-safe packages: ButtonsGroup, BackgroundPlate and TitleView.
+- [ ] Extend selectors and operators, then migrate Button, CardImage, FAQ and TableBulkActions without approximating host-dependent or advisory rules as hard violations.
 - [ ] Emit deterministic findings through the existing `CustomizationAssessment` model with explicit `expected | allowed | violation | unknown` verdicts and stale-safe remediation actions.
 
 ## P2: maintenance

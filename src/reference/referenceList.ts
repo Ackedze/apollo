@@ -30,6 +30,7 @@ export type RemoteReferenceCatalogList = {
   baseUrl?: string;
   apollo?: {
     patternRulesPath?: string;
+    compositionContractsPath?: string;
     componentContractIndexPath?: string;
     contractsManifestPath?: string;
     remediationConfigPath?: string;
@@ -46,6 +47,14 @@ export function resolvePatternRulesUrl(
   if (!path) {
     throw new Error('referenceSourcesMVP.json does not define apollo.patternRulesPath');
   }
+  return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
+}
+
+export function resolveCompositionContractsUrl(
+  payload: RemoteReferenceCatalogList,
+): string | null {
+  const path = payload.apollo?.compositionContractsPath?.trim();
+  if (!path) return null;
   return resolveCatalogUrl((payload.baseUrl ?? '').trim(), path);
 }
 

@@ -76,6 +76,7 @@ async function main() {
     assert.equal(runtime.areReferenceCatalogsReady(), true);
     assert.equal(runtime.getTokenCatalogs().length, 1);
     assert.equal(runtime.getStyleCatalogs().length, 1);
+    assert.equal(runtime.getCompositionContractsConfig().contracts.length, 0);
 
     await runtime.ensureReferenceCatalogsForKeys(['figma-test']);
     const component = runtime.findComponent('figma-test');
@@ -89,6 +90,11 @@ async function main() {
     };
     await runtime.ensureContractArtifactsForHints([hint]);
     assert.equal(runtime.getContractPackageKeyForHint(hint), 'web.test');
+    assert.equal(runtime.getRemoteComponentApiRegistry().length, 1);
+    assert.equal(
+      runtime.getComponentApiContractByFigmaKey('figma-test').id,
+      'test.desktop',
+    );
     assert.equal(runtime.getRemoteComponentRuleRegistry().length, 1);
     assert.equal(runtime.getRemoteCompositionContractRegistry().length, 1);
     assert.equal(

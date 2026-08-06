@@ -55,10 +55,15 @@ import {
   applyContractAwareDiffs,
 } from '../contracts/contractAwareDiffs';
 import {
+  applyCompositionContracts,
+  hasMatchingCompositionContract,
+} from '../contracts/compositionContractEngine';
+import {
   applyContextualComponentRuleAssessment,
   applyRequiredComponentSizingAssessment,
   applyVariableBindingAssessment,
   createNumericConstraintRuleDiffs,
+  createRequiredPaintStateDiffs,
   createRequiredComponentSizingDiffs,
   createVariableModeRuleDiffs,
   hasNumericConstraintRules,
@@ -66,6 +71,8 @@ import {
   hasVariableModeRules,
   type VariableCollectionMetadata,
 } from '../contracts/componentRules';
+import { createComponentApiVariantDiffs } from '../contracts/componentApiContracts';
+import { getComponentApiContractByFigmaKey } from '../contracts/runtimeContractRegistry';
 import {
   alignStructurePaths,
   attachSurfaceContext,
@@ -127,6 +134,28 @@ export interface ComponentClassifierDependencies {
 
 function hasInstanceOverrides(instance: InstanceNode): boolean {
   return Array.isArray(instance.overrides) && instance.overrides.length > 0;
+}
+
+export function shouldRunComponentDiff(options: {
+  forcedCategory: boolean;
+  needsDiff: boolean;
+  instanceHasOverrides: boolean;
+  requiresSizingRuleAudit: boolean;
+  requiresNumericConstraintAudit: boolean;
+  requiresVariableModeRuleAudit: boolean;
+  requiresCompositionContractAudit: boolean;
+  requiresComponentApiAudit: boolean;
+  isInheritedFromLocalComponentContext: boolean;
+}): boolean {
+  return !options.forcedCategory && options.needsDiff && (
+    options.instanceHasOverrides ||
+    options.requiresSizingRuleAudit ||
+    options.requiresNumericConstraintAudit ||
+    options.requiresVariableModeRuleAudit ||
+    options.requiresCompositionContractAudit ||
+    options.requiresComponentApiAudit ||
+    options.isInheritedFromLocalComponentContext
+  );
 }
 
 /**
@@ -261,18 +290,27 @@ export async function classifyComponentNode(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
   );
+  const requiresCompositionContractAudit = hasMatchingCompositionContract({
+    hostComponentKey: ref?.key ?? componentKey ?? null,
+    hostComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+  });
+  const requiresComponentApiAudit = Boolean(
+    getComponentApiContractByFigmaKey(componentKey),
+  );
   const isInheritedFromLocalComponentContext =
     node.type === 'INSTANCE' &&
     (await isInsideLocalComponentContext(node, componentKeyCache, localComponentContextCache));
-  const shouldDiff =
-    !forcedCategory &&
-    needsDiff &&
-    (ref?.status !== 'current' ||
-      instanceHasOverrides ||
-      requiresSizingRuleAudit ||
-      requiresNumericConstraintAudit ||
-      requiresVariableModeRuleAudit ||
-      isInheritedFromLocalComponentContext);
+  const shouldDiff = shouldRunComponentDiff({
+    forcedCategory: Boolean(forcedCategory),
+    needsDiff,
+    instanceHasOverrides: ref?.status !== 'current' || instanceHasOverrides,
+    requiresSizingRuleAudit,
+    requiresNumericConstraintAudit,
+    requiresVariableModeRuleAudit,
+    requiresCompositionContractAudit,
+    requiresComponentApiAudit,
+    isInheritedFromLocalComponentContext,
+  });
   const actualStructure =
     shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
   throwIfCancelled();
@@ -317,13 +355,36 @@ export async function classifyComponentNode(
           diffResult.diffs.concat(requiredSizingDiffs),
         )
       : [];
+  const requiredPaintStateDiffs =
+    shouldDiff && alignedActualStructure
+      ? createRequiredPaintStateDiffs(
+          alignedActualStructure,
+          diffResult.diffs
+            .concat(requiredSizingDiffs)
+            .concat(numericConstraintDiffs),
+          resolveTokenLabel,
+        )
+      : [];
+  const componentApiDiffs =
+    shouldDiff && alignedActualStructure
+      ? createComponentApiVariantDiffs(
+          alignedActualStructure,
+          getComponentApiContractByFigmaKey,
+          diffResult.diffs
+            .concat(requiredSizingDiffs)
+            .concat(numericConstraintDiffs)
+            .concat(requiredPaintStateDiffs),
+        )
+      : [];
   const variableModeRuleDiffs =
     shouldDiff && alignedActualStructure
       ? createVariableModeRuleDiffs(
           alignedActualStructure,
           diffResult.diffs
             .concat(requiredSizingDiffs)
-            .concat(numericConstraintDiffs),
+            .concat(numericConstraintDiffs)
+            .concat(requiredPaintStateDiffs)
+            .concat(componentApiDiffs),
           resolveVariableCollectionMetadata,
         )
       : [];
@@ -334,6 +395,8 @@ export async function classifyComponentNode(
   const rawDiffs = diffResult.diffs
     .concat(requiredSizingDiffs)
     .concat(numericConstraintDiffs)
+    .concat(requiredPaintStateDiffs)
+    .concat(componentApiDiffs)
     .concat(variableModeRuleDiffs)
     .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)
@@ -352,6 +415,29 @@ export async function classifyComponentNode(
           .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
       : [];
   const diffsForAssessment = markedDiffs.concat(explicitVariantStateDiffs);
+  const compositionContractResult =
+    shouldDiff && alignedActualStructure && referenceStructure
+      ? applyCompositionContracts(diffsForAssessment, {
+          actualStructure: alignedActualStructure,
+          hostReference: referenceStructure,
+          hostComponentKey: ref?.key ?? componentKey ?? null,
+          hostComponentName:
+            ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+          resolveComponent: findComponent,
+        })
+      : {
+          diffs: diffsForAssessment,
+          matchedContractIds: [] as string[],
+          decisionCount: 0,
+        };
+  if (compositionContractResult.matchedContractIds.length) {
+    traceAudit('composition-contracts', {
+      nodeId: node.id,
+      nodeName: node.name,
+      matchedContracts: compositionContractResult.matchedContractIds,
+      decisionCount: compositionContractResult.decisionCount,
+    });
+  }
   const hostDiffs =
     shouldDiff && referenceStructure && alignedActualStructure
       ? diffStructures(alignedActualStructure, referenceStructure, {
@@ -362,7 +448,7 @@ export async function classifyComponentNode(
           resolveVariableMetadata: resolveVariableMetadata,
         }).diffs
       : [];
-  const assessedDiffs = assessCustomizationDiffs(diffsForAssessment, {
+  const assessedDiffs = assessCustomizationDiffs(compositionContractResult.diffs, {
     hostDiffs,
     hostReference: referenceStructure ?? [],
     nestedContextEvidence: alignedActualStructure
@@ -377,7 +463,7 @@ export async function classifyComponentNode(
               instance.componentInstance ?? null,
             );
           },
-          diffsForAssessment,
+          compositionContractResult.diffs,
           (nestedComponentKey) =>
             findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
           {
@@ -556,4 +642,3 @@ export async function classifyComponentNode(
     resolvedReferenceVariantName,
   };
 }
-

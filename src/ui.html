@@ -886,7 +886,7 @@
             case 'detached':
               return () => resolveViewArray(['detached']);
             case 'changes':
-              return () => resolveViewArray(['changes']);
+              return () => getVisibleCustomizationItems();
             case 'technical':
               return () => resolveViewArray(['relevance', 'technical']);
             case 'deprecated':
@@ -921,6 +921,7 @@
         let currentChannelId = 'b2b';
         let currentPickerLabel = 'Desktop';
         let shellAuditEnabled = false;
+        let showExpectedCustomizations = true;
         let agentReportMeta = null;
         let activeApolloView = 'audit';
         let agentRequestInProgress = false;
@@ -976,6 +977,7 @@
                 onChannelChange: handleChannelChange,
                 onPickerChange: handlePickerChange,
                 onShellAuditToggle: handleShellAuditToggle,
+                onShowExpectedToggle: handleShowExpectedToggle,
                 onExampleCapture: handleGenerationExampleCapture,
               }),
             );
@@ -1669,7 +1671,6 @@
                   typeof diff.details?.bindingStatus === 'string' ||
                   Boolean(diff.details?.variableMode);
                 const marker =
-                  !isVariantDiff &&
                   (diff.assessment?.verdict === 'expected' ||
                     diff.assessment?.verdict === 'allowed')
                     ? 'Expected'
@@ -1686,10 +1687,14 @@
                         structuredValues || [(diff.message || '').trim() || '—'],
                       marker,
                     };
+                let remediation = diff.assessment?.remediation;
+                const isStructuralCompositionDiff =
+                  typeof diff.details?.property === 'string' &&
+                  diff.details.property.indexOf('composition.') === 0;
                 const canReset =
                   diff.assessment?.verdict !== 'expected' &&
-                  diff.assessment?.verdict !== 'allowed';
-                let remediation = diff.assessment?.remediation;
+                  diff.assessment?.verdict !== 'allowed' &&
+                  (!isStructuralCompositionDiff || Boolean(remediation));
                 if (!remediation && canReset && isVariantDiff && diff.nodeId) {
                   const property = diff.details?.property?.slice('variant.'.length);
                   const referenceValue = diff.details?.reference?.value;
@@ -1713,6 +1718,12 @@
                         property: diff.details.property,
                         reference: diff.details.reference,
                         message: diff.message,
+                        resetSurface:
+                          diff.assessment?.evidence?.resetSurface === 'layer' &&
+                          (diff.details.property === 'fill' ||
+                            diff.details.property === 'stroke')
+                            ? 'paint'
+                            : undefined,
                       }
                     : null;
 
@@ -1866,12 +1877,14 @@
         }
 
         function getDiffKey(diff) {
-          return (
+          const locationKey =
             diff.nodeId ??
             diff.nodePath ??
             diff.nodeName ??
-            String(diff.message ?? 'diff')
-          );
+            'diff';
+          const propertyKey =
+            diff.details?.property ?? String(diff.message ?? 'change');
+          return `${locationKey}:${propertyKey}`;
         }
 
         function dedupeDiffs(diffs) {
@@ -1905,8 +1918,21 @@
          */
         function prepareChangeDiffs(item) {
           const rawDiffs = Array.isArray(item.diffs) ? item.diffs : [];
+          const visibleDiffs = showExpectedCustomizations
+            ? rawDiffs
+            : rawDiffs.filter(
+                (diff) =>
+                  diff?.assessment?.verdict !== 'expected' &&
+                  diff?.assessment?.verdict !== 'allowed',
+              );
 
-          return dedupeDiffs(rawDiffs);
+          return dedupeDiffs(visibleDiffs);
+        }
+
+        function getVisibleCustomizationItems() {
+          return resolveViewArray(['changes']).filter(
+            (item) => prepareChangeDiffs(item).length > 0,
+          );
         }
 
         function setScanningState(active) {
@@ -3075,6 +3101,12 @@
           syncChromeState();
         }
 
+        function handleShowExpectedToggle() {
+          showExpectedCustomizations = !showExpectedCustomizations;
+          renderTabs();
+          renderList();
+        }
+
         function handleGenerationExampleCapture(payload) {
           parent.postMessage(
             {
@@ -3168,6 +3200,7 @@
                 : 'primary',
             compact: isCompact,
             shellAuditEnabled,
+            showExpectedCustomizations,
             tabs,
           };
 

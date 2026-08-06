@@ -76,8 +76,14 @@ export function validateRemoteContractIndex(
     const artifacts = asRecord(entry.artifacts, `${label}.artifacts`);
     const normalizedArtifacts = normalizeArtifacts(artifacts, label);
     if (policy === 'required') {
-      if (!normalizedArtifacts.rules || !normalizedArtifacts.composition) {
-        throw new Error(`${label} requires rules and composition artifacts`);
+      if (
+        !normalizedArtifacts.generatedContract ||
+        !normalizedArtifacts.rules ||
+        !normalizedArtifacts.composition
+      ) {
+        throw new Error(
+          `${label} requires generatedContract, rules and composition artifacts`,
+        );
       }
     }
 

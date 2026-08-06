@@ -48,7 +48,7 @@ function main() {
   );
   const workspaceConfigPath = path.resolve(
     __dirname,
-    '../../../../shared/design-system_ab/JSONS/apollo/patternRules.json',
+    '../../../shared/design-system_ab/JSONS/apollo/patternRules.json',
   );
 
   const fixture = setPatternRulesConfig(readJson(fixturePath));
@@ -64,6 +64,18 @@ function main() {
     const workspace = setPatternRulesConfig(readJson(workspaceConfigPath));
     assert.equal(workspace.schemaVersion, 1);
     assert.ok(workspace.rules.length > 0);
+    assert.equal(
+      workspace.rules.some(
+        (rule) => rule.id === 'background-plate.level-one-type',
+      ),
+      false,
+      'BackgroundPlate Type must be owned by its component composition contract only.',
+    );
+    assert.equal(
+      workspace.rules.some((rule) => rule.id === 'title-view.status-size-24'),
+      false,
+      'TitleView Status size must be owned by compositionContracts.json only.',
+    );
   }
 
   assert.throws(

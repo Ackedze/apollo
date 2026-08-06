@@ -30,6 +30,7 @@ function main() {
     compileContractAgentContextArtifact,
     compileContractCompositionArtifact,
     compileContractExamplesArtifact,
+    compileContractGeneratedApiArtifact,
     compileContractRulesArtifact,
   } = loadModule();
   const entry = {
@@ -52,15 +53,61 @@ function main() {
   assert.equal(rules.rulesFile.rules[0].ruleId, 'test.rule');
   assert.equal(compileContractRulesArtifact({ rules: [] }, entry, aliases), null);
 
+  const api = compileContractGeneratedApiArtifact(
+    {
+      schemaVersion: 'apollo.ds-contracts.v1',
+      contracts: [{
+        id: 'test.desktop',
+        name: '[D] Test',
+        normalizedName: 'test',
+        componentKey: 'test-set-key',
+        status: 'active',
+        role: 'main',
+        platform: 'desktop',
+        figma: {
+          variants: {
+            properties: {View: ['Primary', 'Secondary']},
+            allowedCombinations: [{View: 'Primary'}, {View: 'Secondary'}],
+            variantKeys: [
+              {key: 'test-primary', name: 'View=Primary', properties: {View: 'Primary'}},
+              {key: 'test-secondary', name: 'View=Secondary', properties: {View: 'Secondary'}},
+            ],
+          },
+        },
+      }],
+    },
+    entry,
+    aliases,
+  );
+  assert.equal(api.packageComponentKey, 'web.test');
+  assert.equal(api.contracts[0].componentKey, 'test-set-key');
+  assert.deepEqual(api.contracts[0].figma.variants.properties.View, [
+    'Primary',
+    'Secondary',
+  ]);
+
   const composition = compileContractCompositionArtifact(
     {
       componentKey: 'web.test',
       allowedOverrides: [{ property: 'fill', scope: 'nested' }],
+      contracts: [{
+        id: 'test.composition',
+        match: {hostComponentNames: ['[D] Test']},
+        select: {nestedComponentNames: ['[D] Child'], visibility: 'visible'},
+        constraints: [{
+          id: 'view',
+          op: 'propertyDomain',
+          property: 'View',
+          values: ['Primary'],
+          message: 'Use Primary',
+        }],
+      }],
     },
     aliases,
   );
   assert.equal(composition.contract.componentKey, 'web.test');
   assert.deepEqual(composition.aliases, aliases);
+  assert.equal(composition.contract.contracts[0].id, 'test.composition');
 
   const context = compileContractAgentContextArtifact(
     {

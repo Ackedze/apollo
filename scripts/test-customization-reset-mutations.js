@@ -84,6 +84,77 @@ async function main() {
       },
       ['Token padding top: 8 → 12'],
     );
+
+    const paintedNode = {
+      id: 'painted-node',
+      type: 'FRAME',
+      fills: [{type: 'SOLID', color: {r: 1, g: 0, b: 0}}],
+      strokes: [{type: 'SOLID', color: {r: 0, g: 0, b: 0}}],
+      strokeWeight: 1,
+    };
+    await mutations.applyReferenceResetByDetails(paintedNode, [
+      {
+        property: 'fill',
+        reference: {value: null},
+      },
+      {
+        property: 'stroke',
+        reference: {value: null},
+      },
+    ]);
+    assert.deepEqual(
+      paintedNode.fills,
+      [],
+      'A null fill baseline must remove the custom fill',
+    );
+    assert.deepEqual(
+      paintedNode.strokes,
+      [],
+      'A null stroke baseline must remove the custom stroke',
+    );
+    assert.equal(
+      paintedNode.strokeWeight,
+      0,
+      'Removing the baseline-less stroke must reset its weight',
+    );
+
+    const borderNode = {
+      id: 'border-node',
+      type: 'FRAME',
+      fills: [{type: 'SOLID', color: {r: 1, g: 0, b: 0}}],
+      strokes: [],
+      strokeWeight: 0,
+      strokeAlign: 'CENTER',
+    };
+    await mutations.applyReferencePaintSurfaceReset(borderNode, {
+      id: 2,
+      path: 'Root / Border',
+      type: 'FRAME',
+      fill: {color: '#FFFFFF'},
+      stroke: {
+        color: '#0F1937',
+        weight: 1,
+        align: 'INSIDE',
+      },
+    }, [
+      {
+        property: 'fill',
+        reference: {value: null},
+        resetSurface: 'paint',
+      },
+    ]);
+    assert.deepEqual(
+      borderNode.fills,
+      [],
+      'A Border surface reset must remove the forbidden fill',
+    );
+    assert.equal(
+      borderNode.strokes.length,
+      1,
+      'A Border surface reset must restore the reference stroke',
+    );
+    assert.equal(borderNode.strokeWeight, 1);
+    assert.equal(borderNode.strokeAlign, 'INSIDE');
   } finally {
     console.warn = originalWarn;
     delete globalThis.figma;

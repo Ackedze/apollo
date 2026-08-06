@@ -63,6 +63,7 @@ async function main() {
             figmaKeys: ['figma-test'],
             sourceCatalogPath: 'components/Test.json',
             artifacts: {
+              generatedContract: 'contract.generated.json',
               rules: 'rules.json',
               composition: 'composition.json',
               agentContext: 'agent.json',
@@ -73,12 +74,49 @@ async function main() {
       },
     ],
     [
+      'https://example.test/contracts/Test/contract.generated.json',
+      {
+        schemaVersion: 'apollo.ds-contracts.v1',
+        contracts: [{
+          id: 'test.desktop',
+          name: '[D] Test',
+          normalizedName: 'test',
+          componentKey: 'figma-test',
+          status: 'active',
+          role: 'main',
+          platform: 'desktop',
+          figma: {
+            variants: {
+              properties: {},
+              allowedCombinations: [],
+              variantKeys: [],
+            },
+          },
+        }],
+      },
+    ],
+    [
       'https://example.test/contracts/Test/rules.json',
       { rules: [{ ruleId: 'test.rule', property: 'variant.View' }] },
     ],
     [
       'https://example.test/contracts/Test/composition.json',
-      { componentKey: 'web.test', allowedOverrides: [] },
+      {
+        componentKey: 'web.test',
+        allowedOverrides: [],
+        contracts: [{
+          id: 'test.composition',
+          match: {hostComponentNames: ['[D] Test']},
+          select: {nestedComponentNames: ['[D] Child'], visibility: 'visible'},
+          constraints: [{
+            id: 'view',
+            op: 'propertyDomain',
+            property: 'View',
+            values: ['Primary'],
+            message: 'Use Primary',
+          }],
+        }],
+      },
     ],
     [
       'https://example.test/contracts/Test/agent.json',
@@ -125,8 +163,17 @@ async function main() {
     );
     const hint = { figmaKey: 'figma-test' };
     await registry.ensureContractArtifactsForHints([hint]);
+    assert.equal(registry.getRemoteComponentApiRegistry().length, 1);
+    assert.equal(
+      registry.getComponentApiContractByFigmaKey('figma-test').id,
+      'test.desktop',
+    );
     assert.equal(registry.getRemoteComponentRuleRegistry().length, 1);
     assert.equal(registry.getRemoteCompositionContractRegistry().length, 1);
+    assert.equal(
+      registry.getRemoteCompositionContractRegistry()[0].contract.contracts[0].id,
+      'test.composition',
+    );
     assert.equal(registry.getRemoteComponentAgentContexts()[0].summary, 'Runtime context');
     assert.equal(registry.getContractPackageKeyForHint(hint), 'web.test');
 

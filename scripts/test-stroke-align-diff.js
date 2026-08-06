@@ -107,6 +107,18 @@ function main() {
     'Unchanged stroke alignment must not produce a diff',
   );
 
+  const referenceWithoutStroke = [
+    Object.assign({}, reference[0], {stroke: null}),
+  ];
+  const addedStrokeDiff = diffStructures(
+    center,
+    referenceWithoutStroke,
+  ).diffs.find((diff) => diff.details?.property === 'stroke');
+  assert.ok(addedStrokeDiff, 'A newly added stroke must use canonical stroke details');
+  assert.equal(addedStrokeDiff.diffKind, 'paint');
+  assert.equal(addedStrokeDiff.details.reference.value, null);
+  assert.equal(addedStrokeDiff.details.actual.value, 'border-token');
+
   const componentInstance = {
     componentKey: 'web-corp.background-plate',
     variantProperties: { Type: 'Border' },

@@ -15,8 +15,15 @@ export type CustomizationAssessment = {
   source: CustomizationAssessmentSource;
   reasonCode: string;
   ruleId: string | null;
+  contractId?: string | null;
+  constraintId?: string | null;
+  evidence?: Record<string, unknown> | null;
   message: string;
-  presentation?: 'show' | 'suppress-derived' | 'semantic-variant';
+  presentation?:
+    | 'show'
+    | 'show-expected'
+    | 'suppress-derived'
+    | 'semantic-variant';
   semanticVariantChanges?: Array<{
     nodeId: string;
     property: string;

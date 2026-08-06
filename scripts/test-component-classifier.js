@@ -46,7 +46,21 @@ function dependencies(overrides = {}) {
 }
 
 async function main() {
-  const { classifyComponentNode } = loadModule();
+  const { classifyComponentNode, shouldRunComponentDiff } = loadModule();
+  assert.equal(
+    shouldRunComponentDiff({
+      forcedCategory: false,
+      needsDiff: true,
+      instanceHasOverrides: false,
+      requiresSizingRuleAudit: false,
+      requiresNumericConstraintAudit: false,
+      requiresVariableModeRuleAudit: false,
+      requiresCompositionContractAudit: true,
+      isInheritedFromLocalComponentContext: false,
+    }),
+    true,
+    'A matching composition contract must trigger deep audit without Figma overrides.',
+  );
   let freshnessChecks = 0;
   const page = { id: 'page:1', name: 'Page', type: 'PAGE', parent: null };
   const node = {

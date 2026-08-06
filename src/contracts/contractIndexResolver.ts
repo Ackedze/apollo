@@ -14,6 +14,7 @@ export type ResolvableContractPackage = {
 };
 
 export type ContractPackageArtifactPaths = {
+  generatedContract: string;
   rules: string;
   composition: string;
   overrides: string;
@@ -81,6 +82,10 @@ export function resolveContractPackageArtifactPaths(
   entry: RemoteContractPackage,
 ): ContractPackageArtifactPaths {
   return {
+    generatedContract: getContractPackageArtifactPath(
+      entry,
+      entry.artifacts.generatedContract ?? '',
+    ),
     rules: getContractPackageArtifactPath(
       entry,
       entry.rulesPath ?? entry.rulesFile ?? entry.artifacts.rules ?? '',

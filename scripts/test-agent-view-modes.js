@@ -68,6 +68,31 @@ assertIncludes(
 );
 assertIncludes(
   uiSource,
+  "diff.assessment?.verdict === 'expected'",
+  'Customization UI must render the Expected marker from assessment verdicts.',
+);
+assertIncludes(
+  uiSource,
+  'let showExpectedCustomizations = true;',
+  'Expected customizations must remain visible by default.',
+);
+assertIncludes(
+  uiSource,
+  "return () => getVisibleCustomizationItems();",
+  'Customization counters must use the Expected-aware visible item source.',
+);
+if (/const marker\s*=\s*!isVariantDiff/.test(uiSource)) {
+  throw new Error(
+    'Expected markers must not be suppressed for semantic variant changes.',
+  );
+}
+assertIncludes(
+  uiSource,
+  "diff.details.property.indexOf('composition.') === 0",
+  'Structural composition violations must not expose a no-op reset action.',
+);
+assertIncludes(
+  uiSource,
   'function getAuditItemCaption(item)',
   'Audit cards must have a typed caption formatter for native library updates.',
 );

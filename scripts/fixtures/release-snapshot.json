@@ -10,6 +10,7 @@
       "baseUrl": "https://release.test/JSONS/",
       "apollo": {
         "patternRulesPath": "apollo/patternRules.json",
+        "compositionContractsPath": "apollo/compositionContracts.json",
         "componentContractIndexPath": "apollo/indexes/componentContractIndex.json",
         "remediationConfigPath": "apollo/remediations.json",
         "auditPolicyConfigPath": "apollo/auditPolicies.json"
@@ -50,6 +51,10 @@
     "apollo/patternRules.json": {
       "schemaVersion": 1,
       "rules": []
+    },
+    "apollo/compositionContracts.json": {
+      "schemaVersion": 1,
+      "contracts": []
     },
     "apollo/remediations.json": {
       "schemaVersion": 1,
@@ -186,10 +191,45 @@
           ],
           "sourceCatalogPath": "components/Test.json",
           "artifacts": {
+            "generatedContract": "contract.generated.json",
             "rules": "rules.json",
             "composition": "composition-contract.json",
             "agentContext": "agent-context.json",
             "examples": "examples.json"
+          }
+        }
+      ]
+    },
+    "apollo/contracts/Test/contract.generated.json": {
+      "schemaVersion": "apollo.ds-contracts.v1",
+      "source": {
+        "library": "Release Fixture",
+        "file": "Test",
+        "generatedAt": "2026-08-04T00:00:00.000Z",
+        "exportVersion": "test"
+      },
+      "stats": {
+        "componentCount": 1,
+        "contractCount": 1,
+        "activeCount": 1,
+        "deprecatedCount": 0,
+        "scheduledCount": 0
+      },
+      "contracts": [
+        {
+          "id": "test.desktop",
+          "name": "[D] Test",
+          "normalizedName": "test",
+          "componentKey": "figma-test",
+          "status": "active",
+          "role": "main",
+          "platform": "desktop",
+          "figma": {
+            "variants": {
+              "properties": {},
+              "allowedCombinations": [],
+              "variantKeys": []
+            }
           }
         }
       ]

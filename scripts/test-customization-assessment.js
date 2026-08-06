@@ -65,7 +65,9 @@ function main() {
     collapseConfiguredSemanticVariantDiffs,
     collapseSemanticVariantDiffs,
     createNestedContextEvidence,
+    createPatternContextResolver,
     evaluatePatternRules,
+    setCompositionContractsConfig,
     setPatternRulesConfig,
   } = loadModule(
     '../src/assessment/customizationAssessment.ts',
@@ -78,6 +80,40 @@ function main() {
       ),
     ),
   );
+  setCompositionContractsConfig({
+    schemaVersion: 1,
+    contracts: [
+      {
+        id: 'background-plate.composition',
+        match: {hostComponentNames: ['[D] BackgroundPlate']},
+        select: {nestedComponentNames: ['[D] Style Level 1']},
+        constraints: [
+          {
+            id: 'level-one-type',
+            op: 'propertyDomain',
+            property: 'Type',
+            values: ['Primary', 'Secondary', 'Colored', 'Border'],
+            message: 'Allowed Type',
+          },
+        ],
+        subtreePropertyPolicies: [
+          {
+            id: 'surface-paint',
+            variantProperty: 'Type',
+            controlledProperties: ['fill', 'stroke'],
+            allowedPropertiesByValue: {
+              Primary: [],
+              Secondary: [],
+              Colored: ['fill'],
+              Border: ['stroke'],
+            },
+            allowedMessage: 'Allowed surface paint',
+            violationMessage: 'Forbidden surface paint',
+          },
+        ],
+      },
+    ],
+  });
   const hostReference = [
     {
       id: 1,
@@ -98,6 +134,198 @@ function main() {
       radius: 0,
     },
   ];
+
+  const assessBackgroundPaint = (
+    type,
+    property,
+    nestedExplains = false,
+    initialAssessment = null,
+  ) => {
+    const label = property === 'fill' ? 'заливка' : 'обводка';
+    const diff = {
+      ...makeDiff(),
+      nodeId: `background-${type}-${property}`,
+      nodePath: '[D] BackgroundPlate / [D] Style Level 1 / Surface',
+      nodeName: 'Surface',
+      message: `${label}: neutral/100 → decorative/green`,
+      details: {
+        property,
+        reference: {value: 'neutral/100'},
+        actual: {value: 'decorative/green'},
+      },
+      ...(initialAssessment ? {assessment: initialAssessment} : {}),
+    };
+    return assessCustomizationDiffs([diff], {
+      hostDiffs: [],
+      hostReference: [],
+      nestedContextEvidence: {
+        explains: () => nestedExplains,
+        selectedReference: () => null,
+      },
+      resolvePatternContext: () => ({
+        hostComponentKey: null,
+        hostComponentName: '[D] BackgroundPlate',
+        nestedComponentKey: null,
+        nestedComponentName: '[D] Style Level 1',
+        occurrence: 1,
+        nestedCount: 1,
+        actualVariantProperties: {Type: type},
+        expectedVariantProperties: {Type: 'Primary'},
+        nestedNodeId: 'background-style',
+      }),
+    });
+  };
+
+  for (const [type, property] of [
+    ['Colored', 'fill'],
+    ['Border', 'stroke'],
+  ]) {
+    const allowedPaint = assessBackgroundPaint(type, property);
+    assert.equal(allowedPaint[0].assessment.verdict, 'expected');
+    assert.equal(allowedPaint[0].assessment.source, 'component-contract');
+    assert.equal(allowedPaint[0].assessment.presentation, 'show-expected');
+    assert.equal(
+      applyAssessmentPresentation(allowedPaint).length,
+      1,
+      `${type} ${property} must stay visible with the Expected marker.`,
+    );
+  }
+
+  for (const [type, property] of [
+    ['Primary', 'fill'],
+    ['Primary', 'stroke'],
+    ['Secondary', 'fill'],
+    ['Secondary', 'stroke'],
+    ['Colored', 'stroke'],
+    ['Border', 'fill'],
+  ]) {
+    const forbiddenPaint = assessBackgroundPaint(type, property);
+    assert.equal(
+      forbiddenPaint[0].assessment.verdict,
+      'violation',
+      `${type} ${property} must be a violation.`,
+    );
+  }
+
+  const derivedSecondaryPaint = assessBackgroundPaint('Secondary', 'fill', true);
+  assert.equal(derivedSecondaryPaint[0].assessment.verdict, 'expected');
+  assert.equal(
+    derivedSecondaryPaint[0].assessment.source,
+    'catalog-host',
+    'Paint explained by the selected variant must not be treated as a manual override.',
+  );
+  assert.equal(applyAssessmentPresentation(derivedSecondaryPaint).length, 0);
+
+  const conflictingGeneratedRule = assessBackgroundPaint(
+    'Colored',
+    'fill',
+    false,
+    {
+      verdict: 'violation',
+      source: 'component-contract',
+      reasonCode: 'component-contract-violation',
+      ruleId: 'generated.background-plate.color-token-rule',
+      message: 'Generic generated rule',
+      remediation: null,
+      presentation: 'show',
+    },
+  );
+  assert.equal(conflictingGeneratedRule[0].assessment.verdict, 'expected');
+  assert.equal(
+    conflictingGeneratedRule[0].assessment.ruleId,
+    'background-plate.composition.surface-paint',
+    'A structured subtree policy must override a generic generated rule.',
+  );
+
+  const backgroundRoot = {
+    id: 10,
+    nodeId: 'background-root',
+    parentId: null,
+    path: 'Position=Level 1 (outer)',
+    type: 'INSTANCE',
+    name: '[D] BackgroundPlate',
+    visible: true,
+    radius: 0,
+    componentInstance: {
+      componentKey: 'background-variant',
+      variantProperties: {Position: 'Level 1 (outer)'},
+    },
+  };
+  const actualStyleLevel = {
+    id: 11,
+    nodeId: 'style-level-actual',
+    parentId: 10,
+    path: 'Position=Level 1 (outer) / [D] Style Level 1',
+    type: 'INSTANCE',
+    name: '[D] Style Level 1',
+    visible: true,
+    radius: 0,
+    componentInstance: {
+      componentKey: 'style-level-colored-variant',
+      variantProperties: {Type: 'Colored'},
+    },
+  };
+  const referenceStyleLevel = {
+    ...actualStyleLevel,
+    nodeId: null,
+    componentInstance: {
+      componentKey: 'style-level-family',
+      variantProperties: {Type: 'Primary'},
+    },
+  };
+  const realContextDiff = {
+    ...makeDiff(),
+    nodeId: 'style-level-actual',
+    nodePath: actualStyleLevel.path,
+    nodeName: '[D] Style Level 1',
+    details: {
+      property: 'fill',
+      reference: {value: 'base-bg-alt/secondary'},
+      actual: {value: 'status-muted/positive'},
+    },
+    context: {
+      ...context(),
+      actualNestedOwnerPath: backgroundRoot.path,
+      nestedOwnerPath: referenceStyleLevel.path,
+      actualNestedOwnerComponentKey: 'background-variant',
+      nestedOwnerComponentKey: 'style-level-family',
+    },
+    assessment: {
+      verdict: 'violation',
+      source: 'component-contract',
+      reasonCode: 'component-contract-violation',
+      ruleId: 'generated.background-plate.color-token-rule',
+      message: 'Generic generated rule',
+      remediation: null,
+    },
+  };
+  const realContextResolver = createPatternContextResolver({
+    actualStructure: [backgroundRoot, actualStyleLevel],
+    hostReference: [backgroundRoot, referenceStyleLevel],
+    hostComponentKey: null,
+    hostComponentName: '[D] BackgroundPlate',
+    resolveComponent: (key) =>
+      key === 'style-level-colored-variant'
+        ? {key: 'style-level-family', displayName: '[D] Style Level 1'}
+        : {key, displayName: '[D] BackgroundPlate'},
+  });
+  const resolvedRealContext = realContextResolver(realContextDiff);
+  assert.equal(resolvedRealContext.nestedComponentName, '[D] Style Level 1');
+  assert.equal(resolvedRealContext.actualVariantProperties.Type, 'Colored');
+  const assessedRealContext = assessCustomizationDiffs([realContextDiff], {
+    hostDiffs: [],
+    hostReference: [backgroundRoot, referenceStyleLevel],
+    nestedContextEvidence: {
+      explains: () => false,
+      selectedReference: () => null,
+    },
+    resolvePatternContext: realContextResolver,
+  });
+  assert.equal(assessedRealContext[0].assessment.verdict, 'expected');
+  assert.equal(
+    assessedRealContext[0].assessment.ruleId,
+    'background-plate.composition.surface-paint',
+  );
 
   const expected = assessCustomizationDiffs([makeDiff()], {
     hostDiffs: [],
@@ -156,8 +384,8 @@ function main() {
   );
   assert.equal(
     nestedExplainedVariant[0].assessment.verdict,
-    'unknown',
-    'Nested context must not convert variant state changes into Expected diffs',
+    'expected',
+    'Nested variant state changes confirmed by the selected ancestor structure must be Expected',
   );
 
   const violation = assessCustomizationDiffs([makeDiff()], {
@@ -409,6 +637,299 @@ function main() {
     nestedEvidence.explains(nestedExpectedDiff),
     true,
     'Selected nested variant must explain its own catalog values',
+  );
+
+  const statusPresetActual = [
+    {
+      id: 19,
+      nodeId: '1:title-view',
+      parentId: null,
+      path: 'TitleView',
+      type: 'INSTANCE',
+      name: 'TitleView',
+      visible: true,
+      componentInstance: {
+        componentKey: 'title-view',
+        variantProperties: { View: 'xLarge' },
+      },
+    },
+    {
+      id: 20,
+      nodeId: '1:status-preset',
+      parentId: 19,
+      path: 'TitleView / StatusPreset',
+      type: 'INSTANCE',
+      name: 'StatusPreset',
+      visible: true,
+      componentInstance: {
+        componentKey: 'status-preset-action-20',
+        variantProperties: {
+          Type: 'Action',
+          Style: 'Contrast',
+          Size: '20',
+        },
+      },
+    },
+    {
+      id: 21,
+      nodeId: '1:status',
+      parentId: 20,
+      path: 'TitleView / StatusPreset / Status',
+      type: 'INSTANCE',
+      name: 'Status',
+      visible: true,
+      componentInstance: {
+        componentKey: 'status-size-20',
+        variantProperties: {
+          LeftAddon: 'False',
+          RightAddon: 'False',
+          Shape: 'Rounded',
+          Size: '20',
+        },
+      },
+    },
+  ];
+  const selectedStatusPresetReference = [
+    {
+      id: 30,
+      parentId: null,
+      path: 'Type=Action, Style=Contrast, Size=20',
+      type: 'COMPONENT',
+      name: 'Type=Action, Style=Contrast, Size=20',
+      visible: true,
+    },
+    {
+      id: 31,
+      parentId: 30,
+      path: 'Type=Action, Style=Contrast, Size=20 / Status',
+      type: 'INSTANCE',
+      name: 'Status',
+      visible: true,
+      componentInstance: {
+        variantProperties: {
+          LeftAddon: 'False',
+          RightAddon: 'False',
+          Shape: 'Rounded',
+          Size: '20',
+        },
+      },
+    },
+  ];
+  const statusSizeDiff = {
+    ...makeDiff(),
+    nodeId: '1:status',
+    nodePath: 'TitleView / StatusPreset / Status',
+    diffKind: 'other',
+    details: {
+      property: 'variant.Size',
+      reference: { value: '24' },
+      actual: { value: '20' },
+    },
+  };
+  const statusPresetEvidence = createNestedContextEvidence(
+    statusPresetActual,
+    (instance) =>
+      instance.componentInstance?.componentKey === 'status-preset-action-20'
+        ? selectedStatusPresetReference
+        : null,
+    [statusSizeDiff],
+  );
+  assert.equal(
+    statusPresetEvidence.explains(statusSizeDiff),
+    true,
+    'Selected StatusPreset variant must explain the derived nested Status size',
+  );
+  const assessedDerivedStatusSize = assessCustomizationDiffs(
+    [statusSizeDiff],
+    {
+      hostDiffs: [],
+      hostReference: [],
+      nestedContextEvidence: statusPresetEvidence,
+    },
+  )[0];
+  assert.equal(
+    assessedDerivedStatusSize.assessment.verdict,
+    'expected',
+    'A nested variant value selected by StatusPreset must be Expected',
+  );
+
+  const statusPresetSizeDiff = {
+    ...statusSizeDiff,
+    nodeId: '1:status-preset',
+    nodePath: 'TitleView / StatusPreset',
+    assessment: {
+      verdict: 'violation',
+      source: 'component-contract',
+      reasonCode: 'contextual-variant-violation',
+      ruleId: 'title-view.status-size-24',
+      message: 'StatusPreset must use Size=24',
+      remediation: null,
+      presentation: 'show',
+    },
+  };
+  const collapsedStatusDiffs = collapseVisualDiffsUnderVariantChanges(
+    [statusPresetSizeDiff, assessedDerivedStatusSize],
+    statusPresetActual,
+  );
+  assert.deepEqual(
+    collapsedStatusDiffs,
+    [statusPresetSizeDiff],
+    'A derived Status size must collapse under the matching StatusPreset size change',
+  );
+
+  const manuallyChangedStatusActual = statusPresetActual.map((node) =>
+    node.nodeId === '1:status'
+      ? {
+          ...node,
+          componentInstance: {
+            ...node.componentInstance,
+            componentKey: 'status-size-32',
+            variantProperties: {
+              ...node.componentInstance.variantProperties,
+              Size: '32',
+            },
+          },
+        }
+      : node,
+  );
+  const manualStatusSizeDiff = {
+    ...statusSizeDiff,
+    details: {
+      property: 'variant.Size',
+      reference: { value: '24' },
+      actual: { value: '32' },
+    },
+  };
+  const manualStatusEvidence = createNestedContextEvidence(
+    manuallyChangedStatusActual,
+    (instance) => {
+      if (instance.componentInstance?.componentKey === 'status-preset-action-20') {
+        return selectedStatusPresetReference;
+      }
+      if (instance.componentInstance?.componentKey === 'status-size-32') {
+        return [
+          {
+            id: 40,
+            parentId: null,
+            path: 'Size=32',
+            type: 'COMPONENT',
+            name: 'Size=32',
+            visible: true,
+            componentInstance: {
+              variantProperties: {Size: '32'},
+            },
+          },
+        ];
+      }
+      return null;
+    },
+    [manualStatusSizeDiff],
+  );
+  const assessedManualStatusSize = assessCustomizationDiffs(
+    [manualStatusSizeDiff],
+    {
+      hostDiffs: [],
+      hostReference: [],
+      nestedContextEvidence: manualStatusEvidence,
+    },
+  )[0];
+  assert.equal(
+    assessedManualStatusSize.assessment.verdict,
+    'violation',
+    'A nested Status variant that differs from the selected StatusPreset structure must be a violation',
+  );
+  assert.equal(
+    assessedManualStatusSize.details.reference.value,
+    '20',
+    'The violation baseline must come from the selected StatusPreset structure',
+  );
+
+  const independentlySelectedChildActual = statusPresetActual.map((node) => {
+    if (node.nodeId === '1:status-preset') {
+      return {
+        ...node,
+        componentInstance: {
+          componentKey: 'container-static',
+          variantProperties: {Type: 'Static'},
+        },
+      };
+    }
+    if (node.nodeId === '1:status') {
+      return {
+        ...node,
+        componentInstance: {
+          componentKey: 'content-table',
+          variantProperties: {Type: 'TableContent'},
+        },
+      };
+    }
+    return node;
+  });
+  const independentChildDiff = {
+    ...statusSizeDiff,
+    details: {
+      property: 'variant.Type',
+      reference: {value: 'Custom'},
+      actual: {value: 'TableContent'},
+    },
+  };
+  const independentlySelectedChildEvidence = createNestedContextEvidence(
+    independentlySelectedChildActual,
+    (instance) => {
+      if (instance.componentInstance?.componentKey === 'container-static') {
+        return [
+          {
+            id: 50,
+            parentId: null,
+            path: 'Type=Static',
+            type: 'COMPONENT',
+            name: 'Type=Static',
+            visible: true,
+            componentInstance: {variantProperties: {Type: 'Static'}},
+          },
+          {
+            id: 51,
+            parentId: 50,
+            path: 'Type=Static / Status',
+            type: 'INSTANCE',
+            name: 'Status',
+            visible: true,
+            componentInstance: {variantProperties: {Type: 'Custom'}},
+          },
+        ];
+      }
+      if (instance.componentInstance?.componentKey === 'content-table') {
+        return [
+          {
+            id: 60,
+            parentId: null,
+            path: 'Type=TableContent',
+            type: 'COMPONENT',
+            name: 'Type=TableContent',
+            visible: true,
+            componentInstance: {variantProperties: {Type: 'TableContent'}},
+          },
+        ];
+      }
+      return null;
+    },
+    [independentChildDiff],
+  );
+  assert.equal(
+    independentlySelectedChildEvidence.hasControllingVariantMismatch(
+      independentChildDiff,
+    ),
+    false,
+    'A parent with a different semantic Type domain must not control the nested Type value',
+  );
+  assert.equal(
+    assessCustomizationDiffs([independentChildDiff], {
+      hostDiffs: [],
+      hostReference: [],
+      nestedContextEvidence: independentlySelectedChildEvidence,
+    })[0].assessment.verdict,
+    'expected',
+    'A public variant selected on an independent nested component must remain Expected',
   );
   assert.equal(
     nestedEvidence.explains({

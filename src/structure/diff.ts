@@ -1513,8 +1513,28 @@ function compareStroke(
       Boolean(actualValue) &&
       typeof actualWeight === 'number' &&
       actualWeight > 0;
-    if (hasActualStroke) {
-      pushDiff(diffs, actualNode, referenceNode, path, `Обводка: — → ${actualValue?.text ?? '—'}`);
+    if (hasActualStroke && actualValue) {
+      pushDiff(
+        diffs,
+        actualNode,
+        referenceNode,
+        path,
+        `Обводка: — → ${actualValue.text}`,
+        'paint',
+        {
+          property: 'stroke',
+          reference: { value: null },
+          actual: paintValueToDiffValue(
+            actualValue,
+            actualNode,
+            resolveVariableMetadata,
+          ),
+          bindingStatus:
+            actualValue.kind === 'token'
+              ? 'missing-reference-binding'
+              : null,
+        },
+      );
     }
     return;
   }

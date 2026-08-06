@@ -45,8 +45,8 @@ function createHarness() {
   const dependencies = {
     ensureReferencesLoaded: async () => calls.push(['ensureReferencesLoaded']),
     getSceneNodeById: async (nodeId) => nodes.get(nodeId) ?? null,
-    resolveReferenceNode: async (node, nodeId) => {
-      calls.push(['resolveReferenceNode', node.id, nodeId]);
+    resolveReferenceNode: async (node, nodeId, options) => {
+      calls.push(['resolveReferenceNode', node.id, nodeId, options]);
       return { ok: true, referenceNode };
     },
     rerunAudit: async (selection) =>
@@ -54,6 +54,8 @@ function createHarness() {
     mutations: {
       applyReferenceResetByDetails: async (node, details) =>
         calls.push(['details', node.id, details]),
+      applyReferencePaintSurfaceReset: async (node, reference, details) =>
+        calls.push(['paintSurface', node.id, reference.path, details]),
       applyReferenceResetByMessages: async (node, reference, messages) =>
         calls.push(['messages', node.id, reference.path, messages]),
     },
@@ -70,6 +72,21 @@ async function main() {
   await createCustomizationResetAction(invalid.dependencies)({});
   assert.deepEqual(invalid.calls, [
     ['notify', 'Недостаточно данных для сброса изменений.'],
+  ]);
+
+  const structuralComposition = createHarness();
+  await createCustomizationResetAction(structuralComposition.dependencies)({
+    rootId: 'root',
+    nodeId: 'target',
+    details: [
+      {
+        property: 'composition.count',
+        reference: { value: '2-4' },
+      },
+    ],
+  });
+  assert.deepEqual(structuralComposition.calls, [
+    ['notify', 'Для нарушения состава автоматический сброс недоступен.'],
   ]);
 
   const remediation = createHarness();
@@ -122,6 +139,41 @@ async function main() {
   );
   assert.equal(
     detailsOnly.calls.some((call) => call[0] === 'resolveReferenceNode'),
+    false,
+  );
+
+  const paintSurface = createHarness();
+  await createCustomizationResetAction(paintSurface.dependencies)({
+    rootId: 'root',
+    nodeId: 'target',
+    details: [
+      {
+        property: 'fill',
+        reference: { value: null },
+        resetSurface: 'paint',
+      },
+    ],
+  });
+  assert.ok(
+    paintSurface.calls.some(
+      (call) =>
+        call[0] === 'resolveReferenceNode' &&
+        call[1] === 'root' &&
+        call[2] === 'target' &&
+        call[3].preferSelectedComponentVariant === true,
+    ),
+  );
+  assert.ok(
+    paintSurface.calls.some(
+      (call) =>
+        call[0] === 'paintSurface' &&
+        call[1] === 'target' &&
+        call[2] === paintSurface.referenceNode.path &&
+        call[3][0].reference.value === null,
+    ),
+  );
+  assert.equal(
+    paintSurface.calls.some((call) => call[0] === 'details'),
     false,
   );
 

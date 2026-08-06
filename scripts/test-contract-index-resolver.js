@@ -35,6 +35,7 @@ function packageState(componentKey, overrides = {}) {
     sourceCatalogPath: `components/${componentKey}.json`,
     aliases: ['Shared alias'],
     artifacts: {
+      generatedContract: 'contract.generated.json',
       rules: 'rules.json',
       composition: 'composition.json',
       examples: 'https://cdn.example.test/examples.json',
@@ -88,6 +89,7 @@ function main() {
   );
 
   assert.deepEqual(resolveContractPackageArtifactPaths(first.indexEntry), {
+    generatedContract: 'contracts/first/contract.generated.json',
     rules: 'contracts/first/rules.json',
     composition: 'contracts/first/composition.json',
     overrides: '',

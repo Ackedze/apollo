@@ -7,6 +7,12 @@ import {
 } from './artifactContext';
 import type { RemoteContractPackage } from './contractIndex';
 import { compilePublicArtifact } from './publicArtifact';
+import {
+  compileGeneratedComponentApiArtifact,
+  type RuntimeComponentApiRegistryEntry,
+} from './componentApiContracts';
+import { validateCompositionContractsConfig } from './compositionContracts';
+import type { CompositionContract } from './compositionContractTypes';
 
 export type RuntimeComponentRuleRegistryEntry = {
   componentKey: string;
@@ -39,6 +45,7 @@ export type RuntimeCompositionContract = {
     styleKey?: string | null;
     scope?: string;
   }>;
+  contracts?: CompositionContract[];
 };
 
 export type RuntimeCompositionRegistryEntry = {
@@ -66,12 +73,35 @@ export function compileContractRulesArtifact(
   };
 }
 
+export function compileContractGeneratedApiArtifact(
+  payload: unknown,
+  entry: RemoteContractPackage,
+  aliases: string[],
+): RuntimeComponentApiRegistryEntry {
+  return compileGeneratedComponentApiArtifact(
+    payload,
+    entry.componentKey,
+    entry.packageName,
+    aliases,
+    entry.figmaKeys,
+  );
+}
+
 export function compileContractCompositionArtifact(
   payload: unknown,
   aliases: string[],
 ): RuntimeCompositionRegistryEntry | null {
-  const contract = compilePublicArtifact(payload);
-  if (!contract || typeof contract !== 'object') return null;
+  const publicContract = compilePublicArtifact(payload);
+  if (!publicContract || typeof publicContract !== 'object') return null;
+  const embeddedContracts = Array.isArray(publicContract.contracts)
+    ? validateCompositionContractsConfig({
+        schemaVersion: 1,
+        contracts: publicContract.contracts,
+      }).contracts
+    : [];
+  const contract = Object.assign({}, publicContract, {
+    contracts: embeddedContracts,
+  });
   return {
     contract: contract as RuntimeCompositionContract,
     aliases,

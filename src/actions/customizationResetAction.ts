@@ -28,7 +28,8 @@ export interface CustomizationResetActionDependencies {
   getSceneNodeById(nodeId: string): Promise<SceneNode | null>;
   resolveReferenceNode(
     rootNode: SceneNode,
-    nodeId: string
+    nodeId: string,
+    options?: { preferSelectedComponentVariant?: boolean }
   ): Promise<CustomizationResetReferenceResult>;
   rerunAudit(fallbackSelection: SceneNode[]): Promise<void>;
   mutations: CustomizationResetMutations;
@@ -48,17 +49,29 @@ export function createCustomizationResetAction(
             typeof message === 'string' && message.trim().length > 0
         )
       : [];
-    const details = Array.isArray(payload?.details)
-      ? payload.details.filter((detail): detail is CustomizationResetDetail =>
+    const requestedDetails = Array.isArray(payload?.details) ? payload.details : [];
+    const hasUnsupportedCompositionDetails = requestedDetails.some(
+      (detail) =>
+        typeof detail?.property === 'string' &&
+        detail.property.startsWith('composition.')
+    );
+    const details = requestedDetails
+      .filter((detail): detail is CustomizationResetDetail =>
           Boolean(
             detail &&
               typeof detail.property === 'string' &&
               detail.property.length > 0 &&
+              !detail.property.startsWith('composition.') &&
               detail.reference &&
               typeof detail.reference === 'object'
           )
-        )
-      : [];
+        );
+    const paintSurfaceResetRequested = details.some(
+      (detail) => detail.resetSurface === 'paint'
+    );
+    const atomicDetails = paintSurfaceResetRequested
+      ? details.filter((detail) => detail.resetSurface !== 'paint')
+      : details;
     const remediations = Array.isArray(payload?.remediations)
       ? payload.remediations.filter(
           (
@@ -83,7 +96,11 @@ export function createCustomizationResetAction(
       !nodeId ||
       (!messages.length && !details.length && !remediations.length)
     ) {
-      dependencies.notify('Недостаточно данных для сброса изменений.');
+      dependencies.notify(
+        hasUnsupportedCompositionDetails
+          ? 'Для нарушения состава автоматический сброс недоступен.'
+          : 'Недостаточно данных для сброса изменений.'
+      );
       return;
     }
 
@@ -114,7 +131,12 @@ export function createCustomizationResetAction(
       return;
     }
 
-    if (details.length && !messages.length && !remediations.length) {
+    if (
+      details.length &&
+      !paintSurfaceResetRequested &&
+      !messages.length &&
+      !remediations.length
+    ) {
       const resetStartedAt = getTimestamp();
       await dependencies.mutations.applyReferenceResetByDetails(
         targetNode,
@@ -132,17 +154,27 @@ export function createCustomizationResetAction(
 
     const referenceResult = await dependencies.resolveReferenceNode(
       rootNode,
-      nodeId
+      nodeId,
+      {
+        preferSelectedComponentVariant: paintSurfaceResetRequested,
+      }
     );
     if (!referenceResult.ok) {
       dependencies.notify(referenceResult.message);
       return;
     }
 
-    if (details.length) {
+    if (paintSurfaceResetRequested) {
+      await dependencies.mutations.applyReferencePaintSurfaceReset(
+        targetNode,
+        referenceResult.referenceNode,
+        details.filter((detail) => detail.resetSurface === 'paint')
+      );
+    }
+    if (atomicDetails.length) {
       await dependencies.mutations.applyReferenceResetByDetails(
         targetNode,
-        details
+        atomicDetails
       );
     }
     if (messages.length) {

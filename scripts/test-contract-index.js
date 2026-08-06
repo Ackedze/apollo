@@ -35,6 +35,7 @@ function packageEntry(overrides = {}) {
     sourceCatalogPath: 'web/Test.json',
     aliases: ['[D] Test'],
     artifacts: {
+      generatedContract: 'contract.generated.json',
       rules: 'rules.json',
       composition: 'composition-contract.json',
     },
@@ -74,7 +75,7 @@ function main() {
       validateRemoteContractIndex(
         index([packageEntry({ artifacts: { rules: 'rules.json' } })]),
       ),
-    /requires rules and composition artifacts/,
+    /requires generatedContract, rules and composition artifacts/,
   );
   assert.doesNotThrow(() =>
     validateRemoteContractIndex(

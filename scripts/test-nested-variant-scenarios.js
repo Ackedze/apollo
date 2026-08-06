@@ -349,6 +349,52 @@ function main() {
     'Nested candidate component key must be preserved while host variantProperties become the expected state',
   );
 
+  const hostControlledInstanceRootDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      {
+        path: 'View=Primary / RightAddon / RightAddon',
+        type: 'INSTANCE',
+        name: 'RightAddon',
+        visible: true,
+        id: 60,
+        parentId: 59,
+        radius: 0,
+        referenceOrigin: 'host',
+        componentInstance: {
+          variantProperties: { Type: 'Icon-24' },
+        },
+      },
+      {
+        path: 'View=Primary / RightAddon / RightAddon',
+        type: 'INSTANCE',
+        name: 'RightAddon',
+        visible: true,
+        id: 160,
+        parentId: 159,
+        radius: 4,
+        referenceOrigin: 'nested-component',
+        referenceOwnerComponentKey: 'addon-icon-24',
+        referenceOwnerPath: 'View=Primary / RightAddon / RightAddon',
+        referenceOwnerRelativePath: '',
+        componentInstance: {
+          componentKey: 'addon-icon-24',
+          variantProperties: { Type: 'Icon-24' },
+        },
+      },
+      'View=Primary / RightAddon / RightAddon',
+      (ownerComponentKey, relativePath) =>
+        ownerComponentKey === 'addon-icon-24' && relativePath === '',
+    );
+  assert.equal(
+    hostControlledInstanceRootDecision.preferCandidate,
+    false,
+    'Standalone nested root must not overwrite a materialized host layout override',
+  );
+  assert.equal(
+    hostControlledInstanceRootDecision.reason,
+    'keep-host-controlled-descendant',
+  );
+
   const mergedHostDescendantRoot = nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
     {
       path: 'Size=56, Overflow=false / [D] Button',

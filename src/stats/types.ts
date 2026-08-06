@@ -100,6 +100,9 @@ export type StatsCustomizationChange = {
     source: string;
     reasonCode: string;
     ruleId: string | null;
+    contractId?: string | null;
+    constraintId?: string | null;
+    evidence?: Record<string, unknown> | null;
     message: string;
     remediation: {
       kind: string;

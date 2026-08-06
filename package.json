@@ -14,6 +14,8 @@
     "test:customization-filters": "node scripts/test-customization-filters.js",
     "test:customization-assessment": "node scripts/test-customization-assessment.js",
     "test:pattern-rules-config": "node scripts/test-pattern-rules-config.js",
+    "test:composition-contracts": "node scripts/test-composition-contracts.js",
+    "test:component-api-contracts": "node scripts/test-component-api-contracts.js",
     "test:allowed-customizations": "node scripts/test-allowed-customizations.js",
     "test:audit-policies": "node scripts/test-audit-policies.js",
     "test:component-key-cache": "node scripts/test-component-key-cache.js",

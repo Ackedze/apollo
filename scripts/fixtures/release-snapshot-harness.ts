@@ -11,8 +11,12 @@ export {
   ensureContractArtifactsForHints,
   ensureContractExamplesForHints,
   getComponentExamplesForKeys,
+  getComponentApiContractByFigmaKey,
   getContractPackageKeyForHint,
+  getRemoteComponentApiRegistry,
   getRemoteComponentAgentContexts,
   getRemoteComponentRuleRegistry,
   getRemoteCompositionContractRegistry,
 } from '../../src/contracts/runtimeContractRegistry';
+
+export { getCompositionContractsConfig } from '../../src/contracts/compositionContracts';

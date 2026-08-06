@@ -31,6 +31,7 @@ export interface CustomizationResetDetail {
   property?: string;
   reference?: CustomizationResetReferenceValue;
   message?: string;
+  resetSurface?: 'paint';
 }
 
 export function createCustomizationResetMutations(
@@ -300,6 +301,26 @@ export function createCustomizationResetMutations(
     }
   }
 
+  async function applyReferencePaintSurfaceReset(
+    node: SceneNode,
+    referenceNode: DSStructureNode,
+    details: CustomizationResetDetail[] = []
+  ) {
+    const fillDetail = details.find((detail) => detail.property === 'fill');
+    const strokeDetail = details.find((detail) => detail.property === 'stroke');
+    if (fillDetail?.reference) {
+      await resetPaintByDiffReference(node, 'fill', fillDetail.reference);
+    } else {
+      await resetPaint(node, referenceNode, 'fill');
+    }
+    if (strokeDetail?.reference) {
+      await resetPaintByDiffReference(node, 'stroke', strokeDetail.reference);
+    } else {
+      await resetPaint(node, referenceNode, 'stroke');
+    }
+    resetStrokeAlign(node, referenceNode);
+  }
+
   function extractPaddingSide(
     message: string
   ): 'top' | 'right' | 'bottom' | 'left' | null {
@@ -498,6 +519,19 @@ export function createCustomizationResetMutations(
       reference.resourceType === 'color' && typeof reference.value === 'string'
         ? reference.value
         : null;
+
+    if (
+      reference.value === null ||
+      reference.value === undefined ||
+      reference.value === '—'
+    ) {
+      mutableNode[prop] = [];
+      if (target === 'stroke' && 'strokeWeight' in mutableNode) {
+        mutableNode.strokeWeight = 0;
+      }
+      return;
+    }
+
     const paint = await buildSolidPaintFromReference({ token, color });
 
     if (!paint) {
@@ -878,6 +912,7 @@ export function createCustomizationResetMutations(
 
   return {
     applyReferenceResetByDetails,
+    applyReferencePaintSurfaceReset,
     applyReferenceResetByMessages,
   };
 }

@@ -29,11 +29,13 @@ type TopSectionProps = {
   actionType: 'primary' | 'secondary';
   compact: boolean;
   shellAuditEnabled: boolean;
+  showExpectedCustomizations: boolean;
   onActionPress: () => void;
   onToggleCompact: () => void;
   onChannelChange?: (channelId: string) => void;
   onPickerChange?: (pickerLabel: string) => void;
   onShellAuditToggle?: () => void;
+  onShowExpectedToggle?: () => void;
   onExampleCapture?: (request: GenerationExampleCaptureRequest) => void;
 };
 
@@ -105,11 +107,13 @@ export function TopSection({
   actionType,
   compact,
   shellAuditEnabled,
+  showExpectedCustomizations,
   onActionPress,
   onToggleCompact,
   onChannelChange,
   onPickerChange,
   onShellAuditToggle,
+  onShowExpectedToggle,
   onExampleCapture,
 }: TopSectionProps): React.JSX.Element {
   const settingsRootRef = useRef<HTMLDivElement | null>(null);
@@ -186,6 +190,7 @@ export function TopSection({
     selectedOption.label,
     selectedWorkshop.id,
     shellAuditEnabled ? 'shared-on' : 'shared-off',
+    showExpectedCustomizations ? 'expected-on' : 'expected-off',
     actionType,
     actionLabel,
     actionDisabled ? 'disabled' : 'enabled',
@@ -312,6 +317,25 @@ export function TopSection({
           >
             <span className={styles.switchText}>Проверять шаред</span>
             <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+              <span className={styles.switchThumb} />
+            </span>
+          </button>
+          <button
+            type="button"
+            className={styles.switchRow}
+            disabled={actionLoading}
+            aria-pressed={showExpectedCustomizations}
+            onClick={onShowExpectedToggle}
+          >
+            <span className={styles.switchText}>Показывать Expected</span>
+            <span
+              className={[
+                styles.switchTrack,
+                showExpectedCustomizations ? styles.switchTrackActive : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
               <span className={styles.switchThumb} />
             </span>
           </button>

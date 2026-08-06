@@ -464,6 +464,7 @@ function main() {
       type: 'INSTANCE',
       componentInstance: {
         variantProperties: {
+          View: 'Primary',
           SingleIcon: 'True',
         },
       },
@@ -492,6 +493,82 @@ function main() {
   assert.deepEqual(buttonsGroupSuppressed.matchedContractKeys, [
     'web-corp.buttons-group',
   ]);
+
+  const primaryPositionViolation = makeDiff(
+    'Size=56, Overflow=false / [D] Button',
+    'variant.View',
+    'Secondary',
+    'Primary',
+  );
+  primaryPositionViolation.assessment = {
+    verdict: 'violation',
+    source: 'component-contract',
+    reasonCode: 'composition-contract-violation',
+    ruleId: 'buttons-group.composition.primary-position',
+    contractId: 'buttons-group.composition',
+    constraintId: 'primary-position',
+    message: 'Primary-кнопка необязательна, но может быть только первой',
+    remediation: null,
+  };
+  const protectedPrimaryPositionViolation = applyContractAwareDiffs(
+    [primaryPositionViolation],
+    {
+      enabled: true,
+      hostComponentKey: 'buttons-group-key',
+      hostComponentName: '[D] ButtonsGroup',
+      actualStructure: buttonsGroupReference,
+      hostReference: buttonsGroupReference,
+      resolveStyleLabel: () => null,
+    },
+  );
+
+  assert.equal(protectedPrimaryPositionViolation.diffs.length, 1);
+  assert.equal(
+    protectedPrimaryPositionViolation.diffs[0].assessment.constraintId,
+    'primary-position',
+  );
+  assert.equal(
+    protectedPrimaryPositionViolation.diffs[0].details.reference.value,
+    'Secondary',
+  );
+  assert.equal(protectedPrimaryPositionViolation.suppressedCount, 0);
+  assert.equal(protectedPrimaryPositionViolation.rebasedCount, 0);
+
+  const requiredPaintStateViolation = makeDiff(
+    'Position=Level 1 (outer) / [D] Style Level 1',
+    'fill',
+    'base-bg-alt/secondary',
+    'base-bg-alt/secondary',
+  );
+  requiredPaintStateViolation.assessment = {
+    verdict: 'violation',
+    source: 'component-contract',
+    reasonCode: 'component-contract-violation',
+    ruleId: 'component:web-corp.background-plate.border-has-no-visible-fill',
+    contractId: null,
+    constraintId: null,
+    message: 'Type=Border всегда используется без видимой заливки',
+    remediation: null,
+  };
+  const protectedRequiredPaintStateViolation = applyContractAwareDiffs(
+    [requiredPaintStateViolation],
+    {
+      enabled: true,
+      hostComponentKey: 'background-plate-key',
+      hostComponentName: '[D] BackgroundPlate',
+      actualStructure: [],
+      hostReference: [],
+      resolveStyleLabel: () => null,
+    },
+  );
+
+  assert.equal(protectedRequiredPaintStateViolation.diffs.length, 1);
+  assert.equal(
+    protectedRequiredPaintStateViolation.diffs[0].assessment.ruleId,
+    'component:web-corp.background-plate.border-has-no-visible-fill',
+  );
+  assert.equal(protectedRequiredPaintStateViolation.suppressedCount, 0);
+  assert.equal(protectedRequiredPaintStateViolation.rebasedCount, 0);
 
   const overflowReference = [
     makeNode(1, 'Size=56, Overflow=true', 'Size=56, Overflow=true', {

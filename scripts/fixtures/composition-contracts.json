@@ -1,0 +1,286 @@
+{
+  "buttonGroup": {
+    "schemaVersion": 2,
+    "documentType": "composition-contract",
+    "metadata": {
+      "componentKey": "web-corp.buttons-group",
+      "status": "ready",
+      "ownershipSchema": "apollo.artifact-ownership.v2"
+    },
+    "generated": {
+      "component": {
+        "name": "ButtonGroup [D]",
+        "library": "Web _ Corp Components"
+      }
+    },
+    "manual": {
+      "contracts": [
+        {
+          "id": "buttons-group.composition",
+          "match": {
+            "hostComponentNames": ["[D] ButtonsGroup", "[M] ButtonsGroup"]
+          },
+          "select": {
+            "nestedComponentNames": ["[D] Button", "[M] Button"],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "button-count",
+              "op": "countBetween",
+              "min": 2,
+              "max": 4,
+              "message": "В ButtonsGroup должно быть от двух до четырёх кнопок"
+            },
+            {
+              "id": "allowed-views",
+              "op": "propertyDomain",
+              "property": "View",
+              "values": ["Primary", "Secondary"],
+              "message": "В ButtonsGroup допускаются только View=Primary и View=Secondary"
+            },
+            {
+              "id": "uniform-size",
+              "op": "propertyEqualsHost",
+              "property": "Size",
+              "message": "Размер каждой кнопки должен совпадать с Size группы"
+            },
+            {
+              "id": "primary-position",
+              "op": "valuePosition",
+              "property": "View",
+              "value": "Primary",
+              "positions": ["first"],
+              "maxCount": 1,
+              "replacement": "Secondary",
+              "message": "Primary-кнопка необязательна, но может быть только первой"
+            },
+            {
+              "id": "single-icon-position",
+              "op": "valuePosition",
+              "property": "SingleIcon",
+              "value": "True",
+              "positions": ["last"],
+              "maxCount": 1,
+              "replacement": "False",
+              "message": "SingleIcon допускается только у последней кнопки и только один раз"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "titleView": {
+    "schemaVersion": 2,
+    "documentType": "composition-contract",
+    "metadata": {
+      "componentKey": "web-corp.title-view",
+      "status": "ready",
+      "ownershipSchema": "apollo.artifact-ownership.v2"
+    },
+    "generated": {
+      "component": {
+        "name": "TitleView",
+        "library": "Web _ Corp Components"
+      }
+    },
+    "manual": {
+      "contracts": [
+        {
+          "id": "title-view.status.composition",
+          "match": {
+            "hostComponentNames": ["[D] TitleView", "[M] TitleView"]
+          },
+          "select": {
+            "nestedComponentNames": [
+              "StatusPreset",
+              "🔒 [D] StatusPreset",
+              "🔒 [M] StatusPreset"
+            ],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "status-size",
+              "op": "propertyDomain",
+              "property": "Size",
+              "values": ["24"],
+              "message": "StatusPreset внутри TitleView должен использовать Size=24"
+            }
+          ]
+        },
+        {
+          "id": "title-view.status-type-relation.composition",
+          "match": {
+            "hostComponentNames": ["[D] TitleView", "[M] TitleView"]
+          },
+          "select": {
+            "nestedComponentNames": [
+              "StatusPreset",
+              "🔒 [D] StatusPreset",
+              "🔒 [M] StatusPreset",
+              "[D] TitleStatus",
+              "[M] TitleStatus"
+            ],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "matching-status-type",
+              "op": "propertyEqualsFirst",
+              "property": "Type",
+              "message": "TitleStatus.Type должен совпадать с Type видимого StatusPreset"
+            }
+          ]
+        },
+        {
+          "id": "title-view.button-group.composition",
+          "match": {
+            "hostComponentNames": ["[D] TitleView", "[M] TitleView"]
+          },
+          "select": {
+            "nestedComponentNames": ["[D] Button", "[M] Button"],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "allowed-views",
+              "op": "propertyDomain",
+              "property": "View",
+              "values": ["Primary", "Secondary"],
+              "message": "В Button group внутри TitleView допускаются только View=Primary и View=Secondary"
+            },
+            {
+              "id": "primary-position",
+              "op": "valuePosition",
+              "property": "View",
+              "value": "Primary",
+              "positions": ["first"],
+              "maxCount": 1,
+              "replacement": "Secondary",
+              "message": "Primary-кнопка внутри TitleView необязательна, но может быть только первой"
+            },
+            {
+              "id": "single-icon-position",
+              "op": "valuePosition",
+              "property": "SingleIcon",
+              "value": "True",
+              "positions": ["last"],
+              "maxCount": 1,
+              "replacement": "False",
+              "message": "SingleIcon внутри TitleView допускается только у последней кнопки и только один раз"
+            }
+          ]
+        },
+        {
+          "id": "title-view.desktop-button-size.composition",
+          "match": {
+            "hostComponentNames": ["[D] TitleView"]
+          },
+          "select": {
+            "nestedComponentNames": ["[D] Button"],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "button-size",
+              "op": "propertyDomain",
+              "property": "Size",
+              "values": ["56"],
+              "message": "Button внутри [D] TitleView должен использовать Size=56"
+            }
+          ]
+        },
+        {
+          "id": "title-view.mobile-button-size.composition",
+          "match": {
+            "hostComponentNames": ["[M] TitleView"]
+          },
+          "select": {
+            "nestedComponentNames": ["[M] Button"],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "button-size",
+              "op": "propertyDomain",
+              "property": "Size",
+              "values": ["48"],
+              "message": "Button внутри [M] TitleView должен использовать Size=48"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "backgroundPlate": {
+    "schemaVersion": 2,
+    "documentType": "composition-contract",
+    "metadata": {
+      "componentKey": "web-corp.background-plate",
+      "status": "ready",
+      "ownershipSchema": "apollo.artifact-ownership.v2"
+    },
+    "generated": {
+      "component": {
+        "name": "BackgroundPlate",
+        "library": "Web _ Corp Components"
+      }
+    },
+    "manual": {
+      "contracts": [
+        {
+          "id": "background-plate.composition",
+          "match": {
+            "hostComponentKeys": [
+              "2c7332d281570f4d5af6d334f8df378d24a1f235",
+              "c49f08db71ab44ea64f0880730220de1d93ac263",
+              "4cfe3915785e5c37255190ae16314f6f2a1d05b3",
+              "a58fa7ae11989280fc24069f204ba617fdb1f93c"
+            ]
+          },
+          "select": {
+            "nestedComponentKeys": [
+              "adb65a62cde9ebedc5d0d41d2d77cd63e71e0745",
+              "2b46e94cdecdab7d4cb977055c0405b2f6204127",
+              "efc528bd86582d96a824edeb2c257dc8b22a8f14",
+              "19b4b6ed5718d82888a6551b56e0c776f4993ccc"
+            ],
+            "visibility": "visible",
+            "order": "document"
+          },
+          "constraints": [
+            {
+              "id": "level-one-type",
+              "op": "propertyDomain",
+              "property": "Type",
+              "values": ["Primary", "Secondary", "Colored", "Border"],
+              "message": "Style Level 1 допускает Type=Primary, Secondary, Colored или Border"
+            }
+          ],
+          "subtreePropertyPolicies": [
+            {
+              "id": "surface-paint",
+              "variantProperty": "Type",
+              "controlledProperties": ["fill", "stroke"],
+              "allowedPropertiesByValue": {
+                "Primary": [],
+                "Secondary": [],
+                "Colored": ["fill"],
+                "Border": ["stroke"]
+              },
+              "allowedMessage": "Цвет поверхности разрешён выбранным Type BackgroundPlate",
+              "violationMessage": "Выбранный Type BackgroundPlate не разрешает это изменение поверхности"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

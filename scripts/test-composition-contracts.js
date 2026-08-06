@@ -87,33 +87,26 @@ function main() {
   const {collapseSemanticVariantDiffs} = loadModule(
     '../src/assessment/customizationAssessment.ts',
   );
-  const buttonGroupContractPath = path.resolve(
+  const fixturePath = path.resolve(
     __dirname,
-    '../../../shared/design-system_ab/JSONS/web/components/web-corp/ButtonGroup [D]/composition-contract.json',
+    'fixtures/composition-contracts.json',
   );
+  const fixtures = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
   const buttonGroupComposition = compileContractCompositionArtifact(
-    JSON.parse(fs.readFileSync(buttonGroupContractPath, 'utf8')),
+    fixtures.buttonGroup,
     ['ButtonGroup [D]', '[D] ButtonsGroup', '[M] ButtonsGroup'],
   );
   assert.ok(buttonGroupComposition);
   const config = buttonGroupComposition.contract;
   assert.equal(validateCompositionContractsConfig(config).contracts.length, 1);
-  const titleViewContractPath = path.resolve(
-    __dirname,
-    '../../../shared/design-system_ab/JSONS/web/components/web-corp/TitleView/composition-contract.json',
-  );
   const titleViewComposition = compileContractCompositionArtifact(
-    JSON.parse(fs.readFileSync(titleViewContractPath, 'utf8')),
+    fixtures.titleView,
     ['TitleView', '[D] TitleView', '[M] TitleView'],
   );
   assert.ok(titleViewComposition);
   assert.equal(titleViewComposition.contract.contracts.length, 5);
-  const backgroundPlateContractPath = path.resolve(
-    __dirname,
-    '../../../shared/design-system_ab/JSONS/web/components/web-corp/BackgroundPlate/composition-contract.json',
-  );
   const backgroundPlateComposition = compileContractCompositionArtifact(
-    JSON.parse(fs.readFileSync(backgroundPlateContractPath, 'utf8')),
+    fixtures.backgroundPlate,
     [
       'BackgroundPlate',
       '[D] BackgroundPlate',
@@ -473,7 +466,7 @@ function main() {
       key,
       displayName:
         key === 'status-preset-variant-key'
-            ? 'StatusPreset'
+            ? '🔒 [D] StatusPreset'
             : key === 'title-view-button-key'
               ? '[D] Button'
               : key === 'title-status-key'
@@ -536,7 +529,7 @@ function main() {
       key,
       displayName:
         key === 'status-preset-variant-key'
-          ? 'StatusPreset'
+          ? '🔒 [D] StatusPreset'
           : key === 'title-status-key'
             ? '[D] TitleStatus'
             : key === 'title-view-button-key'

@@ -72,3 +72,8 @@ violations while the corresponding Figma components remain active.
 Adding an operation requires Apollo code, schema validation, Athena publication
 validation and regression tests. Editing selectors or values of an existing
 operation requires only package publication and an Apollo restart.
+
+Apollo regression tests use compact ownership-v2 fixtures from
+`scripts/fixtures/composition-contracts.json` and therefore run in an isolated
+checkout. Athena targeted `contracts:check-apollo` remains responsible for
+validating the real component packages and their compiled registry.

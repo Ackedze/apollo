@@ -439,7 +439,7 @@ async function loadPackageArtifacts(
       const aliases = state.aliases;
       const artifactPaths = resolveContractPackageArtifactPaths(entry);
       const transportOptions = {
-        baseUrl: remoteContractsBaseUrl,
+        baseUrl: entry.baseUrl ?? remoteContractsBaseUrl,
         cacheBust: remoteContractsCacheBust,
       };
 
@@ -541,7 +541,7 @@ async function loadPackageExamples(
       ).examples;
       const payload = path
         ? await fetchRemoteContractArtifactPayload(path, {
-            baseUrl: remoteContractsBaseUrl,
+            baseUrl: state.indexEntry.baseUrl ?? remoteContractsBaseUrl,
             cacheBust: remoteContractsCacheBust,
           })
         : null;

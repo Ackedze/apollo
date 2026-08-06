@@ -20,14 +20,20 @@ type RemoteReferenceCatalogEntry = {
 
 type RemoteReferenceLibrary = {
   name?: string;
+  baseUrl?: string;
   catalogs?: RemoteReferenceCatalogEntry[];
   source?: Record<string, unknown>;
+};
+
+export type RemoteReferenceCatalogManifest = {
+  url: string;
 };
 
 export type RemoteReferenceCatalogList = {
   schemaVersion?: number;
   generatedAt?: string;
   baseUrl?: string;
+  catalogManifests?: RemoteReferenceCatalogManifest[];
   apollo?: {
     patternRulesPath?: string;
     componentContractIndexPath?: string;
@@ -99,14 +105,27 @@ export function buildReferenceCatalogSources(
   const baseUrl = (payload.baseUrl ?? '').trim();
   const entries = normalizeCatalogEntries(payload);
 
-  return entries.map((entry, index) => ({
+  return entries.map(({ entry, baseUrl: entryBaseUrl }, index) => ({
     id: entry.id ?? `catalog${index}`,
     fileName: entry.fileName,
     path: normalizePath(entry.path),
-    url: resolveCatalogUrl(baseUrl, entry.path),
+    url: resolveCatalogUrl(entryBaseUrl || baseUrl, entry.path),
     kind: inferCatalogKind(entry),
-    indexUrl: buildIndexUrl(baseUrl, entry),
+    indexUrl: buildIndexUrl(entryBaseUrl || baseUrl, entry),
   }));
+}
+
+export function resolveCatalogManifestUrls(
+  payload: RemoteReferenceCatalogList,
+): string[] {
+  if (!Array.isArray(payload.catalogManifests)) return [];
+  return payload.catalogManifests.map((entry, index) => {
+    const url = entry?.url?.trim();
+    if (!url || !/^https?:\/\//i.test(url)) {
+      throw new Error(`Reference manifest catalogManifests[${index}].url must be an absolute HTTP(S) URL`);
+    }
+    return url;
+  });
 }
 
 export function validateReferenceCatalogList(
@@ -122,12 +141,14 @@ export function validateReferenceCatalogList(
   }
 
   const entries = normalizeCatalogEntries(payload);
-  if (!entries.length) {
+  const nestedManifestUrls = resolveCatalogManifestUrls(payload);
+  if (!entries.length && !nestedManifestUrls.length) {
     throw new Error('Reference manifest does not contain catalogs');
   }
 
   const paths = new Set<string>();
-  for (const [index, entry] of entries.entries()) {
+  for (const [index, normalized] of entries.entries()) {
+    const entry = normalized.entry;
     const entryPath = normalizePath(entry.path);
     if (!entryPath || !entry.fileName) {
       throw new Error(`Reference manifest catalog[${index}] requires fileName and path`);
@@ -149,15 +170,25 @@ export function validateReferenceCatalogList(
 
 function normalizeCatalogEntries(
   payload: RemoteReferenceCatalogList,
-): RemoteReferenceCatalogEntry[] {
-  const flatCatalogs = Array.isArray(payload.catalogs) ? payload.catalogs : [];
-  const libraryCatalogs: RemoteReferenceCatalogEntry[] = [];
+): Array<{ entry: RemoteReferenceCatalogEntry; baseUrl: string }> {
+  const manifestBaseUrl = (payload.baseUrl ?? '').trim();
+  const flatCatalogs = (Array.isArray(payload.catalogs) ? payload.catalogs : []).map(
+    (entry) => ({ entry, baseUrl: manifestBaseUrl }),
+  );
+  const libraryCatalogs: Array<{
+    entry: RemoteReferenceCatalogEntry;
+    baseUrl: string;
+  }> = [];
 
   if (Array.isArray(payload.libraries)) {
     for (const library of payload.libraries) {
+      const libraryBaseUrl = (library.baseUrl ?? manifestBaseUrl).trim();
+      if (library.baseUrl !== undefined && !/^https?:\/\//i.test(libraryBaseUrl)) {
+        throw new Error(`Reference manifest library ${library.name ?? ''} has invalid baseUrl`);
+      }
       const catalogs = Array.isArray(library.catalogs) ? library.catalogs : [];
       for (const entry of catalogs) {
-        libraryCatalogs.push(entry);
+        libraryCatalogs.push({ entry, baseUrl: libraryBaseUrl });
       }
     }
   }

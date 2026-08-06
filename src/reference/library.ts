@@ -6,6 +6,7 @@ import {
   resolveAuditPolicyConfigUrl,
   resolveComponentContractIndexUrl,
   resolvePatternRulesUrl,
+  resolveCatalogManifestUrls,
   resolveRemediationConfigUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
@@ -315,12 +316,29 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       await ensureAuditPolicyConfigLoaded();
     }
     const sources = buildReferenceCatalogSources(payload);
+    const nestedManifestUrls = resolveCatalogManifestUrls(payload);
+    for (const manifestUrl of nestedManifestUrls) {
+      const nestedResponse = await requestCatalogSource(
+        appendCacheBustingQuery(manifestUrl, 'apolloReferenceSources'),
+      );
+      const nestedPayload = JSON.parse(nestedResponse);
+      const nestedSources = buildReferenceCatalogSources(nestedPayload);
+      sources.push(...nestedSources);
+    }
+    const seenSourcePaths = new Set<string>();
+    for (const source of sources) {
+      if (seenSourcePaths.has(source.path)) {
+        throw new Error(`Reference manifests contain duplicate catalog path: ${source.path}`);
+      }
+      seenSourcePaths.add(source.path);
+    }
 
     console.log('[Apollo] reference sources list loaded', {
       url: apolloReferenceCatalogListUrl,
       baseUrl: payload?.baseUrl ?? '',
       patternRulesUrl,
       auditPolicyConfigUrl,
+      nestedManifestCount: nestedManifestUrls.length,
       count: sources.length,
     });
 

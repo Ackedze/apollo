@@ -13,7 +13,7 @@
 
 ## Что реально умеет сейчас
 После нажатия `Проверить` плагин:
-1. Загружает список reference-каталогов с GitHub Pages.
+1. Загружает основной manifest reference-каталогов и подключённые им catalog manifests с GitHub Pages.
 2. Загружает базовые token- и style-справочники.
 3. Обходит всё видимое поддерево внутри текущего выделения и собирает `componentKey`.
 4. По component indexes определяет только нужные component-каталоги и скачивает их лениво.
@@ -22,6 +22,8 @@
 7. Отправляет в UI готовые списки для табов, позволяет перейти к нужному слою через `focus-node` и показывает безопасные действия для findings с однозначной целью.
 
 Если запрос списка reference-источников целиком не удался, Apollo останавливает загрузку справочников и показывает ошибку. Bundled fallback больше не используется, чтобы не скрывать рассинхрон runtime-данных и component indexes.
+
+Основной bootstrap остаётся в `Ackedze/design-system_ab`, а тяжёлые Android/iOS ABM-каталоги и их indexes публикуются из `Ackedze/desing-system_abm`. Bootstrap подключает ABM через `catalogManifests`; каждый дочерний manifest задаёт собственный абсолютный `baseUrl`. Apollo объединяет источники только после строгой проверки всех manifest-файлов и блокирует загрузку при дубликате catalog path или недоступном обязательном дочернем manifest.
 
 Важно: Apollo работает с component-каталогами через index-only lazy loading. После первой проверки он не должен скачивать все component-каталоги подряд. Reference manifest schema v2 обязан явно содержать `source.indexPath` для каждого component-каталога; отсутствующий или недоступный index останавливает проверку, а не включает inferred fallback.
 

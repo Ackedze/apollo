@@ -58,6 +58,11 @@ function main() {
   const validated = validateRemoteContractIndex(index([packageEntry()]));
   assert.equal(validated.coverage.defaultPolicy, 'none');
   assert.equal(validated.packages[0].coverage, 'required');
+  const packageBaseUrl = 'https://example.test/abm-contracts/';
+  const splitValidated = validateRemoteContractIndex(
+    index([packageEntry({ baseUrl: packageBaseUrl })]),
+  );
+  assert.equal(splitValidated.packages[0].baseUrl, packageBaseUrl);
 
   assert.throws(
     () => validateRemoteContractIndex({ ...index([]), schemaVersion: 1 }),
@@ -76,6 +81,13 @@ function main() {
         index([packageEntry({ artifacts: { rules: 'rules.json' } })]),
       ),
     /requires generatedContract, rules and composition artifacts/,
+  );
+  assert.throws(
+    () =>
+      validateRemoteContractIndex(
+        index([packageEntry({ baseUrl: '/relative/contracts/' })]),
+      ),
+    /absolute HTTP\(S\) URL/,
   );
   assert.doesNotThrow(() =>
     validateRemoteContractIndex(

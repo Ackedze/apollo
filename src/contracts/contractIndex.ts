@@ -4,6 +4,7 @@ export type RemoteContractPackage = {
   componentKey: string;
   packageName?: string;
   packagePath: string;
+  baseUrl?: string;
   coverage: ContractCoveragePolicy;
   aliases?: string[];
   figmaKeys: string[];
@@ -117,6 +118,7 @@ export function validateRemoteContractIndex(
       componentKey,
       packageName: optionalString(entry.packageName, `${label}.packageName`),
       packagePath,
+      baseUrl: optionalAbsoluteHttpUrl(entry.baseUrl, `${label}.baseUrl`),
       coverage: policy,
       aliases: optionalStringArray(entry.aliases, `${label}.aliases`),
       figmaKeys: packageFigmaKeys,
@@ -215,6 +217,14 @@ function optionalStringArray(value: unknown, label: string): string[] | undefine
   if (value === undefined || value === null) return undefined;
   if (!Array.isArray(value)) throw new Error(`${label} must be an array`);
   return value.map((item) => requireString(item, `${label}[]`));
+}
+
+function optionalAbsoluteHttpUrl(value: unknown, label: string): string | undefined {
+  const result = optionalString(value, label);
+  if (result !== undefined && !isAbsoluteHttpUrl(result)) {
+    throw new Error(`${label} must be an absolute HTTP(S) URL`);
+  }
+  return result;
 }
 
 function isAbsoluteHttpUrl(value: unknown): value is string {

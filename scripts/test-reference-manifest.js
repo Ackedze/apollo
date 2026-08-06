@@ -28,6 +28,7 @@ function loadReferenceList() {
 function main() {
   const {
     buildReferenceCatalogSources,
+    resolveCatalogManifestUrls,
     resolveAuditPolicyConfigUrl,
     resolveRemediationConfigUrl,
   } = loadReferenceList();
@@ -53,6 +54,38 @@ function main() {
   assert.equal(
     explicit[0].indexUrl,
     `${baseUrl}indexes/web/components/Test.index.json`,
+  );
+  const splitBaseUrl = 'https://ackedze.github.io/desing-system_abm/JSONS/';
+  const splitSources = buildReferenceCatalogSources({
+    schemaVersion: 2,
+    baseUrl,
+    catalogManifests: [{ url: `${splitBaseUrl}referenceSourcesMVP.json` }],
+    libraries: [
+      {
+        baseUrl: splitBaseUrl,
+        catalogs: [
+          {
+            fileName: 'ABM.json',
+            path: 'abm/ABM.json',
+            source: {
+              kind: 'components',
+              indexPath: 'indexes/abm/ABM.index.json',
+            },
+          },
+        ],
+      },
+    ],
+  });
+  assert.equal(splitSources[0].url, `${splitBaseUrl}abm/ABM.json`);
+  assert.equal(
+    splitSources[0].indexUrl,
+    `${splitBaseUrl}indexes/abm/ABM.index.json`,
+  );
+  assert.deepEqual(
+    resolveCatalogManifestUrls({
+      catalogManifests: [{ url: `${splitBaseUrl}referenceSourcesMVP.json` }],
+    }),
+    [`${splitBaseUrl}referenceSourcesMVP.json`],
   );
   assert.equal(
     resolveRemediationConfigUrl({
@@ -104,6 +137,13 @@ function main() {
         ],
       }),
     /duplicate catalog path/,
+  );
+  assert.throws(
+    () =>
+      resolveCatalogManifestUrls({
+        catalogManifests: [{ url: '/relative/referenceSourcesMVP.json' }],
+      }),
+    /absolute HTTP\(S\) URL/,
   );
 
   const legacy = buildReferenceCatalogSources({

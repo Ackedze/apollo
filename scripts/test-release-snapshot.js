@@ -56,8 +56,12 @@ async function main() {
     const relativePath =
       requestUrl === snapshot.bootstrapUrl
         ? snapshot.rootFile
+        : requestUrl === `${snapshot.secondaryBaseUrl}referenceSourcesMVP.json`
+          ? 'abm-referenceSourcesMVP.json'
         : requestUrl.startsWith(snapshot.releaseBaseUrl)
           ? decodeURIComponent(requestUrl.slice(snapshot.releaseBaseUrl.length))
+          : requestUrl.startsWith(snapshot.secondaryBaseUrl)
+            ? decodeURIComponent(requestUrl.slice(snapshot.secondaryBaseUrl.length))
           : null;
     if (!relativePath || !(relativePath in snapshot.files)) {
       return {

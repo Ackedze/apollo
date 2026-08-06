@@ -2,12 +2,18 @@
   "snapshotVersion": 1,
   "bootstrapUrl": "https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json",
   "releaseBaseUrl": "https://release.test/JSONS/",
+  "secondaryBaseUrl": "https://abm-release.test/JSONS/",
   "rootFile": "referenceSourcesMVP.json",
   "files": {
     "referenceSourcesMVP.json": {
       "schemaVersion": 2,
       "generatedAt": "2026-08-04T00:00:00.000Z",
       "baseUrl": "https://release.test/JSONS/",
+      "catalogManifests": [
+        {
+          "url": "https://abm-release.test/JSONS/referenceSourcesMVP.json"
+        }
+      ],
       "apollo": {
         "patternRulesPath": "apollo/patternRules.json",
         "componentContractIndexPath": "apollo/indexes/componentContractIndex.json",
@@ -33,7 +39,20 @@
                 "kind": "styles",
                 "pageName": "Base Styles"
               }
-            },
+            }
+          ]
+        }
+      ]
+    },
+    "abm-referenceSourcesMVP.json": {
+      "schemaVersion": 2,
+      "documentType": "catalog-source-manifest",
+      "generatedAt": "2026-08-04T00:00:00.000Z",
+      "baseUrl": "https://abm-release.test/JSONS/",
+      "libraries": [
+        {
+          "name": "ABM Release Fixture",
+          "catalogs": [
             {
               "fileName": "components/Test.json",
               "path": "components/Test.json",

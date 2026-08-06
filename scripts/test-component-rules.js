@@ -533,6 +533,65 @@ function main() {
     },
     ruleText: 'Maximum width is 420 px.',
   };
+  const amountSharedColorRule = {
+    ruleId: 'component:web-corp.amount-styles.parts-share-color',
+    severity: 'error',
+    source: 'component-contract',
+    appliesTo: 'fill|fills',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'AmountStyles',
+      layers: ['Operation', 'Minus', 'Major', 'Minor', 'Currency'],
+    },
+    sharedValueConstraint: {
+      strategy: 'all-visible-targets-equal',
+      groupByPathBranches: ['Operation', 'Amount'],
+    },
+    ruleText: 'All visible Amount text parts must share one color.',
+  };
+  const amountTextStyleRule = {
+    ruleId: 'component:web-corp.amount-styles.parts-share-text-style',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'styles.text',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'AmountStyles',
+      layers: ['Operation', 'Minus', 'Major', 'Minor', 'Currency'],
+    },
+    ruleText: 'Amount text style is controlled by the host Style property.',
+  };
+  const amountOpacityRule = {
+    ruleId: 'component:web-corp.amount-styles.opacity-is-forbidden',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'opacity|variant.Opacity',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'AmountStyles',
+      layers: ['Minor', 'Currency'],
+    },
+    ruleText: 'Minor and Currency opacity overrides are forbidden.',
+  };
+  const amountGeometryRule = {
+    ruleId: 'component:web-corp.amount-styles.geometry-follows-effective-baseline',
+    severity: 'error',
+    source: 'component-contract',
+    ruleKind: 'design-rule',
+    appliesTo: 'layout.*',
+    checkType: 'deterministic',
+    matchKind: 'exact_component_rule',
+    target: {
+      component: 'AmountStyles',
+      layers: ['Operation', 'Major', 'Minor', 'Currency', 'Addon'],
+    },
+    ruleText: 'Amount geometry follows the effective Style baseline.',
+  };
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [
     {
       componentKey: 'web-corp.background-plate',
@@ -645,6 +704,28 @@ function main() {
         ],
       },
     },
+    {
+      componentKey: 'web-corp.amount-styles',
+      packageName: 'AmountStyles',
+      aliases: [
+        'AmountStyles',
+        '🔒 AmountParagraph',
+        'Operation',
+        'Major',
+        'Minor',
+        'Currency',
+      ],
+      figmaKeys: ['amount-paragraph-key'],
+      rulesFile: {
+        componentKey: 'web-corp.amount-styles',
+        rules: [
+          amountSharedColorRule,
+          amountTextStyleRule,
+          amountOpacityRule,
+          amountGeometryRule,
+        ],
+      },
+    },
   ];
   globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__ = {
     'background-plate-key': '[D] BackgroundPlateSlot',
@@ -661,6 +742,7 @@ function main() {
     'status-preset-key': '[D] StatusPreset',
     'buttons-group-variant-key': 'Size=56, Overflow=true',
     'onboarding-hint-key': 'Onboarding Hint',
+    'amount-paragraph-key': '🔒 AmountParagraph',
   };
 
   const styleLevelPaintDiff = (
@@ -1496,6 +1578,181 @@ function main() {
     excessiveWidthDiffs[0].assessment.ruleId,
     onboardingHintMaximumWidthRule.ruleId,
     'A runtime width above the maximum must receive the exact violation assessment',
+  );
+
+  const amountNode = (id, parentId, nodePath, name, token) => ({
+    id,
+    nodeId: `amount-${id}`,
+    parentId,
+    path: nodePath,
+    type: id === 1 ? 'INSTANCE' : 'TEXT',
+    name,
+    visible: true,
+    radius: null,
+    fill: token ? {token} : null,
+    componentInstance:
+      id === 1 ? {componentKey: 'amount-paragraph-key'} : null,
+  });
+  const amountRoot = amountNode(
+    1,
+    null,
+    '🔒 AmountParagraph',
+    '🔒 AmountParagraph',
+    null,
+  );
+  const amountParts = (minorToken) => [
+    amountRoot,
+    amountNode(2, 1, '🔒 AmountParagraph / Operation / Minus', 'Minus', 'text/custom'),
+    amountNode(3, 1, '🔒 AmountParagraph / Amount / Major / Major', 'Major', 'text/custom'),
+    amountNode(4, 1, '🔒 AmountParagraph / Amount / Minor / Minor', 'Minor', minorToken),
+    amountNode(5, 1, '🔒 AmountParagraph / Amount / Currency / Currency', 'Currency', 'text/custom'),
+  ];
+  const amountFillDiff = (nodePath, nodeName, actual) => ({
+    message: `fill: text/primary → ${actual}`,
+    nodePath,
+    nodeName,
+    nodeId: `diff-${nodeName}`,
+    context: scopedContext({
+      actualNestedOwnerComponentKey: 'amount-paragraph-key',
+      actualNestedOwnerPath: '🔒 AmountParagraph',
+      actualNestedOwnerRelativePath: nodePath.replace('🔒 AmountParagraph / ', ''),
+    }),
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: {value: 'text/primary', bindingId: 'text/primary'},
+      actual: {value: actual, bindingId: actual},
+      bindingStatus: 'different-binding',
+    },
+  });
+  const wholeAmountRecolorDiffs = [
+    amountFillDiff('🔒 AmountParagraph / Operation / Minus', 'Minus', 'text/custom'),
+    amountFillDiff('🔒 AmountParagraph / Amount / Major / Major', 'Major', 'text/custom'),
+    amountFillDiff('🔒 AmountParagraph / Amount / Minor / Minor', 'Minor', 'text/custom'),
+    amountFillDiff('🔒 AmountParagraph / Amount / Currency / Currency', 'Currency', 'text/custom'),
+  ];
+  const expectedWholeAmountRecolor =
+    rules.applySharedValueComponentRuleAssessments(
+      wholeAmountRecolorDiffs,
+      amountParts('text/custom'),
+    );
+  assert.ok(
+    expectedWholeAmountRecolor.every(
+      (entry) => entry.assessment?.verdict === 'expected',
+    ),
+    'A whole-Amount recolor to one shared token must remain Expected',
+  );
+  const singleVisiblePart = rules.applySharedValueComponentRuleAssessments(
+    [
+      amountFillDiff(
+        '🔒 AmountParagraph / Amount / Major / Major',
+        'Major',
+        'text/custom',
+      ),
+    ],
+    [
+      amountRoot,
+      amountNode(
+        3,
+        1,
+        '🔒 AmountParagraph / Amount / Major / Major',
+        'Major',
+        'text/custom',
+      ),
+    ],
+  );
+  assert.equal(
+    singleVisiblePart[0].assessment?.verdict,
+    'expected',
+    'A whole-Amount recolor remains valid when Major is the only visible part',
+  );
+
+  const secondAmountParts = amountParts('text/secondary').map((node) =>
+    Object.assign({}, node, {
+      id: node.id + 10,
+      parentId: node.parentId === null ? null : node.parentId + 10,
+      path: node.path.replace('🔒 AmountParagraph', 'Card / Second Amount'),
+      fill: node.fill?.token ? {token: 'text/secondary'} : node.fill,
+    }),
+  );
+  const independentAmounts = rules.applySharedValueComponentRuleAssessments(
+    [
+      wholeAmountRecolorDiffs[0],
+      amountFillDiff(
+        'Card / Second Amount / Operation / Minus',
+        'Minus',
+        'text/secondary',
+      ),
+    ],
+    amountParts('text/custom').concat(secondAmountParts),
+  );
+  assert.ok(
+    independentAmounts.every(
+      (entry) => entry.assessment?.verdict === 'expected',
+    ),
+    'Different Amount occurrences must not be compared with each other',
+  );
+
+  const partialAmountRecolor = rules.applySharedValueComponentRuleAssessments(
+    [
+      amountFillDiff(
+        '🔒 AmountParagraph / Amount / Minor / Minor',
+        'Minor',
+        'text/secondary',
+      ),
+    ],
+    amountParts('text/secondary'),
+  );
+  assert.equal(partialAmountRecolor[0].assessment?.verdict, 'violation');
+  assert.equal(
+    partialAmountRecolor[0].assessment?.ruleId,
+    amountSharedColorRule.ruleId,
+    'A partial Amount recolor must be an exact component-contract violation',
+  );
+
+  const amountRuleContext = scopedContext({
+    actualNestedOwnerComponentKey: 'amount-paragraph-key',
+    actualNestedOwnerPath: '🔒 AmountParagraph',
+    actualNestedOwnerRelativePath: 'Amount / Major / Major',
+  });
+  const amountTextStyleDiff = scopedDiff(
+    '🔒 AmountParagraph / Amount / Major / Major',
+    'Major',
+    'styles.text',
+    amountRuleContext,
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(amountTextStyleDiff)?.ruleId,
+    amountTextStyleRule.ruleId,
+    'A repeated wrapper/leaf name must still match the exact leaf selector',
+  );
+
+  const amountOpacityDiff = scopedDiff(
+    '🔒 AmountParagraph / Amount / Minor',
+    'Minor',
+    'variant.Opacity',
+    Object.assign({}, amountRuleContext, {
+      actualNestedOwnerRelativePath: 'Amount / Minor',
+    }),
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(amountOpacityDiff)?.ruleId,
+    amountOpacityRule.ruleId,
+    'Minor opacity changes must be deterministic violations',
+  );
+
+  const amountSpacingDiff = scopedDiff(
+    '🔒 AmountParagraph / Amount / Currency',
+    'Currency',
+    'layout.itemSpacing',
+    Object.assign({}, amountRuleContext, {
+      actualNestedOwnerRelativePath: 'Amount / Currency',
+    }),
+  );
+  assert.equal(
+    rules.findComponentContractViolationForDiff(amountSpacingDiff)?.ruleId,
+    amountGeometryRule.ruleId,
+    'Internal Amount geometry changes must use the effective baseline',
   );
 
   const warnings = [];

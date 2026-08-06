@@ -88,6 +88,10 @@ export type ComponentContractRule = {
     allowedModes?: string[];
     prohibitedModes?: string[];
   };
+  sharedValueConstraint?: {
+    strategy: 'all-visible-targets-equal';
+    groupByPathBranches?: string[];
+  };
 };
 
 type ComponentRulesFile = {
@@ -508,6 +512,142 @@ export function applyStructuredComponentRuleAssessment(
       }),
     }),
   });
+}
+
+export function applySharedValueComponentRuleAssessments(
+  diffs: DiffEntry[],
+  actualNodes: DSStructureNode[],
+): DiffEntry[] {
+  if (!diffs.length || !actualNodes.length) return diffs;
+
+  let assessed = diffs;
+  for (const entry of getComponentRuleRegistry()) {
+    for (const rule of entry.rulesFile.rules ?? []) {
+      if (
+        !isUsableRule(rule) ||
+        rule.severity !== 'error' ||
+        rule.checkType !== 'deterministic' ||
+        rule.sharedValueConstraint?.strategy !==
+          'all-visible-targets-equal'
+      ) {
+        continue;
+      }
+
+      const target = parseRuleTarget(rule);
+      if (!target?.layerSelectors.length) continue;
+      const property = readSharedValueProperty(rule.appliesTo);
+      if (!property) continue;
+
+      const values = actualNodes
+        .filter((node) => node.visible !== false)
+        .filter((node) =>
+          target.layerSelectors.some((selector) =>
+            layerMatchesDiff(selector, normalizePathSegment(node.name), node.path),
+          ),
+        )
+        .map((node) => ({
+          node,
+          value: readNodeSharedValue(node, property),
+        }))
+        .filter(
+          (candidate): candidate is {node: DSStructureNode; value: string} =>
+            candidate.value !== null,
+        );
+      if (!values.length) continue;
+
+      const groups = new Map<string, Set<string>>();
+      for (const {node, value} of values) {
+        const groupKey = getSharedValueGroupKey(
+          node.path,
+          rule.sharedValueConstraint.groupByPathBranches,
+        );
+        const group = groups.get(groupKey) ?? new Set<string>();
+        group.add(value);
+        groups.set(groupKey, group);
+      }
+      assessed = assessed.map((diff) => {
+        if (!ruleMatchesDiff(rule, diff, diff.details?.property ?? '', entry)) {
+          return diff;
+        }
+        if (diff.assessment?.verdict === 'violation') return diff;
+
+        const groupKey = getSharedValueGroupKey(
+          diff.nodePath,
+          rule.sharedValueConstraint?.groupByPathBranches,
+        );
+        const distinctValues = groups.get(groupKey);
+        if (!distinctValues?.size) return diff;
+        const verdict = distinctValues.size === 1 ? 'expected' : 'violation';
+
+        return Object.assign({}, diff, {
+          assessment:
+            verdict === 'violation'
+              ? Object.assign(createRuleViolationAssessment(rule), {
+                  reasonCode: 'component-contract-shared-value-violation',
+                  evidence: {
+                    property,
+                    distinctValueCount: distinctValues.size,
+                  },
+                })
+              : {
+                  verdict: 'expected' as const,
+                  source: 'component-contract' as const,
+                  reasonCode: 'component-contract-shared-value-expected',
+                  ruleId: rule.ruleId,
+                  evidence: {property, distinctValueCount: 1},
+                  message: rule.ruleText,
+                  remediation: null,
+                  presentation: 'show-expected' as const,
+                },
+        });
+      });
+    }
+  }
+  return assessed;
+}
+
+function getSharedValueGroupKey(
+  nodePath: string,
+  branches: string[] | undefined,
+): string {
+  if (!branches?.length) return '';
+  const normalizedBranches = new Set(branches.map(normalizePathSegment));
+  const segments = nodePath.split('/').map((segment) => segment.trim());
+  let branchIndex = -1;
+  for (let index = 0; index < segments.length; index += 1) {
+    if (normalizedBranches.has(normalizePathSegment(segments[index]))) {
+      branchIndex = index;
+    }
+  }
+  return (branchIndex >= 0 ? segments.slice(0, branchIndex) : segments)
+    .map(normalizePathSegment)
+    .join('/');
+}
+
+function readSharedValueProperty(
+  appliesTo: string,
+): 'fill' | 'styles.text' | null {
+  const properties = appliesTo.split('|').map((value) => value.trim());
+  if (properties.includes('fill') || properties.includes('fills')) {
+    return 'fill';
+  }
+  if (properties.includes('styles.text')) return 'styles.text';
+  return null;
+}
+
+function readNodeSharedValue(
+  node: DSStructureNode,
+  property: 'fill' | 'styles.text',
+): string | null {
+  if (property === 'styles.text') {
+    return node.typographyToken ?? node.styles?.text?.styleKey ?? null;
+  }
+  return (
+    node.fill?.token ??
+    node.styles?.fill?.styleKey ??
+    node.fill?.color ??
+    null
+  );
 }
 
 export function applyContextualComponentRuleAssessment(
@@ -2011,7 +2151,8 @@ function layerMatchesDiff(
     if (segment === targetSegments[targetIndex]) {
       targetIndex += 1;
       if (targetIndex === targetSegments.length) {
-        return pathIndex === pathSegments.length - 1;
+        if (pathIndex === pathSegments.length - 1) return true;
+        targetIndex = 0;
       }
     }
   }

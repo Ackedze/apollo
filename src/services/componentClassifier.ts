@@ -61,6 +61,7 @@ import {
 import {
   applyContextualComponentRuleAssessment,
   applyRequiredComponentSizingAssessment,
+  applySharedValueComponentRuleAssessments,
   applyStructuredComponentRuleAssessment,
   applyVariableBindingAssessment,
   createNumericConstraintRuleDiffs,
@@ -402,7 +403,10 @@ export async function classifyComponentNode(
     .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)
     .map(applyVariableBindingAssessment);
-  const markedDiffs = rawDiffs
+  const sharedValueAssessedDiffs = alignedActualStructure
+    ? applySharedValueComponentRuleAssessments(rawDiffs, alignedActualStructure)
+    : rawDiffs;
+  const markedDiffs = sharedValueAssessedDiffs
     .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
     .map(applyStructuredComponentRuleAssessment);
   const explicitVariantStateDiffs =

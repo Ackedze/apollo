@@ -172,29 +172,6 @@ export async function collectAuditTargets(
         );
         throwIfCancelled();
 
-        if (!localDefinition && item.isLocal) {
-          localDefinition = await resolveLocalComponentDefinition<
-            SceneNode,
-            ComponentNode
-          >(node, {
-            getNodeType: (candidate) => candidate.type,
-            getMainComponent: async (candidate) =>
-              candidate.type === 'INSTANCE'
-                ? await (candidate as InstanceNode).getMainComponentAsync()
-                : null,
-            isRemoteComponent: (component) => component.remote,
-            includeRemoteDefinition: true,
-          });
-          if (localDefinition) {
-            registerComponentDefinition(
-              localComponentDefinitions,
-              localComponentFocusNodeIds,
-              localDefinition,
-              node.id,
-            );
-          }
-        }
-
         if (item.isLocal) {
           checkState.localLibraryItems.push(item);
         }

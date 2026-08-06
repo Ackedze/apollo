@@ -138,6 +138,12 @@ function hasInstanceOverrides(instance: InstanceNode): boolean {
   return Array.isArray(instance.overrides) && instance.overrides.length > 0;
 }
 
+export function isNativeLocalComponent(
+  nativeLocalDefinition: ComponentNode | null,
+): boolean {
+  return Boolean(nativeLocalDefinition && !nativeLocalDefinition.remote);
+}
+
 export function shouldRunComponentDiff(options: {
   forcedCategory: boolean;
   needsDiff: boolean;
@@ -222,13 +228,15 @@ export async function classifyComponentNode(
       name: node.name,
       nodeType: node.type,
       relevance: 'unknown',
-      isLocal: true,
       pageName,
       pathSegments,
       fullPath,
       librarySource: null,
       librarySourceFile: null,
       componentKey,
+      // A missing catalog entry does not make a published Figma component local.
+      // Locality comes from the native main component and its `remote` flag.
+      isLocal: isNativeLocalComponent(nativeLocalDefinition),
       comparisonIssues: [],
       diffs: []
     }
@@ -634,7 +642,7 @@ export async function classifyComponentNode(
     relevance,
     librarySource: ref?.source ?? null,
     librarySourceFile: ref?.sourceFile ?? null,
-    isLocal: Boolean(nativeLocalDefinition),
+    isLocal: isNativeLocalComponent(nativeLocalDefinition),
     reference: ref,
     componentKey,
     diffs,

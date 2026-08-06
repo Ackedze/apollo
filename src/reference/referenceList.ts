@@ -94,7 +94,7 @@ export function getReferenceCatalogBaseUrl(
 }
 
 export const apolloReferenceCatalogListUrl =
-  'https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json';
+  'https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/referenceSourcesMVP.json';
 
 export function buildReferenceCatalogSources(
   payload: RemoteReferenceCatalogList,

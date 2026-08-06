@@ -14,6 +14,7 @@
   "networkAccess": {
     "allowedDomains": [
       "https://ackedze.github.io",
+      "https://raw.githubusercontent.com",
       "https://llm.api.cloud.yandex.net",
       "https://dwjnndpxzqizrcwpasrs.supabase.co",
       "http://localhost:3001"

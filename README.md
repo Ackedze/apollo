@@ -160,9 +160,9 @@ Source-аудит дедуплицирует owner definitions по стабил
 - Системные allowlist-правила покрывают семейства nested override-кейсов вроде `Status`, `Amount`, `PaymentMaskedNumber`, `Link`, `StatusBadge`, `TopAddon` и `ProgressBar`, где допустимое переопределение должно задаваться на уровне вложенного компонента, а не отдельным host-specific хаком.
 
 ## Источники данных
-Плагин работает с удалёнными JSON-справочниками и в рантайме берёт список источников с GitHub Pages:
+Плагин работает с удалёнными JSON-справочниками. Лёгкий bootstrap-манифест читается напрямую из `main`, а сами каталоги и indexes остаются на GitHub Pages:
 
-- основной URL: `https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json`;
+- bootstrap URL: `https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/referenceSourcesMVP.json`;
 - декларативные правила кастомизаций: путь `apollo.patternRulesPath` из основного списка, сейчас `JSONS/apollo/patternRules.json`;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
@@ -170,7 +170,9 @@ Source-аудит дедуплицирует owner definitions по стабил
 
 При старте Apollo загружает и список источников, и pattern rules с cache-busting query-параметрами, затем валидирует `schemaVersion` и структуру каждого правила. Это исключает чтение предыдущей версии GitHub Pages из десятиминутного CDN-кеша. После публикации изменённого JSON достаточно перезапустить плагин: пересборка Apollo не требуется. Отсутствующий или некорректный конфиг считается ошибкой reference bootstrap; встроенного fallback с устаревшими правилами нет.
 
-Важно: текущий runtime-аудит зависит от доступности и актуальности опубликованного содержимого `ackedze.github.io/design-system_ab`. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
+Такое разделение позволяет Apollo сразу увидеть новую маршрутизацию дочерних manifest даже при очереди или сбое GitHub Pages deployment. Текущий runtime-аудит всё ещё зависит от доступности опубликованных catalog/index URL из manifest. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
+
+Компонент с Figma key, отсутствующим в текущих indexes, получает статус `unknown`, но не считается локальным автоматически. В категорию `Локальные компоненты` попадают только узлы, для которых Figma API вернул локальный `ComponentNode` с `remote=false`.
 
 Для COLOR variables Apollo не требует отдельного удалённого value index. Обязательные token-каталоги Athena содержат `actualValuesByMode`; после bootstrap Apollo один раз строит компактный reverse index `RGB -> token candidates` в памяти. Для отвязанного однородного solid fill/stroke предлагаются только опубликованные COLOR variables с подходящим scope. Один кандидат отображается сразу с кнопкой `Привязать`, несколько кандидатов выбираются через общий dropdown Apollo на компонентах `PickerButton`, `OptionList` и `OptionListCell`; reference token компонента имеет приоритет. Dropdown рендерится поверх результатов и не меняет геометрию карточки. Перед binding Apollo повторно проверяет fingerprint слоя и импортирует variable по стабильному key. Каталоги старого формата поддерживают только direct COLOR values, поэтому semantic alias-кандидаты появляются после повторной публикации новой Athena.
 

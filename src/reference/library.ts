@@ -354,7 +354,7 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     });
   }
 
-  throw new Error('Failed to load reference catalog list from GitHub Pages');
+  throw new Error('Failed to load the remote reference catalog list');
 }
 
 async function fetchCatalogModule(

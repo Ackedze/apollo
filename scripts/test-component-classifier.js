@@ -46,7 +46,11 @@ function dependencies(overrides = {}) {
 }
 
 async function main() {
-  const { classifyComponentNode, shouldRunComponentDiff } = loadModule();
+  const {
+    classifyComponentNode,
+    isNativeLocalComponent,
+    shouldRunComponentDiff,
+  } = loadModule();
   assert.equal(
     shouldRunComponentDiff({
       forcedCategory: false,
@@ -97,10 +101,26 @@ async function main() {
     dependencies(),
   );
   assert.equal(item.relevance, 'unknown');
-  assert.equal(item.isLocal, true);
+  assert.equal(item.isLocal, false);
   assert.equal(item.componentKey, null);
   assert.equal(item.pageName, 'Page');
   assert.equal(freshnessChecks, 0);
+
+  assert.equal(
+    isNativeLocalComponent(null),
+    false,
+    'A remote component missing from catalogs must not be reported as local.',
+  );
+  assert.equal(
+    isNativeLocalComponent({ id: 'component:local', remote: false }),
+    true,
+    'A native local component definition must remain local without a catalog entry.',
+  );
+  assert.equal(
+    isNativeLocalComponent({ id: 'component:remote', remote: true }),
+    false,
+    'A native remote component definition must never be reported as local.',
+  );
 
   await assert.rejects(
     classifyComponentNode(

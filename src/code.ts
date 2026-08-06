@@ -1049,7 +1049,7 @@ async function getComponentKeyCached(
 
 async function isInsideLocalComponentContext(
   node: SceneNode,
-  componentKeyCache: Map<string, string | null>,
+  _componentKeyCache: Map<string, string | null>,
   localComponentContextCache: Map<string, boolean>,
 ): Promise<boolean> {
   let current = node.parent as BaseNode | null;
@@ -1062,13 +1062,11 @@ async function isInsideLocalComponentContext(
 
     let isLocalContext = false;
 
-    if (current.type === 'INSTANCE' || current.type === 'COMPONENT') {
-      const currentKey = await getComponentKeyCached(
-        current as SceneNode,
-        componentKeyCache,
-        { retryIfMissing: true },
-      );
-      isLocalContext = Boolean(currentKey && !findComponent(currentKey));
+    if (current.type === 'COMPONENT') {
+      isLocalContext = !(current as ComponentNode).remote;
+    } else if (current.type === 'INSTANCE') {
+      const mainComponent = await (current as InstanceNode).getMainComponentAsync();
+      isLocalContext = Boolean(mainComponent && !mainComponent.remote);
     }
 
     if (isLocalContext) {

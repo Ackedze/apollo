@@ -1,6 +1,6 @@
 {
   "snapshotVersion": 1,
-  "bootstrapUrl": "https://ackedze.github.io/design-system_ab/JSONS/referenceSourcesMVP.json",
+  "bootstrapUrl": "https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/referenceSourcesMVP.json",
   "releaseBaseUrl": "https://release.test/JSONS/",
   "secondaryBaseUrl": "https://abm-release.test/JSONS/",
   "rootFile": "referenceSourcesMVP.json",

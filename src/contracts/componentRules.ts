@@ -483,6 +483,33 @@ export function applyVariableBindingAssessment(diff: DiffEntry): DiffEntry {
   });
 }
 
+export function applyStructuredComponentRuleAssessment(
+  diff: DiffEntry,
+): DiffEntry {
+  const rule = findComponentContractViolationForDiff(diff);
+  const property = normalizePaintProperty(diff.details?.property ?? '');
+  const requiredPaintState = property
+    ? rule?.requiredPaintState?.[property] ?? null
+    : null;
+  if (!rule || !requiredPaintState || !isNoVisiblePaintState(requiredPaintState)) {
+    return diff;
+  }
+
+  const normalizedDiff = normalizeStructuredPaintViolation(diff, rule);
+  const assessment = createRuleViolationAssessment(rule);
+  return Object.assign({}, normalizedDiff, {
+    suppressAsHostControlledNestedProperty: false,
+    suppressionReason: null,
+    assessment: Object.assign({}, assessment, {
+      reasonCode: 'component-contract-required-paint-state',
+      evidence: Object.assign({}, assessment.evidence, {
+        property,
+        requiredPaintState,
+      }),
+    }),
+  });
+}
+
 export function applyContextualComponentRuleAssessment(
   diff: DiffEntry,
 ): DiffEntry {

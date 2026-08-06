@@ -66,10 +66,21 @@ async function main() {
     explicit: { [collectionId]: 'mode-1024' },
     resolved: { [collectionId]: 'mode-1024' },
   });
+  const gradient = createFrame('gradient-node-id', 'Gradient');
+  gradient.fills = [
+    {
+      type: 'GRADIENT_LINEAR',
+      visible: true,
+      opacity: 1,
+      gradientStops: [],
+    },
+  ];
+  root.children.push(gradient);
+  gradient.parent = root;
 
   const result = await snapshotTree(root, new Set());
 
-  assert.equal(result.length, 2, 'Snapshot tree must contain root and child');
+  assert.equal(result.length, 3, 'Snapshot tree must contain root and both children');
   assert.equal(result[0].id, 1, 'Root snapshot node must have a generated numeric id');
   assert.equal(result[0].parentId, null, 'Root snapshot node must not have a parent id');
   assert.equal(result[0].nodeId, 'root-node-id', 'Root snapshot node must preserve the Figma node id');
@@ -88,6 +99,11 @@ async function main() {
       explicitOwnerPath: 'Root',
     },
   ]);
+  assert.deepEqual(
+    result[2].fill,
+    {color: 'paint:GRADIENT_LINEAR', token: null},
+    'Visible non-solid fills must remain observable for deterministic no-fill rules',
+  );
 
   console.log('Snapshot tree regression checks passed');
 }

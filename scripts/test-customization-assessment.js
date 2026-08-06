@@ -314,6 +314,27 @@ function main() {
     'A structured subtree policy must override a generic generated rule.',
   );
 
+  const absoluteBorderFillRule = assessBackgroundPaint(
+    'Border',
+    'fill',
+    true,
+    {
+      verdict: 'violation',
+      source: 'component-contract',
+      reasonCode: 'component-contract-required-paint-state',
+      ruleId: 'component:web-corp.background-plate.border-has-no-visible-fill',
+      message: 'Border must not have a visible fill',
+      remediation: null,
+      presentation: 'show',
+    },
+  );
+  assert.equal(absoluteBorderFillRule[0].assessment.verdict, 'violation');
+  assert.equal(
+    absoluteBorderFillRule[0].assessment.ruleId,
+    'component:web-corp.background-plate.border-has-no-visible-fill',
+    'Nested context must not reinterpret an absolute paint-state violation',
+  );
+
   const backgroundRoot = {
     id: 10,
     nodeId: 'background-root',

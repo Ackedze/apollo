@@ -179,7 +179,7 @@ function main() {
     checkType: 'deterministic',
     matchKind: 'exact_component_rule',
     conditions: {
-      components: ['[D] Style Level 1'],
+      components: ['[D] Style Level 1', '[D][Promo] Style Level 1'],
       variant: { Type: ['Colored', 'Border'] },
     },
     requiredTokenBinding: {
@@ -199,7 +199,7 @@ function main() {
     checkType: 'deterministic',
     matchKind: 'exact_component_rule',
     conditions: {
-      components: ['[D] Style Level 1'],
+      component: 'web-corp.background-plate',
       variant: { Type: 'Border' },
     },
     requiredPaintState: { fill: 'none-or-not-visible' },
@@ -215,7 +215,7 @@ function main() {
     checkType: 'deterministic',
     matchKind: 'exact_component_rule',
     conditions: {
-      components: ['[D] Style Level 1'],
+      components: ['[D] Style Level 1', '[D][Promo] Style Level 1'],
       variant: { Type: 'Colored' },
     },
     requiredPaintState: {
@@ -233,7 +233,7 @@ function main() {
     checkType: 'deterministic',
     matchKind: 'exact_component_rule',
     conditions: {
-      components: ['[D] Style Level 1'],
+      components: ['[D] Style Level 1', '[D][Promo] Style Level 1'],
       variant: { Type: ['Primary', 'Secondary'] },
     },
     requiredPaintState: {
@@ -536,8 +536,16 @@ function main() {
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [
     {
       componentKey: 'web-corp.background-plate',
-      aliases: ['[D] BackgroundPlateSlot', '[D] Style Level 1'],
-      figmaKeys: ['background-plate-key', 'style-level-key'],
+      aliases: [
+        '[D] BackgroundPlateSlot',
+        '[D] Style Level 1',
+        '[D][Promo] Style Level 1',
+      ],
+      figmaKeys: [
+        'background-plate-key',
+        'style-level-key',
+        'promo-style-level-key',
+      ],
       rulesFile: {
         componentKey: 'web-corp.background-plate',
         rules: [
@@ -641,6 +649,7 @@ function main() {
   globalThis.__APOLLO_TEST_COMPONENT_NAME_BY_KEY__ = {
     'background-plate-key': '[D] BackgroundPlateSlot',
     'style-level-key': '[D] Style Level 1',
+    'promo-style-level-key': '[D][Promo] Style Level 1',
     'corporate-content-key': '[D] CorporateContent',
     'section-key': '[D] Section',
     'body-key': 'Body',
@@ -753,6 +762,76 @@ function main() {
   );
   assert.equal(forbiddenBorderFillResult.details.bindingStatus, null);
   assert.match(forbiddenBorderFillResult.message, /заливка: — →/);
+  const earlyForbiddenBorderFillResult =
+    rules.applyStructuredComponentRuleAssessment(
+      Object.assign({}, borderFillClassifiedAsDerivedExpected, {
+        assessment: null,
+        suppressAsHostControlledNestedProperty: true,
+        suppressionReason: 'nested-variant-root-switch',
+        details: Object.assign({}, borderFillClassifiedAsDerivedExpected.details, {
+          bindingStatus: 'missing-reference-binding',
+        }),
+      }),
+    );
+  assert.equal(
+    earlyForbiddenBorderFillResult.assessment?.verdict,
+    'violation',
+    'A forbidden Border fill must be protected before composition suppression',
+  );
+  assert.equal(
+    earlyForbiddenBorderFillResult.assessment?.ruleId,
+    backgroundPlateBorderFillRule.ruleId,
+  );
+  assert.equal(
+    earlyForbiddenBorderFillResult.suppressAsHostControlledNestedProperty,
+    false,
+    'An absolute no-fill violation must override nested variant suppression',
+  );
+  const preAssessedForbiddenBorderFillResult =
+    rules.applyStructuredComponentRuleAssessment(
+      Object.assign({}, borderFillClassifiedAsDerivedExpected, {
+        assessment: {
+          verdict: 'violation',
+          source: 'component-contract',
+          reasonCode: 'component-contract-violation',
+          ruleId: backgroundPlateBorderFillRule.ruleId,
+          message: 'Already classified during variable binding assessment',
+          remediation: null,
+        },
+        suppressAsHostControlledNestedProperty: true,
+        suppressionReason: 'nested-variant-root-switch',
+      }),
+    );
+  assert.equal(
+    preAssessedForbiddenBorderFillResult.suppressAsHostControlledNestedProperty,
+    false,
+    'A pre-assessed no-fill violation must still clear host suppression',
+  );
+  assert.equal(
+    preAssessedForbiddenBorderFillResult.details.reference.value,
+    null,
+    'A pre-assessed no-fill violation must still normalize its baseline',
+  );
+  assert.equal(
+    preAssessedForbiddenBorderFillResult.assessment.reasonCode,
+    'component-contract-required-paint-state',
+    'An absolute paint-state violation must remain identifiable downstream',
+  );
+  const effectiveBaselineDiff = Object.assign(
+    {},
+    borderFillClassifiedAsDerivedExpected,
+    {
+      assessment: null,
+      context: Object.assign({}, borderFillClassifiedAsDerivedExpected.context, {
+        actualVariantProperties: {Type: 'Primary'},
+      }),
+    },
+  );
+  assert.equal(
+    rules.applyStructuredComponentRuleAssessment(effectiveBaselineDiff),
+    effectiveBaselineDiff,
+    'Effective-baseline paint rules must wait for composition assessment',
+  );
   assert.equal(
     rules.findComponentContractViolationForDiff(
       styleLevelPaintDiff(
@@ -876,6 +955,39 @@ function main() {
   assert.equal(
     tokenizedForbiddenBorderFillDiffs[0].message,
     'заливка: — → base-bg-alt/secondary',
+  );
+
+  const promoBorderFillDiffs = rules.createRequiredPaintStateDiffs([
+    {
+      id: 3,
+      nodeId: 'promo-style-level-border',
+      parentId: null,
+      path:
+        'Position=Level 1 (outer) / [D][Promo] Style Level 1',
+      type: 'INSTANCE',
+      name: '[D][Promo] Style Level 1',
+      visible: true,
+      radius: 16,
+      fill: {color: 'paint:GRADIENT_LINEAR'},
+      stroke: {token: 'border-token', color: '#000000'},
+      componentInstance: {
+        componentKey: 'promo-style-level-key',
+        variantProperties: {
+          BackgroundColor: 'base-bg-alt (gray)',
+          Type: 'Border',
+          Skeleton: 'False',
+        },
+      },
+    },
+  ]);
+  assert.equal(
+    promoBorderFillDiffs.length,
+    1,
+    'A visible non-solid fill on promo Border must produce a violation',
+  );
+  assert.equal(
+    promoBorderFillDiffs[0].assessment.ruleId,
+    backgroundPlateBorderFillRule.ruleId,
   );
 
   const actualNodes = [

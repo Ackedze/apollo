@@ -720,6 +720,13 @@ export function assessCustomizationDiffs(
     ) {
       return inputDiff;
     }
+    if (
+      existingComponentContractAssessment?.verdict === 'violation' &&
+      existingComponentContractAssessment.reasonCode ===
+        'component-contract-required-paint-state'
+    ) {
+      return inputDiff;
+    }
     let diff = inputDiff;
     const isVariantDiff = isVariantPropertyDiff(diff);
     const nestedContextExplains = options.nestedContextEvidence?.explains(diff);

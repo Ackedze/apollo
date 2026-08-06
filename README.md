@@ -460,7 +460,8 @@ npm run test:generation-example-candidate
 - suppression для root-level nested variant switch внутри одной component family;
 - отсутствие ложных `itemSpacing` diff-ов для проблемных variant-комбинаций;
 - корректную привязку reference-структуры к выбранному variant path;
-- сохранение `id/parentId/visible` в actual snapshot, от которых зависит корректный layout diff.
+- сохранение `id/parentId/visible` в actual snapshot, от которых зависит корректный layout diff;
+- сохранение видимого non-solid paint (`gradient`, `image` и другие Figma paint-типы), чтобы правила `none-or-not-visible` не пропускали запрещённую заливку.
 - формирование статистического отчёта, обязательные категории, resource metadata и исключение актуальных компонентов из счётчика проблем.
 - определение ближайшей white/gray surface по variable token или SOLID-цвету и безопасный `unknown` без догадок.
 - разбор remote/local variable collection id и восстановление читаемых collection/mode labels из token-каталогов;

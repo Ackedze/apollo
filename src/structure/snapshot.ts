@@ -462,19 +462,19 @@ function extractFillInfo(node: SceneNode) {
   if (!fills || fills === figma.mixed || !Array.isArray(fills)) {
     return undefined;
   }
-  const solids = fills.filter((paint) => paint && paint.type === 'SOLID');
-  const hasVisibleFillPaint = fills.some(
+  const visiblePaints = fills.filter(
     (paint) =>
       paint &&
       paint.visible !== false &&
       (paint.opacity === undefined || paint.opacity > 0),
   );
+  const solids = visiblePaints.filter((paint) => paint.type === 'SOLID');
   const visibleSolids = solids.filter(
     (paint) =>
       paint.visible !== false &&
       (paint.opacity === undefined || paint.opacity > 0),
   );
-  if (!visibleSolids.length) {
+  if (!visiblePaints.length) {
     return undefined;
   }
   const color = visibleSolids
@@ -485,8 +485,14 @@ function extractFillInfo(node: SceneNode) {
     })
     .join(',');
   const variableToken = extractPaintVariableId(fills);
-  if (!hasVisibleFillPaint && !variableToken) return undefined;
-  return { color: color || null, token: variableToken };
+  const visiblePaintDescriptor = visiblePaints
+    .filter((paint) => paint.type !== 'SOLID')
+    .map((paint) => `paint:${paint.type}`)
+    .join(',');
+  return {
+    color: color || visiblePaintDescriptor || null,
+    token: variableToken,
+  };
 }
 
 function extractStrokeInfo(node: SceneNode) {

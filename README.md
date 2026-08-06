@@ -160,17 +160,19 @@ Source-аудит дедуплицирует owner definitions по стабил
 - Системные allowlist-правила покрывают семейства nested override-кейсов вроде `Status`, `Amount`, `PaymentMaskedNumber`, `Link`, `StatusBadge`, `TopAddon` и `ProgressBar`, где допустимое переопределение должно задаваться на уровне вложенного компонента, а не отдельным host-specific хаком.
 
 ## Источники данных
-Плагин работает с удалёнными JSON-справочниками. Лёгкий bootstrap-манифест читается напрямую из `main`, а сами каталоги и indexes остаются на GitHub Pages:
+Плагин работает с удалёнными JSON-справочниками напрямую из веток `main` через `raw.githubusercontent.com`. GitHub Pages больше не участвует в runtime-цепочке и может использоваться только как необязательное зеркало:
 
 - bootstrap URL: `https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/referenceSourcesMVP.json`;
+- Web, token/style, contract catalogs и indexes: `https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/`;
+- Android/iOS ABM catalogs и indexes: `https://raw.githubusercontent.com/Ackedze/desing-system_abm/main/JSONS/` через дочерний manifest;
 - декларативные правила кастомизаций: путь `apollo.patternRulesPath` из основного списка, сейчас `JSONS/apollo/patternRules.json`;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
 
-При старте Apollo загружает и список источников, и pattern rules с cache-busting query-параметрами, затем валидирует `schemaVersion` и структуру каждого правила. Это исключает чтение предыдущей версии GitHub Pages из десятиминутного CDN-кеша. После публикации изменённого JSON достаточно перезапустить плагин: пересборка Apollo не требуется. Отсутствующий или некорректный конфиг считается ошибкой reference bootstrap; встроенного fallback с устаревшими правилами нет.
+При старте Apollo загружает manifest, catalogs, indexes, contracts и pattern rules с process-scoped cache-busting query-параметрами, затем валидирует `schemaVersion` и структуру каждого правила. Это исключает чтение предыдущей версии raw CDN после публикации. После публикации изменённого JSON достаточно перезапустить плагин: пересборка Apollo не требуется. Отсутствующий или некорректный конфиг считается ошибкой reference bootstrap; встроенного fallback с устаревшими правилами нет.
 
-Такое разделение позволяет Apollo сразу увидеть новую маршрутизацию дочерних manifest даже при очереди или сбое GitHub Pages deployment. Текущий runtime-аудит всё ещё зависит от доступности опубликованных catalog/index URL из manifest. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
+Такое разделение позволяет Apollo получать новую маршрутизацию и каталоги сразу после появления commit в `main`, независимо от очереди GitHub Pages deployment. Runtime-аудит зависит от доступности raw catalog/index URL из manifest. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
 
 Компонент с Figma key, отсутствующим в текущих indexes, получает статус `unknown`, но не считается локальным автоматически. В категорию `Локальные компоненты` попадают только узлы, для которых Figma API вернул локальный `ComponentNode` с `remote=false`.
 
@@ -237,7 +239,7 @@ Targetless rules имеют отдельную scope-политику. `matchKin
 9. `examples.json` fixtures, если они есть;
 10. consistency checks между agent-context rule references и `rules.json`.
 
-Публикация на GitHub Pages должна быть атомарной относительно этого комплекта: Apollo не должен получать новый raw-каталог со старым index, старые rules с новым agent-context или composition contract без соответствующего component catalog.
+Публикация в `main` должна быть атомарной относительно этого комплекта: Athena создаёт один scoped commit, выполняет push и сверяет SHA-256 manifest и изменённых файлов через raw URL. Apollo не должен получать новый каталог со старым index, старые rules с новым agent-context или composition contract без соответствующего component catalog.
 
 ## Правило публикации
 

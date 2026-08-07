@@ -765,6 +765,80 @@ function main() {
     'fill: neutral-translucent/200 → neutral/0',
   );
 
+  const standaloneTokenId =
+    'VariableID:1111111111111111111111111111111111111111/1:1';
+  const statusReferenceTokenId =
+    'VariableID:816d73cd4950f3b36c90398019ff9b9e00c3a42d/1816:56';
+  const statusActualTokenId =
+    'VariableID:76adb8761a80aa2cea2dd34da2bcfae22668786a/1816:109';
+  const statusLabelPath =
+    'Type=Approved, Style=Muted, Size=24 / Status / Label / Label';
+  const statusReference = [
+    makeNode(1, 'Type=Approved, Style=Muted, Size=24', 'StatusPreset'),
+    makeNode(2, statusLabelPath, 'Label', {
+      fill: { color: '#188D4A', token: statusReferenceTokenId },
+    }),
+  ];
+  const statusActual = [
+    makeNode(1, 'Type=Approved, Style=Muted, Size=24', 'StatusPreset'),
+    makeNode(2, statusLabelPath, 'Label', {
+      fill: { color: '#CC338B', token: statusActualTokenId },
+    }),
+  ];
+  const statusTokenDiff = makeDiff(
+    statusLabelPath,
+    'fill',
+    standaloneTokenId,
+    statusActualTokenId,
+  );
+  statusTokenDiff.details.reference = {
+    value: standaloneTokenId,
+    resourceType: 'token',
+    resourceId: standaloneTokenId,
+    displayName: 'text/primary',
+  };
+  statusTokenDiff.details.actual = {
+    value: statusActualTokenId,
+    resourceType: 'token',
+    resourceId: statusActualTokenId,
+    displayName: 'decorative-text/fuchsia',
+  };
+  statusTokenDiff.details.bindingStatus = 'different-binding';
+
+  const statusRebased = applyContractAwareDiffs([statusTokenDiff], {
+    enabled: true,
+    hostComponentKey: 'title-view-key',
+    hostComponentName: '[D] TitleView',
+    actualStructure: statusActual,
+    hostReference: statusReference,
+    resolveStyleLabel: () => null,
+    resolveTokenLabel: (tokenId) => {
+      if (tokenId === statusReferenceTokenId) {
+        return 'decorative-text/green';
+      }
+      if (tokenId === statusActualTokenId) {
+        return 'decorative-text/fuchsia';
+      }
+      return null;
+    },
+  });
+
+  assert.equal(statusRebased.rebasedCount, 1);
+  assert.equal(
+    statusRebased.diffs[0].message,
+    'fill: decorative-text/green → decorative-text/fuchsia',
+    'Contract rebase messages must use token labels instead of VariableID values',
+  );
+  assert.equal(
+    statusRebased.diffs[0].details.reference.displayName,
+    'decorative-text/green',
+  );
+  assert.equal(
+    statusRebased.diffs[0].details.bindingStatus,
+    'different-binding',
+    'Contract rebase must preserve binding evidence from the original diff',
+  );
+
   console.log('Contract-aware diff regression checks passed');
 }
 

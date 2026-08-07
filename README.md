@@ -13,7 +13,7 @@
 
 ## Что реально умеет сейчас
 После нажатия `Проверить` плагин:
-1. Загружает основной manifest reference-каталогов и подключённые им catalog manifests с GitHub Pages.
+1. Загружает основной manifest reference-каталогов и подключённые им catalog manifests напрямую из веток `main` через `raw.githubusercontent.com`.
 2. Загружает базовые token- и style-справочники.
 3. Обходит всё видимое поддерево внутри текущего выделения и собирает `componentKey`.
 4. По component indexes определяет только нужные component-каталоги и скачивает их лениво.
@@ -30,6 +30,10 @@
 Component contracts загружаются только через `componentContractIndex.json` schema v2. Индекс задаёт явную политику покрытия `required | optional | none`; обязательные пакеты должны объявлять `generatedContract`, `rules` и `composition`, а поиск пакета выполняется в порядке Figma key, source catalog path, уникальный alias. Дубликаты и двусмысленные alias считаются ошибкой данных. Текущий архитектурный бэклог зафиксирован в [`docs/ARCHITECTURE_BACKLOG.md`](./docs/ARCHITECTURE_BACKLOG.md).
 
 Runtime contract pipeline разделён на независимые слои. [`src/contracts/contractTransport.ts`](./src/contracts/contractTransport.ts) отвечает только за fetch, JSON parse, URL resolution и cache-busting. [`src/contracts/contractIndexResolver.ts`](./src/contracts/contractIndexResolver.ts) детерминированно разрешает package по Figma key, source catalog path или уникальному alias и строит безопасные artifact paths. [`src/contracts/contractArtifactCompiler.ts`](./src/contracts/contractArtifactCompiler.ts) компилирует public rules, composition, overrides, agent context, audit mapping и examples. [`src/contracts/runtimeContractRegistry.ts`](./src/contracts/runtimeContractRegistry.ts) остаётся совместимым фасадом, а lifecycle загрузок управляется общим автоматом состояний.
+
+В настройках доступен выключенный по умолчанию тогл `Тестировать Contract v2`. Он включает изолированный тестовый контур: Apollo лениво загружает `experimentalComponentContractIndexPath` и только v2-пакеты для ключей компонентов текущего выделения. В этом режиме решения legacy component-contract engine не попадают в категорию `Кастомизации`; результат формирует только универсальный v2-интерпретатор. Настройка не сохраняется между запусками плагина и не влияет на обычную проверку при выключенном тогле.
+
+Contract v2 работает fail-closed. Нарушение может создать только правило с `enforcement=enforced`, поддержанными selector/operator и достаточными evidence. `nonExecutableRules`, классификационные правила, неизвестные возможности и неполные данные получают диагностический результат `unknown` и не считаются нарушением. Apollo не интерпретирует `ruleText` и не пытается угадать смысл неподтверждённого правила.
 
 [`src/contracts/componentApiContracts.ts`](./src/contracts/componentApiContracts.ts) компилирует `contract.generated.json` в целевой Component API и детерминированно проверяет public variant properties, их значения и разрешённые комбинации. Нарушения проходят через обычный `DiffEntry`/`CustomizationAssessment`, поэтому одинаково отображаются в UI, полном отчёте и agent report. Runtime принимает целевую схему `apollo.ds-contracts.v1` и один явно описанный migration-format `component-contract-generated` schema 1; к сырым каталогам при ошибке компиляции не откатывается. Регрессия компилирует все пакеты текущего `componentContractIndex`.
 
@@ -166,6 +170,7 @@ Source-аудит дедуплицирует owner definitions по стабил
 - Web, token/style, contract catalogs и indexes: `https://raw.githubusercontent.com/Ackedze/design-system_ab/main/JSONS/`;
 - Android/iOS ABM catalogs и indexes: `https://raw.githubusercontent.com/Ackedze/desing-system_abm/main/JSONS/` через дочерний manifest;
 - декларативные правила кастомизаций: путь `apollo.patternRulesPath` из основного списка, сейчас `JSONS/apollo/patternRules.json`;
+- экспериментальный Contract v2 index: путь `experimentalComponentContractIndexPath`; загружается только после ручного включения тестового контура;
 - token/style каталоги: пути из этого списка;
 - component catalogs: загружаются только по component indexes для ключей, найденных в проверяемом выделении;
 - разрешённые домены описаны в [`manifest.json`](./manifest.json).
@@ -175,6 +180,8 @@ Source-аудит дедуплицирует owner definitions по стабил
 Такое разделение позволяет Apollo получать новую маршрутизацию и каталоги сразу после появления commit в `main`, независимо от очереди GitHub Pages deployment. Runtime-аудит зависит от доступности raw catalog/index URL из manifest. `npm run build` не публикует JSON-каталоги, indexes или pattern rules и не скачивает их автоматически, а только собирает плагин.
 
 Компонент с Figma key, отсутствующим в текущих indexes, получает статус `unknown`, но не считается локальным автоматически. В категорию `Локальные компоненты` попадают только узлы, для которых Figma API вернул локальный `ComponentNode` с `remote=false`.
+
+Отсутствующие во всех подключённых indexes component keys запоминаются до перезапуска плагина. Apollo выводит одну агрегированную diagnostic warning для новых ключей и не повторяет заведомо пустой lazy lookup для каждого instance sublayer. Это уменьшает шум и не превращает неизвестный ключ в локальный компонент.
 
 Для COLOR variables Apollo не требует отдельного удалённого value index. Обязательные token-каталоги Athena содержат `actualValuesByMode`; после bootstrap Apollo один раз строит компактный reverse index `RGB -> token candidates` в памяти. Для отвязанного однородного solid fill/stroke предлагаются только опубликованные COLOR variables с подходящим scope. Один кандидат отображается сразу с кнопкой `Привязать`, несколько кандидатов выбираются через общий dropdown Apollo на компонентах `PickerButton`, `OptionList` и `OptionListCell`; reference token компонента имеет приоритет. Dropdown рендерится поверх результатов и не меняет геометрию карточки. Перед binding Apollo повторно проверяет fingerprint слоя и импортирует variable по стабильному key. Каталоги старого формата поддерживают только direct COLOR values, поэтому semantic alias-кандидаты появляются после повторной публикации новой Athena.
 
@@ -203,6 +210,8 @@ Apollo постепенно расширяется от одного Figma-пл�
 Текущий runtime Apollo использует `composition-contract.json` для contract-aware diff/rebase и `rules.json` для обогащения agent report. Для component packages, найденных в проверяемом выделении, runtime также загружает `agent-context.json`, компактно добавляет его в `*_agent.json`, читает из `audit-mapping.json` presentation metadata для changes и прикладывает релевантные части `contract.overrides.json` (`publicApi`, `resetModel`) к агентскому контексту. В `componentSemantics` попадают только Figma-description или ручные записи со статусом `approved`; `runtime.semanticDescriptionCandidates` не считается нормативным источником. Перед сохранением отчёта Apollo оставляет только semantic entries для компонентов, фактически найденных в макете. Запись связывается по published component key, а для finding с variant key восстанавливается по каноническому имени компонента; поэтому семантика выбранного `TitleView` сохраняется, но описания соседних компонентов пакета не протекают в контекст. `examples.json` не загружается во время обычного аудита: до 12 примеров на пакет подгружаются только для прямого вопроса Apollo Agent и явно маркируются как контекст, а не правила.
 
 Component rules сопоставляются прежде всего по явным ключам actual/reference и владельца вложенного diff. Runtime понимает опубликованные селекторы `target.component`, `components`, `componentKeys`, `componentNames`, `layer`, `layers`, `slot` и `slots`. Для обычного layer/root-правила приоритет имеет непосредственно изменённый component instance; владелец-предок участвует только в явном slot-scope. `layer: "root"` относится только к корню выбранного компонента, а layer/slot-селектор должен завершаться на изменённом узле. Каноническое имя компонента восстанавливается из каталога по Figma key, поэтому переименование instance в макете не ломает scope. Неизвестные или некорректные поля `target` логируются один раз как `unsupported rule target`, и такое правило не прикладывается как unconstrained. Одинаковые правила в отчёте схлопываются по `ruleId`. Правило с `requiredTokenSource` считается нарушенным только при наличии фактических binding-данных, которые явно показывают отсутствие токена; Apollo не выводит token violation из одного raw-значения diff.
+
+Когда component contract заменяет standalone baseline на effective host baseline, Apollo повторно разрешает имена token bindings и формирует сообщение из `displayName`, а не из технического `VariableID`. Исходные binding evidence и `bindingStatus` сохраняются после rebase, поэтому UI, полный отчёт и agent report показывают одинаковые человекочитаемые значения.
 
 Прямой вложенный instance под корнем проверяемого компонента сохраняет host ownership и относительный slot path. Это позволяет правилам композиции `TitleView` оценивать изменения `StatusPreset`, даже когда finding несёт variant key самого статуса. Для variant-правил runtime поддерживает `conditions.backgroundSurface`, `requiredVariant`, `forbiddenVariant`, `requiredVariantByContext` и `classification.allPublicApiValuesAllowed`. Ближайшая распознаваемая поверхность определяется по bound fill variable, а при отсутствии токена — по SOLID-цвету; evidence сохраняется в `change.context.surfaceContext`. При `kind=unknown` Apollo не делает предположение о фоне. Например, `StatusPreset.Style=Muted` становится разрешённым на белой поверхности и нарушением на серой, а опубликованное значение `StatusPreset.Type` остаётся допустимым public API, если это прямо объявлено правилом TitleView.
 
@@ -375,7 +384,7 @@ Ackedze/design-system_stats/apollo/stats/<figma-user>/dd-mm-yyyy/
 
 Локальный `services/apollo-stats-collector` сохранён только как инструмент разработки и не используется production-сборкой Apollo.
 
-Каталоги и indexes загружаются только из `Ackedze/design-system_ab`. Локальный каталог `JSONS` в репозитории Apollo не используется.
+Web, token/style и contract catalogs загружаются из `Ackedze/design-system_ab`, Android/iOS ABM catalogs и indexes — из `Ackedze/desing-system_abm`. Локальный каталог `JSONS` в репозитории Apollo не используется.
 
 ## Внешний контрибьютинг
 

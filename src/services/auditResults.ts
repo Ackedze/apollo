@@ -46,6 +46,7 @@ export interface PrepareAuditReportInput<TNode extends AuditReportSelectionNode>
     startedAt: Date;
     finishedAt: Date;
     shellAuditEnabled: boolean;
+    experimentalContractV2Enabled: boolean;
   };
   selection: readonly TNode[];
   checkState: CheckState;
@@ -126,6 +127,7 @@ export async function prepareAuditReport<TNode extends AuditReportSelectionNode>
       selection,
       settings: {
         shellAuditEnabled: input.scan.shellAuditEnabled,
+        experimentalContractV2Enabled: input.scan.experimentalContractV2Enabled,
       },
       scannedComponents: input.checkState.totalItems,
     },

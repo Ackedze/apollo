@@ -15,6 +15,7 @@ const defaultState: ChromeState = {
   compact: false,
   shellAuditEnabled: false,
   showExpectedCustomizations: true,
+  experimentalContractV2Enabled: false,
   tabs: [],
 };
 
@@ -68,12 +69,14 @@ class ApolloChromeBridge {
           compact={this.state.compact}
           shellAuditEnabled={this.state.shellAuditEnabled}
           showExpectedCustomizations={this.state.showExpectedCustomizations}
+          experimentalContractV2Enabled={this.state.experimentalContractV2Enabled}
           onActionPress={options.onActionPress}
           onToggleCompact={options.onToggleCompact}
           onChannelChange={options.onChannelChange}
           onPickerChange={options.onPickerChange}
           onShellAuditToggle={options.onShellAuditToggle}
           onShowExpectedToggle={options.onShowExpectedToggle}
+          onExperimentalContractV2Toggle={options.onExperimentalContractV2Toggle}
           onExampleCapture={options.onExampleCapture}
         />,
       );

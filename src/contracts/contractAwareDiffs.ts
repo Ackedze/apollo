@@ -61,6 +61,7 @@ export function applyContractAwareDiffs(
     actualStructure: DSStructureNode[];
     hostReference: DSStructureNode[];
     resolveStyleLabel?: (styleKey: string) => string | null;
+    resolveTokenLabel?: (tokenId: string) => string | null;
   },
 ): ContractAwareDiffResult {
   const emptyResult = {
@@ -111,12 +112,14 @@ export function applyContractAwareDiffs(
           hostReferenceByOccurrence,
           actualByOccurrence,
           resolveStyleLabel: options.resolveStyleLabel,
+          resolveTokenLabel: options.resolveTokenLabel,
         })
       : resolveContractEffectiveBaseline(diff, property, {
           contract,
           hostReferenceByOccurrence,
           actualByOccurrence,
           resolveStyleLabel: options.resolveStyleLabel,
+          resolveTokenLabel: options.resolveTokenLabel,
         }));
 
     if (!expectedBaseline || property === null) {
@@ -394,6 +397,7 @@ function resolveExpectedBaseline(
     hostReferenceByOccurrence: Map<string, DSStructureNode>;
     actualByOccurrence: Map<string, DSStructureNode>;
     resolveStyleLabel?: (styleKey: string) => string | null;
+    resolveTokenLabel?: (tokenId: string) => string | null;
   },
 ): DiffValueDetails | null {
   const property = rule.property ?? '';
@@ -402,7 +406,12 @@ function resolveExpectedBaseline(
     ? options.hostReferenceByOccurrence.get(occurrenceKey) ?? null
     : null;
   const fromHostReference = hostReferenceNode
-    ? readNodePropertyAsDiffValue(hostReferenceNode, property, options.resolveStyleLabel)
+    ? readNodePropertyAsDiffValue(
+        hostReferenceNode,
+        property,
+        options.resolveStyleLabel,
+        options.resolveTokenLabel,
+      )
     : null;
   const expected = rule.expectedOverride ?? null;
 
@@ -451,6 +460,7 @@ function resolveContractEffectiveBaseline(
     hostReferenceByOccurrence: Map<string, DSStructureNode>;
     actualByOccurrence: Map<string, DSStructureNode>;
     resolveStyleLabel?: (styleKey: string) => string | null;
+    resolveTokenLabel?: (tokenId: string) => string | null;
   },
 ): DiffValueDetails | null {
   if (!property) {
@@ -470,6 +480,7 @@ function resolveContractEffectiveBaseline(
     hostReferenceNode,
     property,
     options.resolveStyleLabel,
+    options.resolveTokenLabel,
   );
   if (!hostBaseline || diffValueDetailsEqual(hostBaseline, referenceDetails)) {
     return null;
@@ -518,6 +529,7 @@ function readNodePropertyAsDiffValue(
   node: DSStructureNode,
   property: string,
   resolveStyleLabel?: (styleKey: string) => string | null,
+  resolveTokenLabel?: (tokenId: string) => string | null,
 ): DiffValueDetails | null {
   if (property.indexOf('variant.') === 0) {
     const propertyName = property.slice('variant.'.length);
@@ -557,11 +569,12 @@ function readNodePropertyAsDiffValue(
   if (property === 'fill') {
     const token = node.fill?.token ?? null;
     if (token) {
+      const displayName = resolveTokenLabel?.(token) ?? token;
       return {
         value: token,
         resourceType: 'token',
         resourceId: token,
-        displayName: token,
+        displayName,
       };
     }
     const color = node.fill?.color ?? null;
@@ -571,11 +584,12 @@ function readNodePropertyAsDiffValue(
   if (property === 'stroke') {
     const token = node.stroke?.token ?? null;
     if (token) {
+      const displayName = resolveTokenLabel?.(token) ?? token;
       return {
         value: token,
         resourceType: 'token',
         resourceId: token,
-        displayName: token,
+        displayName,
       };
     }
     const color = node.stroke?.color ?? null;
@@ -620,14 +634,14 @@ function rebaseDiffReference(
   rule: CompositionAllowedOverride | null,
 ): DiffEntry {
   const actual = diff.details?.actual ?? { value: null };
-  const details = {
+  const details = Object.assign({}, diff.details, {
     property,
     reference,
     actual,
-  };
+  });
 
   return Object.assign({}, diff, {
-    message: formatRebasedMessage(diff, reference.value, actual.value),
+    message: formatRebasedMessage(diff, reference, actual),
     details,
     suppressionReason:
       rule?.reason ??
@@ -637,12 +651,16 @@ function rebaseDiffReference(
 
 function formatRebasedMessage(
   diff: DiffEntry,
-  referenceValue: string | number | null,
-  actualValue: string | number | null,
+  reference: DiffValueDetails,
+  actual: DiffValueDetails,
 ): string {
   const property = diff.details?.property ?? '';
   const label = getPropertyDisplayLabel(property);
-  return `${label}: ${formatValue(referenceValue)} → ${formatValue(actualValue)}`;
+  return `${label}: ${formatDiffValue(reference)} → ${formatDiffValue(actual)}`;
+}
+
+function formatDiffValue(value: DiffValueDetails): string {
+  return formatValue(value.displayName ?? value.value);
 }
 
 function getPropertyDisplayLabel(property: string): string {

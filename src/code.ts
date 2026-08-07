@@ -73,6 +73,9 @@ import {
   type ContractArtifactHint,
 } from './contracts/runtimeContractRegistry';
 import {
+  ensureExperimentalContractV2ForKeys,
+} from './contracts/experimentalContractV2Registry';
+import {
   auditEvidenceMatchesCapture,
   buildGenerationExampleCandidate,
   createGenerationExampleAuditEvidence,
@@ -153,6 +156,8 @@ figma.ui.onmessage = createApolloPluginMessageRouter({
   scanSelection: (payload) => {
     void runAudit(undefined, parseAuditChannel(payload?.pickerLabel), {
       shellAuditEnabled: payload?.shellAuditEnabled === true,
+      experimentalContractV2Enabled:
+        payload?.experimentalContractV2Enabled === true,
     });
   },
   captureGenerationExample,
@@ -192,6 +197,10 @@ const auditLifecycle = new AuditLifecycle();
 let catalogPreloadStarted = false;
 let lastAuditSelectionIds: string[] = [];
 let lastAuditChannel: AuditChannel = 'Desktop';
+let lastAuditOptions = {
+  shellAuditEnabled: false,
+  experimentalContractV2Enabled: false,
+};
 // Compare nested instances against their own component references to avoid placeholder diffs.
 const COMPARE_NESTED_INSTANCES_BY_COMPONENT = true;
 const LOCAL_DEPENDENCY_CONCURRENCY = 4;
@@ -238,6 +247,7 @@ async function runAudit(
   selectedChannel: AuditChannel = 'Desktop',
   options?: {
     shellAuditEnabled?: boolean;
+    experimentalContractV2Enabled?: boolean;
   },
 ) {
   if (generationExampleCaptureInProgress) {
@@ -253,6 +263,12 @@ async function runAudit(
   lastContractArtifactHints = [];
   activeApolloAgentRequestId = null;
   findingActionRegistry.reset();
+  lastAuditOptions = {
+    shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+    experimentalContractV2Enabled: Boolean(
+      options?.experimentalContractV2Enabled,
+    ),
+  };
 
   figma.ui.postMessage({ type: 'scan-started' });
 
@@ -358,7 +374,11 @@ async function runAudit(
     );
     await ensureReferenceCatalogsForKeys(selectionComponentKeys);
     lastContractArtifactHints = buildContractArtifactHints(selectionComponentKeys);
-    await ensureContractArtifactsForHints(lastContractArtifactHints);
+    if (options?.experimentalContractV2Enabled) {
+      await ensureExperimentalContractV2ForKeys(selectionComponentKeys);
+    } else {
+      await ensureContractArtifactsForHints(lastContractArtifactHints);
+    }
     logAuditMetric('audit-component-reference-ready', {
       totalMs: Number((getTimestamp() - keyCollectStartedAt).toFixed(1)),
       componentKeyCount: selectionComponentKeys.size,
@@ -388,6 +408,9 @@ async function runAudit(
       traversalContext,
       {
         shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+        experimentalContractV2Enabled: Boolean(
+          options?.experimentalContractV2Enabled,
+        ),
         dependencyConcurrency: LOCAL_DEPENDENCY_CONCURRENCY,
       },
       {
@@ -472,6 +495,9 @@ async function runAudit(
           startedAt: auditStartedAt,
           finishedAt: new Date(),
           shellAuditEnabled: Boolean(options?.shellAuditEnabled),
+          experimentalContractV2Enabled: Boolean(
+            options?.experimentalContractV2Enabled,
+          ),
         },
         selection,
         checkState,
@@ -1206,9 +1232,9 @@ async function rerunLastAuditWithFallback(fallbackSelection: SceneNode[]) {
   await auditLifecycle.waitUntilIdle();
   const rerunSelection = await resolveSceneNodesByIds(lastAuditSelectionIds);
   if (rerunSelection.length) {
-    await runAudit(rerunSelection, lastAuditChannel);
+    await runAudit(rerunSelection, lastAuditChannel, lastAuditOptions);
   } else if (fallbackSelection.length) {
-    await runAudit(fallbackSelection, lastAuditChannel);
+    await runAudit(fallbackSelection, lastAuditChannel, lastAuditOptions);
   }
 }
 

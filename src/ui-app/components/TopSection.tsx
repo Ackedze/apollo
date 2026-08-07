@@ -30,12 +30,14 @@ type TopSectionProps = {
   compact: boolean;
   shellAuditEnabled: boolean;
   showExpectedCustomizations: boolean;
+  experimentalContractV2Enabled: boolean;
   onActionPress: () => void;
   onToggleCompact: () => void;
   onChannelChange?: (channelId: string) => void;
   onPickerChange?: (pickerLabel: string) => void;
   onShellAuditToggle?: () => void;
   onShowExpectedToggle?: () => void;
+  onExperimentalContractV2Toggle?: () => void;
   onExampleCapture?: (request: GenerationExampleCaptureRequest) => void;
 };
 
@@ -108,12 +110,14 @@ export function TopSection({
   compact,
   shellAuditEnabled,
   showExpectedCustomizations,
+  experimentalContractV2Enabled,
   onActionPress,
   onToggleCompact,
   onChannelChange,
   onPickerChange,
   onShellAuditToggle,
   onShowExpectedToggle,
+  onExperimentalContractV2Toggle,
   onExampleCapture,
 }: TopSectionProps): React.JSX.Element {
   const settingsRootRef = useRef<HTMLDivElement | null>(null);
@@ -191,6 +195,7 @@ export function TopSection({
     selectedWorkshop.id,
     shellAuditEnabled ? 'shared-on' : 'shared-off',
     showExpectedCustomizations ? 'expected-on' : 'expected-off',
+    experimentalContractV2Enabled ? 'contract-v2-on' : 'contract-v2-off',
     actionType,
     actionLabel,
     actionDisabled ? 'disabled' : 'enabled',
@@ -317,6 +322,25 @@ export function TopSection({
           >
             <span className={styles.switchText}>Проверять шаред</span>
             <span className={[styles.switchTrack, shellAuditEnabled ? styles.switchTrackActive : ''].filter(Boolean).join(' ')}>
+              <span className={styles.switchThumb} />
+            </span>
+          </button>
+          <button
+            type="button"
+            className={styles.switchRow}
+            disabled={actionLoading}
+            aria-pressed={experimentalContractV2Enabled}
+            onClick={onExperimentalContractV2Toggle}
+          >
+            <span className={styles.switchText}>Тестировать Contract v2</span>
+            <span
+              className={[
+                styles.switchTrack,
+                experimentalContractV2Enabled ? styles.switchTrackActive : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+            >
               <span className={styles.switchThumb} />
             </span>
           </button>

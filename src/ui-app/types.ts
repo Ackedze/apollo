@@ -19,6 +19,7 @@ export type ChromeState = {
   compact: boolean;
   shellAuditEnabled: boolean;
   showExpectedCustomizations: boolean;
+  experimentalContractV2Enabled: boolean;
   tabs: ChromeTabItem[];
 };
 
@@ -51,6 +52,7 @@ export type ChromeBridgeOptions = {
   onPickerChange: (pickerLabel: string) => void;
   onShellAuditToggle: () => void;
   onShowExpectedToggle: () => void;
+  onExperimentalContractV2Toggle: () => void;
   onExampleCapture: (request: GenerationExampleCaptureRequest) => void;
 };
 

@@ -5,12 +5,14 @@ import {
   normalizePath,
   resolveAuditPolicyConfigUrl,
   resolveComponentContractIndexUrl,
+  resolveExperimentalComponentContractIndexUrl,
   resolvePatternRulesUrl,
   resolveCatalogManifestUrls,
   resolveRemediationConfigUrl,
   type ReferenceCatalogSource,
 } from './referenceList';
 import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
+import { configureExperimentalContractV2Source } from '../contracts/experimentalContractV2Registry';
 import { loadPatternRulesConfig } from '../assessment/patternRuleLoader';
 import {
   configureRemoteRemediationConfigSource,
@@ -157,11 +159,16 @@ export async function ensureReferenceCatalogsForKeys(
       ),
     ),
   );
-  let { catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(requestedKeys);
+  const keysToResolve = requestedKeys.filter((key) => !missingIndexLog.has(key));
+  if (!keysToResolve.length) {
+    return;
+  }
+
+  let { catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(keysToResolve);
 
   if (unresolvedKeys.length && failedComponentIndexSources.size) {
     await retryFailedComponentIndexes();
-    ({ catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(requestedKeys));
+    ({ catalogPaths, unresolvedKeys } = resolveCatalogPathsForKeys(keysToResolve));
   }
 
   if (unresolvedKeys.length) {
@@ -171,7 +178,7 @@ export async function ensureReferenceCatalogsForKeys(
   if (!catalogPaths.size) {
     logAuditMetric('reference-lazy-load', {
       totalMs: 0,
-      requestedKeys: requestedKeys.length,
+      requestedKeys: keysToResolve.length,
       catalogCount: 0,
       unresolvedKeys: unresolvedKeys.length,
       mode: 'index-only',
@@ -184,7 +191,7 @@ export async function ensureReferenceCatalogsForKeys(
   refreshDerivedComponentCatalogState();
   logAuditMetric('reference-lazy-load', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
-    requestedKeys: requestedKeys.length,
+    requestedKeys: keysToResolve.length,
     catalogCount: catalogPaths.size,
     unresolvedKeys: unresolvedKeys.length,
     mode: 'index-only',
@@ -192,13 +199,28 @@ export async function ensureReferenceCatalogsForKeys(
 }
 
 function reportMissingIndexKeys(keys: string[]): void {
-  for (const key of keys.slice(0, 20)) {
-    if (missingIndexLog.has(key)) {
+  const newKeys = rememberMissingIndexKeys(keys, missingIndexLog);
+  if (newKeys.length) {
+    console.warn('[Apollo::catalog] Component keys are missing from indexes', {
+      count: newKeys.length,
+      keys: newKeys.slice(0, 20),
+    });
+  }
+}
+
+export function rememberMissingIndexKeys(
+  keys: string[],
+  knownKeys: Set<string>,
+): string[] {
+  const newKeys: string[] = [];
+  for (const key of keys) {
+    if (knownKeys.has(key)) {
       continue;
     }
-    missingIndexLog.add(key);
-    console.warn('[Apollo::catalog] Component key is missing from index', { key });
+    knownKeys.add(key);
+    newKeys.push(key);
   }
+  return newKeys;
 }
 
 function registerComponentCatalogSource(source: ReferenceCatalogSource): void {
@@ -302,6 +324,10 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
     const patternRulesUrl = resolvePatternRulesUrl(payload);
     configureRemoteContractIndexSource(
       resolveComponentContractIndexUrl(payload),
+      getReferenceCatalogBaseUrl(payload),
+    );
+    configureExperimentalContractV2Source(
+      resolveExperimentalComponentContractIndexUrl(payload),
       getReferenceCatalogBaseUrl(payload),
     );
     const remediationConfigUrl = resolveRemediationConfigUrl(payload);
@@ -1619,6 +1645,10 @@ function logCatalogEvent(source: ReferenceCatalogSource, message: string) {
 }
 
 export function reportMissingReference(name: string, key: string | null) {
+  if (key && missingIndexLog.has(key)) {
+    return;
+  }
+
   const signature = `${key}::${name}`;
 
   if (missingReferenceLog.has(signature)) {

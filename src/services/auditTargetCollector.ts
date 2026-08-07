@@ -33,6 +33,7 @@ import { traceAudit } from '../utils/auditInstrumentation';
 
 export interface AuditTargetCollectorOptions {
   shellAuditEnabled: boolean;
+  experimentalContractV2Enabled: boolean;
   dependencyConcurrency: number;
 }
 
@@ -81,7 +82,11 @@ export async function collectAuditTargets(
   options: AuditTargetCollectorOptions,
   dependencies: AuditTargetCollectorDependencies,
 ): Promise<void> {
-  const { dependencyConcurrency, shellAuditEnabled } = options;
+  const {
+    dependencyConcurrency,
+    experimentalContractV2Enabled,
+    shellAuditEnabled,
+  } = options;
   const {
     buildNodeSegments,
     debugDiffPipeline,
@@ -167,6 +172,7 @@ export async function collectAuditTargets(
             normalizeRelevanceStatus,
             reportMissingReference,
             debugDiffPipeline,
+            experimentalContractV2Enabled,
             throwIfCancelled,
           },
         );

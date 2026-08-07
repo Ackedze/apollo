@@ -188,6 +188,7 @@ export type ApolloStatsReport = {
     }>;
     settings: {
       shellAuditEnabled: boolean;
+      experimentalContractV2Enabled: boolean;
     };
   };
   summary: {

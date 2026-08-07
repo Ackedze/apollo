@@ -76,6 +76,11 @@ import {
 import { createComponentApiVariantDiffs } from '../contracts/componentApiContracts';
 import { getComponentApiContractByFigmaKey } from '../contracts/runtimeContractRegistry';
 import {
+  getExperimentalContractV2ForKey,
+  hasExperimentalContractV2ForKey,
+} from '../contracts/experimentalContractV2Registry';
+import { evaluateExperimentalContractV2 } from '../contracts/experimentalContractV2Engine';
+import {
   alignStructurePaths,
   attachSurfaceContext,
   expandReferenceWithInstanceComponents,
@@ -131,6 +136,7 @@ export interface ComponentClassifierDependencies {
     allowlistedDiffs: DiffList;
     finalDiffs: DiffList;
   }): void;
+  experimentalContractV2Enabled?: boolean;
   throwIfCancelled(): void;
 }
 
@@ -179,6 +185,7 @@ export async function classifyComponentNode(
   const {
     buildNodeSegments,
     debugDiffPipeline,
+    experimentalContractV2Enabled = false,
     getComponentKeyCached,
     getReferenceStructureCached,
     isInsideLocalComponentContext,
@@ -292,6 +299,8 @@ export async function classifyComponentNode(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
   );
+  const requiresExperimentalContractV2Audit =
+    experimentalContractV2Enabled && hasExperimentalContractV2ForKey(componentKey);
   const requiresNumericConstraintAudit = hasNumericConstraintRules(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
@@ -304,7 +313,7 @@ export async function classifyComponentNode(
     hostComponentKey: ref?.key ?? componentKey ?? null,
     hostComponentName: ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
   });
-  const requiresComponentApiAudit = Boolean(
+  const requiresComponentApiAudit = !experimentalContractV2Enabled && Boolean(
     getComponentApiContractByFigmaKey(componentKey),
   );
   const isInheritedFromLocalComponentContext =
@@ -318,7 +327,8 @@ export async function classifyComponentNode(
     requiresNumericConstraintAudit,
     requiresVariableModeRuleAudit,
     requiresCompositionContractAudit,
-    requiresComponentApiAudit,
+    requiresComponentApiAudit:
+      requiresComponentApiAudit || requiresExperimentalContractV2Audit,
     isInheritedFromLocalComponentContext,
   });
   const actualStructure =
@@ -529,6 +539,7 @@ export async function classifyComponentNode(
     actualStructure: alignedActualStructure ?? [],
     hostReference: referenceStructure ?? [],
     resolveStyleLabel: resolveStyleLabelForDiff,
+    resolveTokenLabel,
   });
   if (contractAwareResult.applied) {
     console.log('[Apollo][contracts] applied composition contract', {
@@ -546,10 +557,43 @@ export async function classifyComponentNode(
       rebasedCount: contractAwareResult.rebasedCount,
     });
   }
-  const diffs = applyCustomizationFilters(contractAwareResult.diffs, {
+  const legacyDiffs = applyCustomizationFilters(contractAwareResult.diffs, {
     libraryName: ref?.source ?? null,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
   });
+  const experimentalContract = experimentalContractV2Enabled
+    ? getExperimentalContractV2ForKey(componentKey)
+    : null;
+  const experimentalResult =
+    experimentalContract && alignedActualStructure
+      ? evaluateExperimentalContractV2({
+          contract: experimentalContract,
+          hostComponentKey: componentKey ?? ref?.key ?? '',
+          hostComponentName:
+            ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+          hostVariantProperties: instanceVariantProperties,
+          actualStructure: alignedActualStructure,
+        })
+      : null;
+  const diffs = experimentalContractV2Enabled
+    ? experimentalResult?.diffs ?? []
+    : legacyDiffs;
+  if (experimentalContractV2Enabled) {
+    console.log('[Apollo][contracts-v2] component evaluated', {
+      componentKey,
+      componentName: ref?.displayName ?? ref?.name ?? node.name,
+      packageId: experimentalContract?.package.id ?? null,
+      diagnostics: experimentalResult?.diagnostics ?? {
+        evaluated: 0,
+        violations: 0,
+        passed: 0,
+        unknown: 0,
+        classificationSkipped: 0,
+        unsupportedRuleIds: [],
+      },
+      legacyDecisionCountDiscarded: legacyDiffs.length,
+    });
+  }
   debugDiffPipeline({
     componentName: ref?.displayName ?? ref?.name ?? node.name,
     alignedActualStructure,

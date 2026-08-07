@@ -62,6 +62,7 @@ export type BuildApolloStatsReportInput = {
     }>;
     settings: {
       shellAuditEnabled: boolean;
+      experimentalContractV2Enabled: boolean;
     };
     scannedComponents: number;
   };

@@ -922,6 +922,7 @@
         let currentPickerLabel = 'Desktop';
         let shellAuditEnabled = false;
         let showExpectedCustomizations = true;
+        let experimentalContractV2Enabled = false;
         let agentReportMeta = null;
         let activeApolloView = 'audit';
         let agentRequestInProgress = false;
@@ -978,6 +979,7 @@
                 onPickerChange: handlePickerChange,
                 onShellAuditToggle: handleShellAuditToggle,
                 onShowExpectedToggle: handleShowExpectedToggle,
+                onExperimentalContractV2Toggle: handleExperimentalContractV2Toggle,
                 onExampleCapture: handleGenerationExampleCapture,
               }),
             );
@@ -3050,6 +3052,7 @@
                     channelId: currentChannelId,
                     pickerLabel: currentPickerLabel,
                     shellAuditEnabled,
+                    experimentalContractV2Enabled,
                   },
                 },
               },
@@ -3105,6 +3108,15 @@
           showExpectedCustomizations = !showExpectedCustomizations;
           renderTabs();
           renderList();
+        }
+
+        function handleExperimentalContractV2Toggle() {
+          if (isScanning) {
+            return;
+          }
+
+          experimentalContractV2Enabled = !experimentalContractV2Enabled;
+          syncChromeState();
         }
 
         function handleGenerationExampleCapture(payload) {
@@ -3201,6 +3213,7 @@
             compact: isCompact,
             shellAuditEnabled,
             showExpectedCustomizations,
+            experimentalContractV2Enabled,
             tabs,
           };
 

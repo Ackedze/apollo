@@ -98,6 +98,51 @@
   font-weight: 400;
 }
 
+.ruleInfo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ruleInfoButton {
+  width: 18px;
+  height: 18px;
+  padding: 2px;
+  border: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(4, 4, 19, 0.45);
+  background: transparent;
+  cursor: help;
+}
+
+.ruleInfoButton:hover,
+.ruleInfoButton:focus-visible {
+  color: rgba(4, 4, 19, 0.88);
+  background: rgba(4, 4, 19, 0.06);
+  outline: none;
+}
+
+.ruleTooltip {
+  position: fixed;
+  z-index: 10000;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 16px));
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(31, 31, 31, 0.96);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.05px;
+  font-weight: 400;
+  pointer-events: none;
+}
+
 .valueMarker {
   flex-shrink: 0;
   padding: 1px 6px;

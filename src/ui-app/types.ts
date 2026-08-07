@@ -108,6 +108,7 @@ export type CustomValueLine = {
   label: string;
   values: string[];
   marker?: 'Expected';
+  ruleText?: string;
 };
 
 export type CustomChangeGroup = {

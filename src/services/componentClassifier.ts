@@ -573,6 +573,8 @@ export async function classifyComponentNode(
             ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
           hostVariantProperties: instanceVariantProperties,
           actualStructure: alignedActualStructure,
+          effectiveBaselineDiffs: legacyDiffs,
+          resolveTokenLabel,
         })
       : null;
   const diffs = experimentalContractV2Enabled

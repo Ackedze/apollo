@@ -22,6 +22,17 @@ type EvaluationContext = {
   hostVariantProperties: Record<string, string>;
   nodes: RuntimeNode[];
   host: RuntimeNode;
+  effectiveBaselineDiffs: DiffEntry[];
+  resolveTokenLabel?: (token: string) => string | null;
+};
+
+type RuleEvaluation = {
+  verdict: EvaluationVerdict;
+  target?: RuntimeNode;
+  expected?: unknown;
+  actual?: unknown;
+  sourceDiff?: DiffEntry;
+  sourceDiffs?: Array<{ diff: DiffEntry; target: RuntimeNode }>;
 };
 
 export type ExperimentalContractV2Evaluation = {
@@ -41,6 +52,8 @@ const SUPPORTED_ASSERTIONS = new Set([
   'allMatch',
   'componentApiValid',
   'countBetween',
+  'matchesEffectiveBaseline',
+  'paintStateEquals',
   'propertiesEqual',
   'relativeOrder',
   'valuePosition',
@@ -56,6 +69,8 @@ export function evaluateExperimentalContractV2(options: {
   hostComponentName: string;
   hostVariantProperties?: Record<string, string> | null;
   actualStructure: DSStructureNode[];
+  effectiveBaselineDiffs?: DiffEntry[];
+  resolveTokenLabel?: (token: string) => string | null;
 }): ExperimentalContractV2Evaluation {
   const host = createHostNode(options);
   const context: EvaluationContext = {
@@ -65,6 +80,8 @@ export function evaluateExperimentalContractV2(options: {
     hostVariantProperties: options.hostVariantProperties ?? {},
     nodes: replaceRoot(options.actualStructure, host),
     host,
+    effectiveBaselineDiffs: options.effectiveBaselineDiffs ?? [],
+    resolveTokenLabel: options.resolveTokenLabel,
   };
   const result: ExperimentalContractV2Evaluation = {
     diffs: [],
@@ -77,6 +94,7 @@ export function evaluateExperimentalContractV2(options: {
       unsupportedRuleIds: [],
     },
   };
+  const claimedBaselineDiffs = new Set<string>();
 
   for (const rule of options.contract.rules) {
     if (rule.enforcement !== 'enforced') {
@@ -94,6 +112,24 @@ export function evaluateExperimentalContractV2(options: {
       result.diagnostics.passed += 1;
       continue;
     }
+    if (evaluation.sourceDiffs) {
+      let emitted = 0;
+      for (const match of evaluation.sourceDiffs) {
+        const sourceKey = baselineDiffKey(match.diff);
+        if (claimedBaselineDiffs.has(sourceKey)) continue;
+        claimedBaselineDiffs.add(sourceKey);
+        result.diffs.push(createViolationDiff(rule, match.target, Object.assign({}, evaluation, {
+          sourceDiff: match.diff,
+          sourceDiffs: undefined,
+          expected: match.diff.details?.reference.value ?? null,
+          actual: match.diff.details?.actual.value ?? null,
+        })));
+        emitted += 1;
+      }
+      if (emitted) result.diagnostics.violations += emitted;
+      else result.diagnostics.passed += 1;
+      continue;
+    }
     result.diagnostics.violations += 1;
     result.diffs.push(createViolationDiff(rule, evaluation.target ?? host, evaluation));
   }
@@ -105,10 +141,11 @@ export function evaluateExperimentalContractV2(options: {
 function evaluateRule(
   rule: ExperimentalRuleV2,
   context: EvaluationContext,
-): { verdict: EvaluationVerdict; target?: RuntimeNode; expected?: unknown; actual?: unknown } {
-  if (rule.when?.op !== 'evidenceComplete') return { verdict: 'unknown' };
+): RuleEvaluation {
   if (!SUPPORTED_ASSERTIONS.has(rule.assert.op)) return { verdict: 'unknown' };
-  const selection = resolveSelection(rule, context);
+  const resolvedSelection = resolveSelection(rule, context);
+  if (!resolvedSelection) return { verdict: 'unknown' };
+  const selection = applyRuleCondition(rule.when, resolvedSelection, context);
   if (!selection) return { verdict: 'unknown' };
 
   switch (rule.assert.op) {
@@ -120,6 +157,10 @@ function evaluateRule(
       return evaluateAllEqual(selection, rule.assert, context);
     case 'countBetween':
       return evaluateCountBetween(selection, rule.assert);
+    case 'matchesEffectiveBaseline':
+      return evaluateMatchesEffectiveBaseline(selection, rule.assert, context);
+    case 'paintStateEquals':
+      return evaluatePaintStateEquals(selection, rule.assert, context);
     case 'propertiesEqual':
       return evaluatePropertiesEqual(selection, rule.assert, context);
     case 'valuePosition':
@@ -129,6 +170,148 @@ function evaluateRule(
     default:
       return { verdict: 'unknown' };
   }
+}
+
+function evaluateMatchesEffectiveBaseline(
+  nodes: RuntimeNode[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+): RuleEvaluation {
+  if (!Array.isArray(assertion.properties) || !assertion.properties.length) {
+    return { verdict: 'unknown' };
+  }
+  const properties = assertion.properties.filter(
+    (property: unknown): property is string => typeof property === 'string' && property.length > 0,
+  );
+  if (!properties.length) return { verdict: 'unknown' };
+
+  const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
+  for (const diff of context.effectiveBaselineDiffs) {
+    if (!isActionableBaselineDiff(diff)) continue;
+    if (!properties.some((property) => baselinePropertyMatches(property, diff))) continue;
+    const target = findBaselineTarget(diff, nodes);
+    if (!target) continue;
+    matches.push({ diff, target });
+  }
+  return matches.length ? { verdict: 'fail', sourceDiffs: matches } : { verdict: 'pass' };
+}
+
+function isActionableBaselineDiff(diff: DiffEntry): boolean {
+  // Contract v2 evaluates the already materialized effective baseline. Legacy
+  // Expected/Allowed verdicts are advisory and must not override an exact
+  // component contract. Derived diffs are the only non-actionable evidence.
+  return diff.assessment?.presentation !== 'suppress-derived';
+}
+
+function baselinePropertyMatches(pattern: string, diff: DiffEntry): boolean {
+  const property = diff.details?.property ?? '';
+  const aliases = baselinePropertyAliases(property);
+  if (aliases.includes(pattern)) return true;
+  if (pattern.endsWith('.*')) {
+    const prefix = pattern.slice(0, -2);
+    return aliases.some((alias) => alias === prefix || alias.startsWith(`${prefix}.`));
+  }
+  return aliases.some((alias) => pattern.endsWith(`.${alias}`));
+}
+
+function baselinePropertyAliases(property: string): string[] {
+  const aliases = new Set([property]);
+  if (property === 'layout.sizing.horizontal') aliases.add('layoutSizingHorizontal');
+  if (property === 'layout.sizing.vertical') aliases.add('layoutSizingVertical');
+  if (property === 'textStyle' || property === 'typographyToken') aliases.add('styles.text');
+  if (property === 'cornerRadius') aliases.add('radius');
+  if (property === 'fills' || property === 'styles.fill') aliases.add('fill');
+  if (property === 'strokes' || property === 'styles.stroke') aliases.add('stroke');
+  return Array.from(aliases);
+}
+
+function findBaselineTarget(diff: DiffEntry, nodes: RuntimeNode[]): RuntimeNode | null {
+  if (diff.nodeId) {
+    const byId = nodes.find((node) => node.nodeId === diff.nodeId);
+    if (byId) return byId;
+  }
+  return nodes.find((node) =>
+    node.path === diff.nodePath ||
+    diff.nodePath.startsWith(`${node.path} / `) ||
+    node.path.startsWith(`${diff.nodePath} / `),
+  ) ?? null;
+}
+
+function baselineDiffKey(diff: DiffEntry): string {
+  return [diff.nodeId ?? '', diff.nodePath, diff.details?.property ?? '', diff.message].join('|');
+}
+
+function applyRuleCondition(
+  condition: ExperimentalRuleV2['when'],
+  nodes: RuntimeNode[],
+  context: EvaluationContext,
+): RuntimeNode[] | null {
+  if (condition?.op === 'evidenceComplete') return nodes;
+  if (condition?.op !== 'all' || !condition.clauses || typeof condition.clauses !== 'object') {
+    return null;
+  }
+  const clauses = condition.clauses as Record<string, unknown>;
+  for (const field of Object.keys(clauses)) {
+    if (field !== 'component' && field !== 'variant' && field !== 'except') return null;
+  }
+  if (typeof clauses.component === 'string' && !hostComponentMatches(clauses.component, context)) {
+    return [];
+  }
+  if (clauses.variant !== undefined) {
+    const expectedVariant = readVariantCondition(clauses.variant);
+    if (!expectedVariant) return null;
+    const properties = Object.keys(expectedVariant);
+    if (properties.some((property) => context.hostVariantProperties[property] !== undefined)) {
+      if (!variantConditionMatches(expectedVariant, context.hostVariantProperties)) return [];
+    } else {
+      nodes = nodes.filter((node) =>
+        variantConditionMatches(expectedVariant, variantProperties(node, context)),
+      );
+    }
+  }
+  if (clauses.except !== undefined) {
+    if (!clauses.except || typeof clauses.except !== 'object' || Array.isArray(clauses.except)) {
+      return null;
+    }
+    const exception = clauses.except as Record<string, unknown>;
+    for (const field of Object.keys(exception)) {
+      if (field !== 'component' && field !== 'variant') return null;
+    }
+    const componentMatches = typeof exception.component !== 'string' ||
+      hostComponentMatches(exception.component, context);
+    const variantMatches = exception.variant === undefined ||
+      variantConditionMatches(exception.variant, context.hostVariantProperties);
+    if (componentMatches && variantMatches) return [];
+  }
+  return nodes;
+}
+
+function hostComponentMatches(expected: string, context: EvaluationContext): boolean {
+  const normalize = (value: string) => value
+    .replace(/^\s*🔒\s*/, '')
+    .replace(/^\s*\[[DM]\]\s*/, '')
+    .replace(/\s+/g, '')
+    .toLowerCase();
+  const target = normalize(expected);
+  return normalize(context.hostComponentName).includes(target) ||
+    normalize(context.contract.package.family).includes(target) ||
+    context.contract.package.id === expected;
+}
+
+function variantConditionMatches(
+  condition: unknown,
+  actual: Record<string, string>,
+): boolean {
+  const expected = readVariantCondition(condition);
+  if (!expected) return false;
+  return Object.entries(expected).every(([property, value]) => actual[property] === value);
+}
+
+function readVariantCondition(condition: unknown): Record<string, string> | null {
+  if (!condition || typeof condition !== 'object' || Array.isArray(condition)) return null;
+  const expected = condition as Record<string, unknown>;
+  if (Object.values(expected).some((value) => typeof value !== 'string')) return null;
+  return expected as Record<string, string>;
 }
 
 function resolveSelection(
@@ -223,7 +406,10 @@ function evaluateComponentApi(
   context: EvaluationContext,
 ): { verdict: EvaluationVerdict; target?: RuntimeNode; expected?: unknown; actual?: unknown } {
   const apiByKey = new Map(
-    context.contract.facts.componentApi.map((entry) => [entry.componentKey, entry]),
+    context.contract.facts.componentApi.flatMap((entry) =>
+      (entry.componentKeys?.length ? entry.componentKeys : [entry.componentKey])
+        .map((key) => [key, entry] as const),
+    ),
   );
   let checked = 0;
   for (const node of nodes) {
@@ -252,16 +438,28 @@ function evaluateAllMatch(
   context: EvaluationContext,
 ) {
   if (!nodes.length || !assertion.predicate) return { verdict: 'unknown' as const };
+  const predicate = assertion.predicate as Record<string, any>;
   for (const node of nodes) {
-    const fact = readFact(node, assertion.predicate.fact, context);
+    const fact = readFact(node, predicate.fact, context);
     if (fact === undefined) return { verdict: 'unknown' as const };
-    const matches = evaluateCondition(fact, assertion.predicate);
+    if (predicate.op === 'equalsFact') {
+      if (typeof predicate.expectedFact !== 'string') {
+        return { verdict: 'unknown' as const };
+      }
+      const expected = readFact(context.host, predicate.expectedFact, context);
+      if (expected === undefined) return { verdict: 'unknown' as const };
+      if (fact !== expected) {
+        return { verdict: 'fail' as const, target: node, expected, actual: fact };
+      }
+      continue;
+    }
+    const matches = evaluateCondition(fact, predicate);
     if (matches === null) return { verdict: 'unknown' as const };
     if (!matches) {
       return {
         verdict: 'fail' as const,
         target: node,
-        expected: assertion.predicate.values ?? assertion.predicate.value,
+        expected: predicate.values ?? predicate.value,
         actual: fact,
       };
     }
@@ -274,8 +472,20 @@ function evaluateAllEqual(
   assertion: Record<string, any>,
   context: EvaluationContext,
 ) {
-  if (!nodes.length || typeof assertion.fact !== 'string') return { verdict: 'unknown' as const };
-  const values = nodes.map((node) => readFact(node, assertion.fact, context));
+  if (!nodes.length) return { verdict: 'unknown' as const };
+  const facts = typeof assertion.fact === 'string'
+    ? [assertion.fact]
+    : Array.isArray(assertion.facts) && assertion.facts.every((fact: unknown) => typeof fact === 'string')
+      ? assertion.facts as string[]
+      : null;
+  if (!facts?.length) return { verdict: 'unknown' as const };
+  const values = nodes.map((node) => {
+    for (const fact of facts) {
+      const value = readFact(node, fact, context);
+      if (value !== undefined) return value;
+    }
+    return undefined;
+  });
   if (values.some((value) => value === undefined)) return { verdict: 'unknown' as const };
   const first = JSON.stringify(values[0]);
   const mismatch = values.findIndex((value) => JSON.stringify(value) !== first);
@@ -291,6 +501,42 @@ function evaluateCountBetween(nodes: RuntimeNode[], assertion: Record<string, an
   return nodes.length >= assertion.min && nodes.length <= assertion.max
     ? { verdict: 'pass' as const }
     : { verdict: 'fail' as const, target: nodes[0], expected: `${assertion.min}-${assertion.max}`, actual: nodes.length };
+}
+
+function evaluatePaintStateEquals(
+  nodes: RuntimeNode[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+) {
+  if (!assertion.state || typeof assertion.state !== 'object' || Array.isArray(assertion.state)) {
+    return { verdict: 'unknown' as const };
+  }
+  const state = assertion.state as Record<string, unknown>;
+  const entries = Object.entries(state);
+  if (!entries.length) return { verdict: 'unknown' as const };
+  if (!nodes.length) return { verdict: 'pass' as const };
+  for (const [paintField, expectedState] of entries) {
+    if ((paintField !== 'fill' && paintField !== 'stroke') || expectedState !== 'none-or-not-visible') {
+      return { verdict: 'unknown' as const };
+    }
+    for (const node of nodes) {
+      const paint = paintField === 'fill' ? node.fill : node.stroke;
+      const style = paintField === 'fill' ? node.styles?.fill : node.styles?.stroke;
+      const rawActual = paint?.token ?? paint?.color ?? style?.styleKey ?? null;
+      const actual = paint?.token && context.resolveTokenLabel
+        ? context.resolveTokenLabel(paint.token) ?? rawActual
+        : rawActual;
+      if (actual !== null && actual !== '') {
+        return {
+          verdict: 'fail' as const,
+          target: node,
+          expected: `без видимой ${paintField === 'fill' ? 'заливки' : 'обводки'}`,
+          actual,
+        };
+      }
+    }
+  }
+  return { verdict: 'pass' as const };
 }
 
 function evaluatePropertiesEqual(
@@ -331,14 +577,24 @@ function evaluateValuePosition(
   }
   if (Number.isFinite(assertion.maxCount) && matching.length > assertion.maxCount) {
     const index = matching[assertion.maxCount] ?? matching[0];
-    return { verdict: 'fail' as const, target: nodes[index], expected: `max ${assertion.maxCount}`, actual: matching.length };
+    return {
+      verdict: 'fail' as const,
+      target: nodes[index],
+      expected: `не более ${assertion.maxCount}`,
+      actual: `найдено ${matching.length}`,
+    };
   }
   for (const index of matching) {
     const allowed = assertion.positions.some((position: string) =>
       position === 'first' ? index === 0 : position === 'last' ? index === nodes.length - 1 : false,
     );
     if (!allowed) {
-      return { verdict: 'fail' as const, target: nodes[index], expected: assertion.positions.join(', '), actual: index + 1 };
+      return {
+        verdict: 'fail' as const,
+        target: nodes[index],
+        expected: formatAllowedPositions(assertion.positions),
+        actual: `позиция ${index + 1}`,
+      };
     }
   }
   return { verdict: 'pass' as const };
@@ -375,6 +631,15 @@ function readFact(
     return node.layout?.sizing?.vertical;
   }
   if (fact === 'opacity') return node.opacity;
+  if (fact === 'fill' || fact === 'fills') {
+    const token = node.fill?.token;
+    return token && context.resolveTokenLabel
+      ? context.resolveTokenLabel(token) ?? token
+      : token ?? node.fill?.color ?? node.styles?.fill?.styleKey;
+  }
+  if (fact === 'style.text' || fact === 'styles.text') {
+    return node.styles?.text?.styleKey ?? node.typographyToken;
+  }
   if (fact === 'stroke.align' || fact === 'strokeAlign') return node.stroke?.align;
   if (fact === 'text.characters') return node.text?.characters;
   return undefined;
@@ -383,9 +648,15 @@ function readFact(
 function createViolationDiff(
   rule: ExperimentalRuleV2,
   target: RuntimeNode,
-  evaluation: { expected?: unknown; actual?: unknown },
+  evaluation: RuleEvaluation,
 ): DiffEntry {
-  const message = rule.presentation?.message || `Нарушено правило ${rule.id}`;
+  const ruleMessage = rule.presentation?.message || `Нарушено правило ${rule.id}`;
+  const variantProperty = getRuleVariantProperty(rule);
+  const referenceValue = stringifyEvidence(evaluation.expected);
+  const actualValue = stringifyEvidence(evaluation.actual);
+  const message = variantProperty
+    ? `${variantProperty}: ${referenceValue ?? '—'} → ${actualValue ?? '—'}`
+    : ruleMessage;
   const assessment: CustomizationAssessment = {
     verdict: 'violation',
     source: 'component-contract',
@@ -398,10 +669,18 @@ function createViolationDiff(
       expected: evaluation.expected ?? null,
       actual: evaluation.actual ?? null,
     },
-    message,
+    message: ruleMessage,
     presentation: 'show',
-    remediation: null,
+    remediation: resolveRuleRemediation(rule, target, evaluation),
   };
+  if (evaluation.sourceDiff) {
+    return Object.assign({}, evaluation.sourceDiff, {
+      nodePath: evaluation.sourceDiff.nodePath || target.path,
+      nodeName: evaluation.sourceDiff.nodeName || target.name,
+      nodeId: evaluation.sourceDiff.nodeId ?? target.nodeId,
+      assessment,
+    });
+  }
   return {
     message,
     nodePath: target.path,
@@ -424,11 +703,75 @@ function createViolationDiff(
     },
     diffKind: 'other',
     details: {
-      property: rule.presentation?.group || 'component-contract-v2',
-      reference: { value: stringifyEvidence(evaluation.expected) },
-      actual: { value: stringifyEvidence(evaluation.actual) },
+      property: variantProperty
+        ? `variant.${variantProperty}`
+        : rule.presentation?.group || 'component-contract-v2',
+      reference: { value: referenceValue },
+      actual: { value: actualValue },
     },
     assessment,
+  };
+}
+
+function formatAllowedPositions(positions: string[]): string {
+  return positions
+    .map((position) => {
+      if (position === 'first') return 'первая позиция';
+      if (position === 'last') return 'последняя позиция';
+      return position;
+    })
+    .join(', ');
+}
+
+function getRuleVariantProperty(rule: ExperimentalRuleV2): string | null {
+  const assertion = rule.assert as Record<string, any>;
+  const fact = typeof assertion.fact === 'string'
+    ? assertion.fact
+    : typeof assertion.predicate?.fact === 'string'
+      ? assertion.predicate.fact
+      : null;
+  if (!fact) return null;
+  return fact.match(/^(?:target|host)\.variant\.([^\.]+)$/)?.[1]
+    ?? (fact.startsWith('variant.') ? fact.slice('variant.'.length) : null);
+}
+
+function resolveRuleRemediation(
+  rule: ExperimentalRuleV2,
+  target: RuntimeNode,
+  evaluation: { expected?: unknown; actual?: unknown },
+): CustomizationAssessment['remediation'] {
+  const remediation = rule.remediation;
+  if (
+    !remediation ||
+    remediation.kind !== 'set-variant-properties' ||
+    remediation.target !== '$failingTarget' ||
+    !remediation.properties ||
+    typeof remediation.properties !== 'object' ||
+    Array.isArray(remediation.properties) ||
+    !target.nodeId
+  ) {
+    return null;
+  }
+  const properties: Record<string, string> = {};
+  for (const [property, value] of Object.entries(remediation.properties)) {
+    if (typeof value !== 'string') continue;
+    if (!value.startsWith('$')) {
+      properties[property] = value;
+      continue;
+    }
+    const referenceProperty = value.match(/^\$targets\[0\]\.variant\.([^\.]+)$/)?.[1];
+    if (
+      referenceProperty === property &&
+      (typeof evaluation.expected === 'string' || typeof evaluation.expected === 'number')
+    ) {
+      properties[property] = String(evaluation.expected);
+    }
+  }
+  if (!Object.keys(properties).length) return null;
+  return {
+    kind: 'set-variant-properties',
+    nodeId: target.nodeId,
+    properties,
   };
 }
 
@@ -497,6 +840,10 @@ function combinationMatches(
 
 function stringifyEvidence(value: unknown): string | number | null {
   if (value === undefined || value === null) return null;
-  if (typeof value === 'string' || typeof value === 'number') return value;
+  if (typeof value === 'number') return Number(value.toFixed(4));
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value) && value.every((entry) => typeof entry === 'string')) {
+    return value.join(' или ');
+  }
   return JSON.stringify(value);
 }

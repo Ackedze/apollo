@@ -26,6 +26,7 @@ type ChangeLine = {
   label: string;
   values: string[];
   marker?: 'Expected';
+  ruleText?: string;
 };
 
 type ChangeGroup = {

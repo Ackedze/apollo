@@ -4,6 +4,10 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const uiSource = fs.readFileSync(path.join(root, 'src/ui.html'), 'utf8');
 const codeSource = fs.readFileSync(path.join(root, 'src/code.ts'), 'utf8');
+const resultSubCardSource = fs.readFileSync(
+  path.join(root, 'src/ui-app/components/ResultSubCard.tsx'),
+  'utf8',
+);
 
 function assertIncludes(source, value, message) {
   if (!source.includes(value)) {
@@ -70,6 +74,26 @@ assertIncludes(
   uiSource,
   "diff.assessment?.verdict === 'expected'",
   'Customization UI must render the Expected marker from assessment verdicts.',
+);
+assertIncludes(
+  uiSource,
+  "diff.assessment?.verdict === 'violation'",
+  'Customization UI must only expose rule help for violations.',
+);
+assertIncludes(
+  uiSource,
+  'diff.assessment.message.trim()',
+  'Customization UI must pass the human-readable assessment message to the rule informer.',
+);
+assertIncludes(
+  resultSubCardSource,
+  'role="tooltip"',
+  'Customization rule informer must render an accessible tooltip.',
+);
+assertIncludes(
+  resultSubCardSource,
+  'Показать нарушенное правило',
+  'Customization rule informer must have a user-facing accessible name.',
 );
 assertIncludes(
   uiSource,

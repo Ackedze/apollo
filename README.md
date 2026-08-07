@@ -33,7 +33,11 @@ Runtime contract pipeline разделён на независимые слои.
 
 В настройках доступен выключенный по умолчанию тогл `Тестировать Contract v2`. Он включает изолированный тестовый контур: Apollo лениво загружает `experimentalComponentContractIndexPath` и только v2-пакеты для ключей компонентов текущего выделения. В этом режиме решения legacy component-contract engine не попадают в категорию `Кастомизации`; результат формирует только универсальный v2-интерпретатор. Настройка не сохраняется между запусками плагина и не влияет на обычную проверку при выключенном тогле.
 
+Experimental runtime-index маршрутизирует пакет по полному набору `componentKeys`: canonical component-set key и всем опубликованным variant keys. Поиск по имени не используется. Валидатор блокирует экспериментальный release, если хотя бы один routing key из Component API отсутствует в индексе или принадлежит нескольким пакетам.
+
 Contract v2 работает fail-closed. Нарушение может создать только правило с `enforcement=enforced`, поддержанными selector/operator и достаточными evidence. `nonExecutableRules`, классификационные правила, неизвестные возможности и неполные данные получают диагностический результат `unknown` и не считаются нарушением. Apollo не интерпретирует `ruleText` и не пытается угадать смысл неподтверждённого правила.
+
+В UI строка детерминированного нарушения показывает фактическое отклонение, а информер рядом с названием параметра раскрывает человекочитаемый текст нарушенного правила из `assessment.message`. Технический `ruleId` сохраняется только в JSON-отчёте и диагностике.
 
 [`src/contracts/componentApiContracts.ts`](./src/contracts/componentApiContracts.ts) компилирует `contract.generated.json` в целевой Component API и детерминированно проверяет public variant properties, их значения и разрешённые комбинации. Нарушения проходят через обычный `DiffEntry`/`CustomizationAssessment`, поэтому одинаково отображаются в UI, полном отчёте и agent report. Runtime принимает целевую схему `apollo.ds-contracts.v1` и один явно описанный migration-format `component-contract-generated` schema 1; к сырым каталогам при ошибке компиляции не откатывается. Регрессия компилирует все пакеты текущего `componentContractIndex`.
 

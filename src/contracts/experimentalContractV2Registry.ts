@@ -37,6 +37,7 @@ export type ExperimentalContractV2 = {
       id: string;
       name: string;
       componentKey: string;
+      componentKeys?: string[];
       publicApi: {
         properties: Record<string, string[]>;
         allowedCombinations: Array<Record<string, string>>;

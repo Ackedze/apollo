@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import { SmallButton } from './SmallButton';
 import styles from './ResultSubCard.module.css';
 
@@ -13,6 +14,7 @@ type ResultValueLine = {
   label: string;
   values: string[];
   marker?: 'Expected';
+  ruleText?: string;
 };
 
 type ResultSubCardProps = {
@@ -39,6 +41,72 @@ function ArrowRightIcon(): React.JSX.Element {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+type RuleTooltipPosition = {
+  top?: number;
+  bottom?: number;
+  left: number;
+};
+
+function RuleInfo({ text }: { text: string }): React.JSX.Element {
+  const buttonRef = React.useRef<HTMLButtonElement | null>(null);
+  const tooltipId = React.useId();
+  const [position, setPosition] = React.useState<RuleTooltipPosition | null>(null);
+
+  const showTooltip = () => {
+    const rect = buttonRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const tooltipWidth = Math.min(320, window.innerWidth - 16);
+    const left = Math.max(
+      8,
+      Math.min(rect.left - 12, window.innerWidth - tooltipWidth - 8),
+    );
+    if (window.innerHeight - rect.bottom >= 120) {
+      setPosition({ top: rect.bottom + 8, left });
+      return;
+    }
+    setPosition({ bottom: window.innerHeight - rect.top + 8, left });
+  };
+
+  return (
+    <span
+      className={styles.ruleInfo}
+      onClick={(event) => event.stopPropagation()}
+      onKeyDown={(event) => event.stopPropagation()}
+    >
+      <button
+        ref={buttonRef}
+        type="button"
+        className={styles.ruleInfoButton}
+        aria-label="Показать нарушенное правило"
+        aria-describedby={position ? tooltipId : undefined}
+        onMouseEnter={showTooltip}
+        onMouseLeave={() => setPosition(null)}
+        onFocus={showTooltip}
+        onBlur={() => setPosition(null)}
+      >
+        <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.25" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M8 7.25V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="8" cy="4.75" r="0.75" fill="currentColor" />
+        </svg>
+      </button>
+      {position
+        ? createPortal(
+            <div
+              id={tooltipId}
+              role="tooltip"
+              className={styles.ruleTooltip}
+              style={position}
+            >
+              {text}
+            </div>,
+            document.body,
+          )
+        : null}
+    </span>
   );
 }
 
@@ -131,6 +199,7 @@ export function ResultSubCard({
               <div className={styles.valueLine} key={`${line.label}:${lineIndex}`}>
                 <div className={styles.valueHeader}>
                   <span>{line.label}</span>
+                  {line.ruleText ? <RuleInfo text={line.ruleText} /> : null}
                   <span>:</span>
                 </div>
                 {line.marker ? (

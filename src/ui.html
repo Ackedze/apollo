@@ -1677,17 +1677,25 @@
                     diff.assessment?.verdict === 'allowed')
                     ? 'Expected'
                     : undefined;
+                const ruleText =
+                  diff.assessment?.verdict === 'violation' &&
+                  typeof diff.assessment?.message === 'string' &&
+                  diff.assessment.message.trim()
+                    ? diff.assessment.message.trim()
+                    : undefined;
                 const line = parsed
                   ? {
                       ...parsed,
                       values: structuredValues || parsed.values,
                       marker,
+                      ruleText,
                     }
                   : {
                       label: 'Изменение',
                       values:
                         structuredValues || [(diff.message || '').trim() || '—'],
                       marker,
+                      ruleText,
                     };
                 let remediation = diff.assessment?.remediation;
                 const isStructuralCompositionDiff =

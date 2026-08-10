@@ -2,6 +2,7 @@
 
 import {
   areReferenceCatalogsReady,
+  ensureReferenceCatalogsForChannel,
   ensureReferenceCatalogsForKeys,
   ensureReferenceCatalogsLoaded,
   findComponent,
@@ -120,6 +121,7 @@ import {
   ensureColorTokenValueIndexLoaded,
   findColorTokenValueCandidates,
 } from './services/colorTokenValueIndex';
+import { getDetachedLibraryComponentKey } from './services/detachedComponentSource';
 
 declare const __APOLLO_VERSION__: string;
 
@@ -148,11 +150,10 @@ figma.ui.postMessage({
   },
 });
 
-startCatalogPreload();
-
 figma.ui.onmessage = createApolloPluginMessageRouter({
   postMessage: (message) => figma.ui.postMessage(message),
   notify: (message) => figma.notify(message),
+  uiReady: startCatalogPreload,
   scanSelection: (payload) => {
     void runAudit(undefined, parseAuditChannel(payload?.pickerLabel), {
       shellAuditEnabled: payload?.shellAuditEnabled === true,
@@ -160,6 +161,8 @@ figma.ui.onmessage = createApolloPluginMessageRouter({
         payload?.experimentalContractV2Enabled === true,
     });
   },
+  prepareCatalogChannel: (payload) =>
+    prepareCatalogChannel(parseAuditChannel(payload?.pickerLabel)),
   captureGenerationExample,
   cancelScan: () => {
     auditLifecycle.requestCancel();
@@ -195,6 +198,8 @@ figma.ui.onmessage = createApolloPluginMessageRouter({
 
 const auditLifecycle = new AuditLifecycle();
 let catalogPreloadStarted = false;
+let requestedCatalogChannel: AuditChannel = 'Desktop';
+let catalogPreparationRevision = 0;
 let lastAuditSelectionIds: string[] = [];
 let lastAuditChannel: AuditChannel = 'Desktop';
 let lastAuditOptions = {
@@ -305,7 +310,7 @@ async function runAudit(
     }
 
     const preloadStartedAt = getTimestamp();
-    await ensureReferenceCatalogsLoaded();
+    await ensureReferenceCatalogsForChannel(selectedChannel);
     await ensureTokenLabelMapLoaded();
     await ensureStyleMetadataLoaded();
     await ensureColorTokenValueIndexLoaded();
@@ -971,17 +976,44 @@ function createApolloAgentDialogueSessionId(): string {
 function startCatalogPreload() {
   if (catalogPreloadStarted) return;
   catalogPreloadStarted = true;
-  figma.ui.postMessage({ type: 'catalog-loading' });
-  ensureReferenceCatalogsLoaded()
-    .then(() => {
-      figma.ui.postMessage({ type: 'catalog-ready' });
-    })
-    .catch((error) => {
-      console.error('Catalog preload failed', error);
-      const message =
-        'Не удалось загрузить библиотеки. Проверьте подключение и попробуйте снова.';
-      figma.ui.postMessage({ type: 'catalog-error', payload: { message } });
+  void prepareCatalogChannel('Desktop');
+}
+
+async function prepareCatalogChannel(channel: AuditChannel): Promise<void> {
+  requestedCatalogChannel = channel;
+  const revision = ++catalogPreparationRevision;
+  figma.ui.postMessage({
+    type: 'catalog-loading',
+    payload: { channel },
+  });
+
+  try {
+    await ensureReferenceCatalogsForChannel(channel);
+    if (
+      revision !== catalogPreparationRevision ||
+      channel !== requestedCatalogChannel
+    ) {
+      return;
+    }
+    figma.ui.postMessage({
+      type: 'catalog-ready',
+      payload: { channel },
     });
+  } catch (error) {
+    if (
+      revision !== catalogPreparationRevision ||
+      channel !== requestedCatalogChannel
+    ) {
+      return;
+    }
+    console.error('Catalog preload failed', error);
+    const message =
+      'Не удалось загрузить библиотеки. Проверьте подключение и попробуйте снова.';
+    figma.ui.postMessage({
+      type: 'catalog-error',
+      payload: { channel, message },
+    });
+  }
 }
 
 async function collectComponentKeys(
@@ -1013,6 +1045,11 @@ async function collectComponentKeys(
       if (key) {
         keys.add(key);
       }
+    }
+
+    const detachedComponentKey = getDetachedLibraryComponentKey(node);
+    if (detachedComponentKey) {
+      keys.add(detachedComponentKey);
     }
 
     if ('children' in node && node.children.length > 0) {

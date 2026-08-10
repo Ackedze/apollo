@@ -643,7 +643,7 @@ function compareNode(
     actual.stroke,
   );
 
-  compareStyle(
+  const hasTextStyleDiff = compareStyle(
     'текст',
     path,
     actual,
@@ -653,6 +653,15 @@ function compareNode(
     diffs,
     resolveStyleLabel,
   );
+
+  compareRawTypography(
+    path,
+    actual,
+    reference,
+    diffs,
+    hasTextStyleDiff,
+  );
+  compareTextCase(path, actual, reference, diffs);
 
   comparePaint(
     'заливка',
@@ -1220,6 +1229,92 @@ function compareStyle(
   );
 
   return true;
+}
+
+function compareRawTypography(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  diffs: DiffEntry[],
+  hasTextStyleDiff: boolean,
+) {
+  if (
+    hasTextStyleDiff ||
+    actualNode.type !== 'TEXT' ||
+    referenceNode.type !== 'TEXT' ||
+    referenceNode.styles?.text?.styleKey
+  ) {
+    return;
+  }
+
+  const fields: Array<keyof NonNullable<DSStructureNode['text']>> = [
+    'fontName',
+    'fontSize',
+    'lineHeight',
+    'letterSpacing',
+    'paragraphSpacing',
+  ];
+  const changedFields = fields.filter((field) => {
+    const referenceValue = referenceNode.text?.[field];
+    const actualValue = actualNode.text?.[field];
+    return (
+      referenceValue !== undefined &&
+      actualValue !== undefined &&
+      actualValue !== referenceValue
+    );
+  });
+  if (!changedFields.length) return;
+
+  const referenceDisplay = formatRawTypography(referenceNode);
+  const actualDisplay = formatRawTypography(actualNode);
+  pushDiff(
+    diffs,
+    actualNode,
+    referenceNode,
+    path,
+    `Типографика: ${referenceDisplay} → ${actualDisplay}`,
+    'text-style',
+    {
+      property: 'styles.text',
+      reference: { value: referenceDisplay },
+      actual: { value: actualDisplay },
+    },
+  );
+}
+
+function compareTextCase(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  diffs: DiffEntry[],
+) {
+  if (actualNode.type !== 'TEXT' || referenceNode.type !== 'TEXT') return;
+  const referenceCase = referenceNode.text?.case ?? 'ORIGINAL';
+  const actualCase = actualNode.text?.case ?? 'ORIGINAL';
+  if (referenceCase === actualCase) return;
+
+  pushDiff(
+    diffs,
+    actualNode,
+    referenceNode,
+    path,
+    `Регистр: ${referenceCase} → ${actualCase}`,
+    'text-style',
+    {
+      property: 'text.case',
+      reference: { value: referenceCase },
+      actual: { value: actualCase },
+    },
+  );
+}
+
+function formatRawTypography(node: DSStructureNode): string {
+  const text = node.text;
+  if (!text) return '—';
+  const font = text.fontName ?? '—';
+  const size = text.fontSize ?? '—';
+  const lineHeight = text.lineHeight ?? '—';
+  return `${font} · ${size}/${lineHeight}`;
 }
 
 function canonicalStyleIdentity(styleId: string): string {

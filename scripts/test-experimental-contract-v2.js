@@ -153,6 +153,100 @@ function testRelationalAndPositionOperators() {
   assert.equal(result.diagnostics.unknown, 0);
 }
 
+function testTableBasicVisibleDataCellCount() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-table-basic-engine',
+  );
+  const contract = createContract();
+  const dataCellSelector = {
+    scope: 'descendants',
+    where: {
+      componentKey: {
+        op: 'oneOf',
+        values: ['body-cell-basic-key', 'body-cell-basic-variant-key'],
+      },
+      visible: { op: 'equals', value: true },
+    },
+  };
+  contract.rules = [rule('visible-data-cell-count', dataCellSelector, {
+    op: 'countBetween',
+    min: 2,
+    max: 5,
+  })];
+  contract.rules[0].select.host = {
+    scope: 'selection-root',
+    where: {
+      componentKey: { op: 'oneOf', values: ['body-row-basic-key'] },
+    },
+  };
+
+  const valid = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-row-basic-key',
+    hostComponentName: '[D] BodyRow :: Basic',
+    actualStructure: [
+      node(1, '[D] BodyRow :: Basic', 'body-row-basic-key', {}),
+      node(2, '[D] BodyControlCell :: Basic', 'control-cell-key', {}),
+      node(3, 'Renamed data cell 0', 'body-cell-basic-key', {}),
+      node(4, 'Renamed data cell 1', 'body-cell-basic-variant-key', {}),
+      node(5, '[D] BodyActionCell :: Basic', 'action-cell-key', {}),
+    ],
+  });
+  assert.equal(valid.diffs.length, 0, 'Control and action cells must not count as data cells');
+
+  const tooFew = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-row-basic-key',
+    hostComponentName: '[D] BodyRow :: Basic',
+    actualStructure: [
+      Object.assign(node(1, '[D] BodyRow :: Basic', 'body-row-basic-key', {}), {
+        type: 'FRAME',
+        componentInstance: null,
+      }),
+      node(2, '[D] BodyControlCell :: Basic', 'control-cell-key', {}),
+      node(3, 'Renamed data cell', 'body-cell-basic-variant-key', {}),
+    ],
+    evaluationScope: 'detached-structural',
+  });
+  assert.equal(tooFew.diffs.length, 1, 'A control cell plus one data cell is still invalid');
+  assert.equal(tooFew.diffs[0].details.reference.value, '2-5');
+  assert.equal(tooFew.diffs[0].details.actual.value, 1);
+
+  const packageWideRule = rule('package-wide-rule-without-detached-provenance', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'countBetween',
+    min: 0,
+    max: 0,
+  });
+  packageWideRule.select.host = 'host.test';
+  contract.rules.push(packageWideRule);
+
+  const invalid = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-row-basic-key',
+    hostComponentName: '[D] BodyRow :: Basic',
+    actualStructure: [
+      Object.assign(node(1, '[D] BodyRow :: Basic', 'body-row-basic-key', {}), {
+        type: 'FRAME',
+        componentInstance: null,
+      }),
+      ...Array.from({ length: 6 }, (_, index) =>
+        node(index + 2, `Renamed data cell ${index}`, 'body-cell-basic-key', {})),
+    ],
+    evaluationScope: 'detached-structural',
+  });
+  assert.equal(invalid.diffs.length, 1);
+  assert.equal(
+    invalid.diffs[0].assessment.ruleId,
+    'rule-ir:test.visible-data-cell-count',
+    'Detached evaluation must skip package-wide rules without an explicit host key',
+  );
+  assert.equal(invalid.diffs[0].details.reference.value, '2-5');
+  assert.equal(invalid.diffs[0].details.actual.value, 6);
+}
+
 function testConditionalPaintStateAndReferenceRemediation() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -161,6 +255,10 @@ function testConditionalPaintStateAndReferenceRemediation() {
   const contract = createContract();
   contract.package.id = 'web.test';
   contract.rules = [
+    rule('surface-baseline', { scope: 'self-and-descendants' }, {
+      op: 'matchesEffectiveBaseline',
+      properties: ['fill'],
+    }),
     {
       ...rule('border-no-fill', { scope: 'self-and-descendants' }, {
         op: 'paintStateEquals',
@@ -179,7 +277,8 @@ function testConditionalPaintStateAndReferenceRemediation() {
       fact: 'target.variant.Type',
     }),
   ];
-  contract.rules[1].remediation = {
+  contract.rules[1].presentation.group = 'fill';
+  contract.rules[2].remediation = {
     kind: 'set-variant-properties',
     target: '$failingTarget',
     properties: { Type: '$targets[0].variant.Type', Unsafe: '$unknown.value' },
@@ -195,6 +294,31 @@ function testConditionalPaintStateAndReferenceRemediation() {
     hostComponentKey: 'test-key',
     hostComponentName: '[D] Test',
     actualStructure: structure,
+    effectiveBaselineDiffs: [{
+      message: 'заливка: — → Base/Background/Primary',
+      nodePath: structure[1].path,
+      nodeName: structure[1].name,
+      nodeId: structure[1].nodeId,
+      visible: true,
+      context: {
+        actualComponentKey: 'surface-key',
+        referenceComponentKey: 'surface-key',
+        referenceOrigin: 'host',
+        actualNestedOwnerComponentKey: null,
+        actualNestedOwnerPath: null,
+        actualNestedOwnerRelativePath: null,
+        nestedOwnerComponentKey: null,
+        nestedOwnerComponentRole: null,
+        nestedOwnerPath: null,
+        nestedOwnerRelativePath: null,
+      },
+      diffKind: 'paint',
+      details: {
+        property: 'fill',
+        reference: { value: null },
+        actual: { value: 'Base/Background/Primary' },
+      },
+    }],
     resolveTokenLabel: (token) => token === 'base-bg/primary' ? 'Base/Background/Primary' : token,
   });
   assert.equal(result.diffs.length, 2);
@@ -202,6 +326,11 @@ function testConditionalPaintStateAndReferenceRemediation() {
   const relationDiff = result.diffs.find((diff) => diff.assessment.ruleId.endsWith('matching-type'));
   assert.equal(paintDiff.nodeName, 'Surface');
   assert.equal(paintDiff.details.actual.value, 'Base/Background/Primary');
+  assert.equal(
+    result.diffs.some((diff) => diff.assessment.ruleId.endsWith('surface-baseline')),
+    false,
+    'An exact paint-state rule must replace the generic effective-baseline violation for the same property',
+  );
   assert.deepEqual(relationDiff.assessment.remediation, {
     kind: 'set-variant-properties',
     nodeId: 'node:4',
@@ -239,6 +368,7 @@ function testAllEqualFactAlternatives() {
     hostComponentName: '[D] Test',
     actualStructure: [
       node(1, '[D] Test', 'test-key', {}),
+      node(5, 'Operation', 'operation-wrapper-key', {}),
       { ...node(2, 'Operation', 'operation-key', {}), fill: { token: 'text/primary' } },
       { ...node(3, 'Major', 'major-key', {}), fill: { token: 'text/primary' } },
       { ...node(4, 'Minor', 'minor-key', {}), fill: { color: '#FF0000' } },
@@ -317,6 +447,7 @@ function testEffectiveBaselineAndNestedSizeContract() {
       except: { component: 'PropertyPreset', variant: { Color: 'Custom' } },
     },
   };
+  contract.rules[0].assert.baselineSource = 'host-variant';
   const structure = [
     node(1, '[D] StatusPreset', 'status-preset-key', { Size: '24', Type: 'Approved' }),
     node(2, 'Status', 'status-key', { Size: '32', Shape: 'Rounded' }),
@@ -368,13 +499,39 @@ function testEffectiveBaselineAndNestedSizeContract() {
       actual: { value: 'status/info' },
     },
   };
+  const hostVariantLabelFillDiff = {
+    ...fillDiff,
+    message: 'заливка: decorative-text/green → text/info',
+    details: {
+      property: 'fill',
+      reference: { value: 'decorative-text/green' },
+      actual: { value: 'text/info' },
+    },
+  };
+  const hostVariantDerivedPaddingDiff = {
+    ...fillDiff,
+    message: 'Паддинг top: 4 → 6',
+    nodePath: structure[1].path,
+    nodeName: 'Status',
+    nodeId: structure[1].nodeId,
+    diffKind: 'layout',
+    details: {
+      property: 'layout.padding.top',
+      reference: { value: 4 },
+      actual: { value: 6 },
+    },
+  };
   const result = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'status-preset-key',
     hostComponentName: '[D] StatusPreset',
     hostVariantProperties: { Size: '24', Type: 'Approved' },
     actualStructure: structure,
-    effectiveBaselineDiffs: [fillDiff, backgroundFillDiff],
+    effectiveBaselineDiffs: [backgroundFillDiff],
+    hostVariantBaselineDiffs: [
+      hostVariantLabelFillDiff,
+      hostVariantDerivedPaddingDiff,
+    ],
   });
   assert.equal(result.diffs.length, 3);
   const detectedFills = result.diffs.filter((diff) =>
@@ -386,9 +543,19 @@ function testEffectiveBaselineAndNestedSizeContract() {
   assert.equal(detectedFills.length, 2);
   assert.deepEqual(
     detectedFills.map((diff) => diff.message).sort(),
-    [fillDiff.message, backgroundFillDiff.message].sort(),
+    [
+      backgroundFillDiff.message,
+      hostVariantLabelFillDiff.message,
+    ].sort(),
   );
   assert.equal(detectedSize.message, 'Size: 24 → 32');
+  assert.equal(
+    result.diffs.some((diff) =>
+      diff.details.property === 'layout.padding.top',
+    ),
+    false,
+    'Host-variant baseline must not expose layout derived from a nested variant switch',
+  );
 
   const uppercaseDiff = {
     ...fillDiff,
@@ -440,6 +607,194 @@ function testEffectiveBaselineAndNestedSizeContract() {
     ),
     false,
   );
+}
+
+function testCompositePropertyDedupeAndVariantArrays() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-composite-property-engine',
+  );
+  const contract = createContract();
+  const surfaceSelector = {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Surface'] } },
+  };
+  const baselineRule = rule('surface-baseline', surfaceSelector, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill', 'styles.fill'],
+  });
+  baselineRule.when = {
+    op: 'all',
+    clauses: { variant: { Type: ['Primary', 'Secondary'] } },
+  };
+  baselineRule.presentation.group = 'fill|styles.fill';
+  const exactRule = rule('surface-no-fill', surfaceSelector, {
+    op: 'paintStateEquals',
+    state: { fill: 'none-or-not-visible' },
+  });
+  exactRule.presentation.group = 'fill|styles.fill';
+  contract.rules = [baselineRule, exactRule];
+
+  const structure = [
+    node(1, '[D] Test', 'test-key', { Type: 'Secondary' }),
+    Object.assign(node(2, 'Surface', 'surface-key', {}), {
+      fill: { token: 'base-bg-alt' },
+    }),
+  ];
+  const fillDiff = {
+    message: 'заливка: — → base-bg-alt/secondary',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'host' },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: null },
+      actual: { value: 'base-bg-alt/secondary' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    hostVariantProperties: { Type: 'Secondary' },
+    actualStructure: structure,
+    effectiveBaselineDiffs: [fillDiff],
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.surface-no-fill');
+}
+
+function testHostVariantBaselineRespectsTargetSubtree() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-host-baseline-target-engine',
+  );
+  const contract = createContract();
+  const paintRule = rule('selected-paint', {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['PaintMe'] } },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill'],
+    baselineSource: 'host-variant',
+  });
+  contract.rules = [paintRule];
+  const structure = [
+    node(1, '[D] Test', 'test-key', {}),
+    node(2, '[D] Button', 'button-key', {}),
+    node(3, 'PaintMe', 'paint-key', {}),
+  ];
+  structure[1].path = '[D] Test / [D] Button';
+  structure[2].path = '[D] Test / [D] Button / PaintMe';
+  const buttonFillDiff = {
+    message: 'заливка: primary → accent',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'host' },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: 'primary' },
+      actual: { value: 'accent' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: structure,
+    hostVariantBaselineDiffs: [buttonFillDiff],
+  });
+  assert.equal(
+    result.diffs.length,
+    0,
+    'An ancestor diff must not be attributed to a selected descendant target',
+  );
+}
+
+function testBenefitsUniformPropertiesReportIndependentOutliers() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-benefits-uniform-properties-engine',
+  );
+  const contract = createContract();
+  const cardSelector = {
+    scope: 'self-and-descendants',
+    from: '$host',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['[D] BenefitCard', '[M] BenefitCard', 'BenefitCard'],
+      },
+    },
+    occurrence: 'all',
+    orderBy: 'document',
+  };
+  const contentSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: 'Content' },
+      visible: { op: 'equals', value: true },
+    },
+  };
+  const sizingRule = rule('benefits-sizing', { scope: 'selection-root' }, {
+    op: 'propertiesEqual',
+    values: { layoutSizingHorizontal: 'FILL' },
+  });
+  const graphicPositionRule = rule('benefits-graphic-position', cardSelector, {
+    op: 'allEqual',
+    fact: 'variant.GraphicPosition',
+  });
+  const titleRule = rule('benefits-title', contentSelector, {
+    op: 'allEqual',
+    fact: 'variant.Title',
+  });
+  sizingRule.presentation.group = 'layoutSizingHorizontal';
+  graphicPositionRule.presentation.group = 'variant.GraphicPosition';
+  titleRule.presentation.group = 'variant.Title';
+  graphicPositionRule.when = { op: 'evidenceComplete' };
+  contract.rules = [sizingRule, graphicPositionRule, titleRule];
+
+  const structure = [
+    Object.assign(node(1, '[D] Test', 'benefits-key', {}), {
+      layout: { sizing: { horizontal: 'FIXED', vertical: 'HUG' } },
+    }),
+    node(2, '[D] BenefitCard', 'benefit-card-key', { GraphicPosition: 'Right' }),
+    node(3, '[D] BenefitCard', 'benefit-card-key', { GraphicPosition: 'Left' }),
+    node(4, '[D] BenefitCard', 'benefit-card-key', { GraphicPosition: 'Right' }),
+    node(5, '[D] BenefitCard', 'benefit-card-key', { GraphicPosition: 'Right' }),
+    node(6, 'Content', 'content-key', { Title: 'Secondary' }),
+    node(7, 'Content', 'content-key', { Title: 'Primary' }),
+    node(8, 'Content', 'content-key', { Title: 'Secondary' }),
+    node(9, 'Content', 'content-key', { Title: 'Secondary' }),
+  ];
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'benefits-key',
+    hostComponentName: '[D] Test',
+    actualStructure: structure,
+  });
+
+  assert.equal(result.diffs.length, 3);
+  const graphicPosition = result.diffs.find((diff) =>
+    diff.assessment.ruleId.endsWith('benefits-graphic-position'),
+  );
+  const title = result.diffs.find((diff) =>
+    diff.assessment.ruleId.endsWith('benefits-title'),
+  );
+  const sizing = result.diffs.find((diff) =>
+    diff.assessment.ruleId.endsWith('benefits-sizing'),
+  );
+  assert.equal(graphicPosition.nodeId, 'node:3');
+  assert.equal(graphicPosition.message, 'GraphicPosition: Right → Left');
+  assert.equal(title.nodeId, 'node:7');
+  assert.equal(title.message, 'Title: Secondary → Primary');
+  assert.equal(sizing.nodeId, 'node:1');
 }
 
 function rule(id, targets, assertion) {
@@ -584,10 +939,14 @@ async function main() {
   await testRegistry();
   testEvaluator();
   testRelationalAndPositionOperators();
+  testTableBasicVisibleDataCellCount();
   testConditionalPaintStateAndReferenceRemediation();
   testAllEqualFactAlternatives();
   testAllowedValuesPresentation();
   testEffectiveBaselineAndNestedSizeContract();
+  testCompositePropertyDedupeAndVariantArrays();
+  testHostVariantBaselineRespectsTargetSubtree();
+  testBenefitsUniformPropertiesReportIndependentOutliers();
   console.log('Experimental Contract v2 contour checks passed');
 }
 

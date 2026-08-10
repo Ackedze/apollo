@@ -1,5 +1,6 @@
 export {
   areReferenceCatalogsReady,
+  ensureReferenceCatalogsForChannel,
   ensureReferenceCatalogsForKeys,
   ensureReferenceCatalogsLoaded,
   findComponent,

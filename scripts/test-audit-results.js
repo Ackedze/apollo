@@ -67,6 +67,27 @@ async function main() {
     componentKey: null,
     isLocal: true,
   });
+  const detachedContractCustomization = auditItem({
+    id: '1:5',
+    name: '[D] BodyRow :: Basic',
+    nodeType: 'FRAME',
+    componentKey: 'body-row-basic-key',
+    customizationOnly: true,
+    diffs: [{
+      message: 'В BodyRow :: Basic должно быть от одной до пяти видимых информационных ячеек',
+      nodePath: '[D] BodyRow :: Basic',
+      nodeName: '[D] BodyRow :: Basic',
+      nodeId: '1:5',
+      visible: true,
+      context: { referenceOrigin: 'host' },
+      diffKind: 'other',
+      details: {
+        property: 'component.composition',
+        reference: { value: '1-5' },
+        actual: { value: 6 },
+      },
+    }],
+  });
   const checkState = {
     relevanceBuckets: {
       technical: [],
@@ -82,6 +103,7 @@ async function main() {
     detachedEntries: [],
     customStyleEntries: [],
     deprecatedStyleEntries: [],
+    contractCustomizationItems: [detachedContractCustomization],
     totalItems: 3,
   };
 
@@ -90,6 +112,15 @@ async function main() {
   assert.equal(views.visibleViews.relevance.current[0], current);
   assert.equal(views.statsViews.updates[0], update);
   assert.equal(views.statsViews.currentComponents[0], current);
+  assert.deepEqual(
+    views.visibleViews.changes.map((item) => item.id),
+    ['1:5'],
+  );
+  assert.deepEqual(
+    views.statsViews.currentComponents.map((item) => item.id),
+    ['1:1'],
+    'Detached contract findings must not pollute current components',
+  );
 
   let componentKeyReads = 0;
   const { report, agentReport } = await prepareAuditReport({

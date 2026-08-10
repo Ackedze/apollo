@@ -11,7 +11,8 @@
       "baseUrl": "https://release.test/JSONS/",
       "catalogManifests": [
         {
-          "url": "https://abm-release.test/JSONS/referenceSourcesMVP.json"
+          "url": "https://abm-release.test/JSONS/referenceSourcesMVP.json",
+          "channels": ["iOS", "Android"]
         }
       ],
       "apollo": {
@@ -54,12 +55,21 @@
           "name": "ABM Release Fixture",
           "catalogs": [
             {
-              "fileName": "components/Test.json",
-              "path": "components/Test.json",
+              "fileName": "abm/ios/Views/iOS _ Views -- Test.json",
+              "path": "abm/ios/Views/iOS _ Views -- Test.json",
               "source": {
                 "kind": "components",
-                "pageName": "Test",
-                "indexPath": "indexes/components/Test.index.json"
+                "pageName": "iOS _ Views -- Test",
+                "indexPath": "indexes/abm/ios/Views/iOS _ Views -- Test.index.json"
+              }
+            },
+            {
+              "fileName": "abm/android/Views/Android _ Views -- Test.json",
+              "path": "abm/android/Views/Android _ Views -- Test.json",
+              "source": {
+                "kind": "components",
+                "pageName": "Android _ Views -- Test",
+                "indexPath": "indexes/abm/android/Views/Android _ Views -- Test.index.json"
               }
             }
           ]
@@ -134,12 +144,12 @@
         }
       ]
     },
-    "indexes/components/Test.index.json": {
+    "indexes/abm/ios/Views/iOS _ Views -- Test.index.json": {
       "kind": "component-index",
       "version": 1,
       "generatedAt": "2026-08-04T00:00:00.000Z",
       "catalogName": "Test",
-      "fileName": "Test.json",
+      "fileName": "iOS _ Views -- Test.json",
       "library": "Release Fixture",
       "pageName": "Test",
       "components": [
@@ -148,15 +158,37 @@
           "name": "[D] Test",
           "role": "main",
           "status": "active",
-          "platform": "desktop",
+          "platform": "ios",
           "category": "Test",
           "variants": [],
-          "catalogPath": "components/Test.json",
-          "indexPath": "indexes/components/Test.index.json"
+          "catalogPath": "abm/ios/Views/iOS _ Views -- Test.json",
+          "indexPath": "indexes/abm/ios/Views/iOS _ Views -- Test.index.json"
         }
       ]
     },
-    "components/Test.json": {
+    "indexes/abm/android/Views/Android _ Views -- Test.index.json": {
+      "kind": "component-index",
+      "version": 1,
+      "generatedAt": "2026-08-04T00:00:00.000Z",
+      "catalogName": "Test",
+      "fileName": "Android _ Views -- Test.json",
+      "library": "Release Fixture",
+      "pageName": "Test",
+      "components": [
+        {
+          "key": "figma-test-android",
+          "name": "[D] Test Android",
+          "role": "main",
+          "status": "active",
+          "platform": "android",
+          "category": "Test",
+          "variants": [],
+          "catalogPath": "abm/android/Views/Android _ Views -- Test.json",
+          "indexPath": "indexes/abm/android/Views/Android _ Views -- Test.index.json"
+        }
+      ]
+    },
+    "abm/ios/Views/iOS _ Views -- Test.json": {
       "kind": "catalog",
       "source": {
         "library": "Release Fixture",
@@ -178,7 +210,34 @@
           "name": "[D] Test",
           "status": "active",
           "role": "main",
-          "platform": "desktop",
+            "platform": "ios",
+          "category": "Test"
+        }
+      ]
+    },
+    "abm/android/Views/Android _ Views -- Test.json": {
+      "kind": "catalog",
+      "source": {
+        "library": "Release Fixture",
+        "file": "Test Android",
+        "generatedAt": "2026-08-04T00:00:00.000Z"
+      },
+      "elements": [
+        {
+          "id": 2,
+          "path": "[D] Test Android",
+          "type": "COMPONENT",
+          "componentKey": "figma-test-android",
+          "visible": true
+        }
+      ],
+      "components": [
+        {
+          "key": "figma-test-android",
+          "name": "[D] Test Android",
+          "status": "active",
+          "role": "main",
+          "platform": "android",
           "category": "Test"
         }
       ]
@@ -203,7 +262,7 @@
           "figmaKeys": [
             "figma-test"
           ],
-          "sourceCatalogPath": "components/Test.json",
+          "sourceCatalogPath": "abm/ios/Views/iOS _ Views -- Test.json",
           "artifacts": {
             "generatedContract": "contract.generated.json",
             "rules": "rules.json",

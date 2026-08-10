@@ -84,6 +84,7 @@ parallel, but it must not introduce another rule representation or bypass releas
 - [ ] Emit every result through `CustomizationAssessment` as `expected | allowed | violation | unknown`, with evidence-complete messages and stale-safe remediation actions.
 - [ ] Store machine-comparable Contract v2 versus schema-v1 verdict, evidence and remediation deltas without exposing discarded legacy findings in the test-contour UI.
 - [ ] Require release fixtures and field reports to reach category, verdict, baseline-label and reset-action parity before enabling Contract v2 enforcement package by package.
+- [x] Fix the `Benefits` aggregate parity regression: evaluate `GraphicPosition` independently from root sizing and nested `Title`, compare every visible direct `BenefitCard`, and report the exact outlier card when values differ. Acceptance fixture: `[Right, Left, Right, Right]` produces one `GraphicPosition` violation for the second card while the existing `FILL -> FIXED` and `Title Secondary -> Primary` findings remain unchanged in UI, full statistics and agent report.
 - [ ] Reject unknown capability versions and incomplete required packages without falling back to component-specific or prose-derived behavior.
 
 ## P1: module boundaries

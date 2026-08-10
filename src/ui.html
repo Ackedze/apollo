@@ -2215,6 +2215,11 @@
           }
         };
 
+        parent.postMessage(
+          { pluginMessage: { type: 'ui-ready' } },
+          '*',
+        );
+
         function showToast(message) {
           if (!toastEl) return;
           toastEl.textContent = message;
@@ -3087,6 +3092,15 @@
             currentTab = getVisibleTabs()[0].id;
           }
           syncChromeState();
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: 'prepare-catalog-channel',
+                payload: { pickerLabel: normalizedPickerLabel },
+              },
+            },
+            '*',
+          );
         }
 
         function handleChannelChange(nextChannelId) {

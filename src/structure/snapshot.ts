@@ -410,6 +410,16 @@ function extractText(node: SceneNode): DSTextContent | undefined {
     hasData = true;
   }
 
+  if (t.fontName !== figma.mixed && t.fontName) {
+    result.fontName = `${t.fontName.family} ${t.fontName.style}`.trim();
+    hasData = true;
+  }
+
+  if (t.fontSize !== figma.mixed && typeof t.fontSize === 'number') {
+    result.fontSize = t.fontSize;
+    hasData = true;
+  }
+
   if (t.lineHeight !== figma.mixed && t.lineHeight) {
     if (t.lineHeight.unit === 'PIXELS') {
       result.lineHeight = t.lineHeight.value;

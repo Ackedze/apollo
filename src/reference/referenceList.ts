@@ -27,6 +27,18 @@ type RemoteReferenceLibrary = {
 
 export type RemoteReferenceCatalogManifest = {
   url: string;
+  channels?: ReferenceCatalogChannel[];
+};
+
+export type ReferenceCatalogChannel =
+  | 'Desktop'
+  | 'MobileWeb'
+  | 'iOS'
+  | 'Android';
+
+export type ResolvedReferenceCatalogManifest = {
+  url: string;
+  channels: ReferenceCatalogChannel[];
 };
 
 export type RemoteReferenceCatalogList = {
@@ -128,13 +140,27 @@ export function buildReferenceCatalogSources(
 export function resolveCatalogManifestUrls(
   payload: RemoteReferenceCatalogList,
 ): string[] {
+  return resolveCatalogManifests(payload).map((entry) => entry.url);
+}
+
+export function resolveCatalogManifests(
+  payload: RemoteReferenceCatalogList,
+): ResolvedReferenceCatalogManifest[] {
   if (!Array.isArray(payload.catalogManifests)) return [];
   return payload.catalogManifests.map((entry, index) => {
     const url = entry?.url?.trim();
     if (!url || !/^https?:\/\//i.test(url)) {
       throw new Error(`Reference manifest catalogManifests[${index}].url must be an absolute HTTP(S) URL`);
     }
-    return url;
+    const channels = Array.isArray(entry.channels)
+      ? entry.channels.map((channel, channelIndex) =>
+          normalizeReferenceCatalogChannel(channel, index, channelIndex),
+        )
+      : [];
+    return {
+      url,
+      channels: Array.from(new Set(channels)),
+    };
   });
 }
 
@@ -151,8 +177,8 @@ export function validateReferenceCatalogList(
   }
 
   const entries = normalizeCatalogEntries(payload);
-  const nestedManifestUrls = resolveCatalogManifestUrls(payload);
-  if (!entries.length && !nestedManifestUrls.length) {
+  const nestedManifests = resolveCatalogManifests(payload);
+  if (!entries.length && !nestedManifests.length) {
     throw new Error('Reference manifest does not contain catalogs');
   }
 
@@ -176,6 +202,27 @@ export function validateReferenceCatalogList(
       throw new Error(`Reference manifest component catalog has no indexPath: ${entryPath}`);
     }
   }
+}
+
+function normalizeReferenceCatalogChannel(
+  value: unknown,
+  manifestIndex: number,
+  channelIndex: number,
+): ReferenceCatalogChannel {
+  const normalized = String(value ?? '').trim().toLowerCase();
+  if (normalized === 'desktop') return 'Desktop';
+  if (
+    normalized === 'mobileweb' ||
+    normalized === 'mobile-web' ||
+    normalized === 'mobile web'
+  ) {
+    return 'MobileWeb';
+  }
+  if (normalized === 'ios') return 'iOS';
+  if (normalized === 'android') return 'Android';
+  throw new Error(
+    `Reference manifest catalogManifests[${manifestIndex}].channels[${channelIndex}] has invalid channel`,
+  );
 }
 
 function normalizeCatalogEntries(
@@ -301,4 +348,14 @@ export function normalizePath(value: string): string {
     .replace(/^\/+/, '')
     .replace(/^JSONS\//i, '')
     .trim();
+}
+
+export function isReferenceCatalogSourceForChannel(
+  source: ReferenceCatalogSource,
+  channel: ReferenceCatalogChannel,
+): boolean {
+  const path = normalizePath(source.path).toLowerCase();
+  if (path.startsWith('abm/ios/')) return channel === 'iOS';
+  if (path.startsWith('abm/android/')) return channel === 'Android';
+  return true;
 }

@@ -80,6 +80,7 @@ import {
   hasExperimentalContractV2ForKey,
 } from '../contracts/experimentalContractV2Registry';
 import { evaluateExperimentalContractV2 } from '../contracts/experimentalContractV2Engine';
+import { alignMaterializedReferenceInstancePaths } from '../reference/nestedReferenceMerge';
 import {
   alignStructurePaths,
   attachSurfaceContext,
@@ -461,9 +462,17 @@ export async function classifyComponentNode(
       decisionCount: compositionContractResult.decisionCount,
     });
   }
+  const hostReferenceForDiff =
+    referenceStructure && alignedActualStructure
+      ? alignMaterializedReferenceInstancePaths(
+          referenceStructure,
+          alignedActualStructure,
+          alignedActualStructure[0]?.path ?? '',
+        )
+      : referenceStructure;
   const hostDiffs =
-    shouldDiff && referenceStructure && alignedActualStructure
-      ? diffStructures(alignedActualStructure, referenceStructure, {
+    shouldDiff && hostReferenceForDiff && alignedActualStructure
+      ? diffStructures(alignedActualStructure, hostReferenceForDiff, {
           strict: STRICT_COMPARISON,
           resolveTokenLabel: resolveTokenLabel,
           resolveStyleLabel: resolveStyleLabelForDiff,
@@ -574,6 +583,7 @@ export async function classifyComponentNode(
           hostVariantProperties: instanceVariantProperties,
           actualStructure: alignedActualStructure,
           effectiveBaselineDiffs: legacyDiffs,
+          hostVariantBaselineDiffs: hostDiffs,
           resolveTokenLabel,
         })
       : null;

@@ -30,6 +30,7 @@ import {
   isShellDetachedEntryExcluded,
 } from '../policies/shellComponentAuditPolicy';
 import { traceAudit } from '../utils/auditInstrumentation';
+import { classifyDetachedContractV2Node } from './detachedContractV2Audit';
 
 export interface AuditTargetCollectorOptions {
   shellAuditEnabled: boolean;
@@ -270,6 +271,16 @@ export async function collectAuditTargets(
           }
 
           checkState.detachedEntries.push(item);
+          if (experimentalContractV2Enabled) {
+            const contractItem = await classifyDetachedContractV2Node(node, {
+              buildNodeSegments,
+              resolveTokenLabel,
+              throwIfCancelled,
+            });
+            if (contractItem) {
+              checkState.contractCustomizationItems.push(contractItem);
+            }
+          }
         }
       }
 

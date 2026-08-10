@@ -69,7 +69,11 @@ export interface AuditReportBundle {
 }
 
 export function buildAuditResultViews(checkState: CheckState): AuditResultViews {
-  const changes = computeChangesResults(checkState.relevanceBuckets.current);
+  const changes = computeChangesResults(
+    checkState.relevanceBuckets.current.concat(
+      checkState.contractCustomizationItems ?? [],
+    ),
+  );
   const local = filterIgnoredLocalLibraryItems(checkState.localLibraryItems);
 
   return {

@@ -14,6 +14,7 @@ export type MaterializedInstanceReferenceDecision = {
     | 'replace-host-descendant'
     | 'keep-host-controlled-descendant'
     | 'keep-host-painted-descendant'
+    | 'keep-host-typography-descendant'
     | 'missing-owner-context'
     | 'path-mismatch';
   existingOrigin: 'host' | 'nested-component';
@@ -57,10 +58,15 @@ export function mergeMaterializedInstanceReferenceNode(
     decision.reason !== 'replace-instance-root' &&
     !(decision.reason === 'replace-host-descendant' && decision.relativePath === '')
   ) {
-    return candidateNode;
+    return (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
+      ? applyParentVariantOwnedProperties(candidateNode, existingNode)
+      : candidateNode;
   }
 
-  return applyMaterializedHostVariantBaselineToNode(candidateNode, existingNode);
+  const merged = applyMaterializedHostVariantBaselineToNode(candidateNode, existingNode);
+  return (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
+    ? applyParentVariantOwnedProperties(merged, existingNode)
+    : merged;
 }
 
 export function selectMaterializedInstanceMergeSource(
@@ -593,6 +599,21 @@ export function getMaterializedInstanceReferenceDecision(
     );
   }
 
+  if (
+    existingNode.path === candidateNode.path &&
+    (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
+  ) {
+    return buildDecision(
+      true,
+      'merge-parent-variant-owned-descendant',
+      existingOrigin,
+      candidateOrigin,
+      ownerComponentKey,
+      relativePath,
+      withinMaterializedSubtree,
+    );
+  }
+
   if (existingNode.type !== 'INSTANCE' || candidateNode.type !== 'INSTANCE') {
     return getHostDescendantDecision(
       existingNode,
@@ -771,6 +792,18 @@ function getHostDescendantDecision(
     );
   }
 
+  if (hasDifferentExplicitTypography(existingNode, candidateNode)) {
+    return buildDecision(
+      false,
+      'keep-host-typography-descendant',
+      existingOrigin,
+      candidateOrigin,
+      ownerComponentKey,
+      relativePath,
+      withinMaterializedSubtree,
+    );
+  }
+
   const preferCandidate = shouldPreferMaterializedHostDescendant(
     existingNode,
     candidateNode,
@@ -797,6 +830,27 @@ function hasDifferentExplicitPaint(
   }
 
   return !arePaintDescriptorsEqual(existingNode, candidateNode);
+}
+
+function hasDifferentExplicitTypography(
+  existingNode: DSStructureNode,
+  candidateNode: DSStructureNode,
+): boolean {
+  const existingDescriptor = getExplicitTypographyDescriptor(existingNode);
+  const candidateDescriptor = getExplicitTypographyDescriptor(candidateNode);
+  if (!existingDescriptor || !candidateDescriptor) {
+    return false;
+  }
+  return existingDescriptor !== candidateDescriptor;
+}
+
+function getExplicitTypographyDescriptor(node: DSStructureNode): string | null {
+  const styleKey = node.styles?.text?.styleKey ?? null;
+  const token = node.typographyToken ?? null;
+  if (!styleKey && !token) {
+    return null;
+  }
+  return `${styleKey ?? ''}|${token ?? ''}`;
 }
 
 function hasPaintDescriptor(node: DSStructureNode): boolean {

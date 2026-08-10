@@ -28,6 +28,8 @@ function loadReferenceList() {
 function main() {
   const {
     buildReferenceCatalogSources,
+    isReferenceCatalogSourceForChannel,
+    resolveCatalogManifests,
     resolveCatalogManifestUrls,
     resolveAuditPolicyConfigUrl,
     resolveRemediationConfigUrl,
@@ -83,10 +85,41 @@ function main() {
   );
   assert.deepEqual(
     resolveCatalogManifestUrls({
-      catalogManifests: [{ url: `${splitBaseUrl}referenceSourcesMVP.json` }],
+      catalogManifests: [
+        {
+          url: `${splitBaseUrl}referenceSourcesMVP.json`,
+          channels: ['iOS', 'Android'],
+        },
+      ],
     }),
     [`${splitBaseUrl}referenceSourcesMVP.json`],
   );
+  assert.deepEqual(
+    resolveCatalogManifests({
+      catalogManifests: [
+        {
+          url: `${splitBaseUrl}referenceSourcesMVP.json`,
+          channels: ['ios', 'Android', 'iOS'],
+        },
+      ],
+    }),
+    [
+      {
+        url: `${splitBaseUrl}referenceSourcesMVP.json`,
+        channels: ['iOS', 'Android'],
+      },
+    ],
+  );
+  const iosSource = {
+    path: 'abm/ios/Views/iOS _ Views -- Button.json',
+  };
+  const androidSource = {
+    path: 'abm/android/Views/Android _ Views -- Button.json',
+  };
+  assert.equal(isReferenceCatalogSourceForChannel(iosSource, 'iOS'), true);
+  assert.equal(isReferenceCatalogSourceForChannel(iosSource, 'Android'), false);
+  assert.equal(isReferenceCatalogSourceForChannel(androidSource, 'Android'), true);
+  assert.equal(isReferenceCatalogSourceForChannel(androidSource, 'iOS'), false);
   assert.equal(
     resolveRemediationConfigUrl({
       baseUrl,
@@ -144,6 +177,18 @@ function main() {
         catalogManifests: [{ url: '/relative/referenceSourcesMVP.json' }],
       }),
     /absolute HTTP\(S\) URL/,
+  );
+  assert.throws(
+    () =>
+      resolveCatalogManifests({
+        catalogManifests: [
+          {
+            url: `${splitBaseUrl}referenceSourcesMVP.json`,
+            channels: ['Windows'],
+          },
+        ],
+      }),
+    /invalid channel/,
   );
 
   const legacy = buildReferenceCatalogSources({

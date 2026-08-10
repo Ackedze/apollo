@@ -162,6 +162,79 @@ function main() {
     'Different published style keys must remain visible as customizations',
   );
 
+  const unchangedRawTypography = diffStructures(
+    [
+      node('TEXT', {
+        text: {
+          characters: 'STATUS',
+          fontName: 'Alfa Interface Sans Bold',
+          fontSize: 11,
+          lineHeight: 16,
+          letterSpacing: 0,
+          paragraphSpacing: 0,
+          case: 'UPPER',
+        },
+      }),
+    ],
+    [
+      node('TEXT', {
+        text: {
+          characters: 'STATUS',
+          fontName: 'Alfa Interface Sans Bold',
+          fontSize: 11,
+          lineHeight: 16,
+          letterSpacing: 0,
+          paragraphSpacing: 0,
+          case: 'UPPER',
+        },
+      }),
+    ],
+  );
+  assert.deepEqual(
+    unchangedRawTypography.diffs,
+    [],
+    'Unchanged component-owned raw typography must remain clean',
+  );
+
+  const changedRawTypography = diffStructures(
+    [
+      node('TEXT', {
+        text: {
+          characters: 'STATUS',
+          fontName: 'Alfa Interface Sans Medium',
+          fontSize: 12,
+          lineHeight: 16,
+          case: 'ORIGINAL',
+        },
+      }),
+    ],
+    [
+      node('TEXT', {
+        text: {
+          characters: 'STATUS',
+          fontName: 'Alfa Interface Sans Bold',
+          fontSize: 11,
+          lineHeight: 16,
+          case: 'UPPER',
+        },
+      }),
+    ],
+  );
+  assert.equal(
+    changedRawTypography.diffs.some(
+      (entry) => entry.details?.property === 'styles.text',
+    ),
+    true,
+    'Raw font changes must become a component baseline typography diff',
+  );
+  assert.equal(
+    changedRawTypography.diffs.some(
+      (entry) => entry.details?.property === 'text.case',
+    ),
+    true,
+    'Raw text case changes must become a component baseline case diff',
+  );
+
   console.log('Strict comparison regression checks passed');
 }
 

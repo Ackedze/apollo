@@ -496,6 +496,66 @@ function main() {
     'A selected parent variant must keep its owned nested variant property over a stale host descendant baseline',
   );
 
+  const hostOwnedTextNode = {
+    path: 'AmountHeadline / Operation / Minus',
+    type: 'TEXT',
+    name: 'Minus',
+    visible: true,
+    id: 161,
+    parentId: 150,
+    referenceOrigin: 'host',
+    referenceVariantOwnedProperties: [
+      'styles.text.styleKey',
+      'text.fontName',
+      'text.fontSize',
+    ],
+    styles: { text: { styleKey: 'headline-18-22' } },
+    text: {
+      fontName: 'Alfa Interface Sans Bold',
+      fontSize: 18,
+      lineHeight: 22,
+    },
+  };
+  const nestedDefaultTextNode = {
+    path: 'AmountHeadline / Operation / Minus',
+    type: 'TEXT',
+    name: 'Minus',
+    visible: true,
+    id: 261,
+    parentId: 250,
+    referenceOrigin: 'nested-component',
+    referenceOwnerComponentKey: 'operation-key',
+    referenceOwnerPath: 'AmountHeadline / Operation',
+    referenceOwnerRelativePath: 'Minus',
+    styles: { text: { styleKey: 'paragraph-16-20' } },
+    text: {
+      fontName: 'Alfa Interface Sans Medium',
+      fontSize: 16,
+      lineHeight: 20,
+    },
+  };
+  const hostOwnedTextDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      hostOwnedTextNode,
+      nestedDefaultTextNode,
+      'AmountHeadline / Operation',
+      () => false,
+    );
+  assert.equal(
+    hostOwnedTextDecision.reason,
+    'merge-parent-variant-owned-descendant',
+    'A host variant text override must survive nested component materialization',
+  );
+  const mergedHostOwnedText =
+    nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+      hostOwnedTextNode,
+      nestedDefaultTextNode,
+      hostOwnedTextDecision,
+    );
+  assert.equal(mergedHostOwnedText.styles.text.styleKey, 'headline-18-22');
+  assert.equal(mergedHostOwnedText.text.fontSize, 18);
+  assert.equal(mergedHostOwnedText.text.lineHeight, 20);
+
   const baselineApplied = nestedReferenceMerge.applyMaterializedHostVariantBaselines(
     [
       {
@@ -2061,6 +2121,65 @@ function main() {
     suppressionPolicy.evaluateDiffSuppression(nestedVariantDiff, deps),
     { suppressed: true, reason: 'nested-variant-root-switch' },
     'Allowed nested Style Level variant switches inside BackgroundPlate must not surface as fill customizations',
+  );
+
+  const amountParentOwnedMinus = {
+    id: 900,
+    parentId: 899,
+    path: 'AmountParagraph / Operation / Minus',
+    type: 'TEXT',
+    name: 'Minus',
+    visible: true,
+    radius: null,
+    styles: { text: { styleKey: 'paragraph-14-20' } },
+    referenceOrigin: 'host',
+    referenceVariantOwnedProperties: ['styles.text'],
+  };
+  const standaloneOperationMinus = Object.assign({}, amountParentOwnedMinus, {
+    styles: { text: { styleKey: 'paragraph-16-20-component' } },
+    referenceOrigin: 'nested-component',
+    referenceOwnerComponentKey: 'operation',
+    referenceOwnerPath: 'AmountParagraph / Operation',
+    referenceOwnerRelativePath: 'Minus',
+    referenceVariantOwnedProperties: [],
+  });
+  const amountMergedMinus = nestedReferenceMerge.mergeMaterializedInstanceReferenceNode(
+    amountParentOwnedMinus,
+    standaloneOperationMinus,
+    {
+      preferCandidate: true,
+      reason: 'replace-host-descendant',
+      existingOrigin: 'host',
+      candidateOrigin: 'nested-component',
+      ownerComponentKey: 'operation',
+      relativePath: 'Minus',
+      withinMaterializedSubtree: true,
+    },
+  );
+  assert.equal(
+    amountMergedMinus.styles.text.styleKey,
+    'paragraph-14-20',
+    'Outer Amount Style must survive nested Operation materialization on deep descendants',
+  );
+
+  const amountTypographyDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      Object.assign({}, amountParentOwnedMinus, {
+        referenceVariantOwnedProperties: [],
+      }),
+      standaloneOperationMinus,
+      'AmountParagraph / Operation',
+      () => false,
+    );
+  assert.equal(
+    amountTypographyDecision.preferCandidate,
+    false,
+    'Explicit host typography must not be replaced by a standalone nested component baseline',
+  );
+  assert.equal(
+    amountTypographyDecision.reason,
+    'keep-host-typography-descendant',
+    'Typography precedence must remain observable in nested reference diagnostics',
   );
 
   console.log('Nested variant and suppression policy regression checks passed');

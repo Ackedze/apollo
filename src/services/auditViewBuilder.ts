@@ -20,6 +20,7 @@ import {
   shouldIgnoreTypographyCustomStyle,
 } from '../filters/customStyleFilters';
 import { shouldIgnoreNodeDiagnostics } from '../filters/ignoredComponentFilters';
+import { getDetachedLibraryComponentKey } from './detachedComponentSource';
 export { __test_setAuditPolicyConfig } from '../policies/auditPolicyConfig';
 import {
   buildNodePath,
@@ -207,14 +208,11 @@ export function collectDetachedEntry(
   node: SceneNode,
 ): DetachedEntry | null {
   if (node.type === 'FRAME' || node.type === 'GROUP') {
-    const info = (node as any).detachedInfo as
-      | { type: 'local'; componentId: string }
-      | { type: 'library'; componentKey: string }
-      | null;
+    const componentKey = getDetachedLibraryComponentKey(node);
 
-    if (info && info.type === 'library' && info.componentKey) {
+    if (componentKey) {
       const componentRef = findComponent(
-        info.componentKey,
+        componentKey,
       );
 
       if (componentRef) {
@@ -223,7 +221,7 @@ export function collectDetachedEntry(
           name: node.name,
           pageName: getPageName(node),
           path: buildNodePath(node),
-          componentKey: info.componentKey,
+          componentKey,
           libraryName:
             componentRef.source ?? componentRef.names[0] ?? 'Дизайн-система',
           componentName:
@@ -287,7 +285,13 @@ export function computeChangesResults(
   items: AuditItem[],
 ): AuditItem[] {
   const componentItems = items.filter(
-    (item) => item.nodeType === 'INSTANCE' || item.nodeType === 'COMPONENT',
+    (item) =>
+      Boolean(item) &&
+      (
+        item.nodeType === 'INSTANCE' ||
+        item.nodeType === 'COMPONENT' ||
+        item.customizationOnly === true
+      ),
   );
   return componentItems.filter((item) => {
     if (!isEntryVisible(item)) {

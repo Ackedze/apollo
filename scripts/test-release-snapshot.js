@@ -80,10 +80,38 @@ async function main() {
     assert.equal(runtime.areReferenceCatalogsReady(), true);
     assert.equal(runtime.getTokenCatalogs().length, 1);
     assert.equal(runtime.getStyleCatalogs().length, 1);
+    assert.equal(requestedFiles.has('abm-referenceSourcesMVP.json'), false);
+
+    await runtime.ensureReferenceCatalogsForChannel('iOS');
+    assert.equal(requestedFiles.has('abm-referenceSourcesMVP.json'), true);
+    assert.equal(
+      requestedFiles.has(
+        'indexes/abm/ios/Views/iOS _ Views -- Test.index.json',
+      ),
+      true,
+    );
+    assert.equal(
+      requestedFiles.has(
+        'indexes/abm/android/Views/Android _ Views -- Test.index.json',
+      ),
+      false,
+    );
     await runtime.ensureReferenceCatalogsForKeys(['figma-test']);
     const component = runtime.findComponent('figma-test');
     assert.equal(component.displayName, '[D] Test');
-    assert.equal(component.sourceFile, 'components/Test.json');
+    assert.equal(
+      component.sourceFile,
+      'abm/ios/Views/iOS _ Views -- Test.json',
+    );
+
+    await runtime.ensureReferenceCatalogsForChannel('Android');
+    assert.equal(
+      requestedFiles.has(
+        'indexes/abm/android/Views/Android _ Views -- Test.index.json',
+      ),
+      true,
+    );
+    await runtime.ensureReferenceCatalogsForKeys(['figma-test-android']);
 
     const hint = {
       figmaKey: 'figma-test',

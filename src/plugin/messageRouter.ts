@@ -6,7 +6,9 @@ export interface ApolloPluginMessage {
 export interface ApolloPluginMessageRouterDependencies {
   postMessage(message: unknown): void;
   notify(message: string): void;
+  uiReady(): void;
   scanSelection(payload: any): void;
+  prepareCatalogChannel(payload: any): Promise<void>;
   captureGenerationExample(payload: unknown): Promise<void>;
   cancelScan(): void;
   sendAgentReport(
@@ -40,8 +42,19 @@ export function routeApolloPluginMessage(
     case 'ping':
       dependencies.postMessage({ type: 'pong' });
       return true;
+    case 'ui-ready':
+      dependencies.uiReady();
+      return true;
     case 'scan-selection':
       dependencies.scanSelection(message.payload);
+      return true;
+    case 'prepare-catalog-channel':
+      void dependencies.prepareCatalogChannel(message.payload).catch((error) => {
+        dependencies.logError(
+          '[Apollo] failed to prepare channel catalogs',
+          error,
+        );
+      });
       return true;
     case 'capture-generation-example':
       void dependencies.captureGenerationExample(message.payload).catch((error) => {

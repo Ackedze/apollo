@@ -76,6 +76,8 @@ export type DSRadii = number | DSRadiiValues;
 
 export interface DSTextContent {
   characters?: string;
+  fontName?: string;
+  fontSize?: number;
   lineHeight?: number | string;
   letterSpacing?: number;
   paragraphSpacing?: number;

@@ -36,7 +36,11 @@ async function main() {
   const dependencies = {
     postMessage: (message) => calls.push(['postMessage', message]),
     notify: (message) => calls.push(['notify', message]),
+    uiReady: () => calls.push(['uiReady']),
     scanSelection: (payload) => calls.push(['scanSelection', payload]),
+    prepareCatalogChannel: async (payload) => {
+      calls.push(['prepareCatalogChannel', payload]);
+    },
     captureGenerationExample: async (payload) => {
       calls.push(['captureGenerationExample', payload]);
     },
@@ -67,8 +71,13 @@ async function main() {
 
   assert.equal(routeApolloPluginMessage({ type: 'unknown' }, dependencies), false);
   assert.equal(routeApolloPluginMessage({ type: 'ping' }, dependencies), true);
+  assert.equal(routeApolloPluginMessage({ type: 'ui-ready' }, dependencies), true);
   routeApolloPluginMessage(
     { type: 'scan-selection', payload: { pickerLabel: 'Desktop' } },
+    dependencies,
+  );
+  routeApolloPluginMessage(
+    { type: 'prepare-catalog-channel', payload: { pickerLabel: 'iOS' } },
     dependencies,
   );
   routeApolloPluginMessage(
@@ -125,7 +134,15 @@ async function main() {
   await waitForAsyncHandlers();
 
   assert.deepEqual(calls[0], ['postMessage', { type: 'pong' }]);
+  assert.ok(calls.some((call) => call[0] === 'uiReady'));
   assert.ok(calls.some((call) => call[0] === 'scanSelection'));
+  assert.ok(
+    calls.some(
+      (call) =>
+        call[0] === 'prepareCatalogChannel' &&
+        call[1]?.pickerLabel === 'iOS',
+    ),
+  );
   assert.ok(calls.some((call) => call[0] === 'captureGenerationExample'));
   assert.ok(calls.some((call) => call[0] === 'cancelScan'));
   assert.ok(

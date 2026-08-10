@@ -16,6 +16,7 @@ export interface CheckState {
     detachedEntries: DetachedEntry[]
     customStyleEntries : CustomStyleEntry[]
     deprecatedStyleEntries: DeprecatedStyleEntry[]
+    contractCustomizationItems: AuditItem[]
     totalItems: number;
 }
 
@@ -35,6 +36,7 @@ export const createCheckState = (): CheckState => {
           detachedEntries: [],
           customStyleEntries: [],
           deprecatedStyleEntries: [],
+          contractCustomizationItems: [],
           totalItems: 0,
     }
 }

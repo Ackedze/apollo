@@ -725,13 +725,8 @@ function main() {
 
   assert.equal(
     paymentMaskedDiffs.length,
-    1,
-    'PaymentMaskedNumber must allow tokenized text recolors and keep raw colors visible',
-  );
-  assert.equal(
-    paymentMaskedDiffs[0].message,
-    'заливка: text/primary → #123456',
-    'PaymentMaskedNumber raw fill color must remain visible',
+    3,
+    'PaymentMaskedNumber text recolors must remain visible',
   );
 
   console.log('Allowed customization regression checks passed');

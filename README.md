@@ -43,6 +43,10 @@ Contract v2 работает fail-closed. Нарушение может созд
 
 `AmountStyles` использует общий `sharedValueConstraint`: Apollo сравнивает фактические значения видимых leaf-слоёв одного instance, не создавая дублирующие findings. Единая ручная перекраска `Operation/Minus/Major/Minor/Currency` остаётся `Expected`, а частичная перекраска становится нарушением; `Addon` не входит в группу. Ручные text style, opacity `Minor/Currency` и геометрия внутренних частей оцениваются как точные component-contract violations относительно effective baseline выбранного `Style`.
 
+Deep reference merge сохраняет variant-owned свойства выбранного Amount Style на всех уровнях materialization. Поэтому `Minus` в `AmountParagraph` и `AmountHeadline` сравнивается с типографикой текущего Style, а не со standalone baseline вложенного компонента. Contract v2 также нормализует составные свойства (`fill|styles.fill`, `stroke|styles.stroke`) и дедуплицирует exact paint-rule с более общим baseline-rule.
+
+Contract v2 использует direct baseline выбранного host-варианта только при явном `assert.baselineSource="host-variant"`. Такое правило задано для заливки `StatusPreset`: оно обнаруживает запрещённую перекраску `Label`, даже если вложенный `Status` переключён на другой Size, но не распространяет baseline на несвязанные subtree и не выводит производные padding/radius/typography этого переключения.
+
 Полная совместимость артефактов релиза проверяется локальным snapshot в [`scripts/fixtures/release-snapshot.json`](./scripts/fixtures/release-snapshot.json). Интеграционный тест [`scripts/test-release-snapshot.js`](./scripts/test-release-snapshot.js) прогоняет fixture через реальные reference и contract runtime API: bootstrap manifest, pattern rules, composition contracts, token/style catalogs, component index, lazy component catalog, contract index, required package artifacts и examples. Тест требует, чтобы каждый файл snapshot был достижим из bootstrap manifest.
 
 ## Табы аудита
@@ -284,9 +288,11 @@ Targetless rules имеют отдельную scope-политику. `matchKin
 - Regression tests composition engine используют локальный ownership-v2 fixture [`scripts/fixtures/composition-contracts.json`](./scripts/fixtures/composition-contracts.json) и не зависят от соседнего checkout `design-system_ab`. Проверку фактических package-файлов и агрегированного registry выполняет Athena через targeted `contracts:check-apollo`.
 - Точный runtime assessment имеет приоритет над общим generated component rule. Generated rules сохраняются в статистике как evidence, но не могут заменить `Expected` на violation после проверки выбранного nested variant и `subtreePropertyPolicies`; это защищает разрешённые `Colored/fill` и `Border/stroke` от ложных срабатываний.
 - Структурированное error-правило с `requiredPaintState` или `requiredTokenBinding` имеет более высокий приоритет, чем ранее вычисленный generic `Expected`. Поэтому фактический видимый fill у `BackgroundPlate Type=Border` не исчезает из результатов после host-derived оценки, а разрешённый stroke остаётся `Expected`.
+- Для `BackgroundPlate Type=Border` контракт запрещает видимую заливку, но не сравнивает цвет, токен, толщину и остальные параметры stroke с baseline. Для `Primary` и `Secondary` fill/stroke по-прежнему должны совпадать с effective baseline.
 - Component-rule evaluator учитывает семантику `requiredTokenBinding` и `requiredPaintState`, а не только severity правила. Поэтому tokenized `Colored/fill` и `Border/stroke` разрешены даже при смене конкретного токена; raw required paint, `Border/fill`, `Colored/stroke` и отклонение от fixed paint baseline `Primary/Secondary` остаются нарушениями. Это работает и при прямой проверке вложенного `Style Level`, когда composition root `BackgroundPlate` не попал в selection.
 - Запрет `none-or-not-visible` проверяется по actual snapshot независимо от materialized host diff. Это защищает `BackgroundPlate Type=Border` от ошибочного наследования fill default-варианта в старом каталоге: любой фактически видимый fill создаёт нарушение с baseline `—`. Сброс paint finding с baseline `—` явно очищает `fills`/`strokes` и для stroke обнуляет `strokeWeight`.
 - Точное deterministic error-rule имеет приоритет над generic `Expected` из standalone nested catalog. Поэтому внутри `TitleView` значение `StatusPreset Size≠24` и несовместимый с поверхностью `Style` остаются нарушениями, тогда как разрешённый public `Type` продолжает отображаться как `Expected`.
+- В Contract v2 TitleView generic baseline не перехватывает text/fill. Изменение типографики Title/Subtitle и их цвета оценивают отдельные семантические правила, поэтому UI объясняет предметный запрет, а вложенный Status продолжает оцениваться собственным контрактом. Дополнительные пакеты проверяют `PaymentMaskedNumber` Major/Minor fill и равенство `Tag.Size` размеру `TagGroup`.
 - Строки со статусами `expected` и `allowed` показываются в UI с маркером `Expected`, сохраняются в статистике вместе с причиной assessment и не предлагают действие `Сбросить`.
 - Для pattern violation с variant constraint действие `Сбросить` восстанавливает variant property через `InstanceNode.setProperties(...)`, а не копирует визуальные значения другого варианта в текущий instance.
 - Производные paint/layout diff-ы запрещённого variant switch сворачиваются в одну семантическую строку вида `view: primary → accent`; независимые ручные изменения внутри того же subtree сохраняются отдельными строками.
@@ -478,6 +484,7 @@ npm run test:generation-example-candidate
 - retry cached-missing `componentKey` для nested instances, если первый lookup временно вернул `null`;
 - policy-based suppression для host-controlled nested color и typography overrides;
 - variant-aware nested reference resolution по `SelectedState`, `Type`, `View` и `Preset`;
+- приоритет явно заданной host-типографики над standalone baseline вложенного компонента, включая `AmountParagraph` и `AmountHeadline`;
 - suppression для root-level nested variant switch внутри одной component family;
 - отсутствие ложных `itemSpacing` diff-ов для проблемных variant-комбинаций;
 - корректную привязку reference-структуры к выбранному variant path;

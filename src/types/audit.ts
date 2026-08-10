@@ -64,6 +64,7 @@ export interface AuditItem {
   resolvedReferenceVariantKey?: string | null;
   resolvedReferenceVariantName?: string | null;
   actions?: FindingActionSummary[];
+  customizationOnly?: boolean;
 }
 
 export interface DetachedEntry {

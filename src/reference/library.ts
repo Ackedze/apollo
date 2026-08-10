@@ -2,14 +2,17 @@ import {
   apolloReferenceCatalogListUrl,
   buildReferenceCatalogSources,
   getReferenceCatalogBaseUrl,
+  isReferenceCatalogSourceForChannel,
   normalizePath,
   resolveAuditPolicyConfigUrl,
   resolveComponentContractIndexUrl,
   resolveExperimentalComponentContractIndexUrl,
   resolvePatternRulesUrl,
-  resolveCatalogManifestUrls,
+  resolveCatalogManifests,
   resolveRemediationConfigUrl,
+  type ReferenceCatalogChannel,
   type ReferenceCatalogSource,
+  type ResolvedReferenceCatalogManifest,
 } from './referenceList';
 import { configureRemoteContractIndexSource } from '../contracts/runtimeContractRegistry';
 import { configureExperimentalContractV2Source } from '../contracts/experimentalContractV2Registry';
@@ -68,6 +71,13 @@ const hostControlledLayoutPaths = new Map<string, Set<string>>();
 const inferredNestedComponentKeyNodes = new Set<Partial<DSStructureNode>>();
 const corporateNameIndex = new Map<string, LibraryComponent>();
 let catalogSources: ReferenceCatalogSource[] | null = null;
+let deferredCatalogManifests: ResolvedReferenceCatalogManifest[] = [];
+const deferredManifestSources = new Map<
+  string,
+  Promise<ReferenceCatalogSource[]>
+>();
+const deferredChannelLoadPromises = new Map<string, Promise<void>>();
+const activatedDeferredManifestChannels = new Set<string>();
 const componentCatalogSourcesByPath = new Map<string, ReferenceCatalogSource>();
 const componentCatalogPathByKey = new Map<string, string>();
 const componentChannelCounterpartByKey = new Map<
@@ -97,6 +107,20 @@ export function areReferenceCatalogsReady(): boolean {
 
 export async function ensureReferenceCatalogsLoaded(): Promise<void> {
   return referenceCatalogLifecycle.ensure(loadAllCatalogs);
+}
+
+export async function ensureReferenceCatalogsForChannel(
+  channel: ReferenceCatalogChannel,
+): Promise<void> {
+  await ensureReferenceCatalogsLoaded();
+  const matchingManifests = deferredCatalogManifests.filter(
+    (manifest) => manifest.channels.includes(channel),
+  );
+  await Promise.all(
+    matchingManifests.map((manifest) =>
+      activateDeferredManifestForChannel(manifest, channel),
+    ),
+  );
 }
 
 async function loadAllCatalogs(): Promise<void> {
@@ -130,11 +154,8 @@ async function loadAllCatalogs(): Promise<void> {
   await loadStyleCatalogs(styleSources);
   const styleLoadDurationMs = getTimestamp() - styleLoadStartedAt;
 
-  void componentIndexLifecycle
-    .ensure(() => loadComponentIndexes(componentSources))
-    .catch((error) => {
-      console.warn('[Apollo] component index preload failed', error);
-    });
+  await componentIndexLifecycle.ensure(() => loadComponentIndexes(componentSources));
+  await ensureComponentIndexesLoaded();
   logAuditMetric('reference-preload', {
     totalMs: Number((getTimestamp() - loadStartedAt).toFixed(1)),
     componentFetchMs: 0,
@@ -142,8 +163,115 @@ async function loadAllCatalogs(): Promise<void> {
     tokenLoadMs: Number(tokenLoadDurationMs.toFixed(1)),
     styleLoadMs: Number(styleLoadDurationMs.toFixed(1)),
     catalogCount: 0,
-    indexPreload: 'background',
+    indexPreload: 'awaited',
   });
+}
+
+async function activateDeferredManifestForChannel(
+  manifest: ResolvedReferenceCatalogManifest,
+  channel: ReferenceCatalogChannel,
+): Promise<void> {
+  const activationKey = `${manifest.url}::${channel}`;
+  if (activatedDeferredManifestChannels.has(activationKey)) return;
+
+  const existingPromise = deferredChannelLoadPromises.get(activationKey);
+  if (existingPromise) return existingPromise;
+
+  const promise = (async () => {
+    const manifestSources = await ensureDeferredManifestSources(manifest.url);
+    const channelSources = manifestSources.filter((source) =>
+      isReferenceCatalogSourceForChannel(source, channel),
+    );
+    const tokenSources = channelSources.filter(isTokenCatalogSource);
+    const styleSources = channelSources.filter(isStyleCatalogSource);
+    if (tokenSources.length || styleSources.length) {
+      throw new Error(
+        `Deferred reference manifest must contain component catalogs only: ${manifest.url}`,
+      );
+    }
+
+    const componentSources = channelSources.filter(isComponentCatalogSource);
+    registerAdditionalCatalogSources(componentSources);
+    await loadComponentIndexes(componentSources, {
+      preserveExistingKeys: true,
+      resetFailureState: false,
+    });
+
+    const failedChannelSources = componentSources.filter((source) =>
+      failedComponentIndexSources.has(source.path),
+    );
+    if (failedChannelSources.length) {
+      await retryFailedComponentIndexes();
+    }
+    const remainingFailures = componentSources.filter((source) =>
+      failedComponentIndexSources.has(source.path),
+    );
+    if (remainingFailures.length) {
+      throw new Error(
+        `Reference component indexes are incomplete for ${channel} (${remainingFailures.length} failed)`,
+      );
+    }
+
+    activatedDeferredManifestChannels.add(activationKey);
+    logAuditMetric('reference-channel-index-load', {
+      channel,
+      manifestUrl: manifest.url,
+      catalogCount: componentSources.length,
+    });
+  })().finally(() => {
+    deferredChannelLoadPromises.delete(activationKey);
+  });
+
+  deferredChannelLoadPromises.set(activationKey, promise);
+  return promise;
+}
+
+async function ensureDeferredManifestSources(
+  manifestUrl: string,
+): Promise<ReferenceCatalogSource[]> {
+  let promise = deferredManifestSources.get(manifestUrl);
+  if (!promise) {
+    promise = (async () => {
+      const response = await requestCatalogSource(
+        appendCacheBustingQuery(manifestUrl, 'apolloReferenceSources'),
+      );
+      return buildReferenceCatalogSources(JSON.parse(response));
+    })().catch((error) => {
+      deferredManifestSources.delete(manifestUrl);
+      throw error;
+    });
+    deferredManifestSources.set(manifestUrl, promise);
+  }
+  return promise;
+}
+
+function registerAdditionalCatalogSources(
+  sources: ReferenceCatalogSource[],
+): void {
+  const activeSources = catalogSources ?? [];
+  const activeSourceByPath = new Map(
+    activeSources.map((source) => [source.path, source]),
+  );
+  const additions: ReferenceCatalogSource[] = [];
+
+  for (const source of sources) {
+    const existing = activeSourceByPath.get(source.path);
+    if (existing) {
+      if (existing.url !== source.url) {
+        throw new Error(
+          `Reference manifests contain duplicate catalog path: ${source.path}`,
+        );
+      }
+      continue;
+    }
+    activeSourceByPath.set(source.path, source);
+    additions.push(source);
+    registerComponentCatalogSource(source);
+  }
+
+  if (additions.length) {
+    catalogSources = activeSources.concat(additions);
+  }
 }
 
 export async function ensureReferenceCatalogsForKeys(
@@ -342,13 +470,17 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       await ensureAuditPolicyConfigLoaded();
     }
     const sources = buildReferenceCatalogSources(payload);
-    const nestedManifestUrls = resolveCatalogManifestUrls(payload);
-    for (const manifestUrl of nestedManifestUrls) {
-      const nestedResponse = await requestCatalogSource(
-        appendCacheBustingQuery(manifestUrl, 'apolloReferenceSources'),
-      );
-      const nestedPayload = JSON.parse(nestedResponse);
-      const nestedSources = buildReferenceCatalogSources(nestedPayload);
+    const nestedManifests = resolveCatalogManifests(payload);
+    deferredCatalogManifests = nestedManifests.filter(
+      (manifest) =>
+        manifest.channels.length > 0 &&
+        !manifest.channels.includes('Desktop'),
+    );
+    const eagerManifests = nestedManifests.filter(
+      (manifest) => !deferredCatalogManifests.includes(manifest),
+    );
+    for (const manifest of eagerManifests) {
+      const nestedSources = await ensureDeferredManifestSources(manifest.url);
       sources.push(...nestedSources);
     }
     const seenSourcePaths = new Set<string>();
@@ -364,7 +496,8 @@ async function ensureCatalogSourceList(): Promise<ReferenceCatalogSource[]> {
       baseUrl: payload?.baseUrl ?? '',
       patternRulesUrl,
       auditPolicyConfigUrl,
-      nestedManifestCount: nestedManifestUrls.length,
+      nestedManifestCount: nestedManifests.length,
+      deferredManifestCount: deferredCatalogManifests.length,
       count: sources.length,
     });
 

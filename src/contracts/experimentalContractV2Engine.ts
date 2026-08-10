@@ -23,6 +23,7 @@ type EvaluationContext = {
   nodes: RuntimeNode[];
   host: RuntimeNode;
   effectiveBaselineDiffs: DiffEntry[];
+  hostVariantBaselineDiffs: DiffEntry[];
   resolveTokenLabel?: (token: string) => string | null;
 };
 
@@ -70,7 +71,9 @@ export function evaluateExperimentalContractV2(options: {
   hostVariantProperties?: Record<string, string> | null;
   actualStructure: DSStructureNode[];
   effectiveBaselineDiffs?: DiffEntry[];
+  hostVariantBaselineDiffs?: DiffEntry[];
   resolveTokenLabel?: (token: string) => string | null;
+  evaluationScope?: 'all' | 'detached-structural';
 }): ExperimentalContractV2Evaluation {
   const host = createHostNode(options);
   const context: EvaluationContext = {
@@ -81,6 +84,7 @@ export function evaluateExperimentalContractV2(options: {
     nodes: replaceRoot(options.actualStructure, host),
     host,
     effectiveBaselineDiffs: options.effectiveBaselineDiffs ?? [],
+    hostVariantBaselineDiffs: options.hostVariantBaselineDiffs ?? [],
     resolveTokenLabel: options.resolveTokenLabel,
   };
   const result: ExperimentalContractV2Evaluation = {
@@ -96,7 +100,11 @@ export function evaluateExperimentalContractV2(options: {
   };
   const claimedBaselineDiffs = new Set<string>();
 
-  for (const rule of options.contract.rules) {
+  const rules = options.evaluationScope === 'detached-structural'
+    ? options.contract.rules.filter(isDetachedStructuralRule)
+    : options.contract.rules;
+
+  for (const rule of rules) {
     if (rule.enforcement !== 'enforced') {
       result.diagnostics.classificationSkipped += 1;
       continue;
@@ -134,8 +142,109 @@ export function evaluateExperimentalContractV2(options: {
     result.diffs.push(createViolationDiff(rule, evaluation.target ?? host, evaluation));
   }
 
+  result.diffs = dedupeExactRulesOverBaselineRules(
+    result.diffs,
+    options.contract.rules,
+  );
+  result.diagnostics.violations = result.diffs.length;
   result.diagnostics.unsupportedRuleIds.sort();
   return result;
+}
+
+function isDetachedStructuralRule(rule: ExperimentalRuleV2): boolean {
+  const host = rule.select?.host;
+  if (!host || typeof host !== 'object' || Array.isArray(host)) return false;
+  const selector = host as Record<string, any>;
+  const componentKeyCondition = selector.where?.componentKey;
+  return selector.scope === 'selection-root' &&
+    componentKeyCondition &&
+    typeof componentKeyCondition === 'object' &&
+    (
+      componentKeyCondition.op === 'equals' ||
+      (
+        componentKeyCondition.op === 'oneOf' &&
+        Array.isArray(componentKeyCondition.values)
+      )
+    );
+}
+
+function dedupeExactRulesOverBaselineRules(
+  diffs: DiffEntry[],
+  rules: ExperimentalRuleV2[],
+): DiffEntry[] {
+  const ruleById = new Map(rules.map((rule) => [rule.id, rule]));
+  const result: DiffEntry[] = [];
+  const indexByTargetProperty = new Map<string, number>();
+
+  for (const diff of diffs) {
+    const property = canonicalViolationProperty(diff.details?.property ?? '');
+    const target = diff.nodeId || diff.nodePath;
+    const key = `${target}::${property}`;
+    const existingIndex = indexByTargetProperty.get(key);
+    if (existingIndex === undefined) {
+      indexByTargetProperty.set(key, result.length);
+      result.push(diff);
+      continue;
+    }
+
+    const existing = result[existingIndex];
+    const existingRule = ruleById.get(existing.assessment?.ruleId ?? '');
+    const candidateRule = ruleById.get(diff.assessment?.ruleId ?? '');
+    const existingOp = existingRule?.assert.op;
+    const candidateOp = candidateRule?.assert.op;
+    const existingIsBaseline = existingOp === 'matchesEffectiveBaseline';
+    const candidateIsBaseline = candidateOp === 'matchesEffectiveBaseline';
+
+    if (existingIsBaseline && !candidateIsBaseline) {
+      result[existingIndex] = diff;
+      continue;
+    }
+    if (!existingIsBaseline && candidateIsBaseline) {
+      continue;
+    }
+    if (existingIsBaseline && candidateIsBaseline) {
+      if (baselineRuleSpecificity(candidateRule) > baselineRuleSpecificity(existingRule)) {
+        result[existingIndex] = diff;
+      }
+      continue;
+    }
+
+    indexByTargetProperty.set(`${key}::${result.length}`, result.length);
+    result.push(diff);
+  }
+
+  return result;
+}
+
+function canonicalViolationProperty(property: string): string {
+  const parts = property.split('|').map((part) => part.trim()).filter(Boolean);
+  if (parts.some((part) => part === 'fill' || part === 'fills' || part === 'styles.fill')) {
+    return 'fill';
+  }
+  if (parts.some((part) => part === 'stroke' || part === 'strokes' || part === 'styles.stroke')) {
+    return 'stroke';
+  }
+  if (parts.some((part) => part === 'textStyle' || part === 'typographyToken' || part === 'styles.text')) {
+    return 'styles.text';
+  }
+  if (property === 'fills' || property === 'styles.fill') return 'fill';
+  if (property === 'strokes' || property === 'styles.stroke') return 'stroke';
+  if (property === 'textStyle' || property === 'typographyToken') return 'styles.text';
+  return property;
+}
+
+function baselineRuleSpecificity(rule: ExperimentalRuleV2 | undefined): number {
+  if (!rule || rule.assert.op !== 'matchesEffectiveBaseline') return 0;
+  const properties = Array.isArray(rule.assert.properties)
+    ? rule.assert.properties.filter((property: unknown) => typeof property === 'string')
+    : [];
+  const targets = rule.select?.targets;
+  const targetValues = targets && typeof targets === 'object' && !Array.isArray(targets)
+    ? (targets as Record<string, any>).where?.semanticRoleOrLayerName?.values
+    : null;
+  const targetCount = Array.isArray(targetValues) ? targetValues.length : 1000;
+  return (properties.length === 1 ? 1000 : Math.max(0, 100 - properties.length)) +
+    Math.max(0, 100 - targetCount);
 }
 
 function evaluateRule(
@@ -185,8 +294,14 @@ function evaluateMatchesEffectiveBaseline(
   );
   if (!properties.length) return { verdict: 'unknown' };
 
+  const baselineDiffs = assertion.baselineSource === 'host-variant'
+    ? mergeBaselineDiffs(
+        context.effectiveBaselineDiffs,
+        context.hostVariantBaselineDiffs,
+      )
+    : context.effectiveBaselineDiffs;
   const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
-  for (const diff of context.effectiveBaselineDiffs) {
+  for (const diff of baselineDiffs) {
     if (!isActionableBaselineDiff(diff)) continue;
     if (!properties.some((property) => baselinePropertyMatches(property, diff))) continue;
     const target = findBaselineTarget(diff, nodes);
@@ -194,6 +309,17 @@ function evaluateMatchesEffectiveBaseline(
     matches.push({ diff, target });
   }
   return matches.length ? { verdict: 'fail', sourceDiffs: matches } : { verdict: 'pass' };
+}
+
+function mergeBaselineDiffs(
+  effectiveDiffs: DiffEntry[],
+  hostVariantDiffs: DiffEntry[],
+): DiffEntry[] {
+  const merged = new Map<string, DiffEntry>();
+  for (const diff of effectiveDiffs.concat(hostVariantDiffs)) {
+    merged.set(baselineDiffKey(diff), diff);
+  }
+  return Array.from(merged.values());
 }
 
 function isActionableBaselineDiff(diff: DiffEntry): boolean {
@@ -232,8 +358,7 @@ function findBaselineTarget(diff: DiffEntry, nodes: RuntimeNode[]): RuntimeNode 
   }
   return nodes.find((node) =>
     node.path === diff.nodePath ||
-    diff.nodePath.startsWith(`${node.path} / `) ||
-    node.path.startsWith(`${diff.nodePath} / `),
+    diff.nodePath.startsWith(`${node.path} / `),
   ) ?? null;
 }
 
@@ -304,14 +429,23 @@ function variantConditionMatches(
 ): boolean {
   const expected = readVariantCondition(condition);
   if (!expected) return false;
-  return Object.entries(expected).every(([property, value]) => actual[property] === value);
+  return Object.entries(expected).every(([property, value]) =>
+    Array.isArray(value)
+      ? value.includes(actual[property])
+      : actual[property] === value,
+  );
 }
 
-function readVariantCondition(condition: unknown): Record<string, string> | null {
+function readVariantCondition(
+  condition: unknown,
+): Record<string, string | string[]> | null {
   if (!condition || typeof condition !== 'object' || Array.isArray(condition)) return null;
   const expected = condition as Record<string, unknown>;
-  if (Object.values(expected).some((value) => typeof value !== 'string')) return null;
-  return expected as Record<string, string>;
+  if (Object.values(expected).some((value) =>
+    typeof value !== 'string' &&
+    !(Array.isArray(value) && value.length > 0 && value.every((item) => typeof item === 'string')),
+  )) return null;
+  return expected as Record<string, string | string[]>;
 }
 
 function resolveSelection(
@@ -479,19 +613,26 @@ function evaluateAllEqual(
       ? assertion.facts as string[]
       : null;
   if (!facts?.length) return { verdict: 'unknown' as const };
-  const values = nodes.map((node) => {
+  const evidence = nodes.flatMap((node) => {
     for (const fact of facts) {
       const value = readFact(node, fact, context);
-      if (value !== undefined) return value;
+      if (value !== undefined) return [{ node, value }];
     }
-    return undefined;
+    return [];
   });
-  if (values.some((value) => value === undefined)) return { verdict: 'unknown' as const };
-  const first = JSON.stringify(values[0]);
-  const mismatch = values.findIndex((value) => JSON.stringify(value) !== first);
+  if (!evidence.length) return { verdict: 'unknown' as const };
+  const first = JSON.stringify(evidence[0].value);
+  const mismatch = evidence.findIndex(
+    (entry) => JSON.stringify(entry.value) !== first,
+  );
   return mismatch < 0
     ? { verdict: 'pass' as const }
-    : { verdict: 'fail' as const, target: nodes[mismatch], expected: values[0], actual: values[mismatch] };
+    : {
+        verdict: 'fail' as const,
+        target: evidence[mismatch].node,
+        expected: evidence[0].value,
+        actual: evidence[mismatch].value,
+      };
 }
 
 function evaluateCountBetween(nodes: RuntimeNode[], assertion: Record<string, any>) {

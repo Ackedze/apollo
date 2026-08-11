@@ -1015,6 +1015,18 @@ export function __test_registerHostControlledNestedPath(
   addHostControlledPath(hostControlledLayoutPaths, componentKeys, relativePath);
 }
 
+export function __test_getHostControlledComponentAliases(
+  partKey: string | null | undefined,
+  resolvedVariantKey: string | null | undefined,
+  partComponentKey: string | null | undefined,
+): string[] {
+  return getHostControlledComponentAliases(
+    partKey,
+    resolvedVariantKey,
+    partComponentKey,
+  );
+}
+
 export function __test_hydrateNestedInstanceComponentKeys(
   component: AthenaComponent,
   components: AthenaComponent[],
@@ -1326,6 +1338,13 @@ function buildNodeLayout(
       horizontal: layout.sizing.horizontal ?? null,
       vertical: layout.sizing.vertical ?? null,
     };
+  }
+
+  if (layout.primaryAxisAlignItems) {
+    out.primaryAxisAlignItems = layout.primaryAxisAlignItems;
+  }
+  if (layout.counterAxisAlignItems) {
+    out.counterAxisAlignItems = layout.counterAxisAlignItems;
   }
 
   if (layout.paddingTokens) {
@@ -2024,19 +2043,20 @@ function registerHostControlledPaintPathsForStructure(
     }
 
     const partComponent = findCatalogComponentByKey(partKey);
-      if (!partComponent) {
-        continue;
-      }
+    if (!partComponent) {
+      continue;
+    }
 
-      const partStructure = resolveStructureCachedForPartPolicy(
-        partComponent,
-        resolveVariantKeyForInstance(
-          partComponent,
-          partKey,
-          node.componentInstance?.variantProperties ?? null,
-        ),
-        structureCache,
-      );
+    const resolvedVariantKey = resolveVariantKeyForInstance(
+      partComponent,
+      partKey,
+      node.componentInstance?.variantProperties ?? null,
+    );
+    const partStructure = resolveStructureCachedForPartPolicy(
+      partComponent,
+      resolvedVariantKey,
+      structureCache,
+    );
     if (!partStructure || !partStructure.length) {
       continue;
     }
@@ -2055,13 +2075,28 @@ function registerHostControlledPaintPathsForStructure(
 
       const overrideKinds = getNestedOverrideKinds(hostNode, partNode);
       if (overrideKinds.paint) {
-        addHostControlledPaintPath(partKey, relativePath, partComponent.key ?? null);
+        addHostControlledPaintPath(
+          partKey,
+          relativePath,
+          resolvedVariantKey,
+          partComponent.key ?? null,
+        );
       }
       if (overrideKinds.text) {
-        addHostControlledTextPath(partKey, relativePath, partComponent.key ?? null);
+        addHostControlledTextPath(
+          partKey,
+          relativePath,
+          resolvedVariantKey,
+          partComponent.key ?? null,
+        );
       }
       if (overrideKinds.layout) {
-        addHostControlledLayoutPath(partKey, relativePath, partComponent.key ?? null);
+        addHostControlledLayoutPath(
+          partKey,
+          relativePath,
+          resolvedVariantKey,
+          partComponent.key ?? null,
+        );
       }
     }
   }
@@ -2159,6 +2194,10 @@ function areLayoutDescriptorsEqual(
     ) &&
     (left?.itemSpacing ?? null) === (right?.itemSpacing ?? null) &&
     (left?.itemSpacingToken ?? null) === (right?.itemSpacingToken ?? null) &&
+    (left?.primaryAxisAlignItems ?? null) ===
+      (right?.primaryAxisAlignItems ?? null) &&
+    (left?.counterAxisAlignItems ?? null) ===
+      (right?.counterAxisAlignItems ?? null) &&
     (left?.sizing?.horizontal ?? null) ===
       (right?.sizing?.horizontal ?? null) &&
     (left?.sizing?.vertical ?? null) === (right?.sizing?.vertical ?? null)
@@ -2236,11 +2275,16 @@ function getRelativeInstancePath(
 function addHostControlledPaintPath(
   partKey: string,
   relativePath: string,
+  resolvedVariantKey?: string | null,
   partComponentKey?: string | null,
 ) {
   addHostControlledPath(
     hostControlledPaintPaths,
-    [partKey, partComponentKey ?? null],
+    getHostControlledComponentAliases(
+      partKey,
+      resolvedVariantKey,
+      partComponentKey,
+    ),
     relativePath,
   );
 }
@@ -2248,11 +2292,16 @@ function addHostControlledPaintPath(
 function addHostControlledTextPath(
   partKey: string,
   relativePath: string,
+  resolvedVariantKey?: string | null,
   partComponentKey?: string | null,
 ) {
   addHostControlledPath(
     hostControlledTextPaths,
-    [partKey, partComponentKey ?? null],
+    getHostControlledComponentAliases(
+      partKey,
+      resolvedVariantKey,
+      partComponentKey,
+    ),
     relativePath,
   );
 }
@@ -2260,12 +2309,32 @@ function addHostControlledTextPath(
 function addHostControlledLayoutPath(
   partKey: string,
   relativePath: string,
+  resolvedVariantKey?: string | null,
   partComponentKey?: string | null,
 ) {
   addHostControlledPath(
     hostControlledLayoutPaths,
-    [partKey, partComponentKey ?? null],
+    getHostControlledComponentAliases(
+      partKey,
+      resolvedVariantKey,
+      partComponentKey,
+    ),
     relativePath,
+  );
+}
+
+function getHostControlledComponentAliases(
+  partKey: string | null | undefined,
+  resolvedVariantKey: string | null | undefined,
+  partComponentKey: string | null | undefined,
+): string[] {
+  return Array.from(
+    new Set(
+      [partKey, resolvedVariantKey, partComponentKey].filter(
+        (componentKey): componentKey is string =>
+          typeof componentKey === 'string' && componentKey.length > 0,
+      ),
+    ),
   );
 }
 

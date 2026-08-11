@@ -441,9 +441,10 @@ function main() {
 
   assert.equal(
     bodyCellTextDiffs.length,
-    0,
-    'BodyCell must allow tokenized nested Text fill and typography overrides',
+    1,
+    'BodyCell must allow the known typography override but keep Amount recolors visible',
   );
+  assert.equal(bodyCellTextDiffs[0].nodeName, 'Major');
 
   const directBodyCellTextDiffs = applyAllowedCustomizationRules(
     [
@@ -490,9 +491,10 @@ function main() {
 
   assert.equal(
     directBodyCellTextDiffs.length,
-    0,
-    'Direct BodyCell audit must allow known text overrides and Content spacing override',
+    1,
+    'Direct BodyCell audit must keep Amount recolors visible while allowing known typography and spacing overrides',
   );
+  assert.equal(directBodyCellTextDiffs[0].nodeName, 'Currency');
 
   const bodyCellStatusDiffs = applyAllowedCustomizationRules(
     [

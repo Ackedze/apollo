@@ -1,6 +1,7 @@
 import type { CustomizationAssessment } from '../assessment/types';
 import type { DiffEntry } from '../structure/diff';
 import type { DSStructureNode } from '../types/structures';
+import { parseVariantName } from '../utils/variantProperties';
 import type {
   ExperimentalContractV2,
   ExperimentalRuleV2,
@@ -12,6 +13,7 @@ type RuntimeNode = DSStructureNode & {
   componentInstance?: {
     componentKey: string;
     variantProperties?: Record<string, string>;
+    componentProperties?: Record<string, string>;
   } | null;
 };
 
@@ -25,6 +27,7 @@ type EvaluationContext = {
   effectiveBaselineDiffs: DiffEntry[];
   hostVariantBaselineDiffs: DiffEntry[];
   resolveTokenLabel?: (token: string) => string | null;
+  resolveComponentFamilyKey?: (componentKey: string) => string;
 };
 
 type RuleEvaluation = {
@@ -32,6 +35,7 @@ type RuleEvaluation = {
   target?: RuntimeNode;
   expected?: unknown;
   actual?: unknown;
+  evidenceProperty?: string;
   sourceDiff?: DiffEntry;
   sourceDiffs?: Array<{ diff: DiffEntry; target: RuntimeNode }>;
 };
@@ -46,6 +50,15 @@ export type ExperimentalContractV2Evaluation = {
     classificationSkipped: number;
     unsupportedRuleIds: string[];
   };
+};
+
+export type ExperimentalContractV2TreeEvaluation = ExperimentalContractV2Evaluation & {
+  scopes: Array<{
+    packageId: string;
+    hostComponentKey: string;
+    hostComponentName: string;
+    hostNodeId: string | null;
+  }>;
 };
 
 const SUPPORTED_ASSERTIONS = new Set([
@@ -73,6 +86,7 @@ export function evaluateExperimentalContractV2(options: {
   effectiveBaselineDiffs?: DiffEntry[];
   hostVariantBaselineDiffs?: DiffEntry[];
   resolveTokenLabel?: (token: string) => string | null;
+  resolveComponentFamilyKey?: (componentKey: string) => string;
   evaluationScope?: 'all' | 'detached-structural';
 }): ExperimentalContractV2Evaluation {
   const host = createHostNode(options);
@@ -86,6 +100,7 @@ export function evaluateExperimentalContractV2(options: {
     effectiveBaselineDiffs: options.effectiveBaselineDiffs ?? [],
     hostVariantBaselineDiffs: options.hostVariantBaselineDiffs ?? [],
     resolveTokenLabel: options.resolveTokenLabel,
+    resolveComponentFamilyKey: options.resolveComponentFamilyKey,
   };
   const result: ExperimentalContractV2Evaluation = {
     diffs: [],
@@ -142,13 +157,247 @@ export function evaluateExperimentalContractV2(options: {
     result.diffs.push(createViolationDiff(rule, evaluation.target ?? host, evaluation));
   }
 
-  result.diffs = dedupeExactRulesOverBaselineRules(
-    result.diffs,
-    options.contract.rules,
+  result.diffs = suppressDerivedOpacityDiffs(
+    dedupeExactRulesOverBaselineRules(
+      result.diffs,
+      options.contract.rules,
+    ),
   );
   result.diagnostics.violations = result.diffs.length;
   result.diagnostics.unsupportedRuleIds.sort();
   return result;
+}
+
+/**
+ * Evaluates every distinct contract boundary in a materialized component tree.
+ * Internal parts that belong to the same package as their nearest ancestor are
+ * intentionally folded into that ancestor scope to avoid duplicate findings.
+ */
+export function evaluateExperimentalContractV2Tree(options: {
+  hostComponentKey: string;
+  hostComponentName: string;
+  hostVariantProperties?: Record<string, string> | null;
+  actualStructure: DSStructureNode[];
+  effectiveBaselineDiffs?: DiffEntry[];
+  rawBaselineDiffs?: DiffEntry[];
+  nestedScopeBaselineDiffs?: ReadonlyMap<number, DiffEntry[]>;
+  hostVariantBaselineDiffs?: DiffEntry[];
+  resolveContract: (componentKey: string) => ExperimentalContractV2 | null;
+  resolveTokenLabel?: (token: string) => string | null;
+  resolveComponentFamilyKey?: (componentKey: string) => string;
+}): ExperimentalContractV2TreeEvaluation {
+  const result: ExperimentalContractV2TreeEvaluation = {
+    diffs: [],
+    diagnostics: emptyDiagnostics(),
+    scopes: [],
+  };
+  if (!options.actualStructure.length) return result;
+
+  const nodesById = new Map(
+    options.actualStructure.map((node) => [node.id, node]),
+  );
+  const scopes: Array<{
+    node: DSStructureNode;
+    contract: ExperimentalContractV2;
+    componentKey: string;
+    componentName: string;
+    variantProperties: Record<string, string>;
+  }> = [];
+
+  const root = options.actualStructure[0];
+  const rootContract = options.resolveContract(options.hostComponentKey);
+  if (rootContract) {
+    scopes.push({
+      node: root,
+      contract: rootContract,
+      componentKey: options.hostComponentKey,
+      componentName: options.hostComponentName,
+      variantProperties: options.hostVariantProperties ?? {},
+    });
+  }
+
+  for (const node of options.actualStructure.slice(1)) {
+    const componentKey = node.componentInstance?.componentKey;
+    if (!componentKey) continue;
+    const contract = options.resolveContract(componentKey);
+    if (!contract) continue;
+    if (hasAncestorContractPackage(node, contract.package.id, nodesById, options.resolveContract)) {
+      continue;
+    }
+    if (hasAncestorContractOwnership(node, contract.package.id, nodesById, options.resolveContract)) {
+      continue;
+    }
+    scopes.push({
+      node,
+      contract,
+      componentKey,
+      componentName: node.name,
+      variantProperties: node.componentInstance?.variantProperties ?? {},
+    });
+  }
+
+  const seenDiffs = new Set<string>();
+  const seenEvidence = new Set<string>();
+  for (const scope of scopes) {
+    const scopeNodes = collectScopeNodes(scope.node, options.actualStructure, nodesById);
+    const effectiveBaselineDiffs = scope.node.id === root.id
+      ? options.effectiveBaselineDiffs
+      : options.nestedScopeBaselineDiffs?.get(scope.node.id) ??
+        mergeScopeBaselineDiffs(
+          options.effectiveBaselineDiffs ?? [],
+          options.rawBaselineDiffs ?? [],
+          scopeNodes,
+        );
+    const evaluation = evaluateExperimentalContractV2({
+      contract: scope.contract,
+      hostComponentKey: scope.componentKey,
+      hostComponentName: scope.componentName,
+      hostVariantProperties: scope.variantProperties,
+      actualStructure: scopeNodes,
+      effectiveBaselineDiffs,
+      hostVariantBaselineDiffs: options.hostVariantBaselineDiffs,
+      resolveTokenLabel: options.resolveTokenLabel,
+      resolveComponentFamilyKey: options.resolveComponentFamilyKey,
+    });
+    mergeDiagnostics(result.diagnostics, evaluation.diagnostics);
+    result.scopes.push({
+      packageId: scope.contract.package.id,
+      hostComponentKey: scope.componentKey,
+      hostComponentName: scope.componentName,
+      hostNodeId: scope.node.nodeId ?? null,
+    });
+    for (const diff of evaluation.diffs) {
+      const evidenceKey = [
+        diff.nodeId ?? diff.nodePath,
+        diff.details?.property ?? '',
+        diff.message,
+      ].join('|');
+      if (seenEvidence.has(evidenceKey)) continue;
+      const key = [
+        diff.assessment?.ruleId ?? '',
+        diff.nodeId ?? diff.nodePath,
+        diff.details?.property ?? '',
+        diff.message,
+      ].join('|');
+      if (seenDiffs.has(key)) continue;
+      seenDiffs.add(key);
+      seenEvidence.add(evidenceKey);
+      result.diffs.push(diff);
+    }
+  }
+  result.diagnostics.violations = result.diffs.length;
+  result.diagnostics.unsupportedRuleIds = Array.from(
+    new Set(result.diagnostics.unsupportedRuleIds),
+  ).sort();
+  return result;
+}
+
+function mergeScopeBaselineDiffs(
+  assessedDiffs: DiffEntry[],
+  rawDiffs: DiffEntry[],
+  scopeNodes: DSStructureNode[],
+): DiffEntry[] {
+  const nodeIds = new Set(
+    scopeNodes
+      .map((node) => node.nodeId)
+      .filter((nodeId): nodeId is string => Boolean(nodeId)),
+  );
+  const nodePaths = new Set(scopeNodes.map((node) => node.path));
+  const scopedRawDiffs = rawDiffs.filter((diff) =>
+    diff.nodeId ? nodeIds.has(diff.nodeId) : nodePaths.has(diff.nodePath),
+  );
+  return mergeBaselineDiffs(assessedDiffs, scopedRawDiffs);
+}
+
+function emptyDiagnostics(): ExperimentalContractV2Evaluation['diagnostics'] {
+  return {
+    evaluated: 0,
+    violations: 0,
+    passed: 0,
+    unknown: 0,
+    classificationSkipped: 0,
+    unsupportedRuleIds: [],
+  };
+}
+
+function mergeDiagnostics(
+  target: ExperimentalContractV2Evaluation['diagnostics'],
+  source: ExperimentalContractV2Evaluation['diagnostics'],
+): void {
+  target.evaluated += source.evaluated;
+  target.violations += source.violations;
+  target.passed += source.passed;
+  target.unknown += source.unknown;
+  target.classificationSkipped += source.classificationSkipped;
+  target.unsupportedRuleIds.push(...source.unsupportedRuleIds);
+}
+
+function hasAncestorContractPackage(
+  node: DSStructureNode,
+  packageId: string,
+  nodesById: Map<number, DSStructureNode>,
+  resolveContract: (componentKey: string) => ExperimentalContractV2 | null,
+): boolean {
+  let parentId = node.parentId;
+  while (parentId !== null) {
+    const parent = nodesById.get(parentId);
+    if (!parent) break;
+    const parentKey = parent.componentInstance?.componentKey;
+    if (parentKey && resolveContract(parentKey)?.package.id === packageId) return true;
+    parentId = parent.parentId;
+  }
+  return false;
+}
+
+function hasAncestorContractOwnership(
+  node: DSStructureNode,
+  nestedPackageId: string,
+  nodesById: Map<number, DSStructureNode>,
+  resolveContract: (componentKey: string) => ExperimentalContractV2 | null,
+): boolean {
+  let parentId = node.parentId;
+  while (parentId !== null) {
+    const parent = nodesById.get(parentId);
+    if (!parent) break;
+    const parentKey = parent.componentInstance?.componentKey;
+    const parentContract = parentKey ? resolveContract(parentKey) : null;
+    if (parentContract && contractOwnsNestedPackage(parentContract, nestedPackageId)) return true;
+    parentId = parent.parentId;
+  }
+  return false;
+}
+
+function contractOwnsNestedPackage(
+  contract: ExperimentalContractV2,
+  nestedPackageId: string,
+): boolean {
+  const ownership = contract.facts.contractOwnership;
+  if (!ownership || typeof ownership !== 'object' || Array.isArray(ownership)) return false;
+  const nestedPackages = (ownership as Record<string, unknown>).nestedPackages;
+  if (!Array.isArray(nestedPackages)) return false;
+  return nestedPackages.some((entry) => {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return false;
+    const policy = entry as Record<string, unknown>;
+    return policy.packageId === nestedPackageId && policy.mode === 'host-contract';
+  });
+}
+
+function collectScopeNodes(
+  root: DSStructureNode,
+  nodes: DSStructureNode[],
+  nodesById: Map<number, DSStructureNode>,
+): DSStructureNode[] {
+  return nodes.filter((node) => {
+    if (node.id === root.id) return true;
+    let parentId = node.parentId;
+    while (parentId !== null) {
+      if (parentId === root.id) return true;
+      const parent = nodesById.get(parentId);
+      if (!parent) return false;
+      parentId = parent.parentId;
+    }
+    return false;
+  });
 }
 
 function isDetachedStructuralRule(rule: ExperimentalRuleV2): boolean {
@@ -214,6 +463,19 @@ function dedupeExactRulesOverBaselineRules(
   }
 
   return result;
+}
+
+function suppressDerivedOpacityDiffs(diffs: DiffEntry[]): DiffEntry[] {
+  const propertyOverrideTargets = new Set(
+    diffs
+      .filter((diff) => canonicalViolationProperty(diff.details?.property ?? '') === 'variant.Opacity')
+      .map((diff) => diff.nodeId || diff.nodePath),
+  );
+  return diffs.filter((diff) => {
+    const target = diff.nodeId || diff.nodePath;
+    return canonicalViolationProperty(diff.details?.property ?? '') !== 'opacity' ||
+      !propertyOverrideTargets.has(target);
+  });
 }
 
 function canonicalViolationProperty(property: string): string {
@@ -302,13 +564,30 @@ function evaluateMatchesEffectiveBaseline(
     : context.effectiveBaselineDiffs;
   const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
   for (const diff of baselineDiffs) {
-    if (!isActionableBaselineDiff(diff)) continue;
-    if (!properties.some((property) => baselinePropertyMatches(property, diff))) continue;
-    const target = findBaselineTarget(diff, nodes);
+    if (!isActionableBaselineDiff(diff, context, assertion)) continue;
+    const evidenceDiff = resolveHostBaselineEvidence(diff, context, assertion);
+    if (!properties.some((property) => baselinePropertyMatches(property, evidenceDiff))) continue;
+    const target = findBaselineTarget(evidenceDiff, nodes);
     if (!target) continue;
-    matches.push({ diff, target });
+    matches.push({ diff: evidenceDiff, target });
   }
   return matches.length ? { verdict: 'fail', sourceDiffs: matches } : { verdict: 'pass' };
+}
+
+function resolveHostBaselineEvidence(
+  diff: DiffEntry,
+  context: EvaluationContext,
+  assertion: Record<string, any>,
+): DiffEntry {
+  if (
+    assertion.baselineSource === 'host-variant' ||
+    diff.context.referenceOrigin !== 'nested-component'
+  ) {
+    return diff;
+  }
+  return context.hostVariantBaselineDiffs.find((hostDiff) =>
+    baselineDiffTargetsSameProperty(hostDiff, diff),
+  ) ?? diff;
 }
 
 function mergeBaselineDiffs(
@@ -322,11 +601,63 @@ function mergeBaselineDiffs(
   return Array.from(merged.values());
 }
 
-function isActionableBaselineDiff(diff: DiffEntry): boolean {
+function isActionableBaselineDiff(
+  diff: DiffEntry,
+  context: EvaluationContext,
+  assertion: Record<string, any>,
+): boolean {
   // Contract v2 evaluates the already materialized effective baseline. Legacy
   // Expected/Allowed verdicts are advisory and must not override an exact
   // component contract. Derived diffs are the only non-actionable evidence.
-  return diff.assessment?.presentation !== 'suppress-derived';
+  if (diff.assessment?.presentation === 'suppress-derived') return false;
+
+  const actualOwner = diff.context.actualNestedOwnerComponentKey ??
+    (diff.context.referenceOrigin === 'nested-component'
+      ? diff.context.actualComponentKey
+      : null);
+  const referenceOwner = diff.context.nestedOwnerComponentKey;
+  const actualFamily = actualOwner
+    ? context.resolveComponentFamilyKey?.(actualOwner) ?? actualOwner
+    : null;
+  const referenceFamily = referenceOwner
+    ? context.resolveComponentFamilyKey?.(referenceOwner) ?? referenceOwner
+    : null;
+  if (actualFamily && referenceFamily && actualFamily !== referenceFamily) {
+    // A nested component swap changes the entire descendant visual tree. Those
+    // paints/layout values cannot be compared with the previous owner's
+    // baseline; the swap itself remains available as component-property evidence.
+    return false;
+  }
+
+  if (
+    assertion.baselineSource !== 'host-variant' &&
+    Array.isArray(assertion.properties) &&
+    assertion.properties.some((property: unknown) =>
+      typeof property === 'string' && property.endsWith('.*'),
+    ) &&
+    diff.context.referenceOrigin === 'nested-component' &&
+    actualFamily &&
+    referenceFamily &&
+    actualFamily === referenceFamily &&
+    !context.hostVariantBaselineDiffs.some((hostDiff) =>
+      baselineDiffTargetsSameProperty(hostDiff, diff),
+    )
+  ) {
+    // The nested component's standalone baseline may intentionally be
+    // overridden by its parent variant. If the full host baseline is clean,
+    // that override is expected rather than a user customization.
+    return false;
+  }
+
+  return true;
+}
+
+function baselineDiffTargetsSameProperty(left: DiffEntry, right: DiffEntry): boolean {
+  const sameNode = left.nodeId && right.nodeId
+    ? left.nodeId === right.nodeId
+    : left.nodePath === right.nodePath;
+  return Boolean(sameNode) &&
+    (left.details?.property ?? '') === (right.details?.property ?? '');
 }
 
 function baselinePropertyMatches(pattern: string, diff: DiffEntry): boolean {
@@ -344,7 +675,14 @@ function baselinePropertyAliases(property: string): string[] {
   const aliases = new Set([property]);
   if (property === 'layout.sizing.horizontal') aliases.add('layoutSizingHorizontal');
   if (property === 'layout.sizing.vertical') aliases.add('layoutSizingVertical');
-  if (property === 'textStyle' || property === 'typographyToken') aliases.add('styles.text');
+  if (
+    property === 'textStyle' ||
+    property === 'typographyToken' ||
+    property === 'style.text'
+  ) {
+    aliases.add('styles.text');
+  }
+  if (property === 'styles.text') aliases.add('style.text');
   if (property === 'cornerRadius') aliases.add('radius');
   if (property === 'fills' || property === 'styles.fill') aliases.add('fill');
   if (property === 'strokes' || property === 'styles.stroke') aliases.add('stroke');
@@ -386,12 +724,21 @@ function applyRuleCondition(
     const expectedVariant = readVariantCondition(clauses.variant);
     if (!expectedVariant) return null;
     const properties = Object.keys(expectedVariant);
-    if (properties.some((property) => context.hostVariantProperties[property] !== undefined)) {
-      if (!variantConditionMatches(expectedVariant, context.hostVariantProperties)) return [];
-    } else {
-      nodes = nodes.filter((node) =>
-        variantConditionMatches(expectedVariant, variantProperties(node, context)),
+    const targetOwnsVariantProperty = nodes.some((node) => {
+      const variants = ruleProperties(node, context);
+      return properties.some((property) => variants[property] !== undefined);
+    });
+    if (targetOwnsVariantProperty) {
+      const matchingOwners = nodes.filter((node) =>
+        variantConditionMatches(expectedVariant, ruleProperties(node, context)),
       );
+      nodes = nodes.filter((node) =>
+        matchingOwners.some((owner) =>
+          node === owner || node.path.startsWith(`${owner.path} / `),
+        ),
+      );
+    } else if (!variantConditionMatches(expectedVariant, ruleProperties(context.host, context))) {
+      return [];
     }
   }
   if (clauses.except !== undefined) {
@@ -405,7 +752,7 @@ function applyRuleCondition(
     const componentMatches = typeof exception.component !== 'string' ||
       hostComponentMatches(exception.component, context);
     const variantMatches = exception.variant === undefined ||
-      variantConditionMatches(exception.variant, context.hostVariantProperties);
+      variantConditionMatches(exception.variant, ruleProperties(context.host, context));
     if (componentMatches && variantMatches) return [];
   }
   return nodes;
@@ -509,13 +856,32 @@ function matchesWhere(
     if (field === 'componentKey') value = componentKey(node, context);
     else if (field === 'componentName') value = componentName(node, context);
     else if (field === 'visible') value = node.visible;
-    else if (field === 'semanticRoleOrLayerName') value = node.path || node.name;
+    else if (field === 'semanticRoleOrLayerName') {
+      const candidates = Array.from(new Set([
+        node.path || node.name,
+        node.name,
+        componentName(node, context),
+        normalizeSemanticRoleName(node.name),
+        normalizeSemanticRoleName(componentName(node, context)),
+      ].filter((candidate): candidate is string => Boolean(candidate))));
+      const results = candidates.map((candidate) => evaluateCondition(candidate, condition));
+      if (results.some((matched) => matched === true)) continue;
+      if (results.some((matched) => matched === null)) return null;
+      return false;
+    }
     else return null;
     const matched = evaluateCondition(value, condition);
     if (matched === null) return null;
     if (!matched) return false;
   }
   return true;
+}
+
+function normalizeSemanticRoleName(value: string): string {
+  return value
+    .replace(/^\s*(?:🔩|🔒|🔐|🛠️|🛠)\s*/u, '')
+    .replace(/^\s*\[[DM]\]\s*/, '')
+    .trim();
 }
 
 function evaluateCondition(value: unknown, condition: unknown): boolean | null {
@@ -552,13 +918,22 @@ function evaluateComponentApi(
     if (!api) continue;
     checked += 1;
     const actual = variantProperties(node, context);
+    const declaredProperties = Object.fromEntries(
+      Object.entries(api.publicApi.properties).filter(([property]) => property !== 'raw'),
+    );
     for (const [property, value] of Object.entries(actual)) {
-      const allowed = api.publicApi.properties[property];
+      const allowed = declaredProperties[property];
       if (!allowed || !allowed.includes(value)) {
         return { verdict: 'fail', target: node, expected: allowed ?? [], actual: `${property}=${value}` };
       }
     }
-    const combinations = api.publicApi.allowedCombinations;
+    const combinations = Object.keys(declaredProperties).length
+      ? api.publicApi.allowedCombinations.map((candidate) =>
+          Object.fromEntries(
+            Object.entries(candidate).filter(([property]) => property !== 'raw'),
+          ),
+        )
+      : [];
     if (combinations.length && !combinations.some((candidate) => combinationMatches(candidate, actual))) {
       return { verdict: 'fail', target: node, expected: combinations, actual };
     }
@@ -606,14 +981,17 @@ function evaluateAllEqual(
   assertion: Record<string, any>,
   context: EvaluationContext,
 ) {
-  if (!nodes.length) return { verdict: 'unknown' as const };
+  const comparableNodes = assertion.strategy?.strategy === 'all-visible-targets-equal'
+    ? nodes.filter((node) => node.visible !== false)
+    : nodes;
+  if (!comparableNodes.length) return { verdict: 'unknown' as const };
   const facts = typeof assertion.fact === 'string'
     ? [assertion.fact]
     : Array.isArray(assertion.facts) && assertion.facts.every((fact: unknown) => typeof fact === 'string')
       ? assertion.facts as string[]
       : null;
   if (!facts?.length) return { verdict: 'unknown' as const };
-  const evidence = nodes.flatMap((node) => {
+  const evidence = comparableNodes.flatMap((node) => {
     for (const fact of facts) {
       const value = readFact(node, fact, context);
       if (value !== undefined) return [{ node, value }];
@@ -625,14 +1003,136 @@ function evaluateAllEqual(
   const mismatch = evidence.findIndex(
     (entry) => JSON.stringify(entry.value) !== first,
   );
-  return mismatch < 0
-    ? { verdict: 'pass' as const }
-    : {
-        verdict: 'fail' as const,
-        target: evidence[mismatch].node,
-        expected: evidence[0].value,
-        actual: evidence[mismatch].value,
-      };
+  if (mismatch < 0) return { verdict: 'pass' as const };
+
+  const baselineSources = evidence.flatMap((entry) => {
+    const diff = findBaselineSourceDiff(entry.node, facts, assertion, context);
+    return diff ? [{ diff, target: entry.node }] : [];
+  });
+  if (baselineSources.length) {
+    return { verdict: 'fail' as const, sourceDiffs: baselineSources };
+  }
+
+  if (facts.some(isTypographyStyleFact)) {
+    // allEqual describes a relation, not a baseline. Without a materialized
+    // text-style diff Apollo cannot know which sibling is canonical and must
+    // not offer a reset that would detach the current style.
+    return { verdict: 'unknown' as const };
+  }
+
+  const referenceEvidence = facts.some(isPaintFact)
+    ? selectMostFrequentEvidence(evidence)
+    : evidence[0];
+  const mismatchEvidence = evidence.find(
+    (entry) => JSON.stringify(entry.value) !== JSON.stringify(referenceEvidence.value),
+  );
+  if (!mismatchEvidence) return { verdict: 'pass' as const };
+  const sourceDiff = createRelationalPaintSourceDiff(
+    referenceEvidence.node,
+    mismatchEvidence.node,
+    facts,
+    referenceEvidence.value,
+    mismatchEvidence.value,
+  );
+  return {
+    verdict: 'fail' as const,
+    target: mismatchEvidence.node,
+    expected: referenceEvidence.value,
+    actual: mismatchEvidence.value,
+    sourceDiff,
+  };
+}
+
+function isTypographyStyleFact(fact: string): boolean {
+  return fact === 'style.text' || fact === 'styles.text';
+}
+
+function isPaintFact(fact: string): boolean {
+  return fact === 'fill' || fact === 'fills' || fact === 'stroke' || fact === 'strokes';
+}
+
+function selectMostFrequentEvidence<T extends { value: unknown }>(evidence: T[]): T {
+  const groups = new Map<string, { count: number; entry: T }>();
+  for (const entry of evidence) {
+    const key = JSON.stringify(entry.value);
+    const group = groups.get(key);
+    if (group) group.count += 1;
+    else groups.set(key, { count: 1, entry });
+  }
+  return Array.from(groups.values()).reduce((best, candidate) =>
+    candidate.count > best.count ? candidate : best,
+  ).entry;
+}
+
+function createRelationalPaintSourceDiff(
+  referenceNode: RuntimeNode,
+  target: RuntimeNode,
+  facts: string[],
+  expected: unknown,
+  actual: unknown,
+): DiffEntry | undefined {
+  const property = facts.some((fact) => fact === 'fill' || fact === 'fills')
+    ? 'fill'
+    : facts.some((fact) => fact === 'stroke' || fact === 'strokes')
+      ? 'stroke'
+      : null;
+  if (!property) return undefined;
+  const referencePaint = property === 'fill' ? referenceNode.fill : referenceNode.stroke;
+  const actualPaint = property === 'fill' ? target.fill : target.stroke;
+  if (!referencePaint?.token) return undefined;
+
+  const referenceValue = stringifyEvidence(expected);
+  const actualValue = stringifyEvidence(actual);
+  return {
+    message: `${formatContractPropertyLabel(property)}: ${referenceValue ?? '—'} → ${actualValue ?? '—'}`,
+    nodePath: target.path,
+    nodeName: target.name,
+    nodeId: target.nodeId,
+    visible: target.visible,
+    context: createRuntimeDiffContext(target),
+    diffKind: 'paint',
+    details: {
+      property,
+      reference: {
+        value: referenceValue,
+        resourceType: 'token',
+        resourceId: referencePaint.token,
+        bindingId: referencePaint.token,
+      },
+      actual: {
+        value: actualValue,
+        resourceType: actualPaint?.token
+          ? 'token'
+          : actualPaint?.color
+            ? 'color'
+            : undefined,
+        resourceId: actualPaint?.token ?? null,
+        bindingId: actualPaint?.token ?? null,
+      },
+    },
+  };
+}
+
+function findBaselineSourceDiff(
+  target: RuntimeNode,
+  facts: string[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+): DiffEntry | undefined {
+  return mergeBaselineDiffs(
+    context.effectiveBaselineDiffs,
+    context.hostVariantBaselineDiffs,
+  ).find((diff) => {
+    const targetsNode = target.nodeId && diff.nodeId
+      ? target.nodeId === diff.nodeId
+      : target.path === diff.nodePath;
+    if (!targetsNode || !facts.some((fact) => baselinePropertyMatches(fact, diff))) {
+      return false;
+    }
+    return isActionableBaselineDiff(diff, context, assertion) &&
+      stringifyEvidence(diff.details?.reference?.value) !==
+        stringifyEvidence(diff.details?.actual?.value);
+  });
 }
 
 function evaluateCountBetween(nodes: RuntimeNode[], assertion: Record<string, any>) {
@@ -690,16 +1190,117 @@ function evaluatePropertiesEqual(
   if (!values || typeof values !== 'object' || Array.isArray(values)) {
     return { verdict: 'unknown' as const };
   }
+  const mismatches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
+  let checked = 0;
   for (const node of nodes) {
-    for (const [factName, expected] of Object.entries(values)) {
-      const actual = readFact(node, factName, context);
-      if (actual === undefined) return { verdict: 'unknown' as const };
+    const actualValues = Object.entries(values).map(([factName, expected]) => ({
+      factName,
+      expected,
+      actual: readFact(node, factName, context),
+    }));
+    if (actualValues.some((entry) => entry.actual === undefined)) continue;
+    checked += 1;
+    const nodeMismatches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
+    for (const { factName, expected, actual } of actualValues) {
       if (actual !== expected) {
-        return { verdict: 'fail' as const, target: node, expected, actual };
+        const property = canonicalFactProperty(factName);
+        nodeMismatches.push({
+          target: node,
+          diff: {
+            message: `${formatContractPropertyLabel(property)}: ${stringifyEvidence(expected) ?? '—'} → ${stringifyEvidence(actual) ?? '—'}`,
+            nodePath: node.path,
+            nodeName: node.name,
+            nodeId: node.nodeId,
+            visible: node.visible,
+            context: createRuntimeDiffContext(node),
+            diffKind: property === 'opacity' ? 'opacity' : 'other',
+            details: {
+              property,
+              reference: { value: stringifyEvidence(expected) },
+              actual: { value: stringifyEvidence(actual) },
+            },
+          },
+        });
       }
     }
+    mismatches.push(...collapseAlignmentMismatches(node, nodeMismatches));
   }
-  return { verdict: 'pass' as const };
+  return mismatches.length
+    ? { verdict: 'fail' as const, sourceDiffs: mismatches }
+    : checked
+      ? { verdict: 'pass' as const }
+      : { verdict: 'unknown' as const };
+}
+
+function collapseAlignmentMismatches(
+  node: RuntimeNode,
+  mismatches: Array<{ diff: DiffEntry; target: RuntimeNode }>,
+): Array<{ diff: DiffEntry; target: RuntimeNode }> {
+  const primary = mismatches.find(
+    ({ diff }) => diff.details?.property === 'layout.primaryAxisAlignItems',
+  );
+  const counter = mismatches.find(
+    ({ diff }) => diff.details?.property === 'layout.counterAxisAlignItems',
+  );
+  if (!primary || !counter || !primary.diff.details || !counter.diff.details) {
+    return mismatches;
+  }
+
+  const expected = formatAlignmentPosition(
+    node.layout?.direction ?? null,
+    primary.diff.details.reference.value,
+    counter.diff.details.reference.value,
+  );
+  const actual = formatAlignmentPosition(
+    node.layout?.direction ?? null,
+    primary.diff.details.actual.value,
+    counter.diff.details.actual.value,
+  );
+  const composite: DiffEntry = Object.assign({}, primary.diff, {
+    message: `Выравнивание: ${expected} → ${actual}`,
+    diffKind: 'layout',
+    details: {
+      property: 'layout.alignment',
+      reference: { value: expected },
+      actual: { value: actual },
+      atomicChanges: [primary.diff.details, counter.diff.details],
+    },
+  });
+  return [
+    { diff: composite, target: node },
+    ...mismatches.filter((mismatch) => mismatch !== primary && mismatch !== counter),
+  ];
+}
+
+function formatAlignmentPosition(
+  direction: 'H' | 'V' | null,
+  primary: string | number | null,
+  counter: string | number | null,
+): string {
+  if (typeof primary !== 'string' || typeof counter !== 'string') {
+    return `primary=${String(primary ?? '—')}, counter=${String(counter ?? '—')}`;
+  }
+  const vertical = direction === 'V';
+  const horizontalValue = vertical ? counter : primary;
+  const verticalValue = vertical ? primary : counter;
+  const horizontal = horizontalValue === 'MIN'
+    ? 'слева'
+    : horizontalValue === 'MAX'
+      ? 'справа'
+      : horizontalValue.toLowerCase();
+  const verticalPosition = verticalValue === 'MIN'
+    ? 'сверху'
+    : verticalValue === 'MAX'
+      ? 'снизу'
+      : verticalValue.toLowerCase();
+  return `${verticalPosition} ${horizontal}`;
+}
+
+function canonicalFactProperty(factName: string): string {
+  if (factName === 'Opacity') return 'variant.Opacity';
+  if (factName === 'primaryAxisAlignItems') return 'layout.primaryAxisAlignItems';
+  if (factName === 'counterAxisAlignItems') return 'layout.counterAxisAlignItems';
+  return canonicalViolationProperty(factName);
 }
 
 function evaluateValuePosition(
@@ -763,13 +1364,19 @@ function readFact(
   const property = fact.match(/^(?:target|host|variant)\.variant\.([^\.]+)$/)?.[1]
     ?? fact.match(/^target\.variant\.([^\.]+)$/)?.[1]
     ?? (fact.startsWith('variant.') ? fact.slice('variant.'.length) : null);
-  if (property) return variantProperties(node, context)[property];
-  if (/^[A-Z][A-Za-z0-9 _-]*$/.test(fact)) return variantProperties(node, context)[fact];
+  if (property) return ruleProperties(node, context)[property];
+  if (/^[A-Z][A-Za-z0-9 _-]*$/.test(fact)) return ruleProperties(node, context)[fact];
   if (fact === 'layoutSizingHorizontal' || fact === 'layout.sizing.horizontal') {
     return node.layout?.sizing?.horizontal;
   }
   if (fact === 'layoutSizingVertical' || fact === 'layout.sizing.vertical') {
     return node.layout?.sizing?.vertical;
+  }
+  if (fact === 'primaryAxisAlignItems' || fact === 'layout.primaryAxisAlignItems') {
+    return node.layout?.primaryAxisAlignItems;
+  }
+  if (fact === 'counterAxisAlignItems' || fact === 'layout.counterAxisAlignItems') {
+    return node.layout?.counterAxisAlignItems;
   }
   if (fact === 'opacity') return node.opacity;
   if (fact === 'fill' || fact === 'fills') {
@@ -786,6 +1393,27 @@ function readFact(
   return undefined;
 }
 
+export function mergeContractBaselineEvidence(
+  assessedDiffs: DiffEntry[],
+  rawDiffs: DiffEntry[],
+  hostNodeId: string | null | undefined,
+): DiffEntry[] {
+  const merged = new Map<string, DiffEntry>();
+  for (const diff of assessedDiffs) {
+    merged.set(baselineDiffKey(diff), diff);
+  }
+  if (!hostNodeId) return Array.from(merged.values());
+
+  for (const diff of rawDiffs) {
+    if (diff.nodeId !== hostNodeId) continue;
+    const property = diff.details?.property ?? '';
+    if (!property.startsWith('layout.')) continue;
+    const key = baselineDiffKey(diff);
+    if (!merged.has(key)) merged.set(key, diff);
+  }
+  return Array.from(merged.values());
+}
+
 function createViolationDiff(
   rule: ExperimentalRuleV2,
   target: RuntimeNode,
@@ -793,10 +1421,13 @@ function createViolationDiff(
 ): DiffEntry {
   const ruleMessage = rule.presentation?.message || `Нарушено правило ${rule.id}`;
   const variantProperty = getRuleVariantProperty(rule);
+  const evidenceProperty = evaluation.evidenceProperty ?? getRuleEvidenceProperty(rule);
   const referenceValue = stringifyEvidence(evaluation.expected);
   const actualValue = stringifyEvidence(evaluation.actual);
   const message = variantProperty
     ? `${variantProperty}: ${referenceValue ?? '—'} → ${actualValue ?? '—'}`
+    : evidenceProperty && (referenceValue !== null || actualValue !== null)
+      ? `${formatContractPropertyLabel(evidenceProperty)}: ${referenceValue ?? '—'} → ${actualValue ?? '—'}`
     : ruleMessage;
   const assessment: CustomizationAssessment = {
     verdict: 'violation',
@@ -828,30 +1459,55 @@ function createViolationDiff(
     nodeName: target.name,
     nodeId: target.nodeId,
     visible: target.visible,
-    context: {
-      actualComponentKey: target.componentInstance?.componentKey ?? null,
-      referenceComponentKey: null,
-      referenceOrigin: 'host',
-      actualNestedOwnerComponentKey: null,
-      actualNestedOwnerPath: null,
-      actualNestedOwnerRelativePath: null,
-      nestedOwnerComponentKey: null,
-      nestedOwnerComponentRole: null,
-      nestedOwnerPath: null,
-      nestedOwnerRelativePath: null,
-      actualVariantProperties: target.componentInstance?.variantProperties ?? null,
-      referenceVariantProperties: null,
-    },
+    context: createRuntimeDiffContext(target),
     diffKind: 'other',
     details: {
       property: variantProperty
         ? `variant.${variantProperty}`
-        : rule.presentation?.group || 'component-contract-v2',
+        : evidenceProperty ?? rule.presentation?.group ?? 'component-contract-v2',
       reference: { value: referenceValue },
       actual: { value: actualValue },
     },
     assessment,
   };
+}
+
+function createRuntimeDiffContext(target: RuntimeNode): DiffEntry['context'] {
+  return {
+    actualComponentKey: target.componentInstance?.componentKey ?? null,
+    referenceComponentKey: null,
+    referenceOrigin: 'host',
+    actualNestedOwnerComponentKey: null,
+    actualNestedOwnerPath: null,
+    actualNestedOwnerRelativePath: null,
+    nestedOwnerComponentKey: null,
+    nestedOwnerComponentRole: null,
+    nestedOwnerPath: null,
+    nestedOwnerRelativePath: null,
+    actualVariantProperties: target.componentInstance?.variantProperties ?? null,
+    referenceVariantProperties: null,
+  };
+}
+
+function getRuleEvidenceProperty(rule: ExperimentalRuleV2): string | null {
+  if (rule.assert.op !== 'allEqual') return null;
+  const assertion = rule.assert as Record<string, any>;
+  const facts = typeof assertion.fact === 'string'
+    ? [assertion.fact]
+    : Array.isArray(assertion.facts)
+      ? assertion.facts.filter((fact: unknown): fact is string => typeof fact === 'string')
+      : [];
+  if (facts.some((fact) => fact === 'fill' || fact === 'fills')) return 'fill';
+  if (facts.some((fact) => fact === 'stroke' || fact === 'strokes')) return 'stroke';
+  if (facts.some((fact) => fact === 'style.text' || fact === 'styles.text')) return 'styles.text';
+  return facts.length === 1 ? facts[0] : null;
+}
+
+function formatContractPropertyLabel(property: string): string {
+  if (property === 'fill') return 'заливка';
+  if (property === 'stroke') return 'Обводка';
+  if (property === 'styles.text') return 'Стиль текст';
+  return property;
 }
 
 function formatAllowedPositions(positions: string[]): string {
@@ -938,6 +1594,7 @@ function createHostNode(options: {
       componentInstance: {
         componentKey: options.hostComponentKey,
         variantProperties: options.hostVariantProperties ?? {},
+        componentProperties: source?.componentInstance?.componentProperties,
       },
     },
   );
@@ -963,7 +1620,22 @@ function variantProperties(
 ): Record<string, string> {
   return node === context.host
     ? context.hostVariantProperties
-    : node.componentInstance?.variantProperties ?? {};
+    : Object.assign(
+        {},
+        parseVariantName(node.name),
+        node.componentInstance?.variantProperties ?? {},
+      );
+}
+
+function ruleProperties(
+  node: RuntimeNode,
+  context: EvaluationContext,
+): Record<string, string> {
+  return Object.assign(
+    {},
+    variantProperties(node, context),
+    node.componentInstance?.componentProperties ?? {},
+  );
 }
 
 function combinationMatches(

@@ -101,6 +101,8 @@ export type NormalizedElement = {
       horizontal?: string | null;
       vertical?: string | null;
     } | null;
+    primaryAxisAlignItems?: string | null;
+    counterAxisAlignItems?: string | null;
     radius?: number | number[];
     paddingTokens?: {
       top?: string | null;

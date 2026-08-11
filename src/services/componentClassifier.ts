@@ -76,10 +76,15 @@ import {
 import { createComponentApiVariantDiffs } from '../contracts/componentApiContracts';
 import { getComponentApiContractByFigmaKey } from '../contracts/runtimeContractRegistry';
 import {
+  ensureExperimentalContractV2ForKeys,
   getExperimentalContractV2ForKey,
   hasExperimentalContractV2ForKey,
+  type ExperimentalContractV2,
 } from '../contracts/experimentalContractV2Registry';
-import { evaluateExperimentalContractV2 } from '../contracts/experimentalContractV2Engine';
+import {
+  evaluateExperimentalContractV2Tree,
+  mergeContractBaselineEvidence,
+} from '../contracts/experimentalContractV2Engine';
 import { alignMaterializedReferenceInstancePaths } from '../reference/nestedReferenceMerge';
 import {
   alignStructurePaths,
@@ -171,6 +176,134 @@ export function shouldRunComponentDiff(options: {
     options.requiresComponentApiAudit ||
     options.isInheritedFromLocalComponentContext
   );
+}
+
+export function collectExperimentalContractV2StructureKeys(
+  structure: readonly DSStructureNode[],
+): Set<string> {
+  const keys = new Set<string>();
+  for (const node of structure) {
+    const key = node.componentInstance?.componentKey?.trim();
+    if (key) keys.add(key);
+  }
+  return keys;
+}
+
+export async function preloadExperimentalContractV2Structure(
+  structure: readonly DSStructureNode[],
+  ensureForKeys: (keys: Iterable<string>) => Promise<void> =
+    ensureExperimentalContractV2ForKeys,
+): Promise<Set<string>> {
+  const keys = collectExperimentalContractV2StructureKeys(structure);
+  if (keys.size) {
+    await ensureForKeys(keys);
+  }
+  return keys;
+}
+
+export function createExperimentalContractV2NestedBaselineDiffs(
+  structure: readonly DSStructureNode[],
+  dependencies: {
+    resolveContract(componentKey: string): ExperimentalContractV2 | null;
+    resolveReference(instance: DSStructureNode): DSStructureNode[] | null;
+    expandReference(
+      reference: DSStructureNode[],
+      actual: DSStructureNode[],
+    ): DSStructureNode[];
+    compare(actual: DSStructureNode[], reference: DSStructureNode[]): DiffEntry[];
+  },
+): Map<number, DiffEntry[]> {
+  const diffsByScopeNodeId = new Map<number, DiffEntry[]>();
+  if (structure.length < 2) return diffsByScopeNodeId;
+  const nodesById = new Map(structure.map((node) => [node.id, node]));
+
+  for (const instance of structure.slice(1)) {
+    const componentKey = instance.componentInstance?.componentKey;
+    if (!componentKey || instance.type !== 'INSTANCE') continue;
+    const contract = dependencies.resolveContract(componentKey);
+    if (!contract) continue;
+    if (
+      hasAncestorExperimentalContractPackage(
+        instance,
+        contract.package.id,
+        nodesById,
+        dependencies.resolveContract,
+      )
+    ) {
+      continue;
+    }
+
+    const actualSubtree = collectStructureSubtree(structure, instance.id);
+    const standaloneReference = dependencies.resolveReference(instance);
+    if (!standaloneReference?.length) continue;
+    const ownedStandaloneReference = markNestedContractReferenceOwnership(
+      standaloneReference,
+      componentKey,
+    );
+    const alignedActual = alignStructurePaths(actualSubtree, ownedStandaloneReference);
+    const expandedReference = dependencies.expandReference(
+      ownedStandaloneReference,
+      alignedActual,
+    );
+    diffsByScopeNodeId.set(
+      instance.id,
+      dependencies.compare(alignedActual, expandedReference),
+    );
+  }
+
+  return diffsByScopeNodeId;
+}
+
+function markNestedContractReferenceOwnership(
+  reference: readonly DSStructureNode[],
+  componentKey: string,
+): DSStructureNode[] {
+  const rootPath = reference[0]?.path ?? '';
+  return reference.map((node) => Object.assign({}, node, {
+    referenceOrigin: 'nested-component' as const,
+    referenceOwnerComponentKey: componentKey,
+    referenceOwnerPath: rootPath,
+    referenceOwnerRelativePath:
+      node.path === rootPath
+        ? ''
+        : node.path.startsWith(`${rootPath} / `)
+          ? node.path.slice(rootPath.length + 3)
+          : node.path,
+  }));
+}
+
+function collectStructureSubtree(
+  structure: readonly DSStructureNode[],
+  rootId: number,
+): DSStructureNode[] {
+  const included = new Set<number>([rootId]);
+  const result: DSStructureNode[] = [];
+  for (const node of structure) {
+    if (node.id === rootId || (node.parentId !== null && included.has(node.parentId))) {
+      included.add(node.id);
+      result.push(node);
+    }
+  }
+  return result;
+}
+
+function hasAncestorExperimentalContractPackage(
+  node: DSStructureNode,
+  packageId: string,
+  nodesById: Map<number, DSStructureNode>,
+  resolveContract: (componentKey: string) => ExperimentalContractV2 | null,
+): boolean {
+  let parentId = node.parentId;
+  while (parentId !== null) {
+    const parent = nodesById.get(parentId);
+    if (!parent) break;
+    const parentKey = parent.componentInstance?.componentKey;
+    if (parentKey && resolveContract(parentKey)?.package.id === packageId) {
+      return true;
+    }
+    parentId = parent.parentId;
+  }
+  return false;
 }
 
 /**
@@ -339,6 +472,16 @@ export async function classifyComponentNode(
     referenceStructure && actualStructure
       ? alignStructurePaths(actualStructure, referenceStructure)
       : actualStructure;
+  if (experimentalContractV2Enabled && alignedActualStructure) {
+    const structureContractKeys = await preloadExperimentalContractV2Structure(
+      alignedActualStructure,
+    );
+    console.log('[Apollo][contracts-v2] materialized subtree ready', {
+      hostComponentKey: componentKey,
+      componentKeyCount: structureContractKeys.size,
+    });
+    throwIfCancelled();
+  }
   const expandedReferenceStructure =
     shouldDiff &&
     referenceStructure &&
@@ -422,6 +565,42 @@ export async function classifyComponentNode(
     .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)
     .map(applyVariableBindingAssessment);
+  const nestedContractBaselineDiffs =
+    experimentalContractV2Enabled && alignedActualStructure
+      ? createExperimentalContractV2NestedBaselineDiffs(
+          alignedActualStructure,
+          {
+            resolveContract: getExperimentalContractV2ForKey,
+            resolveReference: (instance) => {
+              const nestedReference = findComponent(
+                instance.componentInstance?.componentKey ?? '',
+              );
+              return resolveStructureForInstance(
+                nestedReference,
+                instance.componentInstance ?? null,
+              );
+            },
+            expandReference: (nestedReference, nestedActual) =>
+              expandReferenceWithInstanceComponents(
+                nestedReference,
+                nestedActual,
+              ),
+            compare: (nestedActual, nestedReference) =>
+              diffStructures(nestedActual, nestedReference, {
+                strict: STRICT_COMPARISON,
+                resolveTokenLabel,
+                resolveStyleLabel: resolveStyleLabelForDiff,
+                isPaintToken,
+                resolveVariableMetadata,
+              }).diffs
+                .map((diff) => attachSurfaceContext(diff, surfaceContext))
+                .map(applyRequiredComponentSizingAssessment)
+                .map(applyVariableBindingAssessment)
+                .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
+                .filter((diff) => diff.suppressAsHostControlledNestedProperty !== true),
+          },
+        )
+      : new Map<number, DiffEntry[]>();
   const sharedValueAssessedDiffs = alignedActualStructure
     ? applySharedValueComponentRuleAssessments(rawDiffs, alignedActualStructure)
     : rawDiffs;
@@ -480,6 +659,24 @@ export async function classifyComponentNode(
           resolveVariableMetadata: resolveVariableMetadata,
         }).diffs
       : [];
+  const contractHostReferenceForDiff = resolveHostReferenceForContractDiff(
+    referenceStructure,
+    expandedReferenceStructure,
+    alignedActualStructure,
+  );
+  const contractHostDiffs =
+    experimentalContractV2Enabled &&
+    shouldDiff &&
+    contractHostReferenceForDiff &&
+    alignedActualStructure
+      ? diffStructures(alignedActualStructure, contractHostReferenceForDiff, {
+          strict: STRICT_COMPARISON,
+          resolveTokenLabel: resolveTokenLabel,
+          resolveStyleLabel: resolveStyleLabelForDiff,
+          isPaintToken: isPaintToken,
+          resolveVariableMetadata: resolveVariableMetadata,
+        }).diffs
+      : hostDiffs;
   const assessedDiffs = assessCustomizationDiffs(compositionContractResult.diffs, {
     hostDiffs,
     hostReference: referenceStructure ?? [],
@@ -505,7 +702,7 @@ export async function classifyComponentNode(
             resolveVariableMetadata: resolveVariableMetadata,
           },
         )
-      : undefined,
+        : undefined,
     resolvePatternContext:
       alignedActualStructure && referenceStructure
         ? createPatternContextResolver({
@@ -516,8 +713,29 @@ export async function classifyComponentNode(
               ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
             resolveComponent: findComponent,
           })
-        : undefined,
+      : undefined,
   }).map(applyContextualComponentRuleAssessment);
+  const assessedContractBaselineDiffs = collapsePatternViolationDiffs(
+    collapseVisualDiffsUnderVariantChanges(
+      collapseSemanticVariantDiffs(
+        collapseConfiguredSemanticVariantDiffs(assessedDiffs, {
+          actualStructure: alignedActualStructure ?? [],
+          hostReference: referenceStructure ?? [],
+          hostComponentKey: ref?.key ?? componentKey ?? null,
+          resolveFamilyKey: (nestedComponentKey) =>
+            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+        }),
+        alignedActualStructure ?? [],
+      ),
+      alignedActualStructure ?? [],
+    ),
+    alignedActualStructure ?? [],
+  );
+  const contractBaselineDiffs = mergeContractBaselineEvidence(
+    assessedContractBaselineDiffs,
+    diffsForAssessment,
+    alignedActualStructure?.[0]?.nodeId,
+  );
   const semanticDiffs = collapsePatternViolationDiffs(
     collapseVisualDiffsUnderVariantChanges(
       applyAssessmentPresentation(
@@ -570,21 +788,26 @@ export async function classifyComponentNode(
     libraryName: ref?.source ?? null,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
   });
-  const experimentalContract = experimentalContractV2Enabled
-    ? getExperimentalContractV2ForKey(componentKey)
-    : null;
   const experimentalResult =
-    experimentalContract && alignedActualStructure
-      ? evaluateExperimentalContractV2({
-          contract: experimentalContract,
+    experimentalContractV2Enabled && alignedActualStructure
+      ? evaluateExperimentalContractV2Tree({
           hostComponentKey: componentKey ?? ref?.key ?? '',
           hostComponentName:
             ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
-          hostVariantProperties: instanceVariantProperties,
+          hostVariantProperties: instanceVariantProperties ?? {},
           actualStructure: alignedActualStructure,
-          effectiveBaselineDiffs: legacyDiffs,
-          hostVariantBaselineDiffs: hostDiffs,
+          // Exact component contracts must evaluate evidence before legacy
+          // allowlists and Expected/Allowed presentation filters remove it.
+          effectiveBaselineDiffs: contractBaselineDiffs,
+          // Nested contracts need their own raw subtree evidence. The tree
+          // evaluator scopes it by node id and does not expose it to the root.
+          rawBaselineDiffs: rawDiffs,
+          nestedScopeBaselineDiffs: nestedContractBaselineDiffs,
+          hostVariantBaselineDiffs: contractHostDiffs,
           resolveTokenLabel,
+          resolveComponentFamilyKey: (nestedComponentKey) =>
+            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+          resolveContract: getExperimentalContractV2ForKey,
         })
       : null;
   const diffs = experimentalContractV2Enabled
@@ -594,7 +817,8 @@ export async function classifyComponentNode(
     console.log('[Apollo][contracts-v2] component evaluated', {
       componentKey,
       componentName: ref?.displayName ?? ref?.name ?? node.name,
-      packageId: experimentalContract?.package.id ?? null,
+      packageIds: experimentalResult?.scopes.map((scope) => scope.packageId) ?? [],
+      scopeCount: experimentalResult?.scopes.length ?? 0,
       diagnostics: experimentalResult?.diagnostics ?? {
         evaluated: 0,
         violations: 0,
@@ -603,6 +827,10 @@ export async function classifyComponentNode(
         classificationSkipped: 0,
         unsupportedRuleIds: [],
       },
+      nestedBaselineScopeCount: nestedContractBaselineDiffs.size,
+      nestedBaselineDiffCount: Array.from(
+        nestedContractBaselineDiffs.values(),
+      ).reduce((total, scopeDiffs) => total + scopeDiffs.length, 0),
       legacyDecisionCountDiscarded: legacyDiffs.length,
     });
   }
@@ -710,4 +938,18 @@ export async function classifyComponentNode(
     resolvedReferenceVariantKey,
     resolvedReferenceVariantName,
   };
+}
+
+export function resolveHostReferenceForContractDiff(
+  referenceStructure: DSStructureNode[] | null,
+  expandedReferenceStructure: DSStructureNode[] | null,
+  actualStructure: DSStructureNode[] | null,
+): DSStructureNode[] | null {
+  const effectiveReference = expandedReferenceStructure ?? referenceStructure;
+  if (!effectiveReference || !actualStructure) return effectiveReference;
+  return alignMaterializedReferenceInstancePaths(
+    effectiveReference,
+    actualStructure,
+    actualStructure[0]?.path ?? '',
+  );
 }

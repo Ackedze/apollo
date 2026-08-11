@@ -175,6 +175,46 @@ function main() {
     'The same final catalog set must restore the same inferred key',
   );
 
+  const inferredHostControlledAliases =
+    library.__test_getHostControlledComponentAliases(
+      'icon-view-family',
+      'icon-view-size-24',
+      'icon-view-family',
+    );
+  assert.deepEqual(
+    inferredHostControlledAliases,
+    ['icon-view-family', 'icon-view-size-24'],
+    'Host-controlled nested paths inferred from a family name must also be registered under the resolved variant key used by materialized references',
+  );
+  library.__test_resetHostControlledNestedPathPolicies();
+  library.__test_registerHostControlledNestedPath(
+    'paint',
+    inferredHostControlledAliases,
+    'Content / ShapeContent / BgColor',
+  );
+  library.__test_registerHostControlledNestedPath(
+    'layout',
+    inferredHostControlledAliases,
+    'Content / Shape',
+  );
+  assert.equal(
+    library.isNestedComponentPaintPathHostControlled(
+      'icon-view-size-24',
+      'Content / ShapeContent / BgColor',
+    ),
+    true,
+    'A host paint override must be addressable by the materialized nested variant key',
+  );
+  assert.equal(
+    library.isNestedComponentLayoutPathHostControlled(
+      'icon-view-size-24',
+      'Content / Shape',
+    ),
+    true,
+    'A host radius/layout override must be addressable by the materialized nested variant key',
+  );
+  library.__test_resetHostControlledNestedPathPolicies();
+
   assert.equal(
     library.resolveVariantKeyForInstance(component, 'radio-selected', null),
     'radio-selected',
@@ -2180,6 +2220,61 @@ function main() {
     amountTypographyDecision.reason,
     'keep-host-typography-descendant',
     'Typography precedence must remain observable in nested reference diagnostics',
+  );
+
+  const unboundStandaloneOperationMinus = Object.assign(
+    {},
+    standaloneOperationMinus,
+    {
+      styles: undefined,
+      typographyToken: null,
+      text: {
+        fontName: { family: 'SF Pro Text', style: 'Bold' },
+        fontSize: 16,
+        lineHeight: { unit: 'PIXELS', value: 20 },
+      },
+    },
+  );
+  const unboundAmountTypographyDecision =
+    nestedReferenceMerge.getMaterializedInstanceReferenceDecision(
+      Object.assign({}, amountParentOwnedMinus, {
+        referenceVariantOwnedProperties: [],
+      }),
+      unboundStandaloneOperationMinus,
+      'AmountParagraph / Operation',
+      () => false,
+    );
+  assert.equal(
+    unboundAmountTypographyDecision.preferCandidate,
+    false,
+    'A nested physical font must not replace an explicit host text-style baseline',
+  );
+  assert.equal(
+    unboundAmountTypographyDecision.reason,
+    'keep-host-typography-descendant',
+    'An unbound nested font must retain the host typography precedence reason',
+  );
+
+  const amountTextStyleDiff = diff.diffStructures(
+    [
+      Object.assign({}, amountParentOwnedMinus, {
+        styles: { text: { styleKey: 'paragraph-16-20' } },
+      }),
+    ],
+    [amountParentOwnedMinus],
+    {
+      resolveStyleLabel(styleKey) {
+        return {
+          'paragraph-14-20': 'Paragraph/14–20',
+          'paragraph-16-20': 'Paragraph/16–20',
+        }[styleKey] ?? styleKey;
+      },
+    },
+  ).diffs.find((entry) => entry.details?.property === 'styles.text');
+  assert.equal(
+    amountTextStyleDiff?.message,
+    'Стиль текст: Paragraph/14–20 → Paragraph/16–20',
+    'Amount typography changes must be reported as text-style tokens, not resolved font names',
   );
 
   console.log('Nested variant and suppression policy regression checks passed');

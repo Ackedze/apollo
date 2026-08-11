@@ -99,6 +99,7 @@ export type DiffDetails = {
   property: string;
   reference: DiffValueDetails;
   actual: DiffValueDetails;
+  atomicChanges?: DiffDetails[];
   bindingStatus?: VariableBindingStatus | null;
   variableMode?: VariableModeEvidence | null;
 };
@@ -438,6 +439,15 @@ function compareNode(
     diffs,
   );
 
+  compareLayoutAlignment(
+    path,
+    actual,
+    reference,
+    actualLayout,
+    referenceLayout,
+    diffs,
+  );
+
   comparePadding(
     path,
     actual,
@@ -762,6 +772,45 @@ function compareLayoutSizing(
         property: `layout.sizing.${axis}`,
         reference: { value: formatLayoutSizing(referenceValue) },
         actual: { value: formatLayoutSizing(actualValue) },
+      },
+    );
+  }
+}
+
+function compareLayoutAlignment(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  actualLayout: DSNodeLayout,
+  referenceLayout: DSNodeLayout,
+  diffs: DiffEntry[],
+) {
+  const fields = [
+    {
+      property: 'primaryAxisAlignItems' as const,
+      label: 'Выравнивание по основной оси',
+    },
+    {
+      property: 'counterAxisAlignItems' as const,
+      label: 'Выравнивание по поперечной оси',
+    },
+  ];
+
+  for (const { property, label } of fields) {
+    const referenceValue = referenceLayout[property] ?? null;
+    const actualValue = actualLayout[property] ?? null;
+    if (!referenceValue || !actualValue || referenceValue === actualValue) continue;
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `${label}: ${referenceValue} → ${actualValue}`,
+      'layout',
+      {
+        property: `layout.${property}`,
+        reference: { value: referenceValue },
+        actual: { value: actualValue },
       },
     );
   }

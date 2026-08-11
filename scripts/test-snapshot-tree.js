@@ -53,10 +53,30 @@ function createFrame(id, name, children = [], modes = {}) {
   return frame;
 }
 
+function createInstance(id, name) {
+  return {
+    id,
+    type: 'INSTANCE',
+    name,
+    visible: true,
+    opacity: 1,
+    boundVariables: {},
+    variantProperties: { View: 'Wide' },
+    componentProperties: {
+      'Presets#101:202': { type: 'VARIANT', value: 'Amount' },
+      'Compact#101:203': { type: 'BOOLEAN', value: false },
+      'Capacity#101:204': { type: 'TEXT', value: 4 },
+      'Swap#101:205': { type: 'INSTANCE_SWAP', value: { id: 'ignored' } },
+    },
+    getMainComponentAsync: async () => ({ key: 'body-cell-wide-key' }),
+    parent: null,
+  };
+}
+
 async function main() {
   global.figma = { mixed: Symbol('mixed') };
 
-  const { snapshotTree } = loadSnapshotModule();
+  const { snapshotNode, snapshotTree } = loadSnapshotModule();
 
   const collectionId = 'VariableCollectionId:grid';
   const child = createFrame('child-node-id', 'Child', [], {
@@ -103,6 +123,24 @@ async function main() {
     result[2].fill,
     {color: 'paint:GRADIENT_LINEAR', token: null},
     'Visible non-solid fills must remain observable for deterministic no-fill rules',
+  );
+
+  const instanceSnapshot = await snapshotNode(
+    createInstance('instance-node-id', '[D] BodyCell :: Wide'),
+    '',
+  );
+  assert.deepEqual(
+    instanceSnapshot.componentInstance,
+    {
+      componentKey: 'body-cell-wide-key',
+      variantProperties: { View: 'Wide' },
+      componentProperties: {
+        Presets: 'Amount',
+        Compact: 'false',
+        Capacity: '4',
+      },
+    },
+    'Snapshot must preserve exposed component properties used by Contract v2 conditions',
   );
 
   console.log('Snapshot tree regression checks passed');

@@ -52,6 +52,38 @@ assert.equal(
   'Duplicate changes of the same node property must still collapse.',
 );
 
+const alignment = {
+  nodeId: 'amount-text',
+  message: 'Выравнивание: сверху справа → снизу слева',
+  details: {
+    property: 'layout.alignment',
+    reference: {value: 'сверху справа'},
+    actual: {value: 'снизу слева'},
+    atomicChanges: [
+      {
+        property: 'layout.primaryAxisAlignItems',
+        reference: {value: 'MIN'},
+        actual: {value: 'MAX'},
+      },
+      {
+        property: 'layout.counterAxisAlignItems',
+        reference: {value: 'MAX'},
+        actual: {value: 'MIN'},
+      },
+    ],
+  },
+};
+const alignmentResetDetails = context.getCustomizationResetDetails(
+  alignment,
+  true,
+  null,
+);
+assert.deepEqual(
+  alignmentResetDetails.map((detail) => detail.property),
+  ['layout.primaryAxisAlignItems', 'layout.counterAxisAlignItems'],
+  'One semantic alignment row must reset both axis properties.',
+);
+
 const expected = Object.assign({}, fill, {
   nodeId: 'expected-node',
   assessment: {verdict: 'expected'},

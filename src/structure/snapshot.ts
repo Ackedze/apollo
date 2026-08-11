@@ -348,6 +348,10 @@ function extractLayout(node: SceneNode): DSNodeLayout | undefined {
 
   if ('layoutMode' in node && (node as AutoLayoutMixin).layoutMode && (node as AutoLayoutMixin).layoutMode !== 'NONE') {
     layout.direction = (node as AutoLayoutMixin).layoutMode === 'HORIZONTAL' ? 'H' : 'V';
+    layout.primaryAxisAlignItems =
+      (node as AutoLayoutMixin).primaryAxisAlignItems ?? null;
+    layout.counterAxisAlignItems =
+      (node as AutoLayoutMixin).counterAxisAlignItems ?? null;
     const padding = {
       top: (node as AutoLayoutMixin).paddingTop || 0,
       right: (node as AutoLayoutMixin).paddingRight || 0,
@@ -393,7 +397,35 @@ async function extractInstance(
       : inst.mainComponent;
   const componentKey = mainComponent?.key ?? '';
   const variantProperties = (inst as any).variantProperties ?? undefined;
-  return { componentKey, variantProperties };
+  const componentProperties = extractComponentPropertyValues(
+    (inst as any).componentProperties,
+  );
+  return { componentKey, variantProperties, componentProperties };
+}
+
+function extractComponentPropertyValues(
+  properties: unknown,
+): Record<string, string> | undefined {
+  if (!properties || typeof properties !== 'object' || Array.isArray(properties)) {
+    return undefined;
+  }
+
+  const result: Record<string, string> = {};
+  for (const [rawName, rawProperty] of Object.entries(
+    properties as Record<string, unknown>,
+  )) {
+    if (!rawProperty || typeof rawProperty !== 'object' || Array.isArray(rawProperty)) {
+      continue;
+    }
+    const value = (rawProperty as { value?: unknown }).value;
+    if (typeof value !== 'string' && typeof value !== 'boolean' && typeof value !== 'number') {
+      continue;
+    }
+    const name = rawName.replace(/#.+$/, '').trim();
+    if (name) result[name] = String(value);
+  }
+
+  return Object.keys(result).length ? result : undefined;
 }
 
 function extractText(node: SceneNode): DSTextContent | undefined {

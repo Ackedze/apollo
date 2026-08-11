@@ -57,7 +57,13 @@ async function main() {
     variables: {
       getVariableByIdAsync: async () => variable,
       importVariableByKeyAsync: async () => variable,
-      setBoundVariableForPaint: (paint) => paint,
+      setBoundVariableForPaint: (paint, field, boundVariable) => ({
+        ...paint,
+        boundVariables: {
+          ...(paint.boundVariables || {}),
+          [field]: {id: boundVariable.id},
+        },
+      }),
     },
     importStyleByKeyAsync: async () => null,
   };
@@ -155,6 +161,90 @@ async function main() {
     );
     assert.equal(borderNode.strokeWeight, 1);
     assert.equal(borderNode.strokeAlign, 'INSIDE');
+
+    const amountPaintNode = {
+      id: 'amount-paint-node',
+      type: 'TEXT',
+      fills: [{type: 'SOLID', color: {r: 1, g: 0, b: 0}}],
+    };
+    await mutations.applyReferenceResetByDetails(amountPaintNode, [
+      {
+        property: 'fill',
+        reference: {
+          value: 'text/primary',
+          resourceType: 'token',
+          resourceId: variable.id,
+        },
+      },
+    ]);
+    assert.equal(
+      amountPaintNode.fills[0].boundVariables.color.id,
+      variable.id,
+      'Amount fill reset must restore the variable binding, not only its RGBA value',
+    );
+
+    const unresolvedTextStyleNode = {
+      id: 'unresolved-text-style-node',
+      type: 'TEXT',
+      textStyleId: 'style-16-20',
+    };
+    await assert.rejects(
+      mutations.applyReferenceResetByDetails(unresolvedTextStyleNode, [
+        {
+          property: 'styles.text',
+          reference: {value: 'style-14-20'},
+        },
+      ]),
+      /without a reference style resource/,
+    );
+    assert.equal(
+      unresolvedTextStyleNode.textStyleId,
+      'style-16-20',
+      'An unresolved synthetic text-style finding must not detach the current style',
+    );
+
+    const amountLayoutNode = {
+      id: 'amount-layout-node',
+      type: 'FRAME',
+      primaryAxisAlignItems: 'MIN',
+      counterAxisAlignItems: 'MIN',
+    };
+    await mutations.applyReferenceResetByDetails(amountLayoutNode, [
+      {
+        property: 'layout.primaryAxisAlignItems',
+        reference: {value: 'MAX'},
+      },
+      {
+        property: 'layout.counterAxisAlignItems',
+        reference: {value: 'MIN'},
+      },
+    ]);
+    assert.equal(amountLayoutNode.primaryAxisAlignItems, 'MAX');
+    assert.equal(amountLayoutNode.counterAxisAlignItems, 'MIN');
+
+    const rejectedLayoutNode = {id: 'rejected-layout-node', type: 'FRAME'};
+    Object.defineProperties(rejectedLayoutNode, {
+      primaryAxisAlignItems: {
+        configurable: true,
+        get: () => 'MIN',
+        set: () => {},
+      },
+      counterAxisAlignItems: {
+        configurable: true,
+        get: () => 'MIN',
+        set: () => {},
+      },
+    });
+    await assert.rejects(
+      mutations.applyReferenceResetByDetails(rejectedLayoutNode, [
+        {
+          property: 'layout.primaryAxisAlignItems',
+          reference: {value: 'MAX'},
+        },
+      ]),
+      /Figma did not preserve primaryAxisAlignItems=MAX/,
+      'A rejected Figma layout mutation must not be reported as successful',
+    );
   } finally {
     console.warn = originalWarn;
     delete globalThis.figma;

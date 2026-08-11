@@ -838,8 +838,13 @@ function hasDifferentExplicitTypography(
 ): boolean {
   const existingDescriptor = getExplicitTypographyDescriptor(existingNode);
   const candidateDescriptor = getExplicitTypographyDescriptor(candidateNode);
-  if (!existingDescriptor || !candidateDescriptor) {
+  if (!existingDescriptor) {
     return false;
+  }
+  // A host variant with an explicit style/token is more authoritative than a
+  // standalone nested catalog that only exposes resolved font properties.
+  if (!candidateDescriptor) {
+    return true;
   }
   return existingDescriptor !== candidateDescriptor;
 }

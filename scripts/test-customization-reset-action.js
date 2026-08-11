@@ -142,6 +142,34 @@ async function main() {
     false,
   );
 
+  const compositeAlignment = createHarness();
+  const alignmentDetails = [
+    {
+      property: 'layout.primaryAxisAlignItems',
+      reference: { value: 'MIN' },
+    },
+    {
+      property: 'layout.counterAxisAlignItems',
+      reference: { value: 'MAX' },
+    },
+  ];
+  await createCustomizationResetAction(compositeAlignment.dependencies)({
+    rootId: 'root',
+    nodeId: 'target',
+    details: alignmentDetails,
+  });
+  assert.ok(
+    compositeAlignment.calls.some(
+      (call) =>
+        call[0] === 'details' &&
+        call[1] === 'target' &&
+        call[2].length === 2 &&
+        call[2][0].property === 'layout.primaryAxisAlignItems' &&
+        call[2][1].property === 'layout.counterAxisAlignItems',
+    ),
+    'A semantic alignment reset must keep both atomic axis mutations',
+  );
+
   const paintSurface = createHarness();
   await createCustomizationResetAction(paintSurface.dependencies)({
     rootId: 'root',

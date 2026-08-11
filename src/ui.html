@@ -1722,20 +1722,11 @@
                     };
                   }
                 }
-                const resetDetail =
-                  canReset && !remediation && diff.details
-                    ? {
-                        property: diff.details.property,
-                        reference: diff.details.reference,
-                        message: diff.message,
-                        resetSurface:
-                          diff.assessment?.evidence?.resetSurface === 'layer' &&
-                          (diff.details.property === 'fill' ||
-                            diff.details.property === 'stroke')
-                            ? 'paint'
-                            : undefined,
-                      }
-                    : null;
+                const resetDetails = getCustomizationResetDetails(
+                  diff,
+                  canReset,
+                  remediation,
+                );
 
                 if (existing) {
                   const sectionLines = isVariantDiff
@@ -1744,8 +1735,8 @@
                       ? existing.bindingLines
                       : existing.layerLines;
                   sectionLines.push(line);
-                  if (resetDetail) {
-                    existing.details.push(resetDetail);
+                  if (resetDetails.length) {
+                    existing.details.push(...resetDetails);
                   } else if (canReset && !remediation) {
                     existing.messages.push(diff.message);
                   }
@@ -1779,8 +1770,10 @@
                   layerLines:
                     !isVariantDiff && !isBindingDiff ? [line] : [],
                   messages:
-                    canReset && !remediation && !resetDetail ? [diff.message] : [],
-                  details: resetDetail ? [resetDetail] : [],
+                    canReset && !remediation && !resetDetails.length
+                      ? [diff.message]
+                      : [],
+                  details: resetDetails,
                   remediations: remediation ? [remediation] : [],
                 };
 
@@ -1920,6 +1913,25 @@
             seen.set(key, { diff, index });
           }
           return normalized;
+        }
+
+        function getCustomizationResetDetails(diff, canReset, remediation) {
+          if (!canReset || remediation || !diff?.details) return [];
+          const sourceDetails =
+            Array.isArray(diff.details.atomicChanges) &&
+            diff.details.atomicChanges.length
+              ? diff.details.atomicChanges
+              : [diff.details];
+          return sourceDetails.map((detail) => ({
+            property: detail.property,
+            reference: detail.reference,
+            message: diff.message,
+            resetSurface:
+              diff.assessment?.evidence?.resetSurface === 'layer' &&
+              (detail.property === 'fill' || detail.property === 'stroke')
+                ? 'paint'
+                : undefined,
+          }));
         }
 
         /**

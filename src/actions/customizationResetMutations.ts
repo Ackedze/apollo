@@ -168,7 +168,12 @@ export function createCustomizationResetMutations(
       }
 
       if (property === 'styles.text') {
-        await resetStyleById(node, 'text', reference.resourceId ?? null);
+        if (!reference.resourceId) {
+          throw new Error(
+            'Apollo cannot restore a text style without a reference style resource'
+          );
+        }
+        await resetStyleById(node, 'text', reference.resourceId);
         continue;
       }
 
@@ -255,6 +260,30 @@ export function createCustomizationResetMutations(
         continue;
       }
 
+      if (
+        property === 'layout.primaryAxisAlignItems' &&
+        typeof reference.value === 'string'
+      ) {
+        setLayoutAlignment(
+          node,
+          'primaryAxisAlignItems',
+          reference.value,
+        );
+        continue;
+      }
+
+      if (
+        property === 'layout.counterAxisAlignItems' &&
+        typeof reference.value === 'string'
+      ) {
+        setLayoutAlignment(
+          node,
+          'counterAxisAlignItems',
+          reference.value,
+        );
+        continue;
+      }
+
       if (property === 'stroke.align' && typeof reference.value === 'string') {
         setNodeStrokeAlignment(node, reference.value);
         continue;
@@ -298,6 +327,26 @@ export function createCustomizationResetMutations(
         }
         (node as SceneNode & { opacity: number }).opacity = reference.value;
       }
+    }
+  }
+
+  function setLayoutAlignment(
+    node: SceneNode,
+    property: 'primaryAxisAlignItems' | 'counterAxisAlignItems',
+    value: string,
+  ) {
+    const layoutNode = node as SceneNode & Record<string, unknown>;
+    if (typeof layoutNode[property] !== 'string') {
+      throw new Error(
+        `Apollo cannot restore ${property} on node ${node.id}`
+      );
+    }
+
+    layoutNode[property] = value;
+    if (layoutNode[property] !== value) {
+      throw new Error(
+        `Figma did not preserve ${property}=${value} on node ${node.id}`
+      );
     }
   }
 

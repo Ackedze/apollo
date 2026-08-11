@@ -362,22 +362,137 @@ function testAllEqualFactAlternatives() {
     op: 'allEqual',
     facts: ['fill', 'fills'],
   })];
+  const actualStructure = [
+    node(1, '[D] Test', 'test-key', {}),
+    node(5, 'Operation', 'operation-wrapper-key', {}),
+    { ...node(2, 'Operation', 'operation-key', {}), fill: { token: 'VariableID:text-primary' } },
+    { ...node(3, 'Major', 'major-key', {}), fill: { token: 'VariableID:text-primary' } },
+    { ...node(4, 'Minor', 'minor-key', {}), fill: { color: '#FF0000' } },
+  ];
   const result = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'test-key',
     hostComponentName: '[D] Test',
-    actualStructure: [
-      node(1, '[D] Test', 'test-key', {}),
-      node(5, 'Operation', 'operation-wrapper-key', {}),
-      { ...node(2, 'Operation', 'operation-key', {}), fill: { token: 'text/primary' } },
-      { ...node(3, 'Major', 'major-key', {}), fill: { token: 'text/primary' } },
-      { ...node(4, 'Minor', 'minor-key', {}), fill: { color: '#FF0000' } },
-    ],
+    actualStructure,
+    resolveTokenLabel: (token) =>
+      token === 'VariableID:text-primary' ? 'text/primary' : token,
   });
   assert.equal(result.diffs.length, 1);
   assert.equal(result.diffs[0].nodeName, 'Minor');
   assert.equal(result.diffs[0].details.reference.value, 'text/primary');
   assert.equal(result.diffs[0].details.actual.value, '#FF0000');
+  assert.equal(result.diffs[0].message, 'заливка: text/primary → #FF0000');
+  assert.equal(result.diffs[0].details.property, 'fill');
+  assert.equal(result.diffs[0].diffKind, 'paint');
+  assert.equal(result.diffs[0].details.reference.resourceType, 'token');
+  assert.equal(result.diffs[0].details.reference.resourceId, 'VariableID:text-primary');
+
+  contract.rules[0].assert.strategy = { strategy: 'all-visible-targets-equal' };
+  actualStructure[4].visible = false;
+  const hiddenMismatch = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure,
+  });
+  assert.equal(hiddenMismatch.diffs.length, 0);
+}
+
+function testAllEqualTypographyUsesEffectiveBaseline() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-all-equal-typography-engine',
+  );
+  const selector = {
+    scope: 'descendants',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['Major', 'Minor', 'Currency'],
+      },
+    },
+  };
+  const baselineRule = rule('amount-typography-baseline', selector, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['styles.text'],
+  });
+  const sharedStyleRule = rule('parts-share-text-style', selector, {
+    op: 'allEqual',
+    fact: 'style.text',
+  });
+  const contract = createContract();
+  contract.rules = [baselineRule, sharedStyleRule];
+
+  const structure = [
+    node(1, 'AmountParagraph', 'amount-key', { Style: 'Paragraph 14/20' }),
+    node(2, 'Major', '', {}),
+    node(3, 'Minor', '', {}),
+    node(4, 'Currency', '', {}),
+  ];
+  for (const part of structure.slice(1)) {
+    part.type = 'TEXT';
+    part.componentInstance = null;
+    part.styles = {
+      text: {
+        styleKey: part.name === 'Major' ? 'style-16-20' : 'style-14-20',
+      },
+    };
+  }
+  const typographyDiff = {
+    message: 'Стиль текст: Paragraph/14–20 Primary Small → Paragraph/16–20 Component Primary',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'nested-component' },
+    diffKind: 'style',
+    details: {
+      property: 'styles.text',
+      reference: {
+        value: 'Paragraph/14–20 Primary Small',
+        resourceType: 'style',
+        resourceId: 'style-14-20',
+      },
+      actual: {
+        value: 'Paragraph/16–20 Component Primary',
+        resourceType: 'style',
+        resourceId: 'style-16-20',
+      },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'amount-key',
+    hostComponentName: '[D] Test',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [typographyDiff],
+  });
+  assert.equal(result.diffs.length, 1, 'The relational rule must reuse the baseline finding');
+  assert.equal(result.diffs[0].nodeName, 'Major');
+  assert.equal(result.diffs[0].details.reference.value, 'Paragraph/14–20 Primary Small');
+  assert.equal(result.diffs[0].details.actual.value, 'Paragraph/16–20 Component Primary');
+  assert.equal(result.diffs[0].details.reference.resourceId, 'style-14-20');
+
+  contract.rules = [sharedStyleRule];
+  const relationalOnly = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'amount-key',
+    hostComponentName: '[D] Test',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [typographyDiff],
+  });
+  assert.equal(relationalOnly.diffs.length, 1);
+  assert.equal(relationalOnly.diffs[0].nodeName, 'Major');
+  assert.equal(relationalOnly.diffs[0].details.reference.resourceId, 'style-14-20');
+
+  const withoutBaseline = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'amount-key',
+    hostComponentName: '[D] Test',
+    actualStructure: structure,
+  });
+  assert.equal(withoutBaseline.diffs.length, 0, 'Traversal order must never define a text-style baseline');
+  assert.equal(withoutBaseline.diagnostics.unknown, 1);
 }
 
 function testAllowedValuesPresentation() {
@@ -667,6 +782,437 @@ function testCompositePropertyDedupeAndVariantArrays() {
   assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.surface-no-fill');
 }
 
+function testEffectiveBaselineIgnoresDescendantsFromReplacedNestedOwner() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-replaced-owner-engine',
+  );
+  const contract = createContract();
+  const graphicsSelector = {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Graphics'] } },
+  };
+  contract.rules = [rule('graphics-baseline', graphicsSelector, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill', 'layout.*'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+
+  const structure = [
+    node(1, '[D] BodyCell :: Basic', 'body-cell-key', {}),
+    node(2, 'Graphics', 'graphics-slot-key', { Presets: 'CardImage' }),
+    node(3, 'Image Container', null, {}),
+  ];
+  structure[1].path = '[D] BodyCell :: Basic / Graphics';
+  structure[2].path = '[D] BodyCell :: Basic / Graphics / CardImage / Image Container';
+  const derivedAssetPaint = {
+    message: 'заливка: — → paint:IMAGE,paint:IMAGE',
+    nodePath: structure[2].path,
+    nodeName: structure[2].name,
+    nodeId: structure[2].nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: null,
+      referenceComponentKey: null,
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'replacement-card-image-key',
+      actualNestedOwnerPath: '[D] BodyCell :: Basic / Graphics / CardImage',
+      actualNestedOwnerRelativePath: 'Image Container',
+      nestedOwnerComponentKey: 'graphics-slot-key',
+      nestedOwnerComponentRole: 'Main',
+      nestedOwnerPath: structure[1].path,
+      nestedOwnerRelativePath: 'CardImage / Image Container',
+    },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: null },
+      actual: { value: 'paint:IMAGE,paint:IMAGE' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-key',
+    hostComponentName: '[D] BodyCell :: Basic',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [derivedAssetPaint],
+  });
+  assert.equal(
+    result.diffs.length,
+    0,
+    'A supported nested asset replacement must not leak descendant paint diffs from the previous owner baseline',
+  );
+}
+
+function testEffectiveBaselineKeepsDescendantsFromAnotherVariantInSameFamily() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-same-family-owner-engine',
+  );
+  const contract = createContract();
+  contract.rules = [rule('amount-baseline', {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Major'] } },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['layout.*', 'fill'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  const structure = [
+    node(1, '[D] BodyCell :: Basic', 'body-cell-key', {}),
+    node(2, 'Major', null, {}),
+  ];
+  const diff = {
+    message: 'заливка: text/primary → text/positive',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: {
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'text-amount-variant-key',
+      nestedOwnerComponentKey: 'text-default-variant-key',
+    },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: 'text/primary' },
+      actual: { value: 'text/positive' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-key',
+    hostComponentName: '[D] BodyCell :: Basic',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [diff],
+    hostVariantBaselineDiffs: [diff],
+    resolveComponentFamilyKey: (key) =>
+      key.startsWith('text-') ? 'text-family-key' : key,
+  });
+  assert.equal(result.diffs.length, 1);
+
+  const expectedParentOverride = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-key',
+    hostComponentName: '[D] BodyCell :: Basic',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [diff],
+    hostVariantBaselineDiffs: [],
+    resolveComponentFamilyKey: (key) =>
+      key.startsWith('text-') ? 'text-family-key' : key,
+  });
+  assert.equal(expectedParentOverride.diffs.length, 0);
+}
+
+function testNestedStandaloneBaselineDefersToExactHostProperty() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-nested-host-property-baseline-engine',
+  );
+  const contract = createContract();
+  contract.rules = [rule('nested-layout-baseline', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['layout.*'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  const structure = [node(1, 'PaymentMaskedNumber', 'payment-variant-key', {})];
+  const standalonePadding = {
+    message: 'Паддинг top: 0 → 2',
+    nodePath: structure[0].path,
+    nodeName: structure[0].name,
+    nodeId: structure[0].nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'payment-variant-key',
+      referenceOrigin: 'nested-component',
+      nestedOwnerComponentKey: 'payment-family-key',
+      nestedOwnerRelativePath: '',
+    },
+    diffKind: 'layout',
+    details: {
+      property: 'layout.padding.top',
+      reference: { value: 0 },
+      actual: { value: 2 },
+    },
+  };
+  const allowedHostOverride = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'payment-variant-key',
+    hostComponentName: 'PaymentMaskedNumber',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [standalonePadding],
+    hostVariantBaselineDiffs: [],
+    resolveComponentFamilyKey: (key) =>
+      key.startsWith('payment-') ? 'payment-family-key' : key,
+  });
+  assert.equal(
+    allowedHostOverride.diffs.length,
+    0,
+    'A clean host baseline must suppress a standalone-only nested layout difference',
+  );
+
+  const hostTypography = Object.assign({}, standalonePadding, {
+    message: 'Стиль текст: Paragraph/14–20 → Headline/22–26',
+    details: {
+      property: 'styles.text',
+      reference: { value: 'Paragraph/14–20' },
+      actual: { value: 'Headline/22–26' },
+    },
+  });
+  const standaloneTypography = Object.assign({}, hostTypography, {
+    message: 'Типографика: SF Pro Text → Alfa Interface Sans',
+    details: {
+      property: 'styles.text',
+      reference: { value: 'SF Pro Text' },
+      actual: { value: 'Alfa Interface Sans' },
+    },
+  });
+  contract.rules[0].assert.properties = ['styles.text'];
+  const customized = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'payment-variant-key',
+    hostComponentName: 'PaymentMaskedNumber',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [standaloneTypography],
+    hostVariantBaselineDiffs: [hostTypography],
+    resolveComponentFamilyKey: (key) =>
+      key.startsWith('payment-') ? 'payment-family-key' : key,
+  });
+  assert.equal(customized.diffs.length, 1);
+  assert.equal(
+    customized.diffs[0].message,
+    hostTypography.message,
+    'An exact host diff must provide the user-facing baseline for a nested violation',
+  );
+}
+
+function testRootLayoutEvidenceSurvivesAssessmentCollapse() {
+  const {
+    evaluateExperimentalContractV2,
+    mergeContractBaselineEvidence,
+  } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-baseline-evidence',
+  );
+  const rootPadding = {
+    message: 'Паддинг top: 24 → 20',
+    nodePath: '[D] BodyCell :: Basic',
+    nodeName: '[D] BodyCell :: Basic',
+    nodeId: 'root-node',
+    visible: true,
+    context: { referenceOrigin: 'host' },
+    diffKind: 'layout',
+    details: {
+      property: 'layout.padding.top',
+      reference: { value: 24 },
+      actual: { value: 20 },
+    },
+  };
+  const nestedPadding = {
+    ...rootPadding,
+    nodeId: 'nested-node',
+    nodePath: '[D] BodyCell :: Basic / Content',
+  };
+  assert.deepEqual(
+    mergeContractBaselineEvidence([], [rootPadding, nestedPadding], 'root-node'),
+    [rootPadding],
+  );
+
+  const contract = createContract();
+  contract.rules = [rule('body-cell-layout-baseline', {
+    scope: 'self-and-descendants',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['[D] BodyCell :: Basic'],
+      },
+    },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['layout.*'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  const root = node(1, 'Presets=Text, Skeleton=False', 'body-cell-key', {});
+  root.nodeId = 'root-node';
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-key',
+    hostComponentName: '[D] BodyCell :: Basic',
+    actualStructure: [root],
+    effectiveBaselineDiffs: [rootPadding],
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].details.property, 'layout.padding.top');
+}
+
+function testAmountPresetTopRightAlignment() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-amount-alignment',
+  );
+  const contract = createContract();
+  contract.rules = [rule('amount-top-right', {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Text 1'] } },
+  }, {
+    op: 'propertiesEqual',
+    values: {
+      primaryAxisAlignItems: 'MAX',
+      counterAxisAlignItems: 'MIN',
+    },
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  contract.rules[0].when = {
+    op: 'all',
+    clauses: { variant: { Presets: 'Amount' } },
+  };
+  const structure = [
+    node(1, '[D] BodyCell :: Basic', 'body-cell-key', { Presets: 'Text' }),
+    node(2, 'Text 1', 'text-amount-key', { Presets: 'Amount' }),
+  ];
+  structure[1].layout = {
+    primaryAxisAlignItems: 'MIN',
+    counterAxisAlignItems: 'MIN',
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-key',
+    hostComponentName: '[D] BodyCell :: Basic',
+    actualStructure: structure,
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].assessment.evidence.expected, 'MAX');
+  assert.equal(result.diffs[0].assessment.evidence.actual, 'MIN');
+  assert.equal(result.diffs[0].details.property, 'layout.primaryAxisAlignItems');
+}
+
+function testWideTableAmountPresetTopRightAlignment() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-wide-table-amount-alignment',
+  );
+  const contract = createContract();
+  contract.rules = [rule('wide-amount-top-right', {
+    scope: 'descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Text'] } },
+  }, {
+    op: 'propertiesEqual',
+    values: {
+      primaryAxisAlignItems: 'MIN',
+      counterAxisAlignItems: 'MAX',
+    },
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  contract.rules[0].when = {
+    op: 'all',
+    clauses: { variant: { Presets: 'Amount' } },
+  };
+  const structure = [
+    node(1, '[D] BodyCell :: Wide', 'body-cell-wide-key', {}),
+    node(2, 'Text', 'wide-text-key', { Presets: 'Amount' }),
+  ];
+  structure[1].layout = {
+    direction: 'V',
+    primaryAxisAlignItems: 'MIN',
+    counterAxisAlignItems: 'MIN',
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].details.property, 'layout.counterAxisAlignItems');
+
+  structure[1].layout.primaryAxisAlignItems = 'MAX';
+  structure[1].layout.counterAxisAlignItems = 'MIN';
+  const diagonalMisalignment = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+  });
+  assert.equal(
+    diagonalMisalignment.diffs.length,
+    1,
+    'A two-axis alignment violation must remain one semantic finding.',
+  );
+  assert.equal(diagonalMisalignment.diffs[0].details.property, 'layout.alignment');
+  assert.equal(diagonalMisalignment.diffs[0].details.reference.value, 'сверху справа');
+  assert.equal(diagonalMisalignment.diffs[0].details.actual.value, 'снизу слева');
+  assert.deepEqual(
+    diagonalMisalignment.diffs[0].details.atomicChanges.map((detail) => detail.property),
+    ['layout.primaryAxisAlignItems', 'layout.counterAxisAlignItems'],
+  );
+
+  structure[1].componentInstance.variantProperties.Presets = 'Text';
+  const regularText = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+  });
+  assert.equal(
+    regularText.diffs.length,
+    0,
+    'Regular Wide table text keeps designer-controlled alignment',
+  );
+
+  structure[1].componentInstance.variantProperties = {};
+  structure[1].componentInstance.componentProperties = {
+    Presets: 'Amount',
+  };
+  const exposedComponentProperty = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+  });
+  assert.equal(
+    exposedComponentProperty.diffs.length,
+    1,
+    'Contract conditions must read exposed component properties, not only variant properties.',
+  );
+
+  const splitOwnerAndLayout = [
+    node(1, '[D] BodyCell :: Wide', 'body-cell-wide-key', {}),
+    node(2, 'Text', 'wide-text-key', { Presets: 'Amount' }),
+    node(3, 'Text', null, {}),
+  ];
+  splitOwnerAndLayout[2].parentId = 2;
+  splitOwnerAndLayout[2].path = `${splitOwnerAndLayout[1].path} / Text`;
+  splitOwnerAndLayout[2].type = 'FRAME';
+  splitOwnerAndLayout[2].componentInstance = null;
+  splitOwnerAndLayout[2].layout = {
+    direction: 'V',
+    primaryAxisAlignItems: 'MAX',
+    counterAxisAlignItems: 'MAX',
+  };
+  const descendantLayout = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: splitOwnerAndLayout,
+  });
+  assert.equal(
+    descendantLayout.diffs.length,
+    1,
+    'A component-property condition must retain selected descendants owned by the matching instance.',
+  );
+  assert.equal(
+    descendantLayout.diffs[0].nodeId,
+    splitOwnerAndLayout[2].nodeId,
+  );
+  assert.equal(
+    descendantLayout.diffs[0].details.property,
+    'layout.primaryAxisAlignItems',
+  );
+}
+
 function testHostVariantBaselineRespectsTargetSubtree() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -715,6 +1261,393 @@ function testHostVariantBaselineRespectsTargetSubtree() {
     0,
     'An ancestor diff must not be attributed to a selected descendant target',
   );
+}
+
+function testNestedContractScopesAreEvaluatedIndependently() {
+  const { evaluateExperimentalContractV2Tree } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-nested-scopes-engine',
+  );
+  const tableContract = createContract();
+  tableContract.package = { id: 'web-corp.table-wide', family: 'Table Wide', library: 'Corp' };
+
+  const paymentContract = createContract();
+  paymentContract.package = {
+    id: 'web-corp.payment-masked-number',
+    family: 'PaymentMaskedNumber',
+    library: 'Corp',
+  };
+  paymentContract.rules = [rule('payment-major-typography', {
+    scope: 'self-and-descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Major'] } },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['styles.text'],
+  })];
+  paymentContract.rules[0].select.host = { scope: 'selection-root' };
+
+  const amountContract = createContract();
+  amountContract.package = { id: 'web-core.amount', family: 'Amount', library: 'Core' };
+  const amountOpacityRule = rule('amount-opacity', {
+    scope: 'self-and-descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Minor', 'Currency'] } },
+  }, {
+    op: 'propertiesEqual',
+    values: { opacity: 1 },
+  });
+  const amountOpacityPropertyRule = rule('amount-opacity-property', {
+    scope: 'self-and-descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Minor', 'Currency'] } },
+  }, {
+    op: 'propertiesEqual',
+    values: { Opacity: 'False' },
+  });
+  amountOpacityRule.select.host = { scope: 'selection-root' };
+  amountOpacityPropertyRule.select.host = { scope: 'selection-root' };
+  amountOpacityPropertyRule.remediation = {
+    kind: 'set-variant-properties',
+    target: '$failingTarget',
+    properties: { Opacity: 'False' },
+  };
+  const amountBaselineRule = rule('amount-effective-baseline', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['layout.itemSpacing', 'styles.text'],
+  });
+  amountBaselineRule.select.host = { scope: 'selection-root' };
+  amountContract.rules = [
+    amountBaselineRule,
+    amountOpacityRule,
+    amountOpacityPropertyRule,
+  ];
+
+  const structure = [
+    node(1, '[D] BodyCell :: Wide', 'table-key', {}),
+    node(2, 'Text', 'table-text-key', { Presets: 'Account' }),
+    node(3, 'PaymentMaskedNumber', 'payment-key', {}),
+    node(4, 'Major', 'payment-major-key', {}),
+    node(5, 'Amount', 'amount-key', {}),
+    node(6, '🔩 Minor', 'amount-minor-key', { Opacity: 'True' }),
+    node(7, 'Currency', 'amount-currency-key', { Opacity: 'True' }),
+  ];
+  structure[1].parentId = 1;
+  structure[2].parentId = 2;
+  structure[3].parentId = 3;
+  structure[4].parentId = 1;
+  structure[5].parentId = 5;
+  structure[6].parentId = 5;
+  structure[1].path = `${structure[0].path} / Text`;
+  structure[2].path = `${structure[1].path} / PaymentMaskedNumber`;
+  structure[3].path = `${structure[2].path} / Major`;
+  structure[4].path = `${structure[0].path} / Amount`;
+  structure[5].path = `${structure[4].path} / Minor`;
+  structure[6].path = `${structure[4].path} / Currency`;
+  structure[5].opacity = 0.6;
+  structure[6].opacity = 0.6;
+  structure[4].layout = { itemSpacing: 12 };
+  structure[5].styles = { text: { styleKey: 'custom-style' } };
+  const minorLeaf = node(8, 'Minor', '', {});
+  minorLeaf.type = 'TEXT';
+  minorLeaf.componentInstance = null;
+  minorLeaf.parentId = 6;
+  minorLeaf.path = `${structure[5].path} / Minor`;
+  structure.push(minorLeaf);
+
+  const contracts = new Map([
+    ['table-key', tableContract],
+    ['table-text-key', tableContract],
+    ['payment-key', paymentContract],
+    ['payment-major-key', paymentContract],
+    ['amount-key', amountContract],
+    ['amount-minor-key', amountContract],
+    ['amount-currency-key', amountContract],
+  ]);
+  const typographyDiff = {
+    message: 'Стиль текст: expected → custom',
+    nodePath: structure[3].path,
+    nodeName: structure[3].name,
+    nodeId: structure[3].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'nested-component' },
+    diffKind: 'style',
+    details: {
+      property: 'textStyle',
+      reference: { value: 'expected' },
+      actual: { value: 'custom' },
+    },
+  };
+  const amountSpacingDiff = {
+    ...typographyDiff,
+    message: 'Отступ между элементами: 0 → 12',
+    nodePath: structure[4].path,
+    nodeName: structure[4].name,
+    nodeId: structure[4].nodeId,
+    diffKind: 'layout',
+    details: {
+      property: 'layout.itemSpacing',
+      reference: { value: 0 },
+      actual: { value: 12 },
+    },
+  };
+  const amountTypographyDiff = {
+    ...typographyDiff,
+    message: 'Стиль текст: Paragraph/14–20 → Paragraph/16–20',
+    nodePath: structure[5].path,
+    nodeName: structure[5].name,
+    nodeId: structure[5].nodeId,
+    details: {
+      property: 'styles.text',
+      reference: { value: 'Paragraph/14–20' },
+      actual: { value: 'Paragraph/16–20' },
+    },
+  };
+  const wrongParentTypographyDiff = {
+    ...amountTypographyDiff,
+    message: 'Типографика: SF Pro Text Bold → Alfa Interface Sans Regular',
+    details: {
+      property: 'styles.text',
+      reference: { value: 'SF Pro Text Bold' },
+      actual: { value: 'Alfa Interface Sans Regular' },
+    },
+  };
+  const result = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'table-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [],
+    rawBaselineDiffs: [typographyDiff, wrongParentTypographyDiff],
+    nestedScopeBaselineDiffs: new Map([
+      [5, [amountSpacingDiff, amountTypographyDiff]],
+    ]),
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+
+  assert.deepEqual(
+    result.scopes.map((scope) => scope.packageId),
+    ['web-corp.table-wide', 'web-corp.payment-masked-number', 'web-core.amount'],
+  );
+  assert.equal(result.diffs.length, 5);
+  assert.equal(result.diffs.filter((diff) => diff.details.property === 'variant.Opacity').length, 2);
+  assert.equal(
+    result.diffs.filter((diff) => diff.details.property === 'opacity').length,
+    0,
+    'A property switch must suppress its derived physical opacity diff',
+  );
+  assert.equal(result.diffs.filter((diff) => diff.details.property === 'textStyle').length, 1);
+  assert.equal(
+    result.diffs.some((diff) => diff.message === amountSpacingDiff.message),
+    true,
+  );
+  assert.equal(
+    result.diffs.some((diff) => diff.message === amountTypographyDiff.message),
+    true,
+  );
+  assert.equal(
+    result.diffs.some((diff) => diff.message === wrongParentTypographyDiff.message),
+    false,
+    'A nested scope must use its direct component baseline instead of a parent-host baseline for the same layer.',
+  );
+  const minorPropertyDiff = result.diffs.find(
+    (diff) => diff.nodeName === '🔩 Minor' && diff.details.property === 'variant.Opacity',
+  );
+  assert.ok(minorPropertyDiff, 'Technical prefixes must not hide the Minor instance');
+  assert.deepEqual(minorPropertyDiff.assessment.remediation, {
+    kind: 'set-variant-properties',
+    nodeId: structure[5].nodeId,
+    properties: { Opacity: 'False' },
+  });
+
+  structure[5].componentInstance.variantProperties.Opacity = 'False';
+  structure[6].componentInstance.variantProperties.Opacity = 'False';
+  structure[6].opacity = 1;
+  const directOpacity = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'table-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [],
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.equal(directOpacity.diffs.length, 1);
+  assert.equal(directOpacity.diffs[0].details.property, 'opacity');
+}
+
+function testHostContractOwnsNestedPackageScope() {
+  const { evaluateExperimentalContractV2Tree } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-owned-nested-scope-engine',
+  );
+  const hostContract = createContract();
+  hostContract.package = {
+    id: 'web-corp.amount-styles',
+    family: 'AmountStyles',
+    library: 'Corp',
+  };
+  hostContract.facts.contractOwnership = {
+    nestedPackages: [{ packageId: 'web-core.amount', mode: 'host-contract' }],
+  };
+  hostContract.rules = [rule('host-amount-typography', {
+    scope: 'self-and-descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Major'] } },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['styles.text'],
+  })];
+  hostContract.rules[0].select.host = { scope: 'selection-root' };
+
+  const nestedContract = createContract();
+  nestedContract.package = { id: 'web-core.amount', family: 'Amount', library: 'Core' };
+  nestedContract.rules = [rule('core-amount-typography', {
+    scope: 'self-and-descendants',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Major'] } },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['styles.text'],
+  })];
+  nestedContract.rules[0].select.host = { scope: 'selection-root' };
+
+  const structure = [
+    node(1, 'AmountParagraph', 'amount-styles-key', { Style: 'Paragraph 14/20' }),
+    node(2, 'Amount', 'amount-key', {}),
+    node(3, 'Major', '', {}),
+  ];
+  structure[1].parentId = 1;
+  structure[2].parentId = 2;
+  structure[1].path = `${structure[0].path} / Amount`;
+  structure[2].path = `${structure[1].path} / Major`;
+  structure[2].type = 'TEXT';
+  structure[2].componentInstance = null;
+  const typographyDiff = {
+    message: 'Стиль текст: preset → custom',
+    nodePath: structure[2].path,
+    nodeName: structure[2].name,
+    nodeId: structure[2].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'nested-component' },
+    diffKind: 'style',
+    details: {
+      property: 'textStyle',
+      reference: { value: 'preset' },
+      actual: { value: 'custom' },
+    },
+  };
+  const contracts = new Map([
+    ['amount-styles-key', hostContract],
+    ['amount-key', nestedContract],
+  ]);
+  const owned = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'amount-styles-key',
+    hostComponentName: 'AmountParagraph',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [typographyDiff],
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.deepEqual(owned.scopes.map((scope) => scope.packageId), ['web-corp.amount-styles']);
+  assert.equal(owned.diffs.length, 1);
+  assert.equal(owned.diffs[0].assessment.ruleId, 'rule-ir:test.host-amount-typography');
+
+  const standalone = [
+    node(1, 'Amount', 'amount-key', {}),
+    node(2, 'Major', '', {}),
+  ];
+  standalone[1].parentId = 1;
+  standalone[1].path = `${standalone[0].path} / Major`;
+  standalone[1].type = 'TEXT';
+  standalone[1].componentInstance = null;
+  const standaloneDiff = Object.assign({}, typographyDiff, {
+    nodePath: standalone[1].path,
+    nodeId: standalone[1].nodeId,
+  });
+  const direct = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'amount-key',
+    hostComponentName: 'Amount',
+    actualStructure: standalone,
+    effectiveBaselineDiffs: [standaloneDiff],
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.deepEqual(direct.scopes.map((scope) => scope.packageId), ['web-core.amount']);
+  assert.equal(direct.diffs.length, 1);
+  assert.equal(direct.diffs[0].assessment.ruleId, 'rule-ir:test.core-amount-typography');
+}
+
+function testRawOnlyComponentApiIsIgnored() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-raw-component-api-engine',
+  );
+  const contract = createContract();
+  contract.facts.componentApi = [{
+    id: 'amount.universal',
+    name: 'Amount',
+    componentKey: 'amount-key',
+    componentKeys: ['amount-key'],
+    platform: 'universal',
+    status: 'active',
+    publicApi: {
+      properties: { raw: ['Amount'] },
+      allowedCombinations: [{ raw: 'Amount' }],
+    },
+    evidence: { source: 'fixture', anatomyCount: 1, structureNodeCount: 1 },
+  }];
+  const apiRule = rule('component-api', { scope: 'self-and-descendants' }, {
+    op: 'componentApiValid',
+  });
+  apiRule.select.host = { scope: 'selection-root' };
+  contract.rules = [apiRule];
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'amount-key',
+    hostComponentName: 'Amount',
+    actualStructure: [node(1, 'Amount', 'amount-key', {})],
+  });
+  assert.equal(result.diffs.length, 0);
+  assert.equal(result.diagnostics.passed, 1);
+}
+
+function testComponentApiIgnoresExposedNonVariantProperties() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-exposed-properties-api-engine',
+  );
+  const contract = createContract();
+  contract.facts.componentApi = [{
+    id: 'body-cell-wide.desktop',
+    name: '[D] BodyCell :: Wide',
+    componentKey: 'body-cell-wide-key',
+    componentKeys: ['body-cell-wide-key'],
+    platform: 'desktop',
+    status: 'active',
+    publicApi: {
+      properties: { Presets: ['Text', 'Amount'] },
+      allowedCombinations: [{ Presets: 'Text' }, { Presets: 'Amount' }],
+    },
+    evidence: { source: 'fixture', anatomyCount: 1, structureNodeCount: 1 },
+  }];
+  const apiRule = rule('component-api', { scope: 'self-and-descendants' }, {
+    op: 'componentApiValid',
+  });
+  apiRule.select.host = { scope: 'selection-root' };
+  contract.rules = [apiRule];
+  const root = node(1, '[D] BodyCell :: Wide', 'body-cell-wide-key', {
+    Presets: 'Amount',
+  });
+  root.componentInstance.componentProperties = {
+    Addon: 'false',
+    '✎ Major': '40802 810 0 0000 000',
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'body-cell-wide-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    hostVariantProperties: { Presets: 'Amount' },
+    actualStructure: [root],
+  });
+  assert.equal(
+    result.diffs.length,
+    0,
+    'Boolean, text and instance-swap exposed properties must not be validated as variant API',
+  );
+  assert.equal(result.diagnostics.passed, 1);
 }
 
 function testBenefitsUniformPropertiesReportIndependentOutliers() {
@@ -942,10 +1875,21 @@ async function main() {
   testTableBasicVisibleDataCellCount();
   testConditionalPaintStateAndReferenceRemediation();
   testAllEqualFactAlternatives();
+  testAllEqualTypographyUsesEffectiveBaseline();
   testAllowedValuesPresentation();
   testEffectiveBaselineAndNestedSizeContract();
   testCompositePropertyDedupeAndVariantArrays();
+  testEffectiveBaselineIgnoresDescendantsFromReplacedNestedOwner();
+  testEffectiveBaselineKeepsDescendantsFromAnotherVariantInSameFamily();
+  testNestedStandaloneBaselineDefersToExactHostProperty();
+  testRootLayoutEvidenceSurvivesAssessmentCollapse();
+  testAmountPresetTopRightAlignment();
+  testWideTableAmountPresetTopRightAlignment();
   testHostVariantBaselineRespectsTargetSubtree();
+  testNestedContractScopesAreEvaluatedIndependently();
+  testHostContractOwnsNestedPackageScope();
+  testRawOnlyComponentApiIsIgnored();
+  testComponentApiIgnoresExposedNonVariantProperties();
   testBenefitsUniformPropertiesReportIndependentOutliers();
   console.log('Experimental Contract v2 contour checks passed');
 }

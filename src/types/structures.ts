@@ -15,6 +15,8 @@ export interface DSNodeLayout {
   minHeight?: number | null;
   maxHeight?: number | null;
   direction?: DSLayoutDirection;
+  primaryAxisAlignItems?: string | null;
+  counterAxisAlignItems?: string | null;
   padding?: DSPadding | null;
   itemSpacing?: number | null;
   sizing?: {
@@ -63,6 +65,7 @@ interface DSStrokeInfo extends DSPaintInfo {
 export interface DSInstanceInfo {
   componentKey: string;
   variantProperties?: Record<string, string>;
+  componentProperties?: Record<string, string>;
 }
 
 export interface DSRadiiValues {
@@ -138,6 +141,8 @@ export interface DSNormalizedElement {
       horizontal?: string | null;
       vertical?: string | null;
     } | null;
+    primaryAxisAlignItems?: string | null;
+    counterAxisAlignItems?: string | null;
     radius?: number | [number, number, number, number];
     paddingTokens?: {
       top?: string | null;

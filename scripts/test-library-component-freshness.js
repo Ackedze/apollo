@@ -100,6 +100,38 @@ async function main() {
     getLibraryComponentFreshnessScope({ parent: frameAncestor }),
     'instance-sublayer',
   );
+  const slotAncestor = {
+    type: 'SLOT',
+    parent: { type: 'INSTANCE', parent: null },
+  };
+  assert.equal(
+    getLibraryComponentFreshnessScope({ parent: slotAncestor }),
+    'projected-slot-root',
+    'A component projected through Slot must become an independent freshness root',
+  );
+  assert.equal(
+    getLibraryComponentFreshnessScope({
+      parent: {
+        type: 'FRAME',
+        parent: slotAncestor,
+      },
+    }),
+    'projected-slot-root',
+    'Wrapper frames inside Slot must retain the projection boundary',
+  );
+  assert.equal(
+    getLibraryComponentFreshnessScope({
+      parent: {
+        type: 'FRAME',
+        parent: {
+          type: 'INSTANCE',
+          parent: slotAncestor,
+        },
+      },
+    }),
+    'instance-sublayer',
+    'A dependency owned by the projected component remains its instance sublayer',
+  );
   assert.equal(
     getLibraryComponentFreshnessScope({
       parent: { type: 'FRAME', parent: { type: 'PAGE', parent: null } },

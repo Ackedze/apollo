@@ -49,10 +49,14 @@ async function main() {
   const {
     collectExperimentalContractV2StructureKeys,
     classifyComponentNode,
+    createExperimentalContractV2NestedBaselineEvidence,
     createExperimentalContractV2NestedBaselineDiffs,
+    filterDirectNestedHostVariantDiffs,
     isNativeLocalComponent,
+    markNestedContractBaselineDiff,
     preloadExperimentalContractV2Structure,
     resolveHostReferenceForContractDiff,
+    shouldMaterializeComponentDiff,
     shouldRunComponentDiff,
   } = loadModule();
   const materializedStructure = [
@@ -204,6 +208,168 @@ async function main() {
     'A parent audit must preserve every direct nested-component baseline difference in its own scope.',
   );
 
+  const nestedEvidence = createExperimentalContractV2NestedBaselineEvidence(
+    materializedStructure,
+    {
+      resolveContract: (key) => packageByKey[key]
+        ? { package: { id: packageByKey[key] } }
+        : null,
+      resolveReference: (instance) =>
+        instance.componentInstance?.componentKey === 'amount-key'
+          ? referenceAmount
+          : null,
+      expandReference: (reference) => reference.map((entry) =>
+        Object.assign({}, entry, { baselineKind: 'effective' }),
+      ),
+      compare: (_actual, reference) => [{
+        nodePath: reference[0].path,
+        nodeId: reference[0].nodeId,
+        message: reference[0].baselineKind ?? 'host-variant',
+      }],
+    },
+  );
+  assert.deepEqual(
+    nestedEvidence.hostVariantDiffs.get(2)?.map((diff) => diff.message),
+    ['host-variant'],
+    'Nested scopes must retain the selected component variant before nested references are expanded.',
+  );
+  assert.deepEqual(
+    nestedEvidence.effectiveDiffs.get(2)?.map((diff) => diff.message),
+    ['effective'],
+    'Nested scopes must also retain the expanded effective component baseline.',
+  );
+  assert.deepEqual(
+    Array.from(nestedEvidence.completedScopeNodeIds),
+    [2],
+    'A nested scope becomes complete only after its own reference is resolved and compared.',
+  );
+
+  const nestedLabelActual = [
+    {
+      id: 40,
+      parentId: null,
+      nodeId: 'body-cell-status',
+      path: 'BodyCell',
+      type: 'INSTANCE',
+      name: 'BodyCell',
+      visible: true,
+      componentInstance: { componentKey: 'body-cell-key' },
+    },
+    {
+      id: 41,
+      parentId: 40,
+      nodeId: 'status-preset',
+      path: 'BodyCell / StatusPreset',
+      type: 'INSTANCE',
+      name: 'StatusPreset',
+      visible: true,
+      componentInstance: { componentKey: 'status-preset-key' },
+    },
+    {
+      id: 42,
+      parentId: 41,
+      nodeId: 'status',
+      path: 'BodyCell / StatusPreset / Status',
+      type: 'INSTANCE',
+      name: 'Status',
+      visible: true,
+      componentInstance: { componentKey: 'status-key' },
+    },
+    {
+      id: 43,
+      parentId: 42,
+      nodeId: 'label-instance',
+      path: 'BodyCell / StatusPreset / Status / Label',
+      type: 'INSTANCE',
+      name: 'Label',
+      visible: true,
+      componentInstance: { componentKey: 'label-key' },
+    },
+    {
+      id: 44,
+      parentId: 43,
+      nodeId: 'label-text',
+      path: 'BodyCell / StatusPreset / Status / Label / Label',
+      type: 'TEXT',
+      name: 'Label',
+      visible: true,
+      fill: { token: 'decorative-text/blue' },
+    },
+  ];
+  const nestedLabelReference = [
+    {
+      id: 50,
+      parentId: null,
+      path: 'StatusPreset',
+      type: 'COMPONENT',
+      name: 'Type=Error / Risk, Style=Muted, Size=20',
+      visible: true,
+    },
+    {
+      id: 51,
+      parentId: 50,
+      path: 'StatusPreset / Status',
+      type: 'INSTANCE',
+      name: 'Status',
+      visible: true,
+      componentInstance: { componentKey: 'status-key' },
+    },
+    {
+      id: 52,
+      parentId: 51,
+      path: 'StatusPreset / Status / 🔩 Label',
+      type: 'INSTANCE',
+      name: '🔩 Label',
+      visible: true,
+      componentInstance: { componentKey: 'label-key' },
+    },
+    {
+      id: 53,
+      parentId: 52,
+      path: 'StatusPreset / Status / 🔩 Label / Label',
+      type: 'TEXT',
+      name: 'Label',
+      visible: true,
+      fill: { token: 'decorative-text/red' },
+    },
+  ];
+  let comparedNestedLabelPath = null;
+  createExperimentalContractV2NestedBaselineEvidence(nestedLabelActual, {
+    resolveContract: (key) =>
+      key === 'status-preset-key'
+        ? { package: { id: 'web-core.status-preset' } }
+        : null,
+    resolveReference: (instance) =>
+      instance.componentInstance?.componentKey === 'status-preset-key'
+        ? nestedLabelReference
+        : null,
+    expandReference: (reference) => reference,
+    compare: () => [],
+    compareHostVariant: (actual, reference) => {
+      const actualLabel = actual.find((node) => node.nodeId === 'label-text');
+      const referenceLabel = reference.find((node) => node.id === 53);
+      assert.ok(actualLabel);
+      assert.ok(referenceLabel);
+      comparedNestedLabelPath = referenceLabel.path;
+      assert.equal(
+        referenceLabel.path,
+        actualLabel.path,
+        'A nested Label instance name must not prevent its TEXT descendant from reaching the host-variant comparison.',
+      );
+      assert.equal(
+        referenceLabel.referenceOwnerRelativePath,
+        'Status / Label / Label',
+        'Aligned nested descendants must keep an owner-relative path usable by Contract v2.',
+      );
+      return [];
+    },
+  });
+  assert.equal(
+    comparedNestedLabelPath,
+    'StatusPreset / Status / Label / Label',
+    'Nested contract evidence must align intermediate instance display names before comparing paint.',
+  );
+
   const paymentStructure = [
     {
       id: 20,
@@ -291,6 +457,99 @@ async function main() {
     ['payment-major-typography'],
     'A materialized host scope must suppress allowed host padding while preserving nested typography violations.',
   );
+  const paymentTypographyEvidence = {
+    message: 'Стиль текст: Paragraph/14–20 → Headline/22–26',
+    nodePath: 'PaymentMaskedNumber / Major / ✎ Major',
+    nodeName: '✎ Major',
+    nodeId: 'payment-major-text',
+    visible: true,
+    diffKind: 'text-style',
+    context: {
+      actualComponentKey: null,
+      referenceComponentKey: null,
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'major-variant-key',
+      actualNestedOwnerPath: 'PaymentMaskedNumber / Major',
+      actualNestedOwnerRelativePath: '✎ Major',
+      nestedOwnerComponentKey: 'major-variant-key',
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: 'PaymentMaskedNumber / Major',
+      nestedOwnerRelativePath: '✎ Major',
+      actualVariantProperties: { 'Mask Number': 'False' },
+      referenceVariantProperties: { 'Mask Number': 'False' },
+    },
+    details: {
+      property: 'styles.text',
+      reference: { value: 'Paragraph/14–20' },
+      actual: { value: 'Headline/22–26' },
+    },
+  };
+  assert.equal(
+    markNestedContractBaselineDiff(paymentTypographyEvidence),
+    paymentTypographyEvidence,
+    'Contract v2 must preserve nested text-style evidence until it can compare it with the full host baseline.',
+  );
+  const statusScopeWithDirectFillOverride = {
+    id: 30,
+    parentId: 1,
+    nodeId: 'status-preset',
+    path: 'BodyCell / Text / StatusPreset',
+    type: 'INSTANCE',
+    name: 'StatusPreset',
+    visible: true,
+    componentInstance: {
+      componentKey: 'status-preset-key',
+      directOverrides: [{ nodeId: 'status-label', fields: ['fills'] }],
+    },
+  };
+  const statusLabelFillEvidence = {
+    message: 'заливка: decorative-text/red → decorative-text/blue',
+    nodePath: `${statusScopeWithDirectFillOverride.path} / Status / Label / Label`,
+    nodeName: 'Label',
+    nodeId: 'status-label',
+    visible: true,
+    diffKind: 'paint',
+    context: { referenceOrigin: 'nested-component' },
+    details: {
+      property: 'fill',
+      reference: { value: 'decorative-text/red' },
+      actual: { value: 'decorative-text/blue' },
+    },
+  };
+  const directStatusLabelDiffs = filterDirectNestedHostVariantDiffs(
+    statusScopeWithDirectFillOverride,
+    [statusLabelFillEvidence, paymentTypographyEvidence],
+  );
+  assert.equal(
+    directStatusLabelDiffs.length,
+    1,
+    'A nested host-variant baseline must keep only diffs backed by direct overrides of that instance.',
+  );
+  assert.equal(
+    directStatusLabelDiffs[0].context.directHostVariantOverride,
+    true,
+    'Direct override evidence must be explicit so Contract v2 can safely cross a nested instance boundary.',
+  );
+  assert.equal(
+    shouldMaterializeComponentDiff({
+      hasReferenceStructure: true,
+      alreadyMaterialized: true,
+      requiresExperimentalContractV2Audit: true,
+      contractV2ScopeCovered: false,
+    }),
+    true,
+    'A parent snapshot must not suppress a nested component whose Contract v2 scope was not evaluated.',
+  );
+  assert.equal(
+    shouldMaterializeComponentDiff({
+      hasReferenceStructure: true,
+      alreadyMaterialized: true,
+      requiresExperimentalContractV2Audit: true,
+      contractV2ScopeCovered: true,
+    }),
+    false,
+    'A nested Contract v2 scope already evaluated by its parent must not run twice.',
+  );
   assert.equal(
     shouldRunComponentDiff({
       forcedCategory: false,
@@ -319,6 +578,7 @@ async function main() {
     referenceStructureCache: new Map(),
     localComponentContextCache: new Map(),
     checkedComponentNodes: new Set(),
+    evaluatedContractV2Nodes: new Set(),
     libraryComponentFreshnessChecker: {
       check: async () => {
         freshnessChecks += 1;

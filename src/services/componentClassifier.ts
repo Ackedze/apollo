@@ -1,6 +1,8 @@
 import {
   ensureReferenceCatalogsForKeys,
   findComponent,
+  findComponentByName,
+  findComponentVariantKeyByName,
   isNestedComponentLayoutPathHostControlled,
   isNestedComponentPaintPathHostControlled,
   isNestedComponentTextPathHostControlled,
@@ -178,6 +180,17 @@ export function shouldRunComponentDiff(options: {
   );
 }
 
+export function shouldMaterializeComponentDiff(options: {
+  hasReferenceStructure: boolean;
+  alreadyMaterialized: boolean;
+  requiresExperimentalContractV2Audit: boolean;
+  contractV2ScopeCovered: boolean;
+}): boolean {
+  if (!options.hasReferenceStructure) return false;
+  if (!options.alreadyMaterialized) return true;
+  return options.requiresExperimentalContractV2Audit && !options.contractV2ScopeCovered;
+}
+
 export function collectExperimentalContractV2StructureKeys(
   structure: readonly DSStructureNode[],
 ): Set<string> {
@@ -213,8 +226,43 @@ export function createExperimentalContractV2NestedBaselineDiffs(
     compare(actual: DSStructureNode[], reference: DSStructureNode[]): DiffEntry[];
   },
 ): Map<number, DiffEntry[]> {
-  const diffsByScopeNodeId = new Map<number, DiffEntry[]>();
-  if (structure.length < 2) return diffsByScopeNodeId;
+  const effectiveOnlyDependencies = Object.assign({}, dependencies, {
+    compareHostVariant: () => [] as DiffEntry[],
+  });
+  return createExperimentalContractV2NestedBaselineEvidence(
+    structure,
+    effectiveOnlyDependencies,
+  ).effectiveDiffs;
+}
+
+export interface ExperimentalContractV2NestedBaselineEvidence {
+  effectiveDiffs: Map<number, DiffEntry[]>;
+  hostVariantDiffs: Map<number, DiffEntry[]>;
+  completedScopeNodeIds: Set<number>;
+}
+
+export function createExperimentalContractV2NestedBaselineEvidence(
+  structure: readonly DSStructureNode[],
+  dependencies: {
+    resolveContract(componentKey: string): ExperimentalContractV2 | null;
+    resolveReference(instance: DSStructureNode): DSStructureNode[] | null;
+    expandReference(
+      reference: DSStructureNode[],
+      actual: DSStructureNode[],
+    ): DSStructureNode[];
+    compare(actual: DSStructureNode[], reference: DSStructureNode[]): DiffEntry[];
+    compareHostVariant?(
+      actual: DSStructureNode[],
+      reference: DSStructureNode[],
+    ): DiffEntry[];
+  },
+): ExperimentalContractV2NestedBaselineEvidence {
+  const evidence: ExperimentalContractV2NestedBaselineEvidence = {
+    effectiveDiffs: new Map<number, DiffEntry[]>(),
+    hostVariantDiffs: new Map<number, DiffEntry[]>(),
+    completedScopeNodeIds: new Set<number>(),
+  };
+  if (structure.length < 2) return evidence;
   const nodesById = new Map(structure.map((node) => [node.id, node]));
 
   for (const instance of structure.slice(1)) {
@@ -241,17 +289,165 @@ export function createExperimentalContractV2NestedBaselineDiffs(
       componentKey,
     );
     const alignedActual = alignStructurePaths(actualSubtree, ownedStandaloneReference);
-    const expandedReference = dependencies.expandReference(
+    const alignedStandaloneReference = alignMaterializedReferenceInstancePaths(
       ownedStandaloneReference,
       alignedActual,
+      alignedActual[0]?.path ?? '',
     );
-    diffsByScopeNodeId.set(
+    evidence.hostVariantDiffs.set(
+      instance.id,
+      dependencies.compareHostVariant
+        ? dependencies.compareHostVariant(alignedActual, alignedStandaloneReference)
+        : dependencies.compare(alignedActual, alignedStandaloneReference),
+    );
+    const expandedReference = dependencies.expandReference(
+      alignedStandaloneReference,
+      alignedActual,
+    );
+    evidence.effectiveDiffs.set(
       instance.id,
       dependencies.compare(alignedActual, expandedReference),
     );
+    evidence.completedScopeNodeIds.add(instance.id);
   }
 
-  return diffsByScopeNodeId;
+  return evidence;
+}
+
+export function markNestedContractBaselineDiff(
+  diff: DiffEntry,
+): DiffEntry {
+  // A text diff against a standalone nested component can either be an
+  // intentional host override or a real user change. Contract v2 resolves
+  // that ambiguity against the full host baseline, so the evidence must reach
+  // the contract engine unchanged. Paint/layout keep using the legacy
+  // suppression policy because their allowed host overrides are resolved
+  // before contract evaluation.
+  return diff.diffKind === 'text-style'
+    ? diff
+    : markSuppressedDiff(diff, runtimeSuppressionDependencies);
+}
+
+export function filterDirectNestedHostVariantDiffs(
+  scope: DSStructureNode,
+  diffs: readonly DiffEntry[],
+): DiffEntry[] {
+  return markDirectHostVariantDiffs(scope, diffs).filter(
+    (diff) => diff.context.directHostVariantOverride === true,
+  );
+}
+
+export function markDirectHostVariantDiffs(
+  scope: DSStructureNode,
+  diffs: readonly DiffEntry[],
+): DiffEntry[] {
+  const directOverrides = scope.componentInstance?.directOverrides ?? [];
+  if (!directOverrides.length) return Array.from(diffs);
+  const fieldsByNodeId = new Map(
+    directOverrides.map((override) => [override.nodeId, new Set(override.fields)]),
+  );
+  return diffs.map((diff) => {
+    if (!diff.nodeId) return diff;
+    const fields = fieldsByNodeId.get(diff.nodeId);
+    if (!fields || !directOverrideFieldsMatchDiff(fields, diff)) return diff;
+    return Object.assign({}, diff, {
+      context: Object.assign({}, diff.context, {
+        directHostVariantOverride: true,
+      }),
+    });
+  });
+}
+
+function directOverrideFieldsMatchDiff(
+  fields: ReadonlySet<string>,
+  diff: DiffEntry,
+): boolean {
+  const property = diff.details?.property ?? '';
+  if (property === 'fill' || property === 'fills' || property === 'styles.fill') {
+    return hasAnyOverrideField(fields, ['fills', 'fillStyleId', 'boundVariables']);
+  }
+  if (property === 'stroke' || property === 'strokes' || property === 'styles.stroke') {
+    return hasAnyOverrideField(fields, [
+      'strokes',
+      'strokeStyleId',
+      'strokeWeight',
+      'strokeAlign',
+      'boundVariables',
+    ]);
+  }
+  if (
+    property === 'styles.text' ||
+    property === 'style.text' ||
+    property === 'textStyle' ||
+    property === 'typographyToken'
+  ) {
+    return hasAnyOverrideField(fields, [
+      'textStyleId',
+      'fontName',
+      'fontSize',
+      'fontWeight',
+      'lineHeight',
+      'letterSpacing',
+      'paragraphSpacing',
+      'textCase',
+      'textDecoration',
+      'boundVariables',
+    ]);
+  }
+  if (property === 'text.characters') {
+    return hasAnyOverrideField(fields, ['characters', 'componentProperties']);
+  }
+  if (property.startsWith('variant.') || property === 'component.identity') {
+    return fields.has('componentProperties');
+  }
+  if (property.startsWith('layout.padding.')) {
+    const side = property.slice('layout.padding.'.length);
+    return hasAnyOverrideField(fields, [
+      `padding${side.charAt(0).toUpperCase()}${side.slice(1)}`,
+      'boundVariables',
+    ]);
+  }
+  if (property === 'layout.itemSpacing') {
+    return hasAnyOverrideField(fields, ['itemSpacing', 'boundVariables']);
+  }
+  if (property === 'layout.sizing.horizontal') {
+    return hasAnyOverrideField(fields, [
+      'layoutSizingHorizontal',
+      'width',
+      'minWidth',
+      'maxWidth',
+    ]);
+  }
+  if (property === 'layout.sizing.vertical') {
+    return hasAnyOverrideField(fields, [
+      'layoutSizingVertical',
+      'height',
+      'minHeight',
+      'maxHeight',
+    ]);
+  }
+  if (property === 'opacity') {
+    return hasAnyOverrideField(fields, ['opacity', 'boundVariables']);
+  }
+  if (property === 'radius' || property === 'cornerRadius') {
+    return hasAnyOverrideField(fields, [
+      'cornerRadius',
+      'topLeftRadius',
+      'topRightRadius',
+      'bottomRightRadius',
+      'bottomLeftRadius',
+      'boundVariables',
+    ]);
+  }
+  const propertyTail = property.split('.').pop();
+  return Boolean(propertyTail && fields.has(propertyTail));
+}
+
+function hasAnyOverrideField(
+  fields: ReadonlySet<string>,
+  candidates: readonly string[],
+): boolean {
+  return candidates.some((candidate) => fields.has(candidate));
 }
 
 function markNestedContractReferenceOwnership(
@@ -334,6 +530,7 @@ export async function classifyComponentNode(
   const {
     checkedComponentNodes: checkedComponentNodesList,
     componentKeyCache,
+    evaluatedContractV2Nodes,
     libraryComponentFreshnessChecker,
     localComponentContextCache,
     referenceStructureCache,
@@ -426,7 +623,6 @@ export async function classifyComponentNode(
       referenceStructure = null;
     }
   }
-  const needsDiff = Boolean(referenceStructure) && !checkedComponentNodesList.has(node.id);
   const instanceHasOverrides =
     node.type === 'INSTANCE' && hasInstanceOverrides(node as InstanceNode);
   const requiresSizingRuleAudit = hasRequiredComponentSizingRules(
@@ -435,6 +631,12 @@ export async function classifyComponentNode(
   );
   const requiresExperimentalContractV2Audit =
     experimentalContractV2Enabled && hasExperimentalContractV2ForKey(componentKey);
+  const needsDiff = shouldMaterializeComponentDiff({
+    hasReferenceStructure: Boolean(referenceStructure),
+    alreadyMaterialized: checkedComponentNodesList.has(node.id),
+    requiresExperimentalContractV2Audit,
+    contractV2ScopeCovered: evaluatedContractV2Nodes.has(node.id),
+  });
   const requiresNumericConstraintAudit = hasNumericConstraintRules(
     componentKey,
     [ref?.name, ref?.displayName, node.name],
@@ -565,9 +767,9 @@ export async function classifyComponentNode(
     .map((diff) => attachSurfaceContext(diff, surfaceContext))
     .map(applyRequiredComponentSizingAssessment)
     .map(applyVariableBindingAssessment);
-  const nestedContractBaselineDiffs =
+  const nestedContractBaselineEvidence =
     experimentalContractV2Enabled && alignedActualStructure
-      ? createExperimentalContractV2NestedBaselineDiffs(
+      ? createExperimentalContractV2NestedBaselineEvidence(
           alignedActualStructure,
           {
             resolveContract: getExperimentalContractV2ForKey,
@@ -595,12 +797,28 @@ export async function classifyComponentNode(
               }).diffs
                 .map((diff) => attachSurfaceContext(diff, surfaceContext))
                 .map(applyRequiredComponentSizingAssessment)
-                .map(applyVariableBindingAssessment)
-                .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
-                .filter((diff) => diff.suppressAsHostControlledNestedProperty !== true),
+                .map(applyVariableBindingAssessment),
           },
         )
-      : new Map<number, DiffEntry[]>();
+      : {
+          effectiveDiffs: new Map<number, DiffEntry[]>(),
+          hostVariantDiffs: new Map<number, DiffEntry[]>(),
+          completedScopeNodeIds: new Set<number>(),
+        };
+  const nestedDirectHostVariantDiffs = new Map<number, DiffEntry[]>();
+  if (alignedActualStructure) {
+    const actualNodesById = new Map(
+      alignedActualStructure.map((structureNode) => [structureNode.id, structureNode]),
+    );
+    for (const [scopeNodeId, scopeDiffs] of nestedContractBaselineEvidence.hostVariantDiffs) {
+      const scopeNode = actualNodesById.get(scopeNodeId);
+      if (!scopeNode) continue;
+      nestedDirectHostVariantDiffs.set(
+        scopeNodeId,
+        filterDirectNestedHostVariantDiffs(scopeNode, scopeDiffs),
+      );
+    }
+  }
   const sharedValueAssessedDiffs = alignedActualStructure
     ? applySharedValueComponentRuleAssessments(rawDiffs, alignedActualStructure)
     : rawDiffs;
@@ -613,6 +831,15 @@ export async function classifyComponentNode(
           alignedActualStructure,
           referenceStructure,
           markedDiffs,
+          {
+            resolveComponentFamilyKey: (nestedComponentKey) =>
+              findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+            resolveReferenceComponentKey: (referenceNode) =>
+              findComponentVariantKeyByName(
+                referenceNode.name,
+                referenceNode.componentInstance?.variantProperties,
+              ) ?? findComponentByName(referenceNode.name)?.key ?? null,
+          },
         )
           .map((diff) => attachSurfaceContext(diff, surfaceContext))
           .map((diff) => markSuppressedDiff(diff, runtimeSuppressionDependencies))
@@ -659,26 +886,11 @@ export async function classifyComponentNode(
           resolveVariableMetadata: resolveVariableMetadata,
         }).diffs
       : [];
-  const contractHostReferenceForDiff = resolveHostReferenceForContractDiff(
-    referenceStructure,
-    expandedReferenceStructure,
-    alignedActualStructure,
-  );
-  const contractHostDiffs =
-    experimentalContractV2Enabled &&
-    shouldDiff &&
-    contractHostReferenceForDiff &&
-    alignedActualStructure
-      ? diffStructures(alignedActualStructure, contractHostReferenceForDiff, {
-          strict: STRICT_COMPARISON,
-          resolveTokenLabel: resolveTokenLabel,
-          resolveStyleLabel: resolveStyleLabelForDiff,
-          isPaintToken: isPaintToken,
-          resolveVariableMetadata: resolveVariableMetadata,
-        }).diffs
-      : hostDiffs;
+  const markedHostVariantDiffs = alignedActualStructure?.[0]
+    ? markDirectHostVariantDiffs(alignedActualStructure[0], hostDiffs)
+    : hostDiffs;
   const assessedDiffs = assessCustomizationDiffs(compositionContractResult.diffs, {
-    hostDiffs,
+    hostDiffs: markedHostVariantDiffs,
     hostReference: referenceStructure ?? [],
     nestedContextEvidence: alignedActualStructure
       ? createNestedContextEvidence(
@@ -799,11 +1011,18 @@ export async function classifyComponentNode(
           // Exact component contracts must evaluate evidence before legacy
           // allowlists and Expected/Allowed presentation filters remove it.
           effectiveBaselineDiffs: contractBaselineDiffs,
-          // Nested contracts need their own raw subtree evidence. The tree
-          // evaluator scopes it by node id and does not expose it to the root.
+          // Nested contracts reuse the fully materialized host reference. It
+          // already contains parent-variant overrides and expands components
+          // injected through slots from their own selected variant. The tree
+          // evaluator scopes this evidence by node id.
           rawBaselineDiffs: rawDiffs,
-          nestedScopeBaselineDiffs: nestedContractBaselineDiffs,
-          hostVariantBaselineDiffs: contractHostDiffs,
+          nestedScopeHostVariantBaselineDiffs: nestedDirectHostVariantDiffs,
+          completedNestedScopeNodeIds:
+            nestedContractBaselineEvidence.completedScopeNodeIds,
+          // `host-variant` is intentionally pre-expansion. For StatusPreset it
+          // preserves the Type-authored Label color instead of replacing it
+          // with the generic nested Status baseline.
+          hostVariantBaselineDiffs: markedHostVariantDiffs,
           resolveTokenLabel,
           resolveComponentFamilyKey: (nestedComponentKey) =>
             findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
@@ -813,6 +1032,11 @@ export async function classifyComponentNode(
   const diffs = experimentalContractV2Enabled
     ? experimentalResult?.diffs ?? []
     : legacyDiffs;
+  if (experimentalContractV2Enabled && experimentalResult) {
+    for (const nodeId of experimentalResult.coveredNodeIds) {
+      evaluatedContractV2Nodes.add(nodeId);
+    }
+  }
   if (experimentalContractV2Enabled) {
     console.log('[Apollo][contracts-v2] component evaluated', {
       componentKey,
@@ -827,10 +1051,8 @@ export async function classifyComponentNode(
         classificationSkipped: 0,
         unsupportedRuleIds: [],
       },
-      nestedBaselineScopeCount: nestedContractBaselineDiffs.size,
-      nestedBaselineDiffCount: Array.from(
-        nestedContractBaselineDiffs.values(),
-      ).reduce((total, scopeDiffs) => total + scopeDiffs.length, 0),
+      completedNestedScopeCount:
+        nestedContractBaselineEvidence.completedScopeNodeIds.size,
       legacyDecisionCountDiscarded: legacyDiffs.length,
     });
   }

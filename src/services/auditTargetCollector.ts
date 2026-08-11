@@ -110,8 +110,8 @@ export async function collectAuditTargets(
     libraryComponentFreshnessChecker,
   } = traversalContext;
   const themizationEnabled = supportsThemizationForChannel(selectedChannel);
-  const localComponentDefinitions = new Map<string, ComponentNode>();
-  const localComponentFocusNodeIds = new Map<string, Set<string>>();
+  const sourceComponentDefinitions = new Map<string, ComponentNode>();
+  const sourceComponentFocusNodeIds = new Map<string, Set<string>>();
   const resolvedFlattenedSourceIds = new Set<string>();
   const rejectedFlattenedSourceIds = new Set<string>();
   const isNodeVisibleSafe = (candidate: SceneNode): boolean => {
@@ -136,7 +136,8 @@ export async function collectAuditTargets(
       let subtreeForcedCategory: 'technical' | 'deprecated' | null = null;
 
       if (nodeIsComponent) {
-        let localDefinition = await resolveLocalComponentDefinition<
+        const freshnessScope = getLibraryComponentFreshnessScope(node);
+        const localDefinition = await resolveLocalComponentDefinition<
           SceneNode,
           ComponentNode
         >(node, {
@@ -149,8 +150,8 @@ export async function collectAuditTargets(
         });
         if (localDefinition) {
           registerComponentDefinition(
-            localComponentDefinitions,
-            localComponentFocusNodeIds,
+            sourceComponentDefinitions,
+            sourceComponentFocusNodeIds,
             localDefinition,
             node.id,
           );
@@ -185,12 +186,12 @@ export async function collectAuditTargets(
 
         if (
           node.type === 'INSTANCE' &&
-          getLibraryComponentFreshnessScope(node) === 'instance-sublayer'
+          freshnessScope === 'instance-sublayer'
         ) {
           await registerFlattenedLocalComponentDefinition(
             node,
-            localComponentDefinitions,
-            localComponentFocusNodeIds,
+            sourceComponentDefinitions,
+            sourceComponentFocusNodeIds,
             resolvedFlattenedSourceIds,
             rejectedFlattenedSourceIds,
             getNodeById,
@@ -317,7 +318,7 @@ export async function collectAuditTargets(
     SceneNode,
     ComponentNode
   >(
-    Array.from(localComponentDefinitions.values()),
+    Array.from(sourceComponentDefinitions.values()),
     checkState.relevanceBuckets.current,
     checkState.relevanceBuckets.update,
     {
@@ -333,7 +334,7 @@ export async function collectAuditTargets(
           : null,
       isRemoteComponent: (component) => component.remote,
       isVisible: isNodeVisibleSafe,
-      componentFocusNodeIds: localComponentFocusNodeIds,
+      componentFocusNodeIds: sourceComponentFocusNodeIds,
       getComponentIdentity: getComponentDefinitionIdentity,
       classifyDependency: async (
         node,

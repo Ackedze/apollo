@@ -74,6 +74,16 @@ function main() {
 
   const sharedTokenKey = '8981b6bfc89935b939b249245e60158b88ca252e';
   const sharedTokenId = `VariableID:${sharedTokenKey}/3541:131`;
+  assert.equal(
+    applyAssessmentPresentation([
+      {
+        ...makeDiff(),
+        contractEvidenceOnly: true,
+      },
+    ]).length,
+    0,
+    'Contract-only evidence must stay hidden until a contract consumes it',
+  );
   const equivalentSelectedReference = assessCustomizationDiffs(
     [
       {

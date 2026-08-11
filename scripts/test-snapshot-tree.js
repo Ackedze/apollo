@@ -68,6 +68,9 @@ function createInstance(id, name) {
       'Capacity#101:204': { type: 'TEXT', value: 4 },
       'Swap#101:205': { type: 'INSTANCE_SWAP', value: { id: 'ignored' } },
     },
+    overrides: [
+      { id: 'nested-label-id', overriddenFields: ['fills'] },
+    ],
     getMainComponentAsync: async () => ({ key: 'body-cell-wide-key' }),
     parent: null,
   };
@@ -139,6 +142,9 @@ async function main() {
         Compact: 'false',
         Capacity: '4',
       },
+      directOverrides: [
+        { nodeId: 'nested-label-id', fields: ['fills'] },
+      ],
     },
     'Snapshot must preserve exposed component properties used by Contract v2 conditions',
   );

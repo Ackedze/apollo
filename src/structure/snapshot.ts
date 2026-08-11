@@ -400,7 +400,18 @@ async function extractInstance(
   const componentProperties = extractComponentPropertyValues(
     (inst as any).componentProperties,
   );
-  return { componentKey, variantProperties, componentProperties };
+  const directOverrides = Array.isArray(inst.overrides)
+    ? inst.overrides.map((override) => ({
+        nodeId: override.id,
+        fields: Array.from(override.overriddenFields),
+      }))
+    : undefined;
+  return {
+    componentKey,
+    variantProperties,
+    componentProperties,
+    directOverrides: directOverrides?.length ? directOverrides : undefined,
+  };
 }
 
 function extractComponentPropertyValues(

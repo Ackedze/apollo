@@ -31,10 +31,24 @@ function createHarness() {
   const calls = [];
   const rootNode = { id: 'root', type: 'INSTANCE' };
   const targetNode = { id: 'target', type: 'FRAME' };
+  const componentSet = {
+    type: 'COMPONENT_SET',
+    children: [
+      { type: 'COMPONENT', variantProperties: { View: 'Primary' } },
+      { type: 'COMPONENT', variantProperties: { View: 'Secondary' } },
+    ],
+  };
   const variantNode = {
     id: 'variant',
     type: 'INSTANCE',
-    setProperties: (properties) => calls.push(['setProperties', properties]),
+    variantProperties: { View: 'Secondary' },
+    setProperties(properties) {
+      Object.assign(this.variantProperties, properties);
+      calls.push(['setProperties', properties]);
+    },
+    async getMainComponentAsync() {
+      return { parent: componentSet };
+    },
   };
   const nodes = new Map([
     [rootNode.id, rootNode],
@@ -115,6 +129,32 @@ async function main() {
   assert.equal(
     remediation.calls.some((call) => call[0] === 'resolveReferenceNode'),
     false,
+  );
+
+  const invalidVariantRemediation = createHarness();
+  await createCustomizationResetAction(invalidVariantRemediation.dependencies)({
+    rootId: 'root',
+    nodeId: 'target',
+    remediations: [
+      {
+        kind: 'set-variant-properties',
+        nodeId: 'variant',
+        properties: { View: 'Primary или Secondary' },
+      },
+    ],
+  });
+  assert.equal(
+    invalidVariantRemediation.calls.some((call) => call[0] === 'setProperties'),
+    false,
+    'A display label that is not a real variant value must never reach Figma setProperties.',
+  );
+  assert.ok(
+    invalidVariantRemediation.calls.some(
+      (call) =>
+        call[0] === 'notify' &&
+        call[1] ===
+          'Не удалось подобрать существующий вариант компонента для восстановления параметров.',
+    ),
   );
 
   const detailsOnly = createHarness();

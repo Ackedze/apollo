@@ -154,17 +154,20 @@ export async function classifyLocalComponentDependency(
     libraryFreshness,
     focusNodeId: options.focusNodeIds[0] ?? owner.id,
     sourceOwnerOccurrenceIds: options.focusNodeIds,
-    localComponentOwner: {
-      id: owner.id,
-      name: owner.name,
-      pageName: getPageName(owner),
-      fullPath: buildNodePath(owner),
-    },
+    sourceOwnerKind: owner.remote ? 'remote' : 'local',
+    localComponentOwner: owner.remote
+      ? null
+      : {
+          id: owner.id,
+          name: owner.name,
+          pageName: getPageName(owner),
+          fullPath: buildNodePath(owner),
+        },
     resolvedReferenceVariantKey,
     resolvedReferenceVariantName,
   };
 
-  traceAudit('local-component-library-dependency', {
+  traceAudit('source-component-library-dependency', {
     nodeId: node.id,
     nodeName: node.name,
     componentKey,
@@ -342,9 +345,9 @@ export async function resolveLocalComponentDefinition<
 }
 
 /**
- * Audits the source definitions behind local component instances. Remote
- * instances are dependency boundaries: their internal sublayers belong to the
- * library component and must not be reported as independently updateable.
+ * Audits source definitions behind selected local and remote component
+ * instances. Nested remote instances are dependency boundaries: their own
+ * descendants belong to that dependency and are not traversed recursively.
  */
 export async function walkLocalComponentDependencies<
   TNode,

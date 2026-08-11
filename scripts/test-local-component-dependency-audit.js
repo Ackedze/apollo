@@ -239,6 +239,91 @@ async function main() {
   );
   assert.equal(orchestrationResult.walkStats.remoteDependencies, 2);
 
+  const remoteOwner = component(
+    'remote-owner',
+    [instance('remote-owner-source-cell', remoteCell)],
+    true,
+  );
+  const renderedDependency = {
+    id: 'Irendered-remote-owner;remote-owner-source-cell',
+    componentKey: 'remote-cell',
+    libraryFreshness: { reason: 'instance-sublayer' },
+  };
+  const remoteOrchestrationResult = await auditLocalComponentDependencies(
+    [remoteOwner],
+    [renderedDependency],
+    [],
+    {
+      getNodeId: (node) => node.id,
+      getNodeType: (node) => node.type,
+      getChildren: (node) => node.children || [],
+      getMainComponent: (node) => node.getMainComponentAsync(),
+      isRemoteComponent: (node) => node.remote,
+      isVisible: (node) => node.visible !== false,
+      componentFocusNodeIds: new Map([
+        ['remote-owner', new Set(['rendered-remote-owner'])],
+      ]),
+      getComponentIdentity: (node) => node.id,
+      classifyDependency: async (
+        node,
+        owner,
+        focusNodeIds,
+        observedComponentKeys,
+      ) => {
+        const mainComponent = await node.getMainComponentAsync();
+        observedComponentKeys.add(mainComponent.id);
+        return {
+          id: node.id,
+          name: node.name,
+          nodeType: node.type,
+          pageName: 'Page',
+          pathSegments: [],
+          fullPath: `Page/${node.name}`,
+          relevance: 'update',
+          librarySource: 'Library',
+          isLocal: false,
+          reference: null,
+          componentKey: mainComponent.id,
+          diffs: [],
+          updateReasons: ['library-update-available'],
+          focusNodeId: focusNodeIds[0] || owner.id,
+          sourceOwnerOccurrenceIds: focusNodeIds,
+          sourceOwnerKind: 'remote',
+          localComponentOwner: null,
+        };
+      },
+      shouldExclude: () => false,
+      freshnessChecker: {
+        check: async () => {
+          throw new Error('not used by orchestration fixture');
+        },
+        getStats: () => freshnessStats,
+      },
+      dependencyConcurrency: 2,
+      throwIfCancelled: () => {},
+    },
+  );
+
+  assert.equal(
+    remoteOrchestrationResult.updateItems.length,
+    1,
+    'Nested updates from a selected remote source definition must be found',
+  );
+  assert.equal(
+    remoteOrchestrationResult.updateItems[0].focusNodeId,
+    'Irendered-remote-owner;remote-owner-source-cell',
+  );
+  assert.equal(
+    remoteOrchestrationResult.currentItems.length,
+    0,
+    'A discovered source update must be removed from current components',
+  );
+  assert.equal(
+    remoteOrchestrationResult.updateItems[0].localComponentOwner,
+    null,
+    'Remote source owners must not be serialized as local components',
+  );
+
   console.log('Local component dependency audit regression checks passed');
 }
 

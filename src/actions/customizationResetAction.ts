@@ -122,7 +122,68 @@ export function createCustomizationResetAction(
         );
         return;
       }
-      variantNode.setProperties(remediation.properties);
+      let compatible = false;
+      try {
+        compatible = await hasCompatibleVariantCombination(
+          variantNode,
+          remediation.properties,
+        );
+      } catch (error) {
+        dependencies.notify(
+          'Не удалось проверить доступные варианты компонента.'
+        );
+        dependencies.log('[Apollo] variant remediation preflight failed', {
+          nodeId: variantNode.id,
+          currentProperties: variantNode.variantProperties ?? null,
+          requestedProperties: remediation.properties,
+          error,
+        });
+        return;
+      }
+      if (!compatible) {
+        dependencies.notify(
+          'Не удалось подобрать существующий вариант компонента для восстановления параметров.'
+        );
+        dependencies.log('[Apollo] incompatible variant remediation skipped', {
+          nodeId: variantNode.id,
+          currentProperties: variantNode.variantProperties ?? null,
+          requestedProperties: remediation.properties,
+        });
+        return;
+      }
+      try {
+        variantNode.setProperties(remediation.properties);
+      } catch (error) {
+        dependencies.notify(
+          'Figma не смогла применить выбранное сочетание параметров компонента.'
+        );
+        dependencies.log('[Apollo] variant remediation failed', {
+          nodeId: variantNode.id,
+          currentProperties: variantNode.variantProperties ?? null,
+          requestedProperties: remediation.properties,
+          error,
+        });
+        return;
+      }
+      const appliedProperties = variantNode.variantProperties;
+      if (appliedProperties) {
+        for (const [property, expected] of Object.entries(
+          remediation.properties
+        )) {
+          if (appliedProperties[property] !== expected) {
+            dependencies.notify(
+              'Figma не сохранила выбранное значение параметра компонента.'
+            );
+            dependencies.log('[Apollo] variant remediation was not preserved', {
+              nodeId: variantNode.id,
+              property,
+              expected,
+              actual: appliedProperties[property] ?? null,
+            });
+            return;
+          }
+        }
+      }
     }
 
     if (remediations.length && !messages.length && !details.length) {
@@ -188,4 +249,31 @@ export function createCustomizationResetAction(
     dependencies.notify('Изменения сброшены.');
     await dependencies.rerunAudit([rootNode]);
   };
+}
+
+async function hasCompatibleVariantCombination(
+  instance: InstanceNode,
+  requestedProperties: Record<string, string>,
+): Promise<boolean> {
+  if (typeof instance.getMainComponentAsync !== 'function') {
+    return true;
+  }
+  const mainComponent = await instance.getMainComponentAsync();
+  const componentSet = mainComponent?.parent;
+  if (componentSet?.type !== 'COMPONENT_SET') {
+    return true;
+  }
+  const desiredProperties = Object.assign(
+    {},
+    instance.variantProperties ?? {},
+    requestedProperties,
+  );
+  return componentSet.children.some((child) => {
+    if (child.type !== 'COMPONENT' || !child.variantProperties) {
+      return false;
+    }
+    return Object.entries(desiredProperties).every(
+      ([property, expected]) => child.variantProperties?.[property] === expected,
+    );
+  });
 }

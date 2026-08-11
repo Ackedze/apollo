@@ -52,6 +52,7 @@ export interface AuditItem {
   libraryFreshness?: LibraryComponentFreshness | null;
   focusNodeId?: string | null;
   sourceOwnerOccurrenceIds?: string[];
+  sourceOwnerKind?: 'local' | 'remote';
   localComponentOwner?: {
     id: string;
     name: string;

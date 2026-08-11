@@ -3,6 +3,7 @@ export interface LibraryUpdateResultItem {
   componentKey: string | null;
   focusNodeId?: string | null;
   sourceOwnerOccurrenceIds?: string[];
+  sourceOwnerKind?: 'local' | 'remote';
   localComponentOwner?: {
     id?: string | null;
   } | null;
@@ -106,7 +107,12 @@ export function findLibraryUpdateCurrentOverlaps<
 >(currentItems: readonly T[], updateItems: readonly T[]): T[] {
   const updateIds = new Set(updateItems.map((item) => item.id));
   const sourceUpdates = updateItems.filter(
-    (item) => Boolean(item.localComponentOwner) && Boolean(item.componentKey),
+    (item) =>
+      Boolean(item.componentKey) &&
+      (
+        Boolean(item.localComponentOwner) ||
+        item.sourceOwnerKind === 'remote'
+      ),
   );
 
   return currentItems.filter(

@@ -117,6 +117,12 @@ export type CustomChangeGroup = {
   lines: CustomValueLine[];
   onFocus?: () => void;
   onReset?: () => void;
+  actions?: Array<{
+    label: string;
+    onPress: () => void;
+    singleIcon?: boolean;
+  }>;
+  actionPickerLabel?: string;
 };
 
 export type CustomizationResultItem = {

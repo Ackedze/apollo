@@ -329,6 +329,118 @@ function main() {
   assert.equal(unanchored[0].details.reference.value, 'False');
   assert.equal(unanchored[0].details.actual.value, 'True');
 
+  const iconButtonReference = [
+    node({
+      id: 501,
+      path: '[D] BodyActionCell :: Wide',
+      name: '[D] BodyActionCell :: Wide',
+      componentInstance: { componentKey: 'body-action-cell' },
+    }),
+    node({
+      id: 502,
+      parentId: 501,
+      path: '[D] BodyActionCell :: Wide / ActionButton',
+      name: 'ActionButton',
+      type: 'FRAME',
+      componentInstance: null,
+    }),
+    node({
+      id: 503,
+      parentId: 502,
+      path: '[D] BodyActionCell :: Wide / ActionButton / [D] IconButton',
+      name: '[D] IconButton',
+      componentInstance: {
+        componentKey: 'icon-button-component-set',
+        variantProperties: {
+          Size: '24',
+          View: 'Primary',
+          TransparentBg: 'False',
+        },
+      },
+    }),
+  ];
+  const iconButtonVariantActual = iconButtonReference.map((item) =>
+    item.id === 503
+      ? {
+          ...item,
+          nodeId: 'action:icon',
+          componentInstance: {
+            componentKey: 'icon-button-tertiary-32',
+            variantProperties: {
+              Size: '32',
+              View: 'Tertiary',
+              TransparentBg: 'False',
+            },
+          },
+        }
+      : item,
+  );
+  const resolveFamily = (key) =>
+    key.startsWith('icon-button-inverted-')
+      ? 'icon-button-inverted'
+      : key.startsWith('icon-button-')
+        ? 'icon-button'
+        : key;
+  const iconButtonVariantDiffs = diffExplicitNestedVariantStates(
+    iconButtonVariantActual,
+    iconButtonReference,
+    [],
+    {
+      resolveComponentFamilyKey: resolveFamily,
+      resolveReferenceComponentKey: (referenceNode) =>
+        referenceNode.name === '[D] IconButton'
+          ? 'icon-button-primary-24'
+          : null,
+    },
+  );
+  assert.deepEqual(
+    iconButtonVariantDiffs.map((diff) => diff.details.property),
+    ['variant.Size', 'variant.View'],
+    'A variant switch inside the same component family must expose changed properties',
+  );
+
+  const swappedIconActual = iconButtonReference.map((item) =>
+    item.id === 503
+      ? {
+          ...item,
+          nodeId: 'action:icon-inverted',
+          path:
+            '[D] BodyActionCell :: Wide / ActionButton / [D] IconButton_Inverted',
+          name: '[D] IconButton_Inverted',
+          componentInstance: {
+            componentKey: 'icon-button-inverted-primary-24',
+            variantProperties: {
+              Size: '24',
+              View: 'Primary',
+              TransparentBg: 'False',
+            },
+          },
+        }
+      : item,
+  );
+  const swappedIconDiffs = diffExplicitNestedVariantStates(
+    swappedIconActual,
+    iconButtonReference,
+    [],
+    {
+      resolveComponentFamilyKey: resolveFamily,
+      resolveReferenceComponentKey: (referenceNode) =>
+        referenceNode.name === '[D] IconButton'
+          ? 'icon-button-primary-24'
+          : null,
+    },
+  );
+  assert.equal(swappedIconDiffs.length, 1);
+  assert.equal(swappedIconDiffs[0].details.property, 'component.identity');
+  assert.equal(
+    swappedIconDiffs[0].details.reference.resourceId,
+    'icon-button-primary-24',
+  );
+  assert.equal(
+    swappedIconDiffs[0].details.actual.resourceId,
+    'icon-button-inverted-primary-24',
+  );
+
   console.log('Variant state diff regression checks passed');
 }
 

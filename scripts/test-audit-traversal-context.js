@@ -56,12 +56,14 @@ async function main() {
   first.referenceStructureCache.set('component:1', []);
   first.localComponentContextCache.set('node:1', true);
   first.checkedComponentNodes.add('node:1');
+  first.evaluatedContractV2Nodes.add('node:1');
 
   assert.equal(second.componentKeyCache.size, 0);
   assert.equal(second.sceneNodeById.size, 0);
   assert.equal(second.referenceStructureCache.size, 0);
   assert.equal(second.localComponentContextCache.size, 0);
   assert.equal(second.checkedComponentNodes.size, 0);
+  assert.equal(second.evaluatedContractV2Nodes.size, 0);
   assert.equal(first.customStyleOptions, customStyleOptions);
   assert.equal(first.deprecatedStyleOptions, deprecatedStyleOptions);
 

@@ -15,6 +15,36 @@ const context = {showExpectedCustomizations: true};
 vm.createContext(context);
 vm.runInContext(uiSource.slice(start, end), context);
 
+const choicesStart = uiSource.indexOf(
+  'function getVariantRemediationChoices',
+);
+const choicesEnd = uiSource.indexOf(
+  'function renderCustomizationReactResults',
+  choicesStart,
+);
+assert.notEqual(choicesStart, -1, 'Variant remediation choice helper is missing.');
+assert.notEqual(
+  choicesEnd,
+  -1,
+  'Variant remediation choice helper boundary is missing.',
+);
+vm.runInContext(uiSource.slice(choicesStart, choicesEnd), context);
+
+const actionsStart = uiSource.indexOf(
+  'function buildCustomizationResetActions',
+);
+const actionsEnd = uiSource.indexOf(
+  'function sortCustomizationGroupsByPath',
+  actionsStart,
+);
+assert.notEqual(actionsStart, -1, 'Customization action builder is missing.');
+assert.notEqual(
+  actionsEnd,
+  -1,
+  'Customization action builder boundary is missing.',
+);
+vm.runInContext(uiSource.slice(actionsStart, actionsEnd), context);
+
 const fill = {
   nodeId: 'nested-style-node',
   message: 'заливка: — → VariableID:token-id',
@@ -107,6 +137,51 @@ assert.equal(
   typeof expectedOnlyItems,
   'function',
   'Customization item filtering must be available to the tab counter.',
+);
+
+const viewChoices = context.getVariantRemediationChoices(
+  {
+    nodeId: 'button',
+    assessment: {
+      evidence: { expected: ['Primary', 'Secondary'] },
+    },
+  },
+  'View',
+);
+assert.deepEqual(
+  JSON.parse(JSON.stringify(viewChoices)),
+  [
+    {
+      label: 'Primary',
+      remediation: {
+        kind: 'set-variant-properties',
+        nodeId: 'button',
+        properties: { View: 'Primary' },
+      },
+    },
+    {
+      label: 'Secondary',
+      remediation: {
+        kind: 'set-variant-properties',
+        nodeId: 'button',
+        properties: { View: 'Secondary' },
+      },
+    },
+  ],
+  'Several allowed variant values must become explicit remediation choices.',
+);
+
+const replacementActions = context.buildCustomizationResetActions('root', {
+  nodeId: 'button',
+  remediationChoices: viewChoices,
+  messages: ['View: Primary или Secondary → Accent'],
+  details: [{property: 'variant.View'}],
+  remediations: [viewChoices[0].remediation],
+});
+assert.deepEqual(
+  replacementActions.map((action) => action.label),
+  ['Primary', 'Secondary'],
+  'Variant replacement picker must contain only real variant values.',
 );
 
 console.log('Customization UI dedupe regression checks passed.');

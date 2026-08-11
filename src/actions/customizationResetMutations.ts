@@ -22,7 +22,7 @@ export interface CustomizationResetMutationDependencies {
 
 export interface CustomizationResetReferenceValue {
   value?: string | number | null;
-  resourceType?: 'style' | 'token' | 'color';
+  resourceType?: 'style' | 'token' | 'color' | 'component';
   resourceId?: string | null;
   displayName?: string | null;
 }
@@ -152,6 +152,33 @@ export function createCustomizationResetMutations(
         continue;
       }
 
+      if (
+        property === 'component.identity' &&
+        node.type === 'INSTANCE' &&
+        reference.resourceType === 'component' &&
+        reference.resourceId
+      ) {
+        const component = await figma.importComponentByKeyAsync(reference.resourceId);
+        node.swapComponent(component);
+        if (typeof node.getMainComponentAsync === 'function') {
+          const appliedComponent = await node.getMainComponentAsync();
+          if (appliedComponent && appliedComponent.key !== component.key) {
+            throw new Error(
+              `Figma did not preserve component ${component.key} on node ${node.id}`
+            );
+          }
+        }
+        continue;
+      }
+
+      if (
+        (property === 'layout.width' || property === 'layout.height') &&
+        typeof reference.value === 'number'
+      ) {
+        resetNodeDimension(node, property, reference.value);
+        continue;
+      }
+
       if (property === 'fill' || property === 'stroke') {
         await resetPaintByDiffReference(node, property, reference);
         continue;
@@ -197,7 +224,7 @@ export function createCustomizationResetMutations(
       }
 
       const paddingSide = property.match(
-        /^layout\.padding\.(top|right|bottom|left)$/
+        /^(?:layout\.)?padding\.(top|right|bottom|left)$/
       )?.[1] as 'top' | 'right' | 'bottom' | 'left' | undefined;
       if (paddingSide && typeof reference.value === 'number') {
         if (reference.resourceType === 'token' && reference.resourceId) {
@@ -348,6 +375,19 @@ export function createCustomizationResetMutations(
         `Figma did not preserve ${property}=${value} on node ${node.id}`
       );
     }
+  }
+
+  function resetNodeDimension(
+    node: SceneNode,
+    property: 'layout.width' | 'layout.height',
+    value: number,
+  ) {
+    if (!('resize' in node) || typeof node.resize !== 'function') {
+      throw new Error(`Apollo cannot restore ${property} on node ${node.id}`);
+    }
+    const width = property === 'layout.width' ? value : node.width;
+    const height = property === 'layout.height' ? value : node.height;
+    node.resize(width, height);
   }
 
   async function applyReferencePaintSurfaceReset(
@@ -527,10 +567,13 @@ export function createCustomizationResetMutations(
     target: 'fill' | 'stroke',
     reference: {
       value?: string | number | null;
-      resourceType?: 'style' | 'token' | 'color';
+      resourceType?: 'style' | 'token' | 'color' | 'component';
       resourceId?: string | null;
     }
   ) {
+    if (reference.resourceType === 'component') {
+      throw new Error(`Apollo cannot use a component as a ${target} reference`);
+    }
     const resourceId =
       typeof reference.resourceId === 'string' && reference.resourceId.length
         ? reference.resourceId

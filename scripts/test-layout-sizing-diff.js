@@ -32,6 +32,8 @@ function sizingNode({
   name,
   horizontal = 'FILL',
   vertical = 'HUG',
+  width = 120,
+  height = 40,
   type = 'FRAME',
   componentInstance = null,
 }) {
@@ -46,6 +48,8 @@ function sizingNode({
     opacity: 1,
     radius: null,
     layout: {
+      width,
+      height,
       sizing: { horizontal, vertical },
       itemSpacing: 12,
     },
@@ -93,6 +97,24 @@ function main() {
     ),
     false,
     'Unchanged sizing must not produce a diff',
+  );
+
+  const resized = [
+    sizingNode({ id: 1, path: 'Slot', name: 'Slot', width: 144 }),
+  ];
+  const widthDiff = diffStructures(resized, reference).diffs.find(
+    (diff) => diff.details?.property === 'layout.width',
+  );
+  assert.ok(widthDiff, 'A changed fixed width must produce contract evidence');
+  assert.equal(widthDiff.details.reference.value, 120);
+  assert.equal(widthDiff.details.actual.value, 144);
+  assert.equal(widthDiff.contractEvidenceOnly, true);
+  assert.equal(
+    diffStructures(reference, reference).diffs.some(
+      (diff) => diff.details?.property === 'layout.width',
+    ),
+    false,
+    'An unchanged numeric width must not produce contract evidence',
   );
 
   globalThis.__APOLLO_TEST_REMOTE_COMPONENT_RULE_REGISTRY__ = [

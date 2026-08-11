@@ -6,6 +6,10 @@ import {
   getCorporateCounterpart,
 } from '../reference/library';
 import type { LibraryComponent } from '../reference/libraryTypes';
+export {
+  getCorporateCounterpart,
+  rebuildCorporateCounterpartIndex,
+} from '../reference/library';
 import {
   countVariantPropertyMatches,
   parseVariantName,
@@ -17,11 +21,24 @@ export type CorporateComponentActionResult =
   | { ok: true; node: InstanceNode }
   | { ok: false; message: string };
 
+export type CorporateReplacementAttempt = {
+  phase: string;
+  error: string;
+};
+
+export type CorporateReplacementResult =
+  | { ok: true }
+  | {
+      ok: false;
+      reason: string;
+      attempts: CorporateReplacementAttempt[];
+    };
+
 export async function applyCorporateComponentReplacement(input: {
   nodeId: string;
   replacementComponentKey?: string | null;
 }): Promise<CorporateComponentActionResult> {
-  const node = await figma.getNodeByIdAsync(input.nodeId);
+  const node = await resolveCorporateActionNodeById(input.nodeId);
   if (!node || node.type !== 'INSTANCE') {
     return { ok: false, message: 'Не удалось найти инстанс для замены.' };
   }
@@ -30,10 +47,10 @@ export async function applyCorporateComponentReplacement(input: {
     node,
     input.replacementComponentKey ?? null,
   );
-  if (!replaced) {
+  if (!replaced.ok) {
     return {
       ok: false,
-      message: 'Не удалось заменить компонент на базовую версию.',
+      message: formatCorporateReplacementFailure(replaced),
     };
   }
 
@@ -45,7 +62,7 @@ export async function applyComponentFindingReplacement(input: {
   expectedComponentKey: string;
   targetComponentKey: string;
 }): Promise<CorporateComponentActionResult> {
-  const node = await figma.getNodeByIdAsync(input.nodeId);
+  const node = await resolveCorporateActionNodeById(input.nodeId);
   if (!node || node.type !== 'INSTANCE') {
     return { ok: false, message: 'Не удалось найти инстанс для замены.' };
   }
@@ -62,27 +79,72 @@ export async function applyComponentFindingReplacement(input: {
     node,
     input.targetComponentKey,
   );
-  if (!replaced) {
+  if (!replaced.ok) {
     return {
       ok: false,
-      message: 'Не удалось подобрать совместимый компонент для замены.',
+      message: formatCorporateReplacementFailure(replaced),
     };
   }
 
   return { ok: true, node };
 }
 
+/**
+ * `getNodeByIdAsync` does not resolve ids of rendered sublayers inside an
+ * instance (for example `I11647:10616;37705:55361`). Resolve the owning
+ * instance first and then find the exact rendered node in its subtree.
+ */
+export async function resolveCorporateActionNodeById(
+  nodeId: string,
+): Promise<SceneNode | null> {
+  const directNode = await figma.getNodeByIdAsync(nodeId);
+  if (directNode && directNode.type !== 'DOCUMENT' && directNode.type !== 'PAGE') {
+    return directNode as SceneNode;
+  }
+
+  const ownerMatch = /^I([^;]+);/.exec(nodeId);
+  const ownerId = ownerMatch?.[1] ?? null;
+  if (!ownerId) {
+    return null;
+  }
+
+  const ownerNode = await figma.getNodeByIdAsync(ownerId);
+  if (!ownerNode || !('findOne' in ownerNode)) {
+    return null;
+  }
+
+  const nestedNode = ownerNode.findOne((candidate) => candidate.id === nodeId);
+  if (!nestedNode || nestedNode.type === 'PAGE') {
+    return null;
+  }
+  return nestedNode as SceneNode;
+}
+
 export async function replaceCorporateInstance(
   instance: InstanceNode,
   replacementComponentKey?: string | null,
-): Promise<boolean> {
+): Promise<CorporateReplacementResult> {
+  const attempts: CorporateReplacementAttempt[] = [];
   const sourceProperties = snapshotInstanceComponentProperties(instance);
-  const mainComponent = await instance.getMainComponentAsync();
+  let mainComponent: ComponentNode | null = null;
+  try {
+    mainComponent = await instance.getMainComponentAsync();
+  } catch (error) {
+    return replacementFailure('source-component-read', error, attempts);
+  }
   const componentKey = mainComponent?.key ?? null;
-  await ensureReferenceCatalogsForKeys([componentKey, replacementComponentKey]);
+  try {
+    await ensureReferenceCatalogsForKeys([componentKey, replacementComponentKey]);
+  } catch (error) {
+    return replacementFailure('catalog-load', error, attempts);
+  }
   const reference = componentKey ? findComponent(componentKey) : null;
   if (!reference) {
-    return false;
+    return replacementFailure(
+      'source-reference',
+      `component ${componentKey ?? 'without-key'} is absent from the catalog`,
+      attempts,
+    );
   }
 
   const replacementReference = replacementComponentKey
@@ -91,7 +153,11 @@ export async function replaceCorporateInstance(
   const pair = replacementReference ? null : getCorporateCounterpart(reference);
   const baseComponent = replacementReference ?? pair?.base ?? null;
   if (!baseComponent) {
-    return false;
+    return replacementFailure(
+      'base-reference',
+      `replacement ${replacementComponentKey ?? 'counterpart'} is absent from the catalog`,
+      attempts,
+    );
   }
 
   const currentVariantName =
@@ -103,35 +169,51 @@ export async function replaceCorporateInstance(
       : null;
 
   if (candidateVariantKey) {
+    let targetVariant: ComponentNode | null = null;
     try {
-      const targetVariant = await figma.importComponentByKeyAsync(
+      targetVariant = await figma.importComponentByKeyAsync(
         candidateVariantKey,
       );
-      instance.swapComponent(targetVariant);
-      restoreCompatibleInstanceProperties(instance, sourceProperties);
-      return true;
     } catch (error) {
-      console.warn(
-        '[Apollo] failed to import base variant directly, trying component set fallback',
-        {
-          nodeId: instance.id,
-          candidateVariantKey,
-          error,
-        },
+      recordReplacementAttempt(
+        attempts,
+        'direct-variant-import',
+        error,
       );
+    }
+    if (
+      targetVariant &&
+      (await swapCorporateTarget(
+        instance,
+        targetVariant,
+        sourceProperties,
+        'direct-variant',
+        attempts,
+      ))
+    ) {
+      return { ok: true };
     }
   }
 
   const baseComponentKey = baseComponent.key ?? null;
   if (!baseComponentKey) {
-    return false;
+    return replacementFailure(
+      'base-component-key',
+      'base component does not have a key',
+      attempts,
+    );
   }
 
   if (baseComponent.variants?.length) {
+    let componentSet: ComponentSetNode | null = null;
     try {
-      const componentSet = await figma.importComponentSetByKeyAsync(
+      componentSet = await figma.importComponentSetByKeyAsync(
         baseComponentKey,
       );
+    } catch (error) {
+      recordReplacementAttempt(attempts, 'component-set-import', error);
+    }
+    if (componentSet) {
       const targetVariant = findMatchingVariantInSet(
         componentSet,
         instance,
@@ -139,45 +221,128 @@ export async function replaceCorporateInstance(
       );
 
       if (!targetVariant) {
-        console.error(
-          '[Apollo] failed to find matching base variant in component set',
-          {
-            nodeId: instance.id,
-            baseComponentKey,
-            currentVariantName,
-            instanceVariantProperties: instance.variantProperties,
-          },
+        recordReplacementAttempt(
+          attempts,
+          'component-set-match',
+          `variant ${currentVariantName ?? 'unknown'} was not found`,
         );
-        return false;
+      } else if (
+        await swapCorporateTarget(
+          instance,
+          targetVariant,
+          sourceProperties,
+          'component-set-variant',
+          attempts,
+        )
+      ) {
+        return { ok: true };
       }
-
-      instance.swapComponent(targetVariant);
-      restoreCompatibleInstanceProperties(instance, sourceProperties);
-      return true;
-    } catch (error) {
-      console.error('[Apollo] failed to swap corporate component', {
-        nodeId: instance.id,
-        baseComponentKey,
-        error: describeError(error),
-      });
     }
+    return replacementFailureFromAttempts('variant-replacement', attempts);
+  }
+
+  let targetComponent: ComponentNode | null = null;
+  try {
+    targetComponent = await figma.importComponentByKeyAsync(
+      baseComponentKey,
+    );
+  } catch (error) {
+    recordReplacementAttempt(attempts, 'component-import', error);
+  }
+  if (
+    targetComponent &&
+    (await swapCorporateTarget(
+      instance,
+      targetComponent,
+      sourceProperties,
+      'component',
+      attempts,
+    ))
+  ) {
+    return { ok: true };
+  }
+  return replacementFailureFromAttempts('component-replacement', attempts);
+}
+
+export async function swapCorporateTarget(
+  instance: InstanceNode,
+  targetComponent: ComponentNode,
+  sourceProperties: InstanceComponentPropertySnapshot[],
+  phase: string,
+  attempts: CorporateReplacementAttempt[],
+): Promise<boolean> {
+  try {
+    instance.swapComponent(targetComponent);
+  } catch (error) {
+    recordReplacementAttempt(attempts, `${phase}-swap`, error);
+    return false;
   }
 
   try {
-    const targetComponent = await figma.importComponentByKeyAsync(
-      baseComponentKey,
-    );
-    instance.swapComponent(targetComponent);
-    restoreCompatibleInstanceProperties(instance, sourceProperties);
-    return true;
+    const appliedComponent = await instance.getMainComponentAsync();
+    if (!appliedComponent || appliedComponent.key !== targetComponent.key) {
+      recordReplacementAttempt(
+        attempts,
+        `${phase}-verify`,
+        `expected ${targetComponent.key}, received ${appliedComponent?.key ?? 'none'}`,
+      );
+      return false;
+    }
   } catch (error) {
-    console.error('[Apollo] failed to import replacement component', {
-      nodeId: instance.id,
-      baseComponentKey,
-      error: describeError(error),
-    });
+    recordReplacementAttempt(attempts, `${phase}-verify`, error);
     return false;
   }
+
+  try {
+    restoreCompatibleInstanceProperties(instance, sourceProperties);
+  } catch (error) {
+    console.warn('[Apollo] component swapped but overrides were not restored', {
+      nodeId: instance.id,
+      targetComponentKey: targetComponent.key,
+      phase,
+      error: describeError(error),
+    });
+  }
+  return true;
+}
+
+function replacementFailure(
+  phase: string,
+  error: unknown,
+  attempts: CorporateReplacementAttempt[],
+): CorporateReplacementResult {
+  recordReplacementAttempt(attempts, phase, error);
+  return replacementFailureFromAttempts(phase, attempts);
+}
+
+function replacementFailureFromAttempts(
+  reason: string,
+  attempts: CorporateReplacementAttempt[],
+): CorporateReplacementResult {
+  console.error('[Apollo] corporate component replacement failed', {
+    reason,
+    attempts,
+  });
+  return { ok: false, reason, attempts };
+}
+
+function recordReplacementAttempt(
+  attempts: CorporateReplacementAttempt[],
+  phase: string,
+  error: unknown,
+): void {
+  attempts.push({ phase, error: describeError(error) });
+}
+
+function formatCorporateReplacementFailure(
+  failure: Extract<CorporateReplacementResult, { ok: false }>,
+): string {
+  const lastAttempt = failure.attempts[failure.attempts.length - 1];
+  if (!lastAttempt) {
+    return `Не удалось заменить компонент (${failure.reason}).`;
+  }
+  const detail = lastAttempt.error.slice(0, 160);
+  return `Не удалось заменить компонент (${lastAttempt.phase}: ${detail}).`;
 }
 
 export function findMatchingVariantInSet(

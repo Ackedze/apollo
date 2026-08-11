@@ -40,6 +40,11 @@ type RuleEvaluation = {
   sourceDiffs?: Array<{ diff: DiffEntry; target: RuntimeNode }>;
 };
 
+type RuleConditionEvaluation =
+  | { status: 'matched'; nodes: RuntimeNode[] }
+  | { status: 'not-applicable' }
+  | { status: 'unsupported' };
+
 export type ExperimentalContractV2Evaluation = {
   diffs: DiffEntry[];
   diagnostics: {
@@ -53,6 +58,7 @@ export type ExperimentalContractV2Evaluation = {
 };
 
 export type ExperimentalContractV2TreeEvaluation = ExperimentalContractV2Evaluation & {
+  coveredNodeIds: string[];
   scopes: Array<{
     packageId: string;
     hostComponentKey: string;
@@ -70,6 +76,7 @@ const SUPPORTED_ASSERTIONS = new Set([
   'paintStateEquals',
   'propertiesEqual',
   'relativeOrder',
+  'sequenceEquals',
   'valuePosition',
 ]);
 
@@ -181,6 +188,8 @@ export function evaluateExperimentalContractV2Tree(options: {
   effectiveBaselineDiffs?: DiffEntry[];
   rawBaselineDiffs?: DiffEntry[];
   nestedScopeBaselineDiffs?: ReadonlyMap<number, DiffEntry[]>;
+  nestedScopeHostVariantBaselineDiffs?: ReadonlyMap<number, DiffEntry[]>;
+  completedNestedScopeNodeIds?: ReadonlySet<number>;
   hostVariantBaselineDiffs?: DiffEntry[];
   resolveContract: (componentKey: string) => ExperimentalContractV2 | null;
   resolveTokenLabel?: (token: string) => string | null;
@@ -189,6 +198,7 @@ export function evaluateExperimentalContractV2Tree(options: {
   const result: ExperimentalContractV2TreeEvaluation = {
     diffs: [],
     diagnostics: emptyDiagnostics(),
+    coveredNodeIds: [],
     scopes: [],
   };
   if (!options.actualStructure.length) return result;
@@ -202,17 +212,21 @@ export function evaluateExperimentalContractV2Tree(options: {
     componentKey: string;
     componentName: string;
     variantProperties: Record<string, string>;
+    root: boolean;
   }> = [];
+  const coveredNodeIds = new Set<string>();
 
   const root = options.actualStructure[0];
   const rootContract = options.resolveContract(options.hostComponentKey);
   if (rootContract) {
+    if (root.nodeId) coveredNodeIds.add(root.nodeId);
     scopes.push({
       node: root,
       contract: rootContract,
       componentKey: options.hostComponentKey,
       componentName: options.hostComponentName,
       variantProperties: options.hostVariantProperties ?? {},
+      root: true,
     });
   }
 
@@ -222,30 +236,48 @@ export function evaluateExperimentalContractV2Tree(options: {
     const contract = options.resolveContract(componentKey);
     if (!contract) continue;
     if (hasAncestorContractPackage(node, contract.package.id, nodesById, options.resolveContract)) {
+      if (node.nodeId) coveredNodeIds.add(node.nodeId);
       continue;
     }
     if (hasAncestorContractOwnership(node, contract.package.id, nodesById, options.resolveContract)) {
+      if (node.nodeId) coveredNodeIds.add(node.nodeId);
       continue;
     }
     scopes.push({
       node,
       contract,
       componentKey,
-      componentName: node.name,
+      componentName: resolveContractComponentName(contract, componentKey, node.name),
       variantProperties: node.componentInstance?.variantProperties ?? {},
+      root: false,
     });
   }
 
   const seenDiffs = new Set<string>();
   const seenEvidence = new Set<string>();
   for (const scope of scopes) {
+    if (
+      !scope.root &&
+      options.completedNestedScopeNodeIds !== undefined &&
+      !options.completedNestedScopeNodeIds.has(scope.node.id)
+    ) {
+      continue;
+    }
     const scopeNodes = collectScopeNodes(scope.node, options.actualStructure, nodesById);
-    const effectiveBaselineDiffs = scope.node.id === root.id
+    const effectiveBaselineDiffs = scope.root
       ? options.effectiveBaselineDiffs
       : options.nestedScopeBaselineDiffs?.get(scope.node.id) ??
         mergeScopeBaselineDiffs(
           options.effectiveBaselineDiffs ?? [],
           options.rawBaselineDiffs ?? [],
+          scopeNodes,
+        );
+    const hostVariantBaselineDiffs = scope.root
+      ? options.hostVariantBaselineDiffs
+      : options.nestedScopeHostVariantBaselineDiffs?.get(scope.node.id) ??
+        mergeScopeBaselineDiffs(
+          [],
+          options.hostVariantBaselineDiffs ?? [],
           scopeNodes,
         );
     const evaluation = evaluateExperimentalContractV2({
@@ -255,7 +287,7 @@ export function evaluateExperimentalContractV2Tree(options: {
       hostVariantProperties: scope.variantProperties,
       actualStructure: scopeNodes,
       effectiveBaselineDiffs,
-      hostVariantBaselineDiffs: options.hostVariantBaselineDiffs,
+      hostVariantBaselineDiffs,
       resolveTokenLabel: options.resolveTokenLabel,
       resolveComponentFamilyKey: options.resolveComponentFamilyKey,
     });
@@ -266,6 +298,7 @@ export function evaluateExperimentalContractV2Tree(options: {
       hostComponentName: scope.componentName,
       hostNodeId: scope.node.nodeId ?? null,
     });
+    if (scope.node.nodeId) coveredNodeIds.add(scope.node.nodeId);
     for (const diff of evaluation.diffs) {
       const evidenceKey = [
         diff.nodeId ?? diff.nodePath,
@@ -289,6 +322,9 @@ export function evaluateExperimentalContractV2Tree(options: {
   result.diagnostics.unsupportedRuleIds = Array.from(
     new Set(result.diagnostics.unsupportedRuleIds),
   ).sort();
+  result.coveredNodeIds = options.actualStructure
+    .map((node) => node.nodeId)
+    .filter((nodeId): nodeId is string => Boolean(nodeId && coveredNodeIds.has(nodeId)));
   return result;
 }
 
@@ -380,6 +416,17 @@ function contractOwnsNestedPackage(
     const policy = entry as Record<string, unknown>;
     return policy.packageId === nestedPackageId && policy.mode === 'host-contract';
   });
+}
+
+function resolveContractComponentName(
+  contract: ExperimentalContractV2,
+  componentKey: string,
+  fallback: string,
+): string {
+  const component = contract.facts.componentApi.find((entry) =>
+    entry.componentKey === componentKey || entry.componentKeys?.includes(componentKey),
+  );
+  return component?.name ?? fallback;
 }
 
 function collectScopeNodes(
@@ -492,6 +539,7 @@ function canonicalViolationProperty(property: string): string {
   if (property === 'fills' || property === 'styles.fill') return 'fill';
   if (property === 'strokes' || property === 'styles.stroke') return 'stroke';
   if (property === 'textStyle' || property === 'typographyToken') return 'styles.text';
+  if (property.startsWith('layout.padding.')) return property.slice('layout.'.length);
   return property;
 }
 
@@ -516,8 +564,10 @@ function evaluateRule(
   if (!SUPPORTED_ASSERTIONS.has(rule.assert.op)) return { verdict: 'unknown' };
   const resolvedSelection = resolveSelection(rule, context);
   if (!resolvedSelection) return { verdict: 'unknown' };
-  const selection = applyRuleCondition(rule.when, resolvedSelection, context);
-  if (!selection) return { verdict: 'unknown' };
+  const condition = applyRuleCondition(rule.when, resolvedSelection, context);
+  if (condition.status === 'unsupported') return { verdict: 'unknown' };
+  if (condition.status === 'not-applicable') return { verdict: 'pass' };
+  const selection = condition.nodes;
 
   switch (rule.assert.op) {
     case 'componentApiValid':
@@ -538,6 +588,8 @@ function evaluateRule(
       return evaluateValuePosition(selection, rule.assert, context);
     case 'relativeOrder':
       return evaluateRelativeOrder(selection, rule.assert);
+    case 'sequenceEquals':
+      return evaluateSequenceEquals(selection, rule.assert, context);
     default:
       return { verdict: 'unknown' };
   }
@@ -556,18 +608,19 @@ function evaluateMatchesEffectiveBaseline(
   );
   if (!properties.length) return { verdict: 'unknown' };
 
+  // A host-variant assertion must use the materialized host as its sole
+  // baseline. Mixing standalone component diffs back in turns intentional
+  // parent-authored overrides into violations (for example StatusPreset
+  // choosing the Label color for each Type).
   const baselineDiffs = assertion.baselineSource === 'host-variant'
-    ? mergeBaselineDiffs(
-        context.effectiveBaselineDiffs,
-        context.hostVariantBaselineDiffs,
-      )
+    ? context.hostVariantBaselineDiffs
     : context.effectiveBaselineDiffs;
   const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
   for (const diff of baselineDiffs) {
     if (!isActionableBaselineDiff(diff, context, assertion)) continue;
     const evidenceDiff = resolveHostBaselineEvidence(diff, context, assertion);
     if (!properties.some((property) => baselinePropertyMatches(property, evidenceDiff))) continue;
-    const target = findBaselineTarget(evidenceDiff, nodes);
+    const target = findBaselineTarget(evidenceDiff, nodes, context);
     if (!target) continue;
     matches.push({ diff: evidenceDiff, target });
   }
@@ -622,7 +675,15 @@ function isActionableBaselineDiff(
   const referenceFamily = referenceOwner
     ? context.resolveComponentFamilyKey?.(referenceOwner) ?? referenceOwner
     : null;
-  if (actualFamily && referenceFamily && actualFamily !== referenceFamily) {
+  if (
+    actualFamily &&
+    referenceFamily &&
+    actualFamily !== referenceFamily &&
+    !(
+      assertion.baselineSource === 'host-variant' &&
+      diff.context.directHostVariantOverride === true
+    )
+  ) {
     // A nested component swap changes the entire descendant visual tree. Those
     // paints/layout values cannot be compared with the previous owner's
     // baseline; the swap itself remains available as component-property evidence.
@@ -632,9 +693,7 @@ function isActionableBaselineDiff(
   if (
     assertion.baselineSource !== 'host-variant' &&
     Array.isArray(assertion.properties) &&
-    assertion.properties.some((property: unknown) =>
-      typeof property === 'string' && property.endsWith('.*'),
-    ) &&
+    shouldResolveNestedBaselineAgainstHost(assertion.properties, diff) &&
     diff.context.referenceOrigin === 'nested-component' &&
     actualFamily &&
     referenceFamily &&
@@ -644,12 +703,29 @@ function isActionableBaselineDiff(
     )
   ) {
     // The nested component's standalone baseline may intentionally be
-    // overridden by its parent variant. If the full host baseline is clean,
-    // that override is expected rather than a user customization.
+    // overridden by its parent variant. This applies to exact properties such
+    // as styles.text as well as wildcard groups. If the full host baseline is
+    // clean, that override is expected rather than a user customization.
     return false;
   }
 
   return true;
+}
+
+function shouldResolveNestedBaselineAgainstHost(
+  properties: unknown[],
+  diff: DiffEntry,
+): boolean {
+  const declared = properties.filter(
+    (property): property is string => typeof property === 'string',
+  );
+  if (declared.some((property) => property.endsWith('.*'))) {
+    return true;
+  }
+
+  const aliases = baselinePropertyAliases(diff.details?.property ?? '');
+  return aliases.includes('styles.text') &&
+    declared.some((property) => property === 'styles.text' || property === 'style.text');
 }
 
 function baselineDiffTargetsSameProperty(left: DiffEntry, right: DiffEntry): boolean {
@@ -686,13 +762,34 @@ function baselinePropertyAliases(property: string): string[] {
   if (property === 'cornerRadius') aliases.add('radius');
   if (property === 'fills' || property === 'styles.fill') aliases.add('fill');
   if (property === 'strokes' || property === 'styles.stroke') aliases.add('stroke');
+  if (property.startsWith('layout.padding.')) aliases.add(property.slice('layout.'.length));
+  if (property.startsWith('padding.')) aliases.add(`layout.${property}`);
   return Array.from(aliases);
 }
 
-function findBaselineTarget(diff: DiffEntry, nodes: RuntimeNode[]): RuntimeNode | null {
+function findBaselineTarget(
+  diff: DiffEntry,
+  nodes: RuntimeNode[],
+  context: EvaluationContext,
+): RuntimeNode | null {
   if (diff.nodeId) {
     const byId = nodes.find((node) => node.nodeId === diff.nodeId);
     if (byId) return byId;
+
+    const ownerKey = diff.context.actualNestedOwnerComponentKey ??
+      (diff.context.referenceOrigin === 'nested-component'
+        ? diff.context.actualComponentKey
+        : null);
+    if (!ownerKey) return null;
+    const ownerFamily = context.resolveComponentFamilyKey?.(ownerKey) ?? ownerKey;
+    return nodes.find((node) => {
+      if (!diff.nodePath.startsWith(`${node.path} / `)) return false;
+      const targetKey = componentKey(node, context);
+      const targetFamily = targetKey
+        ? context.resolveComponentFamilyKey?.(targetKey) ?? targetKey
+        : null;
+      return targetFamily === ownerFamily;
+    }) ?? null;
   }
   return nodes.find((node) =>
     node.path === diff.nodePath ||
@@ -708,21 +805,33 @@ function applyRuleCondition(
   condition: ExperimentalRuleV2['when'],
   nodes: RuntimeNode[],
   context: EvaluationContext,
-): RuntimeNode[] | null {
-  if (condition?.op === 'evidenceComplete') return nodes;
+): RuleConditionEvaluation {
+  if (condition?.op === 'evidenceComplete') return { status: 'matched', nodes };
   if (condition?.op !== 'all' || !condition.clauses || typeof condition.clauses !== 'object') {
-    return null;
+    return { status: 'unsupported' };
   }
   const clauses = condition.clauses as Record<string, unknown>;
   for (const field of Object.keys(clauses)) {
-    if (field !== 'component' && field !== 'variant' && field !== 'except') return null;
+    if (
+      field !== 'component' &&
+      field !== 'hostVariant' &&
+      field !== 'variant' &&
+      field !== 'except'
+    ) return { status: 'unsupported' };
   }
   if (typeof clauses.component === 'string' && !hostComponentMatches(clauses.component, context)) {
-    return [];
+    return { status: 'not-applicable' };
+  }
+  if (clauses.hostVariant !== undefined) {
+    const expectedHostVariant = readVariantCondition(clauses.hostVariant);
+    if (!expectedHostVariant) return { status: 'unsupported' };
+    if (!variantConditionMatches(expectedHostVariant, ruleProperties(context.host, context))) {
+      return { status: 'not-applicable' };
+    }
   }
   if (clauses.variant !== undefined) {
     const expectedVariant = readVariantCondition(clauses.variant);
-    if (!expectedVariant) return null;
+    if (!expectedVariant) return { status: 'unsupported' };
     const properties = Object.keys(expectedVariant);
     const targetOwnsVariantProperty = nodes.some((node) => {
       const variants = ruleProperties(node, context);
@@ -737,25 +846,26 @@ function applyRuleCondition(
           node === owner || node.path.startsWith(`${owner.path} / `),
         ),
       );
+      if (!nodes.length) return { status: 'not-applicable' };
     } else if (!variantConditionMatches(expectedVariant, ruleProperties(context.host, context))) {
-      return [];
+      return { status: 'not-applicable' };
     }
   }
   if (clauses.except !== undefined) {
     if (!clauses.except || typeof clauses.except !== 'object' || Array.isArray(clauses.except)) {
-      return null;
+      return { status: 'unsupported' };
     }
     const exception = clauses.except as Record<string, unknown>;
     for (const field of Object.keys(exception)) {
-      if (field !== 'component' && field !== 'variant') return null;
+      if (field !== 'component' && field !== 'variant') return { status: 'unsupported' };
     }
     const componentMatches = typeof exception.component !== 'string' ||
       hostComponentMatches(exception.component, context);
     const variantMatches = exception.variant === undefined ||
       variantConditionMatches(exception.variant, ruleProperties(context.host, context));
-    if (componentMatches && variantMatches) return [];
+    if (componentMatches && variantMatches) return { status: 'not-applicable' };
   }
-  return nodes;
+  return { status: 'matched', nodes };
 }
 
 function hostComponentMatches(expected: string, context: EvaluationContext): boolean {
@@ -1356,6 +1466,40 @@ function evaluateRelativeOrder(nodes: RuntimeNode[], assertion: Record<string, a
   return { verdict: 'pass' as const };
 }
 
+function evaluateSequenceEquals(
+  nodes: RuntimeNode[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+) {
+  if (
+    !nodes.length ||
+    typeof assertion.fact !== 'string' ||
+    !Array.isArray(assertion.values) ||
+    !assertion.values.every((value: unknown) => typeof value === 'string')
+  ) {
+    return { verdict: 'unknown' as const };
+  }
+  // Count constraints own missing or extra targets. Sequence comparison only
+  // evaluates a complete composition to avoid reporting the same defect twice.
+  if (nodes.length !== assertion.values.length) {
+    return { verdict: 'unknown' as const };
+  }
+  for (const [index, node] of nodes.entries()) {
+    const actual = readFact(node, assertion.fact, context);
+    if (actual === undefined) return { verdict: 'unknown' as const };
+    const expected = assertion.values[index];
+    if (actual !== expected) {
+      return {
+        verdict: 'fail' as const,
+        target: node,
+        expected,
+        actual,
+      };
+    }
+  }
+  return { verdict: 'pass' as const };
+}
+
 function readFact(
   node: RuntimeNode,
   fact: string,
@@ -1378,6 +1522,15 @@ function readFact(
   if (fact === 'counterAxisAlignItems' || fact === 'layout.counterAxisAlignItems') {
     return node.layout?.counterAxisAlignItems;
   }
+  if (fact.startsWith('padding.') || fact.startsWith('layout.padding.')) {
+    const parts = fact.split('.');
+    const side = parts[parts.length - 1];
+    if (side === 'top' || side === 'right' || side === 'bottom' || side === 'left') {
+      return node.layout?.padding?.[side];
+    }
+  }
+  if (fact === 'layout.itemSpacing') return node.layout?.itemSpacing;
+  if (fact === 'layout.direction') return node.layout?.direction;
   if (fact === 'opacity') return node.opacity;
   if (fact === 'fill' || fact === 'fills') {
     const token = node.fill?.token;
@@ -1535,7 +1688,11 @@ function getRuleVariantProperty(rule: ExperimentalRuleV2): string | null {
 function resolveRuleRemediation(
   rule: ExperimentalRuleV2,
   target: RuntimeNode,
-  evaluation: { expected?: unknown; actual?: unknown },
+  evaluation: {
+    expected?: unknown;
+    actual?: unknown;
+    sourceDiff?: DiffEntry;
+  },
 ): CustomizationAssessment['remediation'] {
   const remediation = rule.remediation;
   if (
@@ -1549,11 +1706,30 @@ function resolveRuleRemediation(
   ) {
     return null;
   }
+  const sourceProperty = evaluation.sourceDiff?.details?.property ?? null;
+  if (sourceProperty === 'component.identity') {
+    // Instance swaps require swapComponent with the reference component key;
+    // they cannot be repaired through variant properties.
+    return null;
+  }
+  const failingVariantProperty = sourceProperty?.startsWith('variant.')
+    ? sourceProperty.slice('variant.'.length)
+    : null;
   const properties: Record<string, string> = {};
   for (const [property, value] of Object.entries(remediation.properties)) {
+    if (failingVariantProperty && property !== failingVariantProperty) {
+      continue;
+    }
     if (typeof value !== 'string') continue;
     if (!value.startsWith('$')) {
       properties[property] = value;
+      continue;
+    }
+    if (
+      value === '$expectedValue' &&
+      (typeof evaluation.expected === 'string' || typeof evaluation.expected === 'number')
+    ) {
+      properties[property] = String(evaluation.expected);
       continue;
     }
     const referenceProperty = value.match(/^\$targets\[0\]\.variant\.([^\.]+)$/)?.[1];

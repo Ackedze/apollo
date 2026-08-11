@@ -16,6 +16,7 @@ export type LibraryComponentFreshnessReason =
 
 export type LibraryComponentFreshnessScope =
   | 'independent-instance'
+  | 'projected-slot-root'
   | 'instance-sublayer';
 
 export interface LibraryNodeAncestor {
@@ -205,6 +206,7 @@ export function getLibraryComponentFreshnessScope(
 ): LibraryComponentFreshnessScope {
   let ancestor = node.parent;
   while (ancestor) {
+    if (ancestor.type === 'SLOT') return 'projected-slot-root';
     if (ancestor.type === 'INSTANCE') return 'instance-sublayer';
     ancestor = ancestor.parent;
   }

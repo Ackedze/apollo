@@ -12,6 +12,7 @@ export interface AuditTraversalContext {
   referenceStructureCache: Map<string, DSStructureNode[] | null>;
   localComponentContextCache: Map<string, boolean>;
   checkedComponentNodes: Set<string>;
+  evaluatedContractV2Nodes: Set<string>;
   libraryComponentFreshnessChecker: LibraryComponentFreshnessChecker;
   customStyleOptions: CustomStyleCollectionOptions;
   deprecatedStyleOptions: DeprecatedStyleCollectionOptions;
@@ -32,6 +33,7 @@ export function createAuditTraversalContext(
     referenceStructureCache: new Map(),
     localComponentContextCache: new Map(),
     checkedComponentNodes: new Set(),
+    evaluatedContractV2Nodes: new Set(),
     libraryComponentFreshnessChecker: createLibraryComponentFreshnessChecker(
       dependencies.importComponentByKey,
     ),

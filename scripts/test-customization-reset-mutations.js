@@ -222,6 +222,85 @@ async function main() {
     assert.equal(amountLayoutNode.primaryAxisAlignItems, 'MAX');
     assert.equal(amountLayoutNode.counterAxisAlignItems, 'MIN');
 
+    const canonicalPaddingNode = {
+      id: 'canonical-padding-node',
+      type: 'FRAME',
+      layoutMode: 'VERTICAL',
+      paddingTop: 12,
+      paddingRight: 16,
+      paddingBottom: 12,
+      paddingLeft: 16,
+    };
+    await mutations.applyReferenceResetByDetails(canonicalPaddingNode, [
+      {
+        property: 'padding.top',
+        reference: {value: 16},
+      },
+      {
+        property: 'padding.right',
+        reference: {value: 20},
+      },
+      {
+        property: 'padding.bottom',
+        reference: {value: 16},
+      },
+      {
+        property: 'padding.left',
+        reference: {value: 20},
+      },
+    ]);
+    assert.equal(canonicalPaddingNode.paddingTop, 16);
+    assert.equal(canonicalPaddingNode.paddingRight, 20);
+    assert.equal(canonicalPaddingNode.paddingBottom, 16);
+    assert.equal(canonicalPaddingNode.paddingLeft, 20);
+
+    const dimensionNode = {
+      id: 'dimension-node',
+      type: 'FRAME',
+      width: 144,
+      height: 40,
+      resize(width, height) {
+        this.width = width;
+        this.height = height;
+      },
+    };
+    await mutations.applyReferenceResetByDetails(dimensionNode, [
+      {
+        property: 'layout.width',
+        reference: {value: 120},
+      },
+    ]);
+    assert.equal(dimensionNode.width, 120);
+    assert.equal(dimensionNode.height, 40);
+
+    const referenceComponent = {key: 'reference-component-key'};
+    const swappedInstance = {
+      id: 'swapped-instance',
+      type: 'INSTANCE',
+      swappedTo: null,
+      swapComponent(component) {
+        this.swappedTo = component;
+      },
+      async getMainComponentAsync() {
+        return this.swappedTo;
+      },
+    };
+    globalThis.figma.importComponentByKeyAsync = async (key) => {
+      assert.equal(key, referenceComponent.key);
+      return referenceComponent;
+    };
+    await mutations.applyReferenceResetByDetails(swappedInstance, [
+      {
+        property: 'component.identity',
+        reference: {
+          value: '[D] IconButton',
+          resourceType: 'component',
+          resourceId: referenceComponent.key,
+        },
+      },
+    ]);
+    assert.equal(swappedInstance.swappedTo, referenceComponent);
+
     const rejectedLayoutNode = {id: 'rejected-layout-node', type: 'FRAME'};
     Object.defineProperties(rejectedLayoutNode, {
       primaryAxisAlignItems: {

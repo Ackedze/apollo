@@ -38,6 +38,7 @@ type ChangeGroup = {
     onPress: () => void;
     singleIcon?: boolean;
   }>;
+  actionPickerLabel?: string;
   lines: ChangeLine[];
 };
 
@@ -230,8 +231,25 @@ export function CustomizationResultCard({
           onFocus={group.onFocus}
           showFocus={Boolean(group.onFocus)}
           valueLines={group.lines}
+          actionSlot={
+            group.actionPickerLabel && (group.actions?.length ?? 0) > 1
+              ? (
+                  <FindingActionPicker
+                    label={group.actionPickerLabel}
+                    actions={(group.actions ?? []).map((action, actionIndex) => ({
+                      id: `${group.name}:${action.label}:${actionIndex}`,
+                      label: group.actionPickerLabel ?? 'Выбрать',
+                      targetName: action.label,
+                      onPress: action.onPress,
+                    }))}
+                  />
+                )
+              : undefined
+          }
           actions={
-            group.actions?.length
+            group.actionPickerLabel && (group.actions?.length ?? 0) > 1
+              ? []
+              : group.actions?.length
               ? group.actions
               : group.onReset
               ? [{ label: 'Сбросить', onPress: group.onReset, singleIcon: false }]

@@ -29,8 +29,12 @@ function loadCorporateActionModule() {
 
 const {
   findBestCatalogVariantKey,
+  getCorporateCounterpart,
+  rebuildCorporateCounterpartIndex,
+  resolveCorporateActionNodeById,
   restoreCompatibleInstanceProperties,
   snapshotInstanceComponentProperties,
+  swapCorporateTarget,
 } = loadCorporateActionModule();
 
 const fixtures = JSON.parse(
@@ -114,6 +118,20 @@ function testPlatformAwareCounterparts() {
   assert.equal(
     index.get(buildIndexKey('🔄 [M][Corporate] Tag', 'mobile-web', 'base')),
     '[M] Tag',
+  );
+
+  rebuildCorporateCounterpartIndex([
+    ...buttonCatalog.components,
+    ...tagCatalog.components,
+  ]);
+  const desktopCorporateButton = buttonCatalog.components.find(
+    (component) => component.name === '🔄 [D][Corporate] Button',
+  );
+  const desktopCounterpart = getCorporateCounterpart(desktopCorporateButton);
+  assert.equal(
+    desktopCounterpart?.base?.name,
+    '[D] Button',
+    'Rebuilt runtime counterpart index must retain the base desktop Button.',
   );
 }
 
@@ -200,11 +218,86 @@ function testCompatiblePropertyRestoration() {
   ]);
 }
 
-function main() {
+async function testNestedInstanceNodeResolution() {
+  const nestedId = 'I11647:10616;37705:55361';
+  const nestedInstance = {
+    id: nestedId,
+    name: '🔄 [D][Corporate] Button',
+    type: 'INSTANCE',
+  };
+  const ownerInstance = {
+    id: '11647:10616',
+    type: 'INSTANCE',
+    findOne(predicate) {
+      return predicate(nestedInstance) ? nestedInstance : null;
+    },
+  };
+  globalThis.figma = {
+    getNodeByIdAsync: async (nodeId) =>
+      nodeId === ownerInstance.id ? ownerInstance : null,
+  };
+
+  const resolved = await resolveCorporateActionNodeById(nestedId);
+  assert.equal(
+    resolved,
+    nestedInstance,
+    'A rendered instance sublayer must resolve through its owning instance.',
+  );
+  delete globalThis.figma;
+}
+
+async function testSuccessfulSwapSurvivesOverrideRestoreFailure() {
+  const targetComponent = { key: 'base-variant-key' };
+  let appliedComponent = null;
+  const instance = {
+    id: 'nested-button',
+    componentProperties: {
+      'Label#target': { type: 'TEXT', value: 'Button' },
+    },
+    swapComponent(component) {
+      appliedComponent = component;
+    },
+    async getMainComponentAsync() {
+      return appliedComponent;
+    },
+    setProperties() {
+      throw new Error('override restore rejected');
+    },
+  };
+  const attempts = [];
+  const swapped = await swapCorporateTarget(
+    instance,
+    targetComponent,
+    [
+      {
+        sourceKey: 'Label#source',
+        canonicalName: 'Label',
+        type: 'TEXT',
+        value: 'Скачать отчёт',
+      },
+    ],
+    'direct-variant',
+    attempts,
+  );
+
+  assert.equal(
+    swapped,
+    true,
+    'A verified component swap must stay successful when optional override restoration fails.',
+  );
+  assert.deepEqual(attempts, []);
+}
+
+async function main() {
   testPlatformAwareCounterparts();
   testVariantResolution();
   testCompatiblePropertyRestoration();
+  await testNestedInstanceNodeResolution();
+  await testSuccessfulSwapSurvivesOverrideRestoreFailure();
   console.log('Themization regression checks passed');
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

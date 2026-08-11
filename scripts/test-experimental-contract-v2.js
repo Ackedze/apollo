@@ -153,6 +153,225 @@ function testRelationalAndPositionOperators() {
   assert.equal(result.diagnostics.unknown, 0);
 }
 
+function testConditionalButtonStackSequence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-button-stack-sequence-engine',
+  );
+  const contract = createContract();
+  const buttonSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: '[M] Button' },
+      visible: { op: 'equals', value: true },
+    },
+  };
+  contract.rules = [rule('button-stack-horizontal-order', buttonSelector, {
+    op: 'sequenceEquals',
+    fact: 'target.variant.View',
+    values: ['Secondary', 'Primary'],
+  })];
+  contract.rules[0].select.host = {
+    scope: 'selection-root',
+    where: {
+      componentName: { op: 'equals', value: '🔒 [M] ButtonStack' },
+    },
+  };
+  contract.rules[0].when = {
+    op: 'all',
+    clauses: { hostVariant: { Presets: 'Group Horizontal' } },
+  };
+  contract.rules[0].remediation = {
+    kind: 'set-variant-properties',
+    target: '$failingTarget',
+    properties: { View: '$expectedValue' },
+  };
+
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: '🔒 [M] ButtonStack',
+    hostVariantProperties: { Presets: 'Group Horizontal' },
+    actualStructure: [
+      node(1, '🔒 [M] ButtonStack', 'test-variant-key', {
+        Presets: 'Group Horizontal',
+      }),
+      node(2, '[M] Button', 'button-key-1', {
+        Presets: 'Primary',
+        View: 'Primary',
+      }),
+      node(3, '[M] Button', 'button-key-2', {
+        Presets: 'Primary',
+        View: 'Secondary',
+      }),
+    ],
+  });
+
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].message, 'View: Secondary → Primary');
+  assert.deepEqual(result.diffs[0].assessment.remediation, {
+    kind: 'set-variant-properties',
+    nodeId: 'node:2',
+    properties: { View: 'Secondary' },
+  });
+
+  const otherPreset = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: '🔒 [M] ButtonStack',
+    hostVariantProperties: { Presets: 'Primary' },
+    actualStructure: [
+      node(1, '🔒 [M] ButtonStack', 'test-variant-key', { Presets: 'Primary' }),
+      node(2, '[M] Button', 'button-key-1', {
+        Presets: 'Group Horizontal',
+        View: 'Primary',
+      }),
+      node(3, '[M] Button', 'button-key-2', {
+        Presets: 'Group Horizontal',
+        View: 'Secondary',
+      }),
+    ],
+  });
+  assert.equal(otherPreset.diffs.length, 0);
+}
+
+function testConditionalButtonStackCountSkipsOtherPresets() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-button-stack-count-condition-engine',
+  );
+  const contract = createContract();
+  const buttonSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: '[M] Button' },
+      visible: { op: 'equals', value: true },
+    },
+  };
+  const primary = rule('button-stack-primary-count', buttonSelector, {
+    op: 'countBetween',
+    min: 1,
+    max: 1,
+  });
+  primary.when = {
+    op: 'all',
+    clauses: { hostVariant: { Presets: 'Primary' } },
+  };
+  const secondary = rule('button-stack-secondary-count', buttonSelector, {
+    op: 'countBetween',
+    min: 1,
+    max: 1,
+  });
+  secondary.when = {
+    op: 'all',
+    clauses: { hostVariant: { Presets: 'Secondary' } },
+  };
+  contract.rules = [primary, secondary];
+  for (const contractRule of contract.rules) contractRule.select.host = {
+    scope: 'selection-root',
+    where: {
+      componentName: { op: 'equals', value: '🔒 [M] ButtonStack' },
+    },
+  };
+
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: '🔒 [M] ButtonStack',
+    hostVariantProperties: { Presets: 'Primary', Background: 'False' },
+    actualStructure: [
+      node(1, '🔒 [M] ButtonStack', 'test-variant-key', {
+        Presets: 'Primary',
+        Background: 'False',
+      }),
+      node(2, '[M] Button', 'button-key', { View: 'Primary' }),
+    ],
+  });
+
+  assert.equal(result.diffs.length, 0);
+  assert.equal(result.diagnostics.passed, 2);
+  assert.equal(result.diagnostics.unknown, 0);
+}
+
+function testButtonStackRootLayoutContract() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-button-stack-layout-engine',
+  );
+  const contract = createContract();
+  const baselineRule = rule('button-stack-root-baseline', { scope: 'selection-root' }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['layout.padding.*'],
+  });
+  const exactRule = rule('button-stack-root-layout', { scope: 'selection-root' }, {
+    op: 'propertiesEqual',
+    values: {
+      'layout.sizing.horizontal': 'FIXED',
+      'layout.sizing.vertical': 'HUG',
+      'layout.direction': 'V',
+      'layout.itemSpacing': 12,
+      'padding.top': 16,
+      'padding.right': 20,
+      'padding.bottom': 16,
+      'padding.left': 20,
+    },
+  });
+  contract.rules = [baselineRule, exactRule];
+  for (const contractRule of contract.rules) contractRule.select.host = {
+    scope: 'selection-root',
+    where: {
+      componentName: { op: 'equals', value: '🔒 [M] ButtonStack' },
+    },
+  };
+
+  const host = node(1, '🔒 [M] ButtonStack', 'test-variant-key', {
+    Presets: 'Primary',
+  });
+  host.layout = {
+    direction: 'V',
+    itemSpacing: 12,
+    sizing: { horizontal: 'FIXED', vertical: 'HUG' },
+    padding: { top: 16, right: 12, bottom: 16, left: 20 },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: '🔒 [M] ButtonStack',
+    hostVariantProperties: { Presets: 'Primary' },
+    actualStructure: [host],
+    effectiveBaselineDiffs: [{
+      message: 'Паддинг right: 20 → 12',
+      nodePath: host.path,
+      nodeName: host.name,
+      nodeId: host.nodeId,
+      visible: true,
+      context: {
+        actualComponentKey: 'test-variant-key',
+        referenceComponentKey: 'test-variant-key',
+        referenceOrigin: 'host',
+        actualNestedOwnerComponentKey: null,
+        actualNestedOwnerPath: null,
+        actualNestedOwnerRelativePath: null,
+        nestedOwnerComponentKey: null,
+        nestedOwnerComponentRole: null,
+        nestedOwnerPath: null,
+        nestedOwnerRelativePath: null,
+      },
+      diffKind: 'layout',
+      details: {
+        property: 'layout.padding.right',
+        reference: { value: 20 },
+        actual: { value: 12 },
+      },
+    }],
+  });
+
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.button-stack-root-layout');
+  assert.equal(result.diffs[0].details.property, 'padding.right');
+  assert.equal(result.diffs[0].message, 'padding.right: 20 → 12');
+}
+
 function testTableBasicVisibleDataCellCount() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -539,8 +758,17 @@ function testEffectiveBaselineAndNestedSizeContract() {
     scope: 'descendants',
     where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['Status'] } },
   };
+  const statusFillSelector = {
+    scope: 'descendants',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['Status', 'Label', '🔩 Label'],
+      },
+    },
+  };
   contract.rules = [
-    rule('fill-follows-effective-baseline', statusSelector, {
+    rule('fill-follows-effective-baseline', statusFillSelector, {
       op: 'matchesEffectiveBaseline',
       properties: ['fill'],
     }),
@@ -617,6 +845,13 @@ function testEffectiveBaselineAndNestedSizeContract() {
   const hostVariantLabelFillDiff = {
     ...fillDiff,
     message: 'заливка: decorative-text/green → text/info',
+    context: {
+      ...fillDiff.context,
+      referenceOrigin: 'host',
+      actualNestedOwnerComponentKey: 'label-key',
+      nestedOwnerComponentKey: 'status-key',
+      directHostVariantOverride: true,
+    },
     details: {
       property: 'fill',
       reference: { value: 'decorative-text/green' },
@@ -636,14 +871,27 @@ function testEffectiveBaselineAndNestedSizeContract() {
       actual: { value: 6 },
     },
   };
+  const cleanStandaloneLabelOverride = {
+    ...fillDiff,
+    message: 'заливка: text/info → decorative-text/green',
+    details: {
+      property: 'fill',
+      reference: { value: 'text/info' },
+      actual: { value: 'decorative-text/green' },
+    },
+  };
   const result = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'status-preset-key',
     hostComponentName: '[D] StatusPreset',
     hostVariantProperties: { Size: '24', Type: 'Approved' },
     actualStructure: structure,
-    effectiveBaselineDiffs: [backgroundFillDiff],
+    effectiveBaselineDiffs: [
+      backgroundFillDiff,
+      cleanStandaloneLabelOverride,
+    ],
     hostVariantBaselineDiffs: [
+      backgroundFillDiff,
       hostVariantLabelFillDiff,
       hostVariantDerivedPaddingDiff,
     ],
@@ -670,6 +918,36 @@ function testEffectiveBaselineAndNestedSizeContract() {
     ),
     false,
     'Host-variant baseline must not expose layout derived from a nested variant switch',
+  );
+  assert.equal(
+    result.diffs.some((diff) => diff.message === cleanStandaloneLabelOverride.message),
+    false,
+    'A host-variant rule must ignore clean standalone-only Label overrides',
+  );
+
+  const unconfirmedCrossOwnerResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'status-preset-key',
+    hostComponentName: '[D] StatusPreset',
+    hostVariantProperties: { Size: '24', Type: 'Approved' },
+    actualStructure: structure,
+    effectiveBaselineDiffs: [],
+    hostVariantBaselineDiffs: [
+      {
+        ...hostVariantLabelFillDiff,
+        context: {
+          ...hostVariantLabelFillDiff.context,
+          directHostVariantOverride: false,
+        },
+      },
+    ],
+  });
+  assert.equal(
+    unconfirmedCrossOwnerResult.diffs.some((diff) =>
+      diff.assessment.ruleId.endsWith('fill-follows-effective-baseline'),
+    ),
+    false,
+    'A cross-owner host baseline must stay suppressed without direct Figma override evidence.',
   );
 
   const uppercaseDiff = {
@@ -721,6 +999,110 @@ function testEffectiveBaselineAndNestedSizeContract() {
       diff.assessment.ruleId.endsWith('fill-follows-effective-baseline'),
     ),
     false,
+  );
+}
+
+function testEffectiveBaselineRemediationIsAtomic() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-atomic-remediation-engine',
+  );
+  const contract = createContract();
+  const targetSelector = {
+    scope: 'descendants',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['[D] IconButton', '[D] IconButton_Inverted'],
+      },
+    },
+  };
+  const baselineRule = rule('action-control-baseline', targetSelector, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['component.identity', 'variant.*'],
+  });
+  baselineRule.select.host = { scope: 'selection-root' };
+  baselineRule.remediation = {
+    kind: 'set-variant-properties',
+    target: '$failingTarget',
+    properties: {
+      Presets: '$targets[0].variant.Presets',
+      Size: '$targets[0].variant.Size',
+      TransparentBg: '$targets[0].variant.TransparentBg',
+      View: '$targets[0].variant.View',
+    },
+  };
+  contract.rules = [baselineRule];
+  const structure = [
+    node(1, '[D] BodyActionCell :: Wide', 'action-cell-key', {}),
+    node(2, '[D] IconButton', 'icon-button-key', {
+      Size: '32',
+      View: 'Tertiary',
+      TransparentBg: 'False',
+    }),
+  ];
+  const baseDiff = {
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'icon-button-key',
+      referenceComponentKey: 'icon-button-key',
+      referenceOrigin: 'host',
+    },
+    diffKind: 'other',
+  };
+  const sizeDiff = {
+    ...baseDiff,
+    message: 'Size: 24 → 32',
+    details: {
+      property: 'variant.Size',
+      reference: { value: '24' },
+      actual: { value: '32' },
+    },
+  };
+  const sizeResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'action-cell-key',
+    hostComponentName: '[D] BodyActionCell :: Wide',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [sizeDiff],
+  });
+  assert.deepEqual(sizeResult.diffs[0].assessment.remediation, {
+    kind: 'set-variant-properties',
+    nodeId: structure[1].nodeId,
+    properties: { Size: '24' },
+  });
+
+  const identityDiff = {
+    ...baseDiff,
+    message: 'Компонент: [D] IconButton → [D] IconButton_Inverted',
+    details: {
+      property: 'component.identity',
+      reference: {
+        value: '[D] IconButton',
+        resourceType: 'component',
+        resourceId: 'icon-button-24-primary',
+      },
+      actual: {
+        value: '[D] IconButton_Inverted',
+        resourceType: 'component',
+        resourceId: 'icon-button-inverted-24-primary',
+      },
+    },
+  };
+  const identityResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'action-cell-key',
+    hostComponentName: '[D] BodyActionCell :: Wide',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [identityDiff],
+  });
+  assert.equal(identityResult.diffs[0].assessment.remediation, null);
+  assert.equal(
+    identityResult.diffs[0].details.reference.resourceId,
+    'icon-button-24-primary',
   );
 }
 
@@ -971,6 +1353,21 @@ function testNestedStandaloneBaselineDefersToExactHostProperty() {
     },
   });
   contract.rules[0].assert.properties = ['styles.text'];
+  const expectedHostTypography = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'payment-variant-key',
+    hostComponentName: 'PaymentMaskedNumber',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [standaloneTypography],
+    hostVariantBaselineDiffs: [],
+    resolveComponentFamilyKey: (key) =>
+      key.startsWith('payment-') ? 'payment-family-key' : key,
+  });
+  assert.equal(
+    expectedHostTypography.diffs.length,
+    0,
+    'An exact text-style rule must keep an intentional host typography override clean.',
+  );
   const customized = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'payment-variant-key',
@@ -1263,6 +1660,232 @@ function testHostVariantBaselineRespectsTargetSubtree() {
   );
 }
 
+function testBaselineRuleDoesNotClaimNestedComponentEvidence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-baseline-scope-boundary-engine',
+  );
+  const contract = createContract();
+  const rootRule = rule('root-baseline', { scope: 'selection-root' }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['styles.text'],
+  });
+  rootRule.select.host = { scope: 'selection-root' };
+  contract.rules = [rootRule];
+  const structure = [
+    node(1, '[D] CorporateContent', 'corporate-content-key', {}),
+    node(2, 'Label', '', {}),
+  ];
+  structure[1].type = 'TEXT';
+  structure[1].componentInstance = null;
+  structure[1].path = `${structure[0].path} / [D] Body / Nested component / Label`;
+  const nestedTextDiff = {
+    message: 'Стиль текст: expected -> actual',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'host' },
+    diffKind: 'style',
+    details: {
+      property: 'styles.text',
+      reference: { value: 'expected' },
+      actual: { value: 'actual' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'corporate-content-key',
+    hostComponentName: '[D] CorporateContent',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [nestedTextDiff],
+  });
+  assert.equal(
+    result.diffs.length,
+    0,
+    'A host-only baseline selector must not claim a nested node diff by path prefix.',
+  );
+}
+
+function testNestedScopeUsesCanonicalComponentApiName() {
+  const { evaluateExperimentalContractV2Tree } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-canonical-nested-name-engine',
+  );
+  const parentContract = createContract();
+  parentContract.package = {
+    id: 'web-corp.corporate-content',
+    family: 'CorporateContent',
+    library: 'Corp',
+  };
+
+  const titleContract = createContract();
+  titleContract.package = {
+    id: 'web-corp.title-view',
+    family: 'TitleView',
+    library: 'Corp',
+  };
+  titleContract.facts.componentApi = [{
+    id: 'title-view.desktop',
+    name: '[D] TitleView',
+    componentKey: 'title-key',
+    componentKeys: ['title-key', 'title-variant-key'],
+    publicApi: { properties: {}, allowedCombinations: [] },
+  }];
+  titleContract.rules = [rule('title-allowed-views', {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'oneOf', values: ['[D] Button'] },
+      visible: { op: 'equals', value: true },
+    },
+  }, {
+    op: 'allMatch',
+    predicate: {
+      op: 'oneOf',
+      fact: 'target.variant.View',
+      values: ['Primary', 'Secondary'],
+    },
+  })];
+  titleContract.rules[0].select.host = {
+    scope: 'selection-root',
+    where: {
+      componentName: { op: 'oneOf', values: ['[D] TitleView'] },
+    },
+  };
+
+  const structure = [
+    node(1, '[D] CorporateContent / History', 'parent-key', {}),
+    node(2, '[D] TitleView / History', 'title-variant-key', {}),
+    node(3, '[D] Button', 'button-key', { View: 'Accent' }),
+  ];
+  structure[1].parentId = 1;
+  structure[2].parentId = 2;
+  structure[1].path = `${structure[0].path} / [D] TitleView / History`;
+  structure[2].path = `${structure[1].path} / [D] Button`;
+  const contracts = new Map([
+    ['parent-key', parentContract],
+    ['title-key', titleContract],
+    ['title-variant-key', titleContract],
+  ]);
+  const result = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'parent-key',
+    hostComponentName: '[D] CorporateContent',
+    actualStructure: structure,
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.title-allowed-views');
+  assert.equal(result.diffs[0].details.actual.value, 'Accent');
+}
+
+function testNestedScopeUsesDirectSelectedVariantBaseline() {
+  const { evaluateExperimentalContractV2Tree } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-nested-host-variant-baseline-engine',
+  );
+  const parentContract = createContract();
+  parentContract.package = {
+    id: 'web-corp.table-wide',
+    family: 'Table Wide',
+    library: 'Corp',
+  };
+
+  const statusContract = createContract();
+  statusContract.package = {
+    id: 'web-corp.status-property',
+    family: 'Status & Property',
+    library: 'Corp',
+  };
+  const fillRule = rule('status-label-fill', {
+    scope: 'self-and-descendants',
+    where: {
+      semanticRoleOrLayerName: { op: 'oneOf', values: ['Label'] },
+    },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill'],
+    baselineSource: 'host-variant',
+  });
+  fillRule.select.host = { scope: 'selection-root' };
+  statusContract.rules = [fillRule];
+
+  const structure = [
+    node(1, '[D] BodyCell :: Wide', 'table-key', {}),
+    node(2, 'StatusPreset', 'status-key', { Type: 'Approved' }),
+    node(3, 'Status', 'core-status-key', { Size: '20' }),
+    node(4, 'Label', '', {}),
+  ];
+  structure[1].parentId = 1;
+  structure[2].parentId = 2;
+  structure[3].parentId = 3;
+  structure[1].path = `${structure[0].path} / Text / StatusPreset`;
+  structure[2].path = `${structure[1].path} / Status`;
+  structure[3].path = `${structure[2].path} / Label`;
+  structure[3].type = 'TEXT';
+  structure[3].componentInstance = null;
+  const labelFillDiff = {
+    message: 'заливка: decorative-text/red → decorative-text/blue',
+    nodePath: structure[3].path,
+    nodeName: structure[3].name,
+    nodeId: structure[3].nodeId,
+    visible: true,
+    context: { referenceOrigin: 'host' },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: 'decorative-text/red' },
+      actual: { value: 'decorative-text/blue' },
+    },
+  };
+  const expandedCoreStatusDiff = {
+    ...labelFillDiff,
+    message: 'заливка: text/info → decorative-text/blue',
+    details: {
+      property: 'fill',
+      reference: { value: 'text/info' },
+      actual: { value: 'decorative-text/blue' },
+    },
+  };
+  const contracts = new Map([
+    ['table-key', parentContract],
+    ['status-key', statusContract],
+  ]);
+  const result = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'table-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+    rawBaselineDiffs: [expandedCoreStatusDiff],
+    hostVariantBaselineDiffs: [expandedCoreStatusDiff],
+    nestedScopeHostVariantBaselineDiffs: new Map([[2, [labelFillDiff]]]),
+    completedNestedScopeNodeIds: new Set([2]),
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].message, labelFillDiff.message);
+  assert.equal(
+    result.diffs[0].assessment.ruleId,
+    'rule-ir:test.status-label-fill',
+  );
+
+  const incomplete = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'table-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+    completedNestedScopeNodeIds: new Set(),
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.deepEqual(
+    incomplete.scopes.map((scope) => scope.packageId),
+    ['web-corp.table-wide'],
+    'A nested baseline scope without its own reference must wait for standalone evaluation.',
+  );
+  assert.deepEqual(
+    incomplete.coveredNodeIds,
+    [structure[0].nodeId],
+    'An incomplete nested scope must not suppress its later standalone audit.',
+  );
+}
+
 function testNestedContractScopesAreEvaluatedIndependently() {
   const { evaluateExperimentalContractV2Tree } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -1427,6 +2050,11 @@ function testNestedContractScopesAreEvaluatedIndependently() {
     result.scopes.map((scope) => scope.packageId),
     ['web-corp.table-wide', 'web-corp.payment-masked-number', 'web-core.amount'],
   );
+  assert.deepEqual(
+    result.coveredNodeIds,
+    structure.slice(0, 7).map((entry) => entry.nodeId),
+    'Evaluated and same-package nested component nodes must be marked as covered.',
+  );
   assert.equal(result.diffs.length, 5);
   assert.equal(result.diffs.filter((diff) => diff.details.property === 'variant.Opacity').length, 2);
   assert.equal(
@@ -1543,6 +2171,11 @@ function testHostContractOwnsNestedPackageScope() {
     resolveContract: (key) => contracts.get(key) ?? null,
   });
   assert.deepEqual(owned.scopes.map((scope) => scope.packageId), ['web-corp.amount-styles']);
+  assert.deepEqual(
+    owned.coveredNodeIds,
+    [structure[0].nodeId, structure[1].nodeId],
+    'A host-owned nested package must be marked as covered without a second evaluation.',
+  );
   assert.equal(owned.diffs.length, 1);
   assert.equal(owned.diffs[0].assessment.ruleId, 'rule-ir:test.host-amount-typography');
 
@@ -1730,6 +2363,96 @@ function testBenefitsUniformPropertiesReportIndependentOutliers() {
   assert.equal(sizing.nodeId, 'node:1');
 }
 
+function testCardImageVariantAndSilverLineContracts() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-engine',
+  );
+  const contract = createContract();
+  contract.package = { id: 'web-corp.card-image', family: 'CardImage', library: 'Web _ Corp Components' };
+  contract.rules = [
+    {
+      id: 'rule-ir:test.card-image-xs-active',
+      severity: 'error',
+      enforcement: 'enforced',
+      select: {
+        host: { scope: 'selection-root', where: { componentName: { op: 'equals', value: 'CardImage' } } },
+        targets: {
+          scope: 'self-and-descendants',
+          from: '$host',
+          where: { semanticRoleOrLayerName: { op: 'oneOf', values: ['CardImage'] } },
+        },
+      },
+      when: { op: 'all', clauses: { variant: { Size: '24x16' } } },
+      assert: { op: 'propertiesEqual', values: { State: 'Active' } },
+      verdict: { pass: 'expected', fail: 'violation', unknown: 'unknown' },
+      evidence: ['variant.properties'],
+      remediation: {
+        kind: 'set-variant-properties',
+        target: '$failingTarget',
+        properties: { State: 'Active' },
+      },
+      presentation: { message: 'CardImage XS использует State=Active', group: 'variant.State' },
+      capabilities: { selectors: [], facts: [], operators: ['propertiesEqual'], remediations: [] },
+    },
+    {
+      id: 'rule-ir:test.card-image-silver-line-medium',
+      severity: 'error',
+      enforcement: 'enforced',
+      select: {
+        host: { scope: 'selection-root', where: { componentName: { op: 'equals', value: 'CardImage' } } },
+        targets: {
+          scope: 'descendants',
+          from: '$host',
+          where: {
+            componentName: { op: 'oneOf', values: ['SilverLine', '🔩 SilverLine'] },
+            visible: { op: 'equals', value: true },
+          },
+        },
+      },
+      when: { op: 'all', clauses: { hostVariant: { Size: ['68x42', '44x28'] } } },
+      assert: {
+        op: 'allMatch',
+        predicate: { op: 'oneOf', fact: 'target.variant.Type', values: ['simple'] },
+      },
+      verdict: { pass: 'expected', fail: 'violation', unknown: 'unknown' },
+      evidence: ['variant.properties'],
+      remediation: {
+        kind: 'set-variant-properties',
+        target: '$failingTarget',
+        properties: { Type: 'simple' },
+      },
+      presentation: { message: 'CardImage M/S использует SilverLine Type=simple', group: 'variant.Type' },
+      capabilities: { selectors: [], facts: [], operators: ['allMatch'], remediations: [] },
+    },
+  ];
+
+  const xsResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    hostVariantProperties: { Size: '24x16', State: 'Locked', Stack: 'false' },
+    actualStructure: [node(1, 'CardImage', 'card-image-key', {})],
+  });
+  assert.equal(xsResult.diffs.length, 1);
+  assert.equal(xsResult.diffs[0].details.property, 'State');
+  assert.deepEqual(xsResult.diffs[0].assessment.remediation.properties, { State: 'Active' });
+
+  const silverLineResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    hostVariantProperties: { Size: '68x42', State: 'Active', Stack: 'false' },
+    actualStructure: [
+      node(1, 'CardImage', 'card-image-key', {}),
+      node(2, 'SilverLine', 'silver-line-key', { Type: 'complex' }),
+    ],
+  });
+  assert.equal(silverLineResult.diffs.length, 1);
+  assert.equal(silverLineResult.diffs[0].details.property, 'variant.Type');
+  assert.deepEqual(silverLineResult.diffs[0].assessment.remediation.properties, { Type: 'simple' });
+}
+
 function rule(id, targets, assertion) {
   return {
     id: `rule-ir:test.${id}`,
@@ -1872,12 +2595,16 @@ async function main() {
   await testRegistry();
   testEvaluator();
   testRelationalAndPositionOperators();
+  testConditionalButtonStackSequence();
+  testConditionalButtonStackCountSkipsOtherPresets();
+  testButtonStackRootLayoutContract();
   testTableBasicVisibleDataCellCount();
   testConditionalPaintStateAndReferenceRemediation();
   testAllEqualFactAlternatives();
   testAllEqualTypographyUsesEffectiveBaseline();
   testAllowedValuesPresentation();
   testEffectiveBaselineAndNestedSizeContract();
+  testEffectiveBaselineRemediationIsAtomic();
   testCompositePropertyDedupeAndVariantArrays();
   testEffectiveBaselineIgnoresDescendantsFromReplacedNestedOwner();
   testEffectiveBaselineKeepsDescendantsFromAnotherVariantInSameFamily();
@@ -1886,11 +2613,15 @@ async function main() {
   testAmountPresetTopRightAlignment();
   testWideTableAmountPresetTopRightAlignment();
   testHostVariantBaselineRespectsTargetSubtree();
+  testBaselineRuleDoesNotClaimNestedComponentEvidence();
+  testNestedScopeUsesCanonicalComponentApiName();
+  testNestedScopeUsesDirectSelectedVariantBaseline();
   testNestedContractScopesAreEvaluatedIndependently();
   testHostContractOwnsNestedPackageScope();
   testRawOnlyComponentApiIsIgnored();
   testComponentApiIgnoresExposedNonVariantProperties();
   testBenefitsUniformPropertiesReportIndependentOutliers();
+  testCardImageVariantAndSilverLineContracts();
   console.log('Experimental Contract v2 contour checks passed');
 }
 

@@ -888,6 +888,9 @@ export function assessCustomizationDiffs(
 
 export function applyAssessmentPresentation(diffs: DiffEntry[]): DiffEntry[] {
   return diffs.filter((diff) => {
+    if (diff.contractEvidenceOnly) {
+      return false;
+    }
     if (isVariantPropertyDiff(diff)) {
       return true;
     }

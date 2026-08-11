@@ -24,6 +24,7 @@ export type DiffContext = {
   actualVariantProperties?: Record<string, string> | null;
   referenceVariantProperties?: Record<string, string> | null;
   surfaceContext?: SurfaceContextEvidence | null;
+  directHostVariantOverride?: boolean;
 };
 
 export type DiffEntry = {
@@ -35,6 +36,7 @@ export type DiffEntry = {
   context: DiffContext;
   suppressAsHostControlledNestedProperty?: boolean;
   suppressionReason?: string | null;
+  contractEvidenceOnly?: boolean;
   diffKind?: 'paint' | 'text-style' | 'layout' | 'shape' | 'opacity' | 'other';
   details?: DiffDetails;
   assessment?: CustomizationAssessment;
@@ -42,7 +44,7 @@ export type DiffEntry = {
 
 export type DiffValueDetails = {
   value: string | number | null;
-  resourceType?: 'style' | 'token' | 'color';
+  resourceType?: 'style' | 'token' | 'color' | 'component';
   resourceId?: string | null;
   displayName?: string | null;
   bindingId?: string | null;
@@ -206,6 +208,10 @@ export function diffExplicitNestedVariantStates(
   actual: DSStructureNode[],
   hostReference: DSStructureNode[],
   existingDiffs: DiffEntry[] = [],
+  options?: {
+    resolveComponentFamilyKey?: (componentKey: string) => string;
+    resolveReferenceComponentKey?: (node: DSStructureNode) => string | null;
+  },
 ): DiffEntry[] {
   if (!actual.length || !hostReference.length) {
     return [];
@@ -234,6 +240,9 @@ export function diffExplicitNestedVariantStates(
       node,
     ]),
   );
+  const actualById = new Map(normalizedActual.map((node) => [node.id, node]));
+  const referenceById = new Map(normalizedHostReference.map((node) => [node.id, node]));
+  const swappedPaths: string[] = [];
   const existingKeys = new Set(existingDiffs.map(getVariantStateDiffKey));
   const result: DiffEntry[] = [];
 
@@ -246,14 +255,40 @@ export function diffExplicitNestedVariantStates(
       continue;
     }
 
+    if (swappedPaths.some((path) => actualNode.path.startsWith(`${path} / `))) {
+      continue;
+    }
+
     const occurrenceKey = actualKeyMap.get(actualNode) ?? actualNode.path;
-    const referenceNode = referenceByOccurrence.get(occurrenceKey) ?? null;
+    const referenceNode =
+      referenceByOccurrence.get(occurrenceKey) ??
+      findReferenceInstanceByStructuralSlot(
+        actualNode,
+        normalizedActual,
+        normalizedHostReference,
+        actualById,
+        referenceById,
+        actualKeyMap,
+        referenceByOccurrence,
+      );
     if (!referenceNode || referenceNode.type !== 'INSTANCE') {
       continue;
     }
 
     const produced: DiffEntry[] = [];
-    compareVariantProperties(occurrenceKey, actualNode, referenceNode, produced);
+    const identityChanged = compareComponentIdentity(
+      occurrenceKey,
+      actualNode,
+      referenceNode,
+      produced,
+      options?.resolveComponentFamilyKey,
+      options?.resolveReferenceComponentKey,
+    );
+    if (identityChanged) {
+      swappedPaths.push(actualNode.path);
+    } else {
+      compareVariantProperties(occurrenceKey, actualNode, referenceNode, produced);
+    }
     for (const diff of produced) {
       const key = getVariantStateDiffKey(diff);
       if (existingKeys.has(key)) {
@@ -265,6 +300,79 @@ export function diffExplicitNestedVariantStates(
   }
 
   return result;
+}
+
+function findReferenceInstanceByStructuralSlot(
+  actualNode: DSStructureNode,
+  actualNodes: DSStructureNode[],
+  referenceNodes: DSStructureNode[],
+  actualById: Map<number, DSStructureNode>,
+  referenceById: Map<number, DSStructureNode>,
+  actualKeyMap: Map<DSStructureNode, string>,
+  referenceByOccurrence: Map<string, DSStructureNode>,
+): DSStructureNode | null {
+  if (typeof actualNode.parentId !== 'number') return null;
+  const actualParent = actualById.get(actualNode.parentId) ?? null;
+  if (!actualParent) return null;
+  const parentOccurrence = actualKeyMap.get(actualParent) ?? actualParent.path;
+  const referenceParent = referenceByOccurrence.get(parentOccurrence) ?? null;
+  if (!referenceParent) return null;
+
+  const actualSiblings = actualNodes.filter(
+    (node) => node.parentId === actualParent.id && node.type === 'INSTANCE',
+  );
+  const referenceSiblings = referenceNodes.filter(
+    (node) => node.parentId === referenceParent.id && node.type === 'INSTANCE',
+  );
+  const slot = actualSiblings.indexOf(actualNode);
+  if (slot < 0) return null;
+  const candidate = referenceSiblings[slot] ?? null;
+  return candidate && referenceById.has(candidate.id) ? candidate : null;
+}
+
+function compareComponentIdentity(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  diffs: DiffEntry[],
+  resolveComponentFamilyKey?: (componentKey: string) => string,
+  resolveReferenceComponentKey?: (node: DSStructureNode) => string | null,
+): boolean {
+  if (!resolveComponentFamilyKey) return false;
+  const actualKey = actualNode.componentInstance?.componentKey ?? null;
+  const referenceKey =
+    resolveReferenceComponentKey?.(referenceNode) ??
+    referenceNode.componentInstance?.componentKey ??
+    null;
+  if (!actualKey || !referenceKey) return false;
+  const actualFamily = resolveComponentFamilyKey(actualKey);
+  const referenceFamily = resolveComponentFamilyKey(referenceKey);
+  if (actualFamily === referenceFamily) return false;
+
+  pushDiff(
+    diffs,
+    actualNode,
+    referenceNode,
+    path,
+    `Компонент: ${referenceNode.name} → ${actualNode.name}`,
+    'other',
+    {
+      property: 'component.identity',
+      reference: {
+        value: referenceNode.name,
+        resourceType: 'component',
+        resourceId: referenceKey,
+        displayName: referenceNode.name,
+      },
+      actual: {
+        value: actualNode.name,
+        resourceType: 'component',
+        resourceId: actualKey,
+        displayName: actualNode.name,
+      },
+    },
+  );
+  return true;
 }
 
 function getVariantStateDiffKey(diff: DiffEntry): string {
@@ -429,6 +537,15 @@ function compareNode(
 ) {
   const actualLayout = actual.layout ?? {};
   const referenceLayout = reference.layout ?? {};
+
+  compareLayoutDimensions(
+    path,
+    actual,
+    reference,
+    actualLayout,
+    referenceLayout,
+    diffs,
+  );
 
   compareLayoutSizing(
     path,
@@ -741,6 +858,50 @@ function compareNode(
   );
 
   compareVariantProperties(path, actual, reference, diffs);
+}
+
+function compareLayoutDimensions(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  actualLayout: DSNodeLayout,
+  referenceLayout: DSNodeLayout,
+  diffs: DiffEntry[],
+) {
+  const fields = [
+    { property: 'width' as const, label: 'Ширина' },
+    { property: 'height' as const, label: 'Высота' },
+    { property: 'minWidth' as const, label: 'Минимальная ширина' },
+    { property: 'maxWidth' as const, label: 'Максимальная ширина' },
+    { property: 'minHeight' as const, label: 'Минимальная высота' },
+    { property: 'maxHeight' as const, label: 'Максимальная высота' },
+  ];
+
+  for (const { property, label } of fields) {
+    const referenceValue = referenceLayout[property];
+    const actualValue = actualLayout[property];
+    if (
+      typeof referenceValue !== 'number' ||
+      typeof actualValue !== 'number' ||
+      Math.abs(referenceValue - actualValue) < 0.01
+    ) {
+      continue;
+    }
+    pushDiff(
+      diffs,
+      actualNode,
+      referenceNode,
+      path,
+      `${label}: ${referenceValue} → ${actualValue}`,
+      'layout',
+      {
+        property: `layout.${property}`,
+        reference: { value: referenceValue },
+        actual: { value: actualValue },
+      },
+      true,
+    );
+  }
 }
 
 function compareLayoutSizing(
@@ -2283,6 +2444,7 @@ function pushDiff(
   message: string,
   diffKind: DiffEntry['diffKind'] = 'other',
   details?: DiffDetails,
+  contractEvidenceOnly = false,
 ) {
   const isHostNestedInstanceRoot =
     (referenceNode.referenceOrigin ?? 'host') === 'host' &&
@@ -2296,6 +2458,7 @@ function pushDiff(
     nodeName: node.name ?? path,
     nodeId: node.nodeId,
     visible: node.visible !== false,
+    contractEvidenceOnly,
     context: {
       actualComponentKey: node.componentInstance?.componentKey ?? null,
       referenceComponentKey: referenceNode.componentInstance?.componentKey ?? null,

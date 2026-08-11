@@ -65,6 +65,7 @@ let catalogs: AthenaCatalog[] = [];
 const tokenCatalogs: TokenCatalog[] = [];
 const styleCatalogs: StyleCatalog[] = [];
 const componentIndexByKey = new Map<string, LibraryComponent>();
+const componentIndexByName = new Map<string, LibraryComponent>();
 const hostControlledPaintPaths = new Map<string, Set<string>>();
 const hostControlledTextPaths = new Map<string, Set<string>>();
 const hostControlledLayoutPaths = new Map<string, Set<string>>();
@@ -1636,6 +1637,7 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   catalogs = modules;
 
   componentIndexByKey.clear();
+  componentIndexByName.clear();
   hostControlledPaintPaths.clear();
   hostControlledTextPaths.clear();
   hostControlledLayoutPaths.clear();
@@ -1724,7 +1726,14 @@ function refreshDerivedComponentCatalogState() {
   });
   rehydrateNestedInstanceComponentKeys(catalogs);
   componentIndexByKey.clear();
-  corporateNameIndex.clear();
+  componentIndexByName.clear();
+  const corporateComponents: LibraryComponent[] = [];
+  for (const module of catalogs) {
+    for (const component of module.components ?? []) {
+      corporateComponents.push(component as unknown as LibraryComponent);
+    }
+  }
+  rebuildCorporateCounterpartIndex(corporateComponents);
   for (const module of catalogs) {
     for (const component of module.components ?? []) {
       indexComponentByKey(component as unknown as LibraryComponent);
@@ -1856,6 +1865,28 @@ export function findComponent(
   const direct = findCatalogComponentByKey(key);
     
   return direct ?? null;
+}
+
+export function findComponentByName(name: string): LibraryComponent | null {
+  return componentIndexByName.get(normalizeComponentLookupName(name)) ?? null;
+}
+
+export function findComponentVariantKeyByName(
+  name: string,
+  properties?: Record<string, string> | null,
+): string | null {
+  const component = findComponentByName(name);
+  if (!component) return null;
+  const expected = properties ?? {};
+  const entries = Object.entries(expected);
+  if (entries.length) {
+    const variant = component.variants?.find((candidate) => {
+      const actual = getVariantPropertiesForLookup(candidate);
+      return entries.every(([property, value]) => actual[property] === value);
+    });
+    if (variant?.key) return variant.key;
+  }
+  return component.key ?? null;
 }
 
 function findCatalogComponentByKey(
@@ -2383,29 +2414,43 @@ function prepareComponent(component: AthenaComponent, module: AthenaCatalog) {
   libraryComponent.variantOf = role === 'Part' ? parentName : undefined;
   libraryComponent.notes = component.description?.trim() || undefined;
 
-  const canonicalName = normalizeCorporateName(component.name);
+  indexCorporateComponent(libraryComponent);
+}
+
+function indexCorporateComponent(component: LibraryComponent): void {
+  const componentName = component.name ?? '';
+  const canonicalName = normalizeCorporateName(componentName);
   if (canonicalName) {
     const key = buildCorporateIndexKey(
       canonicalName,
-      libraryComponent.platform,
-      component.name,
-      component.name.includes('[Corporate]') ? 'corp' : 'base',
+      component.platform,
+      componentName,
+      componentName.includes('[Corporate]') ? 'corp' : 'base',
       '-variant',
     );
 
-    corporateNameIndex.set(key, libraryComponent);
+    corporateNameIndex.set(key, component);
 
-    if (!(component as any).variants) {
+    if (!component.variants) {
       corporateNameIndex.set(
         buildCorporateIndexKey(
           canonicalName,
-          libraryComponent.platform,
-          component.name,
-          component.name.includes('[Corporate]') ? 'corp' : 'base',
+          component.platform,
+          componentName,
+          componentName.includes('[Corporate]') ? 'corp' : 'base',
         ),
-        libraryComponent,
+        component,
       );
     }
+  }
+}
+
+export function rebuildCorporateCounterpartIndex(
+  components: LibraryComponent[],
+): void {
+  corporateNameIndex.clear();
+  for (const component of components) {
+    indexCorporateComponent(component);
   }
 }
 
@@ -2710,6 +2755,21 @@ function indexComponentByKey(component: LibraryComponent) {
       componentIndexByKey.set(variant.key, component);
     }
   }
+
+  for (const name of [component.displayName, component.name, ...(component.names ?? [])]) {
+    const normalized = normalizeComponentLookupName(name ?? '');
+    if (normalized && !componentIndexByName.has(normalized)) {
+      componentIndexByName.set(normalized, component);
+    }
+  }
+}
+
+function normalizeComponentLookupName(name: string): string {
+  return String(name ?? '')
+    .trim()
+    .replace(/^[^A-Za-zА-Яа-яЁё0-9\[]+/, '')
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
 }
 
 function registerPartUsage(component: LibraryComponent) {

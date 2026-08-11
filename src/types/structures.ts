@@ -66,6 +66,12 @@ export interface DSInstanceInfo {
   componentKey: string;
   variantProperties?: Record<string, string>;
   componentProperties?: Record<string, string>;
+  directOverrides?: DSInstanceOverride[];
+}
+
+export interface DSInstanceOverride {
+  nodeId: string;
+  fields: string[];
 }
 
 export interface DSRadiiValues {

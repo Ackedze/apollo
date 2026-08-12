@@ -682,6 +682,96 @@ function testBenefitCardNestedContentBaselineRule() {
   assert.equal(result.diagnostics.unknown, 0);
 }
 
+function testBenefitCardPublicRootsAndNativeTextAlignment() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-benefit-card-public-root-and-alignment',
+  );
+  const contract = createContract();
+  contract.package = {
+    id: 'web-corp-promo.benefit-card',
+    family: 'BenefitCard',
+    library: 'Web _ Corp Promo Components',
+  };
+  const publicRoots = rule('public-roots-only', {
+    scope: 'selection-root',
+    from: '$host',
+  }, {
+    op: 'allMatch',
+    predicate: {
+      op: 'oneOf',
+      fact: 'target.componentName',
+      values: ['[D] BenefitCard', '[M] BenefitCard'],
+    },
+  });
+  publicRoots.select.host = 'host.test';
+  const alignment = rule('text-alignment-protected', {
+    scope: 'self-and-descendants',
+    from: '$host',
+  }, {
+    op: 'configurationPolicy',
+    manualTextAlignAllowed: false,
+    expectedTextAlign: 'LEFT',
+  });
+  alignment.select.host = {
+    scope: 'selection-root',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['[D] BenefitCard', '[M] BenefitCard'],
+      },
+    },
+  };
+  contract.rules = [publicRoots, alignment];
+
+  const host = node(1, '[D] BenefitCard', 'benefit-card-key', {});
+  const title = Object.assign(node(2, 'value', null, {}), {
+    type: 'TEXT',
+    componentInstance: null,
+    text: { alignHorizontal: 'LEFT' },
+  });
+  title.path = `${host.path} / ContentWrapper / Content / Title / value`;
+  const clean = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'benefit-card-key',
+    hostComponentName: '[D] BenefitCard',
+    actualStructure: [host, title],
+  });
+  assert.equal(clean.diffs.length, 0, 'A clean LEFT value must not create textAlign noise.');
+
+  host.componentInstance.directOverrides = [{
+    nodeId: title.nodeId,
+    fields: ['textAlignHorizontal'],
+  }];
+  title.text.alignHorizontal = 'RIGHT';
+  const changed = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'benefit-card-key',
+    hostComponentName: '[D] BenefitCard',
+    actualStructure: [host, title],
+  });
+  assert.equal(changed.diffs.length, 1);
+  assert.equal(changed.diffs[0].assessment.ruleId, 'rule-ir:test.text-alignment-protected');
+  assert.equal(changed.diffs[0].details.property, 'text.align.horizontal');
+  assert.equal(changed.diffs[0].details.reference.value, 'LEFT');
+  assert.equal(changed.diffs[0].details.actual.value, 'RIGHT');
+
+  const graphic = node(1, '[D] Graphic', 'graphic-key', {});
+  const standalone = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'graphic-key',
+    hostComponentName: '[D] Graphic',
+    actualStructure: [graphic],
+  });
+  assert.equal(standalone.diffs.length, 1);
+  assert.equal(standalone.diffs[0].assessment.ruleId, 'rule-ir:test.public-roots-only');
+  assert.equal(
+    standalone.diagnostics.unknown,
+    1,
+    'The public-root alignment selector must not claim standalone Graphic descendants.',
+  );
+}
+
 function testCorporateSystemMessageButtonViews() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -4038,6 +4128,7 @@ async function main() {
   testButtonStackRootLayoutContract();
   testRootAndAllInternalLayersBaselineRule();
   testBenefitCardNestedContentBaselineRule();
+  testBenefitCardPublicRootsAndNativeTextAlignment();
   testCorporateSystemMessageButtonViews();
   testCorporateSystemMessageGraphicOverrideBaseOnly();
   testCorporateSystemMessageTextAlignmentRequiresNativeOverride();

@@ -2552,6 +2552,9 @@ function readFact(
   fact: string,
   context: EvaluationContext,
 ): unknown {
+  if (fact === 'componentName' || fact === 'target.componentName') {
+    return componentName(node, context);
+  }
   const property = fact.match(/^(?:target|host|variant)\.variant\.([^\.]+)$/)?.[1]
     ?? fact.match(/^target\.variant\.([^\.]+)$/)?.[1]
     ?? (fact.startsWith('variant.') ? fact.slice('variant.'.length) : null);

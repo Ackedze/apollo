@@ -1672,6 +1672,17 @@ function debugBenefitCardBaselineEvidence(input: {
       directOverrides: (structureNode.componentInstance?.directOverrides ?? [])
         .filter((override) => override.fields.some((field) => relevantFields.has(field))),
     }));
+  const overrideOwners = input.actualStructure
+    .filter((structureNode) => structureNode.componentInstance?.directOverrides?.some(
+      (override) => override.fields.some((field) => relevantFields.has(field)),
+    ))
+    .map((structureNode) => ({
+      nodeId: structureNode.nodeId ?? null,
+      name: structureNode.name,
+      path: structureNode.path,
+      directOverrides: (structureNode.componentInstance?.directOverrides ?? [])
+        .filter((override) => override.fields.some((field) => relevantFields.has(field))),
+    }));
   const relevantNodeIds = new Set(
     relevantNodes.map((entry) => entry.nodeId).filter(Boolean),
   );
@@ -1681,13 +1692,22 @@ function debugBenefitCardBaselineEvidence(input: {
       [...relevantNames].some((name) => diff.nodePath.split(' / ').includes(name)),
     ),
   );
-  if (!relevantNodes.length && !input.rawDiffs.length && !input.finalDiffs.length) return;
+  const rawDiffs = relevantDiffs(input.rawDiffs);
+  const contractBaselineDiffs = relevantDiffs(input.contractBaselineDiffs);
+  const finalDiffs = relevantDiffs(input.finalDiffs);
+  if (
+    !overrideOwners.length &&
+    !rawDiffs.length &&
+    !contractBaselineDiffs.length &&
+    !finalDiffs.length
+  ) return;
   console.log(`[Apollo][probe] benefit-card-baseline ${JSON.stringify({
     hostComponentName: input.hostComponentName,
     relevantNodes,
-    rawDiffs: relevantDiffs(input.rawDiffs),
-    contractBaselineDiffs: relevantDiffs(input.contractBaselineDiffs),
-    finalDiffs: relevantDiffs(input.finalDiffs),
+    overrideOwners,
+    rawDiffs,
+    contractBaselineDiffs,
+    finalDiffs,
   })}`);
 }
 

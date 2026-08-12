@@ -731,30 +731,39 @@ function testBenefitCardPublicRootsAndNativeTextAlignment() {
     text: { alignHorizontal: 'LEFT' },
   });
   title.path = `${host.path} / ContentWrapper / Content / Title / value`;
+  const subtitle = Object.assign(node(3, 'value', null, {}), {
+    type: 'TEXT',
+    componentInstance: null,
+    text: { alignHorizontal: 'LEFT' },
+  });
+  subtitle.path = `${host.path} / ContentWrapper / Content / Subtitle / value`;
   const clean = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'benefit-card-key',
     hostComponentName: '[D] BenefitCard',
-    actualStructure: [host, title],
+    actualStructure: [host, title, subtitle],
   });
   assert.equal(clean.diffs.length, 0, 'A clean LEFT value must not create textAlign noise.');
 
-  host.componentInstance.directOverrides = [{
-    nodeId: title.nodeId,
-    fields: ['textAlignHorizontal'],
-  }];
+  host.componentInstance.directOverrides = [
+    { nodeId: title.nodeId, fields: ['textAlignHorizontal'] },
+    { nodeId: subtitle.nodeId, fields: ['textAlignHorizontal'] },
+  ];
   title.text.alignHorizontal = 'RIGHT';
+  subtitle.text.alignHorizontal = 'RIGHT';
   const changed = evaluateExperimentalContractV2({
     contract,
     hostComponentKey: 'benefit-card-key',
     hostComponentName: '[D] BenefitCard',
-    actualStructure: [host, title],
+    actualStructure: [host, title, subtitle],
   });
-  assert.equal(changed.diffs.length, 1);
+  assert.equal(changed.diffs.length, 2, 'Every changed text layer must produce its own finding.');
   assert.equal(changed.diffs[0].assessment.ruleId, 'rule-ir:test.text-alignment-protected');
   assert.equal(changed.diffs[0].details.property, 'text.align.horizontal');
   assert.equal(changed.diffs[0].details.reference.value, 'LEFT');
   assert.equal(changed.diffs[0].details.actual.value, 'RIGHT');
+  assert.equal(changed.diffs[1].assessment.ruleId, 'rule-ir:test.text-alignment-protected');
+  assert.equal(changed.diffs[1].details.actual.value, 'RIGHT');
 
   const graphic = node(1, '[D] Graphic', 'graphic-key', {});
   const standalone = evaluateExperimentalContractV2({
@@ -769,6 +778,110 @@ function testBenefitCardPublicRootsAndNativeTextAlignment() {
     standalone.diagnostics.unknown,
     1,
     'The public-root alignment selector must not claim standalone Graphic descendants.',
+  );
+}
+
+function testBenefitCardStructuredPolicies() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-benefit-card-structured-policies',
+  );
+  const contract = createContract();
+  const semantic = (values) => ({
+    scope: 'self-and-descendants',
+    from: '$host',
+    where: { semanticRoleOrLayerName: { op: 'oneOf', values } },
+  });
+  const titleLength = rule('title-length', semantic(['Title / value']), {
+    op: 'stringLengthBetween', property: 'text.characters', min: 0, max: 60,
+  });
+  const subtitleLength = rule('subtitle-length', semantic(['Subtitle / value']), {
+    op: 'stringLengthBetween', property: 'text.characters', min: 0, max: 120,
+  });
+  const graphicVisible = rule('graphic-visible', semantic(['GraphicContainer']), {
+    op: 'propertiesEqual', values: { 'target.visible': true },
+  });
+  const compactTitle = rule('compact-title', semantic(['Content']), {
+    op: 'propertiesEqual', values: { 'variant.Title': 'Secondary' },
+  });
+  compactTitle.when = { op: 'all', clauses: { hostVariant: { Compact: 'True' } } };
+  const imageView = rule('image-view', semantic(['ImageView']), {
+    op: 'propertiesEqual',
+    values: { 'variant.Crop': 'Center', 'variant.Size': '80' },
+  });
+  const overflowSizing = rule('overflow-sizing', {
+    scope: 'selection-root', from: '$host',
+  }, {
+    op: 'configurationPolicy', hugWhenVerticalContentOverflows: true,
+  });
+  contract.rules = [
+    titleLength,
+    subtitleLength,
+    graphicVisible,
+    compactTitle,
+    imageView,
+    overflowSizing,
+  ];
+
+  const host = Object.assign(node(1, '[D] Test', 'benefit-card-key', { Compact: 'True' }), {
+    layout: {
+      height: 200,
+      direction: 'V',
+      sizing: { horizontal: 'FIXED', vertical: 'FIXED' },
+      padding: { top: 32, right: 32, bottom: 32, left: 32 },
+      itemSpacing: 0,
+    },
+  });
+  const graphic = Object.assign(node(2, 'GraphicContainer', null, {}), {
+    type: 'FRAME', componentInstance: null, visible: false,
+    layout: { height: 64 },
+  });
+  const stopper = Object.assign(node(3, 'Stopper', null, {}), {
+    type: 'FRAME', componentInstance: null, layout: { height: 24 },
+  });
+  const contentWrapper = Object.assign(node(4, 'ContentWrapper', null, {}), {
+    type: 'FRAME', componentInstance: null, layout: { height: 122 },
+  });
+  const content = node(5, 'Content', 'content-key', { Title: 'Primary' });
+  content.parentId = contentWrapper.id;
+  content.path = `${host.path} / ContentWrapper / Content`;
+  const image = node(6, 'ImageView', 'image-key', { Size: '348', Crop: 'Bottom' });
+  image.parentId = graphic.id;
+  image.path = `${host.path} / GraphicContainer / Graphic / ImageView`;
+  const title = Object.assign(node(7, 'value', null, {}), {
+    type: 'TEXT', componentInstance: null,
+    text: { characters: 'Очень длинный заголовок карточки, который превышает лимит в шестьдесят символов' },
+  });
+  title.parentId = content.id;
+  title.path = `${content.path} / Title / value`;
+  const subtitle = Object.assign(node(8, 'value', null, {}), {
+    type: 'TEXT', componentInstance: null,
+    text: { characters: 'Очень длинный подзаголовок карточки '.repeat(5) },
+  });
+  subtitle.parentId = content.id;
+  subtitle.path = `${content.path} / Subtitle / value`;
+
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'benefit-card-key',
+    hostComponentName: '[D] Test',
+    hostVariantProperties: { Compact: 'True' },
+    actualStructure: [host, graphic, stopper, contentWrapper, content, image, title, subtitle],
+  });
+  const ruleIds = result.diffs.map((diff) => diff.assessment.ruleId);
+  for (const id of [
+    'title-length',
+    'subtitle-length',
+    'graphic-visible',
+    'compact-title',
+    'overflow-sizing',
+  ]) {
+    assert.ok(ruleIds.includes(`rule-ir:test.${id}`), `${id} must be executable.`);
+  }
+  assert.equal(
+    ruleIds.filter((id) => id === 'rule-ir:test.image-view').length,
+    2,
+    'Crop and Size must be reported independently.',
   );
 }
 
@@ -4129,6 +4242,7 @@ async function main() {
   testRootAndAllInternalLayersBaselineRule();
   testBenefitCardNestedContentBaselineRule();
   testBenefitCardPublicRootsAndNativeTextAlignment();
+  testBenefitCardStructuredPolicies();
   testCorporateSystemMessageButtonViews();
   testCorporateSystemMessageGraphicOverrideBaseOnly();
   testCorporateSystemMessageTextAlignmentRequiresNativeOverride();

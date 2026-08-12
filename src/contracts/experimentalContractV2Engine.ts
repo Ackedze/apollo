@@ -85,6 +85,8 @@ const SUPPORTED_ASSERTIONS = new Set([
   'compositionPolicy',
   'configurationPolicy',
   'countBetween',
+  'stringLengthBetween',
+  'visibleAndNonEmpty',
   'matchesEffectiveBaseline',
   'paintStateEquals',
   'propertiesEqual',
@@ -936,6 +938,10 @@ function evaluateRule(
       return evaluateAllEqual(selection, rule.assert, context);
     case 'countBetween':
       return evaluateCountBetween(selection, rule.assert);
+    case 'stringLengthBetween':
+      return evaluateStringLengthBetween(selection, rule.assert, context);
+    case 'visibleAndNonEmpty':
+      return evaluateVisibleAndNonEmpty(selection, rule.assert, context);
     case 'matchesEffectiveBaseline':
       return evaluateMatchesEffectiveBaseline(selection, rule.assert, context);
     case 'paintStateEquals':
@@ -1105,11 +1111,15 @@ function evaluateConfigurationPolicy(
   assertion: Record<string, any>,
   context: EvaluationContext,
 ): RuleEvaluation {
+  if (assertion.hugWhenVerticalContentOverflows === true) {
+    return evaluateHugWhenVerticalContentOverflows(nodes, context);
+  }
   const modeEvaluation = evaluateAllowedVariableModes(nodes, assertion, context);
   if (modeEvaluation) return modeEvaluation;
 
   const manualFields = getConfigurationManualFields(assertion);
   if (manualFields.length) {
+    const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
     for (const node of nodes) {
       const targets = assertion.includeDescendants === true
         ? context.nodes.filter((candidate) =>
@@ -1131,19 +1141,59 @@ function evaluateConfigurationPolicy(
             // alone.
             continue;
           }
-          return {
-            verdict: 'fail',
+          const property = getConfigurationEvidenceProperty(assertion);
+          const expected = getConfigurationExpectedValue(assertion);
+          const actual = getConfigurationActualValue(target, assertion);
+          matches.push({
             target,
-            expected: getConfigurationExpectedValue(assertion),
-            actual: getConfigurationActualValue(target, assertion),
-            evidenceProperty: getConfigurationEvidenceProperty(assertion),
-          };
+            diff: createRuntimePropertyDiff(target, property, expected, actual),
+          });
         }
       }
     }
-    return { verdict: 'pass' };
+    return matches.length
+      ? { verdict: 'fail', sourceDiffs: matches }
+      : { verdict: 'pass' };
   }
   return { verdict: 'unknown' };
+}
+
+function evaluateHugWhenVerticalContentOverflows(
+  nodes: RuntimeNode[],
+  context: EvaluationContext,
+): RuleEvaluation {
+  let checked = 0;
+  for (const node of nodes) {
+    const sizing = node.layout?.sizing?.vertical;
+    const height = node.layout?.height;
+    if (sizing === 'HUG' || sizing === 'FILL') {
+      checked += 1;
+      continue;
+    }
+    if (sizing !== 'FIXED' || typeof height !== 'number') continue;
+    const directChildren = context.nodes.filter((candidate) =>
+      candidate.parentId === node.id &&
+      candidate.visible !== false &&
+      !/BackgroundPlate/i.test(candidate.name),
+    );
+    if (!directChildren.length) continue;
+    checked += 1;
+    const padding = node.layout?.padding;
+    const contentHeight = directChildren.reduce(
+      (sum, child) => sum + (child.layout?.height ?? 0),
+      (padding?.top ?? 0) + (padding?.bottom ?? 0),
+    ) + Math.max(0, directChildren.length - 1) * (node.layout?.itemSpacing ?? 0);
+    if (contentHeight > height + 0.5) {
+      return {
+        verdict: 'fail',
+        target: node,
+        expected: 'HUG',
+        actual: sizing,
+        evidenceProperty: 'layout.sizing.vertical',
+      };
+    }
+  }
+  return checked ? { verdict: 'pass' } : { verdict: 'unknown' };
 }
 
 function evaluateAllowedVariableModes(
@@ -2267,6 +2317,77 @@ function evaluateCountBetween(nodes: RuntimeNode[], assertion: Record<string, an
     : { verdict: 'fail' as const, target: nodes[0], expected: `${assertion.min}-${assertion.max}`, actual: nodes.length };
 }
 
+function evaluateStringLengthBetween(
+  nodes: RuntimeNode[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+): RuleEvaluation {
+  if (
+    typeof assertion.property !== 'string' ||
+    !Number.isFinite(assertion.min) ||
+    !Number.isFinite(assertion.max)
+  ) {
+    return { verdict: 'unknown' };
+  }
+  const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
+  let checked = 0;
+  for (const node of nodes) {
+    const value = readFact(node, assertion.property, context);
+    if (typeof value !== 'string') continue;
+    checked += 1;
+    const length = Array.from(value).length;
+    if (length < assertion.min || length > assertion.max) {
+      matches.push({
+        target: node,
+        diff: createRuntimePropertyDiff(
+          node,
+          assertion.property,
+          `${assertion.min}-${assertion.max}`,
+          length,
+        ),
+      });
+    }
+  }
+  return matches.length
+    ? { verdict: 'fail', sourceDiffs: matches }
+    : checked
+      ? { verdict: 'pass' }
+      : { verdict: 'unknown' };
+}
+
+function evaluateVisibleAndNonEmpty(
+  nodes: RuntimeNode[],
+  assertion: Record<string, any>,
+  context: EvaluationContext,
+): RuleEvaluation {
+  if (!nodes.length || typeof assertion.property !== 'string') {
+    return { verdict: 'unknown' };
+  }
+  const matches: Array<{ diff: DiffEntry; target: RuntimeNode }> = [];
+  let checked = 0;
+  for (const node of nodes) {
+    const value = readFact(node, assertion.property, context);
+    if (value === undefined) continue;
+    checked += 1;
+    if (node.visible === false || (typeof value === 'string' && value.trim() === '')) {
+      matches.push({
+        target: node,
+        diff: createRuntimePropertyDiff(
+          node,
+          node.visible === false ? 'target.visible' : assertion.property,
+          node.visible === false ? true : 'непустое значение',
+          node.visible === false ? false : value,
+        ),
+      });
+    }
+  }
+  return matches.length
+    ? { verdict: 'fail', sourceDiffs: matches }
+    : checked
+      ? { verdict: 'pass' }
+      : { verdict: 'unknown' };
+}
+
 function evaluatePaintStateEquals(
   nodes: RuntimeNode[],
   assertion: Record<string, any>,
@@ -2552,6 +2673,7 @@ function readFact(
   fact: string,
   context: EvaluationContext,
 ): unknown {
+  if (fact === 'target.visible' || fact === 'visible') return node.visible;
   if (fact === 'componentName' || fact === 'target.componentName') {
     return componentName(node, context);
   }
@@ -2681,6 +2803,30 @@ function createViolationDiff(
       actual: { value: actualValue },
     },
     assessment,
+  };
+}
+
+function createRuntimePropertyDiff(
+  target: RuntimeNode,
+  property: string,
+  expected: unknown,
+  actual: unknown,
+): DiffEntry {
+  const referenceValue = stringifyEvidence(expected);
+  const actualValue = stringifyEvidence(actual);
+  return {
+    message: `${formatContractPropertyLabel(property)}: ${referenceValue ?? '—'} → ${actualValue ?? '—'}`,
+    nodePath: target.path,
+    nodeName: target.name,
+    nodeId: target.nodeId,
+    visible: target.visible,
+    context: createRuntimeDiffContext(target),
+    diffKind: property.startsWith('layout.') ? 'layout' : 'other',
+    details: {
+      property,
+      reference: { value: referenceValue },
+      actual: { value: actualValue },
+    },
   };
 }
 

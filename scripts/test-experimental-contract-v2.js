@@ -723,6 +723,20 @@ function testCorporateSystemMessageTextAlignmentRequiresNativeOverride() {
   assert.equal(changedResult.diffs[0].details.property, 'text.align.horizontal');
   assert.equal(changedResult.diffs[0].details.reference.value, 'CENTER');
   assert.equal(changedResult.diffs[0].details.actual.value, 'LEFT');
+
+  title.text.alignHorizontal = 'CENTER';
+  const restoredResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: { View: 'Base' },
+    actualStructure: [root, title, label],
+  });
+  assert.equal(
+    restoredResult.diffs.length,
+    0,
+    'A stale native override record must not survive once alignment matches the contract.',
+  );
 }
 
 function testClassificationRequiresDirectOverrideEvidence() {

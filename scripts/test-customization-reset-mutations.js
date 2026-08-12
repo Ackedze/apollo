@@ -54,6 +54,8 @@ async function main() {
     valuesByMode: {},
   };
   globalThis.figma = {
+    mixed: Symbol('mixed'),
+    loadFontAsync: async () => {},
     variables: {
       getVariableByIdAsync: async () => variable,
       importVariableByKeyAsync: async () => variable,
@@ -325,7 +327,15 @@ async function main() {
       id: 'aligned-text-node',
       type: 'TEXT',
       textAlignHorizontal: 'LEFT',
+      getStyledTextSegments() {
+        return [
+          {fontName: {family: 'SB Sans Text', style: 'Regular'}},
+          {fontName: {family: 'SB Sans Text', style: 'Regular'}},
+        ];
+      },
     };
+    const loadedFonts = [];
+    globalThis.figma.loadFontAsync = async (fontName) => loadedFonts.push(fontName);
     await mutations.applyReferenceResetByDetails(alignedTextNode, [
       {
         property: 'text.align.horizontal',
@@ -336,6 +346,11 @@ async function main() {
       alignedTextNode.textAlignHorizontal,
       'CENTER',
       'Text alignment reset must restore the contract baseline.',
+    );
+    assert.deepEqual(
+      loadedFonts,
+      [{family: 'SB Sans Text', style: 'Regular'}],
+      'Text alignment reset must load every current font once before mutation.',
     );
 
     const shadowNode = {

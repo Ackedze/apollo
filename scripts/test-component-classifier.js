@@ -49,6 +49,7 @@ async function main() {
   const {
     collectExperimentalContractV2StructureKeys,
     classifyComponentNode,
+    contractRequiresNativeVisualOverrideEvidence,
     createExperimentalContractV2NestedBaselineEvidence,
     createExperimentalContractV2NestedBaselineDiffs,
     filterUndocumentedNestedVisualDiffs,
@@ -114,6 +115,19 @@ async function main() {
     filterUndocumentedNestedVisualDiffs(iconHost, [hostOriginShape]),
     [],
     'Materialized host-origin Shape noise must also require native override evidence.',
+  );
+  assert.equal(
+    contractRequiresNativeVisualOverrideEvidence({
+      package: { family: 'CorporateSystemMessage' },
+    }),
+    true,
+    'Standalone internal variants must inherit the CorporateSystemMessage visual evidence policy from their package.',
+  );
+  assert.equal(
+    contractRequiresNativeVisualOverrideEvidence({
+      package: { family: 'CardImage' },
+    }),
+    false,
   );
   const materializedStructure = [
     {

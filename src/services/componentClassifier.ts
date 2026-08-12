@@ -232,6 +232,12 @@ export function filterUndocumentedNestedVisualDiffs(
   });
 }
 
+export function contractRequiresNativeVisualOverrideEvidence(
+  contract: { package?: { family?: string } } | null | undefined,
+): boolean {
+  return contract?.package?.family === 'CorporateSystemMessage';
+}
+
 export function collectExperimentalContractV2StructureKeys(
   structure: readonly DSStructureNode[],
 ): Set<string> {
@@ -1167,10 +1173,12 @@ export async function classifyComponentNode(
         mergedContractBaselineDiffs,
       )
     : mergedContractBaselineDiffs;
-  const hostComponentDisplayName =
-    ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name;
+  const experimentalHostContract = experimentalContractV2Enabled
+    ? getExperimentalContractV2ForKey(componentKey)
+    : null;
   const actionableContractBaselineDiffs =
-    alignedActualStructure?.[0] && hostComponentDisplayName.includes('CorporateSystemMessage')
+    alignedActualStructure?.[0] &&
+    contractRequiresNativeVisualOverrideEvidence(experimentalHostContract)
       ? filterUndocumentedNestedVisualDiffs(
           alignedActualStructure[0],
           contractBaselineDiffs,

@@ -195,6 +195,7 @@ export function createCustomizationResetMutations(
         ) {
           throw new Error(`Apollo cannot restore text alignment ${reference.value}`);
         }
+        await loadTextNodeFonts(node);
         node.textAlignHorizontal = alignment;
         if (node.textAlignHorizontal !== alignment) {
           throw new Error(
@@ -393,6 +394,32 @@ export function createCustomizationResetMutations(
         (node as SceneNode & { opacity: number }).opacity = reference.value;
       }
     }
+  }
+
+  async function loadTextNodeFonts(node: TextNode): Promise<void> {
+    const fontNames = typeof node.getStyledTextSegments === 'function'
+      ? node.getStyledTextSegments(['fontName'])
+          .map((segment) => segment.fontName)
+          .filter((fontName): fontName is FontName =>
+            Boolean(
+              fontName &&
+              typeof fontName === 'object' &&
+              typeof fontName.family === 'string' &&
+              typeof fontName.style === 'string'
+            )
+          )
+      : node.fontName !== figma.mixed && node.fontName
+        ? [node.fontName]
+        : [];
+    const uniqueFonts = new Map(
+      fontNames.map((fontName) => [
+        `${fontName.family}\u0000${fontName.style}`,
+        fontName,
+      ]),
+    );
+    await Promise.all(
+      Array.from(uniqueFonts.values(), (fontName) => figma.loadFontAsync(fontName)),
+    );
   }
 
   function resetEffects(node: SceneNode, referenceEffects: DSEffect[] | null) {

@@ -1118,6 +1118,19 @@ function evaluateConfigurationPolicy(
         : [node];
       for (const target of targets) {
         if (hasDirectOverrideForFields(context.host, target, manualFields, assertion, context)) {
+          if (
+            assertion.manualTextAlignAllowed === false &&
+            typeof assertion.expectedTextAlign === 'string' &&
+            normalizePolicyValue(target.text?.alignHorizontal ?? '') ===
+              normalizePolicyValue(assertion.expectedTextAlign)
+          ) {
+            // Assigning the contract value back to a nested text layer can
+            // leave a native Figma override record behind. The override is no
+            // longer a customization once its effective value matches the
+            // contract, so do not keep the finding alive on storage metadata
+            // alone.
+            continue;
+          }
           return {
             verdict: 'fail',
             target,

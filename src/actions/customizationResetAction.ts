@@ -199,14 +199,18 @@ export function createCustomizationResetAction(
       !remediations.length
     ) {
       const resetStartedAt = getTimestamp();
+      const resetProbeBefore = readCustomizationResetProbe(targetNode, details);
       await dependencies.mutations.applyReferenceResetByDetails(
         targetNode,
         details
       );
+      const resetProbeAfter = readCustomizationResetProbe(targetNode, details);
       dependencies.log('[Apollo] customization detail reset complete', {
         nodeId: targetNode.id,
         totalMs: Number((getTimestamp() - resetStartedAt).toFixed(1)),
         detailCount: details.length,
+        before: resetProbeBefore,
+        after: resetProbeAfter,
       });
       dependencies.notify('Изменения сброшены.');
       await dependencies.rerunAudit([targetNode]);
@@ -248,6 +252,20 @@ export function createCustomizationResetAction(
 
     dependencies.notify('Изменения сброшены.');
     await dependencies.rerunAudit([rootNode]);
+  };
+}
+
+function readCustomizationResetProbe(
+  node: SceneNode,
+  details: CustomizationResetDetail[],
+): Record<string, unknown> | null {
+  if (!details.some((detail) => detail.property === 'text.align.horizontal')) {
+    return null;
+  }
+  return {
+    nodeType: node.type,
+    textAlignHorizontal:
+      node.type === 'TEXT' ? node.textAlignHorizontal : null,
   };
 }
 

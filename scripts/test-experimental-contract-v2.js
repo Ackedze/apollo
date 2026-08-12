@@ -574,6 +574,114 @@ function testRootAndAllInternalLayersBaselineRule() {
   assert.equal(result.diagnostics.unknown, 0);
 }
 
+function testBenefitCardNestedContentBaselineRule() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-benefit-card-nested-content',
+  );
+  const contract = createContract();
+  contract.package = {
+    id: 'web-corp-promo.benefit-card',
+    family: 'BenefitCard',
+    library: 'Web _ Corp Promo Components',
+  };
+  const blanketRule = rule('visuals-follow-effective-baseline', {
+    scope: 'self-and-descendants',
+    from: '$host',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: [
+      'layout.*',
+      'layoutSizing*',
+      'styles.text',
+      'fill',
+      'stroke',
+      'radius',
+      'opacity',
+      'effects.*',
+    ],
+  });
+  blanketRule.select.host = 'host.test';
+  blanketRule.severity = 'error';
+  contract.rules = [blanketRule];
+
+  const host = node(1, '[D] ContentWrapper', 'content-wrapper-key', {
+    Title: 'Primary',
+  });
+  const content = node(2, 'Content', null, {});
+  const title = node(3, 'Title', null, {});
+  const titleValue = node(4, 'value', null, {});
+  const subtitle = node(5, 'Subtitle', null, {});
+  const subtitleValue = node(6, 'value', null, {});
+  for (const child of [content, title, titleValue, subtitle, subtitleValue]) {
+    child.type = child.name === 'value' ? 'TEXT' : 'FRAME';
+    child.componentInstance = null;
+  }
+  content.parentId = host.id;
+  title.parentId = content.id;
+  titleValue.parentId = title.id;
+  subtitle.parentId = content.id;
+  subtitleValue.parentId = subtitle.id;
+  for (const child of [content, title, titleValue, subtitle, subtitleValue]) {
+    const parent = [host, content, title, subtitle]
+      .find((candidate) => candidate.id === child.parentId);
+    child.path = `${parent.path} / ${child.name}`;
+  }
+
+  const makeBaselineDiff = (target, property, reference, actual, diffKind) => ({
+    message: `${property}: ${reference} → ${actual}`,
+    nodePath: target.path,
+    nodeName: target.name,
+    nodeId: target.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'content-wrapper-key',
+      referenceComponentKey: 'content-wrapper-key',
+      referenceOrigin: 'host',
+      actualNestedOwnerComponentKey: null,
+      actualNestedOwnerPath: null,
+      actualNestedOwnerRelativePath: null,
+      nestedOwnerComponentKey: null,
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: null,
+      nestedOwnerRelativePath: null,
+      directHostVariantOverride: true,
+    },
+    diffKind,
+    details: {
+      property,
+      reference: { value: reference },
+      actual: { value: actual },
+    },
+  });
+  const diffs = [
+    makeBaselineDiff(content, 'layout.itemSpacing', 8, 16, 'layout'),
+    makeBaselineDiff(title, 'layout.padding.top', 0, 12, 'layout'),
+    makeBaselineDiff(titleValue, 'styles.text', 'Headline/22', 'Headline/18', 'style'),
+    makeBaselineDiff(titleValue, 'fill', 'text/primary', 'text/info', 'paint'),
+    makeBaselineDiff(titleValue, 'text.align.horizontal', 'LEFT', 'RIGHT', 'text-style'),
+    makeBaselineDiff(subtitleValue, 'styles.text', 'Paragraph/16', 'Paragraph/20', 'style'),
+    makeBaselineDiff(subtitleValue, 'fill', 'text/secondary', 'text/positive', 'paint'),
+    makeBaselineDiff(subtitleValue, 'text.align.horizontal', 'LEFT', 'RIGHT', 'text-style'),
+  ];
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'content-wrapper-key',
+    hostComponentName: '[D] ContentWrapper',
+    hostVariantProperties: host.componentInstance.variantProperties,
+    actualStructure: [host, content, title, titleValue, subtitle, subtitleValue],
+    effectiveBaselineDiffs: diffs,
+    hostVariantBaselineDiffs: diffs,
+  });
+
+  assert.deepEqual(
+    result.diffs.map((diff) => `${diff.nodePath}:${diff.details.property}`).sort(),
+    diffs.map((diff) => `${diff.nodePath}:${diff.details.property}`).sort(),
+    'BenefitCard must preserve every protected diff below ContentWrapper, including text leaves.',
+  );
+  assert.equal(result.diagnostics.unknown, 0);
+}
+
 function testCorporateSystemMessageButtonViews() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -3929,6 +4037,7 @@ async function main() {
   testConditionalButtonStackCountSkipsOtherPresets();
   testButtonStackRootLayoutContract();
   testRootAndAllInternalLayersBaselineRule();
+  testBenefitCardNestedContentBaselineRule();
   testCorporateSystemMessageButtonViews();
   testCorporateSystemMessageGraphicOverrideBaseOnly();
   testCorporateSystemMessageTextAlignmentRequiresNativeOverride();

@@ -1298,6 +1298,14 @@ export async function classifyComponentNode(
     contractBaselineDiffs: actionableContractBaselineDiffs,
     finalDiffs: experimentalResult?.diffs ?? [],
   });
+  debugBenefitCardBaselineEvidence({
+    hostComponentName:
+      ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    rawDiffs,
+    contractBaselineDiffs: actionableContractBaselineDiffs,
+    finalDiffs: experimentalResult?.diffs ?? [],
+  });
   const diffs = experimentalContractV2Enabled
     ? experimentalResult?.diffs ?? []
     : legacyDiffs;
@@ -1612,6 +1620,74 @@ function debugCorporateSystemMessageBaselineEvidence(input: {
     rawDiffs: describeProbeDiffs(input.rawDiffs),
     contractBaselineDiffs: describeProbeDiffs(input.contractBaselineDiffs),
     finalDiffs: describeProbeDiffs(input.finalDiffs),
+  })}`);
+}
+
+function debugBenefitCardBaselineEvidence(input: {
+  hostComponentName: string;
+  actualStructure: readonly DSStructureNode[];
+  rawDiffs: readonly DiffEntry[];
+  contractBaselineDiffs: readonly DiffEntry[];
+  finalDiffs: readonly DiffEntry[];
+}): void {
+  if (!input.hostComponentName.includes('BenefitCard')) return;
+  const relevantNames = new Set([
+    'ContentWrapper',
+    'Content',
+    'Title',
+    'Subtitle',
+    'value',
+    'BackgroundPlate',
+  ]);
+  const relevantFields = new Set([
+    'itemSpacing',
+    'paddingTop',
+    'paddingRight',
+    'paddingBottom',
+    'paddingLeft',
+    'textStyleId',
+    'textAlignHorizontal',
+    'fills',
+    'fillStyleId',
+    'strokes',
+    'strokeStyleId',
+    'cornerRadius',
+    'topLeftRadius',
+    'topRightRadius',
+    'bottomLeftRadius',
+    'bottomRightRadius',
+    'opacity',
+    'effects',
+    'effectStyleId',
+    'layoutSizingHorizontal',
+    'layoutSizingVertical',
+  ]);
+  const relevantNodes = input.actualStructure
+    .filter((structureNode) => relevantNames.has(structureNode.name))
+    .map((structureNode) => ({
+      nodeId: structureNode.nodeId ?? null,
+      name: structureNode.name,
+      path: structureNode.path,
+      visible: structureNode.visible !== false,
+      directOverrides: (structureNode.componentInstance?.directOverrides ?? [])
+        .filter((override) => override.fields.some((field) => relevantFields.has(field))),
+    }));
+  const relevantNodeIds = new Set(
+    relevantNodes.map((entry) => entry.nodeId).filter(Boolean),
+  );
+  const relevantDiffs = (diffs: readonly DiffEntry[]) => describeProbeDiffs(
+    diffs.filter((diff) =>
+      relevantNodeIds.has(diff.nodeId ?? null) ||
+      [...relevantNames].some((name) => diff.nodePath.split(' / ').includes(name)),
+    ),
+  );
+  if (!relevantNodes.length && !input.rawDiffs.length && !input.finalDiffs.length) return;
+  console.log(`[Apollo][probe] benefit-card-baseline ${JSON.stringify({
+    hostComponentName: input.hostComponentName,
+    relevantNodes,
+    rawDiffs: relevantDiffs(input.rawDiffs),
+    contractBaselineDiffs: relevantDiffs(input.contractBaselineDiffs),
+    finalDiffs: relevantDiffs(input.finalDiffs),
   })}`);
 }
 

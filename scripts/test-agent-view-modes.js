@@ -62,6 +62,24 @@ assertIncludes(
 );
 assertIncludes(
   uiSource,
+  'function requestAgentReportWhenVisible()',
+  'Agent reports must be requested through the report-tab visibility gate.',
+);
+assertIncludes(
+  uiSource,
+  "activeApolloView !== 'report' ||",
+  'The report visibility gate must require the report tab.',
+);
+assertIncludes(
+  uiSource,
+  'agentRequestedReportId === reportId',
+  'Opening the report tab repeatedly must not resend the same report.',
+);
+if (codeSource.includes('void sendApolloAgentReport();')) {
+  throw new Error('A completed audit must not send its report to the LLM automatically.');
+}
+assertIncludes(
+  uiSource,
   'function getCustomizationStructuredValues(diff)',
   'Customization UI must prefer structured reference and actual values.',
 );

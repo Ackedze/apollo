@@ -1702,6 +1702,10 @@ function hydrateCatalogs(modules: AthenaCatalog[]) {
   }
 }
 
+export function __test_hydrateCatalogs(modules: AthenaCatalog[]): void {
+  hydrateCatalogs(modules);
+}
+
 function hydrateAdditionalCatalogs(modules: AthenaCatalog[]) {
   if (!modules.length) {
     return;

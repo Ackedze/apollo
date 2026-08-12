@@ -1,5 +1,6 @@
 import type { DSStructureNode } from '../types/structures';
 import { buildOccurrenceKeyMap } from '../structure/occurrenceKeys';
+import { traceAudit } from '../utils/auditInstrumentation';
 
 export type MaterializedInstanceReferenceDecision = {
   preferCandidate: boolean;
@@ -51,7 +52,9 @@ export function mergeMaterializedInstanceReferenceNode(
   }
 
   if (decision.reason === 'merge-parent-variant-owned-descendant') {
-    return applyParentVariantOwnedProperties(candidateNode, existingNode);
+    const merged = applyParentVariantOwnedProperties(candidateNode, existingNode);
+    traceMaterializedPaintDecision(existingNode, candidateNode, merged, decision);
+    return merged;
   }
 
   if (
@@ -64,9 +67,37 @@ export function mergeMaterializedInstanceReferenceNode(
   }
 
   const merged = applyMaterializedHostVariantBaselineToNode(candidateNode, existingNode);
-  return (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
+  const result = (existingNode.referenceVariantOwnedProperties?.length ?? 0) > 0
     ? applyParentVariantOwnedProperties(merged, existingNode)
     : merged;
+  traceMaterializedPaintDecision(existingNode, candidateNode, result, decision);
+  return result;
+}
+
+function traceMaterializedPaintDecision(
+  parentVariantNode: DSStructureNode,
+  candidateNode: DSStructureNode,
+  resultNode: DSStructureNode,
+  decision: MaterializedInstanceReferenceDecision,
+) {
+  const parentPaint = paintIdentity(parentVariantNode);
+  const candidatePaint = paintIdentity(candidateNode);
+  const resultPaint = paintIdentity(resultNode);
+  if (!parentPaint && !candidatePaint && !resultPaint) return;
+  traceAudit('materialized-paint-baseline', {
+    path: resultNode.path,
+    reason: decision.reason,
+    ownerComponentKey: decision.ownerComponentKey,
+    relativePath: decision.relativePath,
+    parentVariantPaint: parentPaint,
+    nestedCandidatePaint: candidatePaint,
+    selectedPaint: resultPaint,
+    parentOwnedProperties: parentVariantNode.referenceVariantOwnedProperties ?? [],
+  });
+}
+
+function paintIdentity(node: DSStructureNode): string | null {
+  return node.fill?.token ?? node.fill?.color ?? node.styles?.fill?.styleKey ?? null;
 }
 
 export function selectMaterializedInstanceMergeSource(

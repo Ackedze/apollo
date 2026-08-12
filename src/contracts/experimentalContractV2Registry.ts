@@ -142,6 +142,19 @@ export function getExperimentalContractV2ForKey(
   return entry ? contractByPackageId.get(entry.id) ?? null : null;
 }
 
+export function resolveExperimentalContractV2ComponentFamilyKey(
+  componentKey: string | null | undefined,
+): string | null {
+  if (!componentKey) return null;
+  const contract = getExperimentalContractV2ForKey(componentKey);
+  if (!contract) return null;
+  const component = contract.facts.componentApi.find((entry) =>
+    entry.componentKey === componentKey ||
+    (entry.componentKeys ?? []).includes(componentKey),
+  );
+  return component?.componentKey ?? null;
+}
+
 export function hasExperimentalContractV2ForKey(
   componentKey: string | null | undefined,
 ): boolean {

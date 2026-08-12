@@ -89,6 +89,10 @@ async function main() {
     explicit: { [collectionId]: 'mode-1024' },
     resolved: { [collectionId]: 'mode-1024' },
   });
+  root.clipsContent = true;
+  root.effects = [];
+  root.width = 1200;
+  root.boundVariables.width = { id: 'VariableID:grid-width' };
   const gradient = createFrame('gradient-node-id', 'Gradient');
   gradient.fills = [
     {
@@ -108,6 +112,21 @@ async function main() {
   assert.equal(result[0].parentId, null, 'Root snapshot node must not have a parent id');
   assert.equal(result[0].nodeId, 'root-node-id', 'Root snapshot node must preserve the Figma node id');
   assert.equal(result[0].visible, true, 'Root snapshot node must preserve effective visibility');
+  assert.equal(
+    result[0].clipsContent,
+    true,
+    'Snapshot must preserve clipsContent for Contract v2 propertiesEqual rules',
+  );
+  assert.deepEqual(
+    result[0].effects,
+    [],
+    'Snapshot must preserve an explicitly empty effects list as a comparable baseline',
+  );
+  assert.equal(
+    result[0].layout.widthToken,
+    'VariableID:grid-width',
+    'Snapshot must preserve the width variable binding for configuration policies',
+  );
   assert.equal(result[1].id, 2, 'Child snapshot node must have a generated numeric id');
   assert.equal(result[1].parentId, 1, 'Child snapshot node must point to the generated parent id');
   assert.equal(result[1].nodeId, 'child-node-id', 'Child snapshot node must preserve the Figma node id');
@@ -124,8 +143,45 @@ async function main() {
   ]);
   assert.deepEqual(
     result[2].fill,
-    {color: 'paint:GRADIENT_LINEAR', token: null},
+    {color: 'paint:GRADIENT_LINEAR', token: null, paintTypes: ['GRADIENT_LINEAR']},
     'Visible non-solid fills must remain observable for deterministic no-fill rules',
+  );
+
+  const hiddenChild = createFrame('hidden-child-node-id', 'Hidden child');
+  hiddenChild.visible = false;
+  const hiddenGrandchild = createFrame(
+    'hidden-grandchild-node-id',
+    'Hidden grandchild',
+  );
+  hiddenChild.children.push(hiddenGrandchild);
+  hiddenGrandchild.parent = hiddenChild;
+  root.children.push(hiddenChild);
+  hiddenChild.parent = root;
+
+  const visibleOnlyResult = await snapshotTree(root, new Set());
+  assert.equal(
+    visibleOnlyResult.some((entry) => entry.nodeId === 'hidden-child-node-id'),
+    false,
+    'Default snapshots must continue to omit hidden branches',
+  );
+  const structuralResult = await snapshotTree(root, new Set(), {
+    includeHidden: true,
+  });
+  const hiddenChildSnapshot = structuralResult.find(
+    (entry) => entry.nodeId === 'hidden-child-node-id',
+  );
+  const hiddenGrandchildSnapshot = structuralResult.find(
+    (entry) => entry.nodeId === 'hidden-grandchild-node-id',
+  );
+  assert.equal(
+    hiddenChildSnapshot?.visible,
+    false,
+    'Structural snapshots must retain a hidden composition node',
+  );
+  assert.equal(
+    hiddenGrandchildSnapshot?.visible,
+    false,
+    'Descendants of a hidden composition node must retain effective visibility=false',
   );
 
   const instanceSnapshot = await snapshotNode(

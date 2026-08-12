@@ -1,10 +1,12 @@
 import {
+  __test_hydrateCatalogs,
   findComponent,
   isNestedComponentLayoutPathHostControlled,
   isNestedComponentPaintPathHostControlled,
   isNestedComponentTextPathHostControlled,
   resolveStructureForInstance,
 } from '../reference/library';
+import type { AthenaCatalog } from '../reference/libraryTypes';
 import {
   alignMaterializedReferenceInstancePaths,
   applyMaterializedHostVariantBaselines,
@@ -213,6 +215,15 @@ export function expandReferenceWithInstanceComponents(
   return applyMaterializedHostVariantBaselines(referenceEntries, reference);
 }
 
+export function __test_expandReferenceWithCatalogs(
+  reference: DSStructureNode[],
+  actual: DSStructureNode[],
+  catalogs: AthenaCatalog[],
+): DSStructureNode[] {
+  __test_hydrateCatalogs(catalogs);
+  return expandReferenceWithInstanceComponents(reference, actual);
+}
+
 function rebaseReferenceSubtreeIds(
   nodes: DSStructureNode[],
   startId: number,
@@ -264,5 +275,4 @@ function replacePathPrefix(path: string, from: string, to: string): string {
   }
   return path;
 }
-
 

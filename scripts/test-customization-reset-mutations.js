@@ -301,6 +301,41 @@ async function main() {
     ]);
     assert.equal(swappedInstance.swappedTo, referenceComponent);
 
+    const shadowNode = {
+      id: 'shadow-node',
+      type: 'FRAME',
+      effects: [{
+        type: 'DROP_SHADOW',
+        radius: 28,
+        spread: -16,
+        offset: {x: 0, y: 20},
+        color: {r: 0, g: 0, b: 0, a: 0.6},
+        visible: true,
+        blendMode: 'NORMAL',
+      }],
+    };
+    await mutations.applyReferenceResetByDetails(shadowNode, [
+      {
+        property: 'effects',
+        reference: {
+          value: 'DROP_SHADOW alpha 0.30',
+          resourceType: 'effects',
+          effects: [{
+            type: 'DROP_SHADOW',
+            radius: 28,
+            color: 'rgba(0, 0, 0, 0.30)',
+            offset: {x: 0, y: 20},
+          }],
+        },
+      },
+    ]);
+    assert.equal(shadowNode.effects[0].color.a, 0.3);
+    assert.equal(
+      shadowNode.effects[0].spread,
+      -16,
+      'Effect reset must preserve a runtime field missing from the catalog baseline',
+    );
+
     const rejectedLayoutNode = {id: 'rejected-layout-node', type: 'FRAME'};
     Object.defineProperties(rejectedLayoutNode, {
       primaryAxisAlignItems: {

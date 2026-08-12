@@ -235,6 +235,26 @@ function main() {
     'Raw text case changes must become a component baseline case diff',
   );
 
+  const changedTextAlignment = diffStructures(
+    [
+      node('TEXT', {
+        text: { characters: 'Title', alignHorizontal: 'LEFT' },
+      }),
+    ],
+    [
+      node('TEXT', {
+        text: { characters: 'Title', alignHorizontal: 'CENTER' },
+      }),
+    ],
+  );
+  assert.equal(
+    changedTextAlignment.diffs.some(
+      (entry) => entry.details?.property === 'text.align.horizontal',
+    ),
+    true,
+    'Horizontal text alignment changes must become component baseline evidence',
+  );
+
   console.log('Strict comparison regression checks passed');
 }
 

@@ -81,6 +81,7 @@ import {
   ensureExperimentalContractV2ForKeys,
   getExperimentalContractV2ForKey,
   hasExperimentalContractV2ForKey,
+  resolveExperimentalContractV2ComponentFamilyKey,
   type ExperimentalContractV2,
 } from '../contracts/experimentalContractV2Registry';
 import {
@@ -136,10 +137,13 @@ export interface ComponentClassifierDependencies {
     componentKey: string | null,
   ): void;
   debugDiffPipeline(payload: {
+    rootNode: SceneNode;
     componentName: string | null | undefined;
     alignedActualStructure: DSStructureNode[] | null;
     expandedReferenceStructure: DSStructureNode[] | null;
     rawDiffs: DiffList;
+    contractBaselineDiffs: DiffList;
+    explicitVariantStateDiffs: DiffList;
     markedDiffs: DiffList;
     allowlistedDiffs: DiffList;
     finalDiffs: DiffList;
@@ -189,6 +193,44 @@ export function shouldMaterializeComponentDiff(options: {
   if (!options.hasReferenceStructure) return false;
   if (!options.alreadyMaterialized) return true;
   return options.requiresExperimentalContractV2Audit && !options.contractV2ScopeCovered;
+}
+
+export function filterUndocumentedNestedVisualDiffs(
+  host: DSStructureNode,
+  diffs: readonly DiffEntry[],
+): DiffEntry[] {
+  const nativeOverrides = new Set(
+    (host.componentInstance?.directOverrides ?? []).flatMap((override) =>
+      override.fields.map((field) => `${override.nodeId}|${field}`),
+    ),
+  );
+  return diffs.filter((diff) => {
+    if (
+      diff.context.referenceOrigin !== 'nested-component' ||
+      diff.context.directHostVariantOverride === true ||
+      !diff.nodeId
+    ) {
+      return true;
+    }
+    const property = diff.details?.property ?? '';
+    const fields = property === 'radius'
+      ? [
+          'cornerRadius',
+          'topLeftRadius',
+          'topRightRadius',
+          'bottomRightRadius',
+          'bottomLeftRadius',
+        ]
+      : property === 'fill' || property === 'styles.fill'
+        ? ['fills', 'fillStyleId', 'boundVariables']
+        : property === 'stroke' || property === 'styles.stroke'
+          ? ['strokes', 'strokeStyleId', 'strokeWeight', 'strokeAlign', 'boundVariables']
+          : property === 'effects' || property.startsWith('effects.')
+            ? ['effects', 'effectStyleId']
+            : [];
+    if (!fields.length) return true;
+    return fields.some((field) => nativeOverrides.has(`${diff.nodeId}|${field}`));
+  });
 }
 
 export function collectExperimentalContractV2StructureKeys(
@@ -255,6 +297,11 @@ export function createExperimentalContractV2NestedBaselineEvidence(
       actual: DSStructureNode[],
       reference: DSStructureNode[],
     ): DiffEntry[];
+    compareComponentStates?(
+      actual: DSStructureNode[],
+      reference: DSStructureNode[],
+      existingDiffs: DiffEntry[],
+    ): DiffEntry[];
   },
 ): ExperimentalContractV2NestedBaselineEvidence {
   const evidence: ExperimentalContractV2NestedBaselineEvidence = {
@@ -266,6 +313,7 @@ export function createExperimentalContractV2NestedBaselineEvidence(
   const nodesById = new Map(structure.map((node) => [node.id, node]));
 
   for (const instance of structure.slice(1)) {
+    if (instance.visible === false) continue;
     const componentKey = instance.componentInstance?.componentKey;
     if (!componentKey || instance.type !== 'INSTANCE') continue;
     const contract = dependencies.resolveContract(componentKey);
@@ -282,6 +330,11 @@ export function createExperimentalContractV2NestedBaselineEvidence(
     }
 
     const actualSubtree = collectStructureSubtree(structure, instance.id);
+    const scopeWithInheritedOverrides = inheritScopeDirectOverrides(
+      instance,
+      actualSubtree,
+      nodesById,
+    );
     const standaloneReference = dependencies.resolveReference(instance);
     if (!standaloneReference?.length) continue;
     const ownedStandaloneReference = markNestedContractReferenceOwnership(
@@ -294,24 +347,103 @@ export function createExperimentalContractV2NestedBaselineEvidence(
       alignedActual,
       alignedActual[0]?.path ?? '',
     );
-    evidence.hostVariantDiffs.set(
-      instance.id,
-      dependencies.compareHostVariant
-        ? dependencies.compareHostVariant(alignedActual, alignedStandaloneReference)
-        : dependencies.compare(alignedActual, alignedStandaloneReference),
+    const hostVariantDiffs = dependencies.compareHostVariant
+      ? dependencies.compareHostVariant(alignedActual, alignedStandaloneReference)
+      : dependencies.compare(alignedActual, alignedStandaloneReference);
+    const hostVariantComponentDiffs = dependencies.compareComponentStates
+      ? dependencies.compareComponentStates(
+          alignedActual,
+          alignedStandaloneReference,
+          hostVariantDiffs,
+        )
+      : [];
+    const directHostVariantDiffs = filterDirectNestedHostVariantDiffs(
+      scopeWithInheritedOverrides,
+      hostVariantDiffs.concat(hostVariantComponentDiffs),
     );
     const expandedReference = dependencies.expandReference(
       alignedStandaloneReference,
       alignedActual,
     );
+    const effectiveDiffs = dependencies.compare(alignedActual, expandedReference);
+    const effectiveComponentDiffs = dependencies.compareComponentStates
+      ? dependencies.compareComponentStates(
+          alignedActual,
+          expandedReference,
+          effectiveDiffs,
+        )
+      : [];
+    const effectiveEvidence = effectiveDiffs.concat(effectiveComponentDiffs);
+    evidence.hostVariantDiffs.set(
+      instance.id,
+      markDirectHostVariantDiffs(
+        scopeWithInheritedOverrides,
+        hostVariantDiffs.concat(hostVariantComponentDiffs),
+      ),
+    );
     evidence.effectiveDiffs.set(
       instance.id,
-      dependencies.compare(alignedActual, expandedReference),
+      mergeDirectNestedBaselineEvidence(
+        effectiveEvidence,
+        directHostVariantDiffs,
+      ),
     );
     evidence.completedScopeNodeIds.add(instance.id);
   }
 
   return evidence;
+}
+
+function inheritScopeDirectOverrides(
+  scope: DSStructureNode,
+  scopeNodes: readonly DSStructureNode[],
+  nodesById: ReadonlyMap<number, DSStructureNode>,
+): DSStructureNode {
+  const scopeNodeIds = new Set(
+    scopeNodes
+      .map((node) => node.nodeId)
+      .filter((nodeId): nodeId is string => Boolean(nodeId)),
+  );
+  const fieldsByNodeId = new Map<string, Set<string>>();
+  let current: DSStructureNode | undefined = scope;
+  while (current) {
+    for (const override of current.componentInstance?.directOverrides ?? []) {
+      if (!scopeNodeIds.has(override.nodeId)) continue;
+      const fields = fieldsByNodeId.get(override.nodeId) ?? new Set<string>();
+      override.fields.forEach((field) => fields.add(field));
+      fieldsByNodeId.set(override.nodeId, fields);
+    }
+    current = current.parentId === null
+      ? undefined
+      : nodesById.get(current.parentId);
+  }
+  if (!fieldsByNodeId.size) return scope;
+  return Object.assign({}, scope, {
+    componentInstance: Object.assign({}, scope.componentInstance, {
+      directOverrides: Array.from(fieldsByNodeId, ([nodeId, fields]) => ({
+        nodeId,
+        fields: Array.from(fields),
+      })),
+    }),
+  });
+}
+
+function mergeDirectNestedBaselineEvidence(
+  effectiveDiffs: readonly DiffEntry[],
+  directHostVariantDiffs: readonly DiffEntry[],
+): DiffEntry[] {
+  const merged = new Map<string, DiffEntry>();
+  for (const diff of effectiveDiffs.concat(directHostVariantDiffs)) {
+    const key = [
+      diff.nodeId ?? diff.nodePath,
+      diff.details?.property ?? diff.message,
+    ].join('|');
+    const existing = merged.get(key);
+    if (!existing || diff.context?.directHostVariantOverride === true) {
+      merged.set(key, diff);
+    }
+  }
+  return Array.from(merged.values());
 }
 
 export function markNestedContractBaselineDiff(
@@ -333,7 +465,7 @@ export function filterDirectNestedHostVariantDiffs(
   diffs: readonly DiffEntry[],
 ): DiffEntry[] {
   return markDirectHostVariantDiffs(scope, diffs).filter(
-    (diff) => diff.context.directHostVariantOverride === true,
+    (diff) => diff.context?.directHostVariantOverride === true,
   );
 }
 
@@ -348,7 +480,7 @@ export function markDirectHostVariantDiffs(
   );
   return diffs.map((diff) => {
     if (!diff.nodeId) return diff;
-    const fields = fieldsByNodeId.get(diff.nodeId);
+    const fields = findDirectOverrideFieldsForDiff(fieldsByNodeId, diff);
     if (!fields || !directOverrideFieldsMatchDiff(fields, diff)) return diff;
     return Object.assign({}, diff, {
       context: Object.assign({}, diff.context, {
@@ -356,6 +488,34 @@ export function markDirectHostVariantDiffs(
       }),
     });
   });
+}
+
+function findDirectOverrideFieldsForDiff(
+  fieldsByNodeId: ReadonlyMap<string, ReadonlySet<string>>,
+  diff: DiffEntry,
+): ReadonlySet<string> | undefined {
+  if (!diff.nodeId) return undefined;
+  const exactFields = fieldsByNodeId.get(diff.nodeId);
+  if (exactFields) return exactFields;
+  if (diff.details?.property !== 'component.identity') return undefined;
+
+  // Figma records an exposed instance-swap property on the instance that owns
+  // the property, while the changed component identity belongs to the swapped
+  // descendant. Use the nearest such ancestor as direct evidence for identity
+  // only; inheriting it for paint/layout would turn the replacement's entire
+  // visual tree into false user customizations.
+  let nearest: { nodeId: string; fields: ReadonlySet<string> } | null = null;
+  for (const [nodeId, fields] of fieldsByNodeId) {
+    if (
+      !fields.has('componentProperties') ||
+      !diff.nodeId.startsWith(`${nodeId};`) ||
+      (nearest && nearest.nodeId.length >= nodeId.length)
+    ) {
+      continue;
+    }
+    nearest = { nodeId, fields };
+  }
+  return nearest?.fields;
 }
 
 function directOverrideFieldsMatchDiff(
@@ -394,11 +554,14 @@ function directOverrideFieldsMatchDiff(
       'boundVariables',
     ]);
   }
+  if (property === 'text.align.horizontal') {
+    return hasAnyOverrideField(fields, ['textAlignHorizontal']);
+  }
   if (property === 'text.characters') {
     return hasAnyOverrideField(fields, ['characters', 'componentProperties']);
   }
   if (property.startsWith('variant.') || property === 'component.identity') {
-    return fields.has('componentProperties');
+    return hasAnyOverrideField(fields, ['componentProperties', 'mainComponent']);
   }
   if (property.startsWith('layout.padding.')) {
     const side = property.slice('layout.padding.'.length);
@@ -428,6 +591,9 @@ function directOverrideFieldsMatchDiff(
   }
   if (property === 'opacity') {
     return hasAnyOverrideField(fields, ['opacity', 'boundVariables']);
+  }
+  if (property === 'effects' || property.startsWith('effects.')) {
+    return hasAnyOverrideField(fields, ['effects', 'effectStyleId', 'boundVariables']);
   }
   if (property === 'radius' || property === 'cornerRadius') {
     return hasAnyOverrideField(fields, [
@@ -668,7 +834,15 @@ export async function classifyComponentNode(
     isInheritedFromLocalComponentContext,
   });
   const actualStructure =
-    shouldDiff && referenceStructure ? await snapshotTree(node, checkedComponentNodesList) : null;
+    shouldDiff && referenceStructure
+      ? await snapshotTree(node, checkedComponentNodesList, {
+          // Contract v2 composition rules may own hidden slots (for example
+          // CardSwiperMobile previous/next). Keep those nodes in the structural
+          // snapshot while preserving visible=false so presentation filters and
+          // nested-scope evaluation can still ignore hidden customizations.
+          includeHidden: experimentalContractV2Enabled,
+        })
+      : null;
   throwIfCancelled();
   const alignedActualStructure =
     referenceStructure && actualStructure
@@ -678,6 +852,11 @@ export async function classifyComponentNode(
     const structureContractKeys = await preloadExperimentalContractV2Structure(
       alignedActualStructure,
     );
+    // Actual nested replacements can live in a catalog that was not needed by
+    // the host reference itself. Load those component families before path and
+    // identity alignment; loading one icon catalog also rehydrates the sibling
+    // reference icon key used by the selected host variant.
+    await ensureReferenceCatalogsForKeys(structureContractKeys);
     console.log('[Apollo][contracts-v2] materialized subtree ready', {
       hostComponentKey: componentKey,
       componentKeyCount: structureContractKeys.size,
@@ -798,6 +977,32 @@ export async function classifyComponentNode(
                 .map((diff) => attachSurfaceContext(diff, surfaceContext))
                 .map(applyRequiredComponentSizingAssessment)
                 .map(applyVariableBindingAssessment),
+            compareComponentStates: (
+              nestedActual,
+              nestedReference,
+              existingDiffs,
+            ) => diffExplicitNestedVariantStates(
+              nestedActual,
+              nestedReference,
+              existingDiffs,
+              {
+                resolveComponentFamilyKey: (nestedComponentKey) =>
+                  findComponent(nestedComponentKey)?.key ??
+                  resolveExperimentalContractV2ComponentFamilyKey(nestedComponentKey) ??
+                  nestedComponentKey,
+                resolveReferenceComponentKey: (referenceNode) =>
+                  referenceNode.componentInstance?.componentKey ||
+                  (findComponentVariantKeyByName(
+                      referenceNode.name,
+                      referenceNode.componentInstance?.variantProperties,
+                    ) ??
+                    findComponentByName(referenceNode.name)?.key ??
+                    null),
+              },
+            )
+              .map((diff) => attachSurfaceContext(diff, surfaceContext))
+              .map(applyRequiredComponentSizingAssessment)
+              .map(applyVariableBindingAssessment),
           },
         )
       : {
@@ -833,12 +1038,17 @@ export async function classifyComponentNode(
           markedDiffs,
           {
             resolveComponentFamilyKey: (nestedComponentKey) =>
-              findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+              findComponent(nestedComponentKey)?.key ??
+              resolveExperimentalContractV2ComponentFamilyKey(nestedComponentKey) ??
+              nestedComponentKey,
             resolveReferenceComponentKey: (referenceNode) =>
-              findComponentVariantKeyByName(
-                referenceNode.name,
-                referenceNode.componentInstance?.variantProperties,
-              ) ?? findComponentByName(referenceNode.name)?.key ?? null,
+              referenceNode.componentInstance?.componentKey ||
+              (findComponentVariantKeyByName(
+                  referenceNode.name,
+                  referenceNode.componentInstance?.variantProperties,
+                ) ??
+                findComponentByName(referenceNode.name)?.key ??
+                null),
           },
         )
           .map((diff) => attachSurfaceContext(diff, surfaceContext))
@@ -943,11 +1153,30 @@ export async function classifyComponentNode(
     ),
     alignedActualStructure ?? [],
   );
-  const contractBaselineDiffs = mergeContractBaselineEvidence(
+  const mergedContractBaselineDiffs = mergeContractBaselineEvidence(
     assessedContractBaselineDiffs,
     diffsForAssessment,
     alignedActualStructure?.[0]?.nodeId,
   );
+  // A component contract may intentionally revive visual evidence that a
+  // legacy pattern marks as derived. Preserve the native Figma override proof
+  // on that evidence so the contract can distinguish a direct user edit from
+  // a visual consequence of a parent variant change.
+  const contractBaselineDiffs = alignedActualStructure?.[0]
+    ? markDirectHostVariantDiffs(
+        alignedActualStructure[0],
+        mergedContractBaselineDiffs,
+      )
+    : mergedContractBaselineDiffs;
+  const hostComponentDisplayName =
+    ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name;
+  const actionableContractBaselineDiffs =
+    alignedActualStructure?.[0] && hostComponentDisplayName.includes('CorporateSystemMessage')
+      ? filterUndocumentedNestedVisualDiffs(
+          alignedActualStructure[0],
+          contractBaselineDiffs,
+        )
+      : contractBaselineDiffs;
   const semanticDiffs = collapsePatternViolationDiffs(
     collapseVisualDiffsUnderVariantChanges(
       applyAssessmentPresentation(
@@ -1010,12 +1239,18 @@ export async function classifyComponentNode(
           actualStructure: alignedActualStructure,
           // Exact component contracts must evaluate evidence before legacy
           // allowlists and Expected/Allowed presentation filters remove it.
-          effectiveBaselineDiffs: contractBaselineDiffs,
+          effectiveBaselineDiffs: actionableContractBaselineDiffs,
           // Nested contracts reuse the fully materialized host reference. It
           // already contains parent-variant overrides and expands components
           // injected through slots from their own selected variant. The tree
           // evaluator scopes this evidence by node id.
           rawBaselineDiffs: rawDiffs,
+          // Nested components must evaluate their own expanded standalone
+          // baseline. Falling back to parent-host diffs loses direct paint
+          // overrides on deep CardImage leaves such as Image Container,
+          // State/icon and overlay.
+          nestedScopeBaselineDiffs:
+            nestedContractBaselineEvidence.effectiveDiffs,
           nestedScopeHostVariantBaselineDiffs: nestedDirectHostVariantDiffs,
           completedNestedScopeNodeIds:
             nestedContractBaselineEvidence.completedScopeNodeIds,
@@ -1024,11 +1259,38 @@ export async function classifyComponentNode(
           // with the generic nested Status baseline.
           hostVariantBaselineDiffs: markedHostVariantDiffs,
           resolveTokenLabel,
+          resolveVariableCollectionMetadata,
           resolveComponentFamilyKey: (nestedComponentKey) =>
-            findComponent(nestedComponentKey)?.key ?? nestedComponentKey,
+            findComponent(nestedComponentKey)?.key ??
+            resolveExperimentalContractV2ComponentFamilyKey(nestedComponentKey) ??
+            nestedComponentKey,
           resolveContract: getExperimentalContractV2ForKey,
         })
       : null;
+  debugCardSwiperNestedContractEvidence({
+    hostComponentName:
+      ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    evidence: nestedContractBaselineEvidence,
+    directHostVariantDiffs: nestedDirectHostVariantDiffs,
+    finalDiffs: experimentalResult?.diffs ?? [],
+  });
+  debugTitleViewStatusPresetEvidence({
+    hostComponentName:
+      ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    evidence: nestedContractBaselineEvidence,
+    directHostVariantDiffs: nestedDirectHostVariantDiffs,
+    finalDiffs: experimentalResult?.diffs ?? [],
+  });
+  debugCorporateSystemMessageBaselineEvidence({
+    hostComponentName:
+      ref?.displayName ?? ref?.name ?? ref?.names?.[0] ?? node.name,
+    actualStructure: alignedActualStructure ?? [],
+    rawDiffs,
+    contractBaselineDiffs: actionableContractBaselineDiffs,
+    finalDiffs: experimentalResult?.diffs ?? [],
+  });
   const diffs = experimentalContractV2Enabled
     ? experimentalResult?.diffs ?? []
     : legacyDiffs;
@@ -1057,10 +1319,13 @@ export async function classifyComponentNode(
     });
   }
   debugDiffPipeline({
+    rootNode: node,
     componentName: ref?.displayName ?? ref?.name ?? node.name,
     alignedActualStructure,
     expandedReferenceStructure,
     rawDiffs,
+    contractBaselineDiffs,
+    explicitVariantStateDiffs,
     markedDiffs: assessedDiffs,
     allowlistedDiffs,
     finalDiffs: diffs,
@@ -1160,6 +1425,214 @@ export async function classifyComponentNode(
     resolvedReferenceVariantKey,
     resolvedReferenceVariantName,
   };
+}
+
+function debugCardSwiperNestedContractEvidence(input: {
+  hostComponentName: string;
+  actualStructure: readonly DSStructureNode[];
+  evidence: ExperimentalContractV2NestedBaselineEvidence;
+  directHostVariantDiffs: ReadonlyMap<number, DiffEntry[]>;
+  finalDiffs: readonly DiffEntry[];
+}): void {
+  if (!input.hostComponentName.includes('CardSwiperMobile')) return;
+  const relevantFields = new Set([
+    'fills',
+    'fillStyleId',
+    'effects',
+    'effectStyleId',
+    'componentProperties',
+    'mainComponent',
+  ]);
+  const records: Array<Record<string, unknown>> = [];
+  for (const scope of input.actualStructure) {
+    if (scope.name !== 'CardImage' || scope.type !== 'INSTANCE') continue;
+    const overrides = (scope.componentInstance?.directOverrides ?? []).filter(
+      (override) => override.fields.some((field) => relevantFields.has(field)),
+    );
+    if (!overrides.length) continue;
+    records.push({
+      scopeId: scope.id,
+      scopeNodeId: scope.nodeId ?? null,
+      scopePath: scope.path,
+      scopeVisible: scope.visible !== false,
+      componentKey: scope.componentInstance?.componentKey ?? null,
+      overrides,
+      effectiveDiffs: describeProbeDiffs(
+        input.evidence.effectiveDiffs.get(scope.id) ?? [],
+      ),
+      hostVariantDiffs: describeProbeDiffs(
+        input.evidence.hostVariantDiffs.get(scope.id) ?? [],
+      ),
+      directHostVariantDiffs: describeProbeDiffs(
+        input.directHostVariantDiffs.get(scope.id) ?? [],
+      ),
+      finalDiffs: describeProbeDiffs(
+        input.finalDiffs.filter((diff) => isDiffInsideScope(diff, scope)),
+      ),
+      completed: input.evidence.completedScopeNodeIds.has(scope.id),
+    });
+  }
+  if (!records.length) return;
+  console.log(`[Apollo][probe] card-swiper-nested-contract ${JSON.stringify({
+    hostComponentName: input.hostComponentName,
+    records,
+    allFinalDiffs: describeProbeDiffs(input.finalDiffs),
+  })}`);
+}
+
+function debugTitleViewStatusPresetEvidence(input: {
+  hostComponentName: string;
+  actualStructure: readonly DSStructureNode[];
+  evidence: ExperimentalContractV2NestedBaselineEvidence;
+  directHostVariantDiffs: ReadonlyMap<number, DiffEntry[]>;
+  finalDiffs: readonly DiffEntry[];
+}): void {
+  if (!input.hostComponentName.includes('TitleView')) return;
+  const relevantFields = new Set([
+    'fills',
+    'fillStyleId',
+    'boundVariables',
+  ]);
+  const nodesById = new Map(
+    input.actualStructure.map((structureNode) => [structureNode.id, structureNode]),
+  );
+  const records: Array<Record<string, unknown>> = [];
+  for (const scope of input.actualStructure) {
+    if (scope.name !== 'StatusPreset' || scope.type !== 'INSTANCE') continue;
+    const scopeNodeIds = new Set(
+      collectStructureSubtree(input.actualStructure, scope.id)
+        .map((structureNode) => structureNode.nodeId)
+        .filter((nodeId): nodeId is string => Boolean(nodeId)),
+    );
+    const overrideOwners: Array<Record<string, unknown>> = [];
+    let current: DSStructureNode | undefined = scope;
+    while (current) {
+      const overrides = (current.componentInstance?.directOverrides ?? []).filter(
+        (override) =>
+          scopeNodeIds.has(override.nodeId) &&
+          override.fields.some((field) => relevantFields.has(field)),
+      );
+      if (overrides.length) {
+        overrideOwners.push({
+          ownerId: current.id,
+          ownerNodeId: current.nodeId ?? null,
+          ownerName: current.name,
+          ownerPath: current.path,
+          overrides,
+        });
+      }
+      current = current.parentId === null
+        ? undefined
+        : nodesById.get(current.parentId);
+    }
+    records.push({
+      scopeId: scope.id,
+      scopeNodeId: scope.nodeId ?? null,
+      scopePath: scope.path,
+      componentKey: scope.componentInstance?.componentKey ?? null,
+      variantProperties: scope.componentInstance?.variantProperties ?? null,
+      overrideOwners,
+      effectiveDiffs: describeProbeDiffs(
+        input.evidence.effectiveDiffs.get(scope.id) ?? [],
+      ),
+      hostVariantDiffs: describeProbeDiffs(
+        input.evidence.hostVariantDiffs.get(scope.id) ?? [],
+      ),
+      directHostVariantDiffs: describeProbeDiffs(
+        input.directHostVariantDiffs.get(scope.id) ?? [],
+      ),
+      finalDiffs: describeProbeDiffs(
+        input.finalDiffs.filter((diff) => isDiffInsideScope(diff, scope)),
+      ),
+      completed: input.evidence.completedScopeNodeIds.has(scope.id),
+    });
+  }
+  if (!records.length) return;
+  console.log(`[Apollo][probe] title-view-status-preset ${JSON.stringify({
+    hostComponentName: input.hostComponentName,
+    records,
+  })}`);
+}
+
+function debugCorporateSystemMessageBaselineEvidence(input: {
+  hostComponentName: string;
+  actualStructure: readonly DSStructureNode[];
+  rawDiffs: readonly DiffEntry[];
+  contractBaselineDiffs: readonly DiffEntry[];
+  finalDiffs: readonly DiffEntry[];
+}): void {
+  if (!input.hostComponentName.includes('CorporateSystemMessage')) return;
+  const relevantFields = new Set([
+    'itemSpacing',
+    'paddingTop',
+    'paddingRight',
+    'paddingBottom',
+    'paddingLeft',
+    'textStyleId',
+    'textAlignHorizontal',
+    'fills',
+    'fillStyleId',
+    'strokes',
+    'strokeStyleId',
+    'cornerRadius',
+    'topLeftRadius',
+    'topRightRadius',
+    'bottomLeftRadius',
+    'bottomRightRadius',
+    'opacity',
+    'effects',
+    'effectStyleId',
+    'layoutSizingHorizontal',
+    'layoutSizingVertical',
+    'componentProperties',
+    'mainComponent',
+  ]);
+  const overrideOwners = input.actualStructure
+    .filter((structureNode) => structureNode.componentInstance?.directOverrides?.some(
+      (override) => override.fields.some((field) => relevantFields.has(field)),
+    ))
+    .map((structureNode) => ({
+      ownerNodeId: structureNode.nodeId ?? null,
+      ownerName: structureNode.name,
+      ownerPath: structureNode.path,
+      overrides: (structureNode.componentInstance?.directOverrides ?? [])
+        .filter((override) => override.fields.some((field) => relevantFields.has(field))),
+    }));
+  if (!overrideOwners.length && !input.rawDiffs.length && !input.finalDiffs.length) return;
+  console.log(`[Apollo][probe] corporate-system-message-baseline ${JSON.stringify({
+    hostComponentName: input.hostComponentName,
+    overrideOwners,
+    rawDiffs: describeProbeDiffs(input.rawDiffs),
+    contractBaselineDiffs: describeProbeDiffs(input.contractBaselineDiffs),
+    finalDiffs: describeProbeDiffs(input.finalDiffs),
+  })}`);
+}
+
+function describeProbeDiffs(diffs: readonly DiffEntry[]): Array<Record<string, unknown>> {
+  return diffs.map((diff) => ({
+    nodeId: diff.nodeId ?? null,
+    nodePath: diff.nodePath,
+    nodeName: diff.nodeName,
+    property: diff.details?.property ?? null,
+    reference: diff.details?.reference.value ?? null,
+    actual: diff.details?.actual.value ?? null,
+    presentation: diff.assessment?.presentation ?? null,
+    directHostVariantOverride:
+      diff.context.directHostVariantOverride === true,
+    referenceOrigin: diff.context.referenceOrigin,
+  }));
+}
+
+function isDiffInsideScope(diff: DiffEntry, scope: DSStructureNode): boolean {
+  if (
+    diff.nodeId &&
+    scope.nodeId &&
+    (diff.nodeId === scope.nodeId || diff.nodeId.startsWith(`${scope.nodeId};`))
+  ) {
+    return true;
+  }
+  return diff.nodePath === scope.path ||
+    diff.nodePath.startsWith(`${scope.path} / `);
 }
 
 export function resolveHostReferenceForContractDiff(

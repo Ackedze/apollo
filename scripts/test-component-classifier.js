@@ -51,6 +51,7 @@ async function main() {
     classifyComponentNode,
     createExperimentalContractV2NestedBaselineEvidence,
     createExperimentalContractV2NestedBaselineDiffs,
+    filterUndocumentedNestedVisualDiffs,
     filterDirectNestedHostVariantDiffs,
     isNativeLocalComponent,
     markNestedContractBaselineDiff,
@@ -59,6 +60,54 @@ async function main() {
     shouldMaterializeComponentDiff,
     shouldRunComponentDiff,
   } = loadModule();
+  const iconHost = {
+    id: 1,
+    parentId: null,
+    nodeId: 'message',
+    path: '[D] CorporateSystemMessage',
+    type: 'INSTANCE',
+    name: '[D] CorporateSystemMessage',
+    visible: true,
+    componentInstance: {
+      componentKey: 'message-key',
+      directOverrides: [
+        { nodeId: 'paint-me', fields: ['fills'] },
+      ],
+    },
+  };
+  const nestedDiff = (nodeId, nodeName, property) => ({
+    message: `${property} changed`,
+    nodeId,
+    nodeName,
+    nodePath: `${iconHost.path} / IconView / ${nodeName}`,
+    visible: true,
+    context: {
+      actualComponentKey: 'icon-view-key',
+      referenceComponentKey: 'icon-view-key',
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'icon-view-key',
+      actualNestedOwnerPath: `${iconHost.path} / IconView`,
+      actualNestedOwnerRelativePath: nodeName,
+      nestedOwnerComponentKey: 'icon-view-key',
+      nestedOwnerComponentRole: 'Main',
+      nestedOwnerPath: `${iconHost.path} / IconView`,
+      nestedOwnerRelativePath: nodeName,
+    },
+    diffKind: 'shape',
+    details: {
+      property,
+      reference: { value: property === 'radius' ? 0 : 'baseline' },
+      actual: { value: property === 'radius' ? 6 : 'custom' },
+    },
+  });
+  assert.deepEqual(
+    filterUndocumentedNestedVisualDiffs(iconHost, [
+      nestedDiff('shape', 'Shape', 'radius'),
+      nestedDiff('paint-me', 'PaintMe', 'fill'),
+    ]).map((diff) => diff.nodeName),
+    ['PaintMe'],
+    'Nested visual noise without native override evidence must be suppressed while direct paint overrides remain visible.',
+  );
   const materializedStructure = [
     {
       id: 1,
@@ -238,10 +287,201 @@ async function main() {
     ['effective'],
     'Nested scopes must also retain the expanded effective component baseline.',
   );
+
+  const nestedDirectPaintStructure = materializedStructure.map((entry) =>
+    entry.id === 2
+      ? Object.assign({}, entry, {
+          componentInstance: Object.assign({}, entry.componentInstance, {
+            directOverrides: [{ nodeId: 'amount-major', fields: ['fills'] }],
+          }),
+        })
+      : entry,
+  );
+  const nestedDirectPaintEvidence = createExperimentalContractV2NestedBaselineEvidence(
+    nestedDirectPaintStructure,
+    {
+      resolveContract: (key) => packageByKey[key]
+        ? { package: { id: packageByKey[key] } }
+        : null,
+      resolveReference: (instance) =>
+        instance.componentInstance?.componentKey === 'amount-key'
+          ? referenceAmount
+          : null,
+      expandReference: (reference) => reference,
+      compareHostVariant: () => [{
+        nodePath: 'Amount / Major',
+        nodeId: 'amount-major',
+        message: 'selected-variant-label-fill',
+        context: { referenceOrigin: 'nested-component' },
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'decorative-text/green' },
+          actual: { value: 'text/secondary' },
+        },
+      }],
+      compare: () => [{
+        nodePath: 'Amount / Major',
+        nodeId: 'amount-major',
+        message: 'expanded-standalone-label-fill',
+        context: { referenceOrigin: 'nested-component' },
+        diffKind: 'paint',
+        details: {
+          property: 'fill',
+          reference: { value: 'text/info' },
+          actual: { value: 'text/secondary' },
+        },
+      }],
+    },
+  );
+  assert.deepEqual(
+    nestedDirectPaintEvidence.effectiveDiffs.get(2)?.map((diff) => diff.message),
+    ['selected-variant-label-fill'],
+    'A direct deep override must keep the exact selected-variant baseline instead of the expanded standalone baseline for the same node/property.',
+  );
+  const inheritedDeepOverrideStructure = nestedDirectPaintStructure.map((entry) =>
+    entry.id === 1
+      ? Object.assign({}, entry, {
+          componentInstance: Object.assign({}, entry.componentInstance, {
+            directOverrides: [{ nodeId: 'amount-major', fields: ['fills'] }],
+          }),
+        })
+      : entry.id === 2
+        ? Object.assign({}, entry, {
+            componentInstance: Object.assign({}, entry.componentInstance, {
+              directOverrides: undefined,
+            }),
+          })
+        : entry,
+  );
+  const inheritedDeepOverrideEvidence =
+    createExperimentalContractV2NestedBaselineEvidence(
+      inheritedDeepOverrideStructure,
+      {
+        resolveContract: (key) => packageByKey[key]
+          ? { package: { id: packageByKey[key] } }
+          : null,
+        resolveReference: (instance) =>
+          instance.componentInstance?.componentKey === 'amount-key'
+            ? referenceAmount
+            : null,
+        expandReference: (reference) => reference,
+        compareHostVariant: () => [{
+          nodePath: 'Amount / Major',
+          nodeId: 'amount-major',
+          message: 'inherited-selected-variant-label-fill',
+          context: { referenceOrigin: 'nested-component' },
+          diffKind: 'paint',
+          details: {
+            property: 'fill',
+            reference: { value: 'static_text_inverted/primary' },
+            actual: { value: 'text/secondary' },
+          },
+        }],
+        compare: () => [{
+          nodePath: 'Amount / Major',
+          nodeId: 'amount-major',
+          message: 'expanded-label-fill',
+          context: { referenceOrigin: 'nested-component' },
+          diffKind: 'paint',
+          details: {
+            property: 'fill',
+            reference: { value: 'text/info' },
+            actual: { value: 'text/secondary' },
+          },
+        }],
+      },
+    );
+  assert.deepEqual(
+    inheritedDeepOverrideEvidence.effectiveDiffs.get(2)?.map((diff) => diff.message),
+    ['inherited-selected-variant-label-fill'],
+    'A nested contract scope must inherit matching deep override records from its outer component instance.',
+  );
+  assert.equal(
+    inheritedDeepOverrideEvidence.hostVariantDiffs.get(2)?.[0]
+      .context.directHostVariantOverride,
+    true,
+    'Inherited override evidence must remain marked when the tree evaluator filters the nested scope again.',
+  );
   assert.deepEqual(
     Array.from(nestedEvidence.completedScopeNodeIds),
     [2],
     'A nested scope becomes complete only after its own reference is resolved and compared.',
+  );
+
+  const nestedComponentSwapEvidence = createExperimentalContractV2NestedBaselineEvidence(
+    materializedStructure,
+    {
+      resolveContract: (key) => packageByKey[key]
+        ? { package: { id: packageByKey[key] } }
+        : null,
+      resolveReference: (instance) =>
+        instance.componentInstance?.componentKey === 'amount-key'
+          ? referenceAmount
+          : null,
+      expandReference: (reference) => reference,
+      compare: () => [],
+      compareComponentStates: (_actual, _reference, existingDiffs) => [{
+        nodePath: 'BodyCell / Amount / icon',
+        nodeId: 'amount-icon',
+        message: `identity:${existingDiffs.length}`,
+        context: { referenceOrigin: 'nested-component' },
+        details: {
+          property: 'component.identity',
+          reference: { value: 'close' },
+          actual: { value: 'power-button-circle' },
+        },
+      }],
+    },
+  );
+  assert.deepEqual(
+    nestedComponentSwapEvidence.effectiveDiffs.get(2)?.map((diff) => diff.message),
+    ['identity:0'],
+    'Nested scope evidence must include a descendant component swap alongside visual diffs.',
+  );
+  assert.deepEqual(
+    nestedComponentSwapEvidence.hostVariantDiffs.get(2)?.map((diff) => diff.message),
+    ['identity:0'],
+    'Direct host evidence must retain descendant component identity changes.',
+  );
+
+  const exposedSwapScope = Object.assign({}, materializedStructure[1], {
+    componentInstance: {
+      componentKey: 'amount-key',
+      directOverrides: [{
+        nodeId: 'state-instance',
+        fields: ['componentProperties'],
+      }],
+    },
+  });
+  const exposedSwapDiffs = filterDirectNestedHostVariantDiffs(
+    exposedSwapScope,
+    [{
+      nodePath: 'Amount / State / power-button-compact',
+      nodeId: 'state-instance;swapped-icon',
+      message: 'Компонент: power-button-circle → power-button-compact',
+      context: { referenceOrigin: 'nested-component' },
+      details: {
+        property: 'component.identity',
+        reference: { value: 'power-button-circle' },
+        actual: { value: 'power-button-compact' },
+      },
+    }, {
+      nodePath: 'Amount / State / power-button-compact / icon',
+      nodeId: 'state-instance;swapped-icon;icon',
+      message: 'заливка: neutral/700 → neutral/0',
+      context: { referenceOrigin: 'nested-component' },
+      details: {
+        property: 'fill',
+        reference: { value: 'neutral/700' },
+        actual: { value: 'neutral/0' },
+      },
+    }],
+  );
+  assert.deepEqual(
+    exposedSwapDiffs.map((diff) => diff.details.property),
+    ['component.identity'],
+    'An exposed instance-swap override must follow the owning ancestor to the replaced child identity only.',
   );
 
   const nestedLabelActual = [
@@ -529,6 +769,31 @@ async function main() {
     directStatusLabelDiffs[0].context.directHostVariantOverride,
     true,
     'Direct override evidence must be explicit so Contract v2 can safely cross a nested instance boundary.',
+  );
+  const iconScopeWithDirectSwap = Object.assign({}, statusScopeWithDirectFillOverride, {
+    componentInstance: {
+      componentKey: 'status-preset-key',
+      directOverrides: [{ nodeId: 'status-icon', fields: ['mainComponent'] }],
+    },
+  });
+  const iconSwapEvidence = Object.assign({}, statusLabelFillEvidence, {
+    nodeId: 'status-icon',
+    nodeName: 'icon',
+    message: 'Компонент: close → power-button-circle',
+    details: {
+      property: 'component.identity',
+      reference: { value: 'close' },
+      actual: { value: 'power-button-circle' },
+    },
+  });
+  const directIconSwapDiffs = filterDirectNestedHostVariantDiffs(
+    iconScopeWithDirectSwap,
+    [iconSwapEvidence],
+  );
+  assert.equal(
+    directIconSwapDiffs.length,
+    1,
+    'A mainComponent override must confirm a direct nested instance swap.',
   );
   assert.equal(
     shouldMaterializeComponentDiff({

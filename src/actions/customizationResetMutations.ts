@@ -5,7 +5,7 @@ import {
   setNodeLayoutSizing,
   type LayoutSizingAxis,
 } from '../structure/layoutSizing';
-import type { DSStructureNode } from '../types/structures';
+import type { DSEffect, DSStructureNode } from '../types/structures';
 import { extractAliasKey } from '../utils/nodeHelpers';
 import { getVariableBindingResetField } from '../utils/variableBindingReset';
 import { extractStyleKey, normalizeStyleId } from '../services/styleMetadata';
@@ -22,9 +22,10 @@ export interface CustomizationResetMutationDependencies {
 
 export interface CustomizationResetReferenceValue {
   value?: string | number | null;
-  resourceType?: 'style' | 'token' | 'color' | 'component';
+  resourceType?: 'style' | 'token' | 'color' | 'component' | 'image' | 'effects';
   resourceId?: string | null;
   displayName?: string | null;
+  effects?: DSEffect[] | null;
 }
 
 export interface CustomizationResetDetail {
@@ -181,6 +182,11 @@ export function createCustomizationResetMutations(
 
       if (property === 'fill' || property === 'stroke') {
         await resetPaintByDiffReference(node, property, reference);
+        continue;
+      }
+
+      if (property === 'effects') {
+        resetEffects(node, reference.effects ?? null);
         continue;
       }
 
@@ -355,6 +361,45 @@ export function createCustomizationResetMutations(
         (node as SceneNode & { opacity: number }).opacity = reference.value;
       }
     }
+  }
+
+  function resetEffects(node: SceneNode, referenceEffects: DSEffect[] | null) {
+    if (!('effects' in node) || !Array.isArray(referenceEffects)) {
+      throw new Error(`Apollo cannot restore effects on node ${node.id}`);
+    }
+    const mutableNode = node as SceneNode & { effects: readonly Effect[] };
+    const currentEffects = Array.isArray(mutableNode.effects)
+      ? Array.from(mutableNode.effects)
+      : [];
+    mutableNode.effects = referenceEffects.map((effect, index) => {
+      const current = currentEffects[index] as Effect | undefined;
+      const restored: Record<string, unknown> = current
+        ? Object.assign({}, current) as unknown as Record<string, unknown>
+        : { type: effect.type };
+      restored.type = effect.type;
+      if (effect.radius !== null) restored.radius = effect.radius;
+      if (effect.color) restored.color = parseEffectColor(effect.color);
+      if (effect.offset) restored.offset = Object.assign({}, effect.offset);
+      if (effect.spread != null) restored.spread = effect.spread;
+      if (effect.visible != null) restored.visible = effect.visible;
+      if (effect.blendMode) restored.blendMode = effect.blendMode;
+      return restored as unknown as Effect;
+    });
+  }
+
+  function parseEffectColor(value: string): RGBA {
+    const match = value.replace(/\s+/g, '').match(
+      /^rgba\(([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+),([-+]?\d*\.?\d+)\)$/i
+    );
+    if (!match) {
+      throw new Error(`Apollo cannot parse effect color ${value}`);
+    }
+    return {
+      r: Number(match[1]) / 255,
+      g: Number(match[2]) / 255,
+      b: Number(match[3]) / 255,
+      a: Number(match[4]),
+    };
   }
 
   function setLayoutAlignment(
@@ -567,7 +612,7 @@ export function createCustomizationResetMutations(
     target: 'fill' | 'stroke',
     reference: {
       value?: string | number | null;
-      resourceType?: 'style' | 'token' | 'color' | 'component';
+      resourceType?: 'style' | 'token' | 'color' | 'component' | 'image' | 'effects';
       resourceId?: string | null;
     }
   ) {

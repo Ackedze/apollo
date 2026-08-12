@@ -527,7 +527,6 @@ async function runAudit(
           findingCount: agentReport.findings.length,
         },
       });
-      void sendApolloAgentReport();
       void submitApolloStatsReport(report);
     } catch (error) {
       console.warn('[Apollo] failed to prepare stats report', error);
@@ -1432,10 +1431,13 @@ function hasLockSymbol(component: LibraryComponent): boolean {
 }
 
 function debugPaintMeDiffPipeline(payload: {
+  rootNode: SceneNode;
   componentName: string | null | undefined;
   alignedActualStructure: DSStructureNode[] | null;
   expandedReferenceStructure: DSStructureNode[] | null;
   rawDiffs: ReturnType<typeof diffStructures>['diffs'];
+  contractBaselineDiffs: ReturnType<typeof diffStructures>['diffs'];
+  explicitVariantStateDiffs: ReturnType<typeof diffStructures>['diffs'];
   markedDiffs: ReturnType<typeof diffStructures>['diffs'];
   allowlistedDiffs: ReturnType<typeof diffStructures>['diffs'];
   finalDiffs: ReturnType<typeof diffStructures>['diffs'];
@@ -1443,6 +1445,7 @@ function debugPaintMeDiffPipeline(payload: {
   if (!isAuditTraceEnabled()) {
     return;
   }
+  debugDirectOverrideDiffPipeline(payload);
   const componentName = payload.componentName ?? '';
   if (!componentName.includes('[D] Button')) {
     return;
@@ -1486,6 +1489,124 @@ function debugPaintMeDiffPipeline(payload: {
   }
 }
 
+function debugDirectOverrideDiffPipeline(payload: {
+  rootNode: SceneNode;
+  componentName: string | null | undefined;
+  alignedActualStructure: DSStructureNode[] | null;
+  expandedReferenceStructure: DSStructureNode[] | null;
+  rawDiffs: ReturnType<typeof diffStructures>['diffs'];
+  contractBaselineDiffs: ReturnType<typeof diffStructures>['diffs'];
+  explicitVariantStateDiffs: ReturnType<typeof diffStructures>['diffs'];
+  markedDiffs: ReturnType<typeof diffStructures>['diffs'];
+  allowlistedDiffs: ReturnType<typeof diffStructures>['diffs'];
+  finalDiffs: ReturnType<typeof diffStructures>['diffs'];
+}) {
+  if (
+    payload.componentName !== 'CardImage' ||
+    payload.rootNode.type !== 'INSTANCE' ||
+    !Array.isArray(payload.rootNode.overrides)
+  ) {
+    return;
+  }
+
+  const relevantFields = new Set([
+    'fills',
+    'fillStyleId',
+    'effects',
+    'effectStyleId',
+    'componentProperties',
+  ]);
+  const overrideRecords = payload.rootNode.overrides.filter((override) =>
+    override.overriddenFields.some((field) => relevantFields.has(field)),
+  );
+  if (!overrideRecords.length) {
+    return;
+  }
+
+  const actual = payload.alignedActualStructure ?? [];
+  const reference = payload.expandedReferenceStructure ?? [];
+  const actualByNodeId = new Map(
+    actual
+      .filter((entry) => Boolean(entry.nodeId))
+      .map((entry) => [entry.nodeId!, entry]),
+  );
+  const actualOccurrenceKeys = buildOccurrenceKeyMap(actual);
+  const referenceOccurrenceKeys = buildOccurrenceKeyMap(reference);
+  const referenceByOccurrence = new Map(
+    reference.map((entry) => [referenceOccurrenceKeys.get(entry) ?? entry.path, entry]),
+  );
+  const stageDiffs = {
+    raw: payload.rawDiffs,
+    explicitVariant: payload.explicitVariantStateDiffs,
+    contractBaseline: payload.contractBaselineDiffs,
+    assessed: payload.markedDiffs,
+    allowlisted: payload.allowlistedDiffs,
+    final: payload.finalDiffs,
+  };
+
+  const records = overrideRecords.map((override) => {
+    const actualNode = actualByNodeId.get(override.id) ?? null;
+    const occurrenceKey = actualNode
+      ? actualOccurrenceKeys.get(actualNode) ?? actualNode.path
+      : null;
+    const referenceNode = occurrenceKey
+      ? referenceByOccurrence.get(occurrenceKey) ?? null
+      : null;
+    const related = Object.fromEntries(
+      Object.entries(stageDiffs).map(([stage, diffs]) => [
+        stage,
+        diffs
+          .filter((diff) => isProbeDiffRelatedToNode(diff, actualNode))
+          .map(describeDebugDiff),
+      ]),
+    );
+    return {
+      overrideId: override.id,
+      fields: override.overriddenFields,
+      occurrenceKey,
+      actual: actualNode ? describeProbeNode(actualNode) : null,
+      reference: referenceNode ? describeProbeNode(referenceNode) : null,
+      related,
+    };
+  });
+
+  console.log(
+    `[Apollo][probe] override-diff-pipeline ${JSON.stringify({
+      rootNodeId: payload.rootNode.id,
+      componentName: payload.componentName,
+      records,
+    })}`,
+  );
+}
+
+function isProbeDiffRelatedToNode(
+  diff: ReturnType<typeof diffStructures>['diffs'][number],
+  node: DSStructureNode | null,
+): boolean {
+  if (!node) return false;
+  return diff.nodeId === node.nodeId ||
+    diff.nodePath === node.path ||
+    node.path.startsWith(`${diff.nodePath} / `) ||
+    diff.nodePath.startsWith(`${node.path} / `);
+}
+
+function describeProbeNode(node: DSStructureNode) {
+  return {
+    nodeId: node.nodeId ?? null,
+    path: node.path,
+    name: node.name,
+    type: node.type,
+    componentKey: node.componentInstance?.componentKey ?? null,
+    variantProperties: node.componentInstance?.variantProperties ?? null,
+    fill: node.fill ?? null,
+    effects: node.effects ?? null,
+    referenceOrigin: node.referenceOrigin ?? null,
+    referenceOwnerComponentKey: node.referenceOwnerComponentKey ?? null,
+    referenceOwnerRelativePath: node.referenceOwnerRelativePath ?? null,
+    referenceVariantOwnedProperties: node.referenceVariantOwnedProperties ?? [],
+  };
+}
+
 function getDiffsForPath(
   diffs: ReturnType<typeof diffStructures>['diffs'],
   path: string,
@@ -1515,6 +1636,15 @@ function describeDebugDiff(diff: ReturnType<typeof diffStructures>['diffs'][numb
     nestedOwnerRelativePath: diff.context.nestedOwnerRelativePath,
     suppressed: diff.suppressAsHostControlledNestedProperty === true,
     suppressionReason: diff.suppressionReason ?? null,
+    directHostVariantOverride: diff.context.directHostVariantOverride === true,
+    assessment: diff.assessment
+      ? {
+          verdict: diff.assessment.verdict,
+          source: diff.assessment.source,
+          reasonCode: diff.assessment.reasonCode,
+          presentation: diff.assessment.presentation ?? null,
+        }
+      : null,
   };
 }
 

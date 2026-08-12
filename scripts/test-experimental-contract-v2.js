@@ -49,6 +49,16 @@ async function testRegistry() {
     }],
   };
   const contract = createContract();
+  contract.facts.componentApi = [{
+    id: 'test.universal',
+    name: 'Test',
+    componentKey: 'test-key',
+    componentKeys: ['test-key', 'test-variant-key'],
+    publicApi: {
+      properties: {},
+      allowedCombinations: [],
+    },
+  }];
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (url) => {
     const clean = String(url).split('?')[0];
@@ -70,6 +80,14 @@ async function testRegistry() {
     assert.equal(registry.hasExperimentalContractV2ForKey('test-variant-key'), true);
     assert.equal(registry.getExperimentalContractV2ForKey('test-variant-key').package.id, 'web.test');
     assert.equal(registry.getExperimentalContractV2ForKey('test-key').package.id, 'web.test');
+    assert.equal(
+      registry.resolveExperimentalContractV2ComponentFamilyKey('test-variant-key'),
+      'test-key',
+    );
+    assert.equal(
+      registry.resolveExperimentalContractV2ComponentFamilyKey('test-key'),
+      'test-key',
+    );
     assert.deepEqual(registry.getExperimentalContractV2Diagnostics(), {
       indexedPackages: 1,
       indexedComponentKeys: 2,
@@ -106,7 +124,15 @@ function testRelationalAndPositionOperators() {
       op: 'valuePosition',
       fact: 'target.variant.SingleIcon',
       value: 'True',
+      subjectLabel: 'PickerButton',
       positions: ['last'],
+      maxCount: 1,
+    }),
+    rule('primary-position', buttonSelector, {
+      op: 'valuePosition',
+      fact: 'target.variant.View',
+      value: 'Primary',
+      positions: ['first'],
       maxCount: 1,
     }),
   ];
@@ -122,11 +148,37 @@ function testRelationalAndPositionOperators() {
     hostVariantProperties: { Size: '56' },
     actualStructure: [
       node(1, '[D] Test', 'test-variant-key', { Size: '56' }),
-      node(2, '[D] Button', 'button-key-1', { Size: '56', SingleIcon: 'False' }),
-      node(3, '[D] Button', 'button-key-2', { Size: '40', SingleIcon: 'True' }),
-      node(4, '[D] Button', 'button-key-3', { Size: '56', SingleIcon: 'True' }),
+      node(2, '[D] Button', 'button-key-1', {
+        Size: '56', SingleIcon: 'False', View: 'Secondary',
+      }),
+      node(3, '[D] Button', 'button-key-2', {
+        Size: '40', SingleIcon: 'True', View: 'Secondary',
+      }),
+      node(4, '[D] Button', 'button-key-3', {
+        Size: '56', SingleIcon: 'True', View: 'Secondary',
+      }),
     ],
   });
+  const misplacedPrimary = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: '[D] Test',
+    hostVariantProperties: { Size: '56' },
+    actualStructure: [
+      node(1, '[D] Test', 'test-variant-key', { Size: '56' }),
+      node(2, '[D] Button', 'button-key-1', {
+        Size: '56', SingleIcon: 'False', View: 'Secondary',
+      }),
+      node(3, '[D] Button', 'button-key-2', {
+        Size: '56', SingleIcon: 'False', View: 'Primary',
+      }),
+    ],
+  });
+  const primaryPositionDiff = misplacedPrimary.diffs.find((diff) =>
+    diff.assessment.ruleId.endsWith('primary-position'),
+  );
+  assert.ok(primaryPositionDiff);
+  assert.equal(primaryPositionDiff.message, 'View: первая позиция → позиция 2');
   assert.equal(result.diffs.length, 2);
   assert.deepEqual(
     result.diffs.map((diff) => diff.assessment.ruleId).sort(),
@@ -141,16 +193,55 @@ function testRelationalAndPositionOperators() {
   assert.equal(sizeDiff.message, 'Size: 56 → 40');
   assert.equal(sizeDiff.details.property, 'variant.Size');
   assert.equal(sizeDiff.assessment.message, 'uniform-size');
-  assert.equal(singleIconDiff.message, 'SingleIcon: не более 1 → найдено 2');
+  assert.equal(
+    singleIconDiff.message,
+    'SingleIcon: PickerButton — последняя позиция → позиция 2',
+    'Position evidence is more actionable than the secondary max-count violation',
+  );
   assert.equal(singleIconDiff.details.property, 'variant.SingleIcon');
   assert.equal(singleIconDiff.assessment.message, 'single-icon-position');
   assert.deepEqual(singleIconDiff.assessment.remediation, {
     kind: 'set-variant-properties',
-    nodeId: 'node:4',
+    nodeId: 'node:3',
     properties: { SingleIcon: 'False' },
   });
   assert.equal(result.diagnostics.violations, 2);
   assert.equal(result.diagnostics.unknown, 0);
+}
+
+function testVisibleCompositionIgnoresHiddenChildren() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-visible-composition',
+  );
+  const contract = createContract();
+  const buttonSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: '[D] Button' },
+      visible: { op: 'equals', value: true },
+    },
+  };
+  const countRule = rule('button-count', buttonSelector, {
+    op: 'countBetween',
+    min: 2,
+    max: 4,
+  });
+  countRule.select.host.where.componentName.value = '[D] ButtonsGroup';
+  contract.rules = [countRule];
+  const host = node(1, '[D] ButtonsGroup', 'group-key', {});
+  const visibleButton = node(2, '[D] Button', 'button-key', {});
+  const hiddenButton = node(3, '[D] Button', 'button-key', {});
+  hiddenButton.visible = false;
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'group-key',
+    hostComponentName: '[D] ButtonsGroup',
+    actualStructure: [host, visibleButton, hiddenButton],
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].message, 'button-count');
+  assert.equal(result.diffs[0].details.actual.value, 1);
 }
 
 function testConditionalButtonStackSequence() {
@@ -356,6 +447,7 @@ function testButtonStackRootLayoutContract() {
         nestedOwnerComponentRole: null,
         nestedOwnerPath: null,
         nestedOwnerRelativePath: null,
+        directHostVariantOverride: true,
       },
       diffKind: 'layout',
       details: {
@@ -370,6 +462,714 @@ function testButtonStackRootLayoutContract() {
   assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.button-stack-root-layout');
   assert.equal(result.diffs[0].details.property, 'padding.right');
   assert.equal(result.diffs[0].message, 'padding.right: 20 → 12');
+}
+
+function testRootAndAllInternalLayersBaselineRule() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-root-and-all-internal-layers',
+  );
+  const contract = createContract();
+  contract.package = {
+    id: 'web-corp.corporate-system-message',
+    family: 'CorporateSystemMessage',
+    library: 'Web _ Corp Components',
+  };
+  const blanketRule = rule('effective-baseline-protected', {
+    scope: 'self-and-descendants',
+    from: '$host',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: [
+      'layout.*',
+      'layoutSizing*',
+      'styles.text',
+      'fill',
+      'stroke',
+      'radius',
+      'opacity',
+      'effects.*',
+    ],
+  });
+  blanketRule.select.host = 'host.test';
+  blanketRule.severity = 'error';
+  contract.rules = [blanketRule];
+
+  const host = node(1, '[D] CorporateSystemMessage', 'message-key', {
+    View: 'Base', Size: 'Large', 'BG plate': 'True',
+  });
+  const content = node(2, 'Content', null, {});
+  content.type = 'FRAME';
+  content.componentInstance = null;
+  const title = node(3, 'Title', null, {});
+  title.type = 'TEXT';
+  title.componentInstance = null;
+  title.text = { alignHorizontal: 'LEFT' };
+  const graphicFill = node(4, 'PaintMe', null, {});
+  graphicFill.type = 'BOOLEAN_OPERATION';
+  graphicFill.componentInstance = null;
+  const shadowLayer = node(5, 'BackgroundPlate', 'background-plate-key', {});
+  for (const child of [content, title, graphicFill, shadowLayer]) {
+    child.parentId = host.id;
+    child.path = `${host.path} / ${child.name}`;
+  }
+
+  const makeBaselineDiff = (target, property, reference, actual, diffKind = 'layout') => ({
+    message: `${property}: ${reference} → ${actual}`,
+    nodePath: target.path,
+    nodeName: target.name,
+    nodeId: target.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: target.componentInstance?.componentKey ?? 'message-key',
+      referenceComponentKey: target.componentInstance?.componentKey ?? 'message-key',
+      referenceOrigin: target.componentInstance ? 'nested-component' : 'host',
+      actualNestedOwnerComponentKey: null,
+      actualNestedOwnerPath: null,
+      actualNestedOwnerRelativePath: null,
+      nestedOwnerComponentKey: null,
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: null,
+      nestedOwnerRelativePath: null,
+      directHostVariantOverride: true,
+    },
+    diffKind,
+    details: {
+      property,
+      reference: { value: reference },
+      actual: { value: actual },
+    },
+  });
+  const diffs = [
+    makeBaselineDiff(content, 'layout.itemSpacing', 0, 20),
+    makeBaselineDiff(content, 'layout.padding.top', 16, 20),
+    makeBaselineDiff(title, 'styles.text', 'body/medium', 'heading/small', 'style'),
+    makeBaselineDiff(title, 'text.align.horizontal', 'CENTER', 'LEFT', 'text-style'),
+    makeBaselineDiff(graphicFill, 'fill', 'decorative/background', 'accent/orange', 'style'),
+    makeBaselineDiff(shadowLayer, 'effects.shadow', 'none', 'shadow/large', 'style'),
+    makeBaselineDiff(host, 'layoutSizingHorizontal', 'FILL', 'FIXED'),
+  ];
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: host.componentInstance.variantProperties,
+    actualStructure: [host, content, title, graphicFill, shadowLayer],
+    effectiveBaselineDiffs: diffs,
+    hostVariantBaselineDiffs: diffs,
+  });
+
+  assert.deepEqual(
+    result.diffs.map((diff) => `${diff.nodeName}:${diff.details.property}`).sort(),
+    [
+      'BackgroundPlate:effects.shadow',
+      'Content:layout.itemSpacing',
+      'Content:layout.padding.top',
+      'PaintMe:fill',
+      'Title:styles.text',
+      'Title:text.align.horizontal',
+      '[D] CorporateSystemMessage:layoutSizingHorizontal',
+    ],
+  );
+  assert.equal(result.diagnostics.unknown, 0);
+}
+
+function testCorporateSystemMessageButtonViews() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-corporate-system-message-button-views',
+  );
+  const contract = createContract();
+  const buttonViewsRule = rule('buttons-count-and-views', {
+    scope: 'descendants',
+    from: '$host',
+    where: {
+      semanticRoleOrLayerName: { op: 'oneOf', values: ['Button'] },
+      visible: { op: 'equals', value: true },
+    },
+  }, {
+    op: 'allMatch',
+    predicate: {
+      op: 'oneOf',
+      fact: 'target.variant.View',
+      values: ['Primary', 'Secondary'],
+    },
+  });
+  contract.rules = [buttonViewsRule];
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [
+      node(1, '[D] Test', 'test-key', {}),
+      node(2, 'Button', 'button-key', { View: 'Accent' }),
+      node(3, 'Button', 'button-key', { View: 'Secondary' }),
+    ],
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].nodeId, 'node:2');
+  assert.equal(result.diffs[0].details.property, 'variant.View');
+  assert.equal(result.diffs[0].details.actual.value, 'Accent');
+}
+
+function testCorporateSystemMessageGraphicOverrideBaseOnly() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-corporate-system-message-graphic-override',
+  );
+  const contract = createContract();
+  const graphicRule = rule('graphic-override-base-only', {
+    scope: 'descendants',
+    from: '$host',
+    where: {
+      semanticRoleOrLayerName: { op: 'oneOf', values: ['Graphic'] },
+      visible: { op: 'equals', value: true },
+    },
+  }, {
+    op: 'configurationPolicy',
+    manualComponentPropertiesAllowed: false,
+    includeDescendants: true,
+  });
+  graphicRule.select.host.where.componentName.value = '[D] CorporateSystemMessage';
+  graphicRule.when = {
+    op: 'all',
+    clauses: { except: { variant: { View: 'Base' } } },
+  };
+  contract.rules = [graphicRule];
+  const root = node(1, '[D] CorporateSystemMessage', 'message-key', { View: 'Error' });
+  const graphic = Object.assign(node(2, 'Graphic', 'graphic-key', {}), {
+    path: `${root.path} / ErrorView / Content / Content / Graphic`,
+  });
+  const content = Object.assign(node(3, '🔩 Content', 'content-key', {}), {
+    parentId: 2,
+    path: `${graphic.path} / IconView / Content / ShapeContent / 🔩 Content`,
+  });
+  root.componentInstance.directOverrides = [{
+    nodeId: content.nodeId,
+    fields: ['componentProperties'],
+  }];
+  const errorResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: { View: 'Error' },
+    actualStructure: [root, graphic, content],
+  });
+  assert.equal(errorResult.diffs.length, 1);
+  assert.equal(errorResult.diffs[0].nodeId, content.nodeId);
+  assert.equal(errorResult.diffs[0].details.property, 'component.identity');
+
+  const baseResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: { View: 'Base' },
+    actualStructure: [root, graphic, content],
+  });
+  assert.equal(baseResult.diffs.length, 0);
+}
+
+function testClassificationRequiresDirectOverrideEvidence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-classification-evidence',
+  );
+  const contract = createContract();
+  const rootSelector = { scope: 'selection-root' };
+  const classificationRule = rule('component-properties', rootSelector, {
+    op: 'classificationPolicy',
+    classification: 'component-properties-are-first-class',
+  });
+  classificationRule.enforcement = 'classification';
+  contract.rules = [classificationRule];
+  const host = node(1, '[D] Test', 'test-key', { Position: 'true' });
+  const authoredDiff = {
+    message: 'Position: false → true',
+    nodePath: host.path,
+    nodeName: host.name,
+    nodeId: host.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'test-key',
+      referenceComponentKey: 'test-key',
+      referenceOrigin: 'host',
+      actualNestedOwnerComponentKey: null,
+      actualNestedOwnerPath: null,
+      actualNestedOwnerRelativePath: null,
+      nestedOwnerComponentKey: null,
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: null,
+      nestedOwnerRelativePath: null,
+    },
+    diffKind: 'other',
+    details: {
+      property: 'variant.Position',
+      reference: { value: 'false' },
+      actual: { value: 'true' },
+    },
+  };
+  const authoredResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [authoredDiff],
+  });
+  assert.equal(authoredResult.diffs.length, 0);
+
+  const directDiff = Object.assign({}, authoredDiff, {
+    context: Object.assign({}, authoredDiff.context, {
+      directHostVariantOverride: true,
+    }),
+  });
+  const directResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [directDiff],
+  });
+  assert.equal(directResult.diffs.length, 1);
+}
+
+function testClassificationIgnoresHiddenAndParentAuthoredVariantEvidence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-classification-parent-baseline',
+  );
+  const contract = createContract();
+  const classificationRule = rule('component-properties', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'classificationPolicy',
+    classification: 'component-properties-are-first-class',
+  });
+  classificationRule.enforcement = 'classification';
+  contract.rules = [classificationRule];
+  const host = node(1, '[D] Group', 'group-key', {});
+  const child = node(2, '[D] Button', 'button-key', { View: 'Secondary' });
+  child.parentId = host.id;
+  child.path = `${host.path} / ${child.name}`;
+  child.componentInstance.directOverrides = [{
+    nodeId: child.nodeId,
+    fields: ['componentProperties'],
+  }];
+  const parentAuthoredDiff = {
+    message: 'View: Primary → Secondary',
+    nodePath: child.path,
+    nodeName: child.name,
+    nodeId: child.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'button-key',
+      referenceComponentKey: 'button-key',
+      referenceOrigin: 'nested-component',
+      directHostVariantOverride: true,
+    },
+    diffKind: 'other',
+    details: {
+      property: 'variant.View',
+      reference: { value: 'Primary' },
+      actual: { value: 'Secondary' },
+    },
+  };
+  const expectedResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'group-key',
+    hostComponentName: '[D] Group',
+    actualStructure: [host, child],
+    effectiveBaselineDiffs: [parentAuthoredDiff],
+    hostVariantBaselineDiffs: [],
+  });
+  assert.equal(
+    expectedResult.diffs.length,
+    0,
+    'A nested component property authored by the selected parent variant is not a user customization',
+  );
+
+  const directNestedDiff = Object.assign({}, parentAuthoredDiff, {
+    context: Object.assign({}, parentAuthoredDiff.context, {
+      referenceOrigin: 'host',
+      directHostVariantOverride: true,
+    }),
+  });
+  const directNestedResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'group-key',
+    hostComponentName: '[D] Group',
+    actualStructure: [host, child],
+    effectiveBaselineDiffs: [directNestedDiff],
+    hostVariantBaselineDiffs: [directNestedDiff],
+  });
+  assert.equal(
+    directNestedResult.diffs.length,
+    0,
+    'Family classification must not claim a nested component property even when Figma records a direct override; explicit composition or the nested contract owns it',
+  );
+
+  const hiddenDiff = Object.assign({}, parentAuthoredDiff, {
+    visible: false,
+    context: Object.assign({}, parentAuthoredDiff.context, {
+      referenceOrigin: 'host',
+    }),
+  });
+  child.visible = false;
+  const hiddenResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'group-key',
+    hostComponentName: '[D] Group',
+    actualStructure: [host, child],
+    effectiveBaselineDiffs: [hiddenDiff],
+    hostVariantBaselineDiffs: [hiddenDiff],
+  });
+  assert.equal(hiddenResult.diffs.length, 0, 'Hidden nested properties must not be reported');
+}
+
+function testConfigurationPolicyUsesPropertySpecificBindingEvidence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-configuration-binding-evidence',
+  );
+  const contract = createContract();
+  const rootSelector = { scope: 'selection-root' };
+  contract.rules = [
+    rule('manual-fill', rootSelector, {
+      op: 'configurationPolicy',
+      manualFillAllowed: false,
+    }),
+    rule('manual-padding', rootSelector, {
+      op: 'configurationPolicy',
+      manualPaddingAllowed: false,
+    }),
+    rule('manual-width', rootSelector, {
+      op: 'configurationPolicy',
+      manualWidthAllowed: false,
+    }),
+  ];
+  const host = node(1, '[D] Test', 'test-key', {});
+  host.fill = { color: 'rgba(255,255,255,1)', token: 'variable:background' };
+  host.layout = {
+    widthToken: 'variable:grid-width',
+    padding: { top: 0, right: 52, bottom: 0, left: 16 },
+    paddingTokens: { left: 'variable:grid-16', right: 'variable:grid-52' },
+  };
+  host.componentInstance.directOverrides = [{
+    nodeId: host.nodeId,
+    fields: ['paddingLeft', 'boundVariables'],
+  }];
+  const paddingDiff = {
+    message: 'padding.left: 52 → 16',
+    nodePath: host.path,
+    nodeName: host.name,
+    nodeId: host.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'test-key',
+      referenceComponentKey: 'test-key',
+      referenceOrigin: 'host',
+      actualNestedOwnerComponentKey: null,
+      actualNestedOwnerPath: null,
+      actualNestedOwnerRelativePath: null,
+      nestedOwnerComponentKey: null,
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: null,
+      nestedOwnerRelativePath: null,
+      directHostVariantOverride: true,
+    },
+    diffKind: 'layout',
+    details: {
+      property: 'layout.padding.left',
+      reference: { value: 52 },
+      actual: { value: 16 },
+    },
+  };
+  const boundResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [paddingDiff],
+  });
+  assert.equal(boundResult.diffs.length, 0);
+
+  host.layout.paddingTokens.left = null;
+  const manualResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [paddingDiff],
+  });
+  assert.deepEqual(
+    manualResult.diffs.map((diff) => diff.assessment.ruleId),
+    ['rule-ir:test.manual-padding'],
+  );
+
+  host.layout.width = 400;
+  host.layout.widthToken = null;
+  host.componentInstance.directOverrides = [{
+    nodeId: host.nodeId,
+    fields: ['boundVariables'],
+  }];
+  const widthResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [],
+  });
+  assert.deepEqual(
+    widthResult.diffs.map((diff) => diff.assessment.ruleId),
+    ['rule-ir:test.manual-width'],
+    'Removing only the width binding must remain observable when the numeric width is unchanged',
+  );
+}
+
+function testSpecificRuleWinsOverClassificationDuplicate() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-rule-priority',
+  );
+  const contract = createContract();
+  const rootSelector = { scope: 'selection-root' };
+  const classificationRule = rule('component-properties', rootSelector, {
+    op: 'classificationPolicy',
+    classification: 'component-properties-are-first-class',
+  });
+  classificationRule.enforcement = 'classification';
+  contract.rules = [
+    classificationRule,
+    rule('position-is-fixed', rootSelector, {
+      op: 'propertiesEqual',
+      values: { Position: 'false' },
+    }),
+  ];
+  const host = node(1, '[D] Test', 'test-key', { Position: 'true' });
+  const directDiff = {
+    message: 'Position: false → true',
+    nodePath: host.path,
+    nodeName: host.name,
+    nodeId: host.nodeId,
+    visible: true,
+    context: {
+      actualComponentKey: 'test-key',
+      referenceComponentKey: 'test-key',
+      referenceOrigin: 'host',
+      actualNestedOwnerComponentKey: null,
+      actualNestedOwnerPath: null,
+      actualNestedOwnerRelativePath: null,
+      nestedOwnerComponentKey: null,
+      nestedOwnerComponentRole: null,
+      nestedOwnerPath: null,
+      nestedOwnerRelativePath: null,
+      directHostVariantOverride: true,
+    },
+    diffKind: 'other',
+    details: {
+      property: 'variant.Position',
+      reference: { value: 'default' },
+      actual: { value: 'true' },
+    },
+  };
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    hostVariantProperties: { Position: 'true' },
+    actualStructure: [host],
+    effectiveBaselineDiffs: [directDiff],
+  });
+  assert.equal(result.diffs.length, 1);
+  assert.equal(result.diffs[0].assessment.ruleId, 'rule-ir:test.position-is-fixed');
+}
+
+function testNoopComponentIdentityIsSuppressed() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-noop-component-identity',
+  );
+  const contract = createContract();
+  contract.rules = [rule('identity-baseline', { scope: 'selection-root' }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['component.identity'],
+  })];
+  const host = node(1, 'Addon', 'addon-key', {});
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'addon-key',
+    hostComponentName: 'Addon',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [{
+      message: 'Компонент: Addon → Addon',
+      nodePath: host.path,
+      nodeName: host.name,
+      nodeId: host.nodeId,
+      visible: true,
+      context: {
+        actualComponentKey: 'addon-key',
+        referenceComponentKey: null,
+        referenceOrigin: 'host',
+        actualNestedOwnerComponentKey: 'owner-key',
+        actualNestedOwnerPath: 'Owner',
+        actualNestedOwnerRelativePath: 'Addon',
+        nestedOwnerComponentKey: null,
+        nestedOwnerComponentRole: null,
+        nestedOwnerPath: null,
+        nestedOwnerRelativePath: null,
+      },
+      diffKind: 'other',
+      details: {
+        property: 'component.identity',
+        reference: { value: 'Addon' },
+        actual: { value: 'Addon' },
+      },
+    }],
+  });
+  assert.equal(result.diffs.length, 0);
+
+  const classificationRule = rule('identity-classification', { scope: 'selection-root' }, {
+    op: 'classificationPolicy',
+    classification: 'component-properties-are-first-class',
+  });
+  classificationRule.enforcement = 'classification';
+  contract.rules = [classificationRule];
+  const classificationResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'addon-key',
+    hostComponentName: 'Addon',
+    actualStructure: [host],
+    effectiveBaselineDiffs: [{
+      message: 'Компонент: Addon → Addon',
+      nodePath: host.path,
+      nodeName: host.name,
+      nodeId: host.nodeId,
+      visible: true,
+      context: {
+        actualComponentKey: 'addon-key',
+        referenceComponentKey: null,
+        referenceOrigin: 'host',
+        actualNestedOwnerComponentKey: 'owner-key',
+        actualNestedOwnerPath: 'Owner',
+        actualNestedOwnerRelativePath: 'Addon',
+        nestedOwnerComponentKey: null,
+        nestedOwnerComponentRole: null,
+        nestedOwnerPath: null,
+        nestedOwnerRelativePath: null,
+        directHostVariantOverride: true,
+      },
+      diffKind: 'other',
+      details: {
+        property: 'component.identity',
+        reference: { value: 'Addon' },
+        actual: { value: 'Addon' },
+      },
+    }],
+  });
+  assert.equal(classificationResult.diffs.length, 0);
+}
+
+function testCardSwiperMobileComposition() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-card-swiper-mobile-engine',
+  );
+  const contract = createContract();
+  const cardSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: 'CardImage' },
+    },
+  };
+  const spacingSelector = {
+    scope: 'descendants',
+    where: {
+      componentName: { op: 'equals', value: '↕ SpacingVertical' },
+    },
+  };
+  contract.rules = [
+    rule('card-swiper-card-sizes', cardSelector, {
+      op: 'sequenceEquals',
+      fact: 'target.variant.Size',
+      values: ['212x132', '264x164', '212x132'],
+    }),
+    rule('card-swiper-card-stack', cardSelector, {
+      op: 'sequenceEquals',
+      fact: 'target.variant.Stack',
+      values: ['false', 'false', 'false'],
+    }),
+    rule('card-swiper-spacing', spacingSelector, {
+      op: 'sequenceEquals',
+      fact: 'target.variant.Size',
+      values: ['24', '32'],
+    }),
+  ];
+  for (const contractRule of contract.rules) contractRule.select.host = {
+    scope: 'selection-root',
+    where: {
+      componentName: { op: 'equals', value: 'CardSwiperMobile' },
+    },
+  };
+
+  const cleanStructure = [
+    node(1, 'CardSwiperMobile', 'test-variant-key', {
+      'Screen Size': '360+',
+    }),
+    node(2, 'CardImage', 'card-image-key', {
+      Size: '212x132',
+      Stack: 'false',
+    }),
+    node(3, 'CardImage', 'card-image-key', {
+      Size: '264x164',
+      Stack: 'false',
+    }),
+    node(4, 'CardImage', 'card-image-key', {
+      Size: '212x132',
+      Stack: 'false',
+    }),
+    node(5, '↕ SpacingVertical', 'spacing-key', { Size: '24' }),
+    node(6, '↕ SpacingVertical', 'spacing-key', { Size: '32' }),
+  ];
+  cleanStructure[1].visible = false;
+
+  const clean = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: 'CardSwiperMobile',
+    hostVariantProperties: { 'Screen Size': '360+' },
+    actualStructure: cleanStructure,
+  });
+  assert.equal(
+    clean.diffs.length,
+    0,
+    'Hidden edge cards remain part of the authored CardSwiperMobile composition',
+  );
+
+  const customizedStructure = cleanStructure.map((item) => Object.assign({}, item, {
+    componentInstance: item.componentInstance
+      ? Object.assign({}, item.componentInstance, {
+          variantProperties: Object.assign(
+            {},
+            item.componentInstance.variantProperties,
+          ),
+        })
+      : item.componentInstance,
+  }));
+  customizedStructure[2].componentInstance.variantProperties.Size = '212x132';
+  customizedStructure[5].componentInstance.variantProperties.Size = '24';
+  const customized = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-variant-key',
+    hostComponentName: 'CardSwiperMobile',
+    hostVariantProperties: { 'Screen Size': '360+' },
+    actualStructure: customizedStructure,
+  });
+  assert.deepEqual(
+    customized.diffs.map((diff) => diff.assessment.ruleId).sort(),
+    [
+      'rule-ir:test.card-swiper-card-sizes',
+      'rule-ir:test.card-swiper-spacing',
+    ],
+  );
 }
 
 function testTableBasicVisibleDataCellCount() {
@@ -530,6 +1330,7 @@ function testConditionalPaintStateAndReferenceRemediation() {
         nestedOwnerComponentRole: null,
         nestedOwnerPath: null,
         nestedOwnerRelativePath: null,
+        directHostVariantOverride: true,
       },
       diffKind: 'paint',
       details: {
@@ -1002,6 +1803,118 @@ function testEffectiveBaselineAndNestedSizeContract() {
   );
 }
 
+function testNestedHostVariantRuleKeepsDeepLabelOverride() {
+  const { evaluateExperimentalContractV2Tree } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-status-label-deep-override',
+  );
+  const contract = createContract();
+  contract.package = {
+    id: 'web-corp.status-property',
+    family: 'Status & Property',
+    library: 'Web _ Corp Components',
+  };
+  const fillRule = rule('fill-follows-effective-baseline', {
+    scope: 'self-and-descendants',
+    where: {
+      semanticRoleOrLayerName: {
+        op: 'oneOf',
+        values: ['Status', 'Label', '🔩 Label'],
+      },
+    },
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill'],
+    baselineSource: 'host-variant',
+  });
+  fillRule.select.host = { scope: 'selection-root' };
+  contract.rules = [fillRule];
+  const structure = [
+    node(1, '[D] TitleView', 'title-key', {}),
+    node(2, 'StatusPreset', 'status-preset-key', { Type: 'Approved' }),
+    node(3, 'Status', 'status-key', {}),
+    node(4, 'Label', '', {}),
+  ];
+  structure[1].parentId = 1;
+  structure[2].parentId = 2;
+  structure[3].parentId = 3;
+  structure[1].path = `${structure[0].path} / StatusPreset`;
+  structure[2].path = `${structure[1].path} / Status`;
+  structure[3].path = `${structure[2].path} / Label`;
+  structure[3].type = 'TEXT';
+  structure[3].componentInstance = null;
+  const surfaceDiff = {
+    message: 'заливка: decorative/green → decorative/blue',
+    nodePath: structure[2].path,
+    nodeName: 'Status',
+    nodeId: structure[2].nodeId,
+    visible: true,
+    context: {
+      referenceOrigin: 'nested-component',
+      directHostVariantOverride: true,
+    },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: 'decorative/green' },
+      actual: { value: 'decorative/blue' },
+    },
+  };
+  const labelDiff = Object.assign({}, surfaceDiff, {
+    message: 'заливка: static_text_inverted/primary → text/secondary',
+    nodePath: structure[3].path,
+    nodeName: 'Label',
+    nodeId: structure[3].nodeId,
+    details: {
+      property: 'fill',
+      reference: { value: 'static_text_inverted/primary' },
+      actual: { value: 'text/secondary' },
+    },
+    context: {
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'actual-label-owner-key',
+      nestedOwnerComponentKey: 'reference-label-owner-key',
+      directHostVariantOverride: true,
+    },
+  });
+  const noopStatusIdentityDiff = Object.assign({}, surfaceDiff, {
+    message: 'Компонент: Status → Status',
+    nodePath: structure[2].path,
+    nodeName: 'Status',
+    nodeId: structure[2].nodeId,
+    diffKind: 'other',
+    details: {
+      property: 'component.identity',
+      reference: { value: 'Status' },
+      actual: { value: 'Status' },
+    },
+    context: {
+      referenceOrigin: 'nested-component',
+      actualComponentKey: 'actual-status-key',
+      referenceComponentKey: 'reference-status-key',
+      directHostVariantOverride: false,
+    },
+  });
+  const result = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'title-key',
+    hostComponentName: '[D] TitleView',
+    actualStructure: structure,
+    nestedScopeBaselineDiffs: new Map([[
+      2,
+      [surfaceDiff, labelDiff, noopStatusIdentityDiff],
+    ]]),
+    nestedScopeHostVariantBaselineDiffs: new Map([[2, [surfaceDiff, labelDiff]]]),
+    completedNestedScopeNodeIds: new Set([2]),
+    resolveContract: (key) => key === 'status-preset-key' ? contract : null,
+    resolveComponentFamilyKey: (key) => key,
+  });
+  assert.deepEqual(
+    result.diffs.map((diff) => diff.nodeName).sort(),
+    ['Label', 'Status'],
+    'A deep Label fill override must not disappear when Figma also records a propagated Status fill override',
+  );
+}
+
 function testEffectiveBaselineRemediationIsAtomic() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -1287,6 +2200,87 @@ function testEffectiveBaselineKeepsDescendantsFromAnotherVariantInSameFamily() {
   assert.equal(expectedParentOverride.diffs.length, 0);
 }
 
+function testNestedBaselineUsesDirectHostEvidenceBeforeOwnerSuppression() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-direct-host-evidence-engine',
+  );
+  const contract = createContract();
+  contract.rules = [rule('nested-visual-baseline', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['fill', 'effects.*'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  const structure = [
+    node(1, 'CardImage', 'card-image-key', {}),
+    node(2, 'overlay', null, {}),
+  ];
+  structure[1].type = 'RECTANGLE';
+  structure[1].componentInstance = null;
+  structure[1].path = `${structure[0].path} / CardItem / State / overlay`;
+  const effectiveFill = {
+    message: 'заливка: static_neutral-translucent/700 → text/attention',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: {
+      referenceOrigin: 'nested-component',
+      actualNestedOwnerComponentKey: 'state-variant-key',
+      nestedOwnerComponentKey: 'card-image-key',
+      directHostVariantOverride: false,
+    },
+    diffKind: 'paint',
+    details: {
+      property: 'fill',
+      reference: { value: 'static_neutral-translucent/700' },
+      actual: { value: 'text/attention' },
+    },
+  };
+  const directHostFill = {
+    ...effectiveFill,
+    context: {
+      ...effectiveFill.context,
+      directHostVariantOverride: true,
+    },
+  };
+  const resolveComponentFamilyKey = (key) =>
+    key === 'state-variant-key' ? 'state-family-key' : key;
+
+  const customized = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [effectiveFill],
+    hostVariantBaselineDiffs: [directHostFill],
+    resolveComponentFamilyKey,
+  });
+  assert.equal(
+    customized.diffs.length,
+    1,
+    'Direct host evidence must make a nested visual override actionable before owner suppression.',
+  );
+  assert.equal(customized.diffs[0].message, directHostFill.message);
+
+  const cleanParentAuthoredVisual = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [effectiveFill],
+    hostVariantBaselineDiffs: [],
+    resolveComponentFamilyKey,
+  });
+  assert.equal(
+    cleanParentAuthoredVisual.diffs.length,
+    0,
+    'A nested visual difference without direct host override evidence must remain suppressed.',
+  );
+}
+
 function testNestedStandaloneBaselineDefersToExactHostProperty() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -1383,6 +2377,89 @@ function testNestedStandaloneBaselineDefersToExactHostProperty() {
     customized.diffs[0].message,
     hostTypography.message,
     'An exact host diff must provide the user-facing baseline for a nested violation',
+  );
+}
+
+function testNestedExposedInstanceSwapUsesDirectHostIdentity() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-nested-exposed-instance-swap-engine',
+  );
+  const contract = createContract();
+  contract.package.family = 'CardImage';
+  contract.rules = [rule('nested-component-identity-baseline', {
+    scope: 'self-and-descendants',
+  }, {
+    op: 'matchesEffectiveBaseline',
+    properties: ['component.identity'],
+  })];
+  contract.rules[0].select.host = { scope: 'selection-root' };
+  const structure = [
+    node(1, 'CardImage', 'card-image-key', {}),
+    node(2, 'power-button-compact', 'compact-key', {}),
+    node(3, '.Grid', 'grid-key', {}),
+  ];
+  structure[1].path = `${structure[0].path} / State / power-button-compact`;
+  structure[2].path = `${structure[1].path} / .Grid@@hidden1`;
+  const expandedIdentityNoise = {
+    message: 'Компонент: .Grid → .Grid',
+    nodePath: structure[2].path,
+    nodeName: '.Grid',
+    nodeId: structure[2].nodeId,
+    visible: false,
+    context: {
+      referenceOrigin: 'nested-component',
+      directHostVariantOverride: false,
+    },
+    details: {
+      property: 'component.identity',
+      reference: { value: '.Grid' },
+      actual: { value: '.Grid' },
+    },
+  };
+  const directHostIdentity = {
+    message: 'Компонент: power-button-circle → power-button-compact',
+    nodePath: structure[1].path,
+    nodeName: structure[1].name,
+    nodeId: structure[1].nodeId,
+    visible: true,
+    context: {
+      referenceOrigin: 'nested-component',
+      directHostVariantOverride: true,
+    },
+    details: {
+      property: 'component.identity',
+      reference: { value: 'power-button-circle' },
+      actual: { value: 'power-button-compact' },
+    },
+  };
+
+  const customized = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [expandedIdentityNoise],
+    hostVariantBaselineDiffs: [directHostIdentity],
+  });
+  assert.deepEqual(
+    customized.diffs.map((diff) => diff.message),
+    [directHostIdentity.message],
+    'A direct exposed instance swap must survive effective reference expansion without reporting identity noise inside the replacement.',
+  );
+
+  const cleanExpandedTree = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'card-image-key',
+    hostComponentName: 'CardImage',
+    actualStructure: structure,
+    effectiveBaselineDiffs: [expandedIdentityNoise],
+    hostVariantBaselineDiffs: [],
+  });
+  assert.equal(
+    cleanExpandedTree.diffs.length,
+    0,
+    'Nested component identity differences without direct override evidence must remain suppressed.',
   );
 }
 
@@ -2086,6 +3163,26 @@ function testNestedContractScopesAreEvaluatedIndependently() {
     properties: { Opacity: 'False' },
   });
 
+  const parentCleanResult = evaluateExperimentalContractV2Tree({
+    hostComponentKey: 'table-key',
+    hostComponentName: '[D] BodyCell :: Wide',
+    actualStructure: structure,
+    rawBaselineDiffs: [typographyDiff],
+    nestedScopeBaselineDiffs: new Map([
+      [5, [amountTypographyDiff]],
+    ]),
+    completedNestedScopeNodeIds: new Set([5]),
+    resolveContract: (key) => contracts.get(key) ?? null,
+  });
+  assert.equal(
+    parentCleanResult.diffs.some((diff) =>
+      diff.assessment.ruleId === 'rule-ir:test.amount-effective-baseline' &&
+      diff.details.property === 'styles.text'
+    ),
+    false,
+    'A nested Amount typography difference is parent-authored when the materialized table baseline is clean',
+  );
+
   structure[5].componentInstance.variantProperties.Opacity = 'False';
   structure[6].componentInstance.variantProperties.Opacity = 'False';
   structure[6].opacity = 1;
@@ -2435,7 +3532,7 @@ function testCardImageVariantAndSilverLineContracts() {
     actualStructure: [node(1, 'CardImage', 'card-image-key', {})],
   });
   assert.equal(xsResult.diffs.length, 1);
-  assert.equal(xsResult.diffs[0].details.property, 'State');
+  assert.equal(xsResult.diffs[0].details.property, 'variant.State');
   assert.deepEqual(xsResult.diffs[0].assessment.remediation.properties, { State: 'Active' });
 
   const silverLineResult = evaluateExperimentalContractV2({
@@ -2473,6 +3570,168 @@ function rule(id, targets, assertion) {
     presentation: { message: id, group: 'component.composition' },
     capabilities: { selectors: [], facts: [], operators: [assertion.op], remediations: [] },
   };
+}
+
+function testRootSelectorAndPropertiesEqualCompatibility() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-root-properties-engine',
+  );
+  const contract = createContract();
+  const rootSelector = {
+    scope: 'self-and-descendants',
+    from: '$host',
+    where: {
+      semanticRoleOrLayerName: { op: 'oneOf', values: ['root'] },
+    },
+  };
+  contract.rules = [
+    rule('root-layout', rootSelector, {
+      op: 'propertiesEqual',
+      values: { layoutMode: 'VERTICAL', itemSpacing: 0 },
+    }),
+    rule('root-sizing', rootSelector, {
+      op: 'propertiesEqual',
+      values: {
+        layoutSizingHorizontal: 'FILL',
+        layoutSizingVertical: 'HUG',
+      },
+    }),
+    rule('root-clipping-legacy-shape', rootSelector, {
+      op: 'propertiesEqual',
+      properties: ['clipsContent'],
+      value: false,
+    }),
+  ];
+  const dirtyRoot = Object.assign(node(1, '[D] Test', 'test-key', {}), {
+    clipsContent: true,
+    layout: {
+      direction: 'V',
+      itemSpacing: 16,
+      sizing: { horizontal: 'FIXED', vertical: 'FIXED' },
+    },
+  });
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [dirtyRoot],
+  });
+
+  assert.equal(result.diagnostics.unknown, 0);
+  assert.deepEqual(
+    result.diffs.map((diff) => diff.details.property).sort(),
+    [
+      'clipsContent',
+      'itemSpacing',
+      'layoutSizingHorizontal',
+      'layoutSizingVertical',
+    ],
+  );
+  assert.ok(result.diffs.every((diff) => diff.nodeId === 'node:1'));
+}
+
+function testPolicyOperatorsUseStructuredEvidence() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-policy-operators-engine',
+  );
+  const contract = createContract();
+  const treeSelector = { scope: 'self-and-descendants', from: '$host' };
+  const classificationRule = rule('component-properties', treeSelector, {
+    op: 'classificationPolicy',
+    classification: 'component-properties-are-first-class',
+  });
+  classificationRule.enforcement = 'classification';
+  contract.rules = [
+    classificationRule,
+    rule('allowed-modes', { scope: 'selection-root' }, {
+      op: 'configurationPolicy',
+      variableCollections: ['Surface'],
+      allowedModes: ['Base'],
+      prohibitedModes: ['Modal'],
+    }),
+    rule('variable-width', treeSelector, {
+      op: 'configurationPolicy',
+      widthSource: 'Grid variables',
+      manualWidthAllowed: false,
+    }),
+    rule('replace-placeholders', treeSelector, {
+      op: 'compositionPolicy',
+      visiblePlaceholdersInFinalLayout: 0,
+    }),
+    rule('no-nested-family', treeSelector, {
+      op: 'compositionPolicy',
+      prohibitedDescendants: ['[D] Test', '[M] Test'],
+    }),
+  ];
+
+  const host = node(1, '[D] Test', 'test-key', { Position: 'false' });
+  host.variableModes = [{
+    collectionId: 'collection:surface',
+    resolvedModeId: 'mode:modal',
+    explicitModeId: 'mode:modal',
+    explicitOwnerNodeId: host.nodeId,
+    explicitOwnerName: host.name,
+    explicitOwnerPath: host.path,
+  }];
+  host.componentInstance.directOverrides = [{
+    nodeId: 'node:2',
+    fields: ['width', 'boundVariables'],
+  }];
+  const content = node(2, 'Content', 'content-key', {});
+  const placeholder = node(3, 'SwapMe', 'swap-me-key', {});
+  const nestedFamily = node(4, '[M] Test', 'test-mobile-key', {});
+  const result = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'test-key',
+    hostComponentName: '[D] Test',
+    actualStructure: [host, content, placeholder, nestedFamily],
+    effectiveBaselineDiffs: [{
+      message: 'Position: false → true',
+      nodePath: host.path,
+      nodeName: host.name,
+      nodeId: host.nodeId,
+      visible: true,
+      context: {
+        actualComponentKey: 'test-key',
+        referenceComponentKey: 'test-key',
+        referenceOrigin: 'host',
+        actualNestedOwnerComponentKey: null,
+        actualNestedOwnerPath: null,
+        actualNestedOwnerRelativePath: null,
+        nestedOwnerComponentKey: null,
+        nestedOwnerComponentRole: null,
+        nestedOwnerPath: null,
+        nestedOwnerRelativePath: null,
+        directHostVariantOverride: true,
+      },
+      diffKind: 'other',
+      details: {
+        property: 'variant.Position',
+        reference: { value: 'false' },
+        actual: { value: 'true' },
+      },
+    }],
+    resolveVariableCollectionMetadata: (collectionId) => ({
+      collectionId,
+      collectionName: 'Surface',
+      modeNames: { 'mode:base': 'Base', 'mode:modal': 'Modal' },
+    }),
+  });
+
+  assert.equal(result.diagnostics.unknown, 0);
+  assert.equal(result.diagnostics.classificationSkipped, 0);
+  assert.deepEqual(
+    result.diffs.map((diff) => diff.assessment.ruleId).sort(),
+    [
+      'rule-ir:test.allowed-modes',
+      'rule-ir:test.component-properties',
+      'rule-ir:test.no-nested-family',
+      'rule-ir:test.replace-placeholders',
+      'rule-ir:test.variable-width',
+    ],
+  );
 }
 
 function testEvaluator() {
@@ -2595,19 +3854,34 @@ async function main() {
   await testRegistry();
   testEvaluator();
   testRelationalAndPositionOperators();
+  testVisibleCompositionIgnoresHiddenChildren();
   testConditionalButtonStackSequence();
   testConditionalButtonStackCountSkipsOtherPresets();
   testButtonStackRootLayoutContract();
+  testRootAndAllInternalLayersBaselineRule();
+  testCorporateSystemMessageButtonViews();
+  testCorporateSystemMessageGraphicOverrideBaseOnly();
+  testRootSelectorAndPropertiesEqualCompatibility();
+  testClassificationRequiresDirectOverrideEvidence();
+  testClassificationIgnoresHiddenAndParentAuthoredVariantEvidence();
+  testConfigurationPolicyUsesPropertySpecificBindingEvidence();
+  testSpecificRuleWinsOverClassificationDuplicate();
+  testNoopComponentIdentityIsSuppressed();
+  testPolicyOperatorsUseStructuredEvidence();
+  testCardSwiperMobileComposition();
   testTableBasicVisibleDataCellCount();
   testConditionalPaintStateAndReferenceRemediation();
   testAllEqualFactAlternatives();
   testAllEqualTypographyUsesEffectiveBaseline();
   testAllowedValuesPresentation();
   testEffectiveBaselineAndNestedSizeContract();
+  testNestedHostVariantRuleKeepsDeepLabelOverride();
   testEffectiveBaselineRemediationIsAtomic();
   testCompositePropertyDedupeAndVariantArrays();
   testEffectiveBaselineIgnoresDescendantsFromReplacedNestedOwner();
   testEffectiveBaselineKeepsDescendantsFromAnotherVariantInSameFamily();
+  testNestedBaselineUsesDirectHostEvidenceBeforeOwnerSuppression();
+  testNestedExposedInstanceSwapUsesDirectHostIdentity();
   testNestedStandaloneBaselineDefersToExactHostProperty();
   testRootLayoutEvidenceSurvivesAssessmentCollapse();
   testAmountPresetTopRightAlignment();

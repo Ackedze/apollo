@@ -229,6 +229,37 @@ export async function collectAuditTargets(
           themizationEntry,
           preset: !subtreeForcedCategory && isPresetCandidate(item),
         });
+        if (
+          experimentalContractV2Enabled &&
+          (
+            item.name.includes('CardSwiperMobile') ||
+            item.diffs.some((diff) =>
+              diff.assessment?.ruleId?.includes('web-corp.card-image'),
+            )
+          )
+        ) {
+          console.log(`[Apollo][probe] contract-v2-lifecycle ${JSON.stringify({
+            stage: 'audit-item-aggregated',
+            itemNodeId: item.id,
+            itemName: item.name,
+            relevance: item.relevance,
+            forcedCategory: item.forcedCategory ?? null,
+            diffs: item.diffs.map((diff) => ({
+              nodeId: diff.nodeId ?? null,
+              nodePath: diff.nodePath,
+              property: diff.details?.property ?? null,
+              ruleId: diff.assessment?.ruleId ?? null,
+              visible: diff.visible !== false,
+            })),
+            bucketSizes: {
+              current: checkState.relevanceBuckets.current.length,
+              update: checkState.relevanceBuckets.update.length,
+              deprecated: checkState.relevanceBuckets.deprecated.length,
+              technical: checkState.relevanceBuckets.technical.length,
+              unknown: checkState.relevanceBuckets.unknown.length,
+            },
+          })}`);
+        }
 
         if (subtreeForcedCategory) {
           traceAudit('category-subtree-skipped', {

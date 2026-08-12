@@ -69,11 +69,33 @@ export interface AuditReportBundle {
 }
 
 export function buildAuditResultViews(checkState: CheckState): AuditResultViews {
-  const changes = computeChangesResults(
-    checkState.relevanceBuckets.current.concat(
-      checkState.contractCustomizationItems ?? [],
-    ),
+  const changeCandidates = checkState.relevanceBuckets.current.concat(
+    checkState.contractCustomizationItems ?? [],
   );
+  const changes = computeChangesResults(changeCandidates);
+  const probedItems = Object.values(checkState.relevanceBuckets)
+    .flat()
+    .filter((item) => item.name.includes('CardSwiperMobile'));
+  if (probedItems.length) {
+    console.log(`[Apollo][probe] contract-v2-lifecycle ${JSON.stringify({
+      stage: 'audit-views-built',
+      cardSwiperItems: probedItems.map((item) => ({
+        nodeId: item.id,
+        name: item.name,
+        relevance: item.relevance,
+        rawDiffCount: item.diffs.length,
+        rawDiffs: item.diffs.map((diff) => ({
+          nodeId: diff.nodeId ?? null,
+          property: diff.details?.property ?? null,
+          ruleId: diff.assessment?.ruleId ?? null,
+          visible: diff.visible !== false,
+        })),
+        isChangeCandidate: changeCandidates.includes(item),
+        isVisibleChange: changes.includes(item),
+      })),
+      visibleChangeNodeIds: changes.map((item) => item.id),
+    })}`);
+  }
   const local = filterIgnoredLocalLibraryItems(checkState.localLibraryItems);
 
   return {

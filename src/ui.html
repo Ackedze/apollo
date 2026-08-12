@@ -928,6 +928,7 @@
         let agentRequestInProgress = false;
         let agentActiveRequestId = null;
         let agentActiveRequestKind = null;
+        let agentRequestedReportId = null;
         let agentReportMessages = [];
         let agentDialogueMessages = [];
         let agentLastQuestion = '';
@@ -2164,6 +2165,7 @@
             agentRequestInProgress = false;
             agentActiveRequestId = null;
             agentActiveRequestKind = null;
+            agentRequestedReportId = null;
             agentReportMessages = [];
             activeApolloView = 'audit';
             if (agentComposerInput) {
@@ -2240,6 +2242,7 @@
           if (msg.type === 'apollo-agent-report-ready') {
             agentReportMeta = msg.payload || null;
             syncAgentViewState();
+            requestAgentReportWhenVisible();
             return;
           }
 
@@ -2365,6 +2368,22 @@
           activeApolloView = nextView;
           renderAgentMessages();
           syncAgentViewState();
+          requestAgentReportWhenVisible();
+        }
+
+        function requestAgentReportWhenVisible() {
+          const reportId = agentReportMeta?.reportId || null;
+          if (
+            activeApolloView !== 'report' ||
+            !reportId ||
+            agentRequestInProgress ||
+            agentRequestedReportId === reportId
+          ) {
+            return;
+          }
+
+          agentRequestedReportId = reportId;
+          sendAgentReportToProxy();
         }
 
         function retryActiveAgentRequest() {

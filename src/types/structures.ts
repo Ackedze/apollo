@@ -9,6 +9,7 @@ export interface DSPadding {
 
 export interface DSNodeLayout {
   width?: number | null;
+  widthToken?: string | null;
   height?: number | null;
   minWidth?: number | null;
   maxWidth?: number | null;
@@ -55,6 +56,7 @@ export interface DSNodeStyles {
 interface DSPaintInfo {
   color?: string | null;
   token?: string | null;
+  paintTypes?: string[] | null;
 }
 
 interface DSStrokeInfo extends DSPaintInfo {
@@ -91,6 +93,7 @@ export interface DSTextContent {
   letterSpacing?: number;
   paragraphSpacing?: number;
   case?: string;
+  alignHorizontal?: string;
 }
 
 export interface DSEffect {
@@ -98,6 +101,9 @@ export interface DSEffect {
   radius: number | null;
   color?: string | null;
   offset?: { x: number; y: number } | null;
+  spread?: number | null;
+  visible?: boolean | null;
+  blendMode?: string | null;
 }
 
 export interface DSStructureNode {
@@ -113,6 +119,7 @@ export interface DSStructureNode {
   stroke?: DSStrokeInfo | null;
   layout?: DSNodeLayout;
   opacity?: number | null;
+  clipsContent?: boolean | null;
   opacityToken?: string | null;
   typographyToken?: string | null;
   radius: DSRadii | null;
@@ -191,6 +198,7 @@ type DSStructureNodePatch = Partial<
     | 'stroke'
     | 'layout'
     | 'opacity'
+    | 'clipsContent'
     | 'opacityToken'
     | 'typographyToken'
     | 'radius'

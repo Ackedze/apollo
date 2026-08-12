@@ -31,7 +31,15 @@ function makePath(parent: string, name: string): string {
  * Рекурсивно перебирает дерево узла и формирует плоский список DSStructureNode
  * с корректным учётом effective visibility, layout, fill/stroke и прочих метаданных.
  */
-export async function snapshotTree(root: SceneNode, checkedComponentNodesList: Set<string>): Promise<DSStructureNode[]> {
+export interface SnapshotTreeOptions {
+  includeHidden?: boolean;
+}
+
+export async function snapshotTree(
+  root: SceneNode,
+  checkedComponentNodesList: Set<string>,
+  options: SnapshotTreeOptions = {},
+): Promise<DSStructureNode[]> {
   const list: DSStructureNode[] = [];
   let nextId = 1;
 
@@ -41,14 +49,14 @@ export async function snapshotTree(root: SceneNode, checkedComponentNodesList: S
     parentId: number | null,
     parentVisible: boolean,
   ) {
-    if (!getNodeSelfVisible(node)) {
+    const nodeVisible = getNodeSelfVisible(node);
+    if (!nodeVisible && !options.includeHidden) {
       return;
     }
 
     checkedComponentNodesList.add(node.id);
 
     const id = nextId++;
-    const nodeVisible = getNodeSelfVisible(node);
     const effectiveVisible = parentVisible && nodeVisible;
     const snap = await snapshotNode(
       node,
@@ -200,6 +208,10 @@ export async function snapshotNode(
     stroke: extractStrokeInfo(node),
     layout: extractLayout(node),
     opacity: 'opacity' in node ? node.opacity : 1,
+    clipsContent:
+      'clipsContent' in node && typeof node.clipsContent === 'boolean'
+        ? node.clipsContent
+        : null,
     opacityToken: getBoundVariableId(node.boundVariables, 'opacity'),
     componentInstance: await extractInstance(node),
     text: extractText(node),
@@ -323,6 +335,8 @@ function extractLayout(node: SceneNode): DSNodeLayout | undefined {
   };
 
   if ('width' in source) assign('width', typeof source.width === 'number' ? source.width : undefined);
+  const widthToken = getBoundVariableId(source.boundVariables, 'width');
+  if (widthToken) layout.widthToken = widthToken;
   if ('height' in source) assign('height', typeof source.height === 'number' ? source.height : undefined);
   if ('minWidth' in source) assign('minWidth', source.minWidth);
   if ('maxWidth' in source) assign('maxWidth', source.maxWidth);
@@ -488,6 +502,11 @@ function extractText(node: SceneNode): DSTextContent | undefined {
     hasData = true;
   }
 
+  if (typeof t.textAlignHorizontal === 'string') {
+    result.alignHorizontal = t.textAlignHorizontal;
+    hasData = true;
+  }
+
   return hasData ? result : undefined;
 }
 
@@ -545,6 +564,7 @@ function extractFillInfo(node: SceneNode) {
   return {
     color: color || visiblePaintDescriptor || null,
     token: variableToken,
+    paintTypes: visiblePaints.map((paint) => paint.type),
   };
 }
 
@@ -695,7 +715,8 @@ function extractEffects(node: SceneNode): DSEffect[] | undefined {
 
   const effects = (node as any).effects;
 
-  if (!effects || effects === figma.mixed || effects.length === 0) return undefined;
+  if (!effects || effects === figma.mixed) return undefined;
+  if (effects.length === 0) return [];
 
   const result: DSEffect[] = [];
   
@@ -707,6 +728,9 @@ function extractEffects(node: SceneNode): DSEffect[] | undefined {
         ? `rgba(${Math.round(e.color.r * 255)}, ${Math.round(e.color.g * 255)}, ${Math.round(e.color.b * 255)}, ${e.color.a.toFixed(2)})`
         : undefined,
       offset: e.offset ? { x: e.offset.x, y: e.offset.y } : undefined,
+      spread: typeof e.spread === 'number' ? e.spread : undefined,
+      visible: e.visible !== false,
+      blendMode: typeof e.blendMode === 'string' ? e.blendMode : undefined,
     });
   }
   return result;

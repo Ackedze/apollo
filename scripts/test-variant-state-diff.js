@@ -441,6 +441,66 @@ function main() {
     'icon-button-inverted-primary-24',
   );
 
+  const paymentReference = [
+    node({
+      id: 601,
+      path: 'CardImage',
+      name: 'CardImage',
+      componentInstance: { componentKey: 'card-image' },
+    }),
+    node({
+      id: 602,
+      parentId: 601,
+      path: 'CardImage / PaymentMaskedNumber',
+      name: 'PaymentMaskedNumber',
+      componentInstance: { componentKey: 'payment-masked-number' },
+    }),
+    node({
+      id: 603,
+      parentId: 602,
+      path: 'CardImage / PaymentMaskedNumber / Major',
+      name: 'Major',
+      componentInstance: {
+        componentKey: 'major-component-set',
+        variantProperties: { 'Mask Number': 'True' },
+      },
+    }),
+    node({
+      id: 604,
+      parentId: 602,
+      path: 'CardImage / PaymentMaskedNumber / Minor',
+      name: 'Minor',
+      componentInstance: { componentKey: 'minor-component' },
+    }),
+  ];
+  const paymentActual = paymentReference.map((item) =>
+    item.id === 603
+      ? {
+          ...item,
+          componentInstance: {
+            componentKey: 'major-true-variant',
+            variantProperties: { 'Mask Number': 'True' },
+          },
+        }
+      : item,
+  );
+  const paymentDiffs = diffExplicitNestedVariantStates(
+    paymentActual,
+    paymentReference,
+    [],
+    {
+      resolveComponentFamilyKey: (key) =>
+        key === 'major-true-variant' ? 'major-component-set' : key,
+      resolveReferenceComponentKey: (referenceNode) =>
+        referenceNode.componentInstance?.componentKey ?? null,
+    },
+  );
+  assert.deepEqual(
+    paymentDiffs,
+    [],
+    'A variant key and its component-set key must not produce Major -> Major or Minor -> Minor identity diffs',
+  );
+
   console.log('Variant state diff regression checks passed');
 }
 

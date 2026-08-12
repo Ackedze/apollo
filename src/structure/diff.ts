@@ -1,4 +1,9 @@
-import type { DSNodeLayout, DSRadii, DSStructureNode } from '../types/structures';
+import type {
+  DSEffect,
+  DSNodeLayout,
+  DSRadii,
+  DSStructureNode,
+} from '../types/structures';
 import type { CustomizationAssessment } from '../assessment/types';
 import { buildOccurrenceKeyMap, makeOccurrenceKey } from './occurrenceKeys';
 import { parseVariantName } from '../utils/variantProperties';
@@ -44,11 +49,12 @@ export type DiffEntry = {
 
 export type DiffValueDetails = {
   value: string | number | null;
-  resourceType?: 'style' | 'token' | 'color' | 'component';
+  resourceType?: 'style' | 'token' | 'color' | 'component' | 'image' | 'effects';
   resourceId?: string | null;
   displayName?: string | null;
   bindingId?: string | null;
   binding?: VariableBindingEvidence | null;
+  effects?: DSEffect[] | null;
 };
 
 export type VariableBindingStatus =
@@ -116,9 +122,15 @@ type DiffResult = {
 };
 
 type PaintValueDescription = {
-  kind: 'token' | 'style' | 'color';
+  kind: 'token' | 'style' | 'color' | 'image';
   id: string | null;
   text: string;
+};
+
+type ComparablePaint = {
+  color?: string | null;
+  token?: string | null;
+  paintTypes?: string[] | null;
 };
 
 function formatRawColor(value: string): string {
@@ -789,6 +801,7 @@ function compareNode(
     hasTextStyleDiff,
   );
   compareTextCase(path, actual, reference, diffs);
+  compareTextAlignment(path, actual, reference, diffs);
 
   comparePaint(
     'заливка',
@@ -856,6 +869,8 @@ function compareNode(
     resolveTokenLabel,
     resolveVariableMetadata,
   );
+
+  compareEffects(path, actual, reference, actual.effects, reference.effects, diffs);
 
   compareVariantProperties(path, actual, reference, diffs);
 }
@@ -1362,7 +1377,7 @@ function compareStyle(
   resolveStyleLabel?: (styleKey: string) => string | null,
   resolveTokenLabel?: (token: string) => string | null,
   isPaintToken?: (token: string) => boolean,
-  actualPaint?: { color?: string | null; token?: string | null } | null,
+  actualPaint?: ComparablePaint | null,
 ): boolean {
   if (reference === undefined) return false;
 
@@ -1518,6 +1533,32 @@ function compareTextCase(
   );
 }
 
+function compareTextAlignment(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  diffs: DiffEntry[],
+) {
+  if (actualNode.type !== 'TEXT' || referenceNode.type !== 'TEXT') return;
+  const referenceAlignment = referenceNode.text?.alignHorizontal;
+  const actualAlignment = actualNode.text?.alignHorizontal;
+  if (!referenceAlignment || !actualAlignment || referenceAlignment === actualAlignment) return;
+
+  pushDiff(
+    diffs,
+    actualNode,
+    referenceNode,
+    path,
+    `Выравнивание текста: ${referenceAlignment} → ${actualAlignment}`,
+    'text-style',
+    {
+      property: 'text.align.horizontal',
+      reference: { value: referenceAlignment },
+      actual: { value: actualAlignment },
+    },
+  );
+}
+
 function formatRawTypography(node: DSStructureNode): string {
   const text = node.text;
   if (!text) return '—';
@@ -1536,7 +1577,7 @@ function canonicalStyleIdentity(styleId: string): string {
 }
 
 function describePaintValue(
-  paint: { color?: string | null; token?: string | null } | null | undefined,
+  paint: ComparablePaint | null | undefined,
   normalizedTokenId: string | null,
   styleKey: string | null | undefined,
   resolveTokenLabel?: (token: string) => string | null,
@@ -1560,6 +1601,16 @@ function describePaintValue(
   }
 
   const color = paint?.color ?? null;
+  if (
+    paint?.paintTypes?.some((paintType) => paintType === 'IMAGE') ||
+    (typeof color === 'string' && color.split(',').some((value) => value.trim() === 'paint:IMAGE'))
+  ) {
+    return {
+      kind: 'image',
+      id: null,
+      text: 'Изображение',
+    };
+  }
   if (color) {
     return {
       kind: 'color',
@@ -1576,8 +1627,8 @@ function comparePaint(
   path: string,
   actualNode: DSStructureNode,
   referenceNode: DSStructureNode,
-  actual: { color?: string | null; token?: string | null } | null | undefined,
-  reference: { color?: string | null; token?: string | null } | null | undefined,
+  actual: ComparablePaint | null | undefined,
+  reference: ComparablePaint | null | undefined,
   diffs: DiffEntry[],
   issueSet: Set<string>,
   strict: boolean,
@@ -1670,6 +1721,31 @@ function comparePaint(
     !actualToken &&
     !normalizedActualStyleKey
   ) {
+    if (actualValue?.kind === 'image') {
+      pushDiff(
+        diffs,
+        actualNode,
+        referenceNode,
+        path,
+        `Заливка: ${referenceValue.text} → ${actualValue.text}`,
+        'paint',
+        {
+          property: label === 'обводка' ? 'stroke' : 'fill',
+          reference: paintValueToDiffValue(
+            referenceValue,
+            referenceNode,
+            resolveVariableMetadata,
+          ),
+          actual: paintValueToDiffValue(
+            actualValue,
+            actualNode,
+            resolveVariableMetadata,
+          ),
+          bindingStatus: null,
+        },
+      );
+      return;
+    }
     const bindingLabel =
       label === 'обводка' ? 'Переменная обводки' : 'Переменная заливки';
     pushDiff(
@@ -1751,6 +1827,85 @@ function comparePaint(
           : null,
     },
   );
+}
+
+function compareEffects(
+  path: string,
+  actualNode: DSStructureNode,
+  referenceNode: DSStructureNode,
+  actual: DSEffect[] | null | undefined,
+  reference: DSEffect[] | null | undefined,
+  diffs: DiffEntry[],
+) {
+  if (reference === undefined && actual === undefined) return;
+  const referenceEffects = reference ?? [];
+  const actualEffects = actual ?? [];
+  if (effectsMatchReference(actualEffects, referenceEffects)) return;
+
+  const referenceLabel = formatEffects(referenceEffects);
+  const actualLabel = formatEffects(actualEffects);
+  pushDiff(
+    diffs,
+    actualNode,
+    referenceNode,
+    path,
+    `Эффекты: ${referenceLabel} → ${actualLabel}`,
+    'other',
+    {
+      property: 'effects',
+      reference: {
+        value: referenceLabel,
+        resourceType: 'effects',
+        displayName: referenceLabel,
+        effects: cloneEffects(referenceEffects),
+      },
+      actual: {
+        value: actualLabel,
+        resourceType: 'effects',
+        displayName: actualLabel,
+        effects: cloneEffects(actualEffects),
+      },
+    },
+  );
+}
+
+function effectsMatchReference(actual: DSEffect[], reference: DSEffect[]): boolean {
+  if (actual.length !== reference.length) return false;
+  return reference.every((expected, index) => {
+    const observed = actual[index];
+    if (!observed || observed.type !== expected.type) return false;
+    if (expected.radius !== null && observed.radius !== expected.radius) return false;
+    if (expected.color != null && observed.color !== expected.color) return false;
+    if (expected.spread != null && observed.spread !== expected.spread) return false;
+    if (expected.visible != null && observed.visible !== expected.visible) return false;
+    if (expected.blendMode != null && observed.blendMode !== expected.blendMode) return false;
+    if (expected.offset) {
+      if (!observed.offset) return false;
+      if (observed.offset.x !== expected.offset.x || observed.offset.y !== expected.offset.y) {
+        return false;
+      }
+    }
+    return true;
+  });
+}
+
+function formatEffects(effects: DSEffect[]): string {
+  if (!effects.length) return 'Нет';
+  return effects.map((effect) => {
+    const parts = [effect.type];
+    if (effect.radius !== null) parts.push(`blur ${effect.radius}`);
+    if (effect.color) parts.push(effect.color);
+    if (effect.offset) parts.push(`offset ${effect.offset.x}/${effect.offset.y}`);
+    if (effect.spread != null) parts.push(`spread ${effect.spread}`);
+    if (effect.visible === false) parts.push('скрыт');
+    return parts.join(' · ');
+  }).join(', ');
+}
+
+function cloneEffects(effects: DSEffect[]): DSEffect[] {
+  return effects.map((effect) => Object.assign({}, effect, {
+    offset: effect.offset ? Object.assign({}, effect.offset) : effect.offset,
+  }));
 }
 
 function paintValueToDiffValue(

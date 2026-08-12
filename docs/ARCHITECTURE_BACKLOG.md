@@ -121,6 +121,14 @@ parallel, but it must not introduce another rule representation or bypass releas
 - [ ] Publish a migration dashboard with package schema version, deterministic coverage, unsupported rules, last parity result and legacy dependency count.
 - [ ] Forbid new component-name conditionals in Apollo runtime; a missing capability becomes an explicit engine task or leaves the rule `unsupported`.
 
+## P1: reusable Core boundary contracts
+
+- [ ] Publish Contract v2 packages for reusable Core component boundaries before encoding more host-specific nested-component heuristics. Prioritize `IconView`, `Button`, `Text`, `StatusPreset`/`Status`, then inventory the remaining Core components that expose Slot, instance-swap or nested component properties.
+- [ ] Require every Core boundary contract to describe stable component families and keys, semantic slot anatomy, public variant/component properties, effective baseline by selected variant, allowed instance replacements and ownership of nested visual/text/layout evidence.
+- [ ] Let host contracts express contextual policy against nested semantic facts instead of Figma storage details. Example: `CorporateSystemMessage` owns the rule “`Graphic.icon` may be replaced only when `View=Base`”, while `IconView` owns how the icon slot and its `component.identity` are resolved.
+- [ ] Keep native `directOverrides`/`componentProperties` interpretation as a fail-closed transitional fallback for a nested component without a contract. Once its Core contract is published and parity-proven, route evaluation through that contract and remove the corresponding heuristic path.
+- [ ] Add cross-boundary parity fixtures. Minimum acceptance: TC-11 reports an icon replacement in `CorporateSystemMessage View=Error`, permits the same replacement in `View=Base`, invalid Button views are evaluated through the Button contract, parent-authored variant propagation remains clean, and every finding retains the nested contract, host rule and native override evidence without component-name runtime branches.
+
 ## P1: reference index performance
 
 - [ ] Replace startup loading of every per-catalog component index with one versioned aggregate routing index per catalog manifest; keep individual indexes as publication/debug artifacts rather than mandatory runtime requests.

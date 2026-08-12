@@ -669,6 +669,62 @@ function testCorporateSystemMessageGraphicOverrideBaseOnly() {
   assert.equal(baseResult.diffs.length, 0);
 }
 
+function testCorporateSystemMessageTextAlignmentRequiresNativeOverride() {
+  const { evaluateExperimentalContractV2 } = loadModule(
+    'src/contracts/experimentalContractV2Engine.ts',
+    'contract-v2-corporate-system-message-text-align',
+  );
+  const contract = createContract();
+  const alignmentRule = rule('center-alignment-protected', {
+    scope: 'self-and-descendants',
+    from: '$host',
+  }, {
+    op: 'configurationPolicy',
+    manualTextAlignAllowed: false,
+    expectedTextAlign: 'CENTER',
+  });
+  alignmentRule.select.host.where.componentName.value = '[D] CorporateSystemMessage';
+  contract.rules = [alignmentRule];
+  const root = node(1, '[D] CorporateSystemMessage', 'message-key', { View: 'Base' });
+  const title = Object.assign(node(2, 'Title', null, {}), {
+    type: 'TEXT',
+    text: { alignHorizontal: 'LEFT' },
+  });
+  const label = Object.assign(node(3, 'Label', null, {}), {
+    type: 'TEXT',
+    text: { alignHorizontal: 'LEFT' },
+  });
+  const cleanResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: { View: 'Base' },
+    actualStructure: [root, title, label],
+  });
+  assert.equal(
+    cleanResult.diffs.length,
+    0,
+    'A native LEFT alignment without override evidence is part of the component baseline.',
+  );
+
+  root.componentInstance.directOverrides = [{
+    nodeId: title.nodeId,
+    fields: ['textAlignHorizontal'],
+  }];
+  const changedResult = evaluateExperimentalContractV2({
+    contract,
+    hostComponentKey: 'message-key',
+    hostComponentName: '[D] CorporateSystemMessage',
+    hostVariantProperties: { View: 'Base' },
+    actualStructure: [root, title, label],
+  });
+  assert.equal(changedResult.diffs.length, 1);
+  assert.equal(changedResult.diffs[0].nodeId, title.nodeId);
+  assert.equal(changedResult.diffs[0].details.property, 'text.align.horizontal');
+  assert.equal(changedResult.diffs[0].details.reference.value, 'CENTER');
+  assert.equal(changedResult.diffs[0].details.actual.value, 'LEFT');
+}
+
 function testClassificationRequiresDirectOverrideEvidence() {
   const { evaluateExperimentalContractV2 } = loadModule(
     'src/contracts/experimentalContractV2Engine.ts',
@@ -3861,6 +3917,7 @@ async function main() {
   testRootAndAllInternalLayersBaselineRule();
   testCorporateSystemMessageButtonViews();
   testCorporateSystemMessageGraphicOverrideBaseOnly();
+  testCorporateSystemMessageTextAlignmentRequiresNativeOverride();
   testRootSelectorAndPropertiesEqualCompatibility();
   testClassificationRequiresDirectOverrideEvidence();
   testClassificationIgnoresHiddenAndParentAuthoredVariantEvidence();

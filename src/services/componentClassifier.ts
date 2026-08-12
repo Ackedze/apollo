@@ -206,7 +206,6 @@ export function filterUndocumentedNestedVisualDiffs(
   );
   return diffs.filter((diff) => {
     if (
-      diff.context.referenceOrigin !== 'nested-component' ||
       diff.context.directHostVariantOverride === true ||
       !diff.nodeId
     ) {

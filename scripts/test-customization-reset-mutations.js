@@ -301,6 +301,43 @@ async function main() {
     ]);
     assert.equal(swappedInstance.swappedTo, referenceComponent);
 
+    const exposedPropertyInstance = {
+      id: 'exposed-property-instance',
+      type: 'INSTANCE',
+      resetCount: 0,
+      resetOverrides() {
+        this.resetCount += 1;
+      },
+    };
+    await mutations.applyReferenceResetByDetails(exposedPropertyInstance, [
+      {
+        property: 'component.identity',
+        reference: {value: 'штатный компонент'},
+      },
+    ]);
+    assert.equal(
+      exposedPropertyInstance.resetCount,
+      1,
+      'A contract-only componentProperties finding must reset native instance overrides.',
+    );
+
+    const alignedTextNode = {
+      id: 'aligned-text-node',
+      type: 'TEXT',
+      textAlignHorizontal: 'LEFT',
+    };
+    await mutations.applyReferenceResetByDetails(alignedTextNode, [
+      {
+        property: 'text.align.horizontal',
+        reference: {value: 'CENTER'},
+      },
+    ]);
+    assert.equal(
+      alignedTextNode.textAlignHorizontal,
+      'CENTER',
+      'Text alignment reset must restore the contract baseline.',
+    );
+
     const shadowNode = {
       id: 'shadow-node',
       type: 'FRAME',

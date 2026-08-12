@@ -108,6 +108,13 @@ async function main() {
     ['PaintMe'],
     'Nested visual noise without native override evidence must be suppressed while direct paint overrides remain visible.',
   );
+  const hostOriginShape = nestedDiff('shape', 'Shape', 'radius');
+  hostOriginShape.context.referenceOrigin = 'host';
+  assert.deepEqual(
+    filterUndocumentedNestedVisualDiffs(iconHost, [hostOriginShape]),
+    [],
+    'Materialized host-origin Shape noise must also require native override evidence.',
+  );
   const materializedStructure = [
     {
       id: 1,

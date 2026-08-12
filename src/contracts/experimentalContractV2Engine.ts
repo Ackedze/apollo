@@ -1122,7 +1122,7 @@ function evaluateConfigurationPolicy(
             verdict: 'fail',
             target,
             expected: getConfigurationExpectedValue(assertion),
-            actual: 'ручное изменение',
+            actual: getConfigurationActualValue(target, assertion),
             evidenceProperty: getConfigurationEvidenceProperty(assertion),
           };
         }
@@ -1197,6 +1197,9 @@ function getConfigurationManualFields(assertion: Record<string, any>): string[] 
   if (assertion.manualComponentPropertiesAllowed === false) {
     return ['componentProperties', 'mainComponent'];
   }
+  if (assertion.manualTextAlignAllowed === false) {
+    return ['textAlignHorizontal'];
+  }
   if (assertion.manualFillAllowed === false) {
     return ['fills', 'fillStyleId', 'boundVariables'];
   }
@@ -1220,6 +1223,7 @@ function getConfigurationManualFields(assertion: Record<string, any>): string[] 
 
 function getConfigurationEvidenceProperty(assertion: Record<string, any>): string {
   if (assertion.manualComponentPropertiesAllowed === false) return 'component.identity';
+  if (assertion.manualTextAlignAllowed === false) return 'text.align.horizontal';
   if (assertion.manualFillAllowed === false) return 'fill';
   if (assertion.manualPaddingAllowed === false) return 'layout.padding';
   if (assertion.manualItemSpacingAllowed === false) return 'layout.itemSpacing';
@@ -1228,9 +1232,23 @@ function getConfigurationEvidenceProperty(assertion: Record<string, any>): strin
 }
 
 function getConfigurationExpectedValue(assertion: Record<string, any>): string {
-  return assertion.manualComponentPropertiesAllowed === false
-    ? 'штатный компонент'
-    : 'переменная дизайн-системы';
+  if (assertion.manualComponentPropertiesAllowed === false) return 'штатный компонент';
+  if (assertion.manualTextAlignAllowed === false) {
+    return typeof assertion.expectedTextAlign === 'string'
+      ? assertion.expectedTextAlign
+      : 'штатное выравнивание';
+  }
+  return 'переменная дизайн-системы';
+}
+
+function getConfigurationActualValue(
+  target: RuntimeNode,
+  assertion: Record<string, any>,
+): string {
+  if (assertion.manualTextAlignAllowed === false) {
+    return target.text?.alignHorizontal ?? 'ручное изменение';
+  }
+  return 'ручное изменение';
 }
 
 function hasDirectOverrideForFields(

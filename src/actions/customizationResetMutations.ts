@@ -173,6 +173,38 @@ export function createCustomizationResetMutations(
       }
 
       if (
+        property === 'component.identity' &&
+        node.type === 'INSTANCE' &&
+        !reference.resourceId
+      ) {
+        node.resetOverrides();
+        continue;
+      }
+
+      if (
+        property === 'text.align.horizontal' &&
+        node.type === 'TEXT' &&
+        typeof reference.value === 'string'
+      ) {
+        const alignment = reference.value.toUpperCase();
+        if (
+          alignment !== 'LEFT' &&
+          alignment !== 'CENTER' &&
+          alignment !== 'RIGHT' &&
+          alignment !== 'JUSTIFIED'
+        ) {
+          throw new Error(`Apollo cannot restore text alignment ${reference.value}`);
+        }
+        node.textAlignHorizontal = alignment;
+        if (node.textAlignHorizontal !== alignment) {
+          throw new Error(
+            `Figma did not preserve textAlignHorizontal=${alignment} on node ${node.id}`
+          );
+        }
+        continue;
+      }
+
+      if (
         (property === 'layout.width' || property === 'layout.height') &&
         typeof reference.value === 'number'
       ) {

@@ -1,0 +1,14 @@
+// Explicit local read-only CLI. Output remains a proposal, including Draft inputs.
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+async function prepare(repo,catalog,candidateDirectory){
+ const root=path.resolve(__dirname,".."),runtime=require("../dist/runtime.cjs"),core=require(path.join(root,'packages/component-contract-core/dist/core.cjs')),hash=runtime.contractHash;
+ const producer=require("./generation-current-producer").loadCurrentProducer({repo,hash}),sources=new Map();
+ for(const p of producer.registry.currentInputs.packages){const file=require(path.join(repo,'tools/code-connect/registry/contract-inputs.cjs')).resolveInputFile(path.dirname(repo),p.archivePath);if(!file.startsWith(path.resolve(catalog)+path.sep))throw Error('CONTRACT_CATALOG_MISMATCH');const bytes=fs.readFileSync(file);if(crypto.createHash('sha256').update(bytes).digest('hex')!==p.archiveSha256)throw Error('NATIVE_PROPOSAL_SOURCE_STALE');const entries=await core.readZip(bytes),source=runtime.sourceFromFiles(entries.filter(e=>/\.json$/i.test(e.name)).map(e=>({name:e.name,text:Buffer.from(e.data).toString('utf8')})));if(hash(source.variantEvidence)!==p.authoritativeFullFactsHash)throw Error('NATIVE_PROPOSAL_SOURCE_STALE');if(p.role==='root'&&core.representationScopeHash(source.manual,source.variantEvidence)!==p.representationScopeHash)throw Error('NATIVE_PROPOSAL_SOURCE_STALE');sources.set(p.componentId,source);}
+ const apiEvidence=require("./inspect-native-slot-api.cjs").inspectApi(root,candidateDirectory),model=require("./generation-native-proposal.cjs");
+ const proposals=producer.registry.mappings.map(mapping=>{const input=producer.registry.currentInputs.packages.find(p=>p.componentId===mapping.contract.componentId),inputs={source:sources.get(input.componentId),mapping,input,producer:producer.snapshot,dependencySources:Array.from(sources.values()),apiEvidence,hash};const proposal=model.proposalFor(inputs);model.assertProposal(proposal,inputs);return proposal;});
+ producer.assertCurrent();
+ return {version:1,kind:'current-native-recipes-proposed-handoff',status:'proposed',normative:false,producer:producer.snapshot,apiEvidence,proposals,execution:{figma:'not-run',frontend:'not-run'},live:'not-run',acceptedBindingProvider:'null',scopedAuthority:'proposal-only',sourceReadyBypass:false};
+}
+if(require.main===module){const [repo,catalog,candidate,out]=process.argv.slice(2);prepare(repo,catalog,candidate).then(result=>{if(out)fs.writeFileSync(out,JSON.stringify(result,null,2));console.log('Current source/API proposal verified; three recipes proposed, installed SLOT unsupported, reference types unsupported, no accepted binding/live execution.');}).catch(e=>{console.error(e.code||e.message);process.exitCode=1;});}
+module.exports={prepare};

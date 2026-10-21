@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "apollo.pattern-contract.v1-draft",
+  "documentType": "pattern-contract",
+  "patternId": "ptrn:synthetic.review",
+  "revision": 1,
+  "status": "draft",
+  "metadata": {
+    "title": "Synthetic authoring example",
+    "owner": "Example owner",
+    "authoredAt": "2026-10-05",
+    "frameworkVersion": "0.1.0-draft.1"
+  },
+  "outcome": {
+    "userGoal": "Review a synthetic choice.",
+    "successCriteria": [
+      "Complete the selected route."
+    ]
+  },
+  "sources": [
+    {
+      "id": "synthetic-source",
+      "repository": "synthetic",
+      "path": "patterns/synthetic.md",
+      "commit": "1111111111111111111111111111111111111111",
+      "sha256": "10e922dcdb31f398eb4535acb7e0b3aa274cefe221078f04c6336c7870a7b6a5",
+      "patternId": "ptrn:synthetic.review",
+      "ruleIds": [
+        "rule:synthetic.review-choice"
+      ]
+    }
+  ],
+  "context": {
+    "fields": [
+      {
+        "id": "needsReview",
+        "type": "boolean",
+        "description": "Explicit synthetic input."
+      },
+      {
+        "id": "platform",
+        "type": "enum",
+        "values": [
+          "desktop",
+          "mobileweb"
+        ],
+        "description": "Synthetic platform."
+      }
+    ]
+  },
+  "decisionTables": [
+    {
+      "id": "review-table",
+      "inputs": [
+        "needsReview",
+        "platform"
+      ],
+      "hitPolicy": "unique",
+      "coverage": "complete",
+      "rows": [
+        {
+          "id": "no-review",
+          "when": {
+            "needsReview": {
+              "op": "eq",
+              "value": false
+            },
+            "platform": {
+              "op": "any"
+            }
+          },
+          "outcomeId": "complete",
+          "evidence": [
+            {
+              "sourceId": "synthetic-source",
+              "ruleId": "rule:synthetic.review-choice"
+            }
+          ]
+        },
+        {
+          "id": "review",
+          "when": {
+            "needsReview": {
+              "op": "eq",
+              "value": true
+            },
+            "platform": {
+              "op": "any"
+            }
+          },
+          "outcomeId": "prompt",
+          "evidence": [
+            {
+              "sourceId": "synthetic-source",
+              "ruleId": "rule:synthetic.review-choice"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "complete",
+      "description": "Complete.",
+      "compositionIds": [],
+      "entryStateId": "completed",
+      "evidence": [
+        {
+          "sourceId": "synthetic-source",
+          "ruleId": "rule:synthetic.review-choice"
+        }
+      ]
+    },
+    {
+      "id": "prompt",
+      "description": "Review.",
+      "compositionIds": [
+        "prompt-composition"
+      ],
+      "entryStateId": "reviewing",
+      "evidence": [
+        {
+          "sourceId": "synthetic-source",
+          "ruleId": "rule:synthetic.review-choice"
+        }
+      ]
+    }
+  ],
+  "compositions": [
+    {
+      "id": "prompt-composition",
+      "activeStates": [
+        "reviewing"
+      ],
+      "roles": [
+        {
+          "id": "root",
+          "semanticRole": "review.region",
+          "parentId": null,
+          "order": 0,
+          "kind": "region",
+          "minimum": 1,
+          "maximum": 1,
+          "evidence": [
+            {
+              "sourceId": "synthetic-source",
+              "ruleId": "rule:synthetic.review-choice"
+            }
+          ]
+        },
+        {
+          "id": "action",
+          "semanticRole": "review.action",
+          "parentId": "root",
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "mapping-gap"
+          },
+          "evidence": [
+            {
+              "sourceId": "synthetic-source",
+              "ruleId": "rule:synthetic.review-choice"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "states": [
+      {
+        "id": "initial",
+        "kind": "initial",
+        "description": "Start."
+      },
+      {
+        "id": "reviewing",
+        "kind": "active",
+        "description": "Review."
+      },
+      {
+        "id": "completed",
+        "kind": "terminal",
+        "description": "Done."
+      }
+    ],
+    "events": [
+      {
+        "id": "start",
+        "origin": "user",
+        "description": "Start."
+      },
+      {
+        "id": "confirm",
+        "origin": "user",
+        "description": "Confirm."
+      },
+      {
+        "id": "failed",
+        "origin": "product",
+        "description": "Unknown result."
+      }
+    ],
+    "transitions": [
+      {
+        "id": "skip-review",
+        "from": "initial",
+        "eventId": "start",
+        "outcomeIds": [
+          "complete"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "completed"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "synthetic-source",
+            "ruleId": "rule:synthetic.review-choice"
+          }
+        ]
+      },
+      {
+        "id": "begin-review",
+        "from": "initial",
+        "eventId": "start",
+        "outcomeIds": [
+          "prompt"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "reviewing"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "synthetic-source",
+            "ruleId": "rule:synthetic.review-choice"
+          }
+        ]
+      },
+      {
+        "id": "confirm-review",
+        "from": "reviewing",
+        "eventId": "confirm",
+        "outcomeIds": [
+          "prompt"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "completed"
+        },
+        "actions": [
+          {
+            "id": "complete-review",
+            "evidence": [
+              {
+                "sourceId": "synthetic-source",
+                "ruleId": "rule:synthetic.review-choice"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "sourceId": "synthetic-source",
+            "ruleId": "rule:synthetic.review-choice"
+          }
+        ]
+      },
+      {
+        "id": "unknown-result",
+        "from": "reviewing",
+        "eventId": "failed",
+        "outcomeIds": [
+          "prompt"
+        ],
+        "when": {},
+        "basis": "gap-route",
+        "target": {
+          "gapId": "product-gap"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "synthetic-source",
+            "ruleId": "rule:synthetic.review-choice"
+          }
+        ]
+      }
+    ]
+  },
+  "constraints": [
+    {
+      "id": "choice-check",
+      "statement": "Select exactly one synthetic route.",
+      "ownership": "pattern-context",
+      "route": "decision-table",
+      "subjectId": "review-table",
+      "evidence": [
+        {
+          "sourceId": "synthetic-source",
+          "ruleId": "rule:synthetic.review-choice"
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "mapping-gap",
+      "area": "availability",
+      "blocking": true,
+      "question": "Which mapping is confirmed?",
+      "owner": "Example owner"
+    },
+    {
+      "id": "product-gap",
+      "area": "product",
+      "blocking": true,
+      "question": "What happens on failure?",
+      "owner": "Example owner"
+    }
+  ]
+}

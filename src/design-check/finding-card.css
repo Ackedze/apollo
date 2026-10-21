@@ -1,0 +1,62 @@
+.apollo-new .apollo-finding-card { box-sizing:border-box; width:100%; padding:8px; margin:0 0 8px; border:0; outline:1px solid rgba(0,0,0,.12); outline-offset:-1px; border-radius:16px; background:white; color:rgba(3,3,6,.88); font-family:inherit; }
+.apollo-new .apollo-finding-card:hover,.apollo-new .apollo-finding-card:focus-within { background:rgba(0,0,0,.04); outline-color:transparent; }
+.apollo-new .apollo-finding-card:has([data-finding-focus]:enabled) { cursor:pointer; }
+.apollo-new .apollo-finding-row { display:grid; grid-template-columns:12px minmax(0,1fr) auto; align-items:start; gap:20px; padding:12px; }
+.apollo-new .apollo-finding-status { position:relative; display:block; width:12px; height:24px; }
+.apollo-new .apollo-finding-status img { position:absolute; left:-12px; top:-2px; max-width:none; }
+.apollo-new .apollo-finding-status.current > span { position:absolute; top:6px; width:12px; height:12px; border-radius:50%; background:#27884b; }
+.apollo-new .apollo-finding-content { min-width:0; display:flex; flex-direction:column; gap:16px; }
+.apollo-new .apollo-finding-main { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.apollo-new .apollo-finding-main h3 { margin:0; font:400 16px/24px "Apollo Alfa",sans-serif; letter-spacing:-.24px; overflow-wrap:anywhere; }
+.apollo-new .apollo-finding-comparison { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px; margin:0; font-size:14px; line-height:20px; letter-spacing:-.08px; }
+.apollo-new .apollo-finding-comparison strong { font-weight:500; overflow-wrap:anywhere; white-space:pre-line; }
+.apollo-new .apollo-finding-arrow { color:rgba(5,8,29,.38); }
+.apollo-new .apollo-finding-location { display:flex; align-items:center; flex-wrap:wrap; gap:8px; min-height:24px; color:#62626b; font-size:14px; line-height:20px; }
+.apollo-new .apollo-finding-location span,.apollo-new .apollo-finding-location button { min-width:0; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.apollo-new .apollo-finding-location button { margin:0; padding:2px 0; border:0; background:transparent; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+.apollo-new .apollo-finding-location button:hover:not(:disabled) { text-decoration:underline; text-underline-offset:3px; }
+.apollo-new .apollo-finding-location button:disabled { opacity:1; cursor:default; }
+.apollo-new .apollo-finding-controls { display:flex; align-items:flex-start; flex-wrap:wrap; justify-content:flex-end; gap:4px; max-width:180px; }
+.apollo-new .apollo-finding-controls button { box-sizing:border-box; display:flex; align-items:center; justify-content:center; min-height:24px; height:24px; margin:0; padding:4px 8px; border:0; border-radius:999px; background:rgba(30,43,68,.08); color:rgba(3,3,6,.88); font:400 12px/16px "Apollo Alfa",sans-serif; letter-spacing:.06px; white-space:nowrap; cursor:pointer; }
+.apollo-new .apollo-finding-controls button:hover:not(:disabled) { background:rgba(30,43,68,.14); }
+.apollo-new .apollo-finding-controls button:disabled { color:#62626b; opacity:.6; cursor:default; }
+.apollo-new .apollo-finding-controls .apollo-finding-info-toggle { width:24px; min-width:24px; padding:4px; }
+.apollo-new .apollo-finding-controls .apollo-finding-info-toggle img { display:block; }
+.apollo-new .apollo-finding-information-body { padding:12px 12px 12px 44px; border-top:1px solid rgba(0,0,0,.08); font-size:14px; line-height:20px; overflow-wrap:anywhere; }
+.apollo-new .apollo-finding-information-body p { margin:0 0 8px; }
+.apollo-new .apollo-finding-information-body pre { max-width:100%; overflow:auto; white-space:pre-wrap; font:inherit; }
+.apollo-new .apollo-finding-information-body button { padding:4px 8px; border:0; border-radius:999px; background:rgba(30,43,68,.08); color:inherit; font:inherit; margin:4px 4px 4px 0; }
+.apollo-new .apollo-finding-note { margin:0; color:#62626b; font-size:12px; line-height:20px; }
+.apollo-new .apollo-finding-warning { color:#8c421b; margin:4px 0 0; font-size:12px; line-height:20px; }
+
+.apollo-finding-dialog { box-sizing:border-box; width:640px; max-width:calc(100vw - 48px); max-height:calc(100dvh - 48px); padding:0; border:0; border-radius:24px; background:white; color:#18181b; font:400 14px/20px "Apollo Alfa",sans-serif; box-shadow:0 16px 48px rgba(0,0,0,.18); overflow:auto; }
+.apollo-finding-dialog::backdrop { background:rgba(0,0,0,.24); }
+.apollo-finding-dialog-content { padding:24px; }
+.apollo-finding-dialog header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.apollo-finding-dialog h2 { margin:0; font-size:20px; line-height:28px; font-weight:500; }
+.apollo-finding-dialog header button { display:grid; place-items:center; width:32px; height:32px; border:0; padding:4px; border-radius:50%; background:#f2f3f5; color:inherit; cursor:pointer; }
+.apollo-finding-dialog header svg { width:24px; height:24px; }
+.apollo-finding-dialog button:focus-visible { outline:2px solid #1769d2; outline-offset:2px; }
+.apollo-finding-dialog h3 { margin:16px 0 8px; font-size:14px; line-height:20px; }
+.apollo-finding-dialog p { margin:8px 0; overflow-wrap:anywhere; white-space:pre-wrap; }
+.apollo-finding-dialog .apollo-rule-identity { color:#62626b; font-size:12px; line-height:20px; }
+
+.apollo-finding-dialog .apollo-finding-information-body { padding:0; border:0; font-size:14px; line-height:20px; overflow-wrap:anywhere; }
+.apollo-finding-dialog pre { white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; }
+
+.apollo-data-dialog { width:960px; }
+.apollo-data-dialog .apollo-data-caption { color:#62626b; margin:0 0 20px; }
+.apollo-data-table-scroll { overflow:auto; max-height:calc(100dvh - 300px); }
+.apollo-data-table-scroll:focus-visible { outline:2px solid #1769d2; outline-offset:2px; }
+.apollo-data-dialog table { width:100%; min-width:680px; border-collapse:collapse; table-layout:fixed; font-size:12px; line-height:18px; }
+.apollo-data-dialog th, .apollo-data-dialog td { padding:14px 8px; border-bottom:1px solid #e7e7eb; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
+.apollo-data-dialog thead th { position:sticky; top:0; background:white; font-weight:500; color:#62626b; }
+.apollo-data-dialog th:first-child { width:30%; padding-left:0; }
+.apollo-data-dialog tbody th { font-weight:500; font-size:14px; line-height:20px; }
+.apollo-data-dialog small { display:block; font-size:12px; line-height:18px; font-weight:400; color:#62626b; margin-top:2px; }
+.apollo-data-status.connected { color:#187342; }
+.apollo-data-status.dependency, .apollo-data-status.not-connected { color:#62626b; }
+.apollo-data-status.unavailable, .apollo-data-status.stale, .apollo-data-dialog .apollo-data-notice { color:#98450c; }
+.apollo-data-actions { display:flex; justify-content:flex-end; margin-top:20px; }
+.apollo-data-actions button { border:0; border-radius:999px; padding:10px 16px; background:#f2f3f5; color:#18181b; cursor:pointer; font:inherit; }
+.apollo-data-actions button:disabled { opacity:.5; cursor:default; }

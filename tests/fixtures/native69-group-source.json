@@ -1,0 +1,459 @@
+{
+  "sourceCoordinateTree": [
+    {
+      "id": "@",
+      "type": "INSTANCE",
+      "parent": null,
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900",
+      "type": "INSTANCE",
+      "parent": "@",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18843",
+      "type": "FRAME",
+      "parent": "62786:48900",
+      "refs": {
+        "visible": "LeftAddon#4:10"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48900;8:18844",
+      "type": "INSTANCE",
+      "parent": "62786:48900;8:18843",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18844;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48900;8:18844",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18844;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48900;8:18844;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18844;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48900;8:18844;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18844;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48900;8:18844;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18845",
+      "type": "FRAME",
+      "parent": "62786:48900",
+      "refs": {
+        "visible": "Label#4:11"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18846",
+      "type": "TEXT",
+      "parent": "62786:48900;8:18845",
+      "refs": {
+        "visible": "Label#4:11",
+        "characters": "✎ Label#16:294"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18847",
+      "type": "TEXT",
+      "parent": "62786:48900;8:18845",
+      "refs": {
+        "visible": "Hint#4:8",
+        "characters": "✎ Hint#16:149"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48900;8:18848",
+      "type": "FRAME",
+      "parent": "62786:48900",
+      "refs": {
+        "visible": "RightAddon#4:9"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48900;8:18849",
+      "type": "INSTANCE",
+      "parent": "62786:48900;8:18848",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18849;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48900;8:18849",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18849;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48900;8:18849;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18849;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48900;8:18849;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48900;8:18849;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48900;8:18849;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901",
+      "type": "INSTANCE",
+      "parent": "@",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11057",
+      "type": "FRAME",
+      "parent": "62786:48901",
+      "refs": {
+        "visible": "LeftAddon#4:10"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48901;16:11058",
+      "type": "INSTANCE",
+      "parent": "62786:48901;16:11057",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11058;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48901;16:11058",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11058;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48901;16:11058;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11058;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48901;16:11058;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11058;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48901;16:11058;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11059",
+      "type": "FRAME",
+      "parent": "62786:48901",
+      "refs": {
+        "visible": "Label#4:11"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11060",
+      "type": "TEXT",
+      "parent": "62786:48901;16:11059",
+      "refs": {
+        "visible": "Label#4:11",
+        "characters": "✎ Label#16:294"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11061",
+      "type": "TEXT",
+      "parent": "62786:48901;16:11059",
+      "refs": {
+        "visible": "Hint#4:8",
+        "characters": "✎ Hint#16:149"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48901;16:11062",
+      "type": "FRAME",
+      "parent": "62786:48901",
+      "refs": {
+        "visible": "RightAddon#4:9"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48901;16:11063",
+      "type": "INSTANCE",
+      "parent": "62786:48901;16:11062",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11063;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48901;16:11063",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11063;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48901;16:11063;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11063;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48901;16:11063;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48901;16:11063;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48901;16:11063;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902",
+      "type": "INSTANCE",
+      "parent": "@",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11057",
+      "type": "FRAME",
+      "parent": "62786:48902",
+      "refs": {
+        "visible": "LeftAddon#4:10"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48902;16:11058",
+      "type": "INSTANCE",
+      "parent": "62786:48902;16:11057",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11058;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48902;16:11058",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11058;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48902;16:11058;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11058;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48902;16:11058;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11058;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48902;16:11058;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11059",
+      "type": "FRAME",
+      "parent": "62786:48902",
+      "refs": {
+        "visible": "Label#4:11"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11060",
+      "type": "TEXT",
+      "parent": "62786:48902;16:11059",
+      "refs": {
+        "visible": "Label#4:11",
+        "characters": "✎ Label#16:294"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11061",
+      "type": "TEXT",
+      "parent": "62786:48902;16:11059",
+      "refs": {
+        "visible": "Hint#4:8",
+        "characters": "✎ Hint#16:149"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48902;16:11062",
+      "type": "FRAME",
+      "parent": "62786:48902",
+      "refs": {
+        "visible": "RightAddon#4:9"
+      },
+      "visible": false
+    },
+    {
+      "id": "62786:48902;16:11063",
+      "type": "INSTANCE",
+      "parent": "62786:48902;16:11062",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11063;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48902;16:11063",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11063;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48902;16:11063;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11063;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48902;16:11063;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48902;16:11063;3:7835;102540:17291",
+      "type": "VECTOR",
+      "parent": "62786:48902;16:11063;3:7835",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903",
+      "type": "INSTANCE",
+      "parent": "@",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11741",
+      "type": "FRAME",
+      "parent": "62786:48903",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11742",
+      "type": "INSTANCE",
+      "parent": "62786:48903;16:11741",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11742;485:29887",
+      "type": "FRAME",
+      "parent": "62786:48903;16:11742",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11742;3:7833",
+      "type": "BOOLEAN_OPERATION",
+      "parent": "62786:48903;16:11742;485:29887",
+      "refs": {},
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11742;3:7835",
+      "type": "INSTANCE",
+      "parent": "62786:48903;16:11742;3:7833",
+      "refs": {
+        "mainComponent": "Icon-24#13:0"
+      },
+      "visible": true
+    },
+    {
+      "id": "62786:48903;16:11742;3:7835;148606:15487",
+      "type": "VECTOR",
+      "parent": "62786:48903;16:11742;3:7835",
+      "refs": {},
+      "visible": true
+    }
+  ],
+  "groupProperties": {
+    "Size": {
+      "value": "56",
+      "type": "VARIANT",
+      "boundVariables": {}
+    },
+    "Overflow": {
+      "value": "true",
+      "type": "VARIANT",
+      "boundVariables": {}
+    }
+  },
+  "limitations": "Actual overflow-true relative type/parent/reference/visibility topology only. Geometry/fonts and nested main objects are synthetic; footer graph remains synthetic."
+}

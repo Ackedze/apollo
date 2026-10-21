@@ -1,0 +1,11 @@
+export const IMPLEMENTED_PREDICATES: Set<string>;
+export const APPLICABILITY: Record<string, string>;
+export const TRUTH: Record<string, string>;
+export function evaluateRules(input: { snapshot: Record<string, unknown>; rules: Array<Record<string, unknown>>; ruleRelease?: string }): any;
+export function snapshotHash(snapshot: unknown): string;
+export function stableHash(value: unknown): string;
+export function stableStringify(value: unknown): string;
+export function validateRule(value: any): any;
+export function resolveValue(expression: any, subject: any, snapshot: any): any;
+export function selectSubjects(rule: any, snapshot: any): any;
+export function evaluateExpression(expression: any, subject: any, snapshot: any): any;

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "apollo.screen-version.v1-experimental",
+  "id": "screen-buttons-5plus2",
+  "revision": 1,
+  "parentHash": null,
+  "inputHash": "8da06ac1ae7b9ee5911a60cd52b58911e8d59bc2edb296cb322a790101efb9c9",
+  "page": {
+    "background": "#FFFFFF"
+  },
+  "spec": {
+    "schemaVersion": "apollo.screen-spec.v2-experimental",
+    "id": "screen-buttons-5plus2",
+    "platform": "desktop",
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "root": "corporate-content",
+    "nodes": [
+      {
+        "kind": "component",
+        "id": "corporate-content",
+        "mappingId": "arui-private.corporate-content.desktop",
+        "props": {},
+        "slots": {
+          "body": [
+            "button-rows"
+          ]
+        }
+      },
+      {
+        "kind": "stack",
+        "id": "button-rows",
+        "direction": "vertical",
+        "gap": 24,
+        "children": [
+          "buttons-row-1",
+          "buttons-row-2"
+        ]
+      },
+      {
+        "kind": "component",
+        "id": "buttons-row-1",
+        "mappingId": "arui-private.buttons-group.desktop",
+        "props": {
+          "size": "56"
+        },
+        "slots": {},
+        "actions": {
+          "port": "button-label",
+          "items": [
+            {
+              "id": "button-1",
+              "label": "Кнопка 1",
+              "behavior": "none"
+            },
+            {
+              "id": "button-2",
+              "label": "Кнопка 2",
+              "behavior": "none"
+            },
+            {
+              "id": "button-3",
+              "label": "Кнопка 3",
+              "behavior": "none"
+            },
+            {
+              "id": "button-4",
+              "label": "Кнопка 4",
+              "behavior": "none"
+            },
+            {
+              "id": "button-5",
+              "label": "Кнопка 5",
+              "behavior": "none"
+            }
+          ]
+        }
+      },
+      {
+        "kind": "component",
+        "id": "buttons-row-2",
+        "mappingId": "arui-private.buttons-group.desktop",
+        "props": {
+          "size": "56"
+        },
+        "slots": {},
+        "actions": {
+          "port": "button-label",
+          "items": [
+            {
+              "id": "save-button",
+              "label": "Сохранит",
+              "behavior": "none"
+            },
+            {
+              "id": "cancel-button",
+              "label": "Отменить",
+              "behavior": "none"
+            }
+          ]
+        }
+      }
+    ],
+    "states": {
+      "initial": "default",
+      "values": [
+        "default"
+      ]
+    },
+    "events": [],
+    "transitions": [],
+    "unresolved": [],
+    "capabilityGaps": [
+      {
+        "code": "OVERFLOW_CROSS_ADAPTER_PARITY",
+        "message": "Все пять действий первой группы сохранены в заданном порядке. Figma-профиль предусматривает choice bg.size56.overflow.true: первые три действия inline, Кнопка 4 и Кнопка 5 — два Cell статичного overflowRecipe; SingleIcon trigger не является действием. Для второй группы предусмотрен bg.size56.overflow.false с двумя inline действиями. Semantic port overflow запрещён в props текущего mapping; общего подтверждённого binding выбора overflow и соответствия frontend maxVisibleButtons этому native recipe нет.",
+        "nodeId": "buttons-row-1"
+      },
+      {
+        "code": "OVERFLOW_DEPENDENCY_MANUALS_MISSING",
+        "message": "Для native overflowRecipe предоставлены typed bindings OptionList, Cell и внутреннего Plain CellContent, но их authoring manuals отсутствуют в CONTRACT_CONTEXT. Полные ограничения этих зависимостей нельзя определить по provider metadata или source choices.",
+        "nodeId": "buttons-row-1"
+      },
+      {
+        "code": "WHITE_BACKGROUND_HOST_BINDING",
+        "message": "Требуется белый фон экрана 1600×900. В Figma белая поверхность собственного корневого frame задаётся create_root; это не заливка CorporateContent. В переданной схеме ScreenSpec отсутствует поле поверхности корневого host, а в общем semantic mapping отсутствует frontend host binding для белого фона; требование нельзя выразить через props CorporateContent.",
+        "nodeId": "corporate-content"
+      },
+      {
+        "code": "ACTUAL_NATIVE_SOURCE_CORRESPONDENCE",
+        "message": "Typed native bindings требуют подтверждения фактических definition/main identity, pristine source correspondence, TEXT/SLOT references и freshness перед любой зависимой записью. Эти факты в переданном контексте остаются UNKNOWN.",
+        "nodeId": "corporate-content"
+      },
+      {
+        "code": "FINITE_PROFILE_NORM_COVERAGE",
+        "message": "Профиль interface-v7/MAP-02 ограничен статичной desktop-композицией Size=56. Полное покрытие норм CorporateContent, ButtonsGroup и зависимостей, включая геометрию, ownership и библиотечные baseline, не подтверждено; source links и typed ports не устраняют UNKNOWN."
+      }
+    ]
+  },
+  "specHash": "2acf25e22c973063e076399a96cdeb99f03f4f718385d57b634fd69759766f1f",
+  "versionHash": "8f7d43c1153475834f2dcc77d5b669e9c778c5c9116dc5445d8275988f9db72b"
+}

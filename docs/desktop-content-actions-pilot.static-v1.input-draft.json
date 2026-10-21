@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "apollo.screen-spec.static-content.v1-draft",
+  "status": "draft",
+  "executionAllowed": false,
+  "id": "desktop-content-actions-pilot",
+  "platform": "desktop",
+  "viewport": {
+    "width": 1600,
+    "height": null
+  },
+  "root": "pilot-content",
+  "nodes": [
+    {
+      "kind": "component",
+      "id": "pilot-content",
+      "mappingId": "arui-private.corporate-content.desktop",
+      "props": {},
+      "slots": {
+        "body": [
+          "pilot-actions"
+        ]
+      }
+    },
+    {
+      "kind": "component",
+      "id": "pilot-actions",
+      "mappingId": "arui-private.buttons-group.desktop",
+      "props": {
+        "size": "56"
+      },
+      "slots": {},
+      "staticActions": {
+        "port": "button-label",
+        "items": [
+          {
+            "id": "save",
+            "label": "Сохранить",
+            "view": null,
+            "disabled": null,
+            "loading": null
+          },
+          {
+            "id": "back",
+            "label": "Назад",
+            "view": null,
+            "disabled": null,
+            "loading": null
+          }
+        ],
+        "displayOrder": [
+          "save",
+          "back"
+        ],
+        "priorityOrder": null
+      }
+    }
+  ],
+  "states": {
+    "initial": "default",
+    "values": [
+      "default"
+    ]
+  },
+  "unresolved": [
+    "REVIEW INPUT DRAFT ONLY: missing product fields make this JSON schema-invalid. Draft protocol never authorizes execution.",
+    "Owner confirmed labels Сохранить then Назад, both Size56, viewport width1600 and default state. General assigned local plan IDs save/back; no native/canonical identity is inferred.",
+    "Owner must review explicit View/disabled/Loading=false for each and independent business priorityOrder. Display order and labels do not supply priority.",
+    "Exact viewport height and actual BG available width/fonts/button widths/gaps/padding remain unknown.",
+    "Events/business handlers/transitions are not required. Static schema/content projection implemented; current Code Connect producer and both target executors remain not-supported.",
+    "Canonical CC SLOT/all four BG occurrence/symbol crosswalk, static profile acceptance, trusted nine-rule scoped receipts, actual width/native mutation/readback/rollback/target/live remain missing. Source BG r59 stays Draft."
+  ]
+}

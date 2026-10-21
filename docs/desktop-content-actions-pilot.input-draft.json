@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "apollo.screen-spec.v1-experimental",
+  "id": "desktop-content-actions-pilot",
+  "platform": "desktop",
+  "viewport": {
+    "width": 1600,
+    "height": null
+  },
+  "root": "pilot-content",
+  "nodes": [
+    {
+      "kind": "component",
+      "id": "pilot-content",
+      "mappingId": "arui-private.corporate-content.desktop",
+      "props": {},
+      "slots": {
+        "body": [
+          "pilot-actions"
+        ]
+      }
+    },
+    {
+      "kind": "component",
+      "id": "pilot-actions",
+      "mappingId": "arui-private.buttons-group.desktop",
+      "props": {
+        "size": "56"
+      },
+      "slots": {},
+      "actions": {
+        "port": "button-label",
+        "items": [
+          {
+            "id": null,
+            "label": null,
+            "eventId": null,
+            "view": null,
+            "disabled": null
+          },
+          {
+            "id": null,
+            "label": null,
+            "eventId": null,
+            "view": null,
+            "disabled": null
+          }
+        ]
+      }
+    }
+  ],
+  "states": {
+    "initial": "default",
+    "values": [
+      "default"
+    ]
+  },
+  "events": [],
+  "transitions": [],
+  "unresolved": [
+    "REVIEW INPUT DRAFT ONLY: null product fields and current CONTENT-ONLY-OWNED-PORT protocol gap block schema/execution; do not import or run.",
+    "Owner-confirmed viewport width=1600 and single default state. Exact height and actual BG available width/width-fit evidence remain unknown.",
+    "Provide two stable real ActionIDs and labels, explicit View and disabled for each; independent priorityOrder is a separate required product fact.",
+    "Static pilot requires explicit Loading=false for each action; default alone is not evidence. Current closed OwnedAction has no Loading or independent priorityOrder field.",
+    "Business/backend/navigation handlers and events/transitions are not required for the content-only pilot. eventId=null records the existing static-protocol gap; do not fabricate no-op events.",
+    "CC body -> BG button-label, size string 56. Overflow=false is fixed by producer/profile route. Preserve all four canonical BG occurrences, two hidden without deletion.",
+    "Canonical source/native/symbol recipes, static projection mode, trusted scoped context receipts and accepted pilot profiles remain missing. Full BG source stays Draft; native provider remains null. No standalone text primitive is proposed."
+  ]
+}

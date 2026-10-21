@@ -1,0 +1,44 @@
+.design-check-generation { padding: 0; overflow: hidden; display: flex; }
+.design-check-generation > .design-check-slot { display: flex; flex: 1; min-height: 0; }
+.design-check-generation .generation-workspace { position: relative; display: flex; flex-direction: column; flex: 1; min-height: 0; margin: 0; padding: 0 24px 20px; font-size: 14px; line-height: 1.5; }
+#generation-panel .generation-chat { flex: 1; min-height: 0; overflow-y: auto; padding: 20px 4px; scrollbar-color: #c6c7cc transparent; }
+#generation-panel #generation-chat-empty { margin: 0; padding: 40px 8px; text-align: center; color: #65666f; }
+#generation-panel #generation-chat-log { max-height: none; overflow: visible; }
+#generation-panel .generation-chat-message { margin: 0 0 24px; }
+#generation-panel .generation-chat-user { margin-left: auto; width: fit-content; max-width: 85%; padding: 12px 16px; border-radius: 16px; background: #f0f1f3; }
+#generation-panel .generation-chat-user h3 { display: none; }
+#generation-panel .generation-chat-assistant { margin-right: 0; }
+#generation-panel .generation-chat-message h3 { font-size: 13px; margin: 0 0 8px; }
+#generation-panel .generation-chat-message h4 { font-size: 14px; margin: 16px 0 8px; }
+#generation-panel .generation-chat-message details { color: #65666f; font-size: 12px; }
+#generation-panel .generation-prompt-form { flex: 0 0 auto; display: flex; align-items: flex-end; gap: 8px; margin: 0; padding: 12px; border: 1px solid #d8d9df; border-radius: 16px; background: #fff; }
+#generation-panel .generation-prompt-form:focus-within { border-color: #92959e; }
+#generation-panel #generation-prompt { flex: 1; width: 0; min-width: 0; min-height: 24px; max-height: 144px; padding: 4px 0; border: 0; border-radius: 0; resize: none; font: inherit; line-height: 24px; outline: none; caret-color: #1c1d22; }
+#generation-panel #generation-prompt::placeholder { color: #65666f; opacity: 1; }
+#generation-panel #generation-prompt:focus-visible { outline: 2px solid #1f73ea; outline-offset: 3px; border-radius: 4px; }
+#generation-panel .generation-icon-button { flex: 0 0 32px; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 6px; border: 0; border-radius: 50%; background: transparent; color: #65666f; }
+#generation-panel .generation-icon-button svg { width: 20px; height: 20px; }
+#generation-panel .generation-icon-button:hover:not(:disabled), #generation-panel #generation-settings-toggle[aria-expanded="true"] { background: #eceef0; color: #1c1d22; }
+#generation-panel .generation-send { background: #111; color: #fff; }
+#generation-panel .generation-send:hover:not(:disabled) { background: #333; color: #fff; }
+#generation-panel .generation-send:disabled { background: #eceef0; color: #767880; opacity: 1; }
+#generation-panel button:focus-visible, #generation-panel input:focus-visible, #generation-panel select:focus-visible, #generation-panel summary:focus-visible { outline: 2px solid #1f73ea; outline-offset: 2px; }
+#generation-panel #generation-session-status { margin: 0 4px 12px; font-size: 12px; }
+#generation-panel .generation-settings { bottom:calc(32px + var(--generation-composer-height,58px)); max-height:calc(100% - 52px - var(--generation-composer-height,58px)); overflow-y:auto; scrollbar-color:#c6c7cc transparent; }
+#generation-panel .generation-settings h2 { margin: 0; font-size: 16px; }
+#generation-panel .generation-settings label { display: block; margin: 16px 0 6px; font-size: 12px; font-weight: 500; }
+#generation-panel .generation-prompt-fields { grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0 0 16px; }
+#generation-panel .generation-prompt-fields > div:first-child { grid-column: 1 / -1; }
+#generation-panel .generation-settings input { width: 100%; min-width: 0; border: 1px solid #d2d2d9; border-radius: 6px; padding: 8px 10px; font: inherit; color: inherit; background: #fff; }
+#generation-panel .generation-settings details { margin-top: 20px; }
+#generation-panel #agent-generation-export { margin-top: 12px; }
+#generation-panel #generation-tools > summary { margin-bottom: 12px; }
+#generation-panel .agent-generation { margin: 0 0 24px; overflow-wrap: anywhere; }
+#generation-panel .agent-generation h3 { margin: 0 0 8px; font-size: 13px; }
+#generation-panel #agent-generation-version { margin: 0 0 8px; font-size: 12px; }
+#generation-panel #agent-generation-status { margin: 0 0 12px; }
+#generation-panel #agent-generation-start { border-radius: 999px; background: #111; border-color: #111; color: #fff; }
+#generation-panel .agent-generation .controls { margin: 12px 0; }
+#generation-panel .agent-generation details { margin-top: 12px; font-size: 12px; color: #65666f; }
+#generation-panel a { color: #145ac2; text-underline-offset: 3px; }
+#generation-panel ::selection { color: #111; background: #cfe2ff; }

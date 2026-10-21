@@ -14,9 +14,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          path: projects/Apollo
+      - uses: actions/checkout@v7
+        with:
+          repository: Ackedze/apollo-proxy
+          ref: 31df9ef836f1b2262e76c4e37adfaf165307ffe2
+          path: services/apollo-proxy
       - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: projects/Apollo/package-lock.json
       - run: npm ci
+        working-directory: projects/Apollo
       - run: npm run validate
+        working-directory: projects/Apollo

@@ -1,0 +1,36 @@
+// Browser/HTTP harness with synthetic injected reader only; no actual Figma or source catalog.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{pathToFileURL}=require('node:url');
+const apollo=path.resolve(__dirname,".."),proxy=process.env.APOLLO_STATIC_REVIEW_TEST_PROXY_ROOT||path.resolve(apollo,"../../services/apollo-proxy"),express=require(path.join(proxy,"./node_modules/express"));
+const g=require(path.join(apollo,"./packages/generation-core/dist/index.cjs")),runtime=require("../dist/runtime.cjs"),{staticFixture}=require(path.join(apollo,"./packages/generation-core/tests/static-content-fixtures.cjs")),{mountGenerationV4Routes}=require(path.join(proxy,"./src/generation-agent/service"));
+const hash=runtime.contractHash,buildHash=require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(apollo,"./dist/build-inputs.json"))).digest('hex');
+(async()=>{let reads=0,hostCalls=0;const app=express();app.use(express.json({limit:'2mb'}));
+ const ports=mountGenerationV4Routes(app,{provider:{readContext(){hostCalls++;throw Error('must not run');}},reviewProvider:{hash,buildHash,validate:g.validateStaticReviewResult,validateV2:g.validateStaticBindingResult,async read(input,id,version){reads++;const r=g.createStaticBindingResult(input,id,buildHash,hash);
+ if(input.id==='synthetic-forged'){r.executionAllowed=true;return g.sealStaticBindingResult(r,hash);}
+ r.source={status:'observed',readiness:'draft',components:[{componentId:'synthetic.group',revision:1,compiledStatus:'draft',manualSourceHash:hash('manual'),compiledHash:hash('compiled'),errors:0,predicates:1,pending:9,nonExecutable:9}]};r.coverage={status:'incomplete',errors:0,pending:9,nonExecutable:9};r.api.availability='confirmed-source-api';r.freshness={status:'stale',mismatches:1};r.consumerBinding={status:'matches',receiptHash:hash('receipt'),vectorHash:hash('vector'),configHash:hash('config'),buildHash,checkedFiles:40,diagnosticCode:null};r.diagnostics.push(...['REVIEW_ONLY','REVIEW_CONSUMER_STALE','SOURCE_NOT_READY','STATIC_TARGET_UNSUPPORTED'].map(code=>({code,field:null})));
+ if(r.schemaStatus==='valid'){r.status='reviewed';r.content=g.projectStaticContent(input);r.producer={planHash:hash('synthetic-producer-plan'),contentHash:hash(r.content),observationHash:hash('synthetic-observation')};}
+ return g.sealStaticBindingResult(r,hash);
+ }}});
+ const server=await new Promise(resolve=>{const s=app.listen(0,'127.0.0.1',()=>resolve(s));});const origin='http://127.0.0.1:'+server.address().port;
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});
+ try{const page=await browser.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+   await page.route('http://localhost:3001/agent/**',route=>route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({success:false,code:'AGENT_PROXY_UNAVAILABLE'})}));
+ await page.route('http://localhost:3001/generation/static-review',async route=>{const response=await fetch(origin+'/generation/static-review',{method:'POST',headers:{'Content-Type':'application/json'},body:route.request().postData()});await route.fulfill({status:response.status,contentType:'application/json',body:await response.text()});});
+ for(const width of [800]){
+ await page.setViewportSize({width,height:860});await page.goto(pathToFileURL(path.join(apollo,"./dist/ui.html")).href);await page.getByRole('button', { name: 'Генерация', exact: true }).click();
+   await page.locator('#generation-settings-toggle').click();await page.locator('#generation-tools > summary').click();
+ await page.evaluate(()=>{window.bridgeMessages=[];parent.postMessage=m=>window.bridgeMessages.push(m.pluginMessage);});
+ assert.equal(await page.locator('#generation-review').isDisabled(),true);
+ const spec=staticFixture().spec;spec.viewport.height=null;spec.nodes[1].staticActions.items[0].loading=null;
+ const upload=async data=>{await page.locator('#generation-spec-file').setInputFiles({name:'synthetic-review.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(data))});await page.waitForFunction(()=>!document.getElementById('generation-review').disabled);};
+ await upload(spec);await page.locator('#generation-review').click();await page.waitForFunction(()=>document.getElementById('generation-status').textContent.startsWith('Review завершён'));
+ assert.match(await page.locator('#generation-diagnostics').innerText(),/\/viewport\/height/);assert.match(await page.locator('#generation-diagnostics').innerText(),/items\/0\/loading/);assert.match(await page.locator('#generation-stages').innerText(),/Авторский source: Draft/);assert.match(await page.locator('#generation-stages').innerText(),/nonExecutable: 9/);assert.match(await page.locator('#generation-stages').innerText(),/Producer freshness: устарели; различий: 1/);assert.match(await page.locator('#generation-stages').innerText(),/Consumer binding: совпадают; проверено файлов: 40/);assert.doesNotMatch(await page.locator('#generation-diagnostics').innerText(),/Требуется rebind/);assert.equal(await page.locator('#generation-execute').isDisabled(),true);assert.equal(await page.locator('#generation-receipts pre').count(),0);
+ await upload(staticFixture().spec);await page.locator('#generation-review').click();await page.waitForFunction(()=>document.getElementById('generation-receipts').querySelector('pre'));
+ await page.locator('#generation-receipts summary').click();assert.match(await page.locator('#generation-receipts pre').innerText(),/generationPlanHash/);assert.equal(await page.locator('#generation-receipts a').count(),0);assert.equal(await page.locator('#generation-execute').isDisabled(),true);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+ if(process.env.APOLLO_STATIC_REVIEW_SCREENSHOT_DIR)await page.screenshot({path:path.join(process.env.APOLLO_STATIC_REVIEW_SCREENSHOT_DIR,'static-review-binding-'+width+'.png'),fullPage:true});
+ const forged=staticFixture().spec;forged.id='synthetic-forged';await upload(forged);await page.locator('#generation-review').click();await page.waitForFunction(()=>document.getElementById('generation-status').textContent.includes('STATIC_REVIEW_RESPONSE_INVALID'));assert.equal(await page.locator('#generation-execute').isDisabled(),true);
+ assert.equal(await page.evaluate(()=>window.bridgeMessages.some(m=>['generation-prepare','generation-execute','generation-frontend-request'].includes(m.type))),false);
+ await page.screenshot({path:process.env.APOLLO_STATIC_REVIEW_SCREENSHOT_DIR?path.join(process.env.APOLLO_STATIC_REVIEW_SCREENSHOT_DIR,'static-review-'+width+'.png'):'/private/tmp/apollo-static-review-'+width+'.png'});
+ }
+ assert.equal(reads,3);assert.equal(hostCalls,0);assert.deepEqual(errors,[]);console.log('Static review browser harness: built v4 UI → actual mounted Proxy HTTP route → synthetic injected reader; missing fields, Draft9, stale, content-only data, forged response, no hosts/Create/preview passed at800×860.');
+ }finally{await browser.close();await ports.dispose();await new Promise(r=>server.close(r));}
+})().catch(e=>{console.error(e.stack);process.exitCode=1;});

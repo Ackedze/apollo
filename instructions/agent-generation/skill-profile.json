@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "apollo.generation-skill-profile.v1",
+  "version": "0.1.1",
+  "targets": {
+    "frontend": {
+      "name": "apollo-generate-frontend",
+      "version": "0.1.1",
+      "profileId": "frontend-workspace.v1",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "e32515b752653b936d05b71ca20011eb31d1196cf352dc4f38068f28bdfd1256",
+          "bytes": 7357
+        },
+        {
+          "path": "references/evals.md",
+          "sha256": "3ec053181122c99ba431d505f4ee206f261459c58db9ef039aa25b0f97f21423",
+          "bytes": 4206
+        }
+      ]
+    },
+    "figma": {
+      "name": "apollo-generate-figma",
+      "version": "0.1.4",
+      "profileId": "figma-owned-generic.v1",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "d8967d074e605038038c0873a5c33176770e9cb0a13bc138edc8f3bfadc77411",
+          "bytes": 7020
+        },
+        {
+          "path": "references/evals.md",
+          "sha256": "3ec053181122c99ba431d505f4ee206f261459c58db9ef039aa25b0f97f21423",
+          "bytes": 4206
+        },
+        {
+          "path": "references/current-profile.md",
+          "sha256": "53af3ccf44389a8dbc2e831870afc6b67ce85b1a43020f747bd6712883a86f4a",
+          "bytes": 5392
+        }
+      ],
+      "sourceHash": "7d3b354f3d9c6005f95f90de9e1a42c1068eb3f7e098122e6e504920341518d8"
+    }
+  }
+}

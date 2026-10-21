@@ -11,7 +11,12 @@ dist/
 build-tmp/
 *.map
 
+# Private live Figma captures
+live-tests/
+
 # env
 .env
 .env.*
 
+# Private generation run artifacts
+generation-runs/

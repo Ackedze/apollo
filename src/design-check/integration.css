@@ -1,0 +1,102 @@
+/* Responsive adaptation of the copied v3 shell; the colour/shape system stays in v3 CSS. */
+body { min-width: 0; }
+.design-check-shell { width: min(800px, 100%); height: 100dvh; max-height: 860px; min-height: 360px; }
+.design-check-shell.compact { width: min(400px, 100%); }
+.design-check-background { display: flex; flex: 1; min-height: 0; }
+.design-check-content { display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; }
+.design-check-check-screen { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+.design-check-rail { display: flex; flex: 0 0 56px; flex-direction: column; justify-content: space-between; gap: 24px; padding: 16px 8px 12px; box-sizing: border-box; background: #eceef0; box-shadow: inset -1px 0 rgba(30, 43, 68, 0.08); z-index: 25; }
+.design-check-rail-main { display: flex; flex-direction: column; gap: 8px; }
+.design-check-rail-button, .design-check-rail-settings button[aria-label="Открыть настройки Apollo"] { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; min-height: 40px; padding: 0; border: 0; border-radius: 12px; background: transparent; color: rgba(3, 3, 6, 0.58); cursor: pointer; }
+.design-check-rail-button:hover, .design-check-rail-settings button[aria-label="Открыть настройки Apollo"]:hover { background: rgba(30, 43, 68, 0.06); color: #111; }
+.design-check-rail-button[aria-pressed="true"], .design-check-rail-settings button[aria-expanded="true"] { background: rgba(30, 43, 68, 0.1); color: #111; }
+.design-check-rail-button > svg, .design-check-rail .agent-chat-launcher__icon svg { width: 20px; height: 20px; }
+.design-check-rail .agent-chat-launcher { position: relative; right: auto; bottom: auto; z-index: auto; background: transparent; color: rgba(3, 3, 6, 0.58); border: 0; border-radius: 12px; }
+.design-check-rail .agent-chat-launcher:hover { background: rgba(30, 43, 68, 0.06); color: #111; }
+.design-check-rail-settings { position: relative; }
+.design-check-shell .design-check-rail-settings [role="dialog"][aria-label="Настройки Apollo"] { position: absolute; top: auto; bottom: 0; left: calc(100% + 16px); right: auto; width: min(248px, calc(100vw - 72px)); max-height: calc(100dvh - 24px); overflow-y: auto; }
+.design-check-shell [hidden] { display: none !important; }
+.design-check-shell .view-segmented-control { position: static; transform: none; align-self: center; flex: 0 0 auto; margin: 8px; background: rgba(30, 43, 68, 0.06); }
+.design-check-shell .view-segment { color: rgba(3, 3, 6, 0.58); }
+.design-check-shell .view-segment.active { color: #fff; }
+.design-check-shell .workspace { padding-bottom: 0; }
+.design-check-check-screen { background: #fff; }
+.design-check-shell .workspace > .main { padding: 0; }
+.design-check-view-pane { flex: 1; overflow-y: auto; background: #fff; }
+.design-check-note, .design-check-category-heading, .design-check-preview-finding { padding: 12px 16px; margin: 0; }
+.design-check-category-heading h2 { font-size: 16px; margin: 0 0 8px; }
+.design-check-muted { color: rgba(5, 8, 29, 0.52); }
+.design-check-category-heading p, .design-check-chat-empty p { margin: 8px 0; }
+.design-check-note { background: rgba(30, 43, 68, 0.04); border-radius: 12px; }
+.design-check-error { color: #c33d2f; padding: 12px; overflow-wrap: anywhere; }
+.design-check-chat-empty { padding: 24px 12px; }
+.design-check-chat-empty h2 { font-size: 18px; font-weight: 600; }
+.design-check-slot { min-width: 0; }
+.design-check-generation-screen { display: flex; flex: 1; flex-direction: column; min-height: 0; background: #fff; }
+.design-check-generation-header { padding: 24px 20px 8px; }
+.design-check-generation-header h2 { margin: 0; font-size: 20px; font-weight: 600; }
+.design-check-generation { padding: 12px 16px; flex: 1; min-height: 0; overflow-y: auto; }
+.design-check-shell .assistant-copy, .design-check-shell .user-msg__container { white-space: pre-wrap; }
+.design-check-shell .markdown-root { white-space: normal; }
+.design-check-shell .md-list { margin: 0; padding: 0; list-style: none; }
+.design-check-shell .md-divider { margin: 0; border: 0; }
+.design-check-shell .md-table-scroll { overflow-x: auto; }
+.design-check-shell .md-table { table-layout: auto; }
+.design-check-shell .md-th:first-child, .design-check-shell .md-td:first-child { width: auto; overflow-wrap: normal; }
+.design-check-shell .md-th:first-child .md-code-inline, .design-check-shell .md-td:first-child .md-code-inline { white-space: nowrap; }
+.design-check-shell .md-reference { text-decoration: underline dotted; text-underline-offset: 3px; }
+.design-check-chat-unread { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 4px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; border: 2px solid #fff; border-radius: 999px; background: #d92323; color: #fff; font: 700 10px/1 Inter, system-ui, sans-serif; pointer-events: none; }
+.design-check-shell .agent-composer-input:focus-visible { outline: 2px solid #1f73ea; outline-offset: -3px; }
+.design-check-shell button:focus-visible { outline: 2px solid #1f73ea; outline-offset: 2px; }
+.design-check-chat-screen { display: flex; flex: 1; min-width: 0; min-height: 0; overflow: hidden; background: #fff; }
+.design-check-chat-screen .agent-chat-panel { background: #fff; border: 0; border-radius: 0; box-shadow: none; }
+.design-check-chat-screen .agent-chat-panel::before { display: none; }
+.design-check-chat-screen .agent-composer { flex: 0 0 56px; border-radius: 0; background: #fff; }
+.design-check-chat-screen .agent-composer-input { height: 56px; font-size: 16px; }
+.design-check-shell .design-check-chat-screen .agent-source-control,
+.design-check-shell .design-check-chat-screen .agent-dialogue-mode-control { display: inline-flex; align-items: center; gap: 2px; padding: 4px; border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 999px; background: rgba(0, 0, 0, 0.04); }
+.design-check-rail .agent-chat-launcher[aria-pressed="true"] { background: rgba(30, 43, 68, 0.1); color: #111; }
+.design-check-shell [role="dialog"][aria-label="Настройки Apollo"] { max-height: calc(100dvh - 84px); overflow-y: auto; }
+.design-check-chat-header { display: flex; align-items: center; flex: 0 0 auto; gap: 12px; min-width: 0; padding: 19px; z-index: 3; background: #fff; }
+/* Keep the full-sized controls in one row; a narrow plugin scrolls this row only. */
+.design-check-chat-controls { display: flex; align-items: center; flex: 1; min-width: 0; gap: 8px; overflow-x: auto; padding: 4px; margin: -4px; scrollbar-width: thin; }
+.design-check-chat-controls > * { flex: 0 0 auto; }
+.design-check-shell .design-check-chat-screen .agent-dialogue-mode-control,
+.design-check-shell .design-check-chat-screen .agent-source-control,
+.design-check-shell .design-check-chat-screen .agent-proxy-version { position: static; top: auto; left: auto; right: auto; height: 40px; min-height: 40px; max-width: none; box-sizing: border-box; }
+.design-check-shell .design-check-chat-screen .agent-proxy-version { display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; border: 1px solid rgba(0, 0, 0, 0.04); border-radius: 999px; background: rgba(0, 0, 0, 0.04); color: rgba(3, 3, 6, 0.64); font-size: 12px; white-space: nowrap; }
+.design-check-shell .design-check-chat-screen .agent-conversation { padding-top: 16px; }
+.design-check-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@media (max-width: 600px) {
+  .design-check-page-picker { max-width: calc(100vw - 220px); min-width: 0 !important; }
+  .design-check-page-picker .design-check-picker-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .design-check-shell .view-segmented-control { top: auto; bottom: 12px; }
+  .design-check-shell .view-segment { min-width: 72px; font-size: 12px; }
+  .design-check-shell .view-segment:nth-child(1) { min-width: 88px; }
+  .design-check-shell .view-segment:nth-child(2) { min-width: 82px; }
+  .design-check-shell .workspace { grid-template-columns: minmax(0, 1fr); grid-template-rows: min(28dvh, 192px) minmax(0, 1fr); overflow: hidden; }
+  .design-check-shell .workspace.compact, .design-check-shell .workspace.agent-active { grid-template-rows: minmax(0, 1fr); }
+  .design-check-shell .sidebar { width: 100%; min-height: 0; max-height: 100%; overflow-y: auto; }
+  .design-check-shell .main { min-height: 0; }
+  .design-check-shell .workspace.compact .main { display: none; }
+  .design-check-shell .workspace.agent-active .main { display: flex; }
+  .design-check-shell .results-pane { flex: 1; max-height: 100%; overflow-y: auto; padding-bottom: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .design-check-shell *, .design-check-shell *::before, .design-check-shell *::after { animation: none !important; transition: none !important; } }
+
+/* Document diagnostics use the existing white/neutral product surfaces. */
+.document-audit-summary { padding: 12px 16px; border-bottom: 1px solid rgba(30,43,68,.1); font-size: 12px; }
+.document-audit-summary p { margin: 0 0 8px; }
+.document-audit-summary-links, .document-audit-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.document-audit-summary button, .document-audit-actions button { font: inherit; border: 0; border-radius: 8px; padding: 8px 10px; color: #222; background: #edeef0; cursor: pointer; text-align: left; }
+.document-audit-summary button:hover, .document-audit-actions button:hover { background: #e1e3e7; }
+.document-audit-results { padding: 0 16px 16px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.document-audit-coverage, .document-audit-owner { color: #50525b; font-size: 12px; }
+.document-audit-list { display: flex; flex-direction: column; gap: 12px; }
+.document-audit-finding { padding: 16px; border: 1px solid #dddfe4; border-radius: 12px; background: #fff; }
+.document-audit-finding h3 { margin: 0 0 8px; font-size: 16px; line-height: 1.4; }
+.document-audit-finding p { margin: 8px 0; }
+.document-audit-finding details { margin-top: 12px; }
+.document-audit-finding summary { cursor: pointer; }
+.document-audit-finding pre { max-width: 100%; overflow-x: auto; font-size: 12px; }
+.document-audit-warning { color: #9a4018; }

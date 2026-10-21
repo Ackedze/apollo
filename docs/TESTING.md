@@ -7,7 +7,13 @@ npm ci
 npm run validate
 ```
 
-`validate` последовательно выполняет TypeScript type-check, production build, проверку совместимости с Figma runtime и все `scripts/test-*.js` regression-тесты.
+`validate` последовательно выполняет TypeScript type-check, production build и
+regression-тесты `tests/*.test.js` и `tests/design-check/*.test.js`, включая
+совместимость main bundle с Figma runtime. Сборка сама создаёт внутренние
+Core/generation/adapter/pattern bundles; готовый `dist`, личные skills и каталоги
+дизайн-системы не требуются. Release integration tests используют исходники
+Proxy рядом в `services/apollo-proxy`, поэтому для полного validate клонируйте
+оба репозитория по структуре из `docs/AGENT_START_ASK.md`. CI создаёт эту структуру.
 
 После любого изменения Apollo должен быть пересобран. Перед публикацией используется чистая установка зависимостей через `npm ci`.
 

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "apollo.declared-target-binding.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "representationId",
+    "componentKey",
+    "componentSetKey",
+    "referenceHash",
+    "referencePath",
+    "nodeType"
+  ],
+  "properties": {
+    "representationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "componentKey": {
+      "type": "string",
+      "minLength": 1
+    },
+    "componentSetKey": {
+      "type": "string"
+    },
+    "referenceHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "portableReferenceHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "configurationReferenceHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "referencePath": {
+      "type": "string"
+    },
+    "nodeType": {
+      "enum": [
+        "INSTANCE",
+        "COMPONENT",
+        "FRAME",
+        "GROUP",
+        "TEXT",
+        "RECTANGLE",
+        "ELLIPSE",
+        "VECTOR",
+        "BOOLEAN_OPERATION",
+        "LINE",
+        "POLYGON",
+        "STAR",
+        "SLOT",
+        "SECTION"
+      ]
+    },
+    "nativeSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceNodeId",
+        "ownerComponentKey",
+        "ownerMainComponentId"
+      ],
+      "properties": {
+        "sourceNodeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownerComponentKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownerMainComponentId": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "documentType": "apollo.static-pilot-projection-review",
+  "status": "design-only",
+  "accepted": false,
+  "executable": false,
+  "normative": false,
+  "mutationAllowed": false,
+  "ownerConfirmed": {
+    "viewportWidth": 1600,
+    "initialState": "default",
+    "stateValues": [
+      "default"
+    ]
+  },
+  "approvedScope": {
+    "platform": "desktop",
+    "rootMappingId": "arui-private.corporate-content.desktop",
+    "slotPort": "body",
+    "childMappingId": "arui-private.buttons-group.desktop",
+    "actionPort": "button-label",
+    "size": "56",
+    "overflow": false,
+    "productActionCount": 2,
+    "sourceOccurrenceCount": 4,
+    "hiddenSourceOccurrenceCount": 2,
+    "mode": "static-content-only"
+  },
+  "productInputs": {
+    "viewportHeight": null,
+    "actions": [
+      {
+        "actionId": null,
+        "label": null,
+        "view": null,
+        "disabled": null,
+        "loading": null
+      },
+      {
+        "actionId": null,
+        "label": null,
+        "view": null,
+        "disabled": null,
+        "loading": null
+      }
+    ],
+    "priorityOrder": null,
+    "bgAvailableWidths": null
+  },
+  "requirements": {
+    "loading": [
+      false,
+      false
+    ],
+    "eventsRequired": false,
+    "transitionsRequired": false,
+    "businessHandlersRequired": false,
+    "sourceOccurrenceDeletionAllowed": false,
+    "priorityDerivedFromViewOrLabelAllowed": false
+  },
+  "technicalGaps": [
+    "CONTENT-ONLY-OWNED-PORT",
+    "CANONICAL-SOURCE",
+    "SCOPED-CONTEXT-EXECUTION",
+    "NATIVE-DEFINITION-AND-RECIPE",
+    "WIDTH-AND-CAPABILITY",
+    "PROFILE-ACCEPTANCE"
+  ],
+  "compatibilityDesign": {
+    "currentSchema": "apollo.screen-spec.v1-experimental",
+    "currentOwnedActionRequiresEventId": true,
+    "staticContentModeImplemented": false,
+    "staticContentModeVersion": null,
+    "priorityLoadingReceiptFormat": null,
+    "sourceRecipeAndAuthorityInput": "separate trusted accepted providers; never imported ScreenSpec"
+  },
+  "verificationDesign": {
+    "predicateChecks": 30,
+    "applicableContextRules": 3,
+    "conditionalNotApplicableRules": 6,
+    "notApplicablePrerequisites": [
+      "fresh Overflow=false branch",
+      "complete action membership/provenance and overflow absence",
+      "actual runtime width-fit"
+    ],
+    "buttonRevision": 31,
+    "spinnerRevision": 8,
+    "actualFigmaMutationReadbackRollback": "not-run",
+    "targetParityLiveAcceptance": "not-run"
+  }
+}

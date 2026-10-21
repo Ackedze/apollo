@@ -1,0 +1,37 @@
+/* Generation overrides follow the legacy stylesheet. */
+.apollo-new #generation-panel .generation-settings { top:auto; left:auto; right:12px; width:400px; bottom:calc(24px + var(--generation-composer-height,122px)); max-height:calc(100% - 36px - var(--generation-composer-height,122px)); }
+
+.apollo-target-control,.generation-select-picker { position:relative; }
+.generation-select-menu { position:absolute; right:0; bottom:calc(100% + 8px); z-index:40; }
+.apollo-new #generation-panel .generation-option-list { width:320px; }
+.apollo-new #generation-panel .generation-picker-button { box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; gap:4px; height:40px; min-height:40px; margin:0; padding:4px 12px; border:1px solid rgba(0,0,0,.04); border-radius:999px; background:rgba(0,0,0,.04); color:#18181b; font:400 14px/20px "Apollo Alfa",sans-serif; letter-spacing:-.08px; }
+.apollo-new #generation-panel .apollo-generation-options .generation-picker-button { gap:2px; min-width:0; padding:4px 16px; border:0; background:transparent; }
+.apollo-new #generation-panel .generation-picker-button:disabled { color:#62626b; opacity:1; }
+.apollo-new #generation-panel .generation-picker-button:hover:not(:disabled) { background:rgba(0,0,0,.08); }
+.apollo-new #generation-panel #generation-settings-toggle[aria-expanded="true"] { background:transparent; }
+.apollo-new #generation-panel #generation-settings-toggle:hover:not(:disabled) { background:rgba(0,0,0,.08); }
+.apollo-new #generation-panel .generation-option-list button { display:flex; align-items:center; gap:4px; min-height:44px; width:100%; margin:0; padding:12px; border:0; border-radius:12px; background:transparent; color:rgba(3,3,6,.88); font-family:inherit; text-align:left; }
+.apollo-new #generation-panel .generation-option-list button:hover:not(:disabled) { background:rgba(0,0,0,.04); }
+.apollo-new #generation-panel .generation-option-list button:disabled { cursor:default; opacity:.56; }
+.apollo-new #generation-panel #generation-settings-toggle { height:40px; margin:0; font-family:inherit; }
+.apollo-new #generation-panel #generation-settings-toggle[aria-expanded="true"] .apollo-option-chevron { transform:rotate(180deg); }
+.apollo-new #generation-panel .generation-settings > .row { gap:8px; }
+.apollo-new #generation-panel .generation-settings h2 { font-size:14px; line-height:20px; font-weight:500; }
+.apollo-new #generation-panel .generation-prompt-fields { display:flex; flex-direction:column; gap:12px; margin:0; }
+.apollo-new #generation-panel .generation-prompt-fields label { margin:0; }
+.apollo-new #generation-panel .generation-prompt-fields input { box-sizing:border-box; width:88px; height:40px; padding:4px 12px; border:1px solid rgba(0,0,0,.04); border-radius:999px; background:rgba(0,0,0,.04); text-align:right; font:400 14px/20px "Apollo Alfa",sans-serif; font-variant-numeric:tabular-nums; }
+.apollo-new #generation-panel .generation-prompt-fields input:invalid { border-color:#cf3024; }
+.apollo-new #generation-panel .generation-prompt-fields input:disabled { color:#62626b; }
+.apollo-new #generation-panel .generation-prompt-fields .generation-picker-button { min-width:128px; }
+.apollo-new #generation-panel .generation-prompt-fields > div:first-child { align-items:flex-start; }
+.apollo-new #generation-panel .generation-prompt-fields > div:first-child > label { padding-top:12px; }
+.apollo-new #generation-panel .generation-prompt-fields .generation-select-menu { position:absolute; top:calc(100% + 4px); right:0; bottom:auto; margin:0; }
+.apollo-new #generation-panel .generation-prompt-fields .generation-option-list { width:200px; }
+.apollo-new #generation-panel .generation-settings details { margin-top:0; }
+.apollo-new #generation-panel #generation-agent-settings:empty { display:none; }
+.apollo-new #generation-panel #agent-generation-export { margin:0; }
+.apollo-new #generation-panel #generation-tools > summary { font-size:12px; line-height:20px; }
+.apollo-new #generation-panel .generation-settings details button,.apollo-new #generation-panel #agent-generation-export { min-height:40px; padding:4px 16px; border:0; border-radius:999px; background:rgba(0,0,0,.04); color:#18181b; font:400 14px/20px "Apollo Alfa",sans-serif; white-space:nowrap; }
+.apollo-new #generation-panel .generation-settings details button:hover:not(:disabled),.apollo-new #generation-panel #agent-generation-export:hover:not(:disabled) { background:rgba(0,0,0,.08); }
+.apollo-new #generation-panel .generation-settings details button:disabled,.apollo-new #generation-panel #agent-generation-export:disabled { color:#62626b; opacity:1; }
+.apollo-new #generation-panel .generation-settings .spec-dropzone p { overflow-wrap:normal; }

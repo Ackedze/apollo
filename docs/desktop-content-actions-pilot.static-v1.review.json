@@ -1,0 +1,64 @@
+{
+  "documentType": "apollo.static-pilot-product-review",
+  "status": "proposal",
+  "accepted": false,
+  "executable": false,
+  "ownerConfirmed": {
+    "labels": [
+      "Сохранить",
+      "Назад"
+    ],
+    "displayOrder": [
+      "save",
+      "back"
+    ],
+    "buttonSize": "56",
+    "viewportWidth": 1600,
+    "state": "default"
+  },
+  "localPlanIdentities": {
+    "save": "Сохранить",
+    "back": "Назад"
+  },
+  "nativeIdentities": null,
+  "profileProposal": {
+    "status": "pending-owner-review",
+    "actions": [
+      {
+        "id": "save",
+        "label": "Сохранить",
+        "view": "primary",
+        "disabled": false,
+        "loading": false
+      },
+      {
+        "id": "back",
+        "label": "Назад",
+        "view": "secondary",
+        "disabled": false,
+        "loading": false
+      }
+    ],
+    "displayOrder": [
+      "save",
+      "back"
+    ],
+    "priorityOrder": [
+      "save",
+      "back"
+    ]
+  },
+  "notSupplied": [
+    "viewportHeight",
+    "actualBGAvailableWidth",
+    "owner acceptance of View/disabled/Loading/priority proposal"
+  ],
+  "authority": {
+    "sourceStatus": "draft",
+    "staticProducer": "not-supported",
+    "staticTargets": "not-supported",
+    "canonicalCrosswalk": null,
+    "scopedReceipts": "not-accepted",
+    "profiles": "not-accepted"
+  }
+}

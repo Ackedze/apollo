@@ -1,0 +1,154 @@
+import type { ApolloPageType } from "../types/pageContext";
+
+export type ChromeTabItem = {
+  id: string;
+  title: string;
+  count: number | null;
+  active: boolean;
+  counterType: 'empty' | 'error' | 'warning' | 'general';
+};
+
+export type ChromeButtonType = 'primary' | 'secondary';
+
+export type PageTypeId = ApolloPageType;
+
+export type ChromeState = {
+  title: string;
+  pageTypeId: PageTypeId | null;
+  channelId: string;
+  pickerLabel: string;
+  actionLabel: string;
+  actionDisabled: boolean;
+  actionLoading: boolean;
+  actionType: ChromeButtonType;
+  compact: boolean;
+  shellAuditEnabled: boolean;
+  showExpectedCustomizations: boolean;
+  hideCustomizations: boolean;
+  experimentalContractV2Enabled: boolean;
+  tabs: ChromeTabItem[];
+};
+
+export type GenerationExampleCaptureRequest = {
+  exampleId: string;
+  exampleSetId: string | null;
+  breakpointLabel: string | null;
+  title: string;
+  pageType:
+    | 'form'
+    | 'landing'
+    | 'data-list'
+    | 'details'
+    | 'status-screen'
+    | 'dashboard'
+    | 'other';
+  platform: 'desktop' | 'mobile-web' | 'ios' | 'android';
+  exampleKind: 'golden' | 'variant' | 'anti-example';
+  includeTextContent: boolean;
+  sourceFigmaUrl: string | null;
+};
+
+export type ChromeBridgeOptions = {
+  topRootId: string;
+  leftRootId: string;
+  onActionPress: () => void;
+  onTabSelect: (tabId: string, count: number | null) => void;
+  onToggleCompact: () => void;
+  onChannelChange: (channelId: string) => void;
+  onPickerChange: (pickerLabel: string) => void;
+  onPageTypeChange: (pageTypeId: PageTypeId) => void;
+  onShellAuditToggle: () => void;
+  onShowExpectedToggle: () => void;
+  onHideCustomizationsToggle: () => void;
+  onExperimentalContractV2Toggle: () => void;
+  onExampleCapture: (request: GenerationExampleCaptureRequest) => void;
+};
+
+export type AuditResultItem = {
+  kind: 'audit' | 'customStyle';
+  id: string;
+  focusId?: string;
+  title: string;
+  caption?: string;
+  actions?: ResultFindingAction[];
+};
+
+export type ResultFindingAction = {
+  id: string;
+  label: string;
+  targetName: string;
+  onPress: () => void;
+};
+
+export type DetachedResultItem = {
+  kind: 'detached';
+  id: string;
+  title: string;
+  caption?: string;
+  targetName: string;
+};
+
+export type ThemizationResultItem = {
+  kind: 'themization';
+  id: string;
+  title: string;
+  caption?: string;
+  targetName: string;
+  onReplace?: () => void;
+};
+
+export type DeprecatedStyleUsageItem = {
+  id: string;
+  name: string;
+  onFocus?: () => void;
+  actions?: ResultFindingAction[];
+};
+
+export type DeprecatedStyleResultItem = {
+  kind: 'deprecatedStyle';
+  id: string;
+  title: string;
+  caption?: string;
+  usages: DeprecatedStyleUsageItem[];
+};
+
+export type CustomValueLine = {
+  label: string;
+  values: string[];
+  marker?: 'Expected';
+  ruleText?: string;
+};
+
+export type CustomChangeGroup = {
+  id: string;
+  name: string;
+  lines: CustomValueLine[];
+  onFocus?: () => void;
+  onReset?: () => void;
+  actions?: Array<{
+    label: string;
+    onPress: () => void;
+    singleIcon?: boolean;
+  }>;
+  actionPickerLabel?: string;
+};
+
+export type CustomizationResultItem = {
+  kind: 'customization';
+  id: string;
+  title: string;
+  caption?: string;
+  groups: CustomChangeGroup[];
+};
+
+export type ResultsItem =
+  | AuditResultItem
+  | DetachedResultItem
+  | ThemizationResultItem
+  | DeprecatedStyleResultItem
+  | CustomizationResultItem;
+
+export type ResultsBridgeOptions = {
+  rootId: string;
+  onFocusItem: (id: string) => void;
+};

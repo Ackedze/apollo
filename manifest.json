@@ -8,22 +8,10 @@
     "figma"
   ],
   "documentAccess": "dynamic-page",
-  "permissions": [
-    "currentuser"
-  ],
   "networkAccess": {
     "allowedDomains": [
-      "https://ackedze.github.io",
-      "https://raw.githubusercontent.com",
-      "https://llm.api.cloud.yandex.net",
-      "https://dwjnndpxzqizrcwpasrs.supabase.co",
       "http://localhost:3001"
     ],
-    "devAllowedDomains": [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:3847"
-    ],
-    "reasoning": "Local proxy is used for development only to bypass CORS limitations"
+    "reasoning": "Connect to Apollo Proxy for contracts, audit explanations and screen generation."
   }
 }

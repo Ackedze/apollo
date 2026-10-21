@@ -1,0 +1,1251 @@
+{
+  "schemaVersion": "apollo.agent-figma-semantic-mapping.v1",
+  "sourceHash": "7d3b354f3d9c6005f95f90de9e1a42c1068eb3f7e098122e6e504920341518d8",
+  "authority": "Current authoring manuals define semantics; reviewed MAP-02 and provider source define finite native realization. This file adds no contract norm or native capability.",
+  "mappings": [
+    {
+      "mappingId": "arui-private.corporate-content.desktop",
+      "componentId": "web-corp.corporate-content",
+      "choices": [
+        "cc.desktop"
+      ],
+      "ports": {
+        "body": {
+          "nativePort": "body",
+          "property": "[D] Body#135096:3",
+          "type": "SLOT",
+          "content": "Ordered owned ScreenSpec children; replace only proven new default payload"
+        }
+      }
+    },
+    {
+      "mappingId": "arui-private.buttons-group.desktop",
+      "componentId": "web-corp.buttons-group",
+      "choices": [
+        "bg.size56.overflow.false",
+        "bg.size56.overflow.true"
+      ],
+      "ports": {
+        "size": {
+          "nativeProperty": "Size",
+          "type": "VARIANT",
+          "values": [
+            "56"
+          ],
+          "choiceProperty": "Size"
+        },
+        "overflow": {
+          "nativeProperty": "Overflow",
+          "type": "VARIANT",
+          "values": [
+            "false",
+            "true"
+          ],
+          "choiceProperty": "Overflow"
+        },
+        "button-label": {
+          "nativePorts": [
+            "button.1.label",
+            "button.2.label",
+            "button.3.label",
+            "button.4.label"
+          ],
+          "property": "✎ Label#16:294",
+          "type": "TEXT",
+          "handle": "Exact logical action ID",
+          "overflowTrue": "Three inline actions; fourth occurrence is the preserved SingleIcon trigger and has no action label/ID"
+        }
+      }
+    },
+    {
+      "mappingId": "core.web.amount",
+      "componentId": "core.web.amount",
+      "representationId": "core.web.amount.figma.universal",
+      "platform": "universal",
+      "choices": [
+        "amount.fe3399f71c9e0971646821d935b64657e462c28e"
+      ],
+      "ports": {
+        "minorEnabled": {
+          "nativePort": "minorEnabled",
+          "type": "BOOLEAN",
+          "property": "Minor#72085:2",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "currencyEnabled": {
+          "nativePort": "currencyEnabled",
+          "type": "BOOLEAN",
+          "property": "Currency#72085:3",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "addonEnabled": {
+          "nativePort": "addonEnabled",
+          "type": "BOOLEAN",
+          "property": "Addon#100902:0",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "major.text": {
+          "nativePort": "major.text",
+          "type": "TEXT",
+          "property": "✎ Major#487:0",
+          "targetId": "target.major",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias backed by existing manual allowed TEXT controlPaths; NOT an added manual semanticApi field"
+        },
+        "minor.text": {
+          "nativePort": "minor.text",
+          "type": "TEXT",
+          "property": "✎ Minor#487:1",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias backed by existing manual allowed TEXT controlPaths; NOT an added manual semanticApi field"
+        },
+        "currency.customText": {
+          "nativePort": "currency.customText",
+          "type": "TEXT",
+          "property": "✎ Currency#487:4",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias backed by existing manual allowed TEXT controlPaths; NOT an added manual semanticApi field"
+        },
+        "minor.opacity": {
+          "nativePort": "minor.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False",
+              "True"
+            ]
+          },
+          "semanticOrigin": "existing allowed native controlPath; universal Core scope only"
+        },
+        "currency.opacity": {
+          "nativePort": "currency.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False",
+              "True"
+            ]
+          },
+          "semanticOrigin": "existing allowed native controlPath; universal Core scope only"
+        },
+        "currencyType": {
+          "nativePort": "currencyType",
+          "type": "VARIANT",
+          "property": "Type",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "₽",
+              "$",
+              "€",
+              "¥",
+              "RUB",
+              "USD",
+              "EUR",
+              "CNY",
+              "Custom"
+            ]
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "target.major.textStyle": {
+          "nativePort": "target.major.textStyle",
+          "type": "TEXT",
+          "property": null,
+          "targetId": "target.major",
+          "actuation": "library-text-style",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "385e7c15a1ff1d8bc65c26cdad779b6c0294af96",
+              "e451446afce66cddd400f39abc5837a829b5a6c2",
+              "26aa508b944e7f86657fec06b59611bca6bb2448",
+              "952e7df724ba0235d6d170ca152117522e48f11c",
+              "69723bb178c1d1f9ec90e7b5670389dadb9de724",
+              "fce615bb338288dd2b2dc2d34878d6c1a3e9e641",
+              "e16784bdce8a29100f40300ab8b132c3c3eac27f",
+              "48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6",
+              "72fd753f9ec2cdf891db05a9abe2a17e033ed0fc",
+              "5ab7406f0d64e21264049625acb68806389dbbe3",
+              "b2633a0162f9359a941b9b6ffd702da6acbd02f3",
+              "f0f0d59f9f92db92901605dd929cfa3b93540058",
+              "6fb5ab6969beee7da9e23dfcbab2f4864b30b665",
+              "cbc26c8bed6e1e260dfcb4c620505cd14a9a8668",
+              "002fd09fb152f69d6c345b171102ed33001b2684",
+              "f599998fb07361ea1c1dc52faee28b2458363306",
+              "020582d780ac6ecbb4d8916c4b68099e42b09126",
+              "d3ec8b47e09e08ae335e4f831491482c2eeeecb3",
+              "a874ad4d0ef2692e18be3128232ad04b3b8d40c6",
+              "839fb5531388b20ac6fcf037327ff62b4f192793",
+              "01b1bd37ddfa085d4049683f3d1875f6d741a9da",
+              "aae5de06136376c7653394d3648478f48372d63f",
+              "f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad",
+              "6dfe9b6e49a789b74042e44f64d8cf8ce10b63cf",
+              "0f9096a276c520f4567ccf3c1a0f9bbf7744817a",
+              "cf893a90732f3e16bd5144907103bab01fc1e4a0",
+              "0fd87667e8841a94094062af08ade71d47456827",
+              "bd1b8bd32e02fa6807ef0354b2b46243b5ce4130",
+              "88fddb36d7765848517300ff27447199c7e6dcbd",
+              "18d7ec00f057a9a26a3d775a657fa901426c7a1d",
+              "92e9a9e9ef07551eca0316447d0913d0b4297f13",
+              "d16140c22dd6431b15814fa9632f4bdc91a4f129",
+              "b657c53719573a5b414a97d0b5d3d69739579de2",
+              "3398cbadbaac938521c5deebe296c54a26cdec93",
+              "7e5262c21ead9d10863da05cc954acb91acaf238",
+              "3b8f755205216e2142f722883e68078b09e41ff5",
+              "a1848d32b95c97f348cf0ba724570da19764dd4f",
+              "45b5f455fe6e3289d7c3977c6c1f9106354de1ad",
+              "3839460e5ea8099dc91631d321d3c5978f5aac68",
+              "ad18a9a57c5f4e305430df89e88d879cf06eb4c5",
+              "a0b4961e0a4495b032ba121f87f8c99ce402594e",
+              "3e8495dc712d117acddf82c99ca3e3db731d3a9e",
+              "d4e8b7443a1861a31772b4191097e54bcb86d7e7",
+              "b4d46efc0d7f37599b2b997efe5c6b0e92e7d809",
+              "15ca6a6aa2c308ee48440713acc517a243b7510e",
+              "051d38ade4d8fd8ef1da0d62a0149e998c7e7145",
+              "dc3c7768fb8dd71f760c8ef3b394a7509ad23e30",
+              "26875a16e6e481d8a456081903011169c150c97f",
+              "89624686d1ffc75520a9b30a2889efe23df5e655",
+              "298505bef6f9fbb4200225923bb6a1c0bdc680b8",
+              "29954f325abeb2765d0039ebb963062cc7117a98",
+              "bd543a27f7e179f1d66fc88ee8326b5515a2234e",
+              "3a0ecb397aee922eacd2093ef7f7827740374a22",
+              "58d3b557665b8c77f38d1b737e372994b2c41f32",
+              "f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a",
+              "9184e4332a4ae0206fd15911c96340da26d6f60d"
+            ]
+          },
+          "semanticOrigin": "existing allowed direct textStyleId rule; proposed mapping alias"
+        },
+        "target.minor.textStyle": {
+          "nativePort": "target.minor.textStyle",
+          "type": "TEXT",
+          "property": null,
+          "targetId": "target.minor",
+          "actuation": "library-text-style",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "385e7c15a1ff1d8bc65c26cdad779b6c0294af96",
+              "e451446afce66cddd400f39abc5837a829b5a6c2",
+              "26aa508b944e7f86657fec06b59611bca6bb2448",
+              "952e7df724ba0235d6d170ca152117522e48f11c",
+              "69723bb178c1d1f9ec90e7b5670389dadb9de724",
+              "fce615bb338288dd2b2dc2d34878d6c1a3e9e641",
+              "e16784bdce8a29100f40300ab8b132c3c3eac27f",
+              "48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6",
+              "72fd753f9ec2cdf891db05a9abe2a17e033ed0fc",
+              "5ab7406f0d64e21264049625acb68806389dbbe3",
+              "b2633a0162f9359a941b9b6ffd702da6acbd02f3",
+              "f0f0d59f9f92db92901605dd929cfa3b93540058",
+              "6fb5ab6969beee7da9e23dfcbab2f4864b30b665",
+              "cbc26c8bed6e1e260dfcb4c620505cd14a9a8668",
+              "002fd09fb152f69d6c345b171102ed33001b2684",
+              "f599998fb07361ea1c1dc52faee28b2458363306",
+              "020582d780ac6ecbb4d8916c4b68099e42b09126",
+              "d3ec8b47e09e08ae335e4f831491482c2eeeecb3",
+              "a874ad4d0ef2692e18be3128232ad04b3b8d40c6",
+              "839fb5531388b20ac6fcf037327ff62b4f192793",
+              "01b1bd37ddfa085d4049683f3d1875f6d741a9da",
+              "aae5de06136376c7653394d3648478f48372d63f",
+              "f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad",
+              "6dfe9b6e49a789b74042e44f64d8cf8ce10b63cf",
+              "0f9096a276c520f4567ccf3c1a0f9bbf7744817a",
+              "cf893a90732f3e16bd5144907103bab01fc1e4a0",
+              "0fd87667e8841a94094062af08ade71d47456827",
+              "bd1b8bd32e02fa6807ef0354b2b46243b5ce4130",
+              "88fddb36d7765848517300ff27447199c7e6dcbd",
+              "18d7ec00f057a9a26a3d775a657fa901426c7a1d",
+              "92e9a9e9ef07551eca0316447d0913d0b4297f13",
+              "d16140c22dd6431b15814fa9632f4bdc91a4f129",
+              "b657c53719573a5b414a97d0b5d3d69739579de2",
+              "3398cbadbaac938521c5deebe296c54a26cdec93",
+              "7e5262c21ead9d10863da05cc954acb91acaf238",
+              "3b8f755205216e2142f722883e68078b09e41ff5",
+              "a1848d32b95c97f348cf0ba724570da19764dd4f",
+              "45b5f455fe6e3289d7c3977c6c1f9106354de1ad",
+              "3839460e5ea8099dc91631d321d3c5978f5aac68",
+              "ad18a9a57c5f4e305430df89e88d879cf06eb4c5",
+              "a0b4961e0a4495b032ba121f87f8c99ce402594e",
+              "3e8495dc712d117acddf82c99ca3e3db731d3a9e",
+              "d4e8b7443a1861a31772b4191097e54bcb86d7e7",
+              "b4d46efc0d7f37599b2b997efe5c6b0e92e7d809",
+              "15ca6a6aa2c308ee48440713acc517a243b7510e",
+              "051d38ade4d8fd8ef1da0d62a0149e998c7e7145",
+              "dc3c7768fb8dd71f760c8ef3b394a7509ad23e30",
+              "26875a16e6e481d8a456081903011169c150c97f",
+              "89624686d1ffc75520a9b30a2889efe23df5e655",
+              "298505bef6f9fbb4200225923bb6a1c0bdc680b8",
+              "29954f325abeb2765d0039ebb963062cc7117a98",
+              "bd543a27f7e179f1d66fc88ee8326b5515a2234e",
+              "3a0ecb397aee922eacd2093ef7f7827740374a22",
+              "58d3b557665b8c77f38d1b737e372994b2c41f32",
+              "f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a",
+              "9184e4332a4ae0206fd15911c96340da26d6f60d"
+            ]
+          },
+          "semanticOrigin": "existing allowed direct textStyleId rule; proposed mapping alias"
+        },
+        "target.currency.textStyle": {
+          "nativePort": "target.currency.textStyle",
+          "type": "TEXT",
+          "property": null,
+          "targetId": "target.currency",
+          "actuation": "library-text-style",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "385e7c15a1ff1d8bc65c26cdad779b6c0294af96",
+              "e451446afce66cddd400f39abc5837a829b5a6c2",
+              "26aa508b944e7f86657fec06b59611bca6bb2448",
+              "952e7df724ba0235d6d170ca152117522e48f11c",
+              "69723bb178c1d1f9ec90e7b5670389dadb9de724",
+              "fce615bb338288dd2b2dc2d34878d6c1a3e9e641",
+              "e16784bdce8a29100f40300ab8b132c3c3eac27f",
+              "48c0d7316d5dcbe1cc52c6c6e0b59e510bb150d6",
+              "72fd753f9ec2cdf891db05a9abe2a17e033ed0fc",
+              "5ab7406f0d64e21264049625acb68806389dbbe3",
+              "b2633a0162f9359a941b9b6ffd702da6acbd02f3",
+              "f0f0d59f9f92db92901605dd929cfa3b93540058",
+              "6fb5ab6969beee7da9e23dfcbab2f4864b30b665",
+              "cbc26c8bed6e1e260dfcb4c620505cd14a9a8668",
+              "002fd09fb152f69d6c345b171102ed33001b2684",
+              "f599998fb07361ea1c1dc52faee28b2458363306",
+              "020582d780ac6ecbb4d8916c4b68099e42b09126",
+              "d3ec8b47e09e08ae335e4f831491482c2eeeecb3",
+              "a874ad4d0ef2692e18be3128232ad04b3b8d40c6",
+              "839fb5531388b20ac6fcf037327ff62b4f192793",
+              "01b1bd37ddfa085d4049683f3d1875f6d741a9da",
+              "aae5de06136376c7653394d3648478f48372d63f",
+              "f3cc4701ff633e5c5f3cbbc1d47e35a6a6f60dad",
+              "6dfe9b6e49a789b74042e44f64d8cf8ce10b63cf",
+              "0f9096a276c520f4567ccf3c1a0f9bbf7744817a",
+              "cf893a90732f3e16bd5144907103bab01fc1e4a0",
+              "0fd87667e8841a94094062af08ade71d47456827",
+              "bd1b8bd32e02fa6807ef0354b2b46243b5ce4130",
+              "88fddb36d7765848517300ff27447199c7e6dcbd",
+              "18d7ec00f057a9a26a3d775a657fa901426c7a1d",
+              "92e9a9e9ef07551eca0316447d0913d0b4297f13",
+              "d16140c22dd6431b15814fa9632f4bdc91a4f129",
+              "b657c53719573a5b414a97d0b5d3d69739579de2",
+              "3398cbadbaac938521c5deebe296c54a26cdec93",
+              "7e5262c21ead9d10863da05cc954acb91acaf238",
+              "3b8f755205216e2142f722883e68078b09e41ff5",
+              "a1848d32b95c97f348cf0ba724570da19764dd4f",
+              "45b5f455fe6e3289d7c3977c6c1f9106354de1ad",
+              "3839460e5ea8099dc91631d321d3c5978f5aac68",
+              "ad18a9a57c5f4e305430df89e88d879cf06eb4c5",
+              "a0b4961e0a4495b032ba121f87f8c99ce402594e",
+              "3e8495dc712d117acddf82c99ca3e3db731d3a9e",
+              "d4e8b7443a1861a31772b4191097e54bcb86d7e7",
+              "b4d46efc0d7f37599b2b997efe5c6b0e92e7d809",
+              "15ca6a6aa2c308ee48440713acc517a243b7510e",
+              "051d38ade4d8fd8ef1da0d62a0149e998c7e7145",
+              "dc3c7768fb8dd71f760c8ef3b394a7509ad23e30",
+              "26875a16e6e481d8a456081903011169c150c97f",
+              "89624686d1ffc75520a9b30a2889efe23df5e655",
+              "298505bef6f9fbb4200225923bb6a1c0bdc680b8",
+              "29954f325abeb2765d0039ebb963062cc7117a98",
+              "bd543a27f7e179f1d66fc88ee8326b5515a2234e",
+              "3a0ecb397aee922eacd2093ef7f7827740374a22",
+              "58d3b557665b8c77f38d1b737e372994b2c41f32",
+              "f4aba13def19b9eb0ed8016de9a0b2a5cdeb930a",
+              "9184e4332a4ae0206fd15911c96340da26d6f60d"
+            ]
+          },
+          "semanticOrigin": "existing allowed direct textStyleId rule; proposed mapping alias"
+        },
+        "addon.content": {
+          "nativePort": "addon.content",
+          "type": "INSTANCE_SWAP",
+          "property": null,
+          "targetId": "target.addon",
+          "actuation": "instance-swap",
+          "writeDomain": {
+            "type": "string",
+            "meaning": "published replacement component key, no Core family allowlist"
+          },
+          "semanticOrigin": "existing slot.content permission with native instance swap; NOT SLOT"
+        }
+      },
+      "defaults": [
+        {
+          "id": "amount.currency",
+          "intent": "Отображение суммы с валютой",
+          "platform": "universal",
+          "representationId": "core.web.amount.figma.universal",
+          "properties": {
+            "minorEnabled": true,
+            "currencyEnabled": true,
+            "addonEnabled": false
+          }
+        },
+        {
+          "id": "amount.integer",
+          "intent": "Отображение целой суммы без дробной части",
+          "platform": "universal",
+          "representationId": "core.web.amount.figma.universal",
+          "properties": {
+            "minorEnabled": false,
+            "currencyEnabled": true,
+            "addonEnabled": false
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "corp.web.amount-styles.paragraph",
+      "componentId": "corp.web.amount-styles",
+      "representationId": "corp.web.amount-styles.figma.paragraph",
+      "platform": "universal",
+      "choices": [
+        "amountstyles.d41ead6809bdacf2a1c4fec638bb9a9669f24ffd",
+        "amountstyles.26f63c6fcd070f9b80f3d82cc8c4fb44abc480b6",
+        "amountstyles.56d2e978ee767799cccbb56d2fc0d151bae29dd5",
+        "amountstyles.926bc974b37ddbd3bc7e9d7b561d973e5f36adbe",
+        "amountstyles.f4ee8e472f0bbdd206db931edf5cbd2b8912b515",
+        "amountstyles.30d4a33dc7b1812528b1c76d1890c79d5bde8801",
+        "amountstyles.82764223edf97093cdc35c8ded32791d46d8f86d",
+        "amountstyles.bfad1c3c599e564fdb4ff1c1b8e88c7d70f265e6",
+        "amountstyles.3c24f2876f0ef07be855fbb8183848ec9953d52c"
+      ],
+      "ports": {
+        "style": {
+          "nativePort": "style",
+          "type": "VARIANT",
+          "property": "Style",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "Paragraph 14/20",
+              "Paragraph 16/20",
+              "Paragraph 16/24",
+              "Action 14/20",
+              "Action 16/20",
+              "Action 16/24",
+              "Accent 14/20",
+              "Accent 16/20",
+              "Accent 16/24"
+            ]
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "operationEnabled": {
+          "nativePort": "operationEnabled",
+          "type": "BOOLEAN",
+          "property": "Operation#57377:0",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "negative": {
+          "nativePort": "negative",
+          "type": "VARIANT",
+          "property": "Negative",
+          "targetId": "target.operation",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "True",
+              "False"
+            ]
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "amount.minorEnabled": {
+          "nativePort": "amount.minorEnabled",
+          "type": "BOOLEAN",
+          "property": "Minor#72085:2",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "amount.currencyEnabled": {
+          "nativePort": "amount.currencyEnabled",
+          "type": "BOOLEAN",
+          "property": "Currency#72085:3",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "amount.addonEnabled": {
+          "nativePort": "amount.addonEnabled",
+          "type": "BOOLEAN",
+          "property": "Addon#100902:0",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "major.text": {
+          "nativePort": "major.text",
+          "type": "TEXT",
+          "property": "✎ Major#487:0",
+          "targetId": "target.major",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "minor.text": {
+          "nativePort": "minor.text",
+          "type": "TEXT",
+          "property": "✎ Minor#487:1",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "currency.customText": {
+          "nativePort": "currency.customText",
+          "type": "TEXT",
+          "property": "✎ Currency#487:4",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "currencyType": {
+          "nativePort": "currencyType",
+          "type": "VARIANT",
+          "property": "Type",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "₽",
+              "$",
+              "€",
+              "¥",
+              "RUB",
+              "USD",
+              "EUR",
+              "CNY",
+              "Custom"
+            ]
+          },
+          "semanticOrigin": "existing allowed child native controlPath delegated to Amount r5"
+        },
+        "target.minor.opacity": {
+          "nativePort": "target.minor.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False"
+            ]
+          },
+          "semanticOrigin": "preset normative restriction; Core domain not changed"
+        },
+        "target.currency.opacity": {
+          "nativePort": "target.currency.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False"
+            ]
+          },
+          "semanticOrigin": "preset normative restriction; Core domain not changed"
+        },
+        "addon.content": {
+          "nativePort": "addon.content",
+          "type": "INSTANCE_SWAP",
+          "property": null,
+          "targetId": "target.addon",
+          "actuation": "instance-swap",
+          "writeDomain": {
+            "type": "string",
+            "allowedComponentSetKeys": [
+              "f188fb1de981b2f32966f4844a4b10cffdb81c35",
+              "f0d694f44da5c0c7185fea0a02823049be4e8ef0"
+            ]
+          },
+          "semanticOrigin": "existing preset addon permission and pinned child contract; NOT native SLOT"
+        }
+      },
+      "defaults": [
+        {
+          "id": "paragraph",
+          "intent": "Библиотечный 🔒 AmountParagraph",
+          "platform": "universal",
+          "representationId": "corp.web.amount-styles.figma.paragraph",
+          "properties": {
+            "style": "Paragraph 14/20",
+            "operationEnabled": true
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "corp.web.amount-styles.headline-desktop",
+      "componentId": "corp.web.amount-styles",
+      "representationId": "corp.web.amount-styles.figma.headline-desktop",
+      "platform": "desktop",
+      "choices": [
+        "amountstyles.ec1a67a5b6bf9f6a8e80adaec907e9f47ef99433",
+        "amountstyles.eccc242ad1843c28fb5042ae1229bedaf87bc24f",
+        "amountstyles.edab133e44bf09ea1d250fdf0f439fee1a7b1f49",
+        "amountstyles.d11227c61339a760b5b1ae1f9f2996841cfaa2be",
+        "amountstyles.dda29dafe7f824813050a07924991cfff6933baf"
+      ],
+      "ports": {
+        "style": {
+          "nativePort": "style",
+          "type": "VARIANT",
+          "property": "Style",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "Headline 18/22",
+              "Headline 22/26",
+              "Headline 30/36",
+              "Headline 40/48",
+              "Headline 48/52"
+            ]
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "operationEnabled": {
+          "nativePort": "operationEnabled",
+          "type": "BOOLEAN",
+          "property": "Operation#57749:0",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "negative": {
+          "nativePort": "negative",
+          "type": "VARIANT",
+          "property": "Negative",
+          "targetId": "target.operation",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "True",
+              "False"
+            ]
+          },
+          "semanticOrigin": "existing manual semanticApi"
+        },
+        "amount.minorEnabled": {
+          "nativePort": "amount.minorEnabled",
+          "type": "BOOLEAN",
+          "property": "Minor#72085:2",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "amount.currencyEnabled": {
+          "nativePort": "amount.currencyEnabled",
+          "type": "BOOLEAN",
+          "property": "Currency#72085:3",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "amount.addonEnabled": {
+          "nativePort": "amount.addonEnabled",
+          "type": "BOOLEAN",
+          "property": "Addon#100902:0",
+          "targetId": "target.amount",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "proposed mapping alias delegates the existing writable Core Amount semanticApi through exact dependency; original preset minorEnabled/currencyEnabled/addonEnabled observations remain read-only"
+        },
+        "major.text": {
+          "nativePort": "major.text",
+          "type": "TEXT",
+          "property": "✎ Major#487:0",
+          "targetId": "target.major",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "minor.text": {
+          "nativePort": "minor.text",
+          "type": "TEXT",
+          "property": "✎ Minor#487:1",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "currency.customText": {
+          "nativePort": "currency.customText",
+          "type": "TEXT",
+          "property": "✎ Currency#487:4",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "emptyAllowed": true,
+            "nativeTransportMaxLength": 8192,
+            "normativeMaxLength": null
+          },
+          "semanticOrigin": "proposed mapping alias delegates allowed child controlPath to pinned Amount r5"
+        },
+        "currencyType": {
+          "nativePort": "currencyType",
+          "type": "VARIANT",
+          "property": "Type",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "₽",
+              "$",
+              "€",
+              "¥",
+              "RUB",
+              "USD",
+              "EUR",
+              "CNY",
+              "Custom"
+            ]
+          },
+          "semanticOrigin": "existing allowed child native controlPath delegated to Amount r5"
+        },
+        "target.minor.opacity": {
+          "nativePort": "target.minor.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.minor",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False"
+            ]
+          },
+          "semanticOrigin": "preset normative restriction; Core domain not changed"
+        },
+        "target.currency.opacity": {
+          "nativePort": "target.currency.opacity",
+          "type": "VARIANT",
+          "property": "Opacity",
+          "targetId": "target.currency",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False"
+            ]
+          },
+          "semanticOrigin": "preset normative restriction; Core domain not changed"
+        },
+        "addon.content": {
+          "nativePort": "addon.content",
+          "type": "INSTANCE_SWAP",
+          "property": null,
+          "targetId": "target.addon",
+          "actuation": "instance-swap",
+          "writeDomain": {
+            "type": "string",
+            "allowedComponentSetKeys": [
+              "f188fb1de981b2f32966f4844a4b10cffdb81c35",
+              "f0d694f44da5c0c7185fea0a02823049be4e8ef0"
+            ]
+          },
+          "semanticOrigin": "existing preset addon permission and pinned child contract; NOT native SLOT"
+        }
+      },
+      "defaults": [
+        {
+          "id": "headline-desktop",
+          "intent": "Библиотечный 🔒 [D] AmountHeadline",
+          "platform": "desktop",
+          "representationId": "corp.web.amount-styles.figma.headline-desktop",
+          "properties": {
+            "style": "Headline 18/22",
+            "operationEnabled": true
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "web-core.icon-view",
+      "componentId": "web-core.icon-view",
+      "representationId": "web-core.icon-view.figma.universal",
+      "platform": "universal",
+      "choices": [
+        "iconview.e2fa51ace6584f743e46af463b4ae018d39ec6c0",
+        "iconview.8b09f235dfee37e9adbf766b55fd58fe56e39757",
+        "iconview.a4d2a9777c843feef68987c0f83e176b10281ec9",
+        "iconview.c8ea702a762762a46a16758cd5617bbbdd841619",
+        "iconview.e7fc528dc669bf70854eecfc0abaeb3e625840a4",
+        "iconview.1a67004b61bf91e9a12eb69f907fe92de4dcd35a",
+        "iconview.1de0077f72a5b4394917373eafa55639f91b3779",
+        "iconview.e4c0526f37fd822fe036e2ca81a218a9f2578ef2",
+        "iconview.da76ef0432f226c9eccfa7b4a874ca7f3a82b164",
+        "iconview.c4b38625705e72815994262ee15404c780c432f2",
+        "iconview.af82b95c3b62f999d56fda9a1f34da2ca5ea38d7"
+      ],
+      "ports": {
+        "text-value": {
+          "nativePort": "text-value",
+          "type": "TEXT",
+          "property": "✎ Text#16913:1",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "nativeTransportMaxLength": 8192
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "content": {
+          "nativePort": "content",
+          "type": "BOOLEAN",
+          "property": "Content#70244:63",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "bottomaddon": {
+          "nativePort": "bottomaddon",
+          "type": "BOOLEAN",
+          "property": "BottomAddon#70244:64",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "indicator": {
+          "nativePort": "indicator",
+          "type": "BOOLEAN",
+          "property": "Indicator#70244:65",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "topaddon": {
+          "nativePort": "topaddon",
+          "type": "BOOLEAN",
+          "property": "TopAddon#70244:66",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "border": {
+          "nativePort": "border",
+          "type": "BOOLEAN",
+          "property": "Border#70244:67",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "bgcolor": {
+          "nativePort": "bgcolor",
+          "type": "BOOLEAN",
+          "property": "BgColor#70274:0",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "bgimg": {
+          "nativePort": "bgimg",
+          "type": "BOOLEAN",
+          "property": "BgImg#70274:18",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "shape": {
+          "nativePort": "shape",
+          "type": "BOOLEAN",
+          "property": "Shape#88323:0",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "text": {
+          "nativePort": "text",
+          "type": "BOOLEAN",
+          "property": "Text#88381:18",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "boolean"
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        },
+        "size": {
+          "nativePort": "size",
+          "type": "VARIANT",
+          "property": "Size",
+          "targetId": "target.root",
+          "actuation": null,
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "16",
+              "20",
+              "24",
+              "32",
+              "40",
+              "48",
+              "56",
+              "64",
+              "72",
+              "80",
+              "128"
+            ]
+          },
+          "semanticOrigin": "Exact IconView r8 semanticApi root binding"
+        }
+      },
+      "defaults": [
+        {
+          "id": "icon-view.default",
+          "intent": "Published IconView using its native root properties",
+          "platform": "universal",
+          "representationId": "web-core.icon-view.figma.universal",
+          "properties": {
+            "text-value": "ЙО",
+            "content": true,
+            "bottomaddon": false,
+            "indicator": false,
+            "topaddon": false,
+            "border": true,
+            "bgcolor": true,
+            "bgimg": false,
+            "shape": true,
+            "text": false,
+            "size": "128"
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "arui-private.background-plate.legacy.desktop",
+      "componentId": "web-corp.background-plate",
+      "representationId": "web-corp.background-plate.figma.desktop.legacy",
+      "platform": "desktop",
+      "choices": [
+        "backgroundplate.desktop.legacy.level-1-outer-",
+        "backgroundplate.desktop.legacy.level-2-inner-"
+      ],
+      "ports": {
+        "Position": {
+          "nativePort": "Position",
+          "type": "VARIANT",
+          "property": "Position",
+          "targetId": "target.root",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "Level 1 (outer)",
+              "Level 2 (inner)"
+            ]
+          },
+          "semanticOrigin": "Existing r6 semanticApi and exact published property"
+        }
+      },
+      "defaults": [
+        {
+          "id": "background-plate.desktop.legacy.default",
+          "platform": "desktop",
+          "representationId": "web-corp.background-plate.figma.desktop.legacy",
+          "properties": {
+            "Position": "Level 1 (outer)"
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "arui-private.background-plate.promo.desktop",
+      "componentId": "web-corp.background-plate",
+      "representationId": "web-corp.background-plate.figma.desktop.promo",
+      "platform": "desktop",
+      "choices": [
+        "backgroundplate.desktop.promo.level-1-outer-",
+        "backgroundplate.desktop.promo.level-2-inner-"
+      ],
+      "ports": {
+        "Position": {
+          "nativePort": "Position",
+          "type": "VARIANT",
+          "property": "Position",
+          "targetId": "target.root",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "Level 1 (outer)",
+              "Level 2 (inner)"
+            ]
+          },
+          "semanticOrigin": "Existing r6 semanticApi and exact published property"
+        }
+      },
+      "defaults": [
+        {
+          "id": "background-plate.desktop.promo.default",
+          "platform": "desktop",
+          "representationId": "web-corp.background-plate.figma.desktop.promo",
+          "properties": {
+            "Position": "Level 1 (outer)"
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "arui-private.background-plate.slot.desktop",
+      "componentId": "web-corp.background-plate",
+      "representationId": "web-corp.background-plate.figma.desktop.slot",
+      "platform": "desktop",
+      "choices": [
+        "backgroundplate.desktop.slot.primary.false",
+        "backgroundplate.desktop.slot.secondary.false",
+        "backgroundplate.desktop.slot.colored.false",
+        "backgroundplate.desktop.slot.border.false",
+        "backgroundplate.desktop.slot.primary.true"
+      ],
+      "ports": {
+        "Type": {
+          "nativePort": "Type",
+          "type": "VARIANT",
+          "property": "Type",
+          "targetId": "target.root",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "Primary",
+              "Secondary",
+              "Colored",
+              "Border"
+            ]
+          },
+          "semanticOrigin": "Existing r6 semanticApi and exact published property"
+        },
+        "Skeleton": {
+          "nativePort": "Skeleton",
+          "type": "VARIANT",
+          "property": "Skeleton",
+          "targetId": "target.root",
+          "writeDomain": {
+            "type": "string",
+            "enum": [
+              "False",
+              "True"
+            ]
+          },
+          "semanticOrigin": "Existing r6 semanticApi and exact published property"
+        },
+        "Slot": {
+          "nativePort": "Slot",
+          "type": "SLOT",
+          "property": "Slot#136328:0",
+          "targetId": "target.slot",
+          "writeDomain": {
+            "type": "content",
+            "contentOwnership": "external"
+          },
+          "semanticOrigin": "Existing r6 semanticApi and exact published property"
+        }
+      },
+      "defaults": [
+        {
+          "id": "background-plate.desktop.slot.default",
+          "platform": "desktop",
+          "representationId": "web-corp.background-plate.figma.desktop.slot",
+          "properties": {
+            "Type": "Primary",
+            "Skeleton": "False"
+          }
+        }
+      ]
+    },
+    {
+      "mappingId": "arui-private.corporate-content.mobile-web",
+      "componentId": "corporate-content.mobile-web",
+      "representationId": "corporate-content.mobile-web.figma.mobile-web",
+      "platform": "mobile-web",
+      "choices": [
+        "cc.mobile-web"
+      ],
+      "ports": {
+        "body": {
+          "nativePort": "body",
+          "type": "SLOT",
+          "property": "[M] Body#135096:2",
+          "targetId": "target.body",
+          "writeDomain": {
+            "type": "content",
+            "propertySetterAllowed": false,
+            "meaning": "ordered external content; empty allowed"
+          }
+        }
+      },
+      "defaults": [
+        {
+          "id": "corporate-content.mobile-web.figma.mobile-web.empty",
+          "intent": "Создать mobile-web экземпляр CorporateContent с пустым Body.",
+          "platform": "mobile-web",
+          "representationId": "corporate-content.mobile-web.figma.mobile-web",
+          "properties": {
+            "body": []
+          },
+          "rationale": "Стартовый контейнер без содержимого. Для наполненного макета body задаётся задачей; пустое содержимое не является обязательным состоянием компонента."
+        }
+      ]
+    }
+  ],
+  "overflowRecipe": {
+    "listChoice": "option-list.desktop",
+    "listHandle": "overflow-<groupId>",
+    "hostHandle": "overflow-host-<groupId>",
+    "listBody": {
+      "nativePort": "body",
+      "property": "Body#121328:2",
+      "type": "SLOT",
+      "content": "Append-only: preserve full source default subtree, append two owned Cells in action order"
+    },
+    "cellChoice": "option-list-cell.desktop",
+    "contentChoice": "option-list-cell-content.universal",
+    "contentPorts": [
+      "content.plain",
+      "content.label"
+    ],
+    "contentLabel": {
+      "property": "✎ Label#204:177",
+      "type": "TEXT",
+      "resolution": "Unique actual physical TEXT reference after independent source proof"
+    },
+    "interaction": "Static Figma composition only; frontend implements opening/closing"
+  },
+  "engineeringProfile": {
+    "size": "56",
+    "state": "default",
+    "Ready": false,
+    "otherMappings": "Named unsupported gap; never infer a key or prop"
+  }
+}

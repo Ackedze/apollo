@@ -1,0 +1,60 @@
+// Fixed-width real dist UI <-> real dist main. Native scene/transport are invented.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
+const {pathToFileURL}=require('node:url'),{actionScene}=require("./focus-actions.fixture.cjs"),authored=require("./authoring-fixtures");
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function waitFor(fn,label){for(let i=0;i<600;i++){const v=fn();if(v)return v;await sleep(5);}throw Error('Timed out: '+label);}
+async function run(){
+ const out=process.env.FOCUS_ACTIONS_QA_ROOT;if(!out)throw Error('Set FOCUS_ACTIONS_QA_ROOT');fs.mkdirSync(out,{recursive:true});
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});const errors=[],requests=[],receipts=[];let checks=0;
+ try{
+ const page=await browser.newPage({viewport:{width:800,height:860}}),f=actionScene();let ready=false,pending=[];
+ f.api.ui.postMessage=m=>{f.messages.push(JSON.parse(JSON.stringify(m)));if(ready)void page.evaluate(m=>window.emitPlugin(m),m).catch(()=>{});else pending.push(m);};
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});
+ await f.api.ui.onmessage({type:'load-contract',source:authored.nested().source});
+ await page.exposeFunction('nativeHost',m=>{requests.push(m);return f.api.ui.onmessage(m);});
+ await page.addInitScript(()=>{parent.postMessage=v=>{void window.nativeHost(v.pluginMessage);};window.emitPlugin=m=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:m}}));const timer=window.setTimeout;window.setTimeout=(f,ms,...args)=>{if(ms===20000)window.fireActionTimeout=()=>f(...args);return timer(f,ms,...args);};});
+ await page.route(/^https?:/,r=>r.abort());page.on('pageerror',e=>errors.push(e.message));await page.goto(pathToFileURL(path.join(__dirname,"../dist/ui.html")).href);ready=true;for(const m of pending)await page.evaluate(m=>window.emitPlugin(m),m);pending=[];
+ const category=async name=>page.getByRole('complementary',{name:'Категории проверки'}).getByRole('button',{name:new RegExp('^'+name+'(?: \\d|$)')}).click();
+ const auditButton=()=>page.getByRole('button',{name:'Проверить',exact:true});
+ let lastNative,lastContract;
+ async function audit(){f.page.selection=[f.area];f.emit('selectionchange');const start=f.messages.length;await auditButton().click();lastNative=await waitFor(()=>f.messages.slice(start).find(m=>m.type==='document-audit-result'),'native');lastContract=await waitFor(()=>f.messages.slice(start).find(m=>m.type==='audit-result'),'contract');await auditButton().waitFor();assert.equal(await auditButton().isEnabled(),true);checks++;}
+ await audit();assert.equal(lastNative.result.checks.length,5);checks++;
+ await category('Кастомизации');const childCard=page.locator('#findings .finding').filter({hasText:'test.child.opacity.1.1'}).first();await childCard.getByRole('button',{name:'Найти в макете',exact:true}).click();
+ const contractReq=await waitFor(()=>requests.find(m=>m.type==='audit-focus'),'contract focus request'),contractAck=await waitFor(()=>f.messages.find(m=>m.type==='audit-focus-result'&&m.requestId===contractReq.requestId),'contract ACK');assert.equal(contractAck.success,true);assert.equal(f.page.selection[0].id,f.child.id);assert.equal(contractAck.nodeId,f.child.id);assert.ok(lastContract.focusTargets.findings.some(r=>r.findingId===contractReq.evaluationId&&r.targets.some(t=>t.id===contractReq.targetId&&t.nodeId===f.child.id)));checks+=4;
+ await page.screenshot({path:path.join(out,'customizations-800.png')});
+ // Independent review race, exercised through the actual UI -> main transport.
+ const getNative=f.api.getNodeByIdAsync;let releaseFocus;
+ f.api.getNodeByIdAsync=id=>id===f.child.id?new Promise(r=>releaseFocus=()=>r(null)):getNative(id);
+ const raceWrites=f.writes.length,raceStart=f.messages.length;
+ await childCard.getByRole('button',{name:'Найти в макете',exact:true}).click();await waitFor(()=>releaseFocus,'final exact-ID read');
+ const raceReq=requests.filter(m=>m.type==='audit-focus').at(-1);f.child.opacity=.2;await f.mutate({nodeChanges:[{id:f.child.id,node:f.child}]});
+ const raceAck=await waitFor(()=>f.messages.slice(raceStart).find(m=>['audit-focus-result','audit-focus-cancelled'].includes(m.type)&&m.requestId===raceReq.requestId),'source-race ACK');
+ assert.ok(f.messages.slice(raceStart).some(m=>m.type==='audit-invalidated'));assert.ok(raceAck.type==='audit-focus-cancelled'||raceAck.success===false);
+ releaseFocus();await sleep(40);assert.equal(f.writes.slice(raceWrites).filter(w=>w[0]==='focus').length,0);assert.equal(await childCard.count(),1);assert.equal(await childCard.getByRole('button',{name:'Найти в макете',exact:true}).isDisabled(),true);checks+=5;
+ await page.screenshot({path:path.join(out,'focus-source-race-stale-800.png')});f.api.getNodeByIdAsync=getNative;await audit();
+ await category('Кастомные стили и токены');const rawCard=page.locator('.document-audit-finding').filter({has:page.getByRole('heading',{name:'Непривязанная заливка',exact:true})});await rawCard.getByRole('button',{name:'Найти в макете',exact:true}).click();
+ await waitFor(()=>f.messages.some(m=>m.type==='document-audit-focus-result'&&m.success),'native style ACK');assert.equal(f.page.selection[0].id,f.raw.id);assert.equal(await page.getByRole('heading',{name:'Подтверждённый детач',exact:true}).count(),0);checks+=2;await page.screenshot({path:path.join(out,'custom-styles-800.png')});
+ await category('Пора обновить');const updateCard=page.locator('.document-audit-finding').filter({has:page.getByRole('heading',{name:'Составной компонент',exact:true})});assert.equal(await updateCard.getByRole('button',{name:'Обновить',exact:true}).isEnabled(),true);checks++;
+ await updateCard.getByRole('button',{name:'Обновить',exact:true}).focus();assert.equal(await updateCard.getByRole('button',{name:'Обновить',exact:true}).evaluate(n=>n===document.activeElement),true);checks++;await page.screenshot({path:path.join(out,'update-ready-800.png')});
+ const start=f.messages.length;await updateCard.getByRole('button',{name:'Обновить',exact:true}).click();const updateAck=await waitFor(()=>f.messages.slice(start).find(m=>m.type==='document-action-result'),'update ACK');assert.equal(updateAck.status,'success');assert.equal(updateAck.applied,true);assert.equal(updateAck.verified,true);assert.equal(f.actual.main.id,f.latest.id);assert.notEqual(f.peer.main.id,f.latest.id);assert.equal(f.actual.componentProperties['Label#new'].value,'Мой текст');assert.equal(f.actual.componentProperties['Visible#new'].value,false);assert.equal(f.actual.componentProperties['Swap#new'].value,'invented-choice');assert.equal(f.actual.width,123);assert.equal(f.actual.opacity,.8);assert.equal(f.writes.filter(w=>w[0]==='swap').length,1);checks+=11;
+ await page.getByText('Состояние макета изменено.',{exact:false}).waitFor();assert.equal(await updateCard.count(),1);assert.equal(await updateCard.getByRole('button',{name:'Найти в макете',exact:true}).isDisabled(),true);checks+=2;await page.screenshot({path:path.join(out,'update-stale-800.png')});
+ await category('Детач');await page.getByRole('heading',{name:'Подтверждённый детач',exact:true}).waitFor();await category('Локальные компоненты');await page.getByRole('heading',{name:'Локальная кнопка',exact:true}).waitFor();checks+=2;
+ await audit();await category('Пора обновить');assert.equal(await page.getByRole('heading',{name:'Составной компонент',exact:true}).count(),0);checks++;
+ await category('Темизация');await page.getByRole('button',{name:'Сменить',exact:true}).waitFor();await page.getByText('Сменить Theme текущей страницы на Corp.',{exact:true}).waitFor();await page.screenshot({path:path.join(out,'theme-ready-800.png')});
+ const themeStart=f.messages.length;await page.getByRole('button',{name:'Сменить',exact:true}).click();const themeAck=await waitFor(()=>f.messages.slice(themeStart).find(m=>m.type==='document-action-result'),'theme ACK');assert.equal(themeAck.status,'success');assert.equal(themeAck.applied,true);assert.equal(themeAck.verified,true);assert.equal(f.page.explicitVariableModes.theme,'corp');assert.equal(f.writes.filter(w=>w[0]==='theme').length,1);checks+=5;
+ await audit();await category('Темизация');await page.getByText('На текущей странице явно выбран режим Corp.',{exact:true}).waitFor();assert.equal(await page.getByRole('button',{name:'Сменить',exact:true}).count(),0);checks++;await page.screenshot({path:path.join(out,'theme-confirmed-800.png')});
+ // Second instance remains old. Timeout is exercised through the UI's actual callback.
+ await category('Пора обновить');const peerCard=page.locator('.document-audit-finding').filter({has:page.getByRole('heading',{name:'Второй экземпляр',exact:true})});const hold=f.holdImport();await peerCard.getByRole('button',{name:'Обновить',exact:true}).click();await waitFor(()=>hold.release,'held action import');const req=requests.filter(m=>m.type==='document-action-request').at(-1);
+ assert.equal(await page.getByRole('button',{name:'Выполняем',exact:true}).isDisabled(),true);assert.equal(await peerCard.getByRole('button',{name:'Найти в макете',exact:true}).isDisabled(),true);checks+=2;
+ await page.evaluate(m=>window.emitPlugin(m),{type:'document-action-result',schemaVersion:req.schemaVersion,requestId:'forged',runId:req.runId,status:'success',applied:true,verified:true,message:'forged'});assert.equal(await page.getByRole('button',{name:'Выполняем',exact:true}).isDisabled(),true);checks++;
+ await f.api.ui.onmessage({type:'audit',requestId:'blocked-while-action'});assert.ok(f.messages.some(m=>m.type==='error'&&m.requestId==='blocked-while-action'));checks++;
+ await page.screenshot({path:path.join(out,'update-busy-800.png')});await page.evaluate(()=>window.fireActionTimeout());const cancel=await waitFor(()=>f.messages.find(m=>m.type==='document-action-result'&&m.requestId===req.requestId),'cancel ACK');assert.equal(cancel.status,'cancelled');assert.equal(cancel.applied,false);const writes=f.writes.length;f.releaseImport();await sleep(40);assert.equal(f.writes.length,writes);assert.notEqual(f.peer.main.id,f.latest.id);assert.equal(f.messages.filter(m=>m.type==='document-action-result'&&m.requestId===req.requestId).length,1);checks+=5;
+ const forged=Object.assign({},req,{requestId:'stale-action',runId:'forged'});await f.api.ui.onmessage(forged);const staleAck=await waitFor(()=>f.messages.find(m=>m.type==='document-action-result'&&m.requestId==='stale-action'),'stale reject');assert.equal(staleAck.applied,false);assert.equal(f.writes.length,writes);checks+=2;await auditButton().waitFor();assert.equal(await auditButton().isEnabled(),true);checks++;
+ await page.screenshot({path:path.join(out,'update-cancelled-800.png')});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);checks++;const rect=await page.locator('.results-pane').evaluate(n=>{const r=n.getBoundingClientRect();return{top:r.top,bottom:r.bottom,height:r.height,viewport:innerHeight};});assert.ok(rect.top>=0&&rect.bottom<=rect.viewport&&rect.height>=260);checks++;
+ assert.deepEqual(errors,[]);checks++;receipts.push({width:800,exactContractCompositeFocus:true,finalReadSourceRaceRejected:true,separateNativeStyleFocus:true,singleUpdateVerified:true,v3CompatiblePropertiesPreserved:true,pageThemeVerified:true,findingsRetained:true,categoryRoutingPreserved:true,busyGuard:true,cancelAcknowledged:true,lateWriteRejected:true,forgedACKRejected:true,rect});
+ f.emit('close');await page.close();fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify({checks,errors,receipts,actualBuiltUi:true,actualBuiltMain:true,syntheticOnly:true,liveFigma:false},null,2)+'\n');console.log(JSON.stringify({checks,errors,widths:[800],syntheticOnly:true}));
+ }finally{await browser.close();}
+}
+run().catch(e=>{console.error(e.stack);process.exitCode=1;});

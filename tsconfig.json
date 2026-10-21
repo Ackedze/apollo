@@ -1,21 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "ESNext",
-    "lib": [
-      "ES2019",
-      "DOM"
-    ],
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "strict": true,
-    "types": [
-      "@figma/code-connect/figma-types",
-      "@figma/plugin-typings",
-      "node"
-    ]
-  }
+    "target": "ES2020", "lib": ["ES2020", "DOM"], "module": "CommonJS",
+    "strict": true, "noEmit": true, "allowJs": true, "checkJs": false,
+    "skipLibCheck": true, "types": ["@figma/plugin-typings", "node"]
+  },
+  "include": ["src/code.ts", "src/runtime.js", "src/contract-profile.js"]
 }

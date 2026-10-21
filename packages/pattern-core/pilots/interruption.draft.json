@@ -1,0 +1,1055 @@
+{
+  "schemaVersion": "apollo.pattern-contract.v1-draft",
+  "documentType": "pattern-contract",
+  "patternId": "ptrn:flow.interruption-scenario",
+  "revision": 1,
+  "status": "draft",
+  "metadata": {
+    "title": "Interruption scenario — review draft",
+    "owner": "Apollo CB :: Patterns / product owner",
+    "authoredAt": "2026-10-05",
+    "frameworkVersion": "0.1.0-draft.1"
+  },
+  "outcome": {
+    "userGoal": "Leave an unfinished scenario with an explicit data preservation outcome.",
+    "successCriteria": [
+      "Choose the source-defined branch using explicit product capabilities.",
+      "Keep unknown save-failure behavior unresolved."
+    ]
+  },
+  "sources": [
+    {
+      "id": "interruption-source",
+      "repository": "design-system_ab",
+      "path": "patterns/p_interruption-scenario.md",
+      "commit": "7f523fcf38127f275f81f171391dfd648b8541d3",
+      "sha256": "e9f2e9a82aef916fabec515a10ffdd4e0b4d53fe693af2115c8236fdd4c126f2",
+      "patternId": "ptrn:flow.interruption-scenario",
+      "ruleIds": [
+        "rule:flow.interruption-scenario.show-on-real-risk",
+        "rule:flow.interruption-scenario.warn-about-loss",
+        "rule:flow.interruption-scenario.autosave-when-possible",
+        "rule:flow.interruption-scenario.save-and-exit-choice",
+        "rule:flow.interruption-scenario.decision-heading",
+        "rule:flow.interruption-scenario.short-consequence-body",
+        "rule:flow.interruption-scenario.mobile-popup-sheet",
+        "rule:flow.interruption-scenario.remember-choice-reversible"
+      ]
+    }
+  ],
+  "context": {
+    "fields": [
+      {
+        "id": "dataLossRisk",
+        "type": "boolean",
+        "description": "Product-supplied risk of losing unsaved data; not inferred from the presence of a form."
+      },
+      {
+        "id": "saveMode",
+        "type": "enum",
+        "values": [
+          "none",
+          "manual",
+          "automatic"
+        ],
+        "description": "Confirmed product save capability."
+      },
+      {
+        "id": "platform",
+        "type": "enum",
+        "values": [
+          "desktop",
+          "mobileweb",
+          "mobile"
+        ],
+        "description": "Scenario platform; a source mention does not confirm an arui-private export."
+      }
+    ]
+  },
+  "decisionTables": [
+    {
+      "id": "exit-treatment",
+      "inputs": [
+        "dataLossRisk",
+        "saveMode",
+        "platform"
+      ],
+      "hitPolicy": "unique",
+      "coverage": "complete",
+      "rows": [
+        {
+          "id": "exit-no-risk",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": false
+            },
+            "saveMode": {
+              "op": "any"
+            },
+            "platform": {
+              "op": "any"
+            }
+          },
+          "outcomeId": "exit-no-risk",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.show-on-real-risk"
+            }
+          ]
+        },
+        {
+          "id": "automatic-save",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": true
+            },
+            "saveMode": {
+              "op": "eq",
+              "value": "automatic"
+            },
+            "platform": {
+              "op": "any"
+            }
+          },
+          "outcomeId": "automatic-save",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+            }
+          ]
+        },
+        {
+          "id": "discard-modal",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": true
+            },
+            "saveMode": {
+              "op": "eq",
+              "value": "none"
+            },
+            "platform": {
+              "op": "eq",
+              "value": "desktop"
+            }
+          },
+          "outcomeId": "discard-modal",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        },
+        {
+          "id": "discard-sheet",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": true
+            },
+            "saveMode": {
+              "op": "eq",
+              "value": "none"
+            },
+            "platform": {
+              "op": "in",
+              "values": [
+                "mobileweb",
+                "mobile"
+              ]
+            }
+          },
+          "outcomeId": "discard-sheet",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        },
+        {
+          "id": "manual-modal",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": true
+            },
+            "saveMode": {
+              "op": "eq",
+              "value": "manual"
+            },
+            "platform": {
+              "op": "eq",
+              "value": "desktop"
+            }
+          },
+          "outcomeId": "manual-modal",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        },
+        {
+          "id": "manual-sheet",
+          "when": {
+            "dataLossRisk": {
+              "op": "eq",
+              "value": true
+            },
+            "saveMode": {
+              "op": "eq",
+              "value": "manual"
+            },
+            "platform": {
+              "op": "in",
+              "values": [
+                "mobileweb",
+                "mobile"
+              ]
+            }
+          },
+          "outcomeId": "manual-sheet",
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "exit-no-risk",
+      "description": "exit-no-risk",
+      "compositionIds": [],
+      "entryStateId": "exited",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.show-on-real-risk"
+        }
+      ]
+    },
+    {
+      "id": "automatic-save",
+      "description": "automatic-save",
+      "compositionIds": [
+        "save-result"
+      ],
+      "entryStateId": "saving",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+        }
+      ]
+    },
+    {
+      "id": "discard-modal",
+      "description": "discard-modal",
+      "compositionIds": [
+        "discard-modal"
+      ],
+      "entryStateId": "confirmation",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+        }
+      ]
+    },
+    {
+      "id": "discard-sheet",
+      "description": "discard-sheet",
+      "compositionIds": [
+        "discard-sheet"
+      ],
+      "entryStateId": "confirmation",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+        }
+      ]
+    },
+    {
+      "id": "manual-modal",
+      "description": "manual-modal",
+      "compositionIds": [
+        "manual-modal"
+      ],
+      "entryStateId": "confirmation",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+        }
+      ]
+    },
+    {
+      "id": "manual-sheet",
+      "description": "manual-sheet",
+      "compositionIds": [
+        "manual-sheet"
+      ],
+      "entryStateId": "confirmation",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+        }
+      ]
+    }
+  ],
+  "compositions": [
+    {
+      "id": "discard-modal",
+      "roles": [
+        {
+          "id": "surface",
+          "semanticRole": "surface.confirmation.modal",
+          "parentId": null,
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        },
+        {
+          "id": "message",
+          "semanticRole": "content.decision-message",
+          "parentId": "surface",
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.short-consequence-body"
+            }
+          ]
+        },
+        {
+          "id": "action-0",
+          "semanticRole": "action.exit",
+          "parentId": "surface",
+          "order": 1,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        },
+        {
+          "id": "action-1",
+          "semanticRole": "action.stay",
+          "parentId": "surface",
+          "order": 2,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        }
+      ],
+      "activeStates": [
+        "confirmation"
+      ]
+    },
+    {
+      "id": "discard-sheet",
+      "roles": [
+        {
+          "id": "surface",
+          "semanticRole": "surface.confirmation.sheet",
+          "parentId": null,
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.mobile-popup-sheet"
+            }
+          ]
+        },
+        {
+          "id": "message",
+          "semanticRole": "content.decision-message",
+          "parentId": "surface",
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.short-consequence-body"
+            }
+          ]
+        },
+        {
+          "id": "action-0",
+          "semanticRole": "action.exit",
+          "parentId": "surface",
+          "order": 1,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        },
+        {
+          "id": "action-1",
+          "semanticRole": "action.stay",
+          "parentId": "surface",
+          "order": 2,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+            }
+          ]
+        }
+      ],
+      "activeStates": [
+        "confirmation"
+      ]
+    },
+    {
+      "id": "manual-modal",
+      "roles": [
+        {
+          "id": "surface",
+          "semanticRole": "surface.confirmation.modal",
+          "parentId": null,
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        },
+        {
+          "id": "message",
+          "semanticRole": "content.decision-message",
+          "parentId": "surface",
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.short-consequence-body"
+            }
+          ]
+        },
+        {
+          "id": "action-0",
+          "semanticRole": "action.save-and-exit",
+          "parentId": "surface",
+          "order": 1,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        },
+        {
+          "id": "action-1",
+          "semanticRole": "action.exit-without-saving",
+          "parentId": "surface",
+          "order": 2,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        }
+      ],
+      "activeStates": [
+        "confirmation"
+      ]
+    },
+    {
+      "id": "manual-sheet",
+      "roles": [
+        {
+          "id": "surface",
+          "semanticRole": "surface.confirmation.sheet",
+          "parentId": null,
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.mobile-popup-sheet"
+            }
+          ]
+        },
+        {
+          "id": "message",
+          "semanticRole": "content.decision-message",
+          "parentId": "surface",
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.short-consequence-body"
+            }
+          ]
+        },
+        {
+          "id": "action-0",
+          "semanticRole": "action.save-and-exit",
+          "parentId": "surface",
+          "order": 1,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        },
+        {
+          "id": "action-1",
+          "semanticRole": "action.exit-without-saving",
+          "parentId": "surface",
+          "order": 2,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+            }
+          ]
+        }
+      ],
+      "activeStates": [
+        "confirmation"
+      ]
+    },
+    {
+      "id": "save-result",
+      "roles": [
+        {
+          "id": "notification",
+          "semanticRole": "notification.save-result",
+          "parentId": null,
+          "order": 0,
+          "kind": "ui-component",
+          "minimum": 1,
+          "maximum": 1,
+          "binding": {
+            "kind": "unresolved",
+            "gapId": "arui-representations"
+          },
+          "evidence": [
+            {
+              "sourceId": "interruption-source",
+              "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+            }
+          ]
+        }
+      ],
+      "activeStates": [
+        "exited"
+      ]
+    }
+  ],
+  "scenario": {
+    "states": [
+      {
+        "id": "editing",
+        "kind": "initial",
+        "description": "Unfinished scenario."
+      },
+      {
+        "id": "confirmation",
+        "kind": "active",
+        "description": "Source-defined choices are presented."
+      },
+      {
+        "id": "saving",
+        "kind": "active",
+        "description": "A product save request awaits an observed result."
+      },
+      {
+        "id": "exited",
+        "kind": "terminal",
+        "description": "Exit is completed."
+      }
+    ],
+    "events": [
+      {
+        "id": "request-exit",
+        "origin": "user",
+        "description": "request-exit"
+      },
+      {
+        "id": "choose-exit",
+        "origin": "user",
+        "description": "choose-exit"
+      },
+      {
+        "id": "choose-stay",
+        "origin": "user",
+        "description": "choose-stay"
+      },
+      {
+        "id": "choose-save",
+        "origin": "user",
+        "description": "choose-save"
+      },
+      {
+        "id": "save-succeeded",
+        "origin": "product",
+        "description": "save-succeeded"
+      },
+      {
+        "id": "save-failed",
+        "origin": "product",
+        "description": "save-failed"
+      }
+    ],
+    "transitions": [
+      {
+        "id": "exit-clean",
+        "from": "editing",
+        "eventId": "request-exit",
+        "outcomeIds": [
+          "exit-no-risk"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "exited"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.show-on-real-risk"
+          }
+        ]
+      },
+      {
+        "id": "save-automatically",
+        "from": "editing",
+        "eventId": "request-exit",
+        "outcomeIds": [
+          "automatic-save"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "saving"
+        },
+        "actions": [
+          {
+            "id": "request-automatic-save",
+            "evidence": [
+              {
+                "sourceId": "interruption-source",
+                "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+          }
+        ]
+      },
+      {
+        "id": "confirm-discard",
+        "from": "editing",
+        "eventId": "request-exit",
+        "outcomeIds": [
+          "discard-modal",
+          "discard-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "confirmation"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+          }
+        ]
+      },
+      {
+        "id": "confirm-manual-save",
+        "from": "editing",
+        "eventId": "request-exit",
+        "outcomeIds": [
+          "manual-modal",
+          "manual-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "confirmation"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+          }
+        ]
+      },
+      {
+        "id": "discard-and-exit",
+        "from": "confirmation",
+        "eventId": "choose-exit",
+        "outcomeIds": [
+          "manual-modal",
+          "manual-sheet",
+          "discard-modal",
+          "discard-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "exited"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+          }
+        ]
+      },
+      {
+        "id": "stay-editing",
+        "from": "confirmation",
+        "eventId": "choose-stay",
+        "outcomeIds": [
+          "discard-modal",
+          "discard-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "editing"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.warn-about-loss"
+          }
+        ]
+      },
+      {
+        "id": "request-save",
+        "from": "confirmation",
+        "eventId": "choose-save",
+        "outcomeIds": [
+          "manual-modal",
+          "manual-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "saving"
+        },
+        "actions": [
+          {
+            "id": "request-manual-save",
+            "evidence": [
+              {
+                "sourceId": "interruption-source",
+                "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+          }
+        ]
+      },
+      {
+        "id": "automatic-save-succeeded",
+        "from": "saving",
+        "eventId": "save-succeeded",
+        "outcomeIds": [
+          "automatic-save"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "exited"
+        },
+        "actions": [
+          {
+            "id": "notify-save-result",
+            "evidence": [
+              {
+                "sourceId": "interruption-source",
+                "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+          }
+        ]
+      },
+      {
+        "id": "manual-save-succeeded",
+        "from": "saving",
+        "eventId": "save-succeeded",
+        "outcomeIds": [
+          "manual-modal",
+          "manual-sheet"
+        ],
+        "when": {},
+        "basis": "source-formalization",
+        "target": {
+          "stateId": "exited"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.save-and-exit-choice"
+          }
+        ]
+      },
+      {
+        "id": "save-result-unknown",
+        "from": "saving",
+        "eventId": "save-failed",
+        "outcomeIds": [
+          "automatic-save",
+          "manual-modal",
+          "manual-sheet"
+        ],
+        "when": {},
+        "basis": "gap-route",
+        "target": {
+          "gapId": "save-failure-policy"
+        },
+        "actions": [],
+        "evidence": [
+          {
+            "sourceId": "interruption-source",
+            "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+          }
+        ]
+      }
+    ]
+  },
+  "constraints": [
+    {
+      "id": "real-risk",
+      "statement": "The product supplies the risk input.",
+      "ownership": "pattern-context",
+      "route": "product-input",
+      "subjectId": "dataLossRisk",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.show-on-real-risk"
+        }
+      ]
+    },
+    {
+      "id": "branch-choice",
+      "statement": "Select only one source-defined treatment.",
+      "ownership": "pattern-context",
+      "route": "decision-table",
+      "subjectId": "exit-treatment",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.show-on-real-risk"
+        }
+      ]
+    },
+    {
+      "id": "failed-save-open",
+      "statement": "Save-failure behavior is an open product question.",
+      "ownership": "pattern-context",
+      "route": "manual",
+      "subjectId": "save-failure-policy",
+      "evidence": [
+        {
+          "sourceId": "interruption-source",
+          "ruleId": "rule:flow.interruption-scenario.autosave-when-possible"
+        }
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "id": "save-failure-policy",
+      "area": "product",
+      "blocking": true,
+      "question": "What must happen after automatic/manual save fails? No retry, exit, notification or fallback is prescribed here.",
+      "owner": "Product owner"
+    },
+    {
+      "id": "arui-representations",
+      "area": "availability",
+      "blocking": true,
+      "question": "Which confirmed arui-private entries represent the required surfaces, messages, actions and notification on each target/platform?",
+      "owner": "Code Connect / General"
+    },
+    {
+      "id": "remember-choice",
+      "area": "product",
+      "blocking": true,
+      "question": "Does this product use remembered choices, and how is reversibility handled? The optional source branch is outside this pilot.",
+      "owner": "Product owner"
+    },
+    {
+      "id": "composition-plan-port",
+      "area": "integration",
+      "blocking": true,
+      "question": "Agree the requirements port and check-route mapping with Apollo Generation before integration.",
+      "owner": "General / Generation"
+    },
+    {
+      "id": "product-live-acceptance",
+      "area": "acceptance",
+      "blocking": true,
+      "question": "Review this source formalization and test the accepted product behavior separately from local validity.",
+      "owner": "Product owner / General"
+    }
+  ]
+}

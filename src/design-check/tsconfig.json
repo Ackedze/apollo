@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    "module": "CommonJS",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [
+      "react",
+      "react-dom",
+      "node"
+    ],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "index.tsx",
+    "v3/**/*.ts",
+    "v3/**/*.tsx",
+    "styles.d.ts",
+    "ContractFindings.tsx",
+    "../GenerationSelect.tsx"
+  ]
+}

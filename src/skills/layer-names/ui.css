@@ -1,47 +1,69 @@
 .apollo-skills-screen { display:flex; min-height:0; max-width:calc(100vw - 16px); overflow:hidden; }
-.apollo-skills { display:flex; flex-direction:column; overflow:hidden; min-width:0; min-height:0; flex:1; font-size:14px; line-height:20px; }
-.apollo-skills-catalog { padding:28px 20px 20px; overflow:auto; }
-.apollo-skills-results { min-width:0; }
+.apollo-skills { --apollo-text:rgba(3,3,6,.88); --apollo-muted:rgba(4,4,19,.55); display:flex; flex:1; min-width:0; min-height:0; flex-direction:column; overflow:hidden; font-size:14px; line-height:20px; }
+.apollo-skills-catalog { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:20px; overflow:auto; }
 .apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] { padding-inline:12px; gap:4px; }
 .apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] .apollo-nav-label { padding-inline:4px; }
 .apollo-skill-nav-icon { position:relative; width:16px; height:16px; flex:0 0 16px; }
-/* Figma keeps the 20px source glyph centered in a 16px addon without scaling. */
+/* The 20px Figma glyph stays centered in the existing 16px addon. */
 .apollo-skill-nav-icon .apollo-nav-icon { position:absolute; left:-2px; top:-2px; }
-.apollo-skill-card { display:flex; justify-content:space-between; gap:20px; width:100%; min-height:120px; padding:20px; border:0; border-radius:24px; color:var(--apollo-text); background:rgba(0,0,0,.04); text-align:left; cursor:pointer; }
-.apollo-skill-card:hover:not(:disabled) { background:rgba(0,0,0,.065); }
-.apollo-skill-card:disabled { cursor:default; }
+.apollo-skill-card { box-sizing:border-box; display:flex; justify-content:space-between; width:100%; height:200px; padding:20px; border:0; border-radius:24px; color:var(--apollo-text); background:rgba(0,0,0,.04); font-family:inherit; letter-spacing:-.08px; text-align:left; cursor:pointer; }
+.apollo-skill-card:hover { background:rgba(0,0,0,.065); }
 .apollo-skill-copy { display:flex; flex:1; min-width:0; flex-direction:column; justify-content:space-between; gap:16px; }
-.apollo-skill-copy strong { font-size:16px; line-height:24px; font-weight:500; }
+.apollo-skill-copy strong { font-size:16px; line-height:24px; letter-spacing:-.05px; font-weight:500; }
 .apollo-skill-copy > span { max-width:400px; color:var(--apollo-muted); font-size:14px; line-height:20px; }
-.apollo-skill-play { width:32px; height:32px; border-radius:50%; flex:0 0 32px; background:#212124; display:grid; place-items:center; }
-.apollo-skill-play img { width:24px; height:24px; transform:scale(.666667); filter:brightness(0) invert(1); }
-.apollo-skill-card:disabled .apollo-skill-play { opacity:.35; }
-.apollo-skills h2 { margin:0; font-size:20px; line-height:28px; font-weight:500; }
-.apollo-skills h3 { margin:0 0 8px; font-size:16px; line-height:24px; font-weight:500; }
-.apollo-skills-scope { color:var(--apollo-muted); text-align:right; }
-.apollo-skills-hint { margin:16px 0; color:var(--apollo-muted); }
-.apollo-skills-message { margin:24px 0; }
-.apollo-skills-message p { max-width:60ch; margin:0 0 16px; }
+.apollo-skill-chevron { width:24px; height:24px; flex:0 0 24px; }
+.apollo-skill-dialog { --apollo-text:rgba(3,3,6,.88); --apollo-muted:rgba(4,4,19,.55); box-sizing:border-box; position:fixed; inset:8px; margin:0; width:calc(100vw - 16px); height:calc(100dvh - 16px); max-width:none; max-height:none; min-width:0; padding:0; border:0; border-radius:36px; background:#fff; color:var(--apollo-text); font-family:"Apollo Alfa",sans-serif; font-size:14px; line-height:20px; letter-spacing:-.08px; overflow:hidden; }
+.apollo-skill-dialog[open] { display:flex; flex-direction:column; }
+.apollo-skill-dialog::backdrop { background:rgba(0,0,0,.6); }
+.apollo-skill-dialog button,.apollo-skill-dialog input { font-family:inherit; }
+.apollo-skill-dialog ::selection { background:#dce9ff; color:#18181b; }
+.apollo-skill-dialog ::-webkit-scrollbar { width:6px; height:6px; }
+.apollo-skill-dialog ::-webkit-scrollbar-thumb { background:#c6c8ce; border:1px solid #fff; border-radius:6px; }
+.apollo-skill-header { position:relative; flex:0 0 82px; box-sizing:border-box; min-width:0; padding:28px 76px 28px 28px; }
+.apollo-skill-header h2 { margin:0; font-size:22px; line-height:26px; letter-spacing:-.8px; font-weight:400; }
+.apollo-skill-close { display:grid; place-items:center; position:absolute; top:20px; right:20px; width:40px; height:40px; padding:10px; border:0; border-radius:50%; background:transparent; cursor:pointer; }
+.apollo-skill-close:hover { background:#f2f3f5; }
+/* The instance export includes a 16px canvas around the 14px cross. */
+.apollo-skill-close img { width:16px; height:16px; }
+.apollo-skill-content,.apollo-skill-stage { box-sizing:border-box; flex:1; min-width:0; min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:#c6c8ce #fff; }
+.apollo-skill-content { padding:0 28px 108px; }
+.apollo-skill-stage { display:grid; place-items:center; padding:0 28px 20px; }
+.apollo-skill-invitation { width:100%; text-align:center; }
+.apollo-skill-invitation p { max-width:400px; margin:10px auto 0; color:var(--apollo-muted); }
+.apollo-skill-invitation .apollo-skill-prompt { max-width:none; margin:0; color:var(--apollo-text); font-size:18px; line-height:24px; letter-spacing:-.36px; }
+.apollo-skills-message { margin:20px 0; max-width:60ch; }
+.apollo-skill-stage .apollo-skills-message { text-align:center; }
+.apollo-skills-message h3 { margin:0 0 8px; font-size:18px; line-height:24px; font-weight:400; }
+.apollo-skills-message p { margin:0 0 12px; }
 .apollo-skills-message [role=alert] { color:#a52b25; }
-.apollo-skills-footer { flex:0 0 auto; min-height:74px; }
-.apollo-skills-actions { box-sizing:border-box; display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-start; gap:12px; min-height:72px; padding:12px; }
-.apollo-skills-actions button { min-height:48px; padding:4px 24px; font-size:16px; line-height:20px; }
-.apollo-skills-actions p { margin:0 auto 0 0; color:var(--apollo-muted); }
-.apollo-skills button[class*="secondary"] { color:var(--apollo-text); background:#f2f3f5; border-color:transparent; }
-.apollo-skills button:focus-visible,.apollo-skills input:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
-.apollo-rename-list { list-style:none; margin:20px 0; padding:0; }
-.apollo-rename-list > li { display:flex; gap:12px; padding:16px 0; border-bottom:1px solid #edeef0; }
-.apollo-rename-choice { display:flex; align-items:flex-start; padding:2px 0; }
+.apollo-skills-hint { color:var(--apollo-muted); }
+.apollo-skill-footer { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 16px); }
+.apollo-skills-actions { box-sizing:border-box; display:flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:8px; padding:12px; border:1px solid #edeef0; border-radius:99px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); width:max-content; max-width:100%; }
+.apollo-skills-actions button { flex:0 0 auto; min-height:48px; padding:4px 24px; font-size:16px; line-height:20px; white-space:nowrap; }
+.apollo-skill-dialog button[class*="secondary"]:not(:disabled) { color:var(--apollo-text); background:#f2f3f5; border-color:transparent; }
+.apollo-skill-dialog button[class*="secondary"] [class*="loader"] { border-color:rgba(3,3,6,.16); border-top-color:rgba(3,3,6,.88); }
+.apollo-skill-dialog button[class*="primary"]:not(:disabled) { color:#fff; background:#212124; border-color:transparent; }
+.apollo-skill-dialog button[class*="primary"]:hover:not(:disabled) { background:#39393c; }
+.apollo-skill-dialog button[class*="secondary"]:hover:not(:disabled) { background:#e7e8eb; }
+.apollo-skill-dialog button:disabled { background:#edeef0; color:rgba(5,8,29,.38); border-color:transparent; }
+.apollo-skill-dialog button:disabled [class*="loader"] { border-color:rgba(5,8,29,.16); border-top-color:rgba(5,8,29,.72); }
+.apollo-skills button:focus-visible,.apollo-skill-dialog button:focus-visible,.apollo-skill-dialog input:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
+.apollo-skill-content:focus-visible { outline:2px solid #2a77ef; outline-offset:-3px; }
+.apollo-rename-table { width:100%; table-layout:fixed; border-collapse:collapse; font-size:14px; line-height:20px; }
+.apollo-rename-table col { width:calc((100% + 20px) / 3); }
+.apollo-rename-table col:last-child { width:calc((100% - 40px) / 3); }
+.apollo-rename-table th,.apollo-rename-table td { padding-right:20px; vertical-align:top; text-align:left; overflow-wrap:anywhere; }
+.apollo-rename-table th:last-child,.apollo-rename-table td:last-child { padding-right:0; }
+.apollo-rename-table th { padding-top:8px; padding-bottom:8px; font-weight:400; border-bottom:1px solid #dcdde2; }
+.apollo-rename-table td { padding-top:22px; padding-bottom:12px; border-bottom:1px solid #dcdde2; }
+.apollo-rename-table tr:last-child td { border-bottom:0; }
+.apollo-rename-before { display:flex; gap:8px; min-width:0; align-items:flex-start; }
+.apollo-rename-choice { flex:0 0 18px; display:flex; padding-top:1px; }
 .apollo-rename-choice input { width:18px; height:18px; margin:0; accent-color:#212124; cursor:pointer; }
-.apollo-rename-content { flex:1; min-width:0; }
-.apollo-rename-names { display:grid; grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr); gap:12px; align-items:start; width:100%; overflow-wrap:anywhere; }
-.apollo-rename-names strong { font-weight:500; }
-.apollo-rename-focus { min-width:0; padding:0; border:0; color:var(--apollo-muted); background:transparent; font:inherit; text-align:left; cursor:pointer; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:3px; }
-.apollo-rename-content p { margin:8px 0 0; color:var(--apollo-muted); }
-.apollo-rename-optional { white-space:nowrap; }
-.apollo-skills-loading { margin:24px 0; }
-.apollo-skills-skeleton { display:flex; flex-direction:column; gap:12px; margin:24px 0; }
-.apollo-skills-skeleton span { display:block; height:52px; border-radius:12px; background:#f2f3f5; animation:apollo-names-pulse 1.4s ease-in-out infinite alternate; }
-@keyframes apollo-names-pulse { from { opacity:.55; } to { opacity:1; } }
-@media (prefers-reduced-motion:reduce) { .apollo-skills-skeleton span { animation:none; } }
-@media (max-width:500px) { .apollo-skills-catalog,.apollo-skills-results { padding:16px; } .apollo-skills-footer { border-radius:28px; } .apollo-rename-names { grid-template-columns:minmax(0,1fr); gap:4px; } .apollo-rename-names > span[aria-hidden] { display:none; } }
+.apollo-rename-focus { min-width:0; padding:0; border:0; color:inherit; background:transparent; font:inherit; text-align:left; cursor:pointer; overflow-wrap:anywhere; }
+.apollo-rename-focus:hover { text-decoration:underline; text-underline-offset:3px; }
+.apollo-rename-optional { color:var(--apollo-muted); }
+/* Leave room below the last row for two action rows, or three on compact screens. */
+@media (max-width:799px) { .apollo-skill-content { padding-bottom:160px; } }
+@media (max-width:500px) { .apollo-skills-catalog { grid-template-columns:minmax(0,1fr); } .apollo-skill-content { padding-inline:20px; padding-bottom:216px; } .apollo-skill-header { padding-left:20px; } .apollo-skill-stage { padding-inline:20px; } .apollo-skill-wide-break { display:none; } .apollo-skills-actions button { padding-inline:16px; } .apollo-skills-actions { border-radius:28px; } .apollo-rename-table th,.apollo-rename-table td { padding-right:12px; } .apollo-rename-table th:last-child,.apollo-rename-table td:last-child { padding-right:0; } }
+@media (prefers-reduced-motion:reduce) { .apollo-skill-dialog [class*="loader"] { animation:none; } }

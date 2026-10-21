@@ -1,8 +1,10 @@
 const test = require('node:test'), assert = require('node:assert/strict'), crypto = require('node:crypto');
 const {createLayerNamesBridge,collect} = require('../src/skills/layer-names/native');
 const {createLayerNamesClient} = require('../src/skills/layer-names/client');
-const p = require('../src/skills/layer-names/protocol');
+const p = require('../src/skills/layer-names/run-protocol')(require('../src/skills/layer-names/protocol'));
 const hash = value => crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex');
+function completed(body,plan,status='completed',error=null) {return {success:true,run:{schemaVersion:p.RUN_SCHEMA,requestId:body.requestId,runId:'00000000-0000-4000-8000-000000000001',snapshotId:body.snapshot.snapshotId,status,step:1,readCount:0,pending:null,plan:status==='completed'?plan:null,error,skill:{name:'figma-layer-name-hygiene',version:'0.2.0',sha256:'a'.repeat(64)},wire:{version:p.WIRE_VERSION,sha256:p.WIRE_SHA256}}};}
+
 function fixture() {
   let id = 0;
   function node(type,name,parent,extra={}) {
@@ -81,7 +83,7 @@ test('UI client completes native capture → agent plan → frozen preview → s
   const f=fixture();let client;
   const emit=message=>queueMicrotask(()=>client.accept(message));
   const bridge=createLayerNamesBridge({api:f.api,hash,post:emit});
-  client=createLayerNamesClient({send:m=>bridge.accept(m),request:async(url,options)=>{const body=JSON.parse(options.body);return{ok:true,json:async()=>({success:true,requestId:body.requestId,snapshotId:body.snapshot.snapshotId,plan:{changes:[f.change(f.form,'DeliveryForm'),f.change(f.manual,'CardTitle','optional')]}})};}});
+  client=createLayerNamesClient({send:m=>bridge.accept(m),request:async(url,options)=>{const body=JSON.parse(options.body);return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm'),f.change(f.manual,'CardTitle','optional')]})};}});
   await client.start();assert.equal(client.getState().status,'preview');assert.deepEqual(client.getState().selected,[f.form.id]);
   await client.apply();assert.equal(client.getState().status,'done');assert.equal(f.form.name,'DeliveryForm');assert.equal(f.manual.name,'_title');
   await client.undo();assert.equal(client.getState().status,'undone');assert.equal(f.form.name,'Frame 1');
@@ -89,7 +91,7 @@ test('UI client completes native capture → agent plan → frozen preview → s
 test('cancelled analysis ignores a late model reply and cannot register or apply it',async()=>{
   const f=fixture();let client,release,requested=false;const operations=[];
   const bridge=createLayerNamesBridge({api:f.api,hash,post:m=>queueMicrotask(()=>client.accept(m))});
-  client=createLayerNamesClient({send:m=>{operations.push(m.operation);bridge.accept(m);},request:async(url,options)=>{requested=true;await new Promise(resolve=>{release=resolve;});const body=JSON.parse(options.body);return{ok:true,json:async()=>({success:true,requestId:body.requestId,snapshotId:body.snapshot.snapshotId,plan:{changes:[f.change(f.form,'DeliveryForm')]}})};}});
+  client=createLayerNamesClient({send:m=>{operations.push(m.operation);bridge.accept(m);},request:async(url,options)=>{if(url.endsWith('/cancel'))return{ok:true,json:async()=>({success:true,run:null})};requested=true;await new Promise(resolve=>{release=resolve;});const body=JSON.parse(options.body);return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm')]})};}});
   const work=client.start();while(!requested)await new Promise(resolve=>setImmediate(resolve));client.cancel();release();await work;
   assert.equal(client.getState().status,'idle');assert.deepEqual(operations,['capture']);assert.equal(f.form.name,'Frame 1');
 });
@@ -123,29 +125,22 @@ function virtualClock(t) {
   }};
 }
 for (const scenario of [
-  {name:'keeps a successful 250-second reply for preview',delay:250000,status:200},
+  {name:'keeps a successful 250-second agent run for preview',delay:250000,status:200},
   {name:'shows a delayed agent failure instead of an area-size timeout',delay:223271,status:502,message:/Агент завершил анализ с ошибкой/},
   {name:'shows the server execution deadline',delay:300000,status:504,message:/Время выполнения анализа истекло/},
   {name:'bounds waiting after the default server wall deadline plus transport grace',delay:1000000,status:200,message:/ApolloProxyControl не ответил вовремя/,timeout:true},
 ]) test('analysis '+scenario.name,async t=>{
-  const clock = virtualClock(t), f = fixture(), operations = [];
-  let client, requested = false, abortedAt = null;
-  const bridge = createLayerNamesBridge({api:f.api,hash,post:m=>queueMicrotask(()=>client.accept(m))});
-  client = createLayerNamesClient({send:m=>{operations.push(m.operation);bridge.accept(m);},request:(url,options)=>new Promise((resolve,reject)=>{
-    requested = true;
-    const body = JSON.parse(options.body), timer = setTimeout(()=>resolve({ok:scenario.status===200,status:scenario.status,json:async()=>scenario.status===200
-      ? {success:true,requestId:body.requestId,snapshotId:body.snapshot.snapshotId,plan:{changes:[f.change(f.form,'DeliveryForm')]}}
-      : {success:false,code:'LAYER_NAMES_UNAVAILABLE'}}),scenario.delay);
-    options.signal.addEventListener('abort',()=>{abortedAt=clock.now;clearTimeout(timer);reject(Object.assign(Error('aborted'),{name:'AbortError'}));},{once:true});
-  })});
-  const work = client.start(); while(!requested) await new Promise(resolve=>setImmediate(resolve));
-  clock.advance(scenario.timeout?930000:scenario.delay); await work;
-  assert.equal(f.form.name,'Frame 1');
-  if (!scenario.message) {
-    assert.equal(client.getState().status,'preview');assert.deepEqual(operations,['capture','register']);assert.equal(abortedAt,null);
-  } else {
-    assert.equal(client.getState().status,'error');assert.match(client.getState().error,scenario.message);
-    assert.doesNotMatch(client.getState().error,/меньш.*област/);assert.deepEqual(operations,['capture']);
-    assert.equal(abortedAt,scenario.timeout?930000:null);
-  }
+  const clock=virtualClock(t),f=fixture(),operations=[];let client,body,requested=false;
+  const bridge=createLayerNamesBridge({api:f.api,hash,post:m=>queueMicrotask(()=>client.accept(m))});
+  client=createLayerNamesClient({send:m=>{operations.push(m.operation);bridge.accept(m);},request:async(url,options)=>{
+    if(url.endsWith('/cancel'))return{ok:true,json:async()=>({success:true,run:null})};
+    if(options.signal.aborted)throw Object.assign(Error('aborted'),{name:'AbortError'});
+    if(options.method==='POST'){body=JSON.parse(options.body);requested=true;return{ok:true,json:async()=>completed(body,null,'running')};}
+    const done=clock.now>=scenario.delay,code=scenario.status===504?'LAYER_NAMES_DEADLINE':'CODEX_PROCESS_FAILED';
+    return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm')]},!done?'running':scenario.status===200?'completed':'failed',done&&scenario.status!==200?{code,message:code}:null)};
+  }});
+  const work=client.start();while(!requested)await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
+  clock.advance(scenario.timeout?930000:scenario.delay);await work;assert.equal(f.form.name,'Frame 1');
+  if(!scenario.message){assert.equal(client.getState().status,'preview');assert.deepEqual(operations,['capture','register']);}
+  else{assert.equal(client.getState().status,'error');assert.match(client.getState().error,scenario.message);assert.doesNotMatch(client.getState().error,/меньш.*област/);assert.deepEqual(operations,['capture']);}
 });

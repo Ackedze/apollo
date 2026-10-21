@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {pathToFileURL}=require('node:url');
 const {createLayerNamesBridge}=require('../src/skills/layer-names/native');
-const proxy=path.resolve(__dirname,'../../../services/apollo-proxy');
+const proxy=process.env.APOLLO_PROXY_TEST_ROOT || path.resolve(__dirname,'../../../services/apollo-proxy');
 const express=require(path.join(proxy,'node_modules/express'));
 const {mountLayerNameRoutes}=require(path.join(proxy,'src/skills/layer-names'));
 async function run(){
@@ -11,13 +11,15 @@ async function run(){
   fs.mkdirSync(output,{recursive:true});
   const errors=[],requests=[],checks=[],rowCount=15;let mode='plan',release=null,planCalls=0;
   const app=express();app.use(express.json());
-  mountLayerNameRoutes(app,{apolloRoot:path.resolve(__dirname,'..'),plan:async(prompt)=>{
+  const runner=mountLayerNameRoutes(app,{apolloRoot:path.resolve(__dirname,'..'),plan:async(prompt,schema,meta)=>{
     planCalls++;
-    if(mode==='wait')await new Promise(resolve=>{release=resolve;});
+    const overview=JSON.parse(prompt.split('OVERVIEW=')[1].split('\nNODE_CONTEXT=')[0]),context=JSON.parse(prompt.split('\nNODE_CONTEXT=')[1]);
+    if(mode==='wait' && !context.length)await new Promise((resolve,reject)=>{release=resolve;meta.signal.addEventListener('abort',()=>reject(Object.assign(Error('cancelled'),{code:'CLI_CANCELLED'})),{once:true});});
     if(mode==='error')throw Error('Owned provider error');
-    if(mode==='empty')return{changes:[]};
-    const snapshot=JSON.parse(prompt.split('DESIGN_DATA=')[1]);
-    return{changes:snapshot.nodes.filter(n=>/^Frame|^Optional/.test(n.oldName)).map((n,i)=>({nodeId:n.nodeId,oldName:n.oldName,newName:i<5?'Секция '+(i+1):'Дополнительная секция '+(i+1),reason:'Назначение подтверждено заголовком внутри секции.',category:i<5?'recommended':'optional'}))};
+    if(mode==='empty')return{action:'finish',nodeIds:[],changes:[]};
+    const nodes=overview.nodes.filter(n=>/^Frame|^Optional/.test(n.oldName));
+    if(!context.length)return{action:'read_nodes',nodeIds:nodes.slice(0,2).map(n=>n.nodeId),changes:[]};
+    return{action:'finish',nodeIds:[],changes:nodes.map((n,i)=>({nodeId:n.nodeId,oldName:n.oldName,newName:i<5?'Секция '+(i+1):'Дополнительная секция '+(i+1),reason:'Назначение подтверждено заголовком внутри секции.',category:i<5?'recommended':'optional'}))};
   }});
   const server=await new Promise(resolve=>{const s=app.listen(0,'127.0.0.1',()=>resolve(s));});
   const origin='http://127.0.0.1:'+server.address().port;
@@ -33,7 +35,7 @@ async function run(){
     await page.exposeFunction('nativeRequest',m=>{requests.push(m);if(m.type==='layer-names-request'){native.accept(m);return reply;}if(m.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:m.schemaVersion,requestId:m.requestId,operation:m.operation,result:null};return null;});
     await page.addInitScript(()=>{window.emitPlugin=data=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:data}}));parent.postMessage=value=>{void window.nativeRequest(value.pluginMessage).then(reply=>{if(reply)window.emitPlugin(reply);});};});
     await page.route(/^https?:/,route=>route.abort());
-    await page.route('http://localhost:3001/skills/layer-names/plan',async route=>{const response=await route.fetch({url:origin+'/skills/layer-names/plan'});await route.fulfill({response});});
+    await page.route('http://localhost:3001/skills/layer-names/**',async route=>{const url=new URL(route.request().url()),response=await route.fetch({url:origin+url.pathname+url.search});await route.fulfill({response});});
     await page.route('http://localhost:3001/health',route=>route.fulfill({json:{success:true,version:'owned-fixture'}}));
     await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);
     await page.evaluate(()=>document.fonts.ready);
@@ -69,6 +71,7 @@ async function run(){
     await card.click();await page.getByText('Подбираем понятные названия…',{exact:true}).waitFor();assert.equal(planCalls,runningCalls);
     await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('nested navigation preserves an ongoing request');release();
     await page.getByRole('checkbox').first().waitFor();
+    assert.ok(requests.some(r=>r.type==='layer-names-request' && r.operation==='read'));checks.push('agent requests bounded native context before the final plan');
     assert.equal(await page.getByRole('checkbox').count(),rowCount);assert.equal(await page.getByRole('checkbox').evaluateAll(nodes=>nodes.filter(n=>n.checked).length),5);
     await page.getByRole('checkbox').last().focus();await page.keyboard.press('Space');assert.equal(await page.getByRole('checkbox').last().isChecked(),true);await page.keyboard.press('Space');
     await page.getByRole('checkbox').first().uncheck();const previewCalls=planCalls;await back.click();await card.click();

@@ -12,11 +12,11 @@ export function SkillsPanel({client}: {client:any}) {
     previousDetail.current = detailOpen;
     (detailOpen ? backRef : cardRef).current?.focus();
   },[detailOpen]);
-  const running = ['reading','planning','registering','applying','undoing'].includes(state.status);
-  const waiting = ['reading','planning','registering'].includes(state.status);
-  const progress = state.status==='reading' ? 'Читаем выделенные слои…' : state.status==='planning' ? 'Подбираем понятные названия…' : state.status==='registering' ? 'Проверяем актуальность предложений…' : state.status==='undoing' ? 'Возвращаем прежние названия…' : 'Применяем выбранные названия…';
+  const running = ['reading','planning','reading-context','registering','applying','undoing'].includes(state.status);
+  const waiting = ['reading','planning','reading-context','registering'].includes(state.status);
+  const progress = state.status==='reading' ? 'Читаем выделенные слои…' : state.status==='planning' ? 'Подбираем понятные названия…' : state.status==='reading-context' ? 'Уточняем содержимое слоёв…' : state.status==='registering' ? 'Проверяем актуальность предложений…' : state.status==='undoing' ? 'Возвращаем прежние названия…' : 'Применяем выбранные названия…';
   function saveReport() {
-    const blob = new Blob([JSON.stringify({snapshot:state.snapshot,plan:state.plan,result:state.result},null,2)],{type:'application/json'});
+    const blob = new Blob([JSON.stringify({snapshot:state.snapshot,run:state.run,plan:state.plan,result:state.result},null,2)],{type:'application/json'});
     const url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = 'apollo-layer-names.json'; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
@@ -51,10 +51,11 @@ export function SkillsPanel({client}: {client:any}) {
       <h2 className="design-check-sr-only">Переназвать слои</h2>
       {running && <div className="apollo-skills-loading" aria-live="polite" aria-busy="true">
         <p role="status">{progress}</p>
+        {state.run && <p className="apollo-skills-hint">Изучено подробно слоёв: {state.run.readCount}. Можно вернуться к навыкам — анализ продолжится.</p>}
         <div className="apollo-skills-skeleton" aria-hidden="true"><span/><span/><span/></div>
       </div>}
       {state.status==='idle' && <p className="apollo-skills-hint">Выдели фрейм или слои в Figma для нового анализа.</p>}
-      {state.status==='error' && <div className="apollo-skills-message"><p role="alert">{state.error}</p></div>}
+      {state.status==='error' && <div className="apollo-skills-message"><p role="alert">{state.error}</p>{state.run && <p className="apollo-skills-hint">До остановки изучено подробно слоёв: {state.run.readCount}.</p>}</div>}
       {state.status==='empty' && <div className="apollo-skills-message"><h3>Названия в порядке</h3><p>В доступных слоях нет уверенных предложений для переименования.</p><p className="apollo-skills-hint">Проверено слоёв: {state.snapshot.observedCount}. Защищённые узлы и закрытые области пропущены.</p></div>}
       {state.status==='preview' && <>
         <p className="apollo-skills-hint">Выбери изменения для применения. Необязательные уточнения выключены.</p>

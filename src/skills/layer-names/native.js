@@ -1,4 +1,4 @@
-const p = require('./protocol');
+const p = require('./run-protocol')(require('./protocol'));
 const {minimalRoots} = require('../../document-audit/scoped-recheck');
 function protection(node) {
   for (let n = node, depth = 0; n && n.type !== 'DOCUMENT'; n = n.parent) {
@@ -93,12 +93,30 @@ function createLayerNamesBridge({api,hash,post,isBusy=()=>false,onMutation=()=>{
     if (message?.type !== 'layer-names-request') return false;
     const reply = result => post({type:'layer-names-result',schemaVersion:p.SCHEMA,requestId:message.requestId,operation:message.operation,result});
     try {
-      if (!p.exact(message,['type','schemaVersion','requestId','operation','payload']) || message.schemaVersion !== p.SCHEMA || !p.string(message.requestId,150) || !p.exact(message.payload, message.operation === 'capture' ? [] : message.operation === 'register' ? ['snapshotId','plan'] : message.operation === 'apply' ? ['snapshotId','nodeIds'] : message.operation === 'undo' ? [] : ['snapshotId','nodeId'])) throw Error('Параметры навыка несовместимы.');
+      if (!p.exact(message,['type','schemaVersion','requestId','operation','payload']) || message.schemaVersion !== p.SCHEMA || !p.string(message.requestId,150) || !p.exact(message.payload, message.operation === 'capture' ? [] : message.operation === 'register' ? ['snapshotId','plan'] : ['apply','read'].includes(message.operation) ? ['snapshotId','nodeIds'] : message.operation === 'undo' ? [] : ['snapshotId','nodeId'])) throw Error('Параметры навыка несовместимы.');
       if (isBusy() || applying) throw Error('Дождитесь завершения другой операции Apollo.');
       if (message.operation === 'capture') {
         session = null;
         const roots = minimalRoots(Array.from(api.currentPage.selection)), capture = collect(api,roots,hash);
         session = {roots,capture,plan:null}; reply(capture.payload);
+      } else if (message.operation === 'read') {
+        const ids = message.payload.nodeIds;
+        if (!session || message.payload.snapshotId !== session.capture.payload.snapshotId || !Array.isArray(ids) || !ids.length || ids.length>p.MAX_CONTEXT_NODES
+          || new Set(ids).size!==ids.length || !ids.every(id=>session.capture.payload.nodes.some(n=>n.nodeId===id))) throw Error('Запрос контекста выходит за выбранную область.');
+        if (JSON.stringify(minimalRoots(Array.from(api.currentPage.selection)).map(n=>n.id))!==JSON.stringify(session.roots.map(n=>n.id))) throw Error('Выделение изменилось. Повторите анализ.');
+        current(session);
+        const facts = new Map(session.capture.facts.map(f=>[f.id,f]));
+        const nodes = ids.map(id=>{
+          const candidate = session.capture.payload.nodes.find(n=>n.nodeId===id), row = facts.get(id), counts = new Map();
+          for (const childId of row.children || []) {
+            const child = facts.get(childId);
+            if (child && !['hidden-or-locked','component-definition'].includes(child.protection)) counts.set(child.type,(counts.get(child.type)||0)+1);
+          }
+          return Object.assign({},candidate,{layoutMode:row.layoutMode || null,geometry:['x','y','width','height'].map(k=>typeof row[k]==='number' && Number.isFinite(row[k]) ? row[k] : null),childTypes:Array.from(counts,([type,count])=>({type,count}))});
+        });
+        const context = {snapshotId:session.capture.payload.snapshotId,nodes};
+        if (!p.contextValid(context,session.capture.payload,ids)) throw Error('Не удалось подготовить контекст слоёв.');
+        reply(context);
       } else if (message.operation === 'register') {
         if (!session || message.payload.snapshotId !== session.capture.payload.snapshotId || !p.planValid(message.payload.plan,session.capture.payload)) throw Error('Предложения несовместимы. Повторите анализ.');
         current(session); session.plan = JSON.parse(JSON.stringify(message.payload.plan)); reply(session.plan);

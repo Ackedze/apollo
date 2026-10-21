@@ -1,8 +1,8 @@
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto'),path=require('node:path');
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto'),path=require('node:path'),os=require('node:os');
 const {loadStaticProducerReview}=require("../scripts/static-producer-review-inputs.cjs");
 const sha=v=>crypto.createHash('sha256').update(v).digest('hex');
 const digest=v=>sha(JSON.stringify(v,(_,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.keys(x).sort().map(k=>[k,x[k]])):x));
-function fixture(){const root=fs.mkdtempSync('/private/tmp/apollo-synthetic-static-review-');
+function fixture(){const root=fs.mkdtempSync(path.join(os.tmpdir(),'apollo-synthetic-static-review-'));
  const a={schemaVersion:'apollo.code-connect.static-producer.v1-draft',version:1,status:'draft',accepted:false,executionAllowed:false,outputVersion:'apollo.code-connect.static-content.v1-draft',planVersion:'apollo.code-connect.static-review-plan.v1-draft',generationPlanHash:null,generationWireSupport:'not-supported',consumerVector:{path:root+'/vector.json',sha256:sha('synthetic-vector')}};a.artifactDigest=digest(a);
  fs.writeFileSync(root+'/vector.json','synthetic-vector');fs.writeFileSync(root+'/manifest.json',JSON.stringify(a));
  const manifestPin={path:root+'/manifest.json',sha256:sha(fs.readFileSync(root+'/manifest.json'))};

@@ -11,7 +11,9 @@ function contractRecord(manual,manualSourceHash){
 const recordKeys=['componentId','contractId','name','library','platform','revision','manualSourceHash','updatedAt'];
 const validRecord=v=>closed(v,recordKeys)&&recordKeys.slice(0,5).every(k=>text(v[k]))&&Number.isSafeInteger(v.revision)&&v.revision>0&&/^[a-f0-9]{64}$/.test(v.manualSourceHash)&&(v.updatedAt===null||typeof v.updatedAt==='string'&&/^\d{4}-\d{2}-\d{2}(?:T.*)?$/.test(v.updatedAt)&&Number.isFinite(Date.parse(v.updatedAt)));
 const validRow=v=>closed(v,recordKeys.concat(['checking','figma','frontend']))&&validRecord(Object.fromEntries(recordKeys.map(k=>[k,v[k]])))&&['checking','figma','frontend'].every(k=>state(v[k]));
-const validOverview=v=>closed(v,['schemaVersion','rows','sources'])&&v.schemaVersion===SCHEMA&&Array.isArray(v.rows)&&v.rows.length<=512&&v.rows.every(validRow)&&closed(v.sources,['checking','figma','frontend'])&&Object.values(v.sources).every(state)&&new Set(v.rows.map(key)).size===v.rows.length;
+const validOverview=v=>closed(v,v&&Object.hasOwn(v,'dataId')?['schemaVersion','rows','sources','dataId']:['schemaVersion','rows','sources'])&&
+ (!Object.hasOwn(v,'dataId')||typeof v.dataId==='string'&&/^[a-f0-9]{64}$/.test(v.dataId))&&
+ v.schemaVersion===SCHEMA&&Array.isArray(v.rows)&&v.rows.length<=512&&v.rows.every(validRow)&&closed(v.sources,['checking','figma','frontend'])&&Object.values(v.sources).every(state)&&new Set(v.rows.map(key)).size===v.rows.length;
 function key(row){return row.contractId+':'+row.manualSourceHash;}
 function createContractDataBridge({post,readState}){return{accept(m){
  if(m?.type!=='contract-data-request')return false;

@@ -27,3 +27,22 @@ test('invalid DTO and missing actual main mode cannot masquerade as a current em
  const client=createContractDataClient(()=>{},{fetcher:async()=>({ok:true,json:async()=>overview()}),timeoutMs:5});await assert.rejects(client.read(),/CONTRACT_DATA_MAIN_UNAVAILABLE/);
  const v=overview();v.rows.push(v.rows[0]);assert.equal(validOverview(v),false);v.rows.pop();v.rows[0].updatedAt='not-date';assert.equal(validOverview(v),false);
 });
+test('producer dataId is preserved in proxy and local contract overviews',async()=>{
+ for(const mode of ['proxy','local']){
+  const value=Object.assign(overview(),{dataId:'b'.repeat(64)});
+  const f=fixture(mode,async()=>({ok:true,json:async()=>value})),result=await f.client.read();
+  assert.equal(result.dataId,value.dataId);assert.equal(validOverview(result),true);
+  assert.equal(result.rows.length,1);assert.equal(result.rows[0].figma.status,'dependency');
+  if(mode==='local')assert.match(result.sources.checking.reason,/Локальный файл/);
+ }
+});
+test('overview rejects malformed present dataIds and unknown top-level fields',async()=>{
+ for(const dataId of ['',null,undefined,1,{},'a'.repeat(63),'a'.repeat(65),'A'.repeat(64),'g'.repeat(64)]){
+  const value=Object.assign(overview(),{dataId});assert.equal(validOverview(value),false);
+  await assert.rejects(fixture('proxy',async()=>({ok:true,json:async()=>value})).client.read(),/CONTRACT_DATA_INVALID/);
+ }
+ for(const value of [overview(),Object.assign(overview(),{dataId:'b'.repeat(64)})]){
+  value.extra='unexpected';assert.equal(validOverview(value),false);
+ }
+ const invalidRow=Object.assign(overview(),{dataId:'b'.repeat(64)});invalidRow.rows[0].updatedAt='not-date';assert.equal(validOverview(invalidRow),false);
+});

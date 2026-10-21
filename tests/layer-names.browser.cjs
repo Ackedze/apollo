@@ -1,0 +1,108 @@
+// Built UI + actual native naming bridge + actual HTTP planner route. Owned data and stub agent only.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
+const {pathToFileURL}=require('node:url');
+const {createLayerNamesBridge}=require('../src/skills/layer-names/native');
+const proxy=path.resolve(__dirname,'../../../services/apollo-proxy');
+const express=require(path.join(proxy,'node_modules/express'));
+const {mountLayerNameRoutes}=require(path.join(proxy,'src/skills/layer-names'));
+async function run(){
+  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private output directory.');
+  fs.mkdirSync(output,{recursive:true});
+  const errors=[],requests=[],checks=[],rowCount=15;let mode='plan',release=null,planCalls=0;
+  const app=express();app.use(express.json());
+  mountLayerNameRoutes(app,{apolloRoot:path.resolve(__dirname,'..'),plan:async(prompt)=>{
+    planCalls++;
+    if(mode==='wait')await new Promise(resolve=>{release=resolve;});
+    if(mode==='error')throw Error('Owned provider error');
+    if(mode==='empty')return{changes:[]};
+    const snapshot=JSON.parse(prompt.split('DESIGN_DATA=')[1]);
+    return{changes:snapshot.nodes.filter(n=>/^Frame|^Optional/.test(n.oldName)).map((n,i)=>({nodeId:n.nodeId,oldName:n.oldName,newName:i<5?'Секция '+(i+1):'Дополнительная секция '+(i+1),reason:'Назначение подтверждено заголовком внутри секции.',category:i<5?'recommended':'optional'}))};
+  }});
+  const server=await new Promise(resolve=>{const s=app.listen(0,'127.0.0.1',()=>resolve(s));});
+  const origin='http://127.0.0.1:'+server.address().port;
+  const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});
+  try{
+    const page=await browser.newPage({viewport:{width:800,height:860}});page.on('pageerror',e=>errors.push(e.message));
+    const document={id:'document',type:'DOCUMENT'},canvas={id:'page',name:'Page',type:'PAGE',parent:document,selection:[]};
+    const root={id:'root',type:'FRAME',name:'Заявка',parent:canvas,children:[],visible:true,locked:false};
+    for(let i=0;i<rowCount;i++){const n={id:'n'+i,type:'FRAME',name:i<5?'Frame '+i:'Optional '+i,parent:root,children:[],visible:true,locked:false,x:0,y:i*60,width:600,height:48};
+      n.children.push({id:'t'+i,type:'TEXT',name:'Заголовок '+i,characters:'Раздел заявки '+i,autoRename:true,parent:n,children:[],visible:true,locked:false});root.children.push(n);}
+    canvas.selection=[root];let reply;
+    const native=createLayerNamesBridge({api:{currentPage:canvas,viewport:{scrollAndZoomIntoView:()=>{}},commitUndo:()=>{}},hash:v=>crypto.createHash('sha256').update(JSON.stringify(v)).digest('hex'),post:m=>{reply=m;}});
+    await page.exposeFunction('nativeRequest',m=>{requests.push(m);if(m.type==='layer-names-request'){native.accept(m);return reply;}if(m.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:m.schemaVersion,requestId:m.requestId,operation:m.operation,result:null};return null;});
+    await page.addInitScript(()=>{window.emitPlugin=data=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:data}}));parent.postMessage=value=>{void window.nativeRequest(value.pluginMessage).then(reply=>{if(reply)window.emitPlugin(reply);});};});
+    await page.route(/^https?:/,route=>route.abort());
+    await page.route('http://localhost:3001/skills/layer-names/plan',async route=>{const response=await route.fetch({url:origin+'/skills/layer-names/plan'});await route.fulfill({response});});
+    await page.route('http://localhost:3001/health',route=>route.fulfill({json:{success:true,version:'owned-fixture'}}));
+    await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);
+    await page.evaluate(()=>document.fonts.ready);
+    await page.getByRole('button',{name:'Навыки',exact:true}).click();
+    assert.equal(await page.getByRole('button',{name:'Навыки',exact:true}).getAttribute('aria-pressed'),'true');
+    assert.equal(await page.getByRole('navigation',{name:'Разделы Apollo'}).getByRole('button').count(),5);
+    await page.getByRole('button',{name:'Навыки',exact:true}).evaluate(node=>Promise.all(node.getAnimations({subtree:true}).map(animation=>animation.finished)));
+    assert.ok(Math.abs((await page.getByRole('button',{name:'Навыки',exact:true}).boundingBox()).width-104)<.1);
+    const skillsButton=page.getByRole('button',{name:'Навыки',exact:true});
+    const iconSlot=await skillsButton.locator('.apollo-skill-nav-icon').boundingBox();
+    assert.ok(iconSlot,'Skills icon has the Figma 16px addon slot');
+    assert.equal(iconSlot.width,16);assert.equal(iconSlot.height,16);
+    const buttonBox=await skillsButton.boundingBox(),glyphBox=await skillsButton.locator('.apollo-nav-icon').boundingBox(),labelBox=await skillsButton.locator('.apollo-nav-label').boundingBox();
+    assert.equal(iconSlot.x-buttonBox.x,12);assert.equal(iconSlot.y-buttonBox.y,12);
+    assert.equal(glyphBox.width,20);assert.equal(glyphBox.height,20);
+    assert.equal(glyphBox.x-iconSlot.x,-2);assert.equal(glyphBox.y-iconSlot.y,-2);
+    assert.equal(labelBox.x-buttonBox.x,32);assert.ok(Math.abs(labelBox.width-60)<.1);
+    assert.equal(await skillsButton.locator('.apollo-nav-label').evaluate(n=>getComputedStyle(n).paddingLeft),'4px');
+    assert.equal((await page.getByRole('button',{name:'Проверка',exact:true}).locator('.apollo-nav-icon').boundingBox()).width,20);
+    assert.equal(await page.getByRole('button',{name:'Переназвать слои',exact:true}).isDisabled(),true);
+    await page.screenshot({animations:'disabled',path:path.join(output,'skills-no-selection.png')});checks.push('navigation and selection-empty state');
+    await page.evaluate(()=>window.emitPlugin({type:'selection',pageId:'page',valid:true,id:'root',name:'Заявка'}));
+    const card=page.getByRole('button',{name:'Переназвать слои',exact:true});
+    assert.equal(await card.isEnabled(),true);const bounds=await card.boundingBox();assert.equal(bounds.x,28);assert.equal(bounds.y,92);assert.equal(bounds.width,744);assert.equal(bounds.height,120);
+    await page.screenshot({animations:'disabled',path:path.join(output,'skills-card.png')});checks.push('card matches Figma bounds');
+    mode='wait';await card.click();await page.getByText('Подбираем понятные названия…',{exact:true}).waitFor();
+    while(!release)await new Promise(resolve=>setTimeout(resolve,10));
+    const back=page.getByRole('button',{name:'Вернуться к навыкам',exact:true}),footer=page.locator('footer[aria-label="Действия навыка"]');
+    assert.equal(await back.count(),1,'Skill results use the existing nested-page back control');
+    assert.equal(await footer.getByRole('button',{name:'Остановить ожидание',exact:true}).count(),1);
+    const runningCalls=planCalls;await back.click();await card.waitFor();assert.equal(await card.isEnabled(),true);
+    await page.waitForFunction(()=>document.activeElement?.classList.contains('apollo-skill-card'));
+    await card.click();await page.getByText('Подбираем понятные названия…',{exact:true}).waitFor();assert.equal(planCalls,runningCalls);
+    await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('nested navigation preserves an ongoing request');release();
+    await page.getByRole('checkbox').first().waitFor();
+    assert.equal(await page.getByRole('checkbox').count(),rowCount);assert.equal(await page.getByRole('checkbox').evaluateAll(nodes=>nodes.filter(n=>n.checked).length),5);
+    await page.getByRole('checkbox').last().focus();await page.keyboard.press('Space');assert.equal(await page.getByRole('checkbox').last().isChecked(),true);await page.keyboard.press('Space');
+    await page.getByRole('checkbox').first().uncheck();const previewCalls=planCalls;await back.click();await card.click();
+    assert.equal(await page.getByRole('checkbox').first().isChecked(),false);assert.equal(planCalls,previewCalls);
+    await page.getByRole('checkbox').first().check();
+    await page.getByRole('button',{name:'Проверка',exact:true}).click();await page.getByRole('button',{name:'Навыки',exact:true}).click();assert.equal(await page.getByRole('checkbox').count(),rowCount);
+    const results=page.getByRole('main',{name:'Результат навыка «Переназвать слои»'});
+    async function pinnedActions(){
+      const before=await footer.boundingBox();assert.ok(before&&before.y+before.height<=page.viewportSize().height-8);
+      assert.equal(await results.evaluate(n=>n.scrollHeight>n.clientHeight),true);
+      await results.evaluate(n=>{n.scrollTop=n.scrollHeight;});
+      assert.deepEqual(await footer.boundingBox(),before);
+      const last=await results.locator('.apollo-rename-list > li').last().boundingBox();assert.ok(last.y+last.height<=before.y);
+      for(const button of await footer.getByRole('button').all()){const b=await button.boundingBox();assert.ok(b.y>=before.y&&b.y+b.height<=before.y+before.height&&b.x+b.width<=page.viewportSize().width);}
+      await results.evaluate(n=>{n.scrollTop=0;});
+    }
+    await pinnedActions();checks.push('long result scrolls independently of the bottom action panel');
+    await page.screenshot({animations:'disabled',path:path.join(output,'skills-preview.png')});checks.push('preview, keyboard choices and navigation persistence');
+    await footer.getByRole('button',{name:'Применить выбранные · 5',exact:true}).click();await page.getByRole('heading',{name:'Переименовано слоёв: 5'}).waitFor();
+    assert.deepEqual(root.children.slice(0,5).map(n=>n.name),['Секция 1','Секция 2','Секция 3','Секция 4','Секция 5']);assert.ok(root.children.slice(5).every((n,i)=>n.name==='Optional '+(i+5)));
+    const completedCalls=planCalls;await back.click();await card.click();await page.getByRole('heading',{name:'Переименовано слоёв: 5'}).waitFor();assert.equal(planCalls,completedCalls);checks.push('completed result survives return to the skill catalogue');
+    await page.screenshot({animations:'disabled',path:path.join(output,'skills-done.png')});checks.push('five selected names applied, optional untouched');
+    await page.getByRole('button',{name:'Вернуть прежние названия',exact:true}).click();await page.getByRole('heading',{name:'Прежние названия возвращены'}).waitFor();assert.equal(root.children[0].name,'Frame 0');checks.push('guarded undo');
+    mode='empty';await page.getByRole('button',{name:'Новый анализ',exact:true}).click();await page.getByRole('heading',{name:'Названия в порядке'}).waitFor();await page.screenshot({animations:'disabled',path:path.join(output,'skills-empty.png')});checks.push('empty result');
+    mode='plan';await page.getByRole('button',{name:'Проверить другое выделение',exact:true}).click();await page.getByRole('checkbox').first().waitFor();
+    root.children[0].children[0].characters='Changed semantic heading';await page.getByRole('button',{name:'Применить выбранные · 5',exact:true}).click();await page.getByRole('alert').filter({hasText:'Макет изменился'}).waitFor();
+    assert.equal(root.children[0].name,'Frame 0');await page.screenshot({animations:'disabled',path:path.join(output,'skills-stale.png')});checks.push('stale context rejected with zero writes');
+    mode='error';await page.getByRole('button',{name:'Повторить анализ',exact:true}).click();await page.getByRole('alert').filter({hasText:'Проверьте подключение'}).waitFor();await page.screenshot({animations:'disabled',path:path.join(output,'skills-error.png')});checks.push('provider error and retry');
+    mode='plan';await page.getByRole('button',{name:'Повторить анализ',exact:true}).click();await page.getByRole('checkbox').first().waitFor();
+    await page.setViewportSize({width:800,height:600});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    await pinnedActions();await page.screenshot({animations:'disabled',path:path.join(output,'skills-preview-short.png')});checks.push('short viewport keeps actions visible without scrolling to them');
+    await page.setViewportSize({width:400,height:600});await pinnedActions();await page.screenshot({animations:'disabled',path:path.join(output,'skills-preview-compact.png')});checks.push('compact skill pane keeps wrapped actions reachable');
+    assert.deepEqual(errors,[]);fs.writeFileSync(path.join(output,'summary.json'),JSON.stringify({checks,errors,requests:requests.filter(r=>r.type==='layer-names-request').map(r=>r.operation),liveFigma:false,realAgent:false},null,2)+'\n');
+    console.log(JSON.stringify({checks,errors,liveFigma:false,realAgent:false}));
+  }finally{release?.();await browser.close();server.closeIdleConnections?.();await new Promise(resolve=>server.close(resolve));}
+}
+run().catch(error=>{console.error(error);process.exitCode=1;});

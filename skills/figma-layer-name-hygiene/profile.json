@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "apollo.layer-names-skill.v1",
+  "version": "0.1.0",
+  "files": [
+    {
+      "path": "skills/figma-layer-name-hygiene/SKILL.md",
+      "sha256": "24cb12ca9c1848a798120ebbb3f996af38f646522388b14f5fb9ec8daa626768",
+      "bytes": 3807
+    },
+    {
+      "path": "src/skills/layer-names/protocol.js",
+      "sha256": "dd93aafebdead9225886ad4930c093638017b1f87daee74f474f8142ffec5bca",
+      "bytes": 3491
+    }
+  ]
+}

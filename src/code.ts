@@ -30,6 +30,7 @@ const {createAgentDraftStorage}=require("./generation/agent/storage");
 const {createMcpScope}=require("./generation/agent/mcp/scope");
 const { createSessionBridge } = require("./generation/session/protocol");
 const { createDocumentAuditBridge } = require("./document-audit/bridge");
+const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
 const {boundedRead}=require("./document-audit/reads");
@@ -78,6 +79,7 @@ function bindAreaPage(){if(areaPage&&typeof areaPage.off==='function')areaPage.o
 const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(contractFocusTask), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
   selectionId = selectionSignature([node]); figma.currentPage.selection = [node]; figma.viewport.scrollAndZoomIntoView([node]);
 } });
+const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
 function post(value: any) { figma.ui.postMessage(value); }
 const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
@@ -421,6 +423,7 @@ nativePageObserver.start();
 documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
+  if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;
   if (agentMcpScope.accept(message)||agentDraftStorage.accept(message)||agentNativeBroker.accept(message)||agentFigmaBroker.accept(message)) return;

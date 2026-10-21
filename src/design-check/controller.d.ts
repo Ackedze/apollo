@@ -29,7 +29,7 @@ export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source'
   onCaptureExample?(value: unknown): void;
 };
 export type ControllerState = {
-  settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation'; settingsNotice: string;
+  settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation' | 'skills'; settingsNotice: string;
   preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;

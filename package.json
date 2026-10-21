@@ -16,7 +16,8 @@
     "replay:button": "npm run build && node scripts/replay-button.js",
     "core:validate": "npm --prefix packages/component-contract-core run validate",
     "generation:validate": "npm run validate && npm --prefix packages/component-contract-core run type-check && npm --prefix packages/component-contract-core test && npm --prefix packages/generation-core run type-check && npm --prefix packages/generation-core test",
-    "generation:build": "npm run build"
+    "generation:build": "npm run build",
+    "test:skills-ui": "node tests/layer-names.browser.cjs"
   },
   "devDependencies": {
     "@figma/code-connect": "^1.4.9",

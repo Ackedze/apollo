@@ -1,0 +1,47 @@
+.apollo-skills-screen { display:flex; min-height:0; max-width:calc(100vw - 16px); overflow:hidden; }
+.apollo-skills { display:flex; flex-direction:column; overflow:hidden; min-width:0; min-height:0; flex:1; font-size:14px; line-height:20px; }
+.apollo-skills-catalog { padding:28px 20px 20px; overflow:auto; }
+.apollo-skills-results { min-width:0; }
+.apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] { padding-inline:12px; gap:4px; }
+.apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] .apollo-nav-label { padding-inline:4px; }
+.apollo-skill-nav-icon { position:relative; width:16px; height:16px; flex:0 0 16px; }
+/* Figma keeps the 20px source glyph centered in a 16px addon without scaling. */
+.apollo-skill-nav-icon .apollo-nav-icon { position:absolute; left:-2px; top:-2px; }
+.apollo-skill-card { display:flex; justify-content:space-between; gap:20px; width:100%; min-height:120px; padding:20px; border:0; border-radius:24px; color:var(--apollo-text); background:rgba(0,0,0,.04); text-align:left; cursor:pointer; }
+.apollo-skill-card:hover:not(:disabled) { background:rgba(0,0,0,.065); }
+.apollo-skill-card:disabled { cursor:default; }
+.apollo-skill-copy { display:flex; flex:1; min-width:0; flex-direction:column; justify-content:space-between; gap:16px; }
+.apollo-skill-copy strong { font-size:16px; line-height:24px; font-weight:500; }
+.apollo-skill-copy > span { max-width:400px; color:var(--apollo-muted); font-size:14px; line-height:20px; }
+.apollo-skill-play { width:32px; height:32px; border-radius:50%; flex:0 0 32px; background:#212124; display:grid; place-items:center; }
+.apollo-skill-play img { width:24px; height:24px; transform:scale(.666667); filter:brightness(0) invert(1); }
+.apollo-skill-card:disabled .apollo-skill-play { opacity:.35; }
+.apollo-skills h2 { margin:0; font-size:20px; line-height:28px; font-weight:500; }
+.apollo-skills h3 { margin:0 0 8px; font-size:16px; line-height:24px; font-weight:500; }
+.apollo-skills-scope { color:var(--apollo-muted); text-align:right; }
+.apollo-skills-hint { margin:16px 0; color:var(--apollo-muted); }
+.apollo-skills-message { margin:24px 0; }
+.apollo-skills-message p { max-width:60ch; margin:0 0 16px; }
+.apollo-skills-message [role=alert] { color:#a52b25; }
+.apollo-skills-footer { flex:0 0 auto; min-height:74px; }
+.apollo-skills-actions { box-sizing:border-box; display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-start; gap:12px; min-height:72px; padding:12px; }
+.apollo-skills-actions button { min-height:48px; padding:4px 24px; font-size:16px; line-height:20px; }
+.apollo-skills-actions p { margin:0 auto 0 0; color:var(--apollo-muted); }
+.apollo-skills button[class*="secondary"] { color:var(--apollo-text); background:#f2f3f5; border-color:transparent; }
+.apollo-skills button:focus-visible,.apollo-skills input:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
+.apollo-rename-list { list-style:none; margin:20px 0; padding:0; }
+.apollo-rename-list > li { display:flex; gap:12px; padding:16px 0; border-bottom:1px solid #edeef0; }
+.apollo-rename-choice { display:flex; align-items:flex-start; padding:2px 0; }
+.apollo-rename-choice input { width:18px; height:18px; margin:0; accent-color:#212124; cursor:pointer; }
+.apollo-rename-content { flex:1; min-width:0; }
+.apollo-rename-names { display:grid; grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr); gap:12px; align-items:start; width:100%; overflow-wrap:anywhere; }
+.apollo-rename-names strong { font-weight:500; }
+.apollo-rename-focus { min-width:0; padding:0; border:0; color:var(--apollo-muted); background:transparent; font:inherit; text-align:left; cursor:pointer; overflow-wrap:anywhere; text-decoration:underline; text-underline-offset:3px; }
+.apollo-rename-content p { margin:8px 0 0; color:var(--apollo-muted); }
+.apollo-rename-optional { white-space:nowrap; }
+.apollo-skills-loading { margin:24px 0; }
+.apollo-skills-skeleton { display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+.apollo-skills-skeleton span { display:block; height:52px; border-radius:12px; background:#f2f3f5; animation:apollo-names-pulse 1.4s ease-in-out infinite alternate; }
+@keyframes apollo-names-pulse { from { opacity:.55; } to { opacity:1; } }
+@media (prefers-reduced-motion:reduce) { .apollo-skills-skeleton span { animation:none; } }
+@media (max-width:500px) { .apollo-skills-catalog,.apollo-skills-results { padding:16px; } .apollo-skills-footer { border-radius:28px; } .apollo-rename-names { grid-template-columns:minmax(0,1fr); gap:4px; } .apollo-rename-names > span[aria-hidden] { display:none; } }

@@ -13,9 +13,11 @@ import "./new-shell.css";
 import { AuditOverview } from "./AuditOverview";
 import { buildResultGroups } from "./result-groups";
 import assets from "./assets";
+import {SkillsPanel} from "../skills/layer-names/SkillsPanel";
+const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { skillsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 
 /** Existing v4 nodes keep their identities, listeners, report/export and generation controls. */
@@ -109,7 +111,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
   const state = useSyncExternalStore(controller.subscribe, controller.getState), settings = state.settings;
   const launcher = useRef<HTMLButtonElement>(null);
-  const activeScreen = state.chat.open ? 'chat' : state.mode === 'generation' ? 'generation' : state.view === 'texts' ? 'texts' : 'check';
+  const activeScreen = state.chat.open ? 'chat' : state.mode === 'skills' ? 'skills' : state.mode === 'generation' ? 'generation' : state.view === 'texts' ? 'texts' : 'check';
   const documentAction = state.documentPageAvailable && controller.hasDocumentAuditPort();
   const actionBusy = state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status);
   const [settingsHost, setSettingsHost] = useState<HTMLDivElement | null>(null);
@@ -177,6 +179,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     <header className="apollo-topbar">
       <img className="apollo-logo" src={assets.logo} alt="Apollo" />
       <nav className="apollo-navigation" aria-label="Разделы Apollo">
+        <button type="button" aria-label="Навыки" title="Навыки" aria-pressed={activeScreen === 'skills'} onClick={() => controller.setMode('skills')}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Навыки</span></button>
         <button type="button" aria-label="Проверка" title="Дизайн" aria-pressed={activeScreen === 'check'} onClick={showDesign}>
           <span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.design})`, WebkitMaskImage: `url(${assets.design})`}} /><span className="apollo-nav-label" aria-hidden="true">Дизайн</span>
         </button>
@@ -229,6 +232,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient} />}</section>
         <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
           <ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}
         </section>

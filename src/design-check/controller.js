@@ -102,7 +102,7 @@ function createDesignCheckController(options = {}) {
     options.onTabSelect?.(id); return true;
   }
   function setMode(mode) {
-    if (destroyed || !['check', 'generation'].includes(mode)) return false;
+    if (destroyed || !['check', 'generation', 'skills'].includes(mode)) return false;
     emit({ mode, chat: Object.assign({}, state.chat, { open: false }) }); return true;
   }
   function setView(view) {

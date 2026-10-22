@@ -179,7 +179,6 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     <header className="apollo-topbar">
       <img className="apollo-logo" src={assets.logo} alt="Apollo" />
       <nav className="apollo-navigation" aria-label="Разделы Apollo">
-        <button type="button" aria-label="Навыки" title="Навыки" aria-pressed={activeScreen === 'skills'} onClick={() => controller.setMode('skills')}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Навыки</span></button>
         <button type="button" aria-label="Проверка" title="Дизайн" aria-pressed={activeScreen === 'check'} onClick={showDesign}>
           <span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.design})`, WebkitMaskImage: `url(${assets.design})`}} /><span className="apollo-nav-label" aria-hidden="true">Дизайн</span>
         </button>
@@ -191,6 +190,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           onClick={() => controller.openChat()}><span className="apollo-nav-icon" aria-hidden="true" style={{maskImage: `url(${assets.chat})`, WebkitMaskImage: `url(${assets.chat})`}} /><span className="apollo-nav-label" aria-hidden="true">Спросить</span>
           {state.chat.unreadCount > 0 && <span className="design-check-chat-unread" role="status" aria-label={`Непрочитанных ответов: ${state.chat.unreadCount}`}>{state.chat.unreadCount > 9 ? '9+' : state.chat.unreadCount}</span>}
         </button>
+        <button type="button" aria-label="Навыки" title="Навыки" aria-pressed={activeScreen === 'skills'} onClick={() => controller.setMode('skills')}><span className="apollo-skill-nav-icon" aria-hidden="true"><span className="apollo-nav-icon" style={{maskImage:`url(${skillIcons['magic-wand']})`,WebkitMaskImage:`url(${skillIcons['magic-wand']})`}} /></span><span className="apollo-nav-label" aria-hidden="true">Навыки</span></button>
       </nav>
       <div ref={setSettingsHost} className="apollo-settings-host" />
     </header>

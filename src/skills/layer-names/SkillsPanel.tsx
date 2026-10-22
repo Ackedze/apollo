@@ -3,6 +3,23 @@ import {createPortal} from 'react-dom';
 import {Button} from '../../design-check/v3/ui-app/components/Button';
 import './ui.css';
 const icons = require('./assets');
+const analysisStages = ['Чтение области','Подбор названий','Проверка предложений'];
+function AnalysisProgress({status,run,progress}: {status:string;run:any;progress:string}) {
+  const active = status==='reading' ? 0 : status==='registering' ? 2 : 1;
+  const detail = status==='reading-context' ? 'Читаем подробности слоёв для более точных предложений.'
+    : status==='reading' ? 'Собираем структуру и текст в выбранной области.'
+    : status==='registering' ? 'Сверяем предложения с текущим состоянием макета.'
+    : 'Определяем назначение слоёв и подбираем понятные названия.';
+  return <div className="apollo-skill-progress">
+    <h3>{progress}</h3><p className="apollo-skill-progress-detail">{detail}</p>
+    <ol className="apollo-skill-steps" aria-label="Стадии проверки названий">{analysisStages.map((label,index)=><li key={label}
+      className={index<active ? 'is-complete' : index===active ? 'is-current' : ''} aria-current={index===active ? 'step' : undefined}>
+      <span className="apollo-skill-step-dot" aria-hidden="true"/><span>{label}</span>
+    </li>)}</ol>
+    {run && <p className="apollo-skill-progress-meta">Изучено подробно слоёв: {run.readCount}
+      {run.step>0 && <span>Проход анализа: {run.step}</span>}</p>}
+  </div>;
+}
 export function SkillsPanel({client}: {client:any}) {
   const state:any = useSyncExternalStore(client.subscribe,client.getState);
   const [detailOpen,setDetailOpen] = useState(false);
@@ -16,11 +33,6 @@ export function SkillsPanel({client}: {client:any}) {
   const running = ['reading','planning','reading-context','registering','applying','undoing'].includes(state.status);
   const waiting = ['reading','planning','reading-context','registering'].includes(state.status);
   const progress = state.status==='reading' ? 'Читаем выделенные слои…' : state.status==='planning' ? 'Подбираем понятные названия…' : state.status==='reading-context' ? 'Уточняем содержимое слоёв…' : state.status==='registering' ? 'Проверяем актуальность предложений…' : state.status==='undoing' ? 'Возвращаем прежние названия…' : 'Применяем выбранные названия…';
-  function saveReport() {
-    const blob = new Blob([JSON.stringify({snapshot:state.snapshot,run:state.run,plan:state.plan,result:state.result},null,2)],{type:'application/json'});
-    const url = URL.createObjectURL(blob), link = document.createElement('a');
-    link.href = url; link.download = 'apollo-layer-names.json'; link.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }
   const hasRun = state.status !== 'idle', preview=state.status==='preview', finished=['done','undone'].includes(state.status);
   const changes = preview ? state.plan.changes : state.result?.changes || [];
   const selected = new Set<string>(state.selected);
@@ -46,18 +58,19 @@ export function SkillsPanel({client}: {client:any}) {
       <header className="apollo-skill-header"><h2 id={titleId}>Переназвать слои</h2>
         <button className="apollo-skill-close" type="button" aria-label="Закрыть навык" onClick={()=>setDetailOpen(false)}><img src={icons.close} alt="" /></button>
       </header>
-      <main className={preview || finished ? 'apollo-skill-content' : 'apollo-skill-stage'} tabIndex={preview || finished ? 0 : undefined} aria-label="Результат навыка «Переназвать слои»" aria-busy={running}>
-        {(state.status==='idle' || waiting) && <div className="apollo-skill-invitation">
+      {running && <p className="design-check-sr-only" role="status">{progress}{state.run && ` Изучено подробно слоёв: ${state.run.readCount}.`}{state.run?.step>0 && ` Проход анализа: ${state.run.step}.`}</p>}
+      <main className={preview || finished ? 'apollo-skill-content' : running ? 'apollo-skill-stage is-running' : 'apollo-skill-stage'} tabIndex={preview || finished ? 0 : undefined} aria-label="Результат навыка «Переназвать слои»" aria-busy={running}>
+        {state.status==='idle' && <div className="apollo-skill-invitation">
           <p className="apollo-skill-prompt">Выбери область и запусти проверку</p>
           <p>Предложим понятные названия по содержимому слоёв,<br className="apollo-skill-wide-break" /> а ты выберешь, какие применить</p>
           {!state.available && !running && <p role="status">Дождись завершения другой операции Apollo.</p>}
         </div>}
-        {running && <p className="design-check-sr-only" role="status">{progress}{state.run && ` Изучено подробно слоёв: ${state.run.readCount}.`}</p>}
+        {waiting && <AnalysisProgress status={state.status} run={state.run} progress={progress} />}
         {running && !waiting && <div className="apollo-skill-invitation"><p className="apollo-skill-prompt">{progress}</p></div>}
         {state.status==='error' && <div className="apollo-skills-message"><h3>Не удалось проверить названия</h3><p role="alert">{state.error}</p>{state.run && <p className="apollo-skills-hint">До остановки изучено подробно слоёв: {state.run.readCount}.</p>}</div>}
         {state.status==='empty' && <div className="apollo-skills-message"><h3>Названия в порядке</h3><p>В доступных слоях нет уверенных предложений для переименования.</p><p className="apollo-skills-hint">Проверено слоёв: {state.snapshot.observedCount}. Защищённые узлы и закрытые области пропущены.</p></div>}
         {finished && <div className="apollo-skills-message" role="status"><h3>{state.result.complete ? state.status==='undone' ? 'Прежние названия возвращены' : `Переименовано слоёв: ${changes.length}` : 'Переименование завершено частично'}</h3>
-          <p>{state.result.complete ? 'Названия перечитаны. Структура, геометрия и текст сохранены.' : 'Часть изменений не удалось применить или проверить. Сохрани отчёт и повтори анализ текущего макета.'}</p></div>}
+          <p>{state.result.complete ? 'Названия перечитаны. Структура, геометрия и текст сохранены.' : 'Часть изменений не удалось применить или проверить. Проверь текущее состояние слоёв и повтори анализ.'}</p></div>}
         {(preview || finished && !!changes.length) && <table className="apollo-rename-table">
           <caption className="design-check-sr-only">Предложения по названиям слоёв. {preview && `Выбрано ${state.selected.length} из ${changes.length}. Необязательные уточнения выключены по умолчанию.`}</caption>
           <colgroup><col/><col/><col/></colgroup>
@@ -82,7 +95,6 @@ export function SkillsPanel({client}: {client:any}) {
         {finished && <>
           <Button label="Новая проверка" disabled={!canStart} onPress={()=>void client.start()} />
           {state.status==='done' && <Button label="Вернуть прежние названия" type="secondary" disabled={!state.result.verified || !changes.length || !state.available} onPress={()=>void client.undo()} />}
-          <Button label="Сохранить отчёт" type="secondary" onPress={saveReport} />
         </>}
       </div></footer>
     </dialog>,document.body)}

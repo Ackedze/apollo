@@ -41,7 +41,7 @@ async function run(){
     await page.evaluate(()=>document.fonts.ready);
     await page.getByRole('button',{name:'Навыки',exact:true}).click();
     assert.equal(await page.getByRole('button',{name:'Навыки',exact:true}).getAttribute('aria-pressed'),'true');
-    assert.equal(await page.getByRole('navigation',{name:'Разделы Apollo'}).getByRole('button').count(),5);
+    assert.deepEqual(await page.getByRole('navigation',{name:'Разделы Apollo'}).getByRole('button').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('aria-label'))),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Навыки']);
     await page.getByRole('button',{name:'Навыки',exact:true}).evaluate(node=>Promise.all(node.getAnimations({subtree:true}).map(animation=>animation.finished)));
     assert.ok(Math.abs((await page.getByRole('button',{name:'Навыки',exact:true}).boundingBox()).width-104)<.1);
     const skillsButton=page.getByRole('button',{name:'Навыки',exact:true});
@@ -67,15 +67,15 @@ async function run(){
     await page.screenshot({animations:'disabled',path:path.join(output,'skills-card.png')});checks.push('card matches Figma bounds');
     mode='wait';await card.click();assert.equal(planCalls,0);
     await page.screenshot({animations:'disabled',path:path.join(output,'skills-idle.png')});
-    await page.getByRole('button',{name:'Проверить названия',exact:true}).click();await page.getByText('Подбираем понятные названия…',{exact:true}).waitFor({state:'attached'});
+    await page.getByRole('button',{name:'Проверить названия',exact:true}).click();await page.getByRole('dialog').getByRole('heading',{name:'Подбираем понятные названия…',exact:true}).waitFor();
     while(!release)await new Promise(resolve=>setTimeout(resolve,10));
     const back=page.getByRole('button',{name:'Закрыть навык',exact:true}),footer=page.locator('footer[aria-label="Действия навыка"]');
     assert.equal(await back.count(),1,'Skill opens in a modal over the catalogue');
     assert.equal(await footer.getByRole('button',{name:'Остановить',exact:true}).isEnabled(),true);
     const runningCalls=planCalls;await back.click();await card.waitFor();assert.equal(await card.isEnabled(),true);
     await page.waitForFunction(()=>document.activeElement?.classList.contains('apollo-skill-card'));
-    await card.click();await page.getByText('Подбираем понятные названия…',{exact:true}).waitFor({state:'attached'});assert.equal(planCalls,runningCalls);
-    await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('modal close and reopen preserve an ongoing request');release();
+    await card.click();await page.getByRole('dialog').getByRole('heading',{name:'Подбираем понятные названия…',exact:true}).waitFor();assert.equal(planCalls,runningCalls);
+    assert.equal(await page.getByRole('dialog').locator('[aria-current=step]').textContent(),'Подбор названий');await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('visible stages and modal reopen preserve an ongoing request');release();
     await page.getByRole('checkbox').first().waitFor();
     assert.ok(requests.some(r=>r.type==='layer-names-request' && r.operation==='read'));checks.push('agent requests bounded native context before the final plan');
     assert.equal(await page.getByRole('checkbox').count(),rowCount);assert.equal(await page.getByRole('checkbox').evaluateAll(nodes=>nodes.filter(n=>n.checked).length),5);
@@ -100,7 +100,7 @@ async function run(){
     await footer.getByRole('button',{name:'Переименовать выбранные слои: 5',exact:true}).click();await page.getByRole('heading',{name:'Переименовано слоёв: 5'}).waitFor();
     assert.deepEqual(root.children.slice(0,5).map(n=>n.name),['Секция 1','Секция 2','Секция 3','Секция 4','Секция 5']);assert.ok(root.children.slice(5).every((n,i)=>n.name==='Optional '+(i+5)));
     const completedCalls=planCalls;await back.click();await card.click();await page.getByRole('heading',{name:'Переименовано слоёв: 5'}).waitFor();assert.equal(planCalls,completedCalls);checks.push('completed result survives return to the skill catalogue');
-    await page.screenshot({animations:'disabled',path:path.join(output,'skills-done.png')});checks.push('five selected names applied, optional untouched');
+    assert.equal(await footer.getByRole('button',{name:'Сохранить отчёт',exact:true}).count(),0);await page.screenshot({animations:'disabled',path:path.join(output,'skills-done.png')});checks.push('five selected names applied, optional untouched, no report action');
     await page.getByRole('button',{name:'Вернуть прежние названия',exact:true}).click();await page.getByRole('heading',{name:'Прежние названия возвращены'}).waitFor();assert.equal(root.children[0].name,'Frame 0');checks.push('guarded undo');
     mode='empty';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await page.getByRole('heading',{name:'Названия в порядке'}).waitFor();await page.screenshot({animations:'disabled',path:path.join(output,'skills-empty.png')});checks.push('empty result');
     mode='plan';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await page.getByRole('checkbox').first().waitFor();

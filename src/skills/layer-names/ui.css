@@ -28,6 +28,20 @@
 .apollo-skill-content,.apollo-skill-stage { box-sizing:border-box; flex:1; min-width:0; min-height:0; overflow:auto; scrollbar-width:thin; scrollbar-color:#c6c8ce #fff; }
 .apollo-skill-content { padding:0 28px 108px; }
 .apollo-skill-stage { display:grid; place-items:center; padding:0 28px 20px; }
+.apollo-skill-stage.is-running { padding-bottom:108px; }
+.apollo-skill-progress { width:100%; max-width:400px; }
+.apollo-skill-progress h3 { margin:0 0 10px; font-size:18px; line-height:24px; letter-spacing:-.36px; font-weight:400; }
+.apollo-skill-progress-detail,.apollo-skill-progress-meta { margin:0; color:var(--apollo-muted); }
+.apollo-skill-progress-meta { font-variant-numeric:tabular-nums; }
+.apollo-skill-progress-meta span { display:block; }
+.apollo-skill-steps { display:flex; flex-direction:column; gap:16px; margin:28px 0; padding:0; list-style:none; }
+.apollo-skill-steps li { display:flex; gap:12px; align-items:center; min-height:20px; color:var(--apollo-muted); }
+.apollo-skill-steps .is-complete,.apollo-skill-steps .is-current { color:var(--apollo-text); }
+.apollo-skill-steps .is-current { font-weight:500; }
+.apollo-skill-step-dot { box-sizing:border-box; width:10px; height:10px; flex:0 0 10px; border:1px solid #b8bac2; border-radius:50%; }
+.apollo-skill-steps .is-complete > .apollo-skill-step-dot { border-color:currentColor; background:currentColor; }
+.apollo-skill-steps .is-current > .apollo-skill-step-dot { border:3px solid currentColor; animation:apollo-skill-working 1.6s ease-in-out infinite; }
+@keyframes apollo-skill-working { 50% { opacity:.4; transform:scale(.8); } }
 .apollo-skill-invitation { width:100%; text-align:center; }
 .apollo-skill-invitation p { max-width:400px; margin:10px auto 0; color:var(--apollo-muted); }
 .apollo-skill-invitation .apollo-skill-prompt { max-width:none; margin:0; color:var(--apollo-text); font-size:18px; line-height:24px; letter-spacing:-.36px; }
@@ -63,7 +77,7 @@
 .apollo-rename-focus { min-width:0; padding:0; border:0; color:inherit; background:transparent; font:inherit; text-align:left; cursor:pointer; overflow-wrap:anywhere; }
 .apollo-rename-focus:hover { text-decoration:underline; text-underline-offset:3px; }
 .apollo-rename-optional { color:var(--apollo-muted); }
-/* Leave room below the last row for two action rows, or three on compact screens. */
+/* Leave room below the last row when the two actions wrap. */
 @media (max-width:799px) { .apollo-skill-content { padding-bottom:160px; } }
-@media (max-width:500px) { .apollo-skills-catalog { grid-template-columns:minmax(0,1fr); } .apollo-skill-content { padding-inline:20px; padding-bottom:216px; } .apollo-skill-header { padding-left:20px; } .apollo-skill-stage { padding-inline:20px; } .apollo-skill-wide-break { display:none; } .apollo-skills-actions button { padding-inline:16px; } .apollo-skills-actions { border-radius:28px; } .apollo-rename-table th,.apollo-rename-table td { padding-right:12px; } .apollo-rename-table th:last-child,.apollo-rename-table td:last-child { padding-right:0; } }
-@media (prefers-reduced-motion:reduce) { .apollo-skill-dialog [class*="loader"] { animation:none; } }
+@media (max-width:500px) { .apollo-skills-catalog { grid-template-columns:minmax(0,1fr); } .apollo-skill-content { padding-inline:20px; padding-bottom:160px; } .apollo-skill-header { padding-left:20px; } .apollo-skill-stage { padding-inline:20px; } .apollo-skill-wide-break { display:none; } .apollo-skills-actions button { padding-inline:16px; } .apollo-skills-actions { border-radius:28px; } .apollo-rename-table th,.apollo-rename-table td { padding-right:12px; } .apollo-rename-table th:last-child,.apollo-rename-table td:last-child { padding-right:0; } }
+@media (prefers-reduced-motion:reduce) { .apollo-skill-dialog [class*="loader"],.apollo-skill-steps .is-current > .apollo-skill-step-dot { animation:none; } }

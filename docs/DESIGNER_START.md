@@ -104,7 +104,7 @@ npm --prefix projects/Apollo run validate
 Тесты чата Proxy выполняются из `services/apollo-proxy`:
 
 ```bash
-node --test test/dialogue-source.test.js test/dialogue-runtime.test.js test/cli-agent.test.js
+TMPDIR=/private/tmp node --test test/dialogue-source.test.js test/dialogue-runtime.test.js test/cli-agent.test.js
 ```
 
 Они используют fake CLI и синтетические данные, не расходуют запросы модели.

@@ -75,11 +75,13 @@ npm run validate
 
 ```bash
 npm ci
-node --test test/dialogue-source.test.js test/dialogue-runtime.test.js test/cli-agent.test.js
+TMPDIR=/private/tmp node --test test/dialogue-source.test.js test/dialogue-runtime.test.js test/cli-agent.test.js
 ```
 
 Эти проверки используют собственные fixtures и fake CLI. Реальный вход и платные
-вызовы для них не требуются. `npm start` использует личный вход пользователя
+вызовы для них не требуются. `TMPDIR=/private/tmp` нужен на macOS для единого
+представления временных путей; Linux CI использует системный temp без этой настройки.
+`npm start` использует личный вход пользователя
 и установленную базу знаний; никогда не копировать чужой `.env` или CLI credentials.
 
 Для ручного теста можно использовать установленное приложение Proxy из принятой

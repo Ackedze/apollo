@@ -67,11 +67,19 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
       result=await rpc('batch-check-next',{sessionId,checkId:result.checkId});
     }
   }
-  async function analyse(snapshot,requestId,controller,revisionId,read){
+  async function analyse(snapshot,requestId,controller,revisionId,read,checkSession={id:requestId,index:0,count:1}){
     if(controller.signal.aborted || revision!==revisionId)throw cancelled();
     let ticket=null;const timer=setTimeout(()=>controller.abort(),930000);
     try{
-      let reply=await api('/runs',{schemaVersion:p.RUN_SCHEMA,wire:{version:p.WIRE_VERSION,sha256:p.WIRE_SHA256},requestId,snapshot},controller.signal),run=reply.run;
+      const context={snapshotId:snapshot.snapshotId,nodes:[]};
+      emit({status:'reading-context'});
+      for(let offset=0;offset<snapshot.nodes.length;offset+=p.MAX_CONTEXT_NODES){
+        const ids=snapshot.nodes.slice(offset,offset+p.MAX_CONTEXT_NODES).map(node=>node.nodeId),part=await read(ids);
+        if(controller.signal.aborted || revision!==revisionId)throw cancelled();
+        if(!p.contextValid(part,snapshot,ids))throw Error('Контекст слоёв несовместим. Повторите анализ.');
+        context.nodes.push(...part.nodes);
+      }
+      let reply=await api('/runs',{schemaVersion:p.RUN_SCHEMA,wire:{version:p.WIRE_VERSION,sha256:p.WIRE_SHA256},requestId,snapshot,context,checkSession},controller.signal),run=reply.run;
       if(!p.runValid(run,snapshot,requestId))throw Error('Ответ агента несовместим. Обновите ApolloProxyControl и повторите анализ.');
       ticket={runId:run.runId,requestId};
       if(revision!==revisionId){void stopRemote(ticket);throw cancelled();}activeRun=ticket;
@@ -117,7 +125,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
       const plan=await analyse(snapshot,attemptId,controller,revisionId,async nodeIds=>{
         const token=await validateBatch('read',batchIndex,attemptId,alive);if(!alive())throw cancelled();
         return rpc('batch-read',{sessionId,batchIndex,attemptId,token,nodeIds});
-      });if(!alive())throw cancelled();
+      },{id:'layer-names-'+identity+'-'+sessionId,index:batchIndex,count:state.batch.batchCount});if(!alive())throw cancelled();
       emit({status:'registering'});token=await validateBatch('register',batchIndex,attemptId,alive);if(!alive())throw cancelled();
       const registered=await rpc('batch-register',{sessionId,batchIndex,attemptId,token,plan});if(!alive())throw cancelled();
       if(!p.planValid(registered?.plan,snapshot)||!b.manifestValid(registered.manifest)||registered.manifest.sessionId!==sessionId||registered.manifest.batchCount!==state.batch.batchCount||registered.manifest.completedCount!==batchIndex+1)throw Error('Предложения пачки не прошли проверку.');

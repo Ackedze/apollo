@@ -1,6 +1,7 @@
 # Старт агента: раздел «Спросить» в Apollo
 
 Это инструкция для разработчика, который дорабатывает чат Apollo вместе с Proxy.
+Дизайнеру сначала пройти [общую инструкцию старта](DESIGNER_START.md).
 Установку готового Proxy выполняйте по
 [инструкции поставки](https://github.com/Ackedze/apollo-proxy/blob/main/macos-app/DELEGATION.md).
 Владелец обоих проектов и окончательный ревьюер — **@Ackedze**.
@@ -89,6 +90,31 @@ UI должен обращаться к фактически выбранном�
 В текущем клиенте `http://localhost:3001` задан в `src/ui.js`: для параллельного
 Proxy на другом порту нужен соответствующий dev-клиент. Переключателя endpoint
 в настройках плагина сейчас нет.
+
+Пример запуска изменённого Proxy с отдельным dev-state и **начальными данными
+совместимой установленной поставки**, из checkout `services/apollo-proxy`:
+
+```bash
+APOLLO_USER_PROXY="$HOME/Library/Application Support/ApolloProxyControl/proxy"
+APOLLO_STATE_ROOT="$HOME/.apollo-dev/ask-links" \
+APOLLO_CLI_PROVIDER=codex \
+PORT=3001 \
+node scripts/git-data-cli.js run \
+  --store "$HOME/.apollo-dev/ask-links/data-releases" \
+  --seed "$APOLLO_USER_PROXY/runtime/seed" \
+  --runtime "$APOLLO_USER_PROXY/runtime/apollo"
+```
+
+Сначала остановить свой миниапп через «Выйти» и убедиться, что порт свободен.
+Команда запускает `server.js` из **текущего checkout**, используя неизменяемый
+runtime/seed принятой поставки; создаваемый dev-state отделён от состояния
+приложения. Это начальный snapshot, а не текущие обновлённые данные миниаппа:
+зафиксировать полученный dataId. Не переносить в пример личный `.env`; если в
+checkout он уже есть, проверить его настройки и явные переопределения корней.
+Для чата с Claude заменить provider на `claude` и использовать свой CLI-вход.
+При изменении общего runtime этот пример уже не доказывает совместимость:
+нужна соответствующая принятой версии сборка runtime и данных.
+После теста завершить dev-сервер Ctrl+C и вернуть свой обычный Proxy.
 
 ## Текущий путь запроса
 

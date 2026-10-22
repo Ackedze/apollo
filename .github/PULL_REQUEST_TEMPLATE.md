@@ -51,4 +51,8 @@ npm run validate
 
 ## Cross-repo changes
 
-Связанные PR в Athena/design-system_ab или `Не требуется`:
+- PR Apollo Proxy / design-system_ab или `Не требуется`:
+- Проверенные commit Apollo и Proxy, версия/build поставки и dataId:
+- Порядок обновления и совместимость, если обновлена только одна сторона:
+
+Окончательное ревью и merge выполняет @Ackedze. Публикация не входит в PR.

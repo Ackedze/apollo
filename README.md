@@ -2,6 +2,8 @@
 
 Основной плагин Figma: [manifest.json](manifest.json), ID публикации **1616850453760090547**. Приложение находится непосредственно в корне репозитория.
 
+[Старт дизайнеру](docs/DESIGNER_START.md) · [Правила контрибьютинга](CONTRIBUTING.md) · [Поручение агенту: «Спросить»](docs/AGENT_START_ASK.md)
+
 ```sh
 npm ci
 npm run validate

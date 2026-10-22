@@ -75,15 +75,16 @@ async function run(){
     const runningCalls=planCalls;await back.click();await card.waitFor();assert.equal(await card.isEnabled(),true);
     await page.waitForFunction(()=>document.activeElement?.classList.contains('apollo-skill-card'));
     await card.click();await page.getByRole('dialog').getByRole('heading',{name:'Подбираем понятные названия…',exact:true}).waitFor();assert.equal(planCalls,runningCalls);
-    assert.equal(await page.getByRole('dialog').locator('[aria-current=step]').textContent(),'Подбор названий');await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('visible stages and modal reopen preserve an ongoing request');release();
-    await page.getByRole('checkbox').first().waitFor();
+    assert.equal(await page.getByRole('dialog').locator('.apollo-skill-progress .apollo-mascot.is-checking').count(),1);await page.screenshot({animations:'disabled',path:path.join(output,'skills-planning.png')});checks.push('mascot, current stage and modal reopen preserve an ongoing request');release();
+    const rowBoxes=page.locator('tbody').getByRole('checkbox'),allBox=page.getByRole('checkbox',{name:'Выбрать все предложения',exact:true});await rowBoxes.first().waitFor();
     assert.ok(requests.some(r=>r.type==='layer-names-request' && r.operation==='read'));checks.push('agent requests bounded native context before the final plan');
-    assert.equal(await page.getByRole('checkbox').count(),rowCount);assert.equal(await page.getByRole('checkbox').evaluateAll(nodes=>nodes.filter(n=>n.checked).length),5);
-    await page.getByRole('checkbox').last().focus();await page.keyboard.press('Space');assert.equal(await page.getByRole('checkbox').last().isChecked(),true);await page.keyboard.press('Space');
-    await page.getByRole('checkbox').first().uncheck();const previewCalls=planCalls;await back.click();await card.click();
-    assert.equal(await page.getByRole('checkbox').first().isChecked(),false);assert.equal(planCalls,previewCalls);
-    await page.getByRole('checkbox').first().check();
-    await back.click();await page.getByRole('button',{name:'Проверка',exact:true}).click();await page.getByRole('button',{name:'Навыки',exact:true}).click();await card.click();assert.equal(await page.getByRole('checkbox').count(),rowCount);
+    assert.equal(await rowBoxes.count(),rowCount);assert.equal(await rowBoxes.evaluateAll(nodes=>nodes.filter(n=>n.checked).length),5);
+    assert.equal(await allBox.evaluate(n=>n.indeterminate),true);await allBox.focus();await page.keyboard.press('Space');assert.equal(await rowBoxes.evaluateAll(nodes=>nodes.every(n=>n.checked)),true);await page.keyboard.press('Space');assert.equal(await rowBoxes.evaluateAll(nodes=>nodes.every(n=>!n.checked)),true);for(let i=0;i<5;i++)await rowBoxes.nth(i).check();checks.push('keyboard select-all supports mixed/all/none without applying names');
+    await rowBoxes.last().focus();await page.keyboard.press('Space');assert.equal(await rowBoxes.last().isChecked(),true);await page.keyboard.press('Space');
+    await rowBoxes.first().uncheck();const previewCalls=planCalls;await back.click();await card.click();
+    assert.equal(await rowBoxes.first().isChecked(),false);assert.equal(planCalls,previewCalls);
+    await rowBoxes.first().check();
+    await back.click();await page.getByRole('button',{name:'Проверка',exact:true}).click();await page.getByRole('button',{name:'Навыки',exact:true}).click();await card.click();assert.equal(await rowBoxes.count(),rowCount);
     assert.deepEqual(await page.getByRole('columnheader').allTextContents(),['Было','Стало','Почему']);
     const results=page.getByRole('main',{name:'Результат навыка «Переназвать слои»'});
     async function pinnedActions(){
@@ -103,11 +104,11 @@ async function run(){
     assert.equal(await footer.getByRole('button',{name:'Сохранить отчёт',exact:true}).count(),0);await page.screenshot({animations:'disabled',path:path.join(output,'skills-done.png')});checks.push('five selected names applied, optional untouched, no report action');
     await page.getByRole('button',{name:'Вернуть прежние названия',exact:true}).click();await page.getByRole('heading',{name:'Прежние названия возвращены'}).waitFor();assert.equal(root.children[0].name,'Frame 0');checks.push('guarded undo');
     mode='empty';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await page.getByRole('heading',{name:'Названия в порядке'}).waitFor();await page.screenshot({animations:'disabled',path:path.join(output,'skills-empty.png')});checks.push('empty result');
-    mode='plan';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await page.getByRole('checkbox').first().waitFor();
+    mode='plan';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await rowBoxes.first().waitFor();
     root.children[0].children[0].characters='Changed semantic heading';await page.getByRole('button',{name:'Переименовать выбранные слои: 5',exact:true}).click();await page.getByRole('alert').filter({hasText:'Макет изменился'}).waitFor();
     assert.equal(root.children[0].name,'Frame 0');await page.screenshot({animations:'disabled',path:path.join(output,'skills-stale.png')});checks.push('stale context rejected with zero writes');
     mode='error';await page.getByRole('button',{name:'Повторить проверку',exact:true}).click();await page.getByRole('alert').filter({hasText:'Проверьте подключение'}).waitFor();await page.screenshot({animations:'disabled',path:path.join(output,'skills-error.png')});checks.push('provider error and retry');
-    mode='plan';await page.getByRole('button',{name:'Повторить проверку',exact:true}).click();await page.getByRole('checkbox').first().waitFor();
+    mode='plan';await page.getByRole('button',{name:'Повторить проверку',exact:true}).click();await rowBoxes.first().waitFor();
     await page.setViewportSize({width:800,height:600});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
     await pinnedActions();await page.screenshot({animations:'disabled',path:path.join(output,'skills-preview-short.png')});checks.push('short viewport keeps actions visible without scrolling to them');
     await page.setViewportSize({width:400,height:600});await pinnedActions();await page.screenshot({animations:'disabled',path:path.join(output,'skills-preview-compact.png')});checks.push('compact skill pane keeps wrapped actions reachable');

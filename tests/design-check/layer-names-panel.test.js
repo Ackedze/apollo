@@ -9,11 +9,11 @@ function harness(initial={}){
   w.HTMLDialogElement.prototype.close=function(){this.open=false;};
   const style=d.createElement('style');style.textContent=css;d.head.append(style);
   let state={status:'idle',snapshot:null,plan:null,result:null,run:null,selected:[],error:'',validSelection:false,available:true,...initial};
-  const calls={start:0,cancel:0,apply:0,undo:0,focus:[]},listeners=new Set();
+  const calls={start:0,cancel:0,apply:0,undo:0,focus:[],toggle:[]},listeners=new Set();
   const emit=patch=>{state={...state,...patch};for(const fn of listeners)fn();};
   const client={subscribe(fn){listeners.add(fn);return()=>listeners.delete(fn);},getState:()=>state,
     start(){calls.start++;emit({status:'reading'});},cancel(){calls.cancel++;emit({status:'idle',plan:null,selected:[]});},
-    toggle(id){emit({selected:state.selected.includes(id)?state.selected.filter(n=>n!==id):state.selected.concat(id)});},
+    toggle(id){calls.toggle.push(id);emit({selected:state.selected.includes(id)?state.selected.filter(n=>n!==id):state.selected.concat(id)});},
     focus(id){calls.focus.push(id);},apply(){calls.apply++;emit({status:'applying'});},undo(){calls.undo++;emit({status:'undoing'});}};
   w.eval(js+'\nwindow.SkillUi=SkillUi;');const unmount=w.SkillUi.mount(d.querySelector('#root'),client);
   return{w,d,calls,get state(){return state;},set(patch){w.SkillUi.update(()=>emit(patch));},
@@ -54,7 +54,7 @@ test('three-column preview keeps choices, focus, apply and undo without a report
  const p=plan(),h=harness({status:'preview',validSelection:true,plan:p,selected:p.changes.slice(0,5).map(c=>c.nodeId),snapshot:{snapshotId:'snapshot'}});try{
   await h.click('Переназвать слои');assert.equal(h.calls.start,0);
   assert.deepEqual(Array.from(h.d.querySelectorAll('th')).map(n=>n.textContent),['Было','Стало','Почему']);
-  assert.equal(h.d.querySelectorAll('tbody tr').length,15);const boxes=()=>Array.from(h.d.querySelectorAll('input[type=checkbox]'));
+  assert.equal(h.d.querySelectorAll('tbody tr').length,15);const boxes=()=>Array.from(h.d.querySelectorAll('tbody input[type=checkbox]'));
   assert.equal(boxes().filter(n=>n.checked).length,5);assert.equal(boxes()[14].checked,false);
   assert.match(h.d.querySelector('tbody tr:last-child').textContent,/очень длинное имя/);assert.match(h.d.querySelector('tbody tr:last-child').textContent,/Необязательно/);
   assert.equal(h.w.getComputedStyle(h.d.querySelector('td')).overflowWrap,'anywhere');
@@ -108,24 +108,53 @@ test('floating footer uses its own intrinsic width and table reserves at most tw
   assert.ok(reserveAt(500)>=needed(2),'compact widths reserve both done actions');
  }finally{h.destroy();}
 });
-test('visible analysis stages follow native capture, agent context passes and registration without invented progress',async()=>{
+test('centered mascot and one current stage follow capture, context, registration and writes',async()=>{
  const h=harness({validSelection:true});try{
   await h.click('Переназвать слои');await h.click('Проверить названия');
-  const progress=()=>h.d.querySelector('.apollo-skill-progress'),current=()=>progress().querySelector('[aria-current=step]').textContent;
-  assert.equal(current(),'Чтение области');assert.match(progress().textContent,/Читаем выделенные слои/);
+  const progress=()=>h.d.querySelector('.apollo-skill-progress'),current=()=>progress().querySelector('h3').textContent,style=node=>h.w.getComputedStyle(node);
+  assert.equal(current(),'Читаем выделенные слои…');
   assert.doesNotMatch(h.d.querySelector('main').textContent,/Выбери область/);
   assert.equal(progress().classList.contains('design-check-sr-only'),false);
   assert.equal(h.d.querySelector('[role=status]').closest('[aria-busy=true]'),null,'live updates stay outside the busy content region');
-  h.set({status:'planning',run:{readCount:0,step:1}});assert.equal(current(),'Подбор названий');
-  assert.equal(progress().querySelectorAll('.is-complete').length,1);assert.match(progress().textContent,/Проход анализа: 1/);
-  h.set({status:'reading-context',run:{readCount:7,step:2}});assert.equal(current(),'Подбор названий');
-  assert.match(progress().textContent,/Уточняем содержимое слоёв/);assert.match(progress().textContent,/Изучено подробно слоёв: 7/);assert.match(progress().textContent,/Проход анализа: 2/);
+  assert.equal(progress().children.length,2);assert.equal(progress().querySelectorAll('.apollo-mascot.is-checking').length,1);
+  assert.equal(style(progress()).textAlign,'center');assert.equal(style(progress()).alignItems,'center');assert.equal(style(progress()).gap,'10px');
+  // JSDOM ignores selector specificity when the later global mascot rule is applied.
+  const mascotRule=Array.from(h.d.styleSheets[0].cssRules).find(r=>r.selectorText==='.apollo-skill-progress .apollo-mascot');
+  assert.equal(mascotRule.style.getPropertyValue('width'),'166px');assert.equal(mascotRule.style.getPropertyValue('height'),'166px');
+  const body=style(progress().querySelector('.apollo-mascot-body'));assert.equal(body.width,'144px');assert.equal(body.height,'144px');assert.equal(body.borderRadius,'50%');assert.equal(body.boxShadow,'none');
+  const header=parseFloat(style(h.d.querySelector('header')).flexBasis),top=parseFloat(style(h.d.querySelector('main')).paddingTop),bottom=parseFloat(style(h.d.querySelector('main')).paddingBottom);
+  for(const [width,height] of [[800,860],[1024,860],[800,600],[400,600]]){
+    const dialogHeight=height-16,center=8+header+top+(dialogHeight-header-top-bottom)/2;
+    assert.equal(center,height/2,`CSS clearance model centers progress at ${width}×${height}; not a pixel measurement`);
+  }
+  h.set({status:'planning',run:{readCount:0,step:1}});assert.equal(current(),'Подбираем понятные названия…');
+  h.set({status:'reading-context',run:{readCount:7,step:2}});assert.equal(current(),'Уточняем содержимое слоёв…');
+  assert.doesNotMatch(progress().textContent,/Проход|Изучено|Собираем|Сверяем/);
+  assert.match(h.d.querySelector('[role=status]').textContent,/Изучено подробно слоёв: 7/);
   assert.match(h.d.querySelector('[role=status]').textContent,/Проход анализа: 2/);
-  await h.click('Закрыть навык');await h.click('Переназвать слои');assert.equal(h.calls.start,1);assert.match(progress().textContent,/Проход анализа: 2/);
-  h.set({status:'registering'});assert.equal(current(),'Проверка предложений');assert.equal(progress().querySelectorAll('.is-complete').length,2);
-  assert.match(progress().textContent,/Сверяем предложения с текущим состоянием макета/);
+  await h.click('Закрыть навык');await h.click('Переназвать слои');assert.equal(h.calls.start,1);assert.equal(current(),'Уточняем содержимое слоёв…');
+  h.set({status:'registering'});assert.equal(current(),'Проверяем актуальность предложений…');
   assert.doesNotMatch(progress().textContent,/%|осталось|секунд/i);
   await h.click('Остановить');assert.equal(progress(),null);assert.match(h.d.querySelector('main').textContent,/Выбери область/);
+  for(const [status,label] of [['applying','Применяем выбранные названия…'],['undoing','Возвращаем прежние названия…']]){
+    h.set({status});assert.equal(current(),label);assert.equal(h.d.querySelectorAll('.apollo-skill-progress .apollo-mascot').length,1);assert.equal(h.d.querySelector('footer button').disabled,true);
+  }
+ }finally{h.destroy();}
+});
+test('select-all reflects none, mixed and all, includes optional only on explicit choice and preserves row choices',async()=>{
+ const p=plan(),recommended=p.changes.slice(0,5).map(c=>c.nodeId),h=harness({status:'preview',validSelection:true,plan:p,selected:recommended});try{
+  await h.click('Переназвать слои');const all=()=>h.d.querySelector('thead input'),rows=()=>Array.from(h.d.querySelectorAll('tbody input'));
+  assert.equal(all().getAttribute('aria-label'),'Выбрать все предложения');assert.equal(all().disabled,false);assert.equal(all().checked,false);assert.equal(all().indeterminate,true);
+  assert.equal(rows().filter(n=>n.checked).length,5);assert.equal(h.calls.toggle.length,0);assert.equal(h.calls.apply,0);
+  all().click();await tick();assert.equal(all().checked,true);assert.equal(all().indeterminate,false);assert.ok(rows().every(n=>n.checked));
+  assert.deepEqual(h.calls.toggle,p.changes.slice(5).map(c=>c.nodeId),'only previously unselected rows toggle');assert.equal(h.calls.apply,0);
+  all().click();await tick();assert.equal(all().checked,false);assert.equal(all().indeterminate,false);assert.ok(rows().every(n=>!n.checked));
+  assert.equal(h.button('Переименовать выбранные слои: 0').disabled,true);
+  rows()[14].click();await tick();assert.equal(all().indeterminate,true);assert.equal(all().checked,false);assert.equal(rows()[14].checked,true);
+  await h.click('Закрыть навык');await h.click('Переназвать слои');assert.equal(all().indeterminate,true);assert.equal(rows()[14].checked,true);
+  all().click();await tick();assert.equal(h.state.selected.length,15);assert.equal(all().indeterminate,false);assert.equal(h.calls.start,0);assert.equal(h.calls.apply,0);assert.equal(h.calls.focus.length,0);
+  h.set({plan:{changes:[]},selected:[]});assert.equal(all().disabled,true);assert.equal(all().indeterminate,false);assert.equal(all().checked,false);
+  h.set({status:'done',result:{complete:true,verified:true,changes:p.changes}});assert.equal(h.d.querySelectorAll('input[type=checkbox]').length,0);
  }finally{h.destroy();}
 });
 test('Skills is the last top navigation action and keeps existing mode and chat transitions',async()=>{

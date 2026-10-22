@@ -12,7 +12,7 @@ export function AuditMascot({ checking, quality = 'unchecked', label }: { checki
   }, []);
   useEffect(() => {
     const node = body.current;
-    if (!node || !visible) return;
+    if (!node || !visible || checking) return;
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)');
     let frame = 0, x = 0, y = 0;
     const reset = () => {
@@ -40,7 +40,7 @@ export function AuditMascot({ checking, quality = 'unchecked', label }: { checki
       document.removeEventListener('pointermove', move); document.removeEventListener('pointerleave', reset);
       window.removeEventListener('blur', reset); reduced?.removeEventListener('change', reset); reset();
     };
-  }, [visible]);
+  }, [visible, checking]);
   return <div className={`apollo-mascot quality-${quality}${checking ? ' is-checking' : ''}${visible ? '' : ' is-paused'}`} role="img" aria-label={label || (checking ? 'Проверка выполняется' : labels[quality])}>
     <div ref={body} className="apollo-mascot-body" aria-hidden="true">
       <div className="apollo-mascot-gaze"><div className="apollo-mascot-eyes"><span /><span /></div></div>

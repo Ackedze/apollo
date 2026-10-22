@@ -1,23 +1,13 @@
 import React, {useEffect, useId, useRef, useState, useSyncExternalStore} from 'react';
 import {createPortal} from 'react-dom';
 import {Button} from '../../design-check/v3/ui-app/components/Button';
+import {AuditMascot} from '../../design-check/AuditMascot';
 import './ui.css';
 const icons = require('./assets');
-const analysisStages = ['Чтение области','Подбор названий','Проверка предложений'];
-function AnalysisProgress({status,run,progress}: {status:string;run:any;progress:string}) {
-  const active = status==='reading' ? 0 : status==='registering' ? 2 : 1;
-  const detail = status==='reading-context' ? 'Читаем подробности слоёв для более точных предложений.'
-    : status==='reading' ? 'Собираем структуру и текст в выбранной области.'
-    : status==='registering' ? 'Сверяем предложения с текущим состоянием макета.'
-    : 'Определяем назначение слоёв и подбираем понятные названия.';
+function AnalysisProgress({progress}: {progress:string}) {
   return <div className="apollo-skill-progress">
-    <h3>{progress}</h3><p className="apollo-skill-progress-detail">{detail}</p>
-    <ol className="apollo-skill-steps" aria-label="Стадии проверки названий">{analysisStages.map((label,index)=><li key={label}
-      className={index<active ? 'is-complete' : index===active ? 'is-current' : ''} aria-current={index===active ? 'step' : undefined}>
-      <span className="apollo-skill-step-dot" aria-hidden="true"/><span>{label}</span>
-    </li>)}</ol>
-    {run && <p className="apollo-skill-progress-meta">Изучено подробно слоёв: {run.readCount}
-      {run.step>0 && <span>Проход анализа: {run.step}</span>}</p>}
+    <AuditMascot checking label={progress}/>
+    <h3>{progress}</h3>
   </div>;
 }
 export function SkillsPanel({client}: {client:any}) {
@@ -36,6 +26,10 @@ export function SkillsPanel({client}: {client:any}) {
   const hasRun = state.status !== 'idle', preview=state.status==='preview', finished=['done','undone'].includes(state.status);
   const changes = preview ? state.plan.changes : state.result?.changes || [];
   const selected = new Set<string>(state.selected);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+  const allSelected = changes.length>0 && changes.every((change:any)=>selected.has(change.nodeId));
+  const someSelected = changes.some((change:any)=>selected.has(change.nodeId));
+  useEffect(()=>{if(selectAllRef.current)selectAllRef.current.indeterminate=someSelected && !allSelected;},[someSelected,allSelected,preview,detailOpen]);
   const canStart = state.available && state.validSelection;
   const reasons = new Map<string,string>((state.plan?.changes || []).map((change:any)=>[change.nodeId,change.reason]));
   const cardDescription = !hasRun ? 'Предложит понятные названия по содержимому слоёв, а ты выберешь, какие применить'
@@ -65,8 +59,7 @@ export function SkillsPanel({client}: {client:any}) {
           <p>Предложим понятные названия по содержимому слоёв,<br className="apollo-skill-wide-break" /> а ты выберешь, какие применить</p>
           {!state.available && !running && <p role="status">Дождись завершения другой операции Apollo.</p>}
         </div>}
-        {waiting && <AnalysisProgress status={state.status} run={state.run} progress={progress} />}
-        {running && !waiting && <div className="apollo-skill-invitation"><p className="apollo-skill-prompt">{progress}</p></div>}
+        {running && <AnalysisProgress progress={progress} />}
         {state.status==='error' && <div className="apollo-skills-message"><h3>Не удалось проверить названия</h3><p role="alert">{state.error}</p>{state.run && <p className="apollo-skills-hint">До остановки изучено подробно слоёв: {state.run.readCount}.</p>}</div>}
         {state.status==='empty' && <div className="apollo-skills-message"><h3>Названия в порядке</h3><p>В доступных слоях нет уверенных предложений для переименования.</p><p className="apollo-skills-hint">Проверено слоёв: {state.snapshot.observedCount}. Защищённые узлы и закрытые области пропущены.</p></div>}
         {finished && <div className="apollo-skills-message" role="status"><h3>{state.result.complete ? state.status==='undone' ? 'Прежние названия возвращены' : `Переименовано слоёв: ${changes.length}` : 'Переименование завершено частично'}</h3>
@@ -74,7 +67,10 @@ export function SkillsPanel({client}: {client:any}) {
         {(preview || finished && !!changes.length) && <table className="apollo-rename-table">
           <caption className="design-check-sr-only">Предложения по названиям слоёв. {preview && `Выбрано ${state.selected.length} из ${changes.length}. Необязательные уточнения выключены по умолчанию.`}</caption>
           <colgroup><col/><col/><col/></colgroup>
-          <thead><tr><th scope="col">Было</th><th scope="col">Стало</th><th scope="col">Почему</th></tr></thead>
+          <thead><tr><th scope="col"><div className="apollo-rename-before">{preview && <label className="apollo-rename-choice"><input ref={selectAllRef} type="checkbox" aria-label="Выбрать все предложения" checked={allSelected} disabled={!changes.length} onChange={event=>{
+            const checked=event.currentTarget.checked;
+            changes.forEach((change:any)=>{if(selected.has(change.nodeId)!==checked)client.toggle(change.nodeId);});
+          }}/></label>}Было</div></th><th scope="col">Стало</th><th scope="col">Почему</th></tr></thead>
           <tbody>{changes.map((change:any)=><tr key={change.nodeId}>
             <td><div className="apollo-rename-before">{preview && <label className="apollo-rename-choice"><input type="checkbox" checked={selected.has(change.nodeId)} onChange={()=>client.toggle(change.nodeId)} /><span className="design-check-sr-only">Применить: {change.oldName} → {change.newName}</span></label>}
               {preview ? <button type="button" className="apollo-rename-focus" title="Показать слой в Figma" onClick={()=>void client.focus(change.nodeId)}>{change.oldName || 'Без названия'}</button> : <span>{change.oldName || 'Без названия'}</span>}</div></td>

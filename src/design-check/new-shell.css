@@ -52,8 +52,15 @@
 .apollo-mascot.quality-violation .apollo-mascot-eyes span { height:20px; }
 .apollo-mascot.quality-violation .apollo-mascot-eyes span:first-child { clip-path:polygon(0 40%,100% 0,100% 100%,0 100%); }
 .apollo-mascot.quality-violation .apollo-mascot-eyes span:last-child { clip-path:polygon(0 0,100% 40%,100% 100%,0 100%); }
-.apollo-mascot.is-checking .apollo-mascot-eyes span { animation-duration:3.4s; }
+.apollo-mascot.is-checking .apollo-mascot-body,.apollo-mascot.is-checking .apollo-mascot-gaze { animation-duration:5.6s; animation-timing-function:ease-in-out; animation-iteration-count:infinite; }
+.apollo-mascot.is-checking .apollo-mascot-body { animation-name:apollo-mascot-breathe; }
+.apollo-mascot.is-checking .apollo-mascot-gaze { animation-name:apollo-mascot-inspect; }
+.apollo-mascot.is-checking .apollo-mascot-eyes span { animation-name:apollo-mascot-check-blink; animation-duration:5.6s; }
+@media (prefers-reduced-motion:no-preference) { .apollo-mascot.is-checking .apollo-mascot-body,.apollo-mascot.is-checking .apollo-mascot-gaze,.apollo-mascot.is-checking .apollo-mascot-eyes span { will-change:transform; } }
 .apollo-mascot.is-paused *, [hidden] .apollo-mascot * { animation-play-state:paused; }
+@keyframes apollo-mascot-breathe { 0%,100% { transform:scale(1); } 50% { transform:scale(1.02); } }
+@keyframes apollo-mascot-inspect { 0%,72%,88%,100% { transform:translate3d(0,0,0); } 16%,28% { transform:translate3d(-6px,1px,0); } 44%,56% { transform:translate3d(6px,-1px,0); } }
+@keyframes apollo-mascot-check-blink { 0%,88%,92%,100% { transform:scaleY(1); } 90% { transform:scaleY(.12); } }
 @keyframes apollo-mascot-blink { 0%,42%,46%,100% { transform:scaleY(1); } 44% { transform:scaleY(.12); } }
 @media (prefers-reduced-motion:reduce) { .apollo-mascot * { animation:none !important; } .apollo-mascot-gaze { transform:none; transition:none; } }
 .apollo-overview-total h2 { font-size:16px; line-height:24px; font-weight:500; margin:12px 0 0; }

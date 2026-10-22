@@ -31,7 +31,7 @@ function canonical(t){
  manual:json('JSONS/web/components/Synthetic Card [D]/contract.manual.json',source.manual),facts:json('JSONS/web/components/Synthetic Card [D]/variant-evidence.json',source.variantEvidence)};
  const index={schemaVersion:'apollo.component-contract-sources.v1',pathBase:'design-system_ab',entries:[record],dependencySources:[]};
  function publish(){const p=json('JSONS/indexes/component-contracts.index.json',index);fs.writeFileSync(path.join(root,'manifest.json'),JSON.stringify({schemaVersion:'component-contract-package-collection.v1',packages:[entry],authoringIndex:{file:'../../JSONS/indexes/component-contracts.index.json',sha256:p.sha256,bytes:p.bytes}}));}
- publish();return{ds,root,index,publish,record,compiled};
+ publish();return{ds,root,index,publish,record,compiled,entry};
 }
 test('canonical manual and explicit facts reproduce the pinned projection and freeze source bytes',t=>{
  const c=canonical(t),catalog=readContractCatalog(c.root);assert.deepEqual(catalog.sources.current[0].compiled,c.compiled);catalog.assertCurrent();
@@ -43,4 +43,37 @@ test('canonical index rejects forged projections, missing facts and symlink sour
  Object.assign(c.record,original);c.record.facts=null;c.publish();assert.throws(()=>readContractCatalog(c.root),/CONTRACT_SOURCE_PATH_INVALID/);
  Object.assign(c.record,original);c.record.facts.path='JSONS/web/components/../outside.json';c.publish();assert.throws(()=>readContractCatalog(c.root),/CONTRACT_SOURCE_PATH_INVALID/);
  Object.assign(c.record,structuredClone(original));c.publish();const sourceDir=path.dirname(path.join(c.ds,c.record.facts.path)),target=path.join(c.ds,'moved');fs.renameSync(sourceDir,target);fs.symlinkSync(target,sourceDir,'dir');assert.throws(()=>readContractCatalog(c.root),/CONTRACT_SOURCE_PATH_INVALID/);
+});
+
+function relocate(c,file='JSONS/web/components/Корпоративный компонент [D]/packages/current.zip'){
+ const old=path.join(c.root,c.entry.file),next=path.join(c.ds,file);
+ fs.mkdirSync(path.dirname(next),{recursive:true});fs.copyFileSync(old,next);
+ c.entry.file=file;c.publish();
+ const filename=path.join(c.root,'manifest.json'),m=JSON.parse(fs.readFileSync(filename));
+ m.archivePathBase='design-system_ab';delete m.authoringIndex;
+ fs.writeFileSync(filename,JSON.stringify(m));return filename;
+}
+test('repository paths opt in to component packages with spaces, brackets and Unicode; payload stays identical',t=>{
+ const c=canonical(t),before=readContractCatalog(c.root).archives[0];relocate(c);
+ const catalog=readContractCatalog(c.root);
+ assert.equal(catalog.archiveRoot,c.ds);assert.deepEqual(catalog.archives[0],before);catalog.assertCurrent();
+ fs.appendFileSync(path.join(c.ds,c.entry.file),'changed');assert.throws(()=>catalog.assertCurrent(),/STALE_ARCHIVE/);
+});
+test('repository archives must remain with the exact canonical manual, preserving source projection',t=>{
+ const c=canonical(t),file=relocate(c,'JSONS/web/components/Synthetic Card [D]/packages/current.zip'),m=JSON.parse(fs.readFileSync(file));
+ c.publish();m.authoringIndex=JSON.parse(fs.readFileSync(file)).authoringIndex;fs.writeFileSync(file,JSON.stringify(m));
+ const catalog=readContractCatalog(c.root);assert.deepEqual(catalog.sources.current[0].compiled,c.compiled);catalog.assertCurrent();
+ const other='JSONS/web/components/Other/packages/current.zip';put(c.ds,other);m.packages[0]=Object.assign({},m.packages[0],{file:other});fs.writeFileSync(file,JSON.stringify(m));
+ assert.throws(()=>readContractCatalog(c.root),/STALE_ARCHIVE|CONTRACT_SOURCE_ARCHIVE_MISMATCH/);
+});
+test('repository path admission rejects unknown bases, escapes, controls, duplicate names and symlink ancestors',t=>{
+ const c=canonical(t),filename=relocate(c),m=JSON.parse(fs.readFileSync(filename)),original=structuredClone(m);
+ for(const base of ['workspace','../..',null]){m.archivePathBase=base;fs.writeFileSync(filename,JSON.stringify(m));assert.throws(()=>readContractCatalog(c.root),/CATALOG_ARCHIVE_BASE_INVALID/);}
+ Object.assign(m,structuredClone(original));
+ for(const file of ['/outside.zip','../../outside.zip','JSONS/web/components/X/../packages/x.zip','JSONS/web/components/X\\packages/x.zip','JSONS/web/components/X\u0000/packages/x.zip','JSONS/web/components/X/packages/../x.zip','history/x.zip','JSONS/web/components/X/reports/x.zip']){
+  m.packages=[{file}];fs.writeFileSync(filename,JSON.stringify(m));assert.throws(()=>readContractCatalog(c.root),/CATALOG_PATH_INVALID/);
+ }
+ Object.assign(m,structuredClone(original));
+ const other=put(c.ds,'JSONS/web/components/Other/packages/current.zip');m.packages.push(other);fs.writeFileSync(filename,JSON.stringify(m));assert.throws(()=>readContractCatalog(c.root),/CATALOG_ARCHIVE_CONFLICT/);
+ Object.assign(m,structuredClone(original));fs.writeFileSync(filename,JSON.stringify(m));const parent=path.dirname(path.join(c.ds,c.entry.file)),moved=parent+'.moved';fs.renameSync(parent,moved);fs.symlinkSync(moved,parent,'dir');assert.throws(()=>readContractCatalog(c.root),/CATALOG_PATH_INVALID/);
 });

@@ -9,6 +9,14 @@ npm run validate
 
 Импортируй корневой manifest в Figma. Сборка создаёт `dist/code.js`, `dist/ui.html` и серверный `dist/runtime.cjs`.
 
+Коллекция ZIP выбирается только её `manifest.json`. При `archivePathBase: "design-system_ab"`
+пути указывают на `JSONS/web/components/.../packages` относительно корня DS;
+manual/facts выбирает существующий source index. Legacy коллекции и входящие
+каталоги ZIP сохраняют прежнюю базу путей. Basename, SHA, canonical source
+projection и stale/symlink guards проверяются до использования; history рекурсивно
+не подбирается. Дата изменения берётся из `metadata.updatedAt` manual, а точная
+версия — из revision и hashes.
+
 - `src/` — проверка макетов, интерфейс и генерация.
 - `packages/` — общий ComponentContract Core, планирование и адаптеры.
 - `scripts/`, `tests/` — сборка, проверки и инструменты.

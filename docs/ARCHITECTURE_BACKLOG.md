@@ -2,6 +2,34 @@
 
 ## Apollo: совместимость с ComponentContract Editor
 
+### CC-COMPAT-MANUAL-EDIT-DATES-01 — дата реального изменения manual
+
+22.10.2026. Editor **0.2.108**, Core **0.1.23** без изменений. В Editor удаление
+существующего правила и изменившийся quick policy «Защитить внутреннее устройство»
+записывают `metadata.updatedAt` в UTC вместе с повышением revision. Создание,
+повторный no-op, импорт/экспорт и перенос не получают выдуманной новой даты.
+Три регрессии исполняют реальные UI handlers с настоящим core: до исправления
+0/3, после 3/3. Полный configured gate и source/build pins фиксируются в final handoff
+общего writer window ASA-028; публикация/установка Editor не заявлены.
+
+Consumer impact: новая реальная правка меняет manual/hash обычным способом;
+исторические manual dates, revision, ZIP и receipts не пересчитываются.
+Apollo/Proxy уже читают `metadata.updatedAt`; новое поле или schema не нужны.
+Collection reader допускает явный `archivePathBase: design-system_ab` для ZIP
+рядом с canonical manual, сохраняя legacy входы и проверки paths/SHA/stale.
+
+Парная запись: [Editor backlog](../../ComponentContractEditor/docs/BACKLOG.ru.md#cc-compat-manual-edit-dates-01--дата-реального-изменения-manual).
+Проверено: Editor `npm run validate` **859/859**, Apollo configured
+`APOLLO_PROJECT_ROOT=<accepted-main> npm run validate` **1188/1188**, без старого
+native scope. Canonical15+3 и prepared delivery12 проверяются в закрытии
+переноса. Runtime adoption и Ready отдельно.
+
+ASA-028: точный перенос существующих standalone inputs и ссылки на один общий
+accepted seed закрывают текущую раскладку. Выделение legacy BG/CC и всех
+component-owned записей в самостоятельные редактируемые fragments потребует
+отдельного producer decomposition/reassembly; этот будущий этап не реализован
+и не является новой возможностью текущего runtime.
+
 ### CC-COMPAT-INSTANCE-PATH-PROJECTION-01 — облегчённый поиск native экземпляров
 
 19.10.2026. **IMPLEMENTED / CONFIGURED_GATES_PASS / PLUGIN_BUILT / NATIVE_TIMING_PENDING**.

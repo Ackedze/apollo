@@ -8,12 +8,17 @@ function readContractCatalog(directory){
  const manifestBytes=fs.existsSync(manifestFile)?fs.readFileSync(manifestFile):null;
  const manifest=manifestBytes?JSON.parse(manifestBytes):null;
  if(manifest&&(!Array.isArray(manifest.packages)||manifest.schemaVersion!=='component-contract-package-collection.v1'))fail('CATALOG_MANIFEST_INVALID');
+ const repositoryPaths=manifest?.archivePathBase==='design-system_ab';
+ if(manifest?.archivePathBase!==undefined&&!repositoryPaths)fail('CATALOG_ARCHIVE_BASE_INVALID');
+ if(repositoryPaths&&(path.basename(root)!=='current-contract-packages'||path.basename(path.dirname(root))!=='experiments'))fail('CATALOG_ARCHIVE_BASE_INVALID');
+ const archiveRoot=repositoryPaths?path.resolve(root,'../..'):root;
  const entries=manifest?manifest.packages:fs.readdirSync(root).filter(name=>/\.zip$/i.test(name)).sort().map(file=>({file}));
  if(!entries.length||entries.length>32)fail('ARCHIVE_LIMIT');
  const names=new Set(),files=new Set(),pins=[];
  const archives=entries.map(entry=>{
-  if(typeof entry.file!=='string'||!entry.file.endsWith('.zip')||entry.file.split('/').some(p=>!p||p==='.'||p==='..'||!/^[-\w.]+$/.test(p)))fail('CATALOG_PATH_INVALID');
-  const file=path.join(root,entry.file),name=path.basename(entry.file);
+  if(typeof entry.file!=='string'||!entry.file.endsWith('.zip')||path.isAbsolute(entry.file)||entry.file.includes('\\')||entry.file.split('/').some(p=>!p||p==='.'||p==='..'||(repositoryPaths?/[<>:"|?*\x00-\x1f\x7f]/.test(p):!/^[-\w.]+$/.test(p))))fail('CATALOG_PATH_INVALID');
+  if(repositoryPaths&&(!entry.file.startsWith('JSONS/web/components/')||path.basename(path.dirname(entry.file))!=='packages'))fail('CATALOG_PATH_INVALID');
+  const file=path.join(archiveRoot,entry.file),name=path.basename(entry.file);
   if(names.has(name)||files.has(file))fail('CATALOG_ARCHIVE_CONFLICT');names.add(name);files.add(file);
   const stat=fs.lstatSync(file);
   if(!stat.isFile()||stat.isSymbolicLink()||fs.realpathSync(file)!==file)fail('CATALOG_PATH_INVALID');
@@ -23,12 +28,13 @@ function readContractCatalog(directory){
   pins.push({file,digest});return{name,bytes};
  });
  const sources=manifest?.authoringIndex?readCanonicalSources(root,manifest.authoringIndex,entries,pins):null;
+ if(repositoryPaths&&sources)for(const entry of entries){const source=sources.index.entries.find(s=>s.contractId===entry.contractId);if(path.dirname(entry.file)!==path.posix.join(path.posix.dirname(source.manual.path),'packages'))fail('CONTRACT_SOURCE_ARCHIVE_MISMATCH');}
  function assertCurrent(){
   if(manifestBytes){if(sha(fs.readFileSync(manifestFile))!==sha(manifestBytes))fail('STALE_CATALOG');}
   else if(JSON.stringify(archives.map(a=>a.name))!==JSON.stringify(fs.readdirSync(root).filter(n=>/\.zip$/i.test(n)).sort()))fail('STALE_CATALOG');
   for(const pin of pins)if(fs.realpathSync(pin.file)!==pin.file||!fs.lstatSync(pin.file).isFile()||sha(fs.readFileSync(pin.file))!==pin.digest)fail('STALE_ARCHIVE');
  }
- return{root,manifest,archives,sources,assertCurrent};
+ return{root,archiveRoot,manifest,archives,sources,assertCurrent};
 }
 module.exports={readContractCatalog};
 

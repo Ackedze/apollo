@@ -21,7 +21,7 @@ function fixture() {
   const manual=node('TEXT','_title',root,{characters:'Visible text',autoRename:false});
   const outside=node('FRAME','Outside',page),messages=[];let mutations=0;
   const api={currentPage:page,viewport:{scrollAndZoomIntoView:()=>{}},commitUndo:()=>{}};page.selection=[root,form];
-  const bridge=createLayerNamesBridge({api,hash,post:m=>messages.push(m),onMutation:()=>mutations++});
+  const bridge=createLayerNamesBridge({api,hash,observer:()=>({status:'available',scope:'current-page-nodechange',pageId:page.id,cleanup:'confirmed'}),post:m=>messages.push(m),onMutation:()=>mutations++});
   function rpc(operation,payload={}) {bridge.accept({type:'layer-names-request',schemaVersion:p.SCHEMA,requestId:'request-'+messages.length,operation,payload});return messages.at(-1);}
   const change=(target,newName,category='recommended')=>({nodeId:target.id,oldName:target.name,newName,reason:'Confirmed by content',category});
   function prepare(changes) {const snapshot=rpc('capture').result;assert.ok(snapshot);const result=rpc('register',{snapshotId:snapshot.snapshotId,plan:{changes}});assert.ok(!result.error,result.error);return snapshot;}
@@ -75,9 +75,9 @@ test('model cannot target outside nodes, duplicate IDs or silently remove emoji'
   assert.equal(p.planValid({changes:[f.change(f.form,'👩🏽‍💻 Form')]},next),true);
   assert.equal(p.planValid({changes:[f.change(f.form,'👩 Form')]},next),false);
 });
-test('capture refuses over-budget areas instead of claiming a complete scan',()=>{
+test('capture schedules over-budget areas without claiming a complete scan',()=>{
   const f=fixture();for(let i=0;i<p.MAX_CANDIDATES;i++)f.node('FRAME','Frame '+i,f.root);
-  assert.match(f.rpc('capture').error,/много слоёв/);
+  const manifest=f.rpc('capture').result;assert.equal(manifest.schemaVersion,'apollo.layer-names-batches.v1');assert.equal(manifest.status,'capturing');assert.equal(manifest.batchCount,0);
 });
 test('UI client completes native capture → agent plan → frozen preview → selected apply; optional remains unselected',async()=>{
   const f=fixture();let client;

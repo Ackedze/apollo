@@ -33,6 +33,19 @@
 .apollo-skill-progress { display:flex; flex-direction:column; align-items:center; gap:10px; width:100%; text-align:center; }
 .apollo-skill-progress .apollo-mascot { width:166px; height:166px; flex:0 0 166px; }
 .apollo-skill-progress h3 { margin:0; font-size:18px; line-height:24px; letter-spacing:-.36px; font-weight:400; }
+.apollo-skill-running { width:100%; min-width:0; }
+.apollo-skill-stage:has(.apollo-skill-diagnostics) { align-items:safe center; padding-bottom:108px; }
+.apollo-skill-diagnostics { width:min(100%,640px); margin:16px auto 0; font-size:14px; line-height:20px; text-align:left; overflow-wrap:anywhere; }
+.apollo-skill-diagnostics>p { text-align:center; font-variant-numeric:tabular-nums; }
+.apollo-skill-diagnostics summary { width:max-content; max-width:100%; margin:auto; cursor:pointer; color:var(--apollo-muted); }
+.apollo-skill-diagnostics summary:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
+.apollo-skill-diagnostics dl { display:grid; grid-template-columns:120px minmax(0,1fr); gap:8px 12px; margin:16px 0; }
+.apollo-skill-diagnostics dt { color:var(--apollo-muted); }
+.apollo-skill-diagnostics dd { min-width:0; margin:0; user-select:text; }
+.apollo-skill-diagnostics code { font-size:13px; line-height:20px; user-select:text; }
+.apollo-skill-diagnostics ol { padding:0; margin:16px 0; list-style:none; }
+.apollo-skill-diagnostics li { margin:8px 0; }
+.apollo-skill-diagnostics time { font-variant-numeric:tabular-nums; color:var(--apollo-muted); }
 .apollo-skill-invitation { width:100%; text-align:center; }
 .apollo-skill-invitation p { max-width:400px; margin:10px auto 0; color:var(--apollo-muted); }
 .apollo-skill-invitation .apollo-skill-prompt { max-width:none; margin:0; color:var(--apollo-text); font-size:18px; line-height:24px; letter-spacing:-.36px; }
@@ -42,6 +55,7 @@
 .apollo-skills-message p { margin:0 0 12px; }
 .apollo-skills-message [role=alert] { color:#a52b25; }
 .apollo-skills-hint { color:var(--apollo-muted); }
+.apollo-skill-batch-progress { text-align:center; }
 .apollo-skill-footer { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 16px); }
 .apollo-skills-actions { box-sizing:border-box; display:flex; align-items:center; flex-wrap:wrap; justify-content:center; gap:8px; padding:12px; border:1px solid #edeef0; border-radius:99px; background:rgba(255,255,255,.88); backdrop-filter:blur(2px); box-shadow:0 4px 24px rgba(0,0,0,.05); width:max-content; max-width:100%; }
 .apollo-skills-actions button { flex:0 0 auto; min-height:48px; padding:4px 24px; font-size:16px; line-height:20px; white-space:nowrap; }
@@ -55,6 +69,8 @@
 .apollo-skills button:focus-visible,.apollo-skill-dialog button:focus-visible,.apollo-skill-dialog input:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
 .apollo-skill-content:focus-visible { outline:2px solid #2a77ef; outline-offset:-3px; }
 .apollo-rename-table { width:100%; table-layout:fixed; border-collapse:collapse; font-size:14px; line-height:20px; }
+.apollo-rename-pagination { display:flex; justify-content:space-between; align-items:center; gap:8px; margin:16px 0; }
+.apollo-rename-pagination span { color:var(--apollo-muted); font-size:14px; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .apollo-rename-table col { width:calc((100% + 20px) / 3); }
 .apollo-rename-table col:last-child { width:calc((100% - 40px) / 3); }
 .apollo-rename-table th,.apollo-rename-table td { padding-right:20px; vertical-align:top; text-align:left; overflow-wrap:anywhere; }

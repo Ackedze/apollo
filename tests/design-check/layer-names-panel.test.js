@@ -127,7 +127,10 @@ test('centered mascot and one current stage follow capture, context, registratio
     const dialogHeight=height-16,center=8+header+top+(dialogHeight-header-top-bottom)/2;
     assert.equal(center,height/2,`CSS clearance model centers progress at ${width}×${height}; not a pixel measurement`);
   }
-  h.set({status:'planning',run:{readCount:0,step:1}});assert.equal(current(),'Подбираем понятные названия…');
+  h.set({status:'planning',run:{readCount:0,step:1}});assert.equal(current(),'Ожидаем ответ агента…');
+  for(const [phase,label] of [['preparing','Подготавливаем запрос…'],['connecting','Ожидаем ответа сервиса…'],['waiting-agent','Ожидаем события от агента…'],['retrying','Агент повторяет подключение…'],['receiving','Получаем ответ агента…']]){
+   h.set({diagnostics:{phase,elapsedMs:100,idleMs:0,events:[]},diagnosticsAt:Date.now()});assert.equal(current(),label);
+  }
   h.set({status:'reading-context',run:{readCount:7,step:2}});assert.equal(current(),'Уточняем содержимое слоёв…');
   assert.doesNotMatch(progress().textContent,/Проход|Изучено|Собираем|Сверяем/);
   assert.match(h.d.querySelector('[role=status]').textContent,/Изучено подробно слоёв: 7/);

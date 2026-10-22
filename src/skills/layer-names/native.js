@@ -1,5 +1,8 @@
 const p = require('./run-protocol')(require('./protocol'));
 const {minimalRoots} = require('../../document-audit/scoped-recheck');
+const batchesProtocol = require('./batch-protocol');
+const {createBatches} = require('./batches');
+const captureBudgetError = message => Object.assign(Error(message),{code:'LAYER_NAMES_CAPTURE_BUDGET'});
 function protection(node) {
   for (let n = node, depth = 0; n && n.type !== 'DOCUMENT'; n = n.parent) {
     if (++depth > 100 || n.removed) throw Error('Слой недоступен. Повторите анализ.');
@@ -29,7 +32,7 @@ function collect(api, roots, hash) {
   const facts = [], handles = new Map(), candidates = [], texts = new Map(), deadline = Date.now() + 3000;
   function walk(node, path) {
     if (handles.has(node.id)) return;
-    if (handles.size >= p.MAX_NODES || Date.now() > deadline) throw Error('Область слишком большая. Выделите один фрейм или меньше слоёв.');
+    if (handles.size >= p.MAX_NODES || Date.now() > deadline) throw captureBudgetError('Область слишком большая. Выделите один фрейм или меньше слоёв.');
     const row = fact(node, hash); handles.set(node.id, node); facts.push(row);
     const currentPath = path.concat(node.name);
     if (!row.protection) candidates.push({nodeId:node.id,type:node.type,parentId:node.parent.id,oldName:node.name,path:currentPath.join(' / ').slice(-2048),texts:[]});
@@ -45,17 +48,18 @@ function collect(api, roots, hash) {
     if (page?.id !== api.currentPage.id) throw Error('Страница изменилась. Повторите анализ.');
     walk(root, []);
   }
-  if (candidates.length > p.MAX_CANDIDATES) throw Error('Слишком много слоёв для одного анализа. Уменьшите выделение.');
+  if (candidates.length > p.MAX_CANDIDATES) throw captureBudgetError('Слишком много слоёв для одного анализа. Уменьшите выделение.');
   for (const item of candidates) item.texts = texts.get(item.nodeId) || [];
   const payload = {schemaVersion:p.SCHEMA,snapshotId:hash(facts),pageId:api.currentPage.id,rootIds:roots.map(n => n.id),
     scopeName:(roots.length === 1 ? roots[0].name : `Выбрано областей: ${roots.length}`).slice(0,2048) || 'Выделенная область',
     nodes:candidates,observedCount:facts.length,skippedCount:facts.filter(f => f.protection).length};
   if (!p.snapshotValid(payload)) throw Error('Не удалось подготовить контекст слоёв. Уменьшите выделение.');
-  if (JSON.stringify(payload).length > 150000) throw Error('Контекст слишком большой. Выделите один фрейм или меньше слоёв.');
+  if (JSON.stringify(payload).length > 150000) throw captureBudgetError('Контекст слишком большой. Выделите один фрейм или меньше слоёв.');
   return {payload,facts,handles};
 }
-function createLayerNamesBridge({api,hash,post,isBusy=()=>false,onMutation=()=>{}}) {
+function createLayerNamesBridge({api,hash,post,isBusy=()=>false,onMutation=()=>{},observer}) {
   let session = null, journal = null, applying = false;
+  const batches = createBatches({api,hash,post,isBusy,onMutation,fact,protection,observer});
   function current(saved, expectedNames = new Map()) {
     if (!saved || api.currentPage.id !== saved.capture.payload.pageId) throw Error('Страница изменилась. Повторите анализ.');
     const fresh = collect(api, saved.roots, hash), expected = saved.capture.facts.map(row => {
@@ -90,14 +94,20 @@ function createLayerNamesBridge({api,hash,post,isBusy=()=>false,onMutation=()=>{
     } finally { applying = false; }
   }
   function accept(message) {
+    if (batches.accept(message)) return true;
     if (message?.type !== 'layer-names-request') return false;
     const reply = result => post({type:'layer-names-result',schemaVersion:p.SCHEMA,requestId:message.requestId,operation:message.operation,result});
     try {
       if (!p.exact(message,['type','schemaVersion','requestId','operation','payload']) || message.schemaVersion !== p.SCHEMA || !p.string(message.requestId,150) || !p.exact(message.payload, message.operation === 'capture' ? [] : message.operation === 'register' ? ['snapshotId','plan'] : ['apply','read'].includes(message.operation) ? ['snapshotId','nodeIds'] : message.operation === 'undo' ? [] : ['snapshotId','nodeId'])) throw Error('Параметры навыка несовместимы.');
-      if (isBusy() || applying) throw Error('Дождитесь завершения другой операции Apollo.');
+      if (isBusy() || applying || batches.isApplying()) throw Error('Дождитесь завершения другой операции Apollo.');
       if (message.operation === 'capture') {
         session = null;
-        const roots = minimalRoots(Array.from(api.currentPage.selection)), capture = collect(api,roots,hash);
+        batches.reset();
+        const roots = minimalRoots(Array.from(api.currentPage.selection));
+        let capture;
+        try { capture = collect(api,roots,hash); }
+        catch(error) { if(error.code!=='LAYER_NAMES_CAPTURE_BUDGET')throw error;reply(batches.begin(roots));return true; }
+        if(capture.payload.nodes.length>batchesProtocol.TARGET_CANDIDATES || batchesProtocol.bytes(capture.payload)>batchesProtocol.TARGET_BYTES){reply(batches.begin(roots,capture));return true;}
         session = {roots,capture,plan:null}; reply(capture.payload);
       } else if (message.operation === 'read') {
         const ids = message.payload.nodeIds;
@@ -140,6 +150,6 @@ function createLayerNamesBridge({api,hash,post,isBusy=()=>false,onMutation=()=>{
     }
     return true;
   }
-  return {accept,isApplying:()=>applying};
+  return {accept,isApplying:()=>applying||batches.isApplying()};
 }
 module.exports = {protection,fact,collect,createLayerNamesBridge};

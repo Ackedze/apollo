@@ -26,6 +26,7 @@ let promptPlanning=false,promptRevision=0,promptDirty=false;
 let sessionRevision=0,sessionLoaded=false,sessionTimer=null;
 const staticReviewTransport=createStaticReviewTransport(__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__);
 const BASE = 'http://localhost:3001';
+const tokenJournalClient = require('./token-journal-client').createTokenJournalClient();
 const { createFrontendTransport } = require("./generation/frontend/ui");
 const { resolveGenerationContext } = require("./generation/proxy/ui");
 const { SOURCE_SCHEMA, sourceFromFiles, linkSourcePackages } = require("./authoring-source");
@@ -53,6 +54,7 @@ const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferen
   onDocumentAction:(findingId,targetId,actionId)=>{documentAuditClient.action(findingId,targetId,actionId);controls();},
   onDocumentFocus: (findingId, targetId) => documentAuditClient.focus(findingId, targetId),
   onDocumentAudit: ({ requestId, uiPreferences }) => {
+    tokenJournalClient.start(requestId, true);
     documentAuditClient.start(requestId, uiPreferences);
     if (!validSelection) return;
     if (legacyOperationUnavailable()) return;
@@ -61,6 +63,7 @@ const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferen
   onAudit: ({ requestId }) => { startContractAudit(requestId); }
 });
 function startContractAudit(requestId) {
+    tokenJournalClient.start(requestId);
     clearResult(false); busy = true; contractStopping=false;activeRequest = requestId; controls();
     clearTimeout(contractTimer);contractTimer=setTimeout(()=>{if(activeRequest===requestId&&busy){contractStopping=true;designCheck.setAuditProgress(requestId,'Останавливаем проверку контрактов: ожидаем подтверждение от Figma…');send({type:'audit-cancel',requestId});}},60000);
     status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
@@ -68,6 +71,7 @@ function startContractAudit(requestId) {
 const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:()=>markContractStale(),onRecheckResult:m=>{if(m.contract){render(m.contract);designCheck.setAudit(m.contract.audit);}controls();},onRecheckError:()=>markContractStale()});
 const contractFocusClient=createAuditFocusClient({send,onStatus:status,isBusy:()=>designCheck.getState().documentAction.busy});
 designCheck.subscribe(() => {
+  tokenJournalClient.observe(designCheck.getState());
   const compact = designCheck.getState().settings.compact;
   if (compact === lastCompact) return;
   lastCompact = compact; void uiClient.resize(compact).catch(error => status(error.message, true));

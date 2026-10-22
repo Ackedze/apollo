@@ -35,7 +35,7 @@ test('rejects missing endpoint and unsupported source/context/history before net
   assert.equal(calls.length, 0);
 });
 test('rejects transport errors, empty bodies and mismatched source identity', async () => {
-  for (const [body, ok] of [[{ success: false, error: 'proxy offline' }, false], [{ success: true, result: '' }, true], [{ success: true, result: 'reply', source: 'langflow' }, true]])
+  for (const [body, ok] of [[{ success: false, error: 'proxy offline' }, false], [{ success: true, result: '' }, true], [{ success: true, result: 'reply', source: 'langflow' }, true], [{success: true, result: 'reply', source: 'codex', provider: 'unknown'}, true]])
     await assert.rejects(setup(body, ok).port.send(input()));
 });
 test('health means endpoint availability, separate from rule coverage', async () => {

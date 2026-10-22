@@ -30,3 +30,18 @@ for (const saved of [null, 'langflow', 'codex']) {
     assert.equal(controller.getState().chat.error, ''); controller.destroy();
   });
 }
+
+for (const provider of ['codex', 'claude', 'alfagen']) {
+  test(`Ask preserves actual ${provider} provenance across the legacy codex wire`, async () => {
+    const dialogue = createExistingDialoguePort({endpoint: 'http://localhost:3001/analyze', createSessionId: () => 'provider-session',
+      request: async (_url, options) => {
+        assert.equal(JSON.parse(options.body).source, 'codex');
+        return {ok: true, json: async () => ({success: true, source: 'codex', provider, result: 'Fixture answer'})};
+      }});
+    const controller = createDesignCheckController({dialogue});
+    await controller.sendChat('Fixture question');
+    const reply = controller.getState().chat.messages.at(-1);
+    assert.equal(reply.provider, provider); assert.equal(reply.returnedSource, 'codex');
+    assert.equal(controller.getState().chat.error, ''); controller.destroy();
+  });
+}

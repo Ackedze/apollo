@@ -13,7 +13,7 @@ export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v
   settings: Partial<UISettings>; agentSource: 'langflow' | 'codex' };
 export type DialoguePort = { cancelScope: 'client-only';
   send(input: { requestId: string; source: string; question: string; dialogue: { role: string; text: string }[];
-    context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; knowledgeRelease?: unknown }>;
+    context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }>;
   status?(): Promise<{ available: boolean; version: string | null }>;
   resetSession?(): void;
 };
@@ -33,7 +33,7 @@ export type ControllerState = {
   preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;
-    messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; knowledgeRelease?: unknown }[];
+    messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }[];
     transport: 'configured' | 'not-connected'; cancelScope: string | null;
     proxy: { available: boolean | null; version: string | null } };
 };

@@ -205,7 +205,7 @@ function createDesignCheckController(options = {}) {
       if (response?.source !== undefined && response.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');
       if (typeof response?.text !== 'string' || !response.text.trim()) throw new TypeError('Агент вернул пустой ответ.');
       activeChat = null;
-      setChat({ busy: false, unreadCount: state.chat.open ? 0 : state.chat.unreadCount + 1, messages: state.chat.messages.concat({ role: 'assistant', text: response.text, requestId, source: response.source || source, returnedSource: response.returnedSource === undefined ? response.source ?? null : response.returnedSource, knowledgeRelease: response.knowledgeRelease ?? null }) });
+      setChat({ busy: false, unreadCount: state.chat.open ? 0 : state.chat.unreadCount + 1, messages: state.chat.messages.concat({ role: 'assistant', text: response.text, requestId, source: response.source || source, returnedSource: response.returnedSource === undefined ? response.source ?? null : response.returnedSource, provider: response.provider ?? null, knowledgeRelease: response.knowledgeRelease ?? null }) });
     } catch (error) {
       if (!destroyed && activeChat?.requestId === requestId) { activeChat = null; setChat({ busy: false, error: error.message || 'Агент недоступен.' }); }
     }

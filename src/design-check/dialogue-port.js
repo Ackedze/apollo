@@ -29,8 +29,9 @@ function createExistingDialoguePort({ request, endpoint, createSessionId }) {
       const body = await response.json();
       if (!response.ok || body.success !== true) throw new Error(body.error || `Apollo proxy error ${response.status}`);
       if (body.source !== undefined && body.source !== source) throw new Error('Источник ответа агента не совпал с запросом.');
+      if (body.provider !== undefined && !['codex', 'claude', 'alfagen'].includes(body.provider)) throw new Error('Прокси вернул неизвестный AI-агент.');
       if (typeof body.result !== 'string' || !body.result.trim()) throw new Error('Агент вернул пустой ответ.');
-      return { text: body.result, source: body.source || source, returnedSource: body.source ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
+      return { text: body.result, source: body.source || source, returnedSource: body.source ?? null, provider: body.provider ?? null, knowledgeRelease: body.knowledgeRelease ?? null };
     } };
 }
 module.exports = { createExistingDialoguePort };

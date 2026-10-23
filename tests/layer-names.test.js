@@ -93,7 +93,7 @@ test('cancelled analysis ignores a late model reply and cannot register or apply
   const bridge=createLayerNamesBridge({api:f.api,hash,post:m=>queueMicrotask(()=>client.accept(m))});
   client=createLayerNamesClient({send:m=>{operations.push(m.operation);bridge.accept(m);},request:async(url,options)=>{if(url.endsWith('/cancel'))return{ok:true,json:async()=>({success:true,run:null})};requested=true;await new Promise(resolve=>{release=resolve;});const body=JSON.parse(options.body);return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm')]})};}});
   const work=client.start();while(!requested)await new Promise(resolve=>setImmediate(resolve));client.cancel();release();await work;
-  assert.equal(client.getState().status,'idle');assert.deepEqual(operations,['capture']);assert.equal(f.form.name,'Frame 1');
+  assert.equal(client.getState().status,'idle');assert.deepEqual(operations,['capture','read']);assert.equal(f.form.name,'Frame 1');
 });
 for (const transport of ['fetch','json']) test('start localizes '+transport+' transport failures without registering a plan',async()=>{
   const f=fixture(),operations=[];let client;
@@ -105,7 +105,7 @@ for (const transport of ['fetch','json']) test('start localizes '+transport+' tr
   await client.start();assert.equal(client.getState().status,'error');
   assert.match(client.getState().error,/Проверьте подключение и версию Proxy/);
   assert.doesNotMatch(client.getState().error,/Failed to fetch|Unexpected token/);
-  assert.deepEqual(operations,['capture']);assert.equal(f.form.name,'Frame 1');
+  assert.deepEqual(operations,['capture','read']);assert.equal(f.form.name,'Frame 1');
 });
 
 function virtualClock(t) {
@@ -141,6 +141,6 @@ for (const scenario of [
   }});
   const work=client.start();while(!requested)await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));
   clock.advance(scenario.timeout?930000:scenario.delay);await work;assert.equal(f.form.name,'Frame 1');
-  if(!scenario.message){assert.equal(client.getState().status,'preview');assert.deepEqual(operations,['capture','register']);}
-  else{assert.equal(client.getState().status,'error');assert.match(client.getState().error,scenario.message);assert.doesNotMatch(client.getState().error,/меньш.*област/);assert.deepEqual(operations,['capture']);}
+  if(!scenario.message){assert.equal(client.getState().status,'preview');assert.deepEqual(operations,['capture','read','register']);}
+  else{assert.equal(client.getState().status,'error');assert.match(client.getState().error,scenario.message);assert.doesNotMatch(client.getState().error,/меньш.*област/);assert.deepEqual(operations,['capture','read']);}
 });

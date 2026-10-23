@@ -38,13 +38,13 @@ test('client executes overview → requested native context → correlated plan 
  const f=fixture();let ticket,contextCalls=0;
  const client=f.makeClient(async(url,options)=>{
   const b=options.body&&JSON.parse(options.body);
-  if(url.endsWith('/runs')){ticket=run(b,'awaiting-context',{pending:{callId:'read-1',nodeIds:['form']}});return response(ticket);}
+  if(url.endsWith('/runs')){assert.equal(p.contextValid(b.context,b.snapshot,['root','form']),true);ticket=run(b,'awaiting-context',{pending:{callId:'read-1',nodeIds:['form']}});return response(ticket);}
   assert.ok(url.endsWith('/context'));contextCalls++;assert.equal(b.callId,'read-1');assert.deepEqual(b.context.nodes[0].texts,['Адрес доставки']);
   return response(Object.assign({},ticket,{status:'completed',step:2,readCount:1,pending:null,plan:{changes:[f.change]}}));
  });
  const states=[];client.subscribe(()=>states.push(client.getState().status));await client.start();
  assert.equal(contextCalls,1);assert.ok(states.includes('reading-context'));assert.equal(client.getState().status,'preview');assert.equal(client.getState().run.readCount,1);
- assert.deepEqual(f.operations,['capture','read','register']);await client.apply();assert.equal(f.form.name,'Адрес доставки');await client.undo();assert.equal(f.form.name,'Frame 1');
+ assert.deepEqual(f.operations,['capture','read','read','register']);await client.apply();assert.equal(f.form.name,'Адрес доставки');await client.undo();assert.equal(f.form.name,'Frame 1');
 });
 test('cancel during a context response ignores a late plan and requests server cancellation',async()=>{
  const f=fixture();let ticket,release,entered=false,cancelled=0;
@@ -55,7 +55,7 @@ test('cancel during a context response ignores a late plan and requests server c
   entered=true;await new Promise(resolve=>{release=resolve;});return response(Object.assign({},ticket,{status:'completed',pending:null,plan:{changes:[f.change]}}));
  });
  const work=client.start();while(!entered)await new Promise(resolve=>setImmediate(resolve));await client.cancel();release();await work;
- assert.ok(cancelled>=1);assert.equal(client.getState().status,'idle');assert.deepEqual(f.operations,['capture','read']);assert.equal(f.form.name,'Frame 1');
+ assert.ok(cancelled>=1);assert.equal(client.getState().status,'idle');assert.deepEqual(f.operations,['capture','read','read']);assert.equal(f.form.name,'Frame 1');
 });
 test('selection changes stop a pending run without registering its plan',async()=>{
  const f=fixture();let created=false,cancelled=0;
@@ -65,15 +65,15 @@ test('selection changes stop a pending run without registering its plan',async()
  });
  client.selection({pageId:'page',id:'root',valid:true});const work=client.start();while(!created)await new Promise(resolve=>setImmediate(resolve));
  await new Promise(resolve=>setImmediate(resolve));client.selection({pageId:'page',id:'form',valid:true});await work;
- assert.equal(client.getState().status,'error');assert.match(client.getState().error,/Выделение изменилось/);assert.ok(cancelled);assert.deepEqual(f.operations,['capture']);
+ assert.equal(client.getState().status,'error');assert.match(client.getState().error,/Выделение изменилось/);assert.ok(cancelled);assert.deepEqual(f.operations,['capture','read']);
 });
 test('upstream connection failures are distinguished from execution deadlines and retain progress',async()=>{
  for(const [code,message] of [['LAYER_NAMES_CONNECTION_FAILED',/установить соединение/],['LAYER_NAMES_DEADLINE',/Время выполнения/]]){
   const f=fixture(),client=f.makeClient(async(url,options)=>url.endsWith('/cancel')?response(null):response(run(JSON.parse(options.body),'failed',{readCount:1,error:{code,message:code}})));
-  await client.start();assert.equal(client.getState().status,'error');assert.match(client.getState().error,message);assert.equal(client.getState().run.readCount,1);assert.deepEqual(f.operations,['capture']);
+  await client.start();assert.equal(client.getState().status,'error');assert.match(client.getState().error,message);assert.equal(client.getState().run.readCount,1);assert.deepEqual(f.operations,['capture','read']);
  }
 });
-test('foreign run identity cannot trigger native reads or registration',async()=>{
+test('foreign run identity cannot trigger additional native reads or registration',async()=>{
  const f=fixture(),client=f.makeClient(async(url,options)=>response(run(JSON.parse(options.body),'awaiting-context',{requestId:'foreign',pending:{callId:'read',nodeIds:['form']}})));
- await client.start();assert.equal(client.getState().status,'error');assert.deepEqual(f.operations,['capture']);
+ await client.start();assert.equal(client.getState().status,'error');assert.deepEqual(f.operations,['capture','read']);
 });

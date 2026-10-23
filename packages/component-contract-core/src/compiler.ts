@@ -986,6 +986,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
       ...(rootAliases.size ? {rootTargetAliasesVersion: 1 as const} : {}),
       ...(manual.rules.some(r=>r.constraints.some(c=>c.dependency?.subjectCondition)) ? {dependencySubjectConditionsVersion:1 as const} : {}),
       ...([...dependencyBindings.values()].some(b=>b.identityLock) ? {assetIdentityLockVersion:1 as const,instanceMainComponentAliasesVersion:1 as const} : {}),
+      ...(manual.metadata.instanceMainComponentAliasesVersion === 1 ? {instanceMainComponentAliasesVersion:1 as const} : {}),
       ...(memberCollections.length ? {memberCollectionsVersion: 1 as const, occurrenceAddressVersion: 1 as const} : {}),
       ...(manual.componentDependencies?.some(d=>d.bindings.some(b=>b.kind==='direct-child')) ? {directChildDependenciesVersion:1 as const,occurrenceAddressVersion:1 as const} : {}),
       ...(variantEvidence?.occurrenceAddressVersion===1 || manual.targets.some(t=>t.variantHints?.length) ? {occurrenceAddressVersion:1 as const} : {}),

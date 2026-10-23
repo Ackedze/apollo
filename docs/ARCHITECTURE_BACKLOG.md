@@ -4,6 +4,17 @@
 
 ### CC-COMPAT-NATIVE-SOURCE-CONTINUITY-01 — явные native targets после смены варианта
 
+23.10.2026, nested-area correction (Core 0.1.23 / Editor 0.2.108): manual
+metadata can opt into existing canonical-key main aliases without adding an
+unrelated asset rule. Area audits pass exact physical-node correspondence to
+`validatedDependencyCapture`; only proven internal parts inherit the enclosing
+independent baseline. Native target resolution preserves that configuration
+for the same canonical identity, while changed variants retain their own
+independent reference. SLOT/foreign/missing/ambiguous contexts fail closed.
+Norms, Draft/Ready and generation scope are unchanged. Acceptance: synthetic
+owner/alias/actual-mutation regressions and retained report replay; installation
+and native field result are recorded separately. No Editor UI change.
+
 23.10.2026. Core **0.1.23**: opt-in `nativeSourceContinuityVersion=1`
 восстанавливает INSTANCE/TEXT по объявленным source addresses, ближайшему
 native owner и независимому matched lineage. Имена слоёв не доказывают identity;

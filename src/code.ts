@@ -246,13 +246,30 @@ async function audit(requestId: string, options:any={}) {
       endStage();
       endStage = time('evaluate', subject.id);
       applyAuditPlatform(captured.snapshot, contract, options.platform);
-      const result = runtime.auditContractSnapshot(captured.snapshot, contract, item.evaluationOptions), scopeId = subject.id;
+      const scopeId = subject.id, ownership = ownedParts.get(scopeId);
+      const owner = ownership && captures.find(entry => entry.subject.id === ownership.ownerNodeId
+        && entry.contract.package.id === ownership.ownerContractId);
+      let ownerContext: any, result: any;
+      if (owner) {
+        const hostIds = new Map<string, string>();
+        owner.captured.anatomy.forEach((node: any) => { if (node.figmaNodeId) hostIds.set(node.figmaNodeId, node.id); });
+        const nodeMap: Record<string, string> = {};
+        captured.anatomy.forEach((node: any) => { const id = hostIds.get(node.figmaNodeId); if (id) nodeMap[node.id] = id; });
+        ownerContext = { snapshot: owner.captured.snapshot, contract: owner.contract,
+          evaluationMode: owner.contract.status === 'draft' ? 'authoring-preview' : undefined,
+          nodeId: ownership.snapshotNodeId, nodeMap };
+      }
+      try { result = runtime.auditContractSnapshot(captured.snapshot, contract, item.evaluationOptions, ownerContext); }
+      catch (error) { if ((error as any)?.code !== 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE') throw error;
+        endStage(); gap('owner-context-unavailable', 'Не подтверждён эталон вложенного компонента в текущей сборке. Повторите проверку.'); continue; }
       endStage();
       endStage = time('index-component', subject.id);
       const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: engine.stableHash(contract) });
       const diagnostics = scopeContractCaptureWarnings(captured, contract);
       const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
         warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };
+      if (ownerContext) Object.assign(component, { ownerContext: { scopeId: owner.subject.id,
+        nodeId: ownerContext.nodeId, nodeMap: ownerContext.nodeMap } });
       components.push(component); captures.push({ subject, contract, captured });
       const map = new Map<string, string>(); captured.anatomy.forEach((node: any) => { if (node.figmaNodeId) map.set(node.id, node.figmaNodeId); });
       for (const entry of result.engine.evaluations) {

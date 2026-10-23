@@ -164,3 +164,26 @@ test('unadvertised legacy absence does not fabricate an owner baseline',()=>{
 test('advertised malformed owner proof is not a legacy fallback',()=>{
  const f=heightFixture();delete f.parent.instanceContentReferences.base;f.parent.instanceContentResults=[{status:'matched',lineageProven:true,matchedNodeIds:[f.part.id],boundaryNodeId:f.part.id}];assert.equal(capture(f).reason,'dependency-owner-baseline-unavailable');
 });
+
+
+test('same configured native identity preserves enclosing paint after local reference resolution',()=>{
+ const f=configured.fixture(core);configured.switchVariant(f,core);
+ const local=f.snapshot.instanceContentReferences.attempts[0].reference;
+ f.part.appearance={fill:[{type:'SOLID',color:{r:0,g:1,b:0}}]};
+ local.nodes.find(n=>n.id===f.part.id).appearance={fill:[{type:'SOLID',color:{r:0,g:0,b:0}}]};
+ const enclosing=clone(local);enclosing.source.rootNodeId='independent-enclosing-configured';
+ enclosing.nodes.find(n=>n.id===f.part.id).appearance=clone(f.part.appearance);
+ const expected=core.materializeEffectiveBaseline(f.snapshot,enclosing,true).snapshot.nodes.find(n=>n.id===f.part.id);
+ const owner={part:{effective:clone(expected.baseline.effective),provenance:clone(expected.baselineProvenance),unknownFacts:[]}};
+ const contract=f.compile().contract,p=core.prepareValidationSnapshot(f.snapshot,contract,undefined,owner),part=p.nodes.find(n=>n.id==='part');
+ assert.deepEqual(part.baseline.effective.appearance.fill,enclosing.nodes.find(n=>n.id==='part').appearance.fill);
+ assert.deepEqual(core.prepareValidationSnapshot(p,contract,undefined,owner),p);
+});
+test('manual native main aliases opt-in compiles without inventing an asset rule',()=>{
+ const f=asset.fixture(core);f.manual.rules=f.manual.rules.filter(r=>!r.constraints.some(c=>c.type==='dependencyDomain'));
+ f.manual.metadata.instanceMainComponentAliasesVersion=1;
+ const compiled=core.compileManualSource(f.manual,f.evidence);assert(compiled.contract,JSON.stringify(compiled.issues));
+ assert.equal(compiled.contract.runtimePolicy.instanceMainComponentAliasesVersion,1);
+ f.manual.metadata.instanceMainComponentAliasesVersion=2;
+ assert(core.validateManualSource(f.manual).some(i=>i.code==='INSTANCE_MAIN_COMPONENT_ALIASES_VERSION'));
+});

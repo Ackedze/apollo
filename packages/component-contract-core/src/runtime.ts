@@ -81,6 +81,20 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
   materializeVerifiedVariantTargets(snapshot, contract);
   materializeVariantTextTargets(snapshot, contract);
   materializeNativeSourceTargets(snapshot, contract);
+  // Native resolution may restore standalone paint. Preserve the proven host's same native configuration.
+  if (ownerBaseline) for (const node of snapshot.nodes) {
+    const baseline=ownerBaseline[String(node.id)], local=(node.baseline as Record<string, any> | undefined)?.effective as Record<string, any> | undefined;
+    if (!baseline || !local || (node.baselineProvenance as Record<string, any> | undefined)?.status!=='matched') continue;
+    const expected=baseline.effective.component as Record<string, any> | undefined, current=local.component;
+    const identity=(c:Record<string,any>|undefined)=>c?.identity?.componentKey
+      ? [c.identity.componentKey,c.identity.componentSetKey||'']
+      : c?.sourceIdentity?.ownerComponentKey ? [c.sourceIdentity.ownerComponentKey,c.sourceIdentity.sourceNodeId] : undefined;
+    const key=identity(expected);
+    if (!key || stableHash(key)!==stableHash(identity(current))) continue;
+    node.baseline={effective:JSON.parse(JSON.stringify(baseline.effective))};
+    node.baselineProvenance=JSON.parse(JSON.stringify(baseline.provenance));
+    node.unknownFacts=[...new Set([...(node.unknownFacts as string[]||[]).filter(f=>f!=='baseline.effective'&&!f.startsWith('baseline.effective.')),...(baseline.unknownFacts||[])])];
+  }
   materializeLineHeightReferences(snapshot, contract);
   materializeSlotTargets(snapshot, contract);
   materializeDeclaredTargetIdentities(snapshot, contract);

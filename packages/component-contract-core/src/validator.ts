@@ -46,6 +46,9 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
   if (manual.schemaVersion !== 'apollo.component-contract.manual.v2-experimental') {
     error('SCHEMA_VERSION', '/schemaVersion', 'Unsupported manual source schema version.');
   }
+  if (manual.metadata.instanceMainComponentAliasesVersion !== undefined && manual.metadata.instanceMainComponentAliasesVersion !== 1) {
+    error('INSTANCE_MAIN_COMPONENT_ALIASES_VERSION', '/metadata/instanceMainComponentAliasesVersion', 'Unsupported native main identity aliases.');
+  }
   if (manual.metadata.ruleOwnershipVersion !== undefined && manual.metadata.ruleOwnershipVersion !== 1) {
     error('RULE_OWNERSHIP_VERSION', '/metadata/ruleOwnershipVersion', 'Unsupported rule ownership model.');
   }

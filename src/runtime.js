@@ -3,13 +3,14 @@ const engine = require('@apollo/predicate-engine');
 const dependencies = require('@apollo/component-contract-dependencies');
 const { CONTRACT_SCHEMA, assertRuntimeContract, contractEvaluationMode, collectContractKeys, collectContractRules, collectContractDependencies } = require("./contract-profile");
 const authoring = require("./authoring-source");
+const { collectContractOwnedParts } = require('./area-ownership');
 const RUNTIME_VERSION = '0.4.1';
 
 function loadRuntimeContract(contract, options) {
   return assertRuntimeContract(contract, engine, options);
 }
 
-function auditContractSnapshot(snapshot, inputContract, options) {
+function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
   const mode = contractEvaluationMode(options), contract = loadRuntimeContract(inputContract, options);
   if (!snapshot || snapshot.schemaVersion !== 'apollo.predicate-snapshot.v2'
     || !Array.isArray(snapshot.nodes) || !Array.isArray(snapshot.selection)
@@ -40,7 +41,25 @@ function auditContractSnapshot(snapshot, inputContract, options) {
     error.code = 'APOLLO_V4_COMPONENT_NOT_COVERED';
     throw error;
   }
-  const result = core.evaluateCompiledContract(snapshot, mode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(contract) : contract);
+  let ownerBaseline;
+  const owner = ownerContext;
+  if (owner) {
+    boundCapture(owner.snapshot, 0);
+    const parent = loadRuntimeContract(owner.contract, owner.evaluationMode ? { evaluationMode: owner.evaluationMode } : undefined);
+    const parts = collectContractOwnedParts(owner.snapshot, parent).filter(part => part.snapshotNodeId === owner.nodeId);
+    const host = JSON.parse(JSON.stringify(owner.snapshot));
+    host.componentDependencyCaptures = (host.componentDependencyCaptures || []).filter(capture => capture.nodeId !== owner.nodeId);
+    host.componentDependencyCaptures.push({ nodeId: owner.nodeId, nodeMap: owner.nodeMap, snapshot });
+    const proof = parts.length === 1 && dependencies.validatedDependencyCapture(host, owner.nodeId, contract);
+    if (!proof?.snapshot || !proof.nodeMap || contract.capabilities.facts.some(fact => fact.startsWith('baseline.effective')) && !proof.ownerBaseline) {
+      const error = new TypeError('Enclosing component evidence is unavailable or inconsistent');
+      error.code = 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE';
+      throw error;
+    }
+    snapshot = proof.snapshot;
+    ownerBaseline = proof.ownerBaseline;
+  }
+  const result = core.evaluateCompiledContract(snapshot, mode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(contract) : contract, [], undefined, ownerBaseline);
   const pendingSources = contract.customizationPolicy.filter((entry) => entry.status !== 'deprecated'
     && ['delegated', 'context-only'].includes(entry.execution.route)).map((entry) => ({
     ruleId: entry.id, route: entry.execution.route,

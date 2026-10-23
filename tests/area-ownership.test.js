@@ -209,3 +209,45 @@ for (const [name, edit] of [
   const f = payloadFixture(); edit(f);
   assert.deepEqual(scopeContractCaptureWarnings(f.captured,f.contract).warnings, f.captured.warnings);
 });
+
+
+const { auditContractSnapshot } = require('../dist/runtime.cjs');
+function ownedAuditFixture() {
+  const f=fixture(1), part=f.snapshot.nodes[1];
+  f.snapshot.source.occurrenceAddressVersion=1;
+  f.snapshot.source.captureTopology={complete:true,issues:[]};
+  part.resolvedModes={};part.appearance={opacity:.8};
+  f.sync();f.snapshot.variantReference=core.captureVariantReference(f.snapshot,'test-key','');
+  const base=clone(f.snapshot);base.source.rootNodeId='independent-enclosing';
+  f.snapshot.instanceContentReferences={schemaVersion:'apollo.instance-content-references.v4',base,attempts:[]};
+  const child=clone(f.snapshot);child.nodes=[clone(part)];child.nodes[0].parentId=null;child.nodes[0].semantic={path:'Test',role:'root'};
+  child.source.componentKey='part-key-0';child.source.rootNodeId='actual-child';child.selection=[part.id];delete child.instanceContentReferences;
+  const standalone=clone(child);standalone.source.rootNodeId='independent-standalone';standalone.nodes[0].appearance.opacity=1;
+  child.variantReference=core.captureVariantReference(standalone,'part-key-0','');
+  child.instanceContentReferences={schemaVersion:'apollo.instance-content-references.v4',base:standalone,attempts:[]};
+  child.nodes=core.materializeEffectiveBaseline(child,standalone,true).snapshot.nodes;
+  const contract=fixtures.contract();contract.package.id=contract.package.componentId=contract.facts.component.componentId='test.owned';
+  contract.package.snapshotProfile='variant-facts-v4';contract.facts.component.componentKey='part-key-0';
+  contract.facts.representations[0].locator.componentKey='part-key-0';
+  const shape=child.variantReference.nodes,id=contractHash(shape);
+  contract.facts.variantEvidence={schemaVersion:'apollo.variant-anatomy.v1',sourceHash:'c'.repeat(64),structures:{[id]:shape},variants:[{componentKey:'part-key-0',componentSetKey:'part-key-0',structureId:id,properties:{}}]};
+  contract.rules[0].assert.expected={fact:'baseline.effective.appearance.opacity'};contract.capabilities.facts=['baseline.effective.appearance.opacity'];
+  return {f,part,child,contract,options:{ownerContext:{snapshot:f.snapshot,contract:f.contract,nodeId:part.id,nodeMap:{[part.id]:part.id}}}};
+}
+test('area audit revalidates independent enclosing configuration without mutating either snapshot',()=>{
+  const a=ownedAuditFixture(),before=JSON.stringify(a);
+  assert.equal(auditContractSnapshot(a.child,a.contract).engine.evaluations[0].classification,'violation');
+  assert.equal(auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext).engine.evaluations[0].classification,'compliant');
+  assert.equal(JSON.stringify(a),before);
+  a.part.appearance.opacity=a.child.nodes[0].appearance.opacity=.4;
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext).engine.evaluations[0];
+  assert.equal(result.classification,'violation');assert.equal(result.trace.expected,.8);
+});
+for(const [name,mutate] of [
+  ['foreign mapping',a=>a.options.ownerContext.nodeMap[a.part.id]='root'],
+  ['stale child actual',a=>a.child.nodes[0].appearance.opacity=.4],
+  ['missing independent owner',a=>delete a.f.snapshot.instanceContentReferences],
+  ['external content',a=>a.f.contract.customizationPolicy[0].controlPaths=[{kind:'slot-api',target:a.part.id,contentOwnership:'external'}]],
+])test('area owner context fails closed for '+name,()=>{
+  const a=ownedAuditFixture();mutate(a);assert.throws(()=>auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext),{code:'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE'});
+});

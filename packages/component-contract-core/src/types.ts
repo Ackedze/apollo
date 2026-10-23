@@ -446,6 +446,7 @@ export type ManualSource = {
     ruleOwnershipVersion?: 1;
     publicRepresentationBoundaryVersion?: 1;
     dependencyCompletionVersion?: 1;
+    instanceMainComponentAliasesVersion?: 1;
     owners: {
       generated: 'athena-cli';
       manual: string;

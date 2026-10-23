@@ -92,3 +92,120 @@ test('attribution cannot promote incomplete host coverage to complete', () => {
   assert.equal(result.coverage.governedComponents, 1);
   assert.equal(result.coverage.incompleteComponents, 1);
 });
+
+const core = require('../packages/component-contract-core/dist/core.cjs');
+const { fixture: configured, switchVariant, clone } = require('../packages/component-contract-core/tests/helpers/declared-configured.cjs');
+const { scopeContractCaptureWarnings } = require('../dist/runtime.cjs');
+const { appendUnmatchedBaselineWarning, captureInstanceAudit } = require('../packages/component-contract-core/dist/capture.cjs');
+const { runNativeOccurrenceCapture } = require('../packages/component-contract-core/tests/helpers/native-occurrence-capture.cjs');
+function variantPart() {
+  const f = configured(core); f.snapshot.source.propertyReferenceIdentityVersion = 1;
+  switchVariant(f, core);
+  return { snapshot: f.snapshot, contract: f.compile().contract };
+}
+test('independently configured same-family boundary root is owned without changing its facts or verdict', () => {
+  const f = variantPart(), before = JSON.stringify(f), result = core.evaluateCompiledContract(f.snapshot, f.contract);
+  const parts = collectContractOwnedParts(f.snapshot, f.contract);
+  assert.equal(parts.length, 1); assert.equal(parts[0].snapshotNodeId, 'part'); assert.equal(parts[0].targetId, 'part.target');
+  assert.equal(JSON.stringify(f), before); assert.deepEqual(core.evaluateCompiledContract(f.snapshot, f.contract), result);
+});
+for (const [name, edit] of [
+  ['same-set foreign key', f => { f.snapshot.nodes.find(n => n.id === 'part').component.identity.componentKey = 'foreign-variant'; }],
+  ['missing independent host evidence', f => { delete f.snapshot.instanceContentReferences; }],
+  ['missing configured reference', f => { delete f.snapshot.instanceContentReferences.attempts[0].reference; }],
+  ['incomplete configured reference', f => { f.snapshot.instanceContentReferences.attempts[0].reference.source.captureTopology.complete = false; }],
+  ['unproven capture strategy', f => { delete f.snapshot.instanceContentReferences.attempts[0].strategy; }],
+  ['foreign host context', f => { f.snapshot.instanceContentReferences.attempts[0].reference.nodes[0].component.properties.Background = 'False'; }],
+  ['unknown variant identity', f => { f.snapshot.nodes.find(n => n.id === 'part').unknownFacts.push('component.identity'); }],
+  ['missing variant key', f => { delete f.snapshot.nodes.find(n => n.id === 'part').component.identity.componentKey; }],
+  ['unknown variant port', f => { f.snapshot.nodes.find(n => n.id === 'part').unknownFacts.push('component.propertyReferenceBindings'); }],
+  ['external declared variant', f => { f.contract.customizationPolicy[0].controlPaths.push({kind:'slot-api',target:'part.target',contentOwnership:'external'}); }],
+]) test(name + ' cannot reuse cached independent-variant ownership', () => {
+  const f = variantPart();
+  // Cached roles, baselines and successful result must be revalidated, never trusted.
+  const proven = core.prepareValidationSnapshot(f.snapshot, f.contract);
+  f.snapshot = proven; edit(f);
+  assert.deepEqual(collectContractOwnedParts(f.snapshot, f.contract), []);
+});
+function payloadFixture(type = 'SLOT') {
+  const f = fixture(1), root = f.snapshot.nodes[0], slot = f.snapshot.nodes[1];
+  root.component.propertyTypes.Body = 'SLOT';
+  slot.type = type; slot.component = {identity:{},properties:{},propertyTypes:{},propertyReferences:[],propertyReferenceBindings:{slotContentId:'Body'}};
+  const payload = {id:'payload',name:'Arbitrary caller content',type:'FRAME',parentId:slot.id,childIds:[],order:0,visible:true,unknownFacts:[],
+    component:{identity:{},properties:{},propertyTypes:{},propertyReferences:[],propertyReferenceBindings:{}},semantic:{path:'Test / Part 0 / Arbitrary caller content'},baselineProvenance:{status:'unresolved',reason:'structural-identity-unresolved'}};
+  slot.childIds = [payload.id]; f.snapshot.nodes.push(payload);
+  f.contract.customizationPolicy[0].controlPaths = [{kind:'slot-api',target:'part-0',property:'Body',contentOwnership:'external'}]; f.sync();
+  const warnings = ['Other capture warning'], unmatchedBaselineNodeIds = ['payload'];
+  const captured = {snapshot:f.snapshot,unmatchedBaselineNodeIds,warnings,baselineDiagnostics:appendUnmatchedBaselineWarning(warnings,unmatchedBaselineNodeIds)};
+  return {...f,captured,slot,payload,root};
+}
+test('only declared native SLOT descendants leave parent baseline warnings; raw evidence remains intact', () => {
+  const f = payloadFixture(), before = JSON.stringify(f), scoped = scopeContractCaptureWarnings(f.captured, f.contract);
+  assert.deepEqual(scoped.warnings, ['Other capture warning']);
+  assert.deepEqual(scoped.baselineDiagnostics.externalSlotPayloadNodeIds, ['payload']);
+  assert.deepEqual(scoped.baselineDiagnostics.rawUnmatchedBaselineNodeIds, ['payload']);
+  assert.deepEqual(scoped.baselineDiagnostics.rawWarnings, f.captured.warnings); assert.equal(JSON.stringify(f), before);
+  // The SLOT itself and a missing host baseline remain parent diagnostics.
+  f.captured.unmatchedBaselineNodeIds.push('root', 'part-0'); f.captured.warnings = ['Other capture warning'];
+  f.captured.baselineDiagnostics = appendUnmatchedBaselineWarning(f.captured.warnings,f.captured.unmatchedBaselineNodeIds);
+  const own = scopeContractCaptureWarnings(f.captured, f.contract);
+  assert.deepEqual(own.warnings, ['Other capture warning','2 узлов instance не сопоставлены с reference baseline.']);
+  assert.deepEqual(own.baselineDiagnostics.unresolvedBaselineNodeIds, ['root','part-0']);
+});
+test('parent diagnostic scoping uses the capture channel, not matching warning strings', () => {
+  const f = payloadFixture();
+  f.captured.warnings = ['Untranslated mode failure','Untranslated baseline diagnostic'];
+  f.captured.baselineDiagnostics.warning = f.captured.warnings[1];
+  assert.deepEqual(scopeContractCaptureWarnings(f.captured,f.contract).warnings,['Untranslated mode failure']);
+  f.captured.warnings = ['1 узлов instance не сопоставлены с reference baseline.'];
+  f.captured.baselineDiagnostics = appendUnmatchedBaselineWarning(f.captured.warnings,f.captured.unmatchedBaselineNodeIds);
+  assert.equal(f.captured.warnings[0],f.captured.warnings[1]);
+  assert.deepEqual(scopeContractCaptureWarnings(f.captured,f.contract).warnings,[f.captured.warnings[0]]);
+});
+test('legacy or invalid diagnostic markers preserve every raw warning', () => {
+  for (const edit of [
+    f=>{delete f.captured.baselineDiagnostics;},
+    f=>{f.captured.baselineDiagnostics=null;},
+    f=>{f.captured.baselineDiagnostics.kind='other-warning';},
+    f=>{f.captured.baselineDiagnostics.warningIndex=-1;},
+    f=>{f.captured.baselineDiagnostics.warningIndex=0;},
+    f=>{f.captured.baselineDiagnostics.warningIndex=1.5;},
+    f=>{f.captured.baselineDiagnostics.warning='Foreign entry';},
+    f=>{f.captured.baselineDiagnostics.unmatchedNodeIds=['root'];},
+    f=>{f.captured.baselineDiagnostics.unmatchedNodeIds.push('payload');},
+    f=>{f.captured.baselineDiagnostics.extra='unknown-field';},
+  ]) {
+    const f=payloadFixture();edit(f);const result=scopeContractCaptureWarnings(f.captured,f.contract);
+    assert.deepEqual(result.warnings,f.captured.warnings);assert.equal(result.baselineDiagnostics.markerAccepted,false);
+  }
+});
+test('actual capture emits the optional marker at the same time as its raw baseline warning',async()=>{
+  await runNativeOccurrenceCapture(async(api,actual,request)=>{
+    actual.children.push({id:'I10:1;external-frame',name:'Additional frame',type:'FRAME',parent:actual,children:[],visible:true,
+      opacity:1,width:10,height:10,x:0,y:0,resolvedVariableModes:{},componentPropertyReferences:{}});
+    request.includePreview=false;const previous=global.figma;global.figma=api;
+    try {
+      const captured=await captureInstanceAudit(actual,request),marker=captured.baselineDiagnostics;
+      assert.ok(captured.unmatchedBaselineNodeIds.length);assert.equal(marker.kind,'unmatched-baseline');
+      assert.deepEqual(marker.unmatchedNodeIds,captured.unmatchedBaselineNodeIds);
+      assert.equal(captured.warnings[marker.warningIndex],marker.warning);
+      assert.equal(captured.warnings.filter((_,index)=>index===marker.warningIndex).length,1);
+    }finally{if(previous===undefined)delete global.figma;else global.figma=previous;}
+  },{reset:true});
+});
+for (const [name, edit] of [
+  ['same-name FRAME', f => { f.slot.type = 'FRAME'; f.slot.name = 'Slot'; }],
+  ['missing external policy', f => { f.contract.customizationPolicy[0].controlPaths = []; }],
+  ['unconfirmed declared owner', f => { f.contract.customizationPolicy[0].controlPaths[0].ownerTargetId = 'missing-owner'; }],
+  ['foreign slot binding', f => { f.slot.component.propertyReferenceBindings.slotContentId = 'Other'; }],
+  ['unknown native slot binding', f => { f.slot.unknownFacts = ['component.propertyReferenceBindings']; }],
+  ['untyped native owner', f => { delete f.root.component.propertyTypes.Body; }],
+  ['unknown native owner identity', f => { f.root.unknownFacts = ['component.identity']; }],
+  ['missing independent baseline', f => { delete f.snapshot.variantReference; }],
+  ['incomplete independent baseline', f => { f.snapshot.variantReference.complete = false; }],
+  ['incomplete actual topology', f => { f.snapshot.source.captureTopology = {complete:false}; }],
+  ['unknown payload parent', f => { f.payload.unknownFacts = ['parentId']; }],
+]) test(name + ' preserves the parent baseline warning', () => {
+  const f = payloadFixture(); edit(f);
+  assert.deepEqual(scopeContractCaptureWarnings(f.captured,f.contract).warnings, f.captured.warnings);
+});

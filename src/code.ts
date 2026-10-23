@@ -16,7 +16,7 @@ import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-
 import { allowedComponentPropertyNames } from "../packages/component-contract-core/src/instance-validation";
 import { nativeSlotCapturePlan } from "../packages/component-contract-core/src/native-slot-capture";
 import { scanArea, selectionSignature, AREA_IDENTITY_BUDGET_MS } from "./area-scan";
-import { collectContractOwnedParts } from "./area-ownership";
+import { collectContractOwnedParts, scopeContractCaptureWarnings } from "./area-ownership";
 import { validatedDependencyCapture, resolveFixedNestedBinding } from "../packages/component-contract-core/src/component-dependencies";
 const runtime = require("./runtime"), engine = require('@apollo/predicate-engine');
 const {auditDelivery,createAuditReportBridge}=require("./audit-report");
@@ -250,7 +250,9 @@ async function audit(requestId: string, options:any={}) {
       endStage();
       endStage = time('index-component', subject.id);
       const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: engine.stableHash(contract) });
-      const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot, warnings: captured.warnings };
+      const diagnostics = scopeContractCaptureWarnings(captured, contract);
+      const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
+        warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };
       components.push(component); captures.push({ subject, contract, captured });
       const map = new Map<string, string>(); captured.anatomy.forEach((node: any) => { if (node.figmaNodeId) map.set(node.id, node.figmaNodeId); });
       for (const entry of result.engine.evaluations) {
@@ -279,7 +281,7 @@ async function audit(requestId: string, options:any={}) {
         if (child.snapshot && child.nodeMap) registerParts(child.snapshot, pin.contract, child.nodeMap);
       }
       appendUiRules(contract, scopeId, rules, captured.snapshot);
-      for (const warning of captured.warnings) warnings.push(identity.name + ': ' + warning);
+      for (const warning of component.warnings) warnings.push(identity.name + ': ' + warning);
       endStage();
     }
     // Read labels before the final capture/freshness checks, so asynchronous

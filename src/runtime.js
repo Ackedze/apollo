@@ -91,6 +91,7 @@ module.exports = {
   reviewAuthoringSource: authoring.reviewAuthoringSource,
   aggregateAreaResult: require("./area-result").aggregateAreaResult,
   collectContractOwnedParts: require("./area-ownership").collectContractOwnedParts,
+  scopeContractCaptureWarnings: require("./area-ownership").scopeContractCaptureWarnings,
   collectContractKeys, collectContractRules, collectContractDependencies,
   componentDependencyKeys: dependencies.componentDependencyKeys, contractHash: engine.stableHash,
 };

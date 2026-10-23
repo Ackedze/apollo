@@ -753,6 +753,20 @@ export async function exportPreview(node: SceneNode): Promise<{ dataUrl: string;
 }
 
 
+export type CaptureBaselineDiagnostic = {
+  kind: 'unmatched-baseline'; warningIndex: number; warning: string; unmatchedNodeIds: string[];
+};
+
+/** Optional provenance for this one diagnostic; the warning text stays compatible. */
+export function appendUnmatchedBaselineWarning(warnings: string[], unmatchedNodeIds: string[]): CaptureBaselineDiagnostic | undefined {
+  if (!unmatchedNodeIds.length) return;
+  const warning = `${unmatchedNodeIds.length} узлов instance не сопоставлены с reference baseline.`;
+  const diagnostic: CaptureBaselineDiagnostic = { kind: 'unmatched-baseline', warningIndex: warnings.length,
+    warning, unmatchedNodeIds: unmatchedNodeIds.slice() };
+  warnings.push(warning);
+  return diagnostic;
+}
+
 export async function captureInstanceAudit(subject: InstanceNode, message: CaptureSelectionOptions) {
   const timed = async <T>(stage:string, work:()=>T|Promise<T>):Promise<T> => {
     const started = Date.now();
@@ -825,9 +839,7 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
         sequence:temporalSequence,manualSourceHash:message.manualSourceHash,externalContext:temporalStart.context,complete,
         ...(!complete?{reason:temporalStart.reason||end.reason||'changed-during-capture'}:{})};
     }
-    if (materialized.unmatchedNodeIds.length) {
-      warnings.push(`${materialized.unmatchedNodeIds.length} узлов instance не сопоставлены с reference baseline.`);
-    }
+    const baselineDiagnostics = appendUnmatchedBaselineWarning(warnings, materialized.unmatchedNodeIds);
     if(actual.snapshot.source?.captureTopology?.issues.length)warnings.push('Захват дерева остановлен: повторные/противоречивые Figma ID или недоступные узлы. Проверка неполная.');
     if(actual.snapshot.source?.nativeSlotCaptureScope)warnings.push('Внешнее содержимое native SLOT не обходилось: проверены только host и граница слота. Правила содержимого не проверялись.');
     return {
@@ -840,6 +852,7 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
       matchedBaselineNodes: materialized.matchedNodes,
       unmatchedBaselineNodeIds: materialized.unmatchedNodeIds,
       warnings,
+      baselineDiagnostics,
       manualSourceHash: message.manualSourceHash,
     };
   } finally {

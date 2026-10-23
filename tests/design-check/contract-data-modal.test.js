@@ -27,6 +27,28 @@ test('settings action opens actual modal: loading/table, refresh failure/retry, 
  }finally{close?.();w.close();}
 });
 
+test('long contract list scrolls inside the dialog without taking its header or refresh action',async()=>{
+ const dom=new JSDOM('<div id="root"></div>',{runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;let close;
+ w.HTMLDialogElement.prototype.showModal=function(){this.open=true;this.querySelector('button')?.focus();};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
+ const style=d.createElement('style');style.textContent=fs.readFileSync(path.join(app,'src/design-check/finding-card.css'),'utf8');d.head.append(style);
+ const long=data();long.rows=Array.from({length:60},(_,i)=>({...long.rows[0],contractId:'synthetic-'+i}));
+ try{
+  w.eval(bundle+'\nwindow.ModalTest=ModalTest;');close=w.ModalTest.mount(d.querySelector('#root'),()=>Promise.resolve(long));
+  const settings=d.querySelector('[aria-label="Открыть настройки Apollo"]');settings.click();await tick();Array.from(d.querySelectorAll('button')).find(b=>b.textContent==='Посмотреть данные').click();await tick();
+  const dialog=d.querySelector('dialog'),content=dialog.firstElementChild,region=dialog.querySelector('[role="region"]'),header=dialog.querySelector('header'),actions=dialog.querySelector('.apollo-data-actions');
+  assert.equal(dialog.querySelectorAll('tbody tr').length,60);
+  assert.equal(w.getComputedStyle(dialog).overflow,'hidden','the outer dialog cannot scroll its close button out of view');
+  assert.equal(w.getComputedStyle(dialog).height,'fit-content','short/loading/empty lists do not reserve a viewport-sized blank area');
+  assert.equal(w.getComputedStyle(content).display,'flex');assert.equal(w.getComputedStyle(content).flexDirection,'column');assert.equal(w.getComputedStyle(content).boxSizing,'border-box');assert.equal(w.getComputedStyle(content).maxHeight,'inherit');
+  assert.equal(header.parentElement,content);assert.equal(actions.parentElement,content);assert.equal(region.parentElement,content);assert.equal(region.contains(header),false);assert.equal(region.contains(actions),false);
+  assert.equal(w.getComputedStyle(header).flexShrink,'0');assert.equal(w.getComputedStyle(actions).flexShrink,'0');
+  assert.equal(w.getComputedStyle(region).overflow,'auto');assert.equal(w.getComputedStyle(region).minHeight,'0');assert.equal(w.getComputedStyle(region).flexShrink,'1');assert.equal(w.getComputedStyle(region).overscrollBehavior,'contain');
+  assert.equal(dialog.querySelector('table').parentElement,region,'no second nested table scroller');assert.equal(w.getComputedStyle(dialog.querySelector('thead th')).position,'sticky');
+  region.scrollTop=10000;region.dispatchEvent(new w.Event('scroll'));assert.equal(dialog.scrollTop,0);assert.equal(d.activeElement,header.querySelector('button'));
+  header.querySelector('button').click();await tick();assert.equal(d.querySelector('dialog'),null);assert.equal(d.activeElement,settings);
+ }finally{close?.();w.close();}
+});
+
 async function pickerHarness({width=800,height=860,top=180,right=760}={},run){
  const dom=new JSDOM('<div class="design-check-shell apollo-new"><div id="root"></div></div><button id="outside">Снаружи</button>',{url:'https://apollo-ui.invalid/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
  Object.defineProperty(w,'innerWidth',{value:width});Object.defineProperty(w,'innerHeight',{value:height});

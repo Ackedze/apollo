@@ -44,10 +44,12 @@
 .apollo-finding-dialog .apollo-finding-information-body { padding:0; border:0; font-size:14px; line-height:20px; overflow-wrap:anywhere; }
 .apollo-finding-dialog pre { white-space:pre-wrap; overflow-wrap:anywhere; font:inherit; }
 
-.apollo-data-dialog { width:960px; }
+.apollo-data-dialog { width:960px; height:fit-content; overflow:hidden; }
+.apollo-data-dialog .apollo-finding-dialog-content { box-sizing:border-box; display:flex; flex-direction:column; min-height:0; max-height:inherit; }
+.apollo-data-dialog header, .apollo-data-dialog .apollo-data-actions { flex-shrink:0; }
 .apollo-data-dialog .apollo-data-caption { color:#62626b; margin:0 0 20px; }
-.apollo-data-table-scroll { overflow:auto; max-height:calc(100dvh - 300px); }
-.apollo-data-table-scroll:focus-visible { outline:2px solid #1769d2; outline-offset:2px; }
+.apollo-data-table-scroll { position:relative; flex:0 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; }
+.apollo-data-table-scroll:focus-visible { outline:2px solid #1769d2; outline-offset:-2px; }
 .apollo-data-dialog table { width:100%; min-width:680px; border-collapse:collapse; table-layout:fixed; font-size:12px; line-height:18px; }
 .apollo-data-dialog th, .apollo-data-dialog td { padding:14px 8px; border-bottom:1px solid #e7e7eb; text-align:left; vertical-align:top; overflow-wrap:anywhere; }
 .apollo-data-dialog thead th { position:sticky; top:0; background:white; font-weight:500; color:#62626b; }

@@ -168,12 +168,28 @@
   flex-shrink: 0;
 }
 
-.pickerMenu {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  z-index: 40;
+.pickerOverlay {
+  position: fixed;
+  z-index: 1000;
+  width: 195px;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  font-family: "Apollo Alfa", sans-serif;
+  color: rgba(3, 3, 6, 0.88);
 }
+
+.pickerMenu {
+  width: 100%;
+  max-height: inherit;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #c6c8ce #fff;
+}
+
+.pickerMenu::-webkit-scrollbar { width: 6px; }
+.pickerMenu::-webkit-scrollbar-thumb { background: #c6c8ce; border: 1px solid #fff; border-radius: 6px; }
+.pickerOverlay button:focus-visible { outline: 2px solid #1f73ea; outline-offset: -2px; }
 
 .switchRow {
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useEffectEvent, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { GenerationExampleCaptureRequest, PageTypeId } from "../types";
 import { Button } from "./Button";
@@ -127,6 +127,43 @@ const WORKSHOP_OPTIONS: WorkshopOption[] = [
   },
 ];
 
+function SettingsPickerMenu({anchor, menuRef, label, onClose, children}: {
+  anchor: React.RefObject<HTMLDivElement | null>; menuRef: React.RefObject<HTMLDivElement | null>;
+  label: string; onClose: () => void; children: React.ReactNode;
+}) {
+  const close = useEffectEvent(onClose);
+  useLayoutEffect(() => {
+    const menu = menuRef.current, trigger = anchor.current?.querySelector('button');
+    if (!menu || !trigger) return;
+    const bounds = trigger.getBoundingClientRect(), size = menu.getBoundingClientRect();
+    const below = Math.max(0, window.innerHeight - bounds.bottom - 12), above = Math.max(0, bounds.top - 12);
+    const flipped = size.height > below && above > below, height = Math.min(size.height, flipped ? above : below);
+    menu.style.left = `${Math.max(8, Math.min(bounds.right - size.width, window.innerWidth - size.width - 8))}px`;
+    menu.style.top = `${flipped ? bounds.top - height - 4 : bounds.bottom + 4}px`;
+    menu.style.maxHeight = `${flipped ? above : below}px`;
+    (menu.querySelector<HTMLButtonElement>('button[aria-pressed="true"]:not(:disabled)') ?? menu.querySelector<HTMLButtonElement>('button:not(:disabled)'))?.focus({preventScroll:true});
+    const scroll = (event: Event) => { if (!(event.target instanceof Node) || !menu.contains(event.target)) close(); };
+    const resize = () => close();
+    document.addEventListener('scroll', scroll, true);
+    window.addEventListener('resize', resize);
+    return () => {
+      document.removeEventListener('scroll', scroll, true);
+      window.removeEventListener('resize', resize);
+      if (menu.contains(document.activeElement) && trigger.isConnected) trigger.focus({preventScroll:true});
+    };
+  }, [anchor, menuRef]);
+  return createPortal(<div ref={menuRef} className={styles.pickerOverlay} role="group" aria-label={label} onKeyDown={event => {
+    if (event.key === 'Tab') { anchor.current?.querySelector('button')?.focus({preventScroll:true}); onClose(); return; }
+    if (!['ArrowDown','ArrowUp','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    const buttons = Array.from(menuRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
+    if (!buttons.length) return;
+    const current = buttons.indexOf(document.activeElement as HTMLButtonElement);
+    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : (current + (event.key === 'ArrowUp' ? -1 : 1) + buttons.length) % buttons.length;
+    buttons[next].focus({preventScroll:true});
+  }}><OptionList className={styles.pickerMenu}>{children}</OptionList></div>, document.body);
+}
+
 export function TopSection({
   controlAvailability,
   title,
@@ -162,10 +199,12 @@ export function TopSection({
   const pageTypeRootRef = useRef<HTMLDivElement | null>(null);
   const pickerRootRef = useRef<HTMLDivElement | null>(null);
   const workshopRootRef = useRef<HTMLDivElement | null>(null);
+  const pickerMenuRef = useRef<HTMLDivElement | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [pageTypeOpen, setPageTypeOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [workshopOpen, setWorkshopOpen] = useState(false);
+  const closeSettingsPicker = useCallback(() => { setPickerOpen(false); setWorkshopOpen(false); }, []);
   const [exampleModalOpen, setExampleModalOpen] = useState(false);
   const [dataOpen, setDataOpen] = useState(false);
   const [selectedPickerLabel, setSelectedPickerLabel] = useState(pickerLabel);
@@ -204,6 +243,7 @@ export function TopSection({
 
     function handlePointerDown(event: MouseEvent): void {
       const target = event.target as Node;
+      if (pickerMenuRef.current?.contains(target)) return;
       if (!settingsRootRef.current?.contains(target)) {
         setSettingsOpen(false);
       }
@@ -220,6 +260,11 @@ export function TopSection({
 
     function handleKeyDown(event: KeyboardEvent): void {
       if (event.key === 'Escape') {
+        if (pickerOpen || workshopOpen) {
+          event.preventDefault();
+          closeSettingsPicker();
+          return;
+        }
         if (settingsOpen && settingsRootRef.current?.contains(document.activeElement)) settingsButtonRef.current?.focus();
         setSettingsOpen(false);
         setPageTypeOpen(false);
@@ -235,7 +280,7 @@ export function TopSection({
       document.removeEventListener('mousedown', handlePointerDown);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [settingsOpen, pageTypeOpen, pickerOpen, workshopOpen]);
+  }, [settingsOpen, pageTypeOpen, pickerOpen, workshopOpen, closeSettingsPicker]);
 
   const selectedOption =
     PICKER_OPTIONS.find((option) => option.label === selectedPickerLabel) ??
@@ -312,7 +357,7 @@ export function TopSection({
                 }}
               />
               {workshopOpen ? (
-                <OptionList className={styles.pickerMenu}>
+                <SettingsPickerMenu anchor={workshopRootRef} menuRef={pickerMenuRef} label="Канал" onClose={closeSettingsPicker}>
                   {WORKSHOP_OPTIONS.map((option) => (
                     <OptionListCell
                       key={option.id}
@@ -325,7 +370,7 @@ export function TopSection({
                       }}
                     />
                   ))}
-                </OptionList>
+                </SettingsPickerMenu>
               ) : null}
             </div>
           </div>
@@ -344,7 +389,7 @@ export function TopSection({
                 }}
               />
               {pickerOpen ? (
-                <OptionList className={styles.pickerMenu}>
+                <SettingsPickerMenu anchor={pickerRootRef} menuRef={pickerMenuRef} label="Платформа" onClose={closeSettingsPicker}>
                   <OptionListHeader label="Web" />
                   <OptionListCell
                     label="Desktop"
@@ -387,7 +432,7 @@ export function TopSection({
                       setPickerOpen(false);
                     }}
                   />
-                </OptionList>
+                </SettingsPickerMenu>
               ) : null}
             </div>
           </div>

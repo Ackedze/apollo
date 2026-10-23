@@ -172,7 +172,7 @@ function effectiveVisibility(node: Record<string, any>, topology: NonNullable<Re
 
 /** Source identity is checked against its actual and independent reference owner.
  * No diagnostic path/name is allowed to create a match. */
-function sourceMatches(node: Record<string, any>, path: string, binding: DeclaredTargetBindingV1,
+function sourceMatches(node: Record<string, any>, path: string, binding: Pick<DeclaredTargetBindingV1, 'nativeSource'>,
   snapshot: PreviewSnapshot, topology: NonNullable<ReturnType<typeof rootedTopology>>, portable: boolean): boolean {
   const source = record(record(node.component).sourceIdentity), expected = binding.nativeSource;
   const reference = snapshot.variantReference!;
@@ -469,4 +469,93 @@ export function bindDeclaredTargetRuleSelectors(contract: CompiledContract): voi
   contract.rules = contract.rules.map(rule => visit(rule));
   const facts = contract.facts.targets.map(t => `declaredTargetMembershipV1.${declaredTargetMembershipKey(t.id)}`);
   contract.capabilities.facts = [...new Set(contract.capabilities.facts.concat(facts))].sort();
+}
+
+export function nativeSourceContinuityErrors(targets: SemanticTarget[]): string[] {
+  const errors: string[] = [];
+  for (const target of targets.filter(t => t.nativeSourceContinuity)) {
+    const c = target.nativeSourceContinuity!, anchors = targets.filter(t => t.id === c.anchorTargetId);
+    if (!closed(c, ['version', 'anchorTargetId', 'nodeType', 'sources']) || c.version !== 1
+      || !['INSTANCE', 'TEXT'].includes(c.nodeType) || !Array.isArray(c.sources) || !c.sources.length || c.sources.length > 256
+      || c.sources.some(s => !closed(s, ['ownerComponentKey', 'sourceNodeId']) || !text(s.ownerComponentKey) || !text(s.sourceNodeId))
+      || new Set(c.sources.map(s => JSON.stringify([s.ownerComponentKey, s.sourceNodeId]))).size !== c.sources.length) {
+      errors.push(`${target.id}: malformed or ambiguous native source declarations.`);
+      continue;
+    }
+    if (anchors.length !== 1 || anchors[0] === target || target.variantContinuity
+      || anchors.length === 1 && targets.filter(t => t.semanticRole === anchors[0].semanticRole).length !== 1
+      || targets.filter(t => t.semanticRole === target.semanticRole).length !== 1) errors.push(`${target.id}: requires a unique native anchor and role.`);
+    const seen = new Set<string>([target.id]);
+    let current: SemanticTarget | undefined = anchors[0];
+    while (current) {
+      if (seen.has(current.id)) { errors.push(`${target.id}: native anchor cycle.`); break; }
+      seen.add(current.id);
+      current = targets.find(t => t.id === current?.nativeSourceContinuity?.anchorTargetId);
+    }
+  }
+  return errors;
+}
+
+export function assertNativeSourceContinuityContract(contract: CompiledContract): void {
+  const declared = contract.facts.targets.some(t => t.nativeSourceContinuity);
+  const enabled = contract.runtimePolicy.nativeSourceContinuityVersion === 1;
+  const errors = nativeSourceContinuityErrors(contract.facts.targets);
+  if (declared !== enabled) errors.push('Native source declarations require explicit supported runtime policy.');
+  // ponytail: v1 restores role facts; reject identity ledgers until they consume the same proof.
+  if (enabled && contract.runtimePolicy.declaredTargetIdentityVersion !== undefined) errors.push('Native source continuity v1 does not support declared identity ledgers.');
+  if (errors.length) throw Object.assign(new Error(errors.join('; ')), { code: 'NATIVE_SOURCE_CONTINUITY_UNSUPPORTED' });
+}
+
+/** An explicit native address restores target identity only; never grants a swap
+ * or changes baseline, appearance, properties or visibility of the actual node. */
+export function materializeNativeSourceTargets(snapshot: PreviewSnapshot, contract: CompiledContract): void {
+  if (contract.runtimePolicy.nativeSourceContinuityVersion !== 1
+    || snapshot.instanceContentReferences?.schemaVersion !== 'apollo.instance-content-references.v4'
+    || variantAvailability(snapshot, contract).status !== 'partial') return;
+  const topology = rootedTopology(snapshot);
+  if (!topology) return;
+  const targets = contract.facts.targets.filter(t => t.nativeSourceContinuity);
+  // Bounded passes support declared owner chains without depending on target order.
+  for (let pass = 0; pass < targets.length; pass++) for (const target of targets) {
+    const c = target.nativeSourceContinuity!, root = topology.root;
+    if (target.resolution !== 'resolved' || root.variantAvailability?.targets?.[target.semanticRole]?.present === true) continue;
+    const anchorTarget = contract.facts.targets.filter(t => t.id === c.anchorTargetId && t.resolution === 'resolved');
+    if (anchorTarget.length !== 1 || root.variantAvailability?.targets?.[anchorTarget[0].semanticRole]?.present !== true) continue;
+    const anchors = snapshot.nodes.filter(n => n.type === 'INSTANCE' && record(n.semantic).role === anchorTarget[0].semanticRole);
+    if (anchors.length !== 1) continue;
+    const anchor = anchors[0];
+    const candidates = snapshot.nodes.filter(node => {
+      if (node.type !== c.nodeType) return false;
+      let owner = topology.byId.get(String(node.parentId));
+      while (owner && !['INSTANCE', 'COMPONENT', 'SLOT'].includes(owner.type)) owner = topology.byId.get(String(owner.parentId));
+      if (owner !== anchor) return false;
+      const source = record(record(node.component).sourceIdentity);
+      const declarations = c.sources.filter(s => s.ownerComponentKey === source.ownerComponentKey && s.sourceNodeId === source.sourceNodeId);
+      if (declarations.length !== 1) return false;
+      const proof = record(node.baselineProvenance);
+      if (proof.status !== 'matched' || proof.kind !== 'independent-host-variant') return false;
+      const results = snapshot.instanceContentResults?.filter(r => r.boundaryNodeId === proof.boundaryNodeId) || [];
+      const attempts = snapshot.instanceContentReferences!.attempts.filter(a => a.boundaryNodeId === proof.boundaryNodeId);
+      if (results.length !== 1 || results[0].status !== 'matched' || results[0].lineageProven !== true
+        || !results[0].matchedNodeIds.includes(String(node.id)) || !results[0].matchedNodeIds.includes(String(anchor.id))
+        || attempts.length !== 1 || attempts[0].failure || attempts[0].strategy !== 'pristine-host-variant-properties' || !attempts[0].reference) return false;
+      const reference = attempts[0].reference;
+      const vr = captureVariantReference(reference, reference.source?.componentKey || '', reference.source?.componentSetKey || '');
+      if (!vr.complete || vr.nodes.filter(n => n.path === proof.referencePath && n.type === c.nodeType).length !== 1) return false;
+      const native = vr.nodeProperties?.[proof.referencePath]?.sourceIdentity;
+      if (!native) return false;
+      const binding = { nativeSource: { ...declarations[0], ownerMainComponentId: native.ownerMainComponentId } };
+      return sourceMatches(node, proof.referencePath, binding, { ...snapshot, variantReference: vr }, topology, true);
+    });
+    if (candidates.length !== 1 || snapshot.nodes.some(n => n !== candidates[0] && record(n.semantic).role === target.semanticRole)) continue;
+    const node = candidates[0];
+    node.semantic = { ...record(node.semantic), role: target.semanticRole };
+    node.unknownFacts = (node.unknownFacts as string[] || []).filter(p => p !== 'semantic.role');
+    for (const entry of snapshot.nodes) {
+      const availability = record(entry.variantAvailability);
+      availability.targets = { ...record(availability.targets), [target.semanticRole]: { present: true, referenceState: 'present', evidence: 'explicit-independent-native-source' } };
+      entry.variantAvailability = availability;
+      entry.unknownFacts = (entry.unknownFacts as string[] || []).filter(p => p !== `variantAvailability.targets.${target.semanticRole}.present`);
+    }
+  }
 }

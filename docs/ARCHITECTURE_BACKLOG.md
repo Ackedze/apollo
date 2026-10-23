@@ -2,6 +2,19 @@
 
 ## Apollo: совместимость с ComponentContract Editor
 
+### CC-COMPAT-NATIVE-SOURCE-CONTINUITY-01 — явные native targets после смены варианта
+
+23.10.2026. Core **0.1.23**: opt-in `nativeSourceContinuityVersion=1`
+восстанавливает INSTANCE/TEXT по объявленным source addresses, ближайшему
+native owner и независимому matched lineage. Имена слоёв не доказывают identity;
+foreign swap, SLOT, missing/ambiguous proof остаются UNKNOWN. Сочетание с
+declared identity ledger в v1 отклоняется. Старый reader отвергает новый flag.
+Editor **0.2.108** не изменялся; CLI ZIP roundtrip проверен. Переносимая
+synthetic regression и retained replay подтверждают локальный scope;
+Editor UI/integration, парная установка portable runtime + данных и native
+приёмка ещё pending. Обычный Git data update runtime не заменяет.
+Парная область: [Editor nested owner targets](../../ComponentContractEditor/docs/BACKLOG.ru.md#cc-compat-nested-owner-targets-01--owner-baseline-и-точные-configured-targets-во-вложенных-проверках).
+
 ### CC-COMPAT-MANUAL-EDIT-DATES-01 — дата реального изменения manual
 
 22.10.2026. Editor **0.2.108**, Core **0.1.23** без изменений. В Editor удаление

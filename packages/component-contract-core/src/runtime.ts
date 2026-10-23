@@ -12,7 +12,7 @@ import { materializeSemanticFacts } from './semantic-facts';
 import { materializeValidationIntent } from './validation-intent';
 import { materializeValidationMode } from './validation-mode';
 import { materializeComponentFacts } from './component-facts';
-import { assertDeclaredTargetContract, materializeDeclaredTargetIdentities } from './declared-target-identity';
+import { assertDeclaredTargetContract, materializeDeclaredTargetIdentities, assertNativeSourceContinuityContract, materializeNativeSourceTargets } from './declared-target-identity';
 import { materializeVariantFacts, materializeVerifiedVariantTargets } from './variant-facts';
 import { materializeDependencyFacts } from './dependency-facts';
 import { materializeInstanceContentReferences } from './instance-content-reference';
@@ -42,6 +42,7 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
   // Evaluate the same JSON-compatible facts that are exported for replay.
   // A cached hash from another context must never determine evaluation identity.
   assertDeclaredTargetContract(contract);
+  assertNativeSourceContinuityContract(contract);
   assertNativeRuleFactPolicies(contract);
   assertConfiguredPropertyContract(contract);
   const shape=contractRepresentationShape(contract),flags=representationFeatureFlags(shape);
@@ -79,6 +80,7 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
   }
   materializeVerifiedVariantTargets(snapshot, contract);
   materializeVariantTextTargets(snapshot, contract);
+  materializeNativeSourceTargets(snapshot, contract);
   materializeLineHeightReferences(snapshot, contract);
   materializeSlotTargets(snapshot, contract);
   materializeDeclaredTargetIdentities(snapshot, contract);

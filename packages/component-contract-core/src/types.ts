@@ -211,6 +211,9 @@ export type SemanticTarget = {
   /** Reviewed source address for one actual library variant. No sibling-index continuity. */
   variantHints?: Array<{representationId:string;componentKey:string;pathHint:string}>;
   identityBindingsV1?: DeclaredTargetBindingV1[];
+  /** Explicit native owner/source addresses; not permission to change a component. */
+  nativeSourceContinuity?: { version: 1; anchorTargetId: string; nodeType: 'INSTANCE' | 'TEXT';
+    sources: Array<{ ownerComponentKey: string; sourceNodeId: string }> };
   nameHint?: string;
   pathHint?: string;
   nodeIdHint?: string;
@@ -790,6 +793,7 @@ export type CompiledContract = {
     textBindingIdentityFactsVersion?: 1;
     structuralOrderFactsVersion?: 1;
     variantTextTargetsVersion?: 1;
+    nativeSourceContinuityVersion?: 1;
     dependencyCompletionVersion?: 1;
     slotTargetFactsVersion?: 1;
     nativeSlotTargetsVersion?: 1;

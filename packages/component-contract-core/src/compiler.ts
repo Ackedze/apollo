@@ -990,6 +990,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
       ...(manual.componentDependencies?.some(d=>d.bindings.some(b=>b.kind==='direct-child')) ? {directChildDependenciesVersion:1 as const,occurrenceAddressVersion:1 as const} : {}),
       ...(variantEvidence?.occurrenceAddressVersion===1 || manual.targets.some(t=>t.variantHints?.length) ? {occurrenceAddressVersion:1 as const} : {}),
       ...(manual.targets.some(t => t.variantContinuity) ? { variantTextTargetsVersion: 1 as const } : {}),
+      ...(manual.targets.some(t => t.nativeSourceContinuity) ? { nativeSourceContinuityVersion: 1 as const } : {}),
       ...(manual.metadata.dependencyCompletionVersion === 1 ? { dependencyCompletionVersion: 1 as const } : {}),
       ...(manual.rules.some(r => r.constraints.some(c => c.type === 'positionOrder' && c.orderScope === 'structural')) ? { structuralOrderFactsVersion: 1 as const } : {}),
       engine: 'apollo-predicate-engine',

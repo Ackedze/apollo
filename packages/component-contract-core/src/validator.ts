@@ -1,4 +1,4 @@
-import { declaredTargetIdentityErrors } from './declared-target-identity';
+import { declaredTargetIdentityErrors, nativeSourceContinuityErrors } from './declared-target-identity';
 import { representationEvidenceErrors, manualRepresentationShape } from './representation-evidence';
 import type { ManualSource, ValidationIssue } from './types';
 import { capabilitiesForSet } from './capabilities';
@@ -191,6 +191,9 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
   for (const message of declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,targets:manual.targets,representations:manual.representations})) {
     error('DECLARED_TARGET_IDENTITY', '/targets', message);
   }
+  for (const message of nativeSourceContinuityErrors(manual.targets)) error('TARGET_NATIVE_SOURCE_CONTINUITY', '/targets', message);
+  if (manual.targets.some(t => t.nativeSourceContinuity) && manual.metadata.declaredTargetIdentityVersion !== undefined)
+    error('TARGET_NATIVE_SOURCE_CONTINUITY', '/targets', 'Native source continuity v1 does not support declared identity ledgers.');
   const targetIds = new Set<string>();
   const roles = new Set<string>();
   manual.targets.forEach((target, index) => {

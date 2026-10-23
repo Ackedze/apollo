@@ -28,6 +28,7 @@ const RUNTIME_VERSIONS = {
   textBindingIdentityFactsVersion: [1],
   structuralOrderFactsVersion: [1],
   variantTextTargetsVersion: [1],
+  nativeSourceContinuityVersion: [1],
   dependencyCompletionVersion: [1],
   slotTargetFactsVersion: [1],
   nativeSlotTargetsVersion: [1],

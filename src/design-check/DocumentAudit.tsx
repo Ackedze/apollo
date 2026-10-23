@@ -1,12 +1,31 @@
 import React from 'react';
 import { FindingCard, FindingComparison } from "./FindingCard";
 import { documentFindingLibrary, knownLibrary } from "./finding-library";
+import { labelFor } from "../finding-display";
 import type { DocumentAuditState } from "./controller";
 import { baseCheck } from "./result-groups";
 type Target = { id: string; kind: string; nodeId: string; pageId: string };
 type Finding = { findingId: string; status: string; name: string; message: string; componentKey?: string | null; owner: { name: string; pageId: string } | null; occurrences: string[]; targets: Target[]; evidence: unknown };
 type Check = { id: string; status: string; findings: Finding[]; gaps: string[]; checked: number; scope: string };
 const labels: Record<string,string> = { local: 'Локальные компоненты', freshness: 'Версии библиотечных экземпляров', theme: 'Темизация страницы', font: 'Шрифт страницы', base: 'База', detached: 'Детач', customStyles: 'Кастомные стили и токены' };
+function bindingLabel(action: any, metadata: any): string {
+ const kind = action.kind === 'bind-variable' ? 'token' : action.kind === 'bind-style' ? 'style' : null;
+ const key = action.binding?.key, name = kind ? labelFor(metadata,kind,key) : null;
+ const opaque = /^(?:[a-f0-9]{40}|VariableID:.*|VariableCollectionId:.*|S:.*)$/i;
+ if (name && !opaque.test(name.split(' · ')[0])) return name;
+ const captured = kind && Array.isArray(metadata?.resources) && metadata.resources.some((r:any)=>r.kind===kind&&(r.key===key||r.id===key));
+ const description = typeof action.description === 'string' ? action.description.split(' · ')[0].trim() : '';
+ if (!captured && description && description.length <= 500 && !/[\u0000-\u001f\u007f]/.test(description) && !opaque.test(description)) return description;
+ return kind === 'style' ? 'Название стиля недоступно' : kind === 'token' ? 'Название токена недоступно' : 'Название привязки недоступно';
+}
+function layerLocation(finding: Finding, audit: any): string {
+ const nodeId = finding.targets[0]?.nodeId;
+ if (!nodeId) return finding.name;
+ // The same native instance-address syntax is used by the exact-ID focus resolver.
+ const ownerId = /^I([^;]+);/.exec(nodeId)?.[1] || nodeId;
+ const owners = (audit?.components || []).filter((c:any)=>c.scopeId===ownerId);
+ return owners.length === 1 && typeof owners[0].name === 'string' && owners[0].name.trim() ? owners[0].name === finding.name ? finding.name : `${owners[0].name} / ${finding.name}` : `${finding.name} · ${nodeId}`;
+}
 export function documentCheckForTab(state: DocumentAuditState, tab: string | null): Check | null {
  if(tab === 'themization')return baseCheck(state.result);
  const id = tab === 'local' ? 'local' : tab === 'current' || tab === 'update' ? 'freshness' : tab === 'themization' ? 'theme' : tab === 'detached' ? 'detached' : tab === 'customStyles' ? 'customStyles' : null;
@@ -58,20 +77,23 @@ export function DocumentAuditCards({check,tab,onFocus,actionsEnabled,mutationEna
    {!items.length && <p>{check.status === 'incomplete' ? check.id === 'base' ? 'В полученных данных замечаний нет. Часть проверки не завершена.' : 'Нет подтверждённых результатов для этого списка. Это не означает отсутствие проблем.' : check.id === 'base' ? 'В проверенных данных замечаний по базе нет.' : tab === 'current' ? 'В проверенной области не найдено экземпляров с подтверждённой опубликованной версией.' : tab === 'update' ? 'В проверенной области не найдено экземпляров с подтверждённым обновлением.' : check.id === 'theme' ? 'Нет подтверждённого результата темизации страницы.' : check.id==='detached' ? 'В проверенной области не найдено подтверждённых библиотечных детачей.' : check.id==='customStyles' ? 'В проверенной области не найдено подтверждённых непривязанных стилей.' : 'В проверенной области не найдено локальных компонентов.'}</p>}
    <div className="document-audit-list">{items.map(f=>{
     const actions=actionsByFinding.get(f.findingId)||[], stale=staleFindings.has(f.findingId), first=f.targets[0], evidence=f.evidence as any;
-    const propertyLabels:Record<string,string>={fill:'Заливка',stroke:'Обводка',effects:'Эффекты',typography:'Типографика'};
+    const propertyLabels:Record<string,string>={fill:'Заливка',fills:'Заливка',stroke:'Обводка',strokes:'Обводка',effects:'Эффекты',typography:'Типографика'};
     const bindingLibrary = actions.length === 1 ? knownLibrary(actions[0].binding?.library) : null;
+    const location = check.id === 'customStyles' ? layerLocation(f,audit) : f.name;
+    const actionDescription = (a:any) => a.binding ? bindingLabel(a,audit?.displayMetadata) : a.description;
     return <FindingCard key={f.findingId} title={f.message}
       tone={['unknown','update','local','detached'].includes(f.status)?'warning':['theme-current','font-current','current'].includes(f.status)?'current':'violation'}
       library={documentFindingLibrary(audit,f)}
-      location={first?<button type="button" data-finding-focus disabled={!actionsEnabled||stale} title={f.name} aria-label={`${first.kind==='owner'?'Открыть определение':'Найти в макете'}: ${f.name}`} onClick={()=>onFocus(f.findingId,first.id)}>{f.name}</button>:<span>{f.name}</span>}
-      actions={actions.map((a:any)=><button key={a.actionId} type="button" title={a.description} aria-label={`${a.label}: ${a.description}`} disabled={!mutationEnabled||!actionsEnabled||stale} onClick={()=>onAction?.(f.findingId,a.targetId,a.actionId)}>{a.label}</button>)}
+      location={first?<button type="button" data-finding-focus disabled={!actionsEnabled||stale} title={location} aria-label={`${first.kind==='owner'?'Открыть определение':'Найти в макете'}: ${location}`} onClick={()=>onFocus(f.findingId,first.id)}>{location}</button>:<span>{location}</span>}
+      actions={actions.map((a:any)=><button key={a.actionId} type="button" title={actionDescription(a)} aria-label={`${a.label}: ${actionDescription(a)}`} disabled={!mutationEnabled||!actionsEnabled||stale} onClick={()=>onAction?.(f.findingId,a.targetId,a.actionId)}>{a.label}</button>)}
       information={<>
         {f.owner&&<p>Определение: {f.owner.name} · экземпляров в области: {f.occurrences.length}</p>}
-        {f.targets.map((t,i)=><button key={t.id} type="button" disabled={!actionsEnabled||stale} onClick={()=>onFocus(f.findingId,t.id)}>{t.kind==='owner'?'Открыть определение':i?`Найти объект ${i+1}`:'Найти в макете'}</button>)}
+        {f.targets.map((t,i)=><div key={t.id}><p>Слой: {t.nodeId}</p><button type="button" disabled={!actionsEnabled||stale} onClick={()=>onFocus(f.findingId,t.id)}>{t.kind==='owner'?'Открыть определение':i?`Найти объект ${i+1}`:'Найти в макете'}</button></div>)}
         {actions.map((a:any)=><div key={a.actionId}><p>{a.description}</p>{a.binding&&<p>Ключ: {a.binding.key}</p>}</div>)}
         <pre>{JSON.stringify(f.evidence,null,2)}</pre>
       </>}>
-      {f.status==='custom-style'&&<FindingComparison property={propertyLabels[evidence?.property]||'Связь со стилем'} before="Не задана" after={actions.length===1&&actions[0].binding?actions[0].description:undefined} beforeLabel="Сейчас" afterLabel="Рекомендуемая привязка" />}
+      {f.status==='custom-style'&&<FindingComparison property={propertyLabels[evidence?.property]||'Связь со стилем'} before={evidence?.styleId === 'mixed' ? 'Есть непривязанные участки' : 'Не задана'} after={actions.length===1&&actions[0].binding?bindingLabel(actions[0],audit?.displayMetadata):undefined} beforeLabel="Сейчас" afterLabel="Рекомендуемая привязка" />}
+      {check.id==='customStyles'&&f.status==='unknown'&&<FindingComparison property={propertyLabels[evidence?.property]||'Связь со стилем'} before="Не подтверждена" beforeLabel="Состояние привязки" />}
       {f.status==='custom-style'&&bindingLibrary&&<p className="apollo-finding-note" title={bindingLibrary}>Библиотека привязки: {bindingLibrary}</p>}
       {['theme-current','theme-mismatch'].includes(f.status)&&<FindingComparison property="Theme" before={evidence.actualModeName||'Явно не выбран'} after="Corp" beforeLabel="Сейчас" afterLabel="Требуется" />}
       {['font-current','font-mismatch'].includes(f.status)&&<FindingComparison property="Font" before={evidence.actualModeName||'Не подтверждён'} after="AlfaSans" beforeLabel="Сейчас" afterLabel="Требуется" />}

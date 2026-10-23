@@ -68,7 +68,7 @@ function startContractAudit(requestId) {
     clearTimeout(contractTimer);contractTimer=setTimeout(()=>{if(activeRequest===requestId&&busy){contractStopping=true;designCheck.setAuditProgress(requestId,'Останавливаем проверку контрактов: ожидаем подтверждение от Figma…');send({type:'audit-cancel',requestId});}},60000);
     status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
 }
-const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:()=>markContractStale(),onRecheckResult:m=>{if(m.contract){render(m.contract);designCheck.setAudit(m.contract.audit);}controls();},onRecheckError:()=>markContractStale()});
+const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:()=>markContractStale(),onRecheckResult:m=>{if(m.contract){render(m.contract);designCheck.setAudit(Object.assign({},m.contract.audit,{displayMetadata:m.contract.displayMetadata}));}controls();},onRecheckError:()=>markContractStale()});
 const contractFocusClient=createAuditFocusClient({send,onStatus:status,isBusy:()=>designCheck.getState().documentAction.busy});
 designCheck.subscribe(() => {
   tokenJournalClient.observe(designCheck.getState());
@@ -293,7 +293,7 @@ window.onmessage = event => {
   if (data.type === 'audit-progress' && data.requestId === activeRequest&&!contractStopping) {status(data.message);designCheck.setAuditProgress(activeRequest,data.message);}
   if(data.type==='audit-cancelled'&&data.requestId===activeRequest&&contractStopping){busy=false;clearTimeout(contractTimer);designCheck.acceptAuditError(activeRequest,'Проверка контрактов остановлена после таймаута. Полученные native-результаты сохранены.');activeRequest='';contractStopping=false;controls();return;}
   if (data.requestId && data.requestId === cancelledAuditRequest && ['audit-result', 'error'].includes(data.type)) { busy = false; cancelledAuditRequest = ''; controls(); return; }
-  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { busy = false;clearTimeout(contractTimer); render(data); designCheck.acceptAuditResult(data.requestId, data.audit); activeRequest = ''; }
+  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { busy = false;clearTimeout(contractTimer); render(data); designCheck.acceptAuditResult(data.requestId, Object.assign({},data.audit,{displayMetadata:data.displayMetadata})); activeRequest = ''; }
   if (data.type === 'error' && ((!data.requestId&&!activeRequest) || data.requestId === activeRequest&&!contractStopping)) { busy = false;clearTimeout(contractTimer); designCheck.acceptAuditError(activeRequest, data.message); activeRequest = ''; status(data.message, true); }
   if(data.type==='document-audit-invalidated'&&audit)markContractStale();
   if (documentAuditClient.accept(data)) { controls(); return; }

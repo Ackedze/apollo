@@ -105,3 +105,36 @@ test('compact sidecar replaces collection counters, keeps original trace in moda
   cards[0].querySelector('.apollo-finding-info-toggle').click();await delay();assert.match(window.document.querySelector('dialog').textContent,/memberCollectionsV1.c.*0.*1/s);
  });
 });
+
+test('native binding labels use confirmed names, retain unknown states and keep opaque keys in details',async()=>{
+ const key='5'.repeat(40),fill={...finding,findingId:'fill',name:'ST-05 · Status',targets:[{...target,nodeId:'status'}],occurrences:['status'],evidence:{property:'fills',styleId:'',unboundSolidPaints:1}};
+ const action={actionId:'bind-fill',targetId:target.id,kind:'bind-variable',label:'Привязать',description:key,binding:{key,library:null,modes:[]}};
+ const metadata={schemaVersion:'apollo.audit-display-metadata.v1',resources:[{kind:'token',id:key,key,name:'text/primary',collectionName:'Interface Static'}]};
+ const props={...native,check:{...native.check,findings:[fill]},actionData:{bindingStatus:{state:'ready'},items:[{findingId:'fill',actions:[action]}]},audit:{...audit,displayMetadata:metadata}};
+ const before=JSON.stringify(props);
+ await harness('native',props,async(window,mounted)=>{
+  let card=window.document.querySelector('.apollo-finding-card');assert.match(card.querySelector('.apollo-finding-comparison').textContent,/Заливка:.*Не задана.*→.*text\/primary.*Interface Static/s);assert.ok(!card.textContent.includes(key));assert.ok(!card.querySelector('.apollo-finding-controls button').title.includes(key));
+  card.querySelector('.apollo-finding-info-toggle').click();await delay();assert.ok(window.document.querySelector('dialog').textContent.includes(key));window.document.querySelector('[aria-label="Закрыть сведения проверки"]').click();await delay();
+  mounted.render({...props,audit:{...audit,displayMetadata:{...metadata,resources:[...metadata.resources,{...metadata.resources[0],name:'Other'}]}}});await delay();card=window.document.querySelector('.apollo-finding-card');assert.match(card.querySelector('.apollo-finding-comparison').textContent,/Название токена недоступно/);assert.ok(!card.textContent.includes(key));
+  mounted.render({...props,audit:{...audit,displayMetadata:{...metadata,resources:[{...metadata.resources[0],name:key}]}}});await delay();card=window.document.querySelector('.apollo-finding-card');assert.match(card.textContent,/Название токена недоступно/);assert.ok(!card.textContent.includes(key));
+  mounted.render({...props,audit:undefined});await delay();card=window.document.querySelector('.apollo-finding-card');assert.match(card.textContent,/Название токена недоступно/);assert.ok(!card.textContent.includes(key));
+  mounted.render({...props,actionData:{...props.actionData,items:[{findingId:'fill',actions:[{...action,kind:'bind-style'}]}]}});await delay();card=window.document.querySelector('.apollo-finding-card');assert.match(card.textContent,/Название стиля недоступно/);assert.doesNotMatch(card.textContent,/text\/primary/);
+  mounted.render({...props,check:{...native.check,findings:[{...fill,evidence:{...fill.evidence,styleId:'mixed'}}]}});await delay();assert.match(window.document.querySelector('.apollo-finding-comparison').textContent,/Есть непривязанные участки/);
+  const unknown={...fill,status:'unknown',message:'Связанный стиль или токен недоступен.',evidence:{property:'typography',styleId:'S:unavailable'}};
+  mounted.render({...props,check:{...native.check,findings:[unknown]},actionData:undefined,audit:undefined});await delay();card=window.document.querySelector('.apollo-finding-card');assert.match(card.querySelector('.apollo-finding-comparison').textContent,/Типографика:.*Не подтверждена/s);assert.match(card.textContent,/Нужна повторная проверка/);assert.equal(card.querySelector('.apollo-finding-status').getAttribute('aria-label'),'Нужна проверка');assert.doesNotMatch(card.textContent,/Не задана/);
+  assert.equal(JSON.stringify(props),before);
+ });
+});
+
+test('same-named native layers retain separate cards and show exact captured owners or node IDs',async()=>{
+ const nodes=['Icase-05;label','Icase-07;label','unmapped-label'];
+ const findings=nodes.map((id,i)=>({...finding,findingId:'label-'+i,name:'Label',occurrences:[id],targets:[{...target,id:'target-'+i,nodeId:id}]}));
+ const props={...native,actionData:undefined,check:{...native.check,findings},audit:{components:[{scopeId:'case-05',name:'ST-05 · Status',library:'Web :: Core'},{scopeId:'case-07',name:'ST-07 · Status',library:'Web :: Core'}]}};
+ const calls=[];
+ await harness('native',{...props,onFocus:(...args)=>calls.push(args)},async(window,mounted)=>{
+  let cards=window.document.querySelectorAll('.apollo-finding-card');assert.equal(cards.length,3);assert.match(cards[0].querySelector('.apollo-finding-location').textContent,/ST-05 · Status.*Label/s);assert.match(cards[1].querySelector('.apollo-finding-location').textContent,/ST-07 · Status.*Label/s);assert.match(cards[2].querySelector('.apollo-finding-location').textContent,/Label.*unmapped-label/s);
+  cards[1].click();assert.deepEqual(calls,[['label-1','target-1']]);cards[1].querySelector('.apollo-finding-info-toggle').click();await delay();assert.ok(window.document.querySelector('dialog').textContent.includes(nodes[1]));window.document.querySelector('[aria-label="Закрыть сведения проверки"]').click();await delay();
+  mounted.render({...props,staleFindingIds:['label-1'],onFocus:(...args)=>calls.push(args)});await delay();cards=window.document.querySelectorAll('.apollo-finding-card');cards[1].click();assert.equal(calls.length,1);assert.equal(cards[1].querySelector('[data-finding-focus]').disabled,true);
+  mounted.render({...props,audit:{components:[...props.audit.components,{scopeId:'case-05',name:'Conflicting owner'}]}});await delay();assert.doesNotMatch(window.document.querySelector('.apollo-finding-location').textContent,/ST-05|Conflicting owner/);assert.match(window.document.querySelector('.apollo-finding-location').textContent,/Icase-05;label/);
+ });
+});

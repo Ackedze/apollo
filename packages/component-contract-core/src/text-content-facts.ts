@@ -30,7 +30,11 @@ export function materializeTextContent(snapshot: PreviewSnapshot, contract: Comp
     if (node.type !== 'TEXT') continue;
     const text = record(node.text), facts: Record<string, number> = {};
     const known = (fact: string) => !prior.some(p => p === fact || fact.startsWith(p + '.'));
-    if (known('text.characters') && typeof text.characters === 'string') facts.characterCount = Array.from(text.characters).length;
+    if (known('text.characters') && typeof text.characters === 'string') {
+      facts.characterCount = Array.from(text.characters).length;
+      // A hyphenated token stays one word; standalone punctuation is not a word.
+      facts.wordCount = text.characters.split(/\s+/u).filter(word => /[\p{L}\p{N}]/u.test(word)).length;
+    }
     const lh = record(text.lineHeight);
     const pixels = lh.unit === 'PIXELS' ? lh.value : lh.unit === 'PERCENT' && typeof text.fontSize === 'number' ? text.fontSize * lh.value / 100 : undefined;
     const height = record(node.bounds).height, count = height / pixels;
@@ -39,6 +43,6 @@ export function materializeTextContent(snapshot: PreviewSnapshot, contract: Comp
       && text.paragraphSpacing === 0 && text.maxHeight === null && typeof pixels === 'number' && Number.isFinite(pixels) && pixels > 0
       && typeof height === 'number' && Number.isFinite(height) && height >= 0 && Math.abs(count - Math.round(count)) < 0.01) facts.lineCount = Math.round(count);
     node.textContentV1 = facts;
-    for (const key of ['characterCount','lineCount']) if (facts[key] === undefined) (node.unknownFacts as string[]).push(`textContentV1.${key}`);
+    for (const key of ['characterCount','wordCount','lineCount']) if (facts[key] === undefined) (node.unknownFacts as string[]).push(`textContentV1.${key}`);
   }
 }

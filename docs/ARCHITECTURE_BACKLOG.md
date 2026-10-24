@@ -544,6 +544,16 @@ Installed Link r3 / Editor 0.2.100, 11.10.2026 09:07 MSK: **CONFIGURED_LABEL_PRE
 
 ### CC-COMPAT-NATIVE-CARD-FACTS-03 — текст, native properties и исключение instance swap
 
+24.10.2026, Status & Property: узкое дополнение `textContentV1.wordCount` выводится
+из уже захваченного `text.characters`; отдельный capture или plugin bundle не нужен.
+Граница — слова, разделённые whitespace; standalone punctuation не считается словом,
+слово с дефисом остаётся одним. Cached fact не используется, missing/unknown исходник
+остаётся UNKNOWN. Private Core regression и две-word/three-word привязка SP PASS;
+installed Apollo/Editor acceptance не заявляется. Видимые 20 символов и native ellipsis
+этим фактом не доказываются. SVG probe показал несовпадение экспортированной строки
+с видимым многоточием; изменение трактовки лимита ожидает решения владельца.
+Evidence: `.local/apollo-contract-creation-2026-10-24/status-property-text-r4` в workspace.
+
 09.10.2026. **Editor 0.2.94 / core 0.1.13**. Общая реализация готова; локальный Apollo profile принимает только версии 1 для `textContentFactsVersion` и `nativeTargetPropertyFactsVersion`, проверяет markers до чтения контракта и использует тот же runtime. Compiler stamp 0.2.94 включается при новых facts. Historical unmarked semantics не меняются.
 
 Новые факты: Unicode character count; консервативный line count равномерного auto-height TEXT; typed properties точного declared native occurrence; счётчик instance swap с одним exact exception. Foreign/missing/ambiguous owner proof или непрослеживаемая разрешённая смена дочернего variant остаются unknown. Applicability поддерживает declared finite expectedInput для root; видимый TEXT отдельно отбирается для LEFT assertion. Cached text/native facts пересчитываются.

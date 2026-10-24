@@ -537,6 +537,12 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
       if (constraint.type === 'quantity' && constraint.min === undefined && constraint.max === undefined) {
         error('CONSTRAINT_RANGE', constraintPath, 'Quantity requires min or max.');
       }
+      if (constraint.fact === 'textContentV1.wordCount' && (constraint.type !== 'layoutConstraint'
+        || !Number.isSafeInteger(constraint.max) || constraint.max! < 0
+        || !Number.isSafeInteger(constraint.min ?? 0) || (constraint.min ?? 0) < 0
+        || (constraint.min ?? 0) > constraint.max! || constraint.value !== undefined)) {
+        error('CONSTRAINT_WORD_COUNT', constraintPath, 'Word count requires an explicit nonnegative integer max and optional min.');
+      }
       if (constraint.contractDependencyId !== undefined) {
         if (constraint.type !== 'quantity' || !manual.componentDependencies?.some(d=>d.id===constraint.contractDependencyId)
           || constraint.targetRole || constraint.targetRoles || constraint.fact || constraint.visibleOnly !== undefined

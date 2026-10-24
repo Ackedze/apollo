@@ -490,6 +490,12 @@ function assertionFor(
     };
   }
   if (constraint.type === 'layoutConstraint') {
+    // Compile words to an existing predicate so installed capture/evaluation needs no new fact.
+    if (fact === 'textContentV1.wordCount') return {selectRoot:false,expression:{
+      predicate:'matches',actual:{fact:'text.characters'},
+      expected:{literal:`^(?:[^\\p{L}\\p{N}]*(?:[\\p{L}\\p{N}]\\S*(?=\\s|$))){${constraint.min ?? 0},${constraint.max}}[^\\p{L}\\p{N}]*$`},
+      flags:'u',missingPolicy:'unknown',
+    }};
     if (constraint.operator === 'at-most-line-height') return {selectRoot:false,expression:{
       predicate:'compare',operator:'lte',actual:{fact},expected:{fact:`lineHeightReferenceV1.${constraint.targetRole}`},missingPolicy:'unknown',
     }};

@@ -12,10 +12,14 @@ function textCase(characters) {
 }
 const run = f => core.evaluateCompiledContract(f.snapshot, core.prepareAuthoringPreviewContract(f.compile().contract));
 test('two-word boundary uses captured text; source punctuation is not an extra word', () => {
+  const ir=textCase('В работе').compile().contract.rules[0];
+  assert.equal(ir.assert.predicate,'matches');
+  assert.equal(ir.assert.actual.fact,'text.characters');
   for (const value of ['В работе', '  В\u00a0работе\t', 'Счёт-фактура готов', 'В — работе']) {
     assert(run(textCase(value)).evaluations.every(e=>e.classification==='compliant'), value);
   }
   assert(run(textCase('Ожидает подписи банка')).evaluations.some(e=>e.classification==='violation'));
+  assert(run(textCase('A'.repeat(10000)+' B C')).evaluations.some(e=>e.classification==='violation'));
 });
 test('word count is recomputed, not trusted from a cached fact', () => {
   const f=textCase('Ожидает подписи банка');
@@ -28,5 +32,11 @@ test('missing and explicitly unknown captured text remain UNKNOWN', () => {
   for (const mutate of [n=>delete n.text.characters, n=>n.unknownFacts=['text.characters']]) {
     const f=textCase('В работе'); mutate(f.snapshot.nodes[2]);
     assert(run(f).evaluations.some(e=>e.classification==='human-review'));
+  }
+});
+test('word count requires an explicit valid range', () => {
+  for (const max of [undefined,-1,1.5]) {
+    const f=textCase('В работе');f.manual.rules[0].constraints[0].max=max;
+    assert(f.compile().issues.some(e=>e.code==='CONSTRAINT_WORD_COUNT'));
   }
 });

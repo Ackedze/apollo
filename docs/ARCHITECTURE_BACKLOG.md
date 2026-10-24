@@ -544,15 +544,15 @@ Installed Link r3 / Editor 0.2.100, 11.10.2026 09:07 MSK: **CONFIGURED_LABEL_PRE
 
 ### CC-COMPAT-NATIVE-CARD-FACTS-03 — текст, native properties и исключение instance swap
 
-24.10.2026, Status & Property: узкое дополнение `textContentV1.wordCount` выводится
-из уже захваченного `text.characters`; отдельный capture или plugin bundle не нужен.
+24.10.2026, Status & Property r4: word count компилируется в существующий
+`matches` над уже захваченным `text.characters`. Новый runtime/capture fact не вводится:
+это позволяет текущему Figma evaluator исполнять полученный IR без замены plugin bundle.
 Граница — слова, разделённые whitespace; standalone punctuation не считается словом,
-слово с дефисом остаётся одним. Cached fact не используется, missing/unknown исходник
-остаётся UNKNOWN. Private Core regression и две-word/three-word привязка SP PASS;
-installed Apollo/Editor acceptance не заявляется. Видимые 20 символов и native ellipsis
-этим фактом не доказываются. SVG probe показал несовпадение экспортированной строки
-с видимым многоточием; изменение трактовки лимита ожидает решения владельца.
-Evidence: `.local/apollo-contract-creation-2026-10-24/status-property-text-r4` в workspace.
+слово с дефисом остаётся одним. Missing/unknown исходник остаётся UNKNOWN.
+Владелец упростил вторую норму: исходный текст не длиннее20 code points, без проверки
+обрезки/ellipsis; используется existing characterCount. Собственный compiler и Proxy
+checking runtime получают private bundles; installed adoption фиксируется отдельно.
+Evidence: `.local/apollo-contract-creation-2026-10-24/status-property-r4-final` в workspace.
 
 09.10.2026. **Editor 0.2.94 / core 0.1.13**. Общая реализация готова; локальный Apollo profile принимает только версии 1 для `textContentFactsVersion` и `nativeTargetPropertyFactsVersion`, проверяет markers до чтения контракта и использует тот же runtime. Compiler stamp 0.2.94 включается при новых facts. Historical unmarked semantics не меняются.
 

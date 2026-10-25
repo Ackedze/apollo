@@ -77,3 +77,27 @@ test('repository path admission rejects unknown bases, escapes, controls, duplic
  const other=put(c.ds,'JSONS/web/components/Other/packages/current.zip');m.packages.push(other);fs.writeFileSync(filename,JSON.stringify(m));assert.throws(()=>readContractCatalog(c.root),/CATALOG_ARCHIVE_CONFLICT/);
  Object.assign(m,structuredClone(original));fs.writeFileSync(filename,JSON.stringify(m));const parent=path.dirname(path.join(c.ds,c.entry.file)),moved=parent+'.moved';fs.renameSync(parent,moved);fs.symlinkSync(moved,parent,'dir');assert.throws(()=>readContractCatalog(c.root),/CATALOG_PATH_INVALID/);
 });
+
+test('offline catalog capacity is explicit and bounded; unchanged callers retain 32',t=>{
+ const root=setup(t),entries=Array.from({length:33},(_,i)=>put(root,`C${i}.zip`));manifest(root,entries);
+ assert.throws(()=>readContractCatalog(root),/ARCHIVE_LIMIT/);
+ assert.equal(readContractCatalog(root,{maxContracts:64}).archives.length,33);
+ for(const maxContracts of [0,65,-1,1.5,'64',null,NaN])assert.throws(()=>readContractCatalog(root,{maxContracts}),/CATALOG_BUDGET_INVALID/);
+ manifest(root,Array.from({length:65},(_,i)=>({file:`C${i}.zip`})));
+ assert.throws(()=>readContractCatalog(root,{maxContracts:64}),/ARCHIVE_LIMIT/);
+});
+test('explicit offline budget includes pinned dependency sources and retains projection guards',t=>{
+ const c=canonical(t),core=require('../packages/component-contract-core/dist/core.cjs');
+ const manual=JSON.parse(fs.readFileSync(path.join(c.ds,c.record.manual.path))),facts=JSON.parse(fs.readFileSync(path.join(c.ds,c.record.facts.path)));
+ const pin=(file,value)=>{const bytes=JSON.stringify(value),target=path.join(c.ds,file);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);return{path:file,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),bytes:Buffer.byteLength(bytes)};};
+ for(let revision=2;revision<=34;revision++){
+  const m=structuredClone(manual);m.metadata.revision=revision;
+  const compiled=core.compileManualSource(m,facts,[]).contract;compiled.package.sourceExportVersion=c.record.sourceExportVersion;
+  c.index.dependencySources.push({...c.record,revision,manualSourceHash:core.stableHash(m),compiledHash:core.stableHash(compiled),manual:pin(`JSONS/web/components/Synthetic/history/r${revision}/contract.manual.json`,m)});
+ }
+ c.publish();assert.throws(()=>readContractCatalog(c.root),/CONTRACT_SOURCE_INDEX_INVALID/);
+ const catalog=readContractCatalog(c.root,{maxContracts:64});assert.equal(catalog.sources.records.length,34);catalog.assertCurrent();
+ c.index.dependencySources[0].compiledHash='0'.repeat(64);c.publish();assert.throws(()=>readContractCatalog(c.root,{maxContracts:64}),/CONTRACT_SOURCE_PROJECTION_MISMATCH/);
+ c.index.dependencySources[0].compiledHash=catalog.sources.records[1].entry.compiledHash;
+ c.index.dependencySources.push(c.index.dependencySources[0]);c.publish();assert.throws(()=>readContractCatalog(c.root,{maxContracts:64}),/CONTRACT_SOURCE_CONFLICT/);
+});

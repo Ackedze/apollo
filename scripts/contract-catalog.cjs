@@ -3,7 +3,8 @@ const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 const fail=code=>{throw Object.assign(Error(code),{code});};
 
 // Current collections are manifest-owned. Never discover historical ZIPs recursively.
-function readContractCatalog(directory){
+function readContractCatalog(directory,{maxContracts=32}={}){
+ if(!Number.isSafeInteger(maxContracts)||maxContracts<1||maxContracts>64)fail('CATALOG_BUDGET_INVALID');
  const root=fs.realpathSync(directory),manifestFile=path.join(root,'manifest.json');
  const manifestBytes=fs.existsSync(manifestFile)?fs.readFileSync(manifestFile):null;
  const manifest=manifestBytes?JSON.parse(manifestBytes):null;
@@ -13,7 +14,7 @@ function readContractCatalog(directory){
  if(repositoryPaths&&(path.basename(root)!=='current-contract-packages'||path.basename(path.dirname(root))!=='experiments'))fail('CATALOG_ARCHIVE_BASE_INVALID');
  const archiveRoot=repositoryPaths?path.resolve(root,'../..'):root;
  const entries=manifest?manifest.packages:fs.readdirSync(root).filter(name=>/\.zip$/i.test(name)).sort().map(file=>({file}));
- if(!entries.length||entries.length>32)fail('ARCHIVE_LIMIT');
+ if(!entries.length||entries.length>maxContracts)fail('ARCHIVE_LIMIT');
  const names=new Set(),files=new Set(),pins=[];
  const archives=entries.map(entry=>{
   if(typeof entry.file!=='string'||!entry.file.endsWith('.zip')||path.isAbsolute(entry.file)||entry.file.includes('\\')||entry.file.split('/').some(p=>!p||p==='.'||p==='..'||(repositoryPaths?/[<>:"|?*\x00-\x1f\x7f]/.test(p):!/^[-\w.]+$/.test(p))))fail('CATALOG_PATH_INVALID');
@@ -27,7 +28,7 @@ function readContractCatalog(directory){
   if(entry.zipSha256&&entry.zipSha256!==digest||entry.bytes!==undefined&&entry.bytes!==bytes.length)fail('STALE_ARCHIVE');
   pins.push({file,digest});return{name,bytes};
  });
- const sources=manifest?.authoringIndex?readCanonicalSources(root,manifest.authoringIndex,entries,pins):null;
+ const sources=manifest?.authoringIndex?readCanonicalSources(root,manifest.authoringIndex,entries,pins,maxContracts):null;
  if(repositoryPaths&&sources)for(const entry of entries){const source=sources.index.entries.find(s=>s.contractId===entry.contractId);if(path.dirname(entry.file)!==path.posix.join(path.posix.dirname(source.manual.path),'packages'))fail('CONTRACT_SOURCE_ARCHIVE_MISMATCH');}
  function assertCurrent(){
   if(manifestBytes){if(sha(fs.readFileSync(manifestFile))!==sha(manifestBytes))fail('STALE_CATALOG');}
@@ -38,7 +39,7 @@ function readContractCatalog(directory){
 }
 module.exports={readContractCatalog};
 
-function readCanonicalSources(root,indexPin,packages,pins){
+function readCanonicalSources(root,indexPin,packages,pins,maxContracts){
  if(indexPin.file!=='../../JSONS/indexes/component-contracts.index.json')fail('CONTRACT_SOURCE_PATH_INVALID');
  const sourceRoot=path.resolve(root,'../..');
  function read(pin,index=false){
@@ -51,7 +52,7 @@ function readCanonicalSources(root,indexPin,packages,pins){
   pins.push({file,digest});return JSON.parse(bytes);
  }
  const index=read(indexPin,true);
- if(index.schemaVersion!=='apollo.component-contract-sources.v1'||index.pathBase!=='design-system_ab'||!Array.isArray(index.entries)||!Array.isArray(index.dependencySources)||index.entries.length!==packages.length||index.entries.length+index.dependencySources.length>32)fail('CONTRACT_SOURCE_INDEX_INVALID');
+ if(index.schemaVersion!=='apollo.component-contract-sources.v1'||index.pathBase!=='design-system_ab'||!Array.isArray(index.entries)||!Array.isArray(index.dependencySources)||index.entries.length!==packages.length||index.entries.length+index.dependencySources.length>maxContracts)fail('CONTRACT_SOURCE_INDEX_INVALID');
  const core=require("../packages/component-contract-core/dist/core.cjs");
  const records=index.entries.concat(index.dependencySources).map(entry=>{
   const manual=read(entry.manual),facts=read(entry.facts);

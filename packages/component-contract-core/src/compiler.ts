@@ -508,6 +508,7 @@ function assertionFor(
           lower: { literal: constraint.min ?? Number.MIN_SAFE_INTEGER },
           upper: { literal: constraint.max ?? Number.MAX_SAFE_INTEGER },
           bounds: 'inclusive',
+          ...(/^bounds\.(width|height)$/.test(fact) ? { missingPolicy: 'unknown' } : {}),
         },
       };
     }
@@ -578,7 +579,9 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
   });
   const rootAliases = variantEvidence?.occurrenceAddressVersion === 1 ? declaredRootAliasRoles(manual.targets) : new Set<string>();
   const assetIdentityLockSource=manual.rules.some(r=>r.constraints.some(c=>c.dependency?.field==='changed'));
-  const semanticTargetVisibility = manual.semanticApi.some(p => p.bindings.some(b => b.targetId && !b.ownedOccurrence && !b.nativeSlotBinding))
+  const semanticTargetVisibility = manual.targets.some(t => t.variantContinuity)
+    || manual.rules.some(r => r.constraints.some(c => c.type === 'propertyForbidden' && c.targetRoles?.length))
+    || manual.semanticApi.some(p => p.bindings.some(b => b.targetId && !b.ownedOccurrence && !b.nativeSlotBinding))
     || manual.rules.some(r=>r.status!=='deprecated'&&r.permission==='constrained'
       && ['auto','predicate'].includes(r.execution?.route || 'auto')&&r.constraints.some(c=>c.dependency?.field==='changed'));
   const configurations = manual.rules.some(r => r.constraints.some(c => c.type === 'configurationDomain'));
@@ -723,7 +726,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
             revision: manual.metadata.revision, source: { path: 'contract.manual.json', checksum: manualSourceHash, anchor: sourceRule.id },
             authority: { status: sourceRule.status === 'reviewed' ? 'active' : sourceRule.status, provenance: sourceRule.owner },
             effect: 'require', scope: scopeFor(sourceRule), select: { from: 'selection-root', traverse: 'self' },
-            when: { predicate: 'all', args: [configurationActive(c), ...(specification ? [{ predicate: 'equals', actual: { fact: 'validationScopeV1.mode' }, expected: { literal: 'specification' }, missingPolicy: 'unknown' }] : [])] },
+            when: { predicate: 'all', args: [...(conditionFor(sourceRule) ? [conditionFor(sourceRule)] : []), configurationActive(c), ...(specification ? [{ predicate: 'equals', actual: { fact: 'validationScopeV1.mode' }, expected: { literal: 'specification' }, missingPolicy: 'unknown' }] : [])] },
             assert: configurationAssertion(c, specification), severity: sourceRule.severity, unknownPolicy: 'human-review',
             presentation: { title: `${sourceRule.message || sourceRule.rationale}${specification ? ' · по спецификации' : ''}`, group: capability },
             manual: { permission: sourceRule.permission, controlPaths: sourceRule.controlPaths },

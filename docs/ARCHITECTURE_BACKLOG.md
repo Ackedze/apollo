@@ -231,6 +231,20 @@ Frontend блокируется отдельно отсутствующим mapp
 
 ### CC-COMPAT-NESTED-OWNER-TARGETS-01 — owner baseline и точные configured targets во вложенных проверках
 
+26.10.2026 — проверка сохранённых native captures обнаружила отдельный пробел
+в разрешённых полях ребёнка: Custom-fill родителя конфликтовал с фиксированным
+fill Core Status. Минимальный SDK-кандидат учитывает только активный exact direct
+controlPath на `appearance.fill`, resolved target и независимо проверенный
+owner/nodeMap. Требование токена без такого разрешения не отменяет child baseline.
+Token violations, другие поля и non-Custom сохраняются. Parent StatusProperty r5
+объявляет два уже разрешённых Custom-поля; нормы не расширяются.
+Также исправлены активная representation native SLOT, optional target/reader,
+singleton surface и UNKNOWN при отсутствующем bounds. Core0.1.23 source/type/
+508 Core tests и ограниченные source-to-plugin проверки PASS. Это локальная
+реализация; Editor UI и свежая Figma-приёмка не заявлены. Пара runtime/main/data
+устанавливается отдельно; generation не пересобирается. Evidence хранится в
+DS `experiments/current-contract-packages/reports/native-repair-2026-10-26/eval.json`.
+
 19.10.2026. **SHARED_IMPLEMENTATION / CONSUMER_AND_NATIVE_PENDING**.
 Core **0.1.20** / Editor **0.2.107**; точный согласованный patch применён.
 Общий reader сохраняет независимо доказанный effective baseline вложенного owner

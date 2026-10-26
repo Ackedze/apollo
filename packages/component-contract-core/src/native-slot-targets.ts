@@ -1,6 +1,7 @@
 import type { CompiledContract, PreviewSnapshot } from './types';
 import type { InstanceComparison } from './instance-boundaries';
 import { matchesCaptureRepresentation } from './capture-representation';
+import { snapshotPaths } from './snapshot-topology';
 
 const record = (value: unknown): Record<string, any> => value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, any> : {};
 const unknown = (node: Record<string, unknown>, fact: string) => ((node.unknownFacts || []) as string[])
@@ -22,7 +23,12 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
   for (const target of contract.facts.targets) {
     const controls = contract.customizationPolicy.filter(rule => rule.targetId === target.id
       && rule.status !== 'deprecated' && ['allowed', 'constrained'].includes(rule.permission))
-      .flatMap(rule => rule.controlPaths.filter(control => control.kind === 'slot-api' && control.target === target.id && control.property));
+      .flatMap(rule => rule.controlPaths.filter(control => control.kind === 'slot-api' && control.target === target.id && control.property))
+      .filter(control => {
+        const owner = control.ownerTargetId ? contract.facts.targets.find(t => t.id === control.ownerTargetId) : undefined;
+        const ownerPath = owner ? pathFor(owner) : control.ownerTargetId ? undefined : '';
+        return ownerPath !== undefined && ref.nodeProperties[ownerPath]?.propertyTypes[control.property!] === 'SLOT';
+      });
     const anchors = [...new Set(controls.map(control => control.property!))];
     const ownerIds = [...new Set(controls.map(control => control.ownerTargetId || ''))];
     const slotPath = pathFor(target);
@@ -39,6 +45,33 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
     if (actualOwners.length !== 1) continue;
     const owner = actualOwners[0], expectedOwner = ref.nodeProperties[ownerPath];
     const identity = record(record(owner.component).identity), expectedIdentity = expectedOwner?.identity;
+    const proof = record(owner.baselineProvenance);
+    const results = snapshot.instanceContentResults?.filter(r => r.boundaryNodeId === owner.id) || [];
+    const attempts = snapshot.instanceContentReferences?.attempts.filter(a => a.boundaryNodeId === owner.id) || [];
+    if (ownerIds[0] && proof.status === 'matched' && proof.kind === 'independent-host-variant'
+      && proof.boundaryNodeId === owner.id && proof.componentKey === identity.componentKey
+      && results.length === 1 && results[0].status === 'matched' && results[0].lineageProven
+      && attempts.length === 1 && !attempts[0].failure && attempts[0].strategy === 'pristine-host-variant-properties'
+      && attempts[0].reference && !attempts[0].reference.source?.truncated && ownerPath !== undefined) {
+      const independent = attempts[0].reference, addresses = snapshotPaths(independent);
+      const owners = independent.nodes.filter(n => addresses?.get(String(n.id)) === ownerPath);
+      const expected = record(record(owners[0]?.component).identity);
+      const known = owners.length === 1 && expected.componentKey === identity.componentKey
+        && expected.componentSetKey === identity.componentSetKey && !unknown(owner, 'component.propertyTypes')
+        && !unknown(owners[0], 'component.propertyTypes')
+        && controls.every(c => record(record(owner.component).propertyTypes)[c.property!]
+          === record(record(owners[0].component).propertyTypes)[c.property!]);
+      if (known && !snapshot.nodes.some(n => n.type === 'SLOT' && n.parentId === owner.id)
+        && !independent.nodes.some(n => n.type === 'SLOT' && n.parentId === owners[0].id)) {
+        for (const entry of snapshot.nodes) {
+          const available = record(entry.variantAvailability);
+          available.targets = { ...record(available.targets), [target.semanticRole]: { present: false, referenceState: 'absent', evidence: 'independent-host-variant-slot-absence' } };
+          entry.variantAvailability = available;
+          entry.unknownFacts = ((entry.unknownFacts || []) as string[]).filter(p => p !== `variantAvailability.targets.${target.semanticRole}.present`);
+        }
+        continue;
+      }
+    }
     if (!expectedIdentity?.componentKey || identity.componentKey !== expectedIdentity.componentKey
       || (identity.componentSetKey || '') !== (expectedIdentity.componentSetKey || '')
       || unknown(owner, 'component.identity') || unknown(owner, `component.propertyTypes.${property}`)

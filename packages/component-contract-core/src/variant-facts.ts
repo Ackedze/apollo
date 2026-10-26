@@ -167,7 +167,9 @@ export function variantAvailability(snapshot: PreviewSnapshot, contract: Compile
     const path = hint ? relativeTargetPath(hint) : undefined;
     // A typo/renamed/unmapped target must not become a confirmed absence.
     const witnessed = occurrenceMode ? path!==undefined && (path==='' || bindings.length===1)
-      && ref.nodes.some(n=>n.path===path) && Boolean(comparison?.referencePaths && Object.values(comparison.referencePaths).includes(path))
+      && (ref.nodes.some(n=>n.path===path) && Boolean(comparison?.referencePaths && Object.values(comparison.referencePaths).includes(path))
+        || bindings.length===1 && !shape.some(n=>n.path===path) && !ref.nodes.some(n=>n.path===path)
+          && siblings.some(v=>evidence.structures[v.structureId]?.some(n=>n.path===path)))
       : path !== undefined && siblings.some(v => evidence.structures[v.structureId]?.some(n => n.path === path));
     const isolated = path !== undefined && comparison?.boundaries.some(b => withinBoundary(path,b.referencePath) || withinBoundary(path,b.actualPath));
     targets[target.semanticRole] = !witnessed || isolated || target.resolution === 'ambiguous' || target.resolution === 'unknown'
@@ -188,6 +190,10 @@ export function variantAvailability(snapshot: PreviewSnapshot, contract: Compile
 /** Factual availability only. Verdicts remain owned by Predicate Engine. */
 export function materializeVariantFacts(snapshot: PreviewSnapshot, contract: CompiledContract): void {
   snapshot.nodes.forEach(node => { delete node.rootTargetAliasesV1; });
+  if (contract.runtimePolicy.semanticTargetVisibilityVersion === 1) {
+    const declared = new Set(contract.facts.targets.map(t => t.semanticRole));
+    for (const node of snapshot.nodes) if (declared.has(record(node.semantic).role)) record(node.semantic).role = '';
+  }
   const availability = variantAvailability(snapshot, contract);
   const scoped = ['variant-facts-v4','dependency-facts-v5'].includes(contract.package.snapshotProfile || '');
   if (scoped) {

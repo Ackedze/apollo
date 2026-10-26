@@ -63,7 +63,10 @@ export function materializeSemanticFacts(snapshot: PreviewSnapshot, contract: Co
           const identity = component?.identity;
           const identityProven = Boolean(snapshot.source?.componentSetKey && identity?.componentSetKey === snapshot.source.componentSetKey
             && snapshot.source?.componentKey && identity?.componentKey === snapshot.source.componentKey
-            && [representations[0].locator.componentKey, representations[0].locator.componentSetKey].includes(snapshot.source.componentSetKey));
+            && [representations[0].locator.componentKey, representations[0].locator.componentSetKey].includes(snapshot.source.componentSetKey))
+            || Boolean(!snapshot.source?.componentSetKey && !identity?.componentSetKey
+              && snapshot.source?.componentKey && identity?.componentKey === snapshot.source.componentKey
+              && representations[0].locator.componentKey === snapshot.source.componentKey);
           const raw = surface ? (identityProven ? representations[0].surface : undefined)
             : name !== undefined ? component?.properties?.[name] : undefined;
           const inputs = surface ? ['component.identity.componentKey', 'component.identity.componentSetKey', binding.path]

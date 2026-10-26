@@ -234,6 +234,15 @@ function ownedAuditFixture() {
   contract.rules[0].assert.expected={fact:'baseline.effective.appearance.opacity'};contract.capabilities.facts=['baseline.effective.appearance.opacity'];
   return {f,part,child,contract,options:{ownerContext:{snapshot:f.snapshot,contract:f.contract,nodeId:part.id,nodeMap:{[part.id]:part.id}}}};
 }
+test('native SLOT chooses the independently typed representation port before testing ambiguity',()=>{
+  const f=payloadFixture();Object.assign(f.contract.runtimePolicy,{nativeSlotTargetsVersion:1,slotTargetFactsVersion:1});f.contract.package.snapshotProfile='variant-facts-v4';f.contract.customizationPolicy[0].targetId='part-0';
+  f.contract.customizationPolicy[0].controlPaths.push({kind:'slot-api',target:'part-0',property:'MobileBody',contentOwnership:'external'});
+  const prepared=core.prepareValidationSnapshot(f.snapshot,f.contract);
+  assert.equal(prepared.nodes.find(n=>n.id==='part-0').slotBoundaryV1?.contentOwnership,'external');
+  f.root.component.propertyTypes.MobileBody='SLOT';f.snapshot.variantReference.nodeProperties[''].propertyTypes.MobileBody='SLOT';
+  const ambiguous=core.prepareValidationSnapshot(f.snapshot,f.contract);
+  assert.equal(ambiguous.nodes.find(n=>n.id==='part-0').slotBoundaryV1,undefined);
+});
 test('area audit revalidates independent enclosing configuration without mutating either snapshot',()=>{
   const a=ownedAuditFixture(),before=JSON.stringify(a);
   assert.equal(auditContractSnapshot(a.child,a.contract).engine.evaluations[0].classification,'violation');
@@ -250,4 +259,47 @@ for(const [name,mutate] of [
   ['external content',a=>a.f.contract.customizationPolicy[0].controlPaths=[{kind:'slot-api',target:a.part.id,contentOwnership:'external'}]],
 ])test('area owner context fails closed for '+name,()=>{
   const a=ownedAuditFixture();mutate(a);assert.throws(()=>auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext),{code:'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE'});
+});
+
+function customFieldFixture() {
+  const a=ownedAuditFixture(), parent=a.f.contract, child=a.contract;
+  const paint={type:'SOLID',visible:true,opacity:1,tokenId:'synthetic-library-token',color:{r:0,g:0,b:0}};
+  for(const snapshot of [a.f.snapshot,a.child]) snapshot.nodes.find(n=>n.id===a.part.id).appearance.fill=[clone(paint)];
+  const fillRule=clone(child.rules[0]);
+  fillRule.ruleId='synthetic.fill';fillRule.assert={predicate:'matches-effective-baseline',actual:{fact:'appearance.fill'},expected:{fact:'baseline.effective.appearance.fill'}};
+  child.rules.push(fillRule);child.capabilities.facts.push('baseline.effective.appearance.fill');
+  const tokenRule=clone(parent.rules[0]);
+  tokenRule.ruleId='synthetic.custom-fill';tokenRule.source.anchor='source.custom-fill';
+  tokenRule.select={from:'selection-root',traverse:'self-and-descendants',where:[{predicate:'equals',actual:{fact:'id'},expected:{literal:a.part.id}}]};
+  tokenRule.assert={predicate:'binding-satisfies',actual:{fact:'paintBindingsV1.fill'},expected:{literal:{required:true}},missingPolicy:'unknown'};
+  parent.runtimePolicy.paintBindingFactsVersion=1;parent.rules.push(tokenRule);
+  parent.customizationPolicy.push({id:'source.custom-fill',status:'reviewed',permission:'constrained',capability:'appearance.fill',targetScope:'self',targetId:a.part.id,controlPaths:[{kind:'direct',target:a.part.id,property:'appearance.fill'}],execution:{route:'predicate'}});
+  child.coverage.compiledRules=child.rules.length;
+  parent.coverage={sourceRules:2,policyRules:2,policyOnlyRules:0,compiledRules:2,nonExecutableRules:0};
+  return a;
+}
+test('an enclosing token field owns only child fill; token and other property violations survive',()=>{
+  const a=customFieldFixture(), audit=()=>auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext);
+  const result=audit();assert.equal(result.engine.evaluations.find(e=>e.ruleId==='synthetic.fill').classification,'not-applicable');
+  assert.equal(result.ownerFieldConstraints.length,1);
+  a.part.appearance.opacity=a.child.nodes[0].appearance.opacity=.3;
+  assert.equal(audit().engine.evaluations.filter(e=>e.classification==='violation').length,1);
+  a.part.appearance.fill[0].tokenId=a.child.nodes[0].appearance.fill[0].tokenId=null;
+  assert.equal(core.evaluateCompiledContract(a.f.snapshot,a.f.contract).evaluations.find(e=>e.ruleId==='synthetic.custom-fill').classification,'violation');
+  assert.equal(audit().engine.evaluations.find(e=>e.ruleId==='synthetic.fill').classification,'not-applicable');
+});
+test('inactive or unknown enclosing token constraints never suppress child baselines',()=>{
+  for(const condition of [false,undefined]) {
+    const a=customFieldFixture();a.f.contract.rules.at(-1).when=condition===false?{predicate:'equals',actual:{literal:false},expected:{literal:true}}:{predicate:'equals',actual:{fact:'missing.context'},expected:{literal:true},missingPolicy:'unknown'};
+    const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext);
+    assert.notEqual(result.engine.evaluations.find(e=>e.ruleId==='synthetic.fill').classification,'not-applicable');
+    assert.equal(result.ownerFieldConstraints,undefined);
+  }
+});
+
+test('an ordinary token requirement alone preserves the fixed child fill baseline',()=>{
+  const a=customFieldFixture();a.f.contract.customizationPolicy.at(-1).controlPaths=[];
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext);
+  assert.notEqual(result.engine.evaluations.find(e=>e.ruleId==='synthetic.fill').classification,'not-applicable');
+  assert.equal(result.ownerFieldConstraints,undefined);
 });

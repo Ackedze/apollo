@@ -41,7 +41,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     error.code = 'APOLLO_V4_COMPONENT_NOT_COVERED';
     throw error;
   }
-  let ownerBaseline;
+  let ownerBaseline, ownerPropertyRules = [];
   const owner = ownerContext;
   if (owner) {
     boundCapture(owner.snapshot, 0);
@@ -58,8 +58,33 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     }
     snapshot = proof.snapshot;
     ownerBaseline = proof.ownerBaseline;
+    const parentResult = core.evaluateCompiledContract(owner.snapshot, owner.evaluationMode === 'authoring-preview'
+      ? core.prepareAuthoringPreviewContract(parent) : parent);
+    for (const evaluation of parentResult.evaluations) {
+      if (evaluation.applicability !== 'applicable' || !['compliant', 'violation'].includes(evaluation.classification)) continue;
+      const ir = parent.rules.find(rule => rule.ruleId === evaluation.ruleId);
+      const policy = parent.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
+      if (!policy || policy.permission !== 'constrained' || policy.capability !== 'appearance.fill'
+        || (policy.targetScope || 'self') !== 'self'
+        || !parent.facts.targets.some(target => target.id === policy.targetId && target.resolution === 'resolved')
+        || !policy.controlPaths.some(control => control.kind === 'direct' && control.target === policy.targetId
+          && control.property === 'appearance.fill') || (ir.assert?.predicate !== 'binding-satisfies' || ir.assert?.actual?.fact !== 'paintBindingsV1.fill'
+          || ir.assert?.expected?.literal?.required !== true)) continue;
+      const childIds = Object.entries(owner.nodeMap).filter(([, host]) => host === evaluation.subjectNodeId).map(([local]) => local);
+      if (childIds.length === 1) ownerPropertyRules.push({ nodeId: childIds[0], fact: 'appearance.fill',
+        parentRuleId: evaluation.ruleId, parentManualSourceHash: parent.package.manualSourceHash });
+    }
   }
-  const result = core.evaluateCompiledContract(snapshot, mode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(contract) : contract, [], undefined, ownerBaseline);
+  // An active, identity-proven enclosing field constraint owns its value domain.
+  // Keep its token violation and all other child constraints in the same engine.
+  const contextual = !ownerPropertyRules.length ? contract : { ...contract, rules: contract.rules.map(rule => {
+    if (rule.assert?.predicate !== 'matches-effective-baseline' || rule.assert?.actual?.fact !== 'appearance.fill') return rule;
+    const ids = [...new Set(ownerPropertyRules.map(p => p.nodeId))];
+    return { ...rule, when: { predicate: 'all', args: [...(rule.when ? [rule.when] : []), {
+      predicate: 'none-of', actual: { fact: 'id' }, expected: { literal: ids }, missingPolicy: 'unknown',
+    }] } };
+  }) };
+  const result = core.evaluateCompiledContract(snapshot, mode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(contextual) : contextual, [], undefined, ownerBaseline);
   const pendingSources = contract.customizationPolicy.filter((entry) => entry.status !== 'deprecated'
     && ['delegated', 'context-only'].includes(entry.execution.route)).map((entry) => ({
     ruleId: entry.id, route: entry.execution.route,
@@ -81,6 +106,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
       schemaVersion: contract.schemaVersion, manualSourceHash: contract.package.manualSourceHash,
     },
     engine: result,
+    ...(ownerPropertyRules.length ? { ownerFieldConstraints: ownerPropertyRules } : {}),
     coverage: {
       scope: 'compiled-predicate-execution',
       executionComplete: !captureIncomplete && !uncertain && !missingRules.length && !pendingSources.length

@@ -36,7 +36,6 @@ export function materializeVariantTextTargets(snapshot: PreviewSnapshot, contrac
     if (anchors.length !== 1) continue;
     const path = targetPath(target), anchorPath = targetPath(anchors[0]);
     if (!path || !anchorPath || !path.startsWith(anchorPath + ' / ')) continue;
-    if (ref.nodes.filter(n => n.path === path && n.type === 'TEXT').length !== 1) continue;
     const anchorsInSnapshot = snapshot.nodes.filter(n => record(n.semantic).role === anchors[0].semanticRole && n.type === 'INSTANCE');
     if (anchorsInSnapshot.length !== 1) continue;
     const anchor = anchorsInSnapshot[0], ap = record(anchor.baselineProvenance);

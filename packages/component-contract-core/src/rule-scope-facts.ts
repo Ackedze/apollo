@@ -23,6 +23,7 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
       for (const targetId of nativeTargets) {
         const target = contract.facts.targets.find(entry => entry.id === targetId);
         const nodes = snapshot.nodes.filter(node => record(node.semantic).role === target?.semanticRole);
+        if (record(record(root?.variantAvailability).targets)[target?.semanticRole || '']?.present === false && nodes.length === 0) continue;
         // BOOLEAN/INSTANCE slots retain their existing behavior. This addition
         // handles only proven native SLOT descendants, never the slot boundary.
         if (nodes.length === 1 && nodes[0].type === 'INSTANCE') continue;

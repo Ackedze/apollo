@@ -57,3 +57,7 @@ test('standalone representation surface requires exact source and actual identit
   root.component.identity.componentKey = 'synthetic-variant'; root.unknownFacts=['component.identity.componentKey'];
   assert.equal(core.prepareValidationSnapshot(f.snapshot,contract).nodes[0].semanticApi.surface,undefined);
 });
+test('captured height baseline detects resize; missing height remains UNKNOWN',()=>{
+ const f=widthFixture(),root=f.snapshot.nodes[0];f.manual.rules[0].capability='geometry.height';f.manual.rules[0].constraints=[{type:'propertyForbidden',fact:'bounds.height'}];root.bounds.height=32;root.baseline={effective:{bounds:{height:32}}};
+ assert.equal(run(f).evaluations[0].classification,'compliant');root.bounds.height=33;assert.equal(run(f).evaluations[0].classification,'violation');delete root.bounds.height;assert.equal(run(f).evaluations[0].classification,'human-review');
+});

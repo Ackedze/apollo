@@ -12,6 +12,7 @@ const unknown=(node:Record<string,unknown>|undefined,fact:string)=>((node?.unkno
  * property checks and no dependency/transition/content predicates are supported.
  * Everything else retains the full capture route. */
 export function nativeSlotCapturePlan(contract:CompiledContract):NativeSlotCapturePlan | undefined {
+  if (contract.facts.memberCollections?.some(entry => entry.collection.slotContent)) return;
   if (contract.runtimePolicy.nativeSlotTargetsVersion!==1 || contract.componentDependencies?.length
     || contract.facts.transitions?.length || contract.nonExecutableRules.length
     || contract.capabilities.operators.some(op=>!['all','any','equals','one-of','not','matches-effective-baseline','fact-present','binding-satisfies'].includes(op))

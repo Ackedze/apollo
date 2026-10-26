@@ -1,3 +1,4 @@
+import { captureResolvedEmptyText } from './empty-text-capture';
 import { intrinsicBounds, matchesComponentIdentity, materializeEffectiveBaseline } from './instance-validation';
 import { resolveCaptureRepresentation } from './capture-representation';
 import { captureSupplementalFacts } from './capture-facts';
@@ -302,10 +303,12 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
   };
   const textEntries = identityOnly ? [] : entries.filter(entry => entry.node.type === 'TEXT');
   let nextText = 0;
+  const emptyTextEvidence = new Map<string, Awaited<ReturnType<typeof captureResolvedEmptyText>>>();
   // Only independent reads overlap; pristine instance creation stays sequential.
   await Promise.all(Array.from({length:Math.min(6,textEntries.length)}, async () => {
     while (nextText < textEntries.length) {
       const node = textEntries[nextText++].node as TextNode;
+      emptyTextEvidence.set(node.id, await captureResolvedEmptyText(node, figma.mixed));
       styleEvidence.set(node.id, await captureTextStyleEvidence(node, resolveStyleKey));
       fillEvidence.set(node.id, await captureTextFillEvidence(node, paintFacts, resolveVariableKey));
     }
@@ -360,13 +363,15 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
     }
     const supplemental = captureSupplementalFacts(entry.node as unknown as Record<string, unknown>, figma.mixed);
     const modeFacts = captureResolvedVariableModes(entry.node.resolvedVariableModes || {}, resolvedCollections);
+    let bindings: Record<string, JsonValue> = {}, bindingsUnreadable = false;
+    try { bindings = variableBindings(entry.node); } catch { bindingsUnreadable = true; }
     const properties: Record<string, JsonValue> = {
       layout: layoutFacts(entry.node),
       appearance: appearanceFacts(entry.node),
-      variable: { bindings: variableBindings(entry.node), modes: modeFacts.modes, modeCatalog: modeFacts.modeCatalog },
+      variable: { bindings, modes: modeFacts.modes, modeCatalog: modeFacts.modeCatalog },
       hostVariableUsageV1: usageEvidence.get(entry.node.id)! as unknown as JsonValue,
       component: componentFacts(entry.node,identities.get(entry.node.id),sourceIdentities.get(entry.node.id)),
-      text: { ...textFacts(entry.node), ...supplemental.text },
+      text: Object.assign({}, textFacts(entry.node), supplemental.text, emptyTextEvidence.get(entry.node.id)?.text),
       ...(styleEvidence.has(entry.node.id) ? {textStyleEvidenceV1: styleEvidence.get(entry.node.id)!} : {}),
       ...(fillEvidence.has(entry.node.id) ? {textFillEvidenceV1: fillEvidence.get(entry.node.id)!} : {}),
       parent: supplemental.parent,
@@ -391,7 +396,7 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
       depth: entry.depth,
       childIds,
       properties,
-      unknownFacts: [...supplemental.unknownFacts, ...modeFacts.unknownFacts],
+      unknownFacts: [...supplemental.unknownFacts, ...modeFacts.unknownFacts, ...(bindingsUnreadable ? ['variable.bindings'] : []), ...(emptyTextEvidence.get(entry.node.id)?.unknownFacts || [])],
     };
   });
 

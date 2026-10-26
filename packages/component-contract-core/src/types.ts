@@ -229,6 +229,8 @@ export type MemberCollection = {
   version: 1;
   ownerTargetRole: string;
   memberTargetRoles: string[];
+  /** Open native SLOT payload: compare only the declared component families, without closing its contents. */
+  slotContent?: { componentSetKeys: string[] };
   representationIds: string[];
   visibleOnly: boolean;
   filter?: CollectionFilter;
@@ -372,7 +374,7 @@ export type ManualRule = {
   targetScope?: TargetScope;
   /** Opt-in: recursive baseline policies stop at proven contract-owned children. */
   boundaryPolicy?: 'component-owned@1';
-  /** Opt-in for style comparisons only; absence/visibility requirements are separate. */
+  /** Opt-in for visible style/text details; absence/visibility requirements are separate. */
   targetApplicability?: 'visible-target@1';
   /** Opt-in configured native BOOLEAN/VARIANT value conformance; visual activity stays separate. */
   propertyConformance?: 'configured-native@1';

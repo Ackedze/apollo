@@ -14,5 +14,10 @@ export function allowsVisibleTargetPolicy(rule: ManualRule): boolean {
     && !rule.capabilitySet && /^(layout|text)\./.test(rule.capability)
     && rule.constraints.length > 0 && rule.constraints.every(c => c.type === 'layoutConstraint'
       && /^(layout|text|derived)\.[a-zA-Z][a-zA-Z0-9.]*$/.test(c.fact || ''));
-  return style || deferredLayout;
+  const visibleDetail = rule.permission === 'constrained' && (rule.targetScope || 'self') === 'self'
+    && !rule.capabilitySet && rule.constraints.length > 0 && rule.constraints.every(c =>
+      c.type === 'layoutConstraint' && (['textContentV1.characterCount', 'textContentV1.wordCount'].includes(c.fact || '')
+        || c.fact === 'bounds.height' && c.operator === 'at-most-line-height')
+      || c.type === 'tokenBinding' && c.fact === 'paintBindingsV1.fill');
+  return style || deferredLayout || visibleDetail;
 }

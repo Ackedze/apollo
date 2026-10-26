@@ -12,7 +12,7 @@ const valueType = (type: string, value: unknown) => type === 'BOOLEAN' ? typeof 
 export function memberCollectionErrors(c: MemberCollection, manual: Pick<ManualSource, 'targets' | 'representations'>): string[] {
   const errors: string[] = [];
   if (!c || c.version !== 1) return ['Member collection version 1 is required.'];
-  if(Object.keys(c).some(k=>!['version','ownerTargetRole','memberTargetRoles','representationIds','visibleOnly','filter','whenHost','whenMember','assertion'].includes(k)))errors.push('Unsupported member collection field.');
+  if(Object.keys(c).some(k=>!['version','ownerTargetRole','memberTargetRoles','slotContent','representationIds','visibleOnly','filter','whenHost','whenMember','assertion'].includes(k)))errors.push('Unsupported member collection field.');
   const resolved = (role: string) => manual.targets.filter(t => t.semanticRole === role && t.resolution === 'resolved').length === 1;
   if (!resolved(c.ownerTargetRole)) errors.push('Choose one resolved collection owner.');
   if (!Array.isArray(c.memberTargetRoles) || !c.memberTargetRoles.length || new Set(c.memberTargetRoles).size !== c.memberTargetRoles.length
@@ -27,6 +27,12 @@ export function memberCollectionErrors(c: MemberCollection, manual: Pick<ManualS
   for (const f of [c.filter, c.whenHost, c.whenMember]) if (f !== undefined) {
     property(f, Array.isArray(f?.values) ? f.values : []);
     if(Object.keys(f || {}).some(k=>!['property','propertyType','values'].includes(k)))errors.push('Unsupported typed filter field.');
+  }
+  if (c.slotContent !== undefined) {
+    const keys = c.slotContent?.componentSetKeys;
+    if (Object.keys(c.slotContent || {}).some(k => k !== 'componentSetKeys') || !Array.isArray(keys) || !keys.length
+      || keys.some(k => typeof k !== 'string' || !/^[a-f0-9]{40}$/i.test(k)) || new Set(keys).size !== keys.length
+      || !Array.isArray(c.memberTargetRoles) || c.memberTargetRoles.length !== 1 || c.assertion?.kind !== 'propertyMapping') errors.push('Open SLOT requires one target, explicit family keys and propertyMapping.');
   }
   const a = c.assertion;
   if (!a || !['membership', 'count', 'position', 'propertyDomain', 'propertyMapping', 'hostRequirement'].includes(a.kind)) return [...errors, 'Unsupported collection assertion.'];
@@ -126,6 +132,39 @@ function resolveCollection(snapshot: PreviewSnapshot, contract: CompiledContract
     result.missing.push('collection-owner-identity-unproven'); return result;
   }
   result.owner = owner;
+  if (c.slotContent) {
+    const slotPath = memberPaths[0]!, slot = actualFor(slotPath), expected = ref.nodeProperties[slotPath];
+    const property = expected?.propertyReferenceBindings?.slotContentId;
+    const controls = contract.customizationPolicy.filter(p => p.status !== 'deprecated' && ['allowed','constrained'].includes(p.permission)
+      && p.targetId === contract.facts.targets.find(t => t.semanticRole === c.memberTargetRoles[0])?.id)
+      .flatMap(p => p.controlPaths).filter(p => p.kind === 'slot-api' && p.property === property && p.contentOwnership === 'external');
+    if (snapshot.source?.captureTopology?.complete !== true || snapshot.source.captureTopology.limitReached
+      || snapshot.source.captureTopology.issues?.length || !slot || slot.type !== 'SLOT'
+      || ref.nodes.find(n => n.path === slotPath)?.type !== 'SLOT' || typeof property !== 'string' || !controls.length
+      || unknown(owner,'component.propertyTypes.' + property) || record(owner.component).propertyTypes?.[property] !== 'SLOT'
+      || ref.nodeProperties[ownerPath]?.propertyTypes?.[property] !== 'SLOT' || unknown(slot,'component.propertyReferenceBindings')
+      || record(record(slot.component).propertyReferenceBindings).slotContentId !== property
+      || record(slot.slotBoundaryV1).evidence !== 'native-slot-content-reference'
+      || record(slot.slotBoundaryV1).contentOwnership !== 'external') {
+      result.missing.push('collection-slot-boundary-unproven'); return result;
+    }
+    const members:Member[] = [];
+    const visit = (node:Record<string,any>) => {
+      if (node.type === 'INSTANCE') {
+        const identity = record(record(node.component).identity);
+        if (unknown(node,'component.identity') || !/^[a-f0-9]{40}$/i.test(identity.componentKey || '')
+          || typeof identity.mainComponentId !== 'string' || !identity.mainComponentId) {
+          result.missing.push('collection-member-identity-unavailable:' + node.id); return;
+        }
+        if (c.slotContent!.componentSetKeys.includes(identity.componentSetKey)) members.push({role:c.memberTargetRoles[0],node,sourceNodeId:node.id});
+        return; // A nested component owns its descendants, including nested groups.
+      }
+      if (['FRAME','GROUP'].includes(node.type)) for (const id of node.childIds) visit(graph.get(id)!);
+    };
+    for (const id of slot.childIds) visit(graph.get(id)!);
+    result.members = members; result.issues = []; result.actualCount = members.length;
+    return result;
+  }
   const originalChildren = ref.nodes.filter(n => n.path && parent(n.path) === ownerPath);
   if (originalChildren.length !== memberPaths.length || originalChildren.some(n => n.type !== 'INSTANCE' || !memberPaths.includes(n.path))) {
     result.missing.push('collection-members-do-not-cover-reference'); return result;

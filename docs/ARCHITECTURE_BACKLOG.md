@@ -2,6 +2,22 @@
 
 ## Apollo: совместимость с ComponentContract Editor
 
+26.10.2026 — **Core0.1.24 / bounded checking candidate; native/Editor UI pending**.
+Tag/FilterTag/Skeleton r3 используют факты bounds; TagGroup r3 добавляет explicit
+slotContent к существующему memberCollection.propertyMapping. Typed native SLOT,
+independent reference, уникальная source occurrence и полный capture обязательны;
+нейтральные wrappers обходятся, вложенный INSTANCE завершает границу владельца.
+Закрытый состав не меняется без opt-in. StatusProperty r6 использует узкую
+visible-target policy для self-local text/token деталей; quantity не исключается.
+Empty TEXT producer разрешает singleton bound fontFamily/tracking на реальном
+consumer, не снимая baseline/style проверок. Missing/ambiguous остаётся UNKNOWN.
+79 retained captures: uncertain67→0; TGR03 обнаружен. Candidate main читает28
+stamped sources и отвергает подменённый stamp. Новых операторов0, whole/generation/
+Proxy rebuild0. Exact runtime/main/data поставляются совместимой парой; до этого
+installed/default Git пара сохранена. Editor shared-core consumer требует uptake
+этой версии и UI проверки; это не Ready/release acceptance. Evidence в DS:
+`experiments/current-contract-packages/reports/rule-gaps-2026-10-26/eval.json`.
+
 ### CC-COMPAT-NATIVE-SOURCE-CONTINUITY-01 — явные native targets после смены варианта
 
 23.10.2026, nested-area correction (Core 0.1.23 / Editor 0.2.108): manual

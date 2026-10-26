@@ -66,3 +66,28 @@ test('two fixed binding pins can share one child authoring source without duplic
   assert.deepEqual(result.engine.dependencyRuns.map(run => run.status), ['executed', 'executed']);
   assert.ok(result.engine.evaluations.filter(entry => entry.dependency).every(entry => entry.ruleId.startsWith('test.child.opacity.')));
 });
+
+test('plugin source loader reproduces stamped word limits from the source compiler', async () => {
+  const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm');
+  const built = await require('esbuild').build({ absWorkingDir: path.resolve(__dirname, '..'),
+    entryPoints: ['packages/component-contract-core/src/compiler.ts'], bundle: true, platform: 'node', format: 'cjs', write: false });
+  const module = { exports: {} };
+  vm.runInNewContext(built.outputFiles[0].text, { module, exports: module.exports, require, TextEncoder });
+  const source = fixture.source();
+  source.manual.rules[0].constraints = [{ type: 'layoutConstraint', fact: 'textContentV1.wordCount', min: 0, max: 2 }];
+  const compiled = JSON.parse(JSON.stringify(module.exports.compileManualSource(source.manual, source.variantEvidence, []).contract));
+  compiled.package.sourceExportVersion = 'component-contract-editor@0.2.94';
+  source.projectionStamp = { sourceExportVersion: compiled.package.sourceExportVersion, compiledHash: runtime.contractHash(compiled) };
+  const code = fs.readFileSync(path.join(__dirname, '../dist/code.js'), 'utf8'), end = code.lastIndexOf('\n})();');
+  assert(end > 0);
+  const f = require('./document-audit.test.js').fixture(), context = { figma: f.api, __html__: '', TextEncoder, setTimeout, clearTimeout };
+  try {
+    // Exercise the shipped loader, which can differ from the separately built Node runtime.
+    vm.runInNewContext(code.slice(0, end) + '\nglobalThis.__loadSource = runtime.loadAuthoringSource;' + code.slice(end), context);
+    const before = JSON.stringify(source), loaded = context.__loadSource(source);
+    assert.equal(runtime.contractHash(loaded.contract), source.projectionStamp.compiledHash);
+    assert.equal(JSON.stringify(source), before);
+    source.projectionStamp.compiledHash = '0'.repeat(64);
+    assert.throws(() => context.__loadSource(source), /не воспроизводят/);
+  } finally { f.emit('close'); }
+});

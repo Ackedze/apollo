@@ -421,6 +421,10 @@ function beginScopedRecheck(plan:any,requestId:string){
  },fail:()=>{if(generation===revision)invalidateArea();for(const [id,p]of pending)if(id.startsWith(requestId+':')){clearTimeout(p.timer);pending.delete(id);p.reject(Error('Перепроверка остановлена.'));}}};
 }
 figma.skipInvisibleInstanceChildren = false;
+declare const __APOLLO_PROGRESSBAR_PILOT__: boolean;
+const progressBarPilot = typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
+  ? require('./design-check/progressbar-capture').createProgressBarCapture({ api: figma, hash: engine.stableHash, post, isBusy: () => busy || documentAuditBridge.isActionBusy() }) : null;
+progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
 figma.on('selectionchange', refreshSelection);
 bindAreaPage();figma.on('currentpagechange',()=>{invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
@@ -441,6 +445,7 @@ async function focusAuditFinding(message:any){
 nativePageObserver.start();
 documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
+  if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;

@@ -14,6 +14,10 @@ import { AuditOverview } from "./AuditOverview";
 import { buildResultGroups } from "./result-groups";
 import assets from "./assets";
 import {SkillsPanel} from "../skills/layer-names/SkillsPanel";
+import { ProgressBarPilot } from './ProgressBarPilot';
+const { createProgressBarClient } = require('./progressbar-client');
+declare const __APOLLO_PROGRESSBAR_PILOT__: boolean;
+declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
@@ -109,6 +113,15 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
 
 
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
+  const [progressBarClient] = useState(() => typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
+    ? createProgressBarClient({ send: (value: any) => window.parent.postMessage({ pluginMessage: value }, '*'), request: (url: string, options: RequestInit) => fetch(url, options),
+      endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
+  useEffect(() => {
+    if (!progressBarClient) return;
+    const receive = (event: MessageEvent) => { if (event.source === window.parent) progressBarClient.accept(event.data?.pluginMessage); };
+    window.addEventListener('message', receive);
+    return () => { window.removeEventListener('message', receive); progressBarClient.close(); };
+  }, [progressBarClient]);
   const state = useSyncExternalStore(controller.subscribe, controller.getState), settings = state.settings;
   const launcher = useRef<HTMLButtonElement>(null);
   const activeScreen = state.chat.open ? 'chat' : state.mode === 'skills' ? 'skills' : state.mode === 'generation' ? 'generation' : state.view === 'texts' ? 'texts' : 'check';
@@ -226,7 +239,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
                 <article className="design-check-preview-finding" key={entry.evaluationId || index}><strong>{entry.ruleId}</strong><p>{entry.classification}</p></article>)}
             </>}
             <section hidden={state.view !== 'report'} aria-label="Паттерны">
-              <ExistingSlot node={slots.patterns} />{!slots.patterns && <p className="placeholder">Проверка паттернов ещё не подключена. Draft-правила не считаются проверенными.</p>}
+              <ExistingSlot node={slots.patterns} />{!slots.patterns && (progressBarClient ? <ProgressBarPilot client={progressBarClient} blocked={actionBusy} /> : <p className="placeholder">Проверка паттернов ещё не подключена. Draft-правила не считаются проверенными.</p>)}
             </section>
           </main>}
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>

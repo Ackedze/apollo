@@ -1,0 +1,12 @@
+.apollo-progressbar-pilot { color:#18181b; font:400 14px/20px "Apollo Alfa",sans-serif; }
+.apollo-progressbar-pilot h2 { margin:0 0 8px; font-size:20px; line-height:28px; font-weight:500; }
+.apollo-progressbar-caption { color:#62626b; overflow-wrap:anywhere; }
+.apollo-progressbar-pilot .apollo-finding-main p { margin:0; overflow-wrap:anywhere; }
+.apollo-progressbar-start, .apollo-progressbar-not-applicable button { border:0; border-radius:999px; padding:12px 20px; background:#18181b; color:#fff; font:inherit; cursor:pointer; }
+.apollo-progressbar-start:hover:enabled { background:#39393c; }
+.apollo-progressbar-start:disabled { background:#edeef0; color:#62626b; cursor:default; }
+.apollo-progressbar-start:focus-visible, .apollo-progressbar-not-applicable button:focus-visible { outline:2px solid #1769d2; outline-offset:3px; }
+.apollo-progressbar-progress { display:flex; flex-direction:column; align-items:center; gap:12px; padding:24px 0; text-align:center; }
+.apollo-progressbar-progress .apollo-mascot { margin:0; }
+.apollo-progressbar-not-applicable { padding:16px; margin:8px 0; background:#f2f3f5; border-radius:16px; }
+.apollo-progressbar-not-applicable h3 { margin:0; font-size:16px; line-height:24px; font-weight:500; }

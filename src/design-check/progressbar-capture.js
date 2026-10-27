@@ -3,14 +3,36 @@ const { CAPTURE_SCHEMA } = require('./progressbar-protocol');
 
 // This pilot observes only the visible selected subtree. It never imports or edits components.
 function createProgressBarCapture({ api, hash, post, isBusy = () => false, now = Date.now }) {
-  let revision = 0, sequence = 0, active = null, current = null, page = null, expectedFocusId = null;
+  let revision = 0, sequence = 0, active = null, current = null, page = null, expectedFocusId = null, observation = null;
   const error = code => Object.assign(Error(code), { code });
   function invalidate() {
     revision++; active = null;
     if (current) post({ type: 'progressbar-invalidated', captureId: current.capture.captureId });
-    current = null;
+    current = null; observation = null;
   }
-  function observe() { invalidate(); }
+  function affectsObservation(change) {
+    if (!change || !['CREATE','DELETE','PROPERTY_CHANGE'].includes(change.type) || typeof change.id !== 'string'
+      || change.node?.id !== change.id || (change.type === 'PROPERTY_CHANGE' && (!Array.isArray(change.properties)
+        || !change.properties.length || change.properties.some(p => typeof p !== 'string')))) return true;
+    if (observation.ids.has(change.id)) return true;
+    if (observation.ancestors.has(change.id)) return change.type !== 'PROPERTY_CHANGE'
+      || change.properties.some(p => !['name','locked','pluginData'].includes(p));
+    // A finished capture has its subtree IDs; in-flight removals have no parent proof.
+    if (change.node.removed) return change.type !== 'DELETE' || !current;
+    const seen = new Set(); let node = change.node;
+    while (node && !seen.has(node.id) && seen.size < 100) {
+      if (node.id === observation.root.id) return true;
+      if (node.type === 'PAGE') return node.id !== api.currentPage.id;
+      seen.add(node.id); node = node.parent;
+    }
+    return true;
+  }
+  function observe(event) {
+    if (!observation) return;
+    try {
+      if (!Array.isArray(event?.nodeChanges) || !event.nodeChanges.length || event.nodeChanges.some(affectsObservation)) invalidate();
+    } catch { invalidate(); }
+  }
   function selectionChanged() {
     if (expectedFocusId && api.currentPage.selection.length === 1 && api.currentPage.selection[0].id === expectedFocusId) { expectedFocusId = null; return; }
     expectedFocusId = null; invalidate();
@@ -23,6 +45,7 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
     async function walk(node, parentId, depth) {
       guard();
       if (depth > 24 || nodes.length >= 300 || node.removed) throw error('PROGRESSBAR_CAPTURE_INCOMPLETE');
+      if (observation?.root === root) observation.ids.add(node.id);
       if (node.visible === false) { hidden++; return; }
       const item = { id: node.id, parentId, type: node.type, name: node.name, visible: true };
       if (typeof item.id !== 'string' || typeof item.name !== 'string' || item.name.length > 1000) throw error('PROGRESSBAR_CAPTURE_INCOMPLETE');
@@ -64,6 +87,14 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
     invalidate();
     if (isBusy() || api.currentPage.selection.length !== 1) throw error('PROGRESSBAR_SELECT_ONE_AREA');
     const root = api.currentPage.selection[0], pageId = api.currentPage.id, expected = revision, ticket = ++sequence;
+    observation = { root, ids: new Set([root.id]), ancestors: new Set() };
+    let ancestor = root.parent;
+    while (ancestor) {
+      if (observation.ancestors.has(ancestor.id) || observation.ancestors.size >= 100) throw error('PROGRESSBAR_CAPTURE_INCOMPLETE');
+      observation.ancestors.add(ancestor.id);
+      if (ancestor.type === 'PAGE' || ancestor.type === 'DOCUMENT') break;
+      ancestor = ancestor.parent;
+    }
     active = ticket; const deadline = now() + 25000;
     const guard = () => {
       if (active !== ticket || revision !== expected || api.currentPage.id !== pageId || api.currentPage.selection.length !== 1

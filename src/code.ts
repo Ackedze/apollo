@@ -148,6 +148,15 @@ function checkCapture(scope: any, contract: any, captured: any) {
       && omissions.some((entry: any) => entry.targetId === boundary.targetId && entry.property === boundary.property && entry.path === boundary.path)) } : undefined;
   return collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope);
 }
+function attachSharedArea(data:any) {
+  if (!progressBarPilot) return;
+  const report=data.audit, proof=areaNotificationProof, revision=lastAuditRevision;
+  const verify=async()=>{
+    const guard=()=>{if(busy||documentAuditBridge.isActionBusy()||contractFocusTask||areaSession!==data||lastAudit!==report||lastAuditRevision!==revision||generation!==revision||auditPageId!==figma.currentPage.id||areaNotificationProof!==proof||!proof)throw Error('SHARED_AREA_STALE');};
+    guard();await proof.finish(()=>{guard();proof.assertStable();});guard();
+  };
+  data.sharedArea=require('./shared-area-capture').createSharedAreaCapture({scan:data.scan,captures:data.captures,roots:data.roots,auditId:report.auditId,pageId:auditPageId,hash:engine.stableHash,verify});
+}
 async function audit(requestId: string, options:any={}) {
   if (busy) throw new Error('Проверка уже выполняется.');
   const roots:SceneNode[] = options.roots||Array.from(figma.currentPage.selection);
@@ -347,6 +356,7 @@ async function audit(requestId: string, options:any={}) {
     auditPageId=pageId;lastAudit=report;lastAuditRevision=current;areaSession=data;
     verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured);assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await scanArea(roots,()=>{assertCurrent();operationGuard();});assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
     setAreaNotificationProof(scan.nodes,verifyLastArea,()=>{if(generation!==current||lastAudit!==report||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
+    endStage = time('shared-area-snapshot');attachSharedArea(data);endStage();
     endStage = time('focus-targets');
     const focus=buildContractFocus(components,captures,pageId,auditId);contractFocusRegistry=focus.registry;
     endStage();
@@ -417,13 +427,15 @@ function beginScopedRecheck(plan:any,requestId:string){
   // The commit changes the report identity; retain the same revision guard for future focus.
   verifyLastArea=async(g=()=>{})=>{g();if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==data.audit)throw Error('NATIVE_RESULT_STALE');for(const c of data.captures){const check=await checkCapture(c.subject,c.contract,c.captured);g();if(generation!==revision||engine.stableHash(check.anatomy)!==engine.stableHash(c.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}const checked=await scanArea(data.roots,g);g();const normalize=(rows:any[])=>rows.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));if(generation!==revision||engine.stableHash(normalize(checked.topology))!==engine.stableHash(normalize(data.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');};
   setAreaNotificationProof(data.scan.nodes,verifyLastArea,()=>{if(generation!==revision||lastAudit!==data.audit||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
+  attachSharedArea(data);
   return auditDelivery({audit:data.audit,rules:data.rules,displayMetadata:data.displayMetadata,focusTargets:data.focusTargets,staleScopeIds:data.staleScopeIds});
  },fail:()=>{if(generation===revision)invalidateArea();for(const [id,p]of pending)if(id.startsWith(requestId+':')){clearTimeout(p.timer);pending.delete(id);p.reject(Error('Перепроверка остановлена.'));}}};
 }
 figma.skipInvisibleInstanceChildren = false;
 declare const __APOLLO_PROGRESSBAR_PILOT__: boolean;
 const progressBarPilot = typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
-  ? require('./design-check/progressbar-capture').createProgressBarCapture({ api: figma, hash: engine.stableHash, post, isBusy: () => busy || documentAuditBridge.isActionBusy() }) : null;
+  ? require('./design-check/progressbar-capture').createProgressBarCapture({ api: figma, hash: engine.stableHash, post, isBusy: () => busy || documentAuditBridge.isActionBusy(),
+    readShared:(root:SceneNode)=>{const shared=areaSession?.sharedArea;if(!shared||shared.root!==root)return null;if(lastAuditRevision!==generation||shared.pageId!==figma.currentPage.id)throw Error('SHARED_AREA_STALE');return shared;} }) : null;
 progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
 figma.on('selectionchange', refreshSelection);

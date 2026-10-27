@@ -43,6 +43,7 @@ export async function scanArea(selection: readonly SceneNode[], assertCurrent: (
           try{
             const main=node.type==='COMPONENT'?node:await boundedRead(()=>node.getMainComponentAsync(),timeoutMs,assertCurrent);
             assertCurrent();identity.componentKey=main?.key||'';identity.componentSetKey=main?.parent?.type==='COMPONENT_SET'?main.parent.key:'';
+            identity.componentName=main?.parent?.type==='COMPONENT_SET'?main.parent.name:main?.name||'';
             if(!identity.componentKey&&!identity.componentSetKey){issue='area-identity-unavailable';identity.identityRead={code:'AREA_IDENTITY_UNAVAILABLE',operation:'getMainComponentAsync',elapsedMs:Date.now()-started};}
           }catch(e){
             assertCurrent();const error=typeof (e as Error)?.message==='string'?(e as Error).message:String(e),timedOut=error==='NATIVE_READ_TIMEOUT';

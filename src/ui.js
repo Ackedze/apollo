@@ -2,6 +2,8 @@ const {failureText}=require("./generation/failure");
 const {mountAgentGeneration}=require("./generation/agent/ui");
 let agentUi=null;
 let layerNamesClient=null;
+let reglyphClient=null;
+const {createReglyphClient}=require("./skills/reglyph/client");
 const {createLayerNamesClient}=require("./skills/layer-names/client");
 const {createAuditFocusClient}=require("./audit-focus-client");
 const { mountDesignCheck, createDesignCheckController, createExistingDialoguePort, tabDefinitions } = require("./design-check/index");
@@ -72,12 +74,16 @@ const documentAuditClient = createDocumentAuditClient({send,controller:designChe
 const contractFocusClient=createAuditFocusClient({send,onStatus:status,isBusy:()=>designCheck.getState().documentAction.busy});
 designCheck.subscribe(() => {
   tokenJournalClient.observe(designCheck.getState());
-  const compact = designCheck.getState().settings.compact;
+  const settings=designCheck.getState().settings;
+  reglyphClient?.setContext({channelId:settings.channelId,pickerLabel:settings.pickerLabel});
+  const compact = settings.compact;
   if (compact === lastCompact) return;
   lastCompact = compact; void uiClient.resize(compact).catch(error => status(error.message, true));
 });
 const nativeDiagnosticUi = createNativeDiagnosticUi(send,state=>{ $('native-diagnostic-status').textContent=state.busy?'Читаем выделение…':state.error?'Не удалось получить диагностику. Повторите чтение.':state.report?'Чтение завершено. Неподтверждённые связи указаны в JSON.':'Чтение текущего компонента без изменения макета.'; controls(); });
 layerNamesClient=createLayerNamesClient({send,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+reglyphClient=createReglyphClient({send,isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
 function dependencyReason(reason) {
   if (['dependency-reference-not-captured', 'dependency-reference-capture-failed', 'dependency-main-component-unavailable', 'dependency-instance-unavailable'].includes(reason)) return 'Не удалось получить независимый библиотечный эталон.';
   if (reason === 'dependency-variable-modes-unavailable') return 'Не удалось воспроизвести режимы переменных.';
@@ -87,10 +93,11 @@ function dependencyReason(reason) {
   return 'Недостаточно подтверждённых фактов о структуре, варианте или происхождении компонента.';
 }
 function status(text, error = false) { $('status').textContent = text; $('status').classList.toggle('error', error); }
-function legacyOperationUnavailable() { return Boolean(layerNamesClient?.busy()) || Boolean(agentUi?.busy()) || designCheck.getState().documentAction.busy || busy || generationBusy || generationLoading || nativeDiagnosticUi.busy(); }
+function legacyOperationUnavailable(ignoreReglyph=false) { return (!ignoreReglyph && Boolean(reglyphClient?.busy())) || Boolean(layerNamesClient?.busy()) || Boolean(agentUi?.busy()) || designCheck.getState().documentAction.busy || busy || generationBusy || generationLoading || nativeDiagnosticUi.busy(); }
 function controls() {
   agentUi?.refresh();
   layerNamesClient?.refresh();
+  reglyphClient?.refresh();
   const generationUnavailable = legacyOperationUnavailable();
   $('native-diagnostic').disabled = generationUnavailable || !validSelection;
   $('native-diagnostic-export').disabled = generationUnavailable || !nativeDiagnosticUi.report();
@@ -273,6 +280,7 @@ window.onmessage = event => {
   const data = event.data?.pluginMessage; if (!data) return;
   if (uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
+  if (reglyphClient?.accept(data)) return;
   if (sessionClient.accept(data)) return;
   if(contractFocusClient.accept(data)){controls();return;}
   if (data.type === 'native-diagnostic-invalidated') { nativeDiagnosticUi.invalidate(); agentUi?.invalidateNative(); return; }
@@ -281,7 +289,7 @@ window.onmessage = event => {
   if (data.type === 'error' && data.requestId === generationRequest) { generationBusy = false; generationResult = null; $('generation-status').textContent = data.message; }
   if (data.type === 'generation-error' && data.requestId === generationRequest) { generationBusy = false; generationResult = null; $('generation-status').textContent = data.message; }
   if (agentUi?.accept(data)) {controls();return;}
-  if (data.type === 'selection') { layerNamesClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
+  if (data.type === 'selection') { layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
   if (data.type === 'contract-loaded') { $('contract-name').textContent = `${data.name} · r${data.revision} · локальный авторский контракт`; status('Локальный пакет загружен. Можно проверять выделение.'); }
   if (data.type === 'source-mode') { clearResult(); $('contract-name').textContent = 'Прокси подберёт контракты по ключам компонентов'; status('Автоматическая загрузка контрактов включена.'); }
   if(['v3-catalog-request','v3-catalog-cancel'].includes(data.type)){void catalogTransport.accept(data);return;}
@@ -510,7 +518,7 @@ $('native-diagnostic-export').onclick=()=>{
 
 agentUi=mountAgentGeneration({root:$('generation-agent-chat'),settingsRoot:$('generation-agent-settings'),send,onSettingsChange:changedSession,onBusy:()=>{controls();generationChatUi?.focusComposer();},isUnavailable:()=>busy||generationBusy||generationLoading||nativeDiagnosticUi.busy()||promptDirty||!sessionLoaded||designCheck.getState().documentAction.busy});
 generationChatUi=mountGenerationChat({root:$('generation-panel'),controller:designCheck});
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient });
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient });
 void designCheck.restorePreferences();
 void restoreSession();
 window.addEventListener('pagehide',()=>void saveSession());

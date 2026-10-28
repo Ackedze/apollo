@@ -31,6 +31,7 @@ const {createMcpScope}=require("./generation/agent/mcp/scope");
 const { createSessionBridge } = require("./generation/session/protocol");
 const { createDocumentAuditBridge } = require("./document-audit/bridge");
 const {createLayerNamesBridge}=require("./skills/layer-names/native");
+const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
 const {boundedRead}=require("./document-audit/reads");
@@ -76,10 +77,12 @@ function invalidateArea(){areaNotificationProof?.close();areaNotificationProof=n
 function observeArea(event:NodeChangeEvent){if(documentAuditBridge.isActionApplying())return;if(event.nodeChanges?.some(change=>areaObservedIds.has(change.id)||('node' in change&&change.node&&'parent' in change.node&&change.node.parent&&areaObservedIds.has(change.node.parent.id)))){if(documentAuditBridge.observeRefreshChange())return;if(areaNotificationProof)void areaNotificationProof.notify();else invalidateArea();}}
 function bindAreaPage(){if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);areaPage=figma.currentPage;if(typeof areaPage.on==='function')areaPage.on('nodechange',observeArea);}
 
-const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(contractFocusTask), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
+let reglyphBridge:any=null;
+const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
   selectionId = selectionSignature([node]); figma.currentPage.selection = [node]; figma.viewport.scrollAndZoomIntoView([node]);
 } });
-const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
+const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
+reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
 function post(value: any) { figma.ui.postMessage(value); }
 const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
@@ -87,6 +90,7 @@ const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
 }});
 function refreshSelection() {
   documentAuditBridge.selectionChanged();
+  reglyphBridge?.selectionChanged();
   invalidateNativeDiagnostic();
   const nodes = figma.currentPage.selection, id = selectionSignature(nodes), invalidated = selectionId !== id;
   if (invalidated) {
@@ -158,7 +162,7 @@ function attachSharedArea(data:any) {
   data.sharedArea=require('./shared-area-capture').createSharedAreaCapture({scan:data.scan,captures:data.captures,roots:data.roots,auditId:report.auditId,pageId:auditPageId,hash:engine.stableHash,verify});
 }
 async function audit(requestId: string, options:any={}) {
-  if (busy) throw new Error('Проверка уже выполняется.');
+  if (busy || reglyphBridge?.busy()) throw new Error('Проверка уже выполняется.');
   const roots:SceneNode[] = options.roots||Array.from(figma.currentPage.selection);
   if (!roots.length) throw new Error('Выделите область или слой, чтобы проверить компоненты.');
   const timingStarted = Date.now();
@@ -445,7 +449,7 @@ async function focusAuditFinding(message:any){
   const reply=(success:boolean,text='',nodeId?:string)=>post({type:'audit-focus-result',requestId:message.requestId,auditId:message.auditId,targetId:message.targetId,success,message:text,nodeId});
   if(Object.keys(message).sort().join(',')!=='auditId,evaluationId,requestId,targetId,type'||[message.requestId,message.auditId,message.evaluationId,message.targetId].some((v:any)=>typeof v!=='string'||!v||v.length>150)){reply(false,'Параметры перехода несовместимы.');return;}
   const registered=contractFocusRegistry.get(message.targetId);
-  if(revision!==generation||areaNotificationProof?.hasPending()||contractFocusTask||documentAuditBridge.isActionBusy()||!report||report.auditId!==message.auditId||!registered||registered.findingId!==message.evaluationId||auditPageId!==figma.currentPage.id){reply(false,'Нет актуального подтверждённого объекта для перехода. Повторите проверку.');return;}
+  if(revision!==generation||areaNotificationProof?.hasPending()||contractFocusTask||documentAuditBridge.isActionBusy()||reglyphBridge?.busy()||!report||report.auditId!==message.auditId||!registered||registered.findingId!==message.evaluationId||auditPageId!==figma.currentPage.id){reply(false,'Нет актуального подтверждённого объекта для перехода. Повторите проверку.');return;}
   const task={requestId:message.requestId,report,deadline:Date.now()+15000};contractFocusTask=task;
   const guard=()=>{if(generation!==revision||areaNotificationProof?.hasPending()||Date.now()>task.deadline||contractFocusTask!==task||lastAudit!==report||report.auditId!==message.auditId||auditPageId!==figma.currentPage.id||documentAuditBridge.isActionBusy())throw Error('Переход устарел. Повторите проверку.');};
   const timer=setTimeout(()=>{if(contractFocusTask===task){contractFocusTask=null;reply(false,'Переход остановлен по таймауту. Повторите проверку.');}},15000);
@@ -459,6 +463,7 @@ documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
+  if (reglyphBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;
@@ -469,7 +474,7 @@ figma.ui.onmessage = async (message: any) => {
   if(message.type==='audit-focus-cancel'){if(Object.keys(message).length===2&&typeof message.requestId==='string'&&message.requestId.length<=150){if(contractFocusTask?.requestId===message.requestId)contractFocusTask=null;post({type:'audit-focus-cancelled',requestId:message.requestId});}return;}
   if(message.type==='audit-context-invalidated'){if(Object.keys(message).length===2&&lastAudit?.auditId===message.auditId)invalidateArea();return;}
   try {
-    if(documentAuditBridge.isActionBusy()&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
+    if((documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
     // Resolve RPC before busy checks: preparation is waiting for this response.
     if (generationFrontend.accept(message)||generationProxy.accept(message)) return;
     if (message.type === 'contracts-resolved') {

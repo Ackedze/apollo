@@ -543,7 +543,7 @@ test('stage timings account for native reads without changing canonical audit or
   assert.equal(timing.scope, 'contract-area-audit-before-delivery');
   assert.equal(timing.clock, 'Date.now');
   assert.equal(timing.totalMs, 49);
-  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','verify-capture','evaluate','index-component','display-metadata','verify-final-capture','final-scan','aggregate','focus-targets']);
+  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','verify-capture','evaluate','index-component','display-metadata','verify-final-capture','final-scan','aggregate','shared-area-snapshot','focus-targets']);
   assert.equal(timing.stages.find(s => s.stage === 'capture').durationMs, 21);
   assert.equal(timing.stages.find(s => s.stage === 'capture').scopeId, 'actual');
   assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')).reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);

@@ -14,6 +14,7 @@ import { AuditOverview } from "./AuditOverview";
 import { buildResultGroups } from "./result-groups";
 import assets from "./assets";
 import {SkillsPanel} from "../skills/layer-names/SkillsPanel";
+import {ReglyphSkill} from "../skills/reglyph/ReglyphSkill";
 import { ProgressBarPilot } from './ProgressBarPilot';
 const { createProgressBarClient } = require('./progressbar-client');
 declare const __APOLLO_PROGRESSBAR_PILOT__: boolean;
@@ -21,7 +22,7 @@ declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { skillsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { skillsClient?: any; reglyphClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 
 /** Existing v4 nodes keep their identities, listeners, report/export and generation controls. */
@@ -245,7 +246,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
-        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient} />}</section>
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>}</SkillsPanel>}</section>
         <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
           <ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}
         </section>

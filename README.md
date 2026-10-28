@@ -112,3 +112,14 @@ Core0.1.23 supports the explicit `instanceReplacementDomain` opt-in for a root-o
 Apollo's runtime profile accepts version 1 of this feature and validates its binding descriptors through the same Core validator used during evaluation. Unsupported versions and malformed or unversioned descriptors are rejected before loading a contract.
 
 An explicitly scoped replacement becomes inactive only when the published variant, captured root and reference prove the selector value. A variant without that opt-in keeps its ordinary baseline checks; an editable value or missing binding alone never establishes inactivity.
+
+
+## ReGlyph в разделе «Навыки»
+
+«Обновить иконки» выполняет ReGlyph локально, без ИИ и Proxy. Навык доступен
+при выборе iOS или Android (АБМ); обе платформы используют одну исходную
+матрицу. Для Desktop и MobileWeb правила пока не подключены. Сценарии
+«Базовая замена» и «Замена в сервисах» сохранены: проверка выделения, ручной
+выбор соответствий, превью и применение после подтверждения. Защищённые
+иконки и нативные исключения сохраняются. Изменение платформы или канала
+сбрасывает план. Источник и состав переноса: `src/skills/reglyph/ORIGIN.md`.

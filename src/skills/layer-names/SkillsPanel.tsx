@@ -36,7 +36,7 @@ function AnalysisProgress({progress}: {progress:string}) {
     <h3>{progress}</h3>
   </div>;
 }
-export function SkillsPanel({client}: {client:any}) {
+export function SkillsPanel({client,children}: {client:any;children?:React.ReactNode}) {
   const state:any = useSyncExternalStore(client.subscribe,client.getState);
   const [detailOpen,setDetailOpen] = useState(false);
   const cardRef = useRef<HTMLButtonElement>(null), dialogRef = useRef<HTMLDialogElement>(null), titleId = useId();
@@ -78,6 +78,7 @@ export function SkillsPanel({client}: {client:any}) {
         <span className="apollo-skill-copy"><strong>Переназвать слои</strong><span id={`${titleId}-description`}>{cardDescription}</span></span>
         <img className="apollo-skill-chevron" src={icons['chevron-right']} alt="" aria-hidden="true" />
       </button>
+      {children}
     </div>
     {detailOpen && createPortal(<dialog ref={dialogRef} className="apollo-skill-dialog" aria-labelledby={titleId} aria-modal="true"
       onCancel={event=>{event.preventDefault();setDetailOpen(false);}}>

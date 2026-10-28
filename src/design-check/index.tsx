@@ -119,7 +119,12 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
   useEffect(() => {
     if (!progressBarClient) return;
-    const receive = (event: MessageEvent) => { if (event.source === window.parent) progressBarClient.accept(event.data?.pluginMessage); };
+    const receive = (event: MessageEvent) => {
+      // Figma can deliver replies from an outer editor frame, as in the main UI bridge.
+      let ancestor = window.parent;
+      while (event.source !== ancestor && ancestor !== ancestor.parent) ancestor = ancestor.parent;
+      if (event.source === ancestor) progressBarClient.accept(event.data?.pluginMessage);
+    };
     window.addEventListener('message', receive);
     return () => { window.removeEventListener('message', receive); progressBarClient.close(); };
   }, [progressBarClient]);

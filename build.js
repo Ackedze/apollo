@@ -70,11 +70,11 @@ async function build() {
     absWorkingDir: root, entryPoints: ['src/code.ts'], outfile: path.join(dist, 'code.js'),
     bundle: true, platform: 'browser', format: 'iife', target: ['es2017'],
     supported: { 'object-rest-spread': false }, alias: aliases, metafile: true,
-    define: { __APOLLO_AGENT_NATIVE_SCOPE__: JSON.stringify(agentScope), __APOLLO_NATIVE_DIAGNOSTIC_INPUTS__: JSON.stringify(diagnosticInputs), __APOLLO_NATIVE_BUILD_INPUTS_SHA__: '"pending"' },
+    define: { __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_AGENT_NATIVE_SCOPE__: JSON.stringify(agentScope), __APOLLO_NATIVE_DIAGNOSTIC_INPUTS__: JSON.stringify(diagnosticInputs), __APOLLO_NATIVE_BUILD_INPUTS_SHA__: '"pending"' },
   };
   const main = await esbuild.build(Object.assign({}, mainOptions, { write: false }));
   // Collect actual UI dependencies before sealing the build hash; the UI build uses that seal later.
-  const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"'}};
+  const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"', __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: JSON.stringify('http://localhost:3001/v1/analyze/codex/runs')}};
   const uiInputs = await esbuild.build(uiOptions);
   const readPortInputs = ['build.js','scripts/contract-catalog.cjs','scripts/generation-package-inputs.js','scripts/load-generation-packages.js','scripts/static-producer-review-inputs.cjs','scripts/static-review-consumer-binding.cjs','src/ui.html',
     // Resolver/config metadata affects the actual UI bundle as well as imported JS/CSS bytes.

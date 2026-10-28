@@ -74,7 +74,7 @@ async function build() {
   };
   const main = await esbuild.build(Object.assign({}, mainOptions, { write: false }));
   // Collect actual UI dependencies before sealing the build hash; the UI build uses that seal later.
-  const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"'}};
+  const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"'}};
   const uiInputs = await esbuild.build(uiOptions);
   const readPortInputs = ['build.js','scripts/contract-catalog.cjs','scripts/generation-package-inputs.js','scripts/load-generation-packages.js','scripts/static-producer-review-inputs.cjs','scripts/static-review-consumer-binding.cjs','src/ui.html',
     // Resolver/config metadata affects the actual UI bundle as well as imported JS/CSS bytes.

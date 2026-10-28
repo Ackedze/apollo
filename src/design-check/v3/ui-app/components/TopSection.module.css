@@ -78,6 +78,15 @@
   flex-shrink: 0;
 }
 
+.pluginVersion {
+  margin: 0;
+  color: rgba(3, 3, 6, 0.64);
+  font-size: 12px;
+  line-height: 16px;
+  overflow-wrap: anywhere;
+  user-select: text;
+}
+
 .proxyDot {
   position: absolute;
   right: 1px;

@@ -18,6 +18,11 @@ import {
 } from "./PickerIcons";
 import styles from "./TopSection.module.css";
 
+declare const __APOLLO_PLUGIN_VERSION__: string;
+declare const __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: string;
+const pluginVersion = typeof __APOLLO_PLUGIN_VERSION__ === 'string' ? __APOLLO_PLUGIN_VERSION__ : 'dev';
+const pluginBuild = typeof __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__ === 'string' ? __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__ : 'dev';
+
 type ControlId = 'pageTypeId' | 'channelId' | 'pickerLabel' | 'shellAuditEnabled' | 'compact' | 'experimentalContractV2Enabled' | 'showExpectedCustomizations' | 'hideCustomizations' | 'captureExample';
 
 type TopSectionProps = {
@@ -331,6 +336,9 @@ export function TopSection({
       {proxy?.available === false && <span className={styles.proxyDot} role="status" aria-label="Proxy недоступен" />}
       {settingsOpen ? (
         <div id="apollo-settings" className={styles.settingsPanel} role="dialog" aria-label="Настройки Apollo">
+          <p className={styles.pluginVersion} aria-label="Версия плагина Apollo" title={`Сборка: ${pluginBuild}`}>
+            Apollo v{pluginVersion} · сборка {pluginBuild.slice(0, 12)}
+          </p>
           {proxy && <button
             type="button"
             className={styles.proxyBadge}

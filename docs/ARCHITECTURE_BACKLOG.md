@@ -2,6 +2,23 @@
 
 ## Apollo: совместимость с ComponentContract Editor
 
+28.10.2026 — **Core0.1.24 / source correction, paired adoption pending**.
+Text r2 исключает неприменимые layout.mode/radius для TEXT. Slider r2 проверяет
+типографику на Pips с явными variant bindings, включая доказанное отсутствие.
+SegmentedControl r2 использует opt-in `nonMemberReferenceTypes: ['FRAME']`:
+из коллекции исключаются только соответствующие независимому native reference
+FRAME/GROUP с подтверждёнными source identity и типом. Посторонние, дублированные,
+утраченные или подменённые siblings не становятся допустимыми; прежние закрытые
+collections без opt-in сохраняют семантику. Missing коллекции не увеличивает
+uncertain только при доказанно ложной applicability; active/unknown остаются
+неполными. Compiler, registry и predicate operators неизменны.
+Проверки: 25 retained native cases сохраняют exact11 violations; 16 focused
+regressions включают legacy/foreign/missing/Divider/UNKNOWN. SG09 и отдельный
+Segment contract остаются явным gap. Editor shared-core consumer требует
+проверки этого opt-in; Editor UI, fresh Apollo и парная runtime/data установка
+не приняты. Общий dist, рабочая установка и generation scope не менялись.
+Evidence: DS `experiments/current-contract-packages/reports/foundation-four-r2-fixes-2026-10-28/`.
+
 26.10.2026 — **Core0.1.24 / bounded checking candidate; native/Editor UI pending**.
 Tag/FilterTag/Skeleton r3 используют факты bounds; TagGroup r3 добавляет explicit
 slotContent к существующему memberCollection.propertyMapping. Typed native SLOT,

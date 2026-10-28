@@ -12,11 +12,15 @@ const valueType = (type: string, value: unknown) => type === 'BOOLEAN' ? typeof 
 export function memberCollectionErrors(c: MemberCollection, manual: Pick<ManualSource, 'targets' | 'representations'>): string[] {
   const errors: string[] = [];
   if (!c || c.version !== 1) return ['Member collection version 1 is required.'];
-  if(Object.keys(c).some(k=>!['version','ownerTargetRole','memberTargetRoles','slotContent','representationIds','visibleOnly','filter','whenHost','whenMember','assertion'].includes(k)))errors.push('Unsupported member collection field.');
+  if(Object.keys(c).some(k=>!['version','ownerTargetRole','memberTargetRoles','nonMemberReferenceTypes','slotContent','representationIds','visibleOnly','filter','whenHost','whenMember','assertion'].includes(k)))errors.push('Unsupported member collection field.');
   const resolved = (role: string) => manual.targets.filter(t => t.semanticRole === role && t.resolution === 'resolved').length === 1;
   if (!resolved(c.ownerTargetRole)) errors.push('Choose one resolved collection owner.');
   if (!Array.isArray(c.memberTargetRoles) || !c.memberTargetRoles.length || new Set(c.memberTargetRoles).size !== c.memberTargetRoles.length
     || c.memberTargetRoles.some(role => role === c.ownerTargetRole || !resolved(role))) errors.push('Choose distinct resolved member roles, separate from the owner.');
+  if (c.nonMemberReferenceTypes !== undefined && (!Array.isArray(c.nonMemberReferenceTypes) || !c.nonMemberReferenceTypes.length
+    || new Set(c.nonMemberReferenceTypes).size !== c.nonMemberReferenceTypes.length || c.slotContent
+    || c.nonMemberReferenceTypes.some(type => !['FRAME', 'GROUP'].includes(type))))
+    errors.push('Choose explicit FRAME/GROUP reference sibling types outside collection members.');
   if (!Array.isArray(c.representationIds) || !c.representationIds.length || new Set(c.representationIds).size !== c.representationIds.length
     || c.representationIds.some(id => !manual.representations.some(r => r.id === id && r.kind === 'figma' && r.status !== 'deprecated'))) errors.push('Choose explicit active Figma representations.');
   if (typeof c.visibleOnly !== 'boolean') errors.push('Declare whether the collection includes only visible members.');
@@ -165,11 +169,21 @@ function resolveCollection(snapshot: PreviewSnapshot, contract: CompiledContract
     result.members = members; result.issues = []; result.actualCount = members.length;
     return result;
   }
-  const originalChildren = ref.nodes.filter(n => n.path && parent(n.path) === ownerPath);
+  const referenceChildren = ref.nodes.filter(n => n.path && parent(n.path) === ownerPath);
+  const nonMembers = referenceChildren.filter(n => c.nonMemberReferenceTypes?.includes(n.type as 'FRAME' | 'GROUP'));
+  const originalChildren = referenceChildren.filter(n => !nonMembers.includes(n));
   if (originalChildren.length !== memberPaths.length || originalChildren.some(n => n.type !== 'INSTANCE' || !memberPaths.includes(n.path))) {
     result.missing.push('collection-members-do-not-cover-reference'); return result;
   }
-  const children = owner.childIds.map((id: string) => graph.get(id)!);
+  const nonMemberIds = new Set<string>();
+  for (const expected of nonMembers) {
+    const actual = actualFor(expected.path);
+    if (!actual || actual.type !== expected.type || nonMemberIds.has(actual.id)) {
+      result.missing.push('collection-non-member-lineage-unavailable'); return result;
+    }
+    nonMemberIds.add(actual.id);
+  }
+  const children = owner.childIds.filter((id: string) => !nonMemberIds.has(id)).map((id: string) => graph.get(id)!);
   result.actualCount = children.length;
   const issues: Array<Record<string, unknown>> = [], members: Member[] = [];
   if (children.length > originalChildren.length) issues.push({reason: 'added-children', ownerNodeId: owner.id, expected: originalChildren.length, actual: children.length});

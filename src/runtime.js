@@ -92,7 +92,8 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
   const missingRules = contract.rules.filter((rule) => !result.evaluations.some((entry) => entry.ruleId === rule.ruleId)).map((rule) => rule.ruleId);
   const uncertain = result.evaluations.filter((entry) => !['compliant', 'allowed', 'violation', 'not-applicable'].includes(entry.classification)
     || entry.trace?.reason === 'selector matched no visible nodes' || entry.trace?.reason === 'rule authority is not active'
-    || contract.runtimePolicy.memberCollectionsVersion === 1 && entry.collection?.missing?.length).length;
+    || contract.runtimePolicy.memberCollectionsVersion === 1 && entry.collection?.missing?.length
+      && !(entry.applicability === 'not-applicable' && entry.trace?.truth === 'false')).length;
   const incompleteDependencies = (result.dependencyRuns || []).filter((run) => !['executed', 'not-applicable'].includes(run.status)).length;
   const captureIncomplete = snapshot.source?.truncated === true
     || snapshot.source?.captureTopology?.complete === false

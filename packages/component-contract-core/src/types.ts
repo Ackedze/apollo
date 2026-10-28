@@ -229,6 +229,8 @@ export type MemberCollection = {
   version: 1;
   ownerTargetRole: string;
   memberTargetRoles: string[];
+  /** Ignore only source-proven native reference containers, never foreign actual children. */
+  nonMemberReferenceTypes?: Array<'FRAME' | 'GROUP'>;
   /** Open native SLOT payload: compare only the declared component families, without closing its contents. */
   slotContent?: { componentSetKeys: string[] };
   representationIds: string[];

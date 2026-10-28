@@ -39,9 +39,7 @@ function fixture(post){
  await card.click();await page.getByRole('heading',{name:'Выбери iOS или Android',exact:true}).waitFor();assert.equal(sent.filter(m=>m.type==='reglyph-request').length,0);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();
  // Use the actual controller through the existing platform picker UI.
- await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await page.getByRole('button',{name:'Desktop',exact:true}).click();await page.getByRole('button',{name:'iOS',exact:true}).click();
- await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await page.evaluate(()=>window.emitPlugin({type:'selection',pageId:'page',valid:true,id:'frame',name:'Экран'}));
  await card.click();const check=page.getByRole('button',{name:'Проверить иконки',exact:true});
  const trigger=page.locator('.apollo-reglyph-scenario>button'),menu=page.getByRole('group',{name:'Сценарий замены',exact:true});
@@ -79,9 +77,7 @@ function fixture(post){
  await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();
  await chooseScenario('Замена в сервисах');
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();
- await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await page.getByRole('button',{name:'iOS',exact:true}).click();await page.getByRole('button',{name:'Android',exact:true}).click();
- await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await card.click();await page.getByText('АБМ · Android · Без ИИ',{exact:true}).waitFor();
  await page.setViewportSize({width:440,height:780});await inspectPicker(440);
  await trigger.click();await menu.waitFor();await page.keyboard.press('Tab');assert.equal(await menu.count(),0);assert.equal(await check.evaluate(element=>element===document.activeElement),true);

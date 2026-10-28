@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSlot } from "./IconSlot";
+import { IconSlot, type IconSlotSize } from "./IconSlot";
 import styles from "./PickerButton.module.css";
 import {
   PickerChevronDownIcon,
@@ -14,6 +14,7 @@ type PickerButtonProps = {
   disabled?: boolean;
   compact?: boolean;
   leadingIcon?: React.ReactNode;
+  iconSize?: IconSlotSize;
   className?: string;
   onPress?: () => void;
 };
@@ -25,6 +26,7 @@ export function PickerButton({
   disabled = false,
   compact = false,
   leadingIcon,
+  iconSize = 16,
   className,
   onPress,
 }: PickerButtonProps): React.JSX.Element {
@@ -46,9 +48,9 @@ export function PickerButton({
       aria-expanded={open}
       onClick={onPress}
     >
-      {selected ? <IconSlot size={16}>{selectedIcon}</IconSlot> : null}
+      {selected ? <IconSlot size={iconSize}>{selectedIcon}</IconSlot> : null}
       <span className={[styles.label, 'design-check-picker-label'].join(' ')}>{label}</span>
-      <IconSlot size={16}>{chevronIcon}</IconSlot>
+      <IconSlot size={iconSize}>{chevronIcon}</IconSlot>
     </button>
   );
 }

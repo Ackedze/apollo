@@ -32,6 +32,7 @@ async function run() {
     await page.getByRole('button', { name: 'Подготовить пример Собрать JSON из выделенного макета' }).waitFor();
     await page.getByRole('button', { name: 'Desktop', exact: true }).click();
     await page.getByRole('button', { name: 'MobileWeb', exact: true }).click();
+    await page.getByRole('button', { name: 'Открыть настройки Apollo' }).click();
     await page.getByRole('button', { name: 'b2b', exact: true }).click(); await page.getByRole('button', { name: 'b2c', exact: true }).click();
     await page.screenshot({ path: path.join(screenshots, 'settings-800.png'), fullPage: true });
     await page.keyboard.press('Escape');

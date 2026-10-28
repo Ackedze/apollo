@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconSlot } from "./IconSlot";
+import { IconSlot, type IconSlotSize } from "./IconSlot";
 import styles from "./OptionListCell.module.css";
 import {
   PickerCheckmarkIcon,
@@ -12,6 +12,7 @@ type OptionListCellProps = {
   selected?: boolean;
   disabled?: boolean;
   leadingIcon?: React.ReactNode;
+  leadingIconSize?: IconSlotSize;
   trailingIcon?: React.ReactNode;
   showLeadingIcon?: boolean;
   className?: string;
@@ -24,6 +25,7 @@ export function OptionListCell({
   selected = false,
   disabled = false,
   leadingIcon,
+  leadingIconSize = 16,
   trailingIcon,
   showLeadingIcon = true,
   className,
@@ -48,7 +50,7 @@ export function OptionListCell({
       aria-pressed={selected}
       onClick={onPress}
     >
-      {showLeadingIcon ? <IconSlot size={16}>{leftAddon}</IconSlot> : null}
+      {showLeadingIcon ? <IconSlot size={leadingIconSize}>{leftAddon}</IconSlot> : null}
       <span className={styles.labelWrap}>
         <span className={styles.label}>{label}</span>
       </span>

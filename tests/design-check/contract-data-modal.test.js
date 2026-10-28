@@ -51,7 +51,7 @@ test('long contract list scrolls inside the dialog without taking its header or 
 });
 
 async function pickerHarness({width=800,height=860,top=180,right=760}={},run){
- const dom=new JSDOM('<div class="design-check-shell apollo-new"><div id="root"></div></div><button id="outside">Снаружи</button>',{url:'https://apollo-ui.invalid/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
+ const dom=new JSDOM('<div class="design-check-shell apollo-new"><header><div id="header-tools" class="apollo-settings-host"></div></header><div id="root"></div></div><button id="outside">Снаружи</button>',{url:'https://apollo-ui.invalid/',runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document;
  Object.defineProperty(w,'innerWidth',{value:width});Object.defineProperty(w,'innerHeight',{value:height});
  const style=d.createElement('style');style.textContent=css+fs.readFileSync(path.join(app,'src/design-check/integration.css'),'utf8')+fs.readFileSync(path.join(app,'src/design-check/new-shell.css'),'utf8');d.head.append(style);
  const rect=w.HTMLElement.prototype.getBoundingClientRect;
@@ -60,43 +60,56 @@ async function pickerHarness({width=800,height=860,top=180,right=760}={},run){
   if(this.tagName==='BUTTON'&&this.getAttribute('aria-expanded')!==null)return{x:right-120,y:top,left:right-120,top,right,bottom:top+40,width:120,height:40};
   return rect.call(this);
  };
- const calls={platform:[],channel:[]},props={controlAvailability:{channelId:true,pickerLabel:true,captureExample:true,shellAuditEnabled:true},onPickerChange:value=>calls.platform.push(value),onChannelChange:value=>calls.channel.push(value)};
+ const calls={platform:[],channel:[]},props={settingsHost:d.querySelector('#header-tools'),controlAvailability:{channelId:true,pickerLabel:true,captureExample:true,shellAuditEnabled:true},onPickerChange:value=>calls.platform.push(value),onChannelChange:value=>calls.channel.push(value)};
  w.eval(bundle+'\nwindow.ModalTest=ModalTest;');const close=w.ModalTest.mount(d.querySelector('#root'),undefined,props);
  const button=label=>{const b=Array.from(d.querySelectorAll('button')).find(n=>(n.getAttribute('aria-label')||n.textContent)===label);assert.ok(b,'button '+label);return b;};
  try{await run({w,d,calls,props,button,update:patch=>close.update({...props,...patch}),async click(label){button(label).click();await tick();}});}finally{close();w.close();}
 }
-test('settings menus leave the scroll panel, keep all choices and restore anchor focus',async()=>{
+test('platform is in the header; its grouped icon menu and separate settings channel retain selection and focus',async()=>{
  await pickerHarness({},async h=>{
-  const {d,w}=h;await h.click('Открыть настройки Apollo');const panel=d.querySelector('#apollo-settings');panel.scrollTop=20;
-  await h.click('Desktop');let menu=d.querySelector('[role="group"][aria-label="Платформа"]');assert.ok(menu);assert.equal(menu.parentElement,d.body);assert.equal(panel.contains(menu),false);assert.equal(w.getComputedStyle(menu).position,'fixed');
+   const {d,w}=h;assert.ok(h.button('Desktop').closest('header'));assert.equal(d.querySelector('#apollo-settings'),null);
+   const desktopIcon=h.button('Desktop').querySelector('svg').getAttribute('viewBox');
+   await h.click('Desktop');let menu=d.querySelector('[role="group"][aria-label="Платформа"]');assert.ok(menu);assert.equal(menu.parentElement,d.body);assert.equal(w.getComputedStyle(menu).position,'fixed');
   assert.equal(menu.style.left,'565px');assert.equal(menu.style.top,'224px');assert.equal(menu.style.maxHeight,'628px');
-  const list=menu.firstElementChild;assert.equal(w.getComputedStyle(list).overflowY,'auto');assert.equal(w.getComputedStyle(list).overscrollBehavior,'contain');assert.equal(panel.scrollTop,20);
+   const list=menu.firstElementChild;assert.equal(w.getComputedStyle(list).overflowY,'auto');assert.equal(w.getComputedStyle(list).overscrollBehavior,'contain');assert.match(menu.textContent,/Web.*ABM/s);
   assert.deepEqual(Array.from(menu.querySelectorAll('button')).map(b=>b.textContent),['Desktop','MobileWeb','iOS','Android']);assert.equal(d.activeElement.textContent,'Desktop');
-  h.button('Android').dispatchEvent(new w.MouseEvent('mousedown',{bubbles:true}));await tick();assert.equal(d.querySelector('#apollo-settings'),panel,'portal pointer stays inside the settings interaction');
-  await h.click('Android');assert.deepEqual(h.calls.platform,['Android']);assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.activeElement,h.button('Android'));assert.equal(panel.scrollTop,20);
-  await h.click('b2b');menu=d.querySelector('[role="group"][aria-label="Канал"]');assert.ok(menu);assert.equal(menu.parentElement,d.body);assert.equal(panel.contains(menu),false);await h.click('site');assert.deepEqual(h.calls.channel,['site']);assert.equal(d.activeElement,h.button('site'));
+   h.button('Android').dispatchEvent(new w.MouseEvent('mousedown',{bubbles:true}));await tick();assert.equal(d.querySelector('[role="group"]'),menu,'pointer within the portal preserves the menu');
+   await h.click('Android');assert.deepEqual(h.calls.platform,['Android']);assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.activeElement,h.button('Android'));assert.notEqual(h.button('Android').querySelector('svg').getAttribute('viewBox'),desktopIcon);
+   await h.click('Открыть настройки Apollo');const panel=d.querySelector('#apollo-settings');panel.scrollTop=20;assert.equal(panel.contains(h.button('Android')),false);
+   await h.click('b2b');menu=d.querySelector('[role="group"][aria-label="Канал"]');assert.ok(menu);assert.equal(menu.parentElement,d.body);assert.equal(panel.contains(menu),false);await h.click('site');assert.deepEqual(h.calls.channel,['site']);assert.equal(d.activeElement,h.button('site'));assert.equal(panel.scrollTop,20);
  });
 });
-test('settings picker flips within the viewport and closes on outside scroll/resize without closing the panel',async()=>{
+test('header picker flips within the viewport and closes on outside scroll or resize',async()=>{
  await pickerHarness({width:800,height:350,top:220,right:760},async h=>{
-  const {w,d}=h;await h.click('Открыть настройки Apollo');await h.click('Desktop');let menu=d.querySelector('[role="group"]');assert.equal(menu.style.top,'8px');assert.equal(menu.style.maxHeight,'208px');
+   const {w,d}=h;await h.click('Desktop');let menu=d.querySelector('[role="group"]');assert.equal(menu.style.top,'8px');assert.equal(menu.style.maxHeight,'208px');
   menu.firstElementChild.dispatchEvent(new w.Event('scroll'));await tick();assert.equal(d.querySelector('[role="group"]'),menu,'own menu scroll never closes or scrolls the panel');
-  d.querySelector('#apollo-settings').dispatchEvent(new w.Event('scroll'));await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.ok(d.querySelector('#apollo-settings'));
-  await h.click('Desktop');w.dispatchEvent(new w.Event('resize'));await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.ok(d.querySelector('#apollo-settings'));
+   d.querySelector('#outside').dispatchEvent(new w.Event('scroll'));await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.ok(h.button('Desktop').closest('header'));
+   await h.click('Desktop');w.dispatchEvent(new w.Event('resize'));await tick();assert.equal(d.querySelector('[role="group"]'),null);
   await h.click('Desktop');d.querySelector('#outside').dispatchEvent(new w.MouseEvent('mousedown',{bubbles:true}));await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.querySelector('#apollo-settings'),null);
  });
  await pickerHarness({width:800,height:600,top:180,right:100},async h=>{
-  await h.click('Открыть настройки Apollo');await h.click('Desktop');assert.equal(h.d.querySelector('[role="group"]').style.left,'8px','left viewport margin is clamped');
+   await h.click('Desktop');assert.equal(h.d.querySelector('[role="group"]').style.left,'8px','left viewport margin is clamped');
  });
 });
-test('settings menu arrows, Escape, Tab and operation/scope changes keep a reachable focused trigger',async()=>{
+test('header menu keyboard, settings exclusion and operation/scope changes keep a reachable trigger',async()=>{
  await pickerHarness({},async h=>{
   const {w,d}=h,key=value=>d.activeElement.dispatchEvent(new w.KeyboardEvent('keydown',{key:value,bubbles:true,cancelable:true}));
-  await h.click('Открыть настройки Apollo');await h.click('Desktop');key('End');assert.equal(d.activeElement.textContent,'Android');key('ArrowDown');assert.equal(d.activeElement.textContent,'Desktop');key('ArrowUp');assert.equal(d.activeElement.textContent,'Android');key('Home');assert.equal(d.activeElement.textContent,'Desktop');
-  key('Escape');await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.ok(d.querySelector('#apollo-settings'));assert.equal(d.activeElement,h.button('Desktop'));
+   await h.click('Desktop');key('End');assert.equal(d.activeElement.textContent,'Android');key('ArrowDown');assert.equal(d.activeElement.textContent,'Desktop');key('ArrowUp');assert.equal(d.activeElement.textContent,'Android');key('Home');assert.equal(d.activeElement.textContent,'Desktop');
+   key('Escape');await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.querySelector('#apollo-settings'),null);assert.equal(d.activeElement,h.button('Desktop'));
+   await h.click('Открыть настройки Apollo');await h.click('b2b');key('Escape');await tick();assert.ok(d.querySelector('#apollo-settings'));assert.equal(d.activeElement,h.button('b2b'));
   key('Escape');await tick();assert.equal(d.querySelector('#apollo-settings'),null);assert.equal(d.activeElement,h.button('Открыть настройки Apollo'));
-  await h.click('Открыть настройки Apollo');await h.click('Desktop');key('Tab');await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.activeElement,h.button('Desktop'),'browser default Tab navigation follows this anchor; no geometry/browser claim');
+   await h.click('Открыть настройки Apollo');await h.click('Desktop');assert.equal(d.querySelector('#apollo-settings'),null);key('Tab');await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.activeElement,h.button('Desktop'),'browser default Tab navigation follows this anchor; no geometry/browser claim');
   await h.click('Desktop');h.update({actionLoading:true});await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.querySelector('#apollo-settings'),null);
   h.update({actionLoading:false});await tick();await h.click('Открыть настройки Apollo');await h.click('Desktop');h.update({overlayScope:'another-screen'});await tick();assert.equal(d.querySelector('[role="group"]'),null);assert.equal(d.querySelector('#apollo-settings'),null);
+ });
+});
+
+test('header platform follows restored preferences and remains available outside audit screens',async()=>{
+ await pickerHarness({},async h=>{
+  h.update({pickerLabel:'iOS',auditControlsVisible:false,overlayScope:'chat'});await tick();
+  assert.ok(h.button('iOS').closest('header'));assert.equal(h.button('iOS').closest('[hidden]'),null);
+  await h.click('iOS');assert.equal(h.d.querySelector('[aria-label="Платформа"] button[aria-pressed="true"]').textContent,'iOS');
+  await h.click('MobileWeb');assert.deepEqual(h.calls.platform,['MobileWeb']);
+  h.update({pickerLabel:'MobileWeb',actionLoading:true});await tick();assert.equal(h.button('MobileWeb').disabled,true);
  });
 });

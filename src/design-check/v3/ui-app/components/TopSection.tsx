@@ -63,7 +63,7 @@ type TopSectionProps = {
 type PickerOption = {
   id: string;
   label: string;
-  section: 'Web' | 'АБМ';
+  section: 'Web' | 'ABM';
   icon: React.ReactNode;
 };
 
@@ -91,25 +91,25 @@ const PICKER_OPTIONS: PickerOption[] = [
     id: 'desktop',
     label: 'Desktop',
     section: 'Web',
-    icon: <PickerDisplayIcon />,
+    icon: <span className={styles.platformIcon}><PickerDisplayIcon /></span>,
   },
   {
     id: 'mobile-web',
     label: 'MobileWeb',
     section: 'Web',
-    icon: <PickerMobilePhoneIcon />,
+    icon: <span className={styles.platformIcon}><PickerMobilePhoneIcon /></span>,
   },
   {
     id: 'ios',
     label: 'iOS',
-    section: 'АБМ',
-    icon: <PickerAppleIcon />,
+    section: 'ABM',
+    icon: <span className={styles.platformIcon}><PickerAppleIcon /></span>,
   },
   {
     id: 'android',
     label: 'Android',
-    section: 'АБМ',
-    icon: <PickerAndroidIcon />,
+    section: 'ABM',
+    icon: <span className={styles.platformIcon}><PickerAndroidIcon /></span>,
   },
 ];
 
@@ -312,6 +312,39 @@ export function TopSection({
   const proxyStatus = proxy?.available === null ? 'Не проверен' : proxy?.available ? 'Подключён' : 'Недоступен';
   const proxyLabel = `Proxy${proxy?.version ? ` v${proxy.version}` : ''}`;
 
+  const platformControl = (
+    <div className={styles.pickerWrap} ref={pickerRootRef} title="Платформа">
+      <PickerButton
+        className={styles.platformButton}
+        label={selectedOption.label}
+        open={pickerOpen}
+        selected
+        iconSize={20}
+        leadingIcon={selectedOption.icon}
+        disabled={actionLoading || !controlAvailability.pickerLabel}
+        onPress={() => {
+          setSettingsOpen(false);
+          setPageTypeOpen(false);
+          setWorkshopOpen(false);
+          setPickerOpen((value) => !value);
+        }}
+      />
+      {pickerOpen && (
+        <SettingsPickerMenu anchor={pickerRootRef} menuRef={pickerMenuRef} label="Платформа" onClose={closeSettingsPicker}>
+          {PICKER_OPTIONS.map((option, index) => <React.Fragment key={option.id}>
+            {PICKER_OPTIONS[index - 1]?.section !== option.section && <OptionListHeader label={option.section} />}
+            <OptionListCell label={option.label} selected={selectedOption.id === option.id} leadingIconSize={20} leadingIcon={option.icon}
+              onPress={() => {
+                setSelectedPickerLabel(option.label);
+                onPickerChange?.(option.label);
+                setPickerOpen(false);
+              }} />
+          </React.Fragment>)}
+        </SettingsPickerMenu>
+      )}
+    </div>
+  );
+
   const settingsControl = (
     <div className={styles.settingsWrap} ref={settingsRootRef}>
       <Button
@@ -378,68 +411,6 @@ export function TopSection({
                       }}
                     />
                   ))}
-                </SettingsPickerMenu>
-              ) : null}
-            </div>
-          </div>
-          <div className={styles.settingsField}>
-            <div className={styles.settingsLabel}>Платформа</div>
-            <div className={styles.pickerWrap} ref={pickerRootRef}>
-              <PickerButton
-                label={selectedOption.label}
-                open={pickerOpen}
-                selected
-                disabled={actionLoading || !controlAvailability.pickerLabel}
-                leadingIcon={selectedOption.icon}
-                onPress={() => {
-                  setWorkshopOpen(false);
-                  setPickerOpen((value) => !value);
-                }}
-              />
-              {pickerOpen ? (
-                <SettingsPickerMenu anchor={pickerRootRef} menuRef={pickerMenuRef} label="Платформа" onClose={closeSettingsPicker}>
-                  <OptionListHeader label="Web" />
-                  <OptionListCell
-                    label="Desktop"
-                    selected={selectedOption.id === 'desktop'}
-                    leadingIcon={<PickerDisplayIcon />}
-                    onPress={() => {
-                      setSelectedPickerLabel('Desktop');
-                      onPickerChange?.('Desktop');
-                      setPickerOpen(false);
-                    }}
-                  />
-                  <OptionListCell
-                    label="MobileWeb"
-                    selected={selectedOption.id === 'mobile-web'}
-                    leadingIcon={<PickerMobilePhoneIcon />}
-                    onPress={() => {
-                      setSelectedPickerLabel('MobileWeb');
-                      onPickerChange?.('MobileWeb');
-                      setPickerOpen(false);
-                    }}
-                  />
-                  <OptionListHeader label="АБМ" />
-                  <OptionListCell
-                    label="iOS"
-                    selected={selectedOption.id === 'ios'}
-                    leadingIcon={<PickerAppleIcon />}
-                    onPress={() => {
-                      setSelectedPickerLabel('iOS');
-                      onPickerChange?.('iOS');
-                      setPickerOpen(false);
-                    }}
-                  />
-                  <OptionListCell
-                    label="Android"
-                    selected={selectedOption.id === 'android'}
-                    leadingIcon={<PickerAndroidIcon />}
-                    onPress={() => {
-                      setSelectedPickerLabel('Android');
-                      onPickerChange?.('Android');
-                      setPickerOpen(false);
-                    }}
-                  />
                 </SettingsPickerMenu>
               ) : null}
             </div>
@@ -551,11 +522,11 @@ export function TopSection({
       >
         {pageTypeControl}
         <div className={compact ? styles.compactRightSide : styles.rightSide}>
-          {settingsHost === undefined ? settingsControl : null}
+          {settingsHost === undefined ? <div className={styles.headerControls}>{platformControl}{settingsControl}</div> : null}
           {actionButton}
         </div>
       </div>
-      {settingsHost ? createPortal(settingsControl, settingsHost) : null}
+      {settingsHost ? createPortal(<>{platformControl}{settingsControl}</>, settingsHost) : null}
       {dataOpen && readContractData && <ContractDataModal readData={readContractData} returnFocus={settingsButtonRef} onClose={() => setDataOpen(false)} />}
       {exampleModalOpen ? (
         <GenerationExampleModal

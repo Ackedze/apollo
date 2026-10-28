@@ -92,3 +92,57 @@ test('background preview yields to another Apollo operation before sending the n
   assert.equal(sent.at(-1),preview);assert.equal(client.getState().available,false);
   otherBusy=false;client.refresh();assert.equal(sent.at(-1).operation,'preview');assert.equal(sent.at(-1).payload.key,'b');
 });
+function historyClient(withResult=true) {
+  const sent=[],handled=new Set();const client=createReglyphClient({send:message=>sent.push(message)});
+  const feed=event=>client.accept({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:sent.find(message=>message.type==='reglyph-context').revision,event});
+  function settle(){for(let i=0;i<sent.length;i++){const message=sent[i];if(message.type!=='reglyph-request'||handled.has(message.requestId))continue;handled.add(message.requestId);if(message.operation==='preview')feed({type:'preview',key:message.payload.key,image:'cached-'+message.payload.key});client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:message.revision,requestId:message.requestId});}}
+  client.setContext({channelId:'b2b',pickerLabel:'iOS'});client.open();
+  feed({type:'catalog',catalog:{scenarioId:'default',newIcons:[{key:'new'},{key:'manual'}]}});settle();
+  const rows=[{oldKey:'old',newKey:'new',ids:['icon'],name:'Old',image:'source-image'}];
+  if(withResult){feed({type:'scan',rows,observedRows:[{oldKey:'native',category:'native',ids:['native-icon']}]});client.choose('old','manual');settle();}
+  return{client,sent,feed,settle,rows};
+}
+test('selection changes retain previous rows, manual choices, observed icons and previews without an error screen',()=>{
+  const f=historyClient(),before=f.client.getState();
+  for(let i=0;i<3;i++){f.client.selection({valid:i!==1});f.feed({type:'stale'});}
+  const after=f.client.getState();assert.equal(after.status,'preview');assert.equal(after.planStale,true);assert.equal(after.error,'');
+  assert.equal(after.rows,before.rows);assert.equal(after.rows[0].newKey,'manual');assert.equal(after.observedRows,before.observedRows);assert.equal(after.images,before.images);
+  const count=f.sent.length;f.client.replace();f.client.focus('icon');assert.equal(f.sent.length,count,'historical result cannot start replace or native focus');
+  f.client.largePreview({id:'icon',image:'source-image'},'historical');assert.equal(f.sent.length,count);assert.equal(f.client.getState().largePreview.image,'source-image');
+});
+test('a new completed scan restores replacement after the previous result became historical',()=>{
+  const f=historyClient();f.feed({type:'stale'});f.client.reset();f.settle();
+  assert.equal(f.client.getState().planStale,false);assert.deepEqual(f.client.getState().rows,[]);
+  f.client.start();f.feed({type:'scan',rows:f.rows});f.settle();f.client.replace();
+  assert.equal(f.client.getState().status,'replacing');assert.equal(f.sent.at(-1).operation,'replace');
+});
+test('completed replacement summary and remaining rows survive selection changes',()=>{
+  const f=historyClient();f.feed({type:'done',remainingRows:f.rows,replaced:1,skipped:1,failed:0});const result=f.client.getState().result;
+  f.feed({type:'stale'});assert.equal(f.client.getState().status,'done');assert.equal(f.client.getState().result,result);
+  f.client.back();assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().planStale,true);
+  const count=f.sent.length;f.client.replace();assert.equal(f.sent.length,count);
+});
+test('an interrupted scan restores a prior result or the invitation quietly, while real scan errors remain visible',()=>{
+  for(const hasResult of [true,false]){
+    const f=historyClient(hasResult),rows=f.client.getState().rows;f.client.start();f.feed({type:'stale'});f.feed({type:'error',requestType:'scan',text:'Selection changed'});
+    assert.equal(f.client.getState().status,hasResult?'preview':'idle');assert.equal(f.client.getState().error,'');assert.equal(f.client.getState().rows,rows);
+  }
+  const f=historyClient(false);f.client.start();f.feed({type:'error',requestType:'scan',text:'Read failed'});assert.equal(f.client.getState().status,'error');assert.equal(f.client.getState().error,'Read failed');
+});
+test('channel change still resets historical results and replacement failures remain explicit',()=>{
+  const f=historyClient();f.feed({type:'stale'});f.client.setContext({channelId:'b2c',pickerLabel:'iOS'});
+  assert.equal(f.client.getState().status,'idle');assert.deepEqual(f.client.getState().rows,[]);assert.equal(f.client.getState().planStale,false);
+  const g=historyClient();g.client.replace();g.feed({type:'stale'});g.feed({type:'error',requestType:'replace',text:'Swap failed'});assert.equal(g.client.getState().error,'Swap failed');assert.equal(g.client.getState().status,'error');
+});
+test('native validation still rejects a forced previous plan after selection changes with zero swaps',async()=>{
+  const f=fixture();f.context();await f.request('scan');f.api.currentPage.selection=[{id:'other-frame',type:'FRAME'}];f.bridge.selectionChanged();
+  await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,[]);assert.ok(f.messages.some(message=>message.event?.type==='error'));
+});
+
+test('a pending navigation refused after selection change cannot replace the historical result with an error',()=>{
+  const f=historyClient();f.client.focus('icon');const request=f.sent.at(-1);assert.equal(request.operation,'go-to');
+  f.feed({type:'stale'});f.feed({type:'error',requestType:'go-to',text:'Selection changed'});
+  assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().error,'');
+  f.client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:request.revision,requestId:request.requestId,error:'Selection changed'});
+  assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().error,'');
+});

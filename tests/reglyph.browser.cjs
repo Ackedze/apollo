@@ -17,7 +17,7 @@ function fixture(post){
  const api={currentPage:page,clientStorage:{getAsync:async k=>storage.get(k),setAsync:async(k,v)=>storage.set(k,v)},importComponentByKeyAsync:async key=>target(key),getNodeByIdAsync:async id=>nodes.get(id),base64Encode:bytes=>Buffer.from(bytes).toString('base64'),commitUndo(){},viewport:{scrollAndZoomIntoView(){}}};
  const catalog={version:1,scenarioId:'default',oldIcons:[1,2,3].map(n=>({key:'old'+n,name:'Старая иконка '+n})),newIcons:[{key:'new1',name:'Alfa',baseName:'Альфа',searchDescription:'Альфа баллы',familyId:'a',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}},{key:'new2',name:'Calendar',baseName:'Календарь',searchDescription:'Дата поездки',familyId:'b',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}}],mappings:[{oldKey:'old1',newKey:'new1'},{oldKey:'old2',newKey:'new2'}]};
  const bridge=createReglyphBridge({api,post,catalogs:{default:catalog,services:Object.assign({},catalog,{scenarioId:'services'})},detection:{containers:[],iconViewSets:[]}});
- return{bridge,swaps};
+ return{bridge,swaps,selection(other){page.selection=other?[{id:'other-frame',name:'Другой фрейм',type:'FRAME',parent:page,findAllWithCriteria:()=>[]}]:[frame];bridge.selectionChanged();}};
 }
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private output directory.');fs.mkdirSync(output,{recursive:true});
@@ -25,6 +25,7 @@ function fixture(post){
  try{
  const page=await browser.newPage({viewport:{width:800,height:860}}),errors=[],sent=[];page.on('pageerror',error=>errors.push(error.message));
  let delivery=Promise.resolve();const f=fixture(message=>{delivery=delivery.then(()=>page.evaluate(message=>window.emitPlugin(message),message));});
+ await page.exposeFunction('changeFixtureSelection',other=>f.selection(other));
  await page.exposeFunction('nativeRequest',message=>{
   sent.push(message);if(f.bridge.accept(message))return null;
   if(message.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:message.schemaVersion,requestId:message.requestId,operation:message.operation,result:null};return null;
@@ -66,6 +67,29 @@ function fixture(post){
  await page.getByRole('heading',{name:/Готовы к замене/}).waitFor();assert.equal(f.swaps.length,0,'scan is read-only');
  await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-preview-800.png')});
  assert.equal(await page.locator('.apollo-reglyph-row').count(),3);
+ const previousRows=await page.locator('.apollo-reglyph-row').allTextContents();
+ await page.evaluate(()=>window.changeFixtureSelection(true));
+ await page.getByText('Результат предыдущей проверки. Для применения замен запусти новую проверку.',{exact:true}).waitFor();
+ assert.deepEqual(await page.locator('.apollo-reglyph-row').allTextContents(),previousRows);assert.equal(await page.getByRole('alert').count(),0);assert.equal(await page.getByText('Нужна новая проверка',{exact:true}).count(),0);
+ const apply=page.getByRole('button',{name:'Заменить · 2',exact:true});assert.equal(await apply.isDisabled(),true);
+ await apply.evaluate(element=>element.click());assert.equal(f.swaps.length,0);
+ assert.equal(await page.getByRole('button',{name:'Показать в макете',exact:true}).evaluateAll(buttons=>buttons.every(button=>button.disabled)),true);
+ const previewsBefore=sent.filter(message=>message.operation==='icon-preview').length;
+ await page.locator('.apollo-reglyph-icon-card').first().getByRole('button',{name:/^Превью:/}).click();
+ assert.equal(await page.getByRole('dialog').count(),2);assert.equal(sent.filter(message=>message.operation==='icon-preview').length,previewsBefore,'historical source preview uses its captured bitmap');
+ await page.getByRole('dialog').last().getByRole('button',{name:/^Закрыть:/}).click();
+ await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-history-800.png')});
+ await page.setViewportSize({width:440,height:780});
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ assert.equal(await page.locator('dialog[open]').count(),1);
+ const historyBounds=await page.locator('dialog[open]').boundingBox();assert.equal(historyBounds.y,8);assert.equal(historyBounds.height,764);
+ const historyFooter=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(historyFooter.y+historyFooter.height<=780);
+ await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-history-440.png')});
+ assert.equal(await page.locator('dialog').evaluate(element=>element.scrollWidth<=element.clientWidth),true);assert.equal(await page.getByRole('alert').count(),0);
+ await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.click();assert.deepEqual(await page.locator('.apollo-reglyph-row').allTextContents(),previousRows);
+ await page.evaluate(()=>window.changeFixtureSelection(false));assert.equal(await apply.isDisabled(),true);assert.equal(await page.getByRole('alert').count(),0);
+ await page.setViewportSize({width:800,height:860});
+ await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByRole('heading',{name:/Готовы к замене/}).waitFor();
  await page.getByRole('button',{name:'Заменить · 2',exact:true}).click();
  await page.getByRole('heading',{name:'Точно заменяем?',exact:true}).waitFor();assert.equal(f.swaps.length,0);
  await page.getByRole('dialog').last().getByRole('button',{name:'Заменить · 2',exact:true}).click();

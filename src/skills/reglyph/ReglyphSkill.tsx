@@ -1,10 +1,56 @@
-import React, {useEffect, useId, useMemo, useRef, useState, useSyncExternalStore} from 'react';
+import React, {useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore} from 'react';
 import {createPortal} from 'react-dom';
 import {Button} from '../../design-check/v3/ui-app/components/Button';
 import {AuditMascot} from '../../design-check/AuditMascot';
+import {PickerButton} from '../../design-check/v3/ui-app/components/PickerButton';
+import {OptionList} from '../../design-check/v3/ui-app/components/OptionList';
+import {OptionListCell} from '../../design-check/v3/ui-app/components/OptionListCell';
+import pickerStyles from '../../design-check/v3/ui-app/components/TopSection.module.css';
 import './ui.css';
 const icons = require('../layer-names/assets');
 const {rowIdentity, searchText} = require('./client');
+
+const scenarios=[{id:'default',label:'Базовая замена'},{id:'services',label:'Замена в сервисах'}];
+function ScenarioPicker({value,disabled,onChange}:{value:string;disabled:boolean;onChange:(value:string)=>void}) {
+  const [open,setOpen]=useState(false),anchor=useRef<HTMLDivElement>(null),menu=useRef<HTMLDivElement>(null);
+  const close=useCallback((restoreFocus=true)=>{setOpen(false);if(restoreFocus)anchor.current?.querySelector('button')?.focus({preventScroll:true});},[]);
+  useEffect(()=>{if(disabled)close(false);},[disabled,close]);
+  useLayoutEffect(()=>{
+    if(!open || disabled)return;
+    const popup=menu.current,trigger=anchor.current?.querySelector('button');
+    if(!popup || !trigger)return;
+    const bounds=trigger.getBoundingClientRect(),size=popup.getBoundingClientRect();
+    popup.style.left=`${Math.max(16,Math.min(bounds.left,window.innerWidth-size.width-16))}px`;
+    popup.style.bottom=`${window.innerHeight-bounds.top+4}px`;
+    popup.style.maxHeight=`${Math.max(0,bounds.top-16)}px`;
+    (popup.querySelector<HTMLButtonElement>('button[aria-pressed="true"]') ?? popup.querySelector<HTMLButtonElement>('button'))?.focus({preventScroll:true});
+    const outside=(event:PointerEvent)=>{if(event.target instanceof Node && !anchor.current?.contains(event.target) && !popup.contains(event.target))close(false);};
+    const scroll=(event:Event)=>{if(event.target instanceof Node && !popup.contains(event.target))close(false);};
+    const resize=()=>close();
+    document.addEventListener('pointerdown',outside,true);document.addEventListener('scroll',scroll,true);window.addEventListener('resize',resize);
+    return()=>{document.removeEventListener('pointerdown',outside,true);document.removeEventListener('scroll',scroll,true);window.removeEventListener('resize',resize);};
+  },[open,disabled,close]);
+  const keyboard=(event:React.KeyboardEvent<HTMLDivElement>)=>{
+    if(open && event.key==='Escape'){event.preventDefault();event.stopPropagation();close();return;}
+    if(open && event.key==='Tab'){close();return;}
+    if(disabled || !['ArrowDown','ArrowUp','Home','End'].includes(event.key))return;
+    event.preventDefault();event.stopPropagation();
+    if(!open){setOpen(true);return;}
+    const buttons=Array.from(menu.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
+    if(!buttons.length)return;
+    const current=buttons.indexOf(document.activeElement as HTMLButtonElement);
+    const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(current+(event.key==='ArrowUp'?-1:1)+buttons.length)%buttons.length;
+    buttons[next].focus({preventScroll:true});
+  };
+  // Keep the custom popup inside the native dialog's active top layer.
+  const portal=anchor.current?.closest('dialog');
+  return <div ref={anchor} className="apollo-reglyph-scenario" onKeyDown={keyboard}>
+    <PickerButton label={scenarios.find(option=>option.id===value)?.label || scenarios[0].label} open={open && !disabled} disabled={disabled} onPress={()=>open?close():setOpen(true)}/>
+    {open && !disabled && portal && createPortal(<div ref={menu} className={`${pickerStyles.pickerOverlay} apollo-reglyph-scenario-menu`} role="group" aria-label="Сценарий замены" onKeyDown={keyboard}>
+      <OptionList className={pickerStyles.pickerMenu}>{scenarios.map(option=><OptionListCell key={option.id} label={option.label} selected={option.id===value} showLeadingIcon={false} onPress={()=>{close();onChange(option.id);}}/>)}</OptionList>
+    </div>,portal)}
+  </div>;
+}
 
 function Dialog({title,onClose,children,className=''}:{title:string;onClose:()=>void;children:React.ReactNode;className?:string}) {
   const ref=useRef<HTMLDialogElement>(null),titleId=useId();
@@ -127,7 +173,7 @@ export function ReglyphSkill({client}:{client:any}) {
         {!state.available && state.supported && !running && <p role="status" className="apollo-skills-hint">Дождись завершения другой операции Apollo.</p>}
       </main>
       <footer className="apollo-skill-footer" aria-label="Действия обновления иконок"><div className="apollo-skills-actions">
-        {state.supported && !running && state.status!=='preview' && state.status!=='done' && <select className="apollo-reglyph-scenario" aria-label="Сценарий замены" disabled={busy || !state.available} value={state.scenario} onChange={event=>client.scenario(event.target.value)}><option value="default">Базовая замена</option><option value="services">Замена в сервисах</option></select>}
+        {state.supported && !running && state.status!=='preview' && state.status!=='done' && <ScenarioPicker disabled={busy || !state.available} value={state.scenario} onChange={client.scenario}/>}
         {running?<Button label={state.status==='scanning'?'Проверяем':'Заменяем'} disabled loading onPress={()=>{}}/>:
           !state.supported?<Button type="secondary" label="Закрыть" onPress={()=>setOpen(false)}/>:
           state.status==='preview'?<><Button label="Новая проверка" type="secondary" disabled={busy || !state.available} onPress={()=>client.reset()}/><Button label={`Заменить · ${replacementCount}`} disabled={!replacementCount || busy || !state.available} onPress={()=>{if(missingCount)setConfirm(true);else client.replace();}}/></>:

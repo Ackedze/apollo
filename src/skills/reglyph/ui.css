@@ -25,7 +25,8 @@
 .apollo-reglyph-small { font:inherit; font-size:12px; padding:4px 10px; margin-top:4px; border:0; border-radius:16px; background:rgba(38,55,88,.06); cursor:pointer; }
 .apollo-reglyph-small:hover:not(:disabled),.apollo-reglyph-tile:hover { background:rgba(38,55,88,.1); }
 .apollo-reglyph-small:disabled { opacity:.5; cursor:default; }
-.apollo-reglyph-scenario { border:0; border-radius:28px; padding:12px 16px; font:inherit; font-size:14px; color:#212124; background:#f2f3f5; max-width:240px; min-height:48px; }
+.apollo-reglyph-scenario { display:flex; min-width:0; }
+.apollo-reglyph-scenario>button { background:#f2f3f5; border-color:transparent; }
 .apollo-reglyph-dialog { color:rgba(3,3,6,.88); }
 .apollo-reglyph-dialog button:focus-visible,.apollo-reglyph-dialog select:focus-visible,.apollo-reglyph-dialog input:focus-visible { outline:2px solid #2a77ef; outline-offset:3px; }
 .apollo-reglyph-picker { width:min(680px,calc(100vw - 32px)); }

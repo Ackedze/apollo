@@ -43,7 +43,28 @@ function fixture(post){
  await page.getByRole('button',{name:'Desktop',exact:true}).click();await page.getByRole('button',{name:'iOS',exact:true}).click();
  await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await page.evaluate(()=>window.emitPlugin({type:'selection',pageId:'page',valid:true,id:'frame',name:'Экран'}));
- await card.click();const check=page.getByRole('button',{name:'Проверить иконки',exact:true});await check.click();
+ await card.click();const check=page.getByRole('button',{name:'Проверить иконки',exact:true});
+ const trigger=page.locator('.apollo-reglyph-scenario>button'),menu=page.getByRole('group',{name:'Сценарий замены',exact:true});
+ async function chooseScenario(label){await trigger.click();await menu.getByRole('button',{name:label,exact:true}).click();}
+ async function inspectPicker(width){
+  await page.waitForFunction(()=>!document.querySelector('.apollo-reglyph-scenario>button')?.disabled);
+  const metrics=await trigger.evaluate(element=>{const other=element.closest('footer').querySelector('.apollo-skills-actions>button'),icon=element.querySelector('svg'),a=element.getBoundingClientRect(),b=icon.getBoundingClientRect();return{font:getComputedStyle(element).fontSize,labelFont:getComputedStyle(element.querySelector('.design-check-picker-label')).fontSize,otherFont:getComputedStyle(other).fontSize,height:a.height,otherHeight:other.getBoundingClientRect().height,iconWidth:b.width,iconHeight:b.height,iconCenter:b.y+b.height/2-a.y-a.height/2,iconInset:a.right-b.right};});
+  assert.equal(metrics.font,metrics.otherFont);assert.equal(metrics.labelFont,metrics.otherFont);assert.equal(metrics.height,metrics.otherHeight);assert.equal(metrics.iconWidth,16);assert.equal(metrics.iconHeight,16);assert.ok(Math.abs(metrics.iconCenter)<1);assert.ok(metrics.iconInset>=16);
+  assert.equal(await page.locator('dialog select').count(),0,'scenario is a house picker, not a native select');
+  await trigger.click();await menu.waitFor();assert.equal(await menu.getByRole('button').count(),2);
+  assert.equal(await menu.evaluate(element=>element.closest('dialog')?.open),true,'menu stays interactive inside the native dialog top layer');
+  assert.equal(await menu.getByRole('button',{pressed:true}).count(),1);
+  const popup=await menu.boundingBox(),button=await trigger.boundingBox();assert.ok(popup.y>=8 && popup.y+popup.height<=button.y);assert.ok(popup.x>=8 && popup.x+popup.width<=width-8);
+  await page.screenshot({animations:'disabled',path:path.join(output,`reglyph-picker-${width}.png`)});
+  await page.keyboard.press('Escape');assert.equal(await menu.count(),0);assert.equal(await page.getByRole('dialog').count(),1);assert.equal(await trigger.evaluate(element=>element===document.activeElement),true);
+ }
+ await inspectPicker(800);
+ await page.keyboard.press('ArrowDown');await menu.waitFor();await page.keyboard.press('End');assert.equal(await menu.getByRole('button',{name:'Замена в сервисах',exact:true}).evaluate(element=>element===document.activeElement),true);
+ await page.keyboard.press('ArrowUp');assert.equal(await menu.getByRole('button',{name:'Базовая замена',exact:true}).evaluate(element=>element===document.activeElement),true);
+ await page.keyboard.press('ArrowDown');await page.keyboard.press('Enter');await trigger.getByText('Замена в сервисах',{exact:true}).waitFor();
+ await chooseScenario('Базовая замена');
+ await trigger.click();await menu.waitFor();await page.getByRole('heading',{name:'Выбери область и запусти проверку',exact:true}).click();assert.equal(await menu.count(),0);
+ await check.click();
  await page.getByRole('heading',{name:/Готовы к замене/}).waitFor();assert.equal(f.swaps.length,0,'scan is read-only');
  await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-preview-800.png')});
  assert.equal(await page.locator('.apollo-reglyph-row').count(),3);
@@ -56,17 +77,19 @@ function fixture(post){
  await page.getByRole('searchbox').fill('дата');await page.locator('.apollo-reglyph-option>button').getByText('Календарь',{exact:true}).click();assert.equal(await page.getByRole('dialog').count(),1);
  await page.getByRole('button',{name:'Заменить · 1',exact:true}).click();await page.getByRole('heading',{name:'Иконки обновлены',exact:true}).waitFor();assert.equal(f.swaps.length,3);
  await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();
- await page.getByRole('combobox',{name:'Сценарий замены'}).selectOption('services');
+ await chooseScenario('Замена в сервисах');
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();
  await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await page.getByRole('button',{name:'iOS',exact:true}).click();await page.getByRole('button',{name:'Android',exact:true}).click();
  await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
  await card.click();await page.getByText('АБМ · Android · Без ИИ',{exact:true}).waitFor();
- await page.setViewportSize({width:440,height:780});await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-ready-440.png')});
+ await page.setViewportSize({width:440,height:780});await inspectPicker(440);
+ await trigger.click();await menu.waitFor();await page.keyboard.press('Tab');assert.equal(await menu.count(),0);assert.equal(await check.evaluate(element=>element===document.activeElement),true);
+ await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-ready-440.png')});
  assert.equal(await page.locator('dialog').evaluate(element=>element.scrollWidth<=element.clientWidth),true);
  const box=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(box.y+box.height<=780);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.focus();assert.equal(await card.evaluate(element=>document.activeElement===element),true);
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN'},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, read-only scan, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, 800/440 footer.');
+ fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN'},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, read-only scan, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "apollo.design-check-ui-source-pins.v1",
+  "records": [
+    {
+      "source": "/Users/alexkukhta/Desktop/workplace/services/apollo-proxy/server.js",
+      "sha256": "412d0a8b34cba3ed3b8d30b7ea3229f884a4663c8cce9a7d33dbb5881ca60c50",
+      "purpose": "observed existing endpoint contract; no acceptance inferred"
+    },
+    {
+      "source": "/Users/alexkukhta/Desktop/workplace/services/apollo-proxy/src/contracts-v4/service.js",
+      "sha256": "c51668453bca6b69af027b39f50826c8a2d1dc73afce17c25e8918fa0573812b",
+      "purpose": "observed existing endpoint contract; no acceptance inferred"
+    },
+    {
+      "source": "src/code.ts",
+      "sha256": "70fa0052fad6949597a59e0ac5f3b7c44042d3035002438661bbe523d2b3ee6c",
+      "purpose": "migration contract evidence; not copied as runtime"
+    },
+    {
+      "source": "src/config/tabs.ts",
+      "sha256": "eb6659d5eebd82ce00e091ffd9f51234b8ac9220627f2ce325b97c6d1c9fabe9",
+      "copy": "apps/apollo-v4/src/design-check/v3/config/tabs.ts"
+    },
+    {
+      "source": "src/plugin/messageRouter.ts",
+      "sha256": "72a5369d82f41f5b87d50462f210fb70e64d022ceef97d47ff97f4161b1312f9",
+      "purpose": "migration contract evidence; not copied as runtime"
+    },
+    {
+      "source": "src/types/pageContext.ts",
+      "sha256": "99c23a0ccd29e1a9a9e80c5238a672b3ae365f334812a9ad64ec66af88c97cb5",
+      "copy": "apps/apollo-v4/src/design-check/v3/types/pageContext.ts"
+    },
+    {
+      "source": "src/types/pageContext.ts",
+      "sha256": "99c23a0ccd29e1a9a9e80c5238a672b3ae365f334812a9ad64ec66af88c97cb5",
+      "purpose": "migration contract evidence; not copied as runtime"
+    },
+    {
+      "source": "src/ui-app/components/Button.module.css",
+      "sha256": "acf54ecd035c9417a90bc49123e0727219e11732a7baa6ffdc456bf197dca9ee",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/Button.module.css"
+    },
+    {
+      "source": "src/ui-app/components/Button.tsx",
+      "sha256": "82f887bd6d64de62fd36c5dd2f6ea280a28ffbce5545735df3c776b3ba0a1b0a",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/Button.tsx"
+    },
+    {
+      "source": "src/ui-app/components/CategoryCard.module.css",
+      "sha256": "450ef460b32c114d5a747f8f65a08f236a3175f819b8e314f8366384ac8a832d",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/CategoryCard.module.css"
+    },
+    {
+      "source": "src/ui-app/components/CategoryCard.tsx",
+      "sha256": "ce63c4fecff9108c1565343834832a08932b7f5ced19564572c693fef41e4ef5",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/CategoryCard.tsx"
+    },
+    {
+      "source": "src/ui-app/components/CounterBadge.module.css",
+      "sha256": "8f76fe10cea6bc62194edaf1efc6c7ddd339959f7c5e3d98318516a7d0988a66",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/CounterBadge.module.css"
+    },
+    {
+      "source": "src/ui-app/components/CounterBadge.tsx",
+      "sha256": "3fef366db2c10dc8770dd1ea0d306ab134a9a6824b83386d6d33d6a7222dbe77",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/CounterBadge.tsx"
+    },
+    {
+      "source": "src/ui-app/components/Divider.module.css",
+      "sha256": "38e72f62354f1b54c2b3d71c417c48eb6e4e377474896248834f3d3fe1b80349",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/Divider.module.css"
+    },
+    {
+      "source": "src/ui-app/components/Divider.tsx",
+      "sha256": "36842c1cbbc80b2ec59b92bf3c8dde4cb6a98b1036a253b392c42d8b8739459f",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/Divider.tsx"
+    },
+    {
+      "source": "src/ui-app/components/GenerationExampleModal.module.css",
+      "sha256": "8d121c3a81717ee9c45a5de82fa53c3edf315f695c2f925e279452ab333950bb",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/GenerationExampleModal.module.css"
+    },
+    {
+      "source": "src/ui-app/components/GenerationExampleModal.tsx",
+      "sha256": "fea18d827134a670044dc300ca13cfc869ec813acff6724fb6136aa591b13092",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/GenerationExampleModal.tsx"
+    },
+    {
+      "source": "src/ui-app/components/IconSlot.module.css",
+      "sha256": "a8855d927dc2d7624a1cd743361f12b01a66b27f491484fe93ce1bf544ac52db",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/IconSlot.module.css"
+    },
+    {
+      "source": "src/ui-app/components/IconSlot.tsx",
+      "sha256": "48bfd6bcc0c2e8385edd7e26a42d5678ca33f0a649fa9ac0b18ca278596d0840",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/IconSlot.tsx"
+    },
+    {
+      "source": "src/ui-app/components/LeftSection.module.css",
+      "sha256": "8f5ab4369a59f021ff7d7104176f93d4388a394caef7d2ee04bb83c5c66158d2",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/LeftSection.module.css"
+    },
+    {
+      "source": "src/ui-app/components/LeftSection.tsx",
+      "sha256": "a4ebf29b6d3a731748c6c551a4742085251c69491343273490370f8a1af72594",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/LeftSection.tsx"
+    },
+    {
+      "source": "src/ui-app/components/OptionList.module.css",
+      "sha256": "90b7aa6f8273a279f9964704823d3e7e07f087c5aecf7d3ca025c83ba4590765",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionList.module.css"
+    },
+    {
+      "source": "src/ui-app/components/OptionList.tsx",
+      "sha256": "7a0535b04f5d129804594d5bc6570b1864a439d9c1bf96807d00884af0ba30ac",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionList.tsx"
+    },
+    {
+      "source": "src/ui-app/components/OptionListCell.module.css",
+      "sha256": "f503e47de1a4a4e942542917aee54cb77eff1034da792eda577bdedcfc81cc31",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionListCell.module.css"
+    },
+    {
+      "source": "src/ui-app/components/OptionListCell.tsx",
+      "sha256": "266a2a6b7524880d5ffdd623bcb3316a48595be75e98d3688effe031fdd177a2",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionListCell.tsx"
+    },
+    {
+      "source": "src/ui-app/components/OptionListHeader.module.css",
+      "sha256": "559405666b1e7aa399b0ed67985848fc8a3bdae25f52aa838dc6cbe848313fb3",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionListHeader.module.css"
+    },
+    {
+      "source": "src/ui-app/components/OptionListHeader.tsx",
+      "sha256": "1186e3a109668d057eafd65b299048e1534541251ca51195847abd04a2136395",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/OptionListHeader.tsx"
+    },
+    {
+      "source": "src/ui-app/components/PickerButton.module.css",
+      "sha256": "097b1949bd61c6efd4ce499856758415556f6a655461b5c38174f3b01293ec09",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/PickerButton.module.css"
+    },
+    {
+      "source": "src/ui-app/components/PickerButton.tsx",
+      "sha256": "fcba8314b883eab2d7e52139d33a92eeede3e17bb25613fbaf98102f605bcf9c",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/PickerButton.tsx"
+    },
+    {
+      "source": "src/ui-app/components/PickerIcons.tsx",
+      "sha256": "94491f755425ef27ec92e13e923d8c883d322c3b862400ad1898eb4895e22db0",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/PickerIcons.tsx"
+    },
+    {
+      "source": "src/ui-app/components/TopSection.module.css",
+      "sha256": "4224a6754a05b0abb3ee7749b3b124e6c520d26d391ca60bab9e53a836ac448c",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/TopSection.module.css"
+    },
+    {
+      "source": "src/ui-app/components/TopSection.tsx",
+      "sha256": "08d5b396f7fab4317652a5b216c91c557fc1ee540c6261484731c9c0ccf94b8c",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/components/TopSection.tsx"
+    },
+    {
+      "source": "src/ui-app/types.ts",
+      "sha256": "da857195e610ca0032e2019f5971dcc6511da7f32cb6d44cc5d1fda5868ef2d4",
+      "copy": "apps/apollo-v4/src/design-check/v3/ui-app/types.ts"
+    },
+    {
+      "source": "src/ui.html",
+      "sha256": "dc43742de28e06022f3794a2d6a41ccac9837876faded8492f0fbe8dfcbe96f1",
+      "copy": "apps/apollo-v4/src/design-check/v3/shell.css",
+      "selection": "first style block; original source retained read-only"
+    }
+  ]
+}

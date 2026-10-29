@@ -10,3 +10,8 @@
 .apollo-progressbar-progress .apollo-mascot { margin:0; }
 .apollo-progressbar-not-applicable { padding:16px; margin:8px 0; background:#f2f3f5; border-radius:16px; }
 .apollo-progressbar-not-applicable h3 { margin:0; font-size:16px; line-height:24px; font-weight:500; }
+
+@media (max-width:480px) {
+  .apollo-new .apollo-progressbar-pilot .apollo-finding-row { grid-template-columns:12px minmax(0,1fr); }
+  .apollo-new .apollo-progressbar-pilot .apollo-finding-controls { grid-column:2; justify-content:flex-start; max-width:none; }
+}

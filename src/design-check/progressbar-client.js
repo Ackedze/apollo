@@ -1,8 +1,8 @@
 const { createOpaqueId } = require('./opaque-id');
-const { PILOT, CAPTURE_SCHEMA, validResult } = require('./progressbar-protocol');
+const { PILOT, CAPTURE_SCHEMA, validPreparation, validResult } = require('./progressbar-protocol');
 const messages = {
-  capture: 'Читаем выбранную область и скриншот…', prepare: 'Подключаем нормы ProgressBar…', verify: 'Проверяем актуальность макета…',
-  running: 'Агент проверяет выбор Goal / Limit…', complete: 'Агентская проверка завершена.', stale: 'Макет изменился. Повторите проверку.',
+  capture: 'Читаем выбранную область и скриншот…', prepare: 'Подключаем нормы компонентов…', verify: 'Проверяем актуальность макета…',
+  running: 'Агент проверяет применение компонентов…', complete: 'Агентская проверка завершена.', stale: 'Макет изменился. Повторите проверку.',
 };
 function createProgressBarClient({ send, request, endpoint, now = Date.now, pollMs = 500, nativeTimeoutMs = 30000 }) {
   const url = new URL(endpoint);
@@ -48,7 +48,7 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
       capture = observed; emit({ capture: observed }); phase('prepare');
       const report = { reportKind: 'apollo-pattern-audit-report', pilot: PILOT, reportId: observed.captureId, phase: 'prepare', capture: observed, sourcePin: null };
       const prepared = (await json(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ report }) }, signal)).preparation; guard();
-      if (prepared?.captureId !== observed.captureId || prepared.reportId !== report.reportId || !/^[a-f0-9]{64}$/.test(prepared.sourcePin) || !Array.isArray(prepared.subjects)) throw Error('PROGRESSBAR_PREPARATION_INVALID');
+      if (!validPreparation(prepared, observed)) throw Error('PATTERN_PREPARATION_INVALID');
       phase('verify'); if (await native('verify', observed.captureId) !== true) throw Error('PROGRESSBAR_CAPTURE_STALE'); guard();
       report.phase = 'run'; report.sourcePin = prepared.sourcePin; phase('running');
       let run = (await json(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ report }) }, signal)).run; guard();
@@ -61,13 +61,14 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
         if (run?.id !== runId) throw Error('PROGRESSBAR_RUN_INVALID');
       }
       const result = run.validation;
-      if (!validResult(result, observed, prepared.sourcePin) || result.reportId !== report.reportId
-        || result.assessments.length !== prepared.subjects.length || result.assessments.some(item => !prepared.subjects.some(s => s.nodeId === item.nodeId))) throw Error('PROGRESSBAR_RESULT_INVALID');
+      if (!validResult(result, observed, prepared)) throw Error('PATTERN_RESULT_INVALID');
       phase('verify'); if (await native('verify', observed.captureId) !== true) throw Error('PROGRESSBAR_CAPTURE_STALE'); guard();
       finishStage();
       emit({ phase: 'complete', busy: false, message: messages.complete, error: '', report: Object.assign({}, result, { timings: { totalMs: Math.max(0, now() - started), stagesMs: stages } }), capture: observed }); return true;
     } catch (error) {
-      if (generation === ticket) emit({ phase: 'error', busy: false, message: '', error: 'Проверка не завершена. Повторите запуск. (' + (error.message || 'PROGRESSBAR_FAILED') + ')' });
+      if (generation === ticket) emit({ phase: 'error', busy: false, message: '', error: error.message === 'Apollo pattern report facts.occurrences must be an array.'
+        ? 'Для расширенной проверки паттернов обновите код Apollo Proxy.'
+        : 'Проверка не завершена. Повторите запуск. (' + (error.message || 'PROGRESSBAR_FAILED') + ')' });
       return false;
     } finally { clearTimeout(deadlineTimer); }
   }

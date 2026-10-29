@@ -9,6 +9,14 @@ test('client rejects a forged result claiming complete whole-category coverage',
 test('no focus request can be created for a target absent from accepted native evidence',()=>{const f=setup();f.port.start('run',f.state.settings);f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:result('run:native')});assert.equal(f.port.focus('invented','node-id'),false);assert.equal(f.messages.some(m=>m.type==='document-audit-focus'),false);f.port.invalidate('');});
 test('missing native reply times out and sends cancellation, without touching contract/generation state',async()=>{const f=setup();f.port.start('run',f.state.settings);await new Promise(r=>setTimeout(r,40));assert.equal(f.state.documentAudit.status,'cancelling');assert.ok(f.messages.some(m=>m.type==='document-audit-cancel'));f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
 
+test('a cancelled read explains retained partial facts without claiming the whole audit failed',async()=>{
+ const f=setup();f.port.start('run',f.state.settings);const partial=result('run:native');partial.checks[1].status='running';
+ f.port.accept({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:'run:native',result:partial});
+ await new Promise(r=>setTimeout(r,40));f.port.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:'run:native'});
+ assert.equal(f.state.documentAudit.result,partial);assert.equal(f.state.documentAudit.status,'stale');
+ assert.match(f.state.documentAudit.error,/Доступные результаты сохранены/);assert.equal(f.port.focus('unknown','unknown'),false);f.port.invalidate('');
+});
+
 test('malformed foreign packets and cyclic native evidence cannot crash the UI client',()=>{const f=setup();assert.equal(f.port.accept({type:{}}),false);f.port.start('run',f.state.settings);const r=result('run:native');r.extra=r;assert.doesNotThrow(()=>f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:r}));assert.equal(f.state.documentAudit.status,'error');f.port.invalidate('');});
 
 const {createDesignCheckController}=require("../../src/design-check/controller");

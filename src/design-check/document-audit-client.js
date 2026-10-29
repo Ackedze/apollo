@@ -97,7 +97,7 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
    if(m.requestId===focusRequest&&m.runId===current?.requestId){clearTimeout(focusTimer);focusRequest=null;if(m.success!==true)invalidate(m.message||'Переход не подтверждён. Повторите проверку.');}return true;
   }
   if(!current||m.requestId!==current.requestId)return true;
-  if(m.type==='document-audit-cancelled'&&current.phase==='cancelling'){fail('Проверка документа остановлена после таймаута. Повторите запуск.');return true;}
+  if(m.type==='document-audit-cancelled'&&current.phase==='cancelling'){fail(snapshot()?'Чтение макета не завершилось вовремя. Доступные результаты сохранены; повторите проверку.':'Не удалось завершить чтение макета вовремя. Повторите проверку.');return true;}
   if(current.phase!=='loading')return true;
   if(m.type==='document-audit-progress'){if(resultValid(m.result)&&m.result.runId===current.requestId&&['pageId','selectionSignature','platform'].every(k=>m.result.context[k]===current.context[k]))publish('loading',m.result);return true;}
   clearTimeout(timer);

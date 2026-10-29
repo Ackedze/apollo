@@ -190,9 +190,9 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   const contextChanged = /^(Страница изменилась\.|Настройки или исходные данные изменились\.|Результат проверки документа устарел\.)/.test(state.documentAudit.error);
   const notices = <div className="apollo-status-messages">
     {state.auditError && !proxyError && <p className="design-check-error" role="alert">{state.auditError}</p>}
-    {state.documentAudit.error && !contextChanged && <p className="design-check-error" role="alert">{state.documentAudit.error}</p>}
+    {state.documentAudit.error && !contextChanged && <p className="design-check-note" role={state.documentAudit.result ? 'status' : 'alert'}>{state.documentAudit.error}</p>}
     {groupId && state.auditBusy && <p className="design-check-note" role="status">{state.auditProgress || 'Проверка контрактов выбранной области продолжается…'}</p>}
-    {groupId && summary.stale && <p className="design-check-note" role="status">{state.documentAction.status === 'refreshing' ? 'Перепроверяем изменённый объект. До свежего результата сохраняем прежние замечания.' : 'Показан предыдущий результат. Повторите проверку.'}</p>}
+    {groupId && summary.stale && (!state.documentAudit.error || contextChanged) && <p className="design-check-note" role="status">{state.documentAction.status === 'refreshing' ? 'Перепроверяем изменённый объект. До свежего результата сохраняем прежние замечания.' : 'Показаны сохранённые результаты. Повторите проверку.'}</p>}
     {state.documentAction.message && <p className="design-check-note" role={state.documentAction.status === 'error' ? 'alert' : 'status'}>{state.documentAction.message}</p>}
   </div>;
   return <div className="shell design-check-shell apollo-new">

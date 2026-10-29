@@ -7,7 +7,7 @@ const {impact,mergeObservation}=require("./scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./notification-proof");
 const {REFRESH_TIMEOUT_MS}=require("./budgets");
 function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null}){
- let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingRefreshRun=null;
+ let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0;
  const errors={NATIVE_FACTS_CHANGED:'Свойства или зависимости изменились. Повторите проверку.',NATIVE_CONTEXT_CHANGED:'Страница или платформа изменились. Повторите проверку.',NATIVE_TIMEOUT:'Чтение заняло слишком много времени. Повторите проверку.',NATIVE_RESULT_STALE:'Результат устарел. Повторите проверку.'};
  function invalidate(reason='NATIVE_RESULT_STALE'){
   epoch++;
@@ -58,9 +58,9 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    const observation=await Promise.race([work(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);
    assertCurrent();
    if(!observerAvailable)for(const c of observation.checks)if(c.status!=='not-applicable'){c.status='incomplete';c.gaps.push('current-page-observer-unavailable');}
-   const bindings=bindingAdapter?await bindingAdapter.resolve(observation,m.context,assertCurrent):new Map();assertCurrent();
    await recheck(api,observation.facts,{hash,assertCurrent,timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();
-   const result=register(observation,true);session.actions=buildActionData(observation,m.requestId,m.context,hash,bindings);active=null;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingRefreshRun===m.requestId){bindingRefreshRun=null;void refreshBindings(m.requestId);}
+   // Action suggestions depend on Proxy catalogs; native verdicts do not.
+   const result=register(observation,true);active=null;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);
   }catch(e){if(sequence===ticket){
    if(latest&&['NATIVE_TIMEOUT','NATIVE_READ_TIMEOUT'].includes(e.message)){
     for(const c of latest.checks)if(c.status==='running'){c.status='incomplete';c.gaps.push('checker-timeout');}
@@ -70,12 +70,12 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
  }
  async function refreshBindings(runId){
   if(!bindingAdapter)return;
-  if(active?.requestId===runId){bindingRefreshRun=runId;return;}
+  if(active?.requestId===runId)return;
   const s=session;if(!s||s.runId!==runId||actionTask||focusTask||refreshTask||active)return;
-  const deadline=now()+timeoutMs,revision=epoch;
-  const guard=()=>{if(session!==s||epoch!==revision||active||actionTask||focusTask||refreshTask||api.currentPage.id!==s.context.pageId||now()>deadline)throw Error('NATIVE_RESULT_STALE');};
+  const deadline=now()+timeoutMs,revision=epoch,ticket=++bindingSequence;
+  const guard=()=>{if(ticket!==bindingSequence||session!==s||epoch!==revision||active||actionTask||focusTask||refreshTask||api.currentPage.id!==s.context.pageId||now()>deadline)throw Error('NATIVE_RESULT_STALE');};
   try{
-   const bindings=await bindingAdapter.resolve(s.observation,s.context,guard);guard();
+   const bindings=await boundedRead(()=>bindingAdapter.resolve(s.observation,s.context,guard),timeoutMs,guard);guard();
    await recheck(api,s.facts,{hash,assertCurrent:guard});guard();
    s.actions=buildActionData(s.observation,s.runId,s.context,hash,bindings);
    post({type:'document-binding-actions',schemaVersion:ACTION_SCHEMA,runId:s.runId,actionData:s.actions.sidecar});

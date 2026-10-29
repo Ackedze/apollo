@@ -22,7 +22,7 @@ declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { skillsClient?: any; reglyphClient?: any; statisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 
 /** Existing v4 nodes keep their identities, listeners, report/export and generation controls. */
@@ -116,7 +116,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
   const [progressBarClient] = useState(() => typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
     ? createProgressBarClient({ send: (value: any) => window.parent.postMessage({ pluginMessage: value }, '*'), request: (url: string, options: RequestInit) => fetch(url, options),
-      onOperation:(kind:string)=>dataOptions.statisticsClient?.begin(kind),endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
+      onOperation:(kind:string)=>dataOptions.statisticsClient?.begin(kind),onOutcome:(value:any)=>dataOptions.auditStatisticsClient?.record(value),endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
   useEffect(() => {
     if (!progressBarClient) return;
     const receive = (event: MessageEvent) => {

@@ -29,6 +29,7 @@ let sessionRevision=0,sessionLoaded=false,sessionTimer=null;
 const staticReviewTransport=createStaticReviewTransport(__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__);
 const BASE = 'http://localhost:3001';
 const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});
+const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
 const { createFrontendTransport } = require("./generation/frontend/ui");
 const { resolveGenerationContext } = require("./generation/proxy/ui");
 const { SOURCE_SCHEMA, sourceFromFiles, linkSourcePackages } = require("./authoring-source");
@@ -39,7 +40,12 @@ const $ = id => document.getElementById(id);
 let generationBusy = false, generationSpec = null, generationResult = null, generationRequest = '';
 let generationLoading = false, generationLoadRevision = 0;
 let validSelection = false, busy = false, sequence = 0, activeRequest = '', cancelledAuditRequest = '', audit = null, agentSequence = 0;
-const send = value => parent.postMessage({ pluginMessage: value }, '*');
+const send = value => {
+  if(value.type==='document-audit-request')auditStatisticsClient.start(value.requestId,'native-document',value.context||null);
+  if(value.type==='document-audit-cancel')auditStatisticsClient.finish(value.requestId,'native-document',null,designCheck.getState().documentAudit.status==='cancelling'?'failed':'cancelled');
+  if(value.type==='audit-cancel')auditStatisticsClient.finish(value.requestId,'contract-area',null,contractStopping?'failed':'cancelled');
+  parent.postMessage({ pluginMessage: value }, '*');
+};
 const {createCatalogTransport}=require("./v3-binding/catalog-port");
 const catalogTransport=createCatalogTransport(send);
 const uiClient = createUiClient(send);
@@ -65,12 +71,13 @@ const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferen
   onAudit: ({ requestId }) => { startContractAudit(requestId); }
 });
 function startContractAudit(requestId) {
+    auditStatisticsClient.start(requestId,'contract-area',designCheck.getState().settings.pickerLabel);
     tokenJournalClient.start(requestId);
     if(audit)markContractStale();else clearResult(false); busy = true; contractStopping=false;activeRequest = requestId; controls();
     clearTimeout(contractTimer);contractTimer=setTimeout(()=>{if(activeRequest===requestId&&busy){contractStopping=true;designCheck.setAuditProgress(requestId,'Останавливаем проверку контрактов: ожидаем подтверждение от Figma…');send({type:'audit-cancel',requestId});}},60000);
     status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
 }
-const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:()=>markContractStale(),onRecheckResult:m=>{if(m.contract){render(m.contract);designCheck.setAudit(Object.assign({},m.contract.audit,{displayMetadata:m.contract.displayMetadata}));}controls();},onRecheckError:()=>markContractStale()});
+const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:m=>{for(const origin of ['native-document','contract-area'])auditStatisticsClient.start(m.requestId,origin,designCheck.getState().settings.pickerLabel,'recheck',origin==='contract-area'?m.runId.replace(/:native$/,''):m.runId);markContractStale();},onRecheckResult:m=>{auditStatisticsClient.finish(m.requestId,'native-document',m.result);if(m.contract){auditStatisticsClient.finish(m.requestId,'contract-area',Object.assign({},m.contract.audit,{statisticsMetrics:m.contract.statisticsMetrics}));render(m.contract);designCheck.setAudit(Object.assign({},m.contract.audit,{displayMetadata:m.contract.displayMetadata}));}else auditStatisticsClient.discard(m.requestId,'contract-area');controls();},onRecheckError:m=>{for(const origin of ['native-document','contract-area'])auditStatisticsClient.finish(m.requestId,origin,null,'failed');markContractStale();}});
 const contractFocusClient=createAuditFocusClient({send,onStatus:status,isBusy:()=>designCheck.getState().documentAction.busy});
 designCheck.subscribe(() => {
   tokenJournalClient.observe(designCheck.getState());
@@ -278,7 +285,7 @@ window.onmessage = event => {
   while (event.source !== ancestor && ancestor !== ancestor.parent) ancestor = ancestor.parent;
   if (event.source !== ancestor) return;
   const data = event.data?.pluginMessage; if (!data) return;
-  if (tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
+  if (auditStatisticsClient.accept(data) || tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
   if (reglyphClient?.accept(data)) return;
   if (sessionClient.accept(data)) return;
@@ -301,10 +308,10 @@ window.onmessage = event => {
   if (data.type === 'audit-progress' && data.requestId === activeRequest&&!contractStopping) {status(data.message);designCheck.setAuditProgress(activeRequest,data.message);}
   if(data.type==='audit-cancelled'&&data.requestId===activeRequest&&contractStopping){busy=false;clearTimeout(contractTimer);designCheck.acceptAuditError(activeRequest,'Проверка контрактов остановлена после таймаута. Полученные native-результаты сохранены.');activeRequest='';contractStopping=false;controls();return;}
   if (data.requestId && data.requestId === cancelledAuditRequest && ['audit-result', 'error'].includes(data.type)) { busy = false; cancelledAuditRequest = ''; controls(); return; }
-  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { busy = false;clearTimeout(contractTimer); render(data); designCheck.acceptAuditResult(data.requestId, Object.assign({},data.audit,{displayMetadata:data.displayMetadata})); activeRequest = ''; }
-  if (data.type === 'error' && ((!data.requestId&&!activeRequest) || data.requestId === activeRequest&&!contractStopping)) { busy = false;clearTimeout(contractTimer); designCheck.acceptAuditError(activeRequest, data.message); activeRequest = ''; status(data.message, true); }
+  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { auditStatisticsClient.finish(data.requestId,'contract-area',Object.assign({},data.audit,{statisticsMetrics:data.statisticsMetrics}));busy = false;clearTimeout(contractTimer); render(data); designCheck.acceptAuditResult(data.requestId, Object.assign({},data.audit,{displayMetadata:data.displayMetadata})); activeRequest = ''; }
+  if (data.type === 'error' && ((!data.requestId&&!activeRequest) || data.requestId === activeRequest&&!contractStopping)) { auditStatisticsClient.finish(activeRequest,'contract-area',null,'failed');busy = false;clearTimeout(contractTimer); designCheck.acceptAuditError(activeRequest, data.message); activeRequest = ''; status(data.message, true); }
   if(data.type==='document-audit-invalidated'&&audit)markContractStale();
-  if (documentAuditClient.accept(data)) { controls(); return; }
+  if (documentAuditClient.accept(data)) {const state=designCheck.getState().documentAudit;if(data.type==='document-audit-progress'&&require('./document-audit/protocol').resultValid(data.result))auditStatisticsClient.checkpoint(data.requestId,data.result);if(data.type==='document-audit-result'&&state.status==='available'&&state.result===data.result)auditStatisticsClient.finish(data.requestId,'native-document',data.result);else if(data.type==='document-audit-error')auditStatisticsClient.finish(data.requestId,'native-document',null,'failed');controls(); return; }
   controls();
 };
 
@@ -518,11 +525,13 @@ $('native-diagnostic-export').onclick=()=>{
 
 agentUi=mountAgentGeneration({root:$('generation-agent-chat'),settingsRoot:$('generation-agent-settings'),send,onSettingsChange:changedSession,onBusy:()=>{controls();generationChatUi?.focusComposer();},isUnavailable:()=>busy||generationBusy||generationLoading||nativeDiagnosticUi.busy()||promptDirty||!sessionLoaded||designCheck.getState().documentAction.busy});
 generationChatUi=mountGenerationChat({root:$('generation-panel'),controller:designCheck});
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, statisticsClient:tokenJournalClient });
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
 void designCheck.restorePreferences();
 void restoreSession();
 window.addEventListener('pagehide',()=>void saveSession());
 
 // Retained metadata is retried independently of audits and model requests.
 void tokenJournalClient.flush();
+void auditStatisticsClient.flush();
+window.addEventListener('online',()=>{void auditStatisticsClient.flush();});
 window.addEventListener('online',()=>{void tokenJournalClient.flush();});

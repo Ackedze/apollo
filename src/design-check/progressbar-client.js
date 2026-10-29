@@ -5,7 +5,7 @@ const messages = {
   capture: 'Читаем выбранную область и скриншот…', prepare: 'Подключаем нормы компонентов…', verify: 'Проверяем актуальность макета…',
   running: 'Агент проверяет применение компонентов…', complete: 'Агентская проверка завершена.', stale: 'Макет изменился. Повторите проверку.',
 };
-function createProgressBarClient({ send, request, endpoint, now = Date.now, pollMs = 500, nativeTimeoutMs = 30000,onOperation=()=>null }) {
+function createProgressBarClient({ send, request, endpoint, now = Date.now, pollMs = 500, nativeTimeoutMs = 30000,onOperation=()=>null,onOutcome=()=>{} }) {
   const url = new URL(endpoint);
   if (url.protocol !== 'http:' || !['localhost','127.0.0.1'].includes(url.hostname) || url.username || url.password || url.search || url.hash || url.pathname !== '/v1/analyze/codex/runs') throw Error('PROGRESSBAR_ENDPOINT_INVALID');
   const identity = createOpaqueId(), pending = new Map(), listeners = new Set();
@@ -72,7 +72,7 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
         ? 'Для расширенной проверки паттернов обновите код Apollo Proxy.'
         : 'Проверка не завершена. Повторите запуск. (' + (error.message || 'PROGRESSBAR_FAILED') + ')' });
       return false;
-    } finally { clearTimeout(deadlineTimer);tracked?.finish(timedOut?'failed':remoteCancelled || generation!==ticket || signal.aborted?'cancelled':state.phase==='complete'?'completed':'failed'); }
+    } finally { clearTimeout(deadlineTimer);const status=timedOut?'failed':remoteCancelled || generation!==ticket || signal.aborted?'cancelled':state.phase==='complete'?'completed':'failed';tracked?.finish(status);try{onOutcome({runId:identity+':'+ticket,origin:'pattern-agent',operation:'pattern-check',status,startedAt:new Date(started).toISOString(),durationMs:Math.max(0,now()-started),result:status==='completed'?state.report:null});}catch(_){/* Statistics never change the check outcome. */} }
   }
   async function focus(nodeId) {
     if (disposed || state.busy || state.phase !== 'complete' || !capture || !state.report?.assessments.some(item => item.nodeId === nodeId)) return false;

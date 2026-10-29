@@ -15,7 +15,8 @@ function auditSummary(report){
 function auditDelivery(data){
  const audit=Object.assign({},auditSummary(data.audit),{findingPresentation:data.audit.findingPresentation || findingPresentation(data.audit,data.rules)}),ids=new Set(audit.result.engine.evaluations.map(e=>e.evaluationId));
  const keys=new Set(audit.result.engine.evaluations.map(e=>`${e.componentScopeId||''}:${e.ruleId}`));
- return Object.assign({},data,{delivery:{postedAt:Date.now()},audit,rules:data.rules.filter(r=>keys.has(`${r.componentScopeId||''}:${r.ruleId}`)),
+  let statisticsMetrics=null;try{statisticsMetrics=require('./audit-statistics/report').metrics('contract-area',data.audit);}catch(_){console.warn('[Apollo][audit-statistics] AUDIT_STATISTICS_PROJECTION_FAILED');}
+  return Object.assign({},data,{statisticsMetrics,delivery:{postedAt:Date.now()},audit,rules:data.rules.filter(r=>keys.has(`${r.componentScopeId||''}:${r.ruleId}`)),
   focusTargets:data.focusTargets?Object.assign({},data.focusTargets,{findings:data.focusTargets.findings.filter(f=>ids.has(f.findingId))}):undefined});
 }
 function createAuditReportBridge({read,post}){

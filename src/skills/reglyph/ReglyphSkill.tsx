@@ -149,9 +149,10 @@ export function ReglyphSkill({client}:{client:any}) {
     {open && <Dialog title="Обновить иконки" onClose={()=>{setPicker(null);setLarge(null);setConfirm(false);client.dismissConfirmation();setOpen(false);}}>
       <main className={`apollo-skill-content apollo-reglyph-content${state.status==='preview'?' is-preview':''}`} aria-label="Результат навыка «Обновить иконки»" aria-busy={running}>
         <p className="apollo-skills-hint apollo-reglyph-context">{state.supported?contextLabel:'АБМ · iOS / Android'} · Без ИИ</p>
+        {state.scopeName && <p className="apollo-skills-hint">Проверенная область: {state.scopeName}</p>}
         {!state.supported?<div className="apollo-reglyph-stage"><h3>Выбери iOS или Android</h3><p>Навык работает с правилами АБМ. Для Desktop и MobileWeb правила пока не подключены.</p></div>:
           state.status==='preview'?<>
-            <p className="apollo-skills-hint">{state.planStale?'Результат предыдущей проверки. Для применения замен запусти новую проверку.':`Проверь соответствия. Без выбранной замены: ${missingCount}.`}</p>
+            <p className="apollo-skills-hint">{state.planStale?'Проверенная область изменилась. Результат сохранён; для применения замен нужна новая проверка.':`Проверь соответствия. Без выбранной замены: ${missingCount}.`}</p>
             {!sections.length && <div className="apollo-reglyph-stage"><h3>Здесь иконок не нашлось</h3><p>Выдели другую область и запусти проверку.</p></div>}
             {sections.map(group=><section key={group.id} className="apollo-reglyph-group"><h3>{group.title} <span className="apollo-reglyph-count">{group.rows.reduce((sum:number,row:any)=>sum+row.ids.length,0)}</span></h3>{group.description && <p className="apollo-skills-hint">{group.description}</p>}
               {group.rows.map((row:any)=>{

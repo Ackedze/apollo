@@ -8,8 +8,8 @@ function fixture() {
   let key='old',imports=async value=>({key:value});
   const page={id:'page',type:'PAGE',selection:[],findAllWithCriteria:()=>[]};
   const icon={id:'icon',type:'INSTANCE',name:'Icon',width:24,height:24,parent:page,children:[],getMainComponentAsync:async()=>({key}),exportAsync:async()=>new Uint8Array([1]),swapComponent:target=>{key=target.key;swaps.push(key);},resize(w,h){this.width=w;this.height=h;}};
-  const frame={id:'frame',type:'FRAME',parent:page,findAllWithCriteria:()=>[icon]};icon.parent=frame;page.selection=[frame];
-  const api={currentPage:page,ui:{onmessage:'original'},on:(name,callback)=>{events[name]=callback;},clientStorage:{getAsync:async k=>storage.get(k),setAsync:async(k,value)=>storage.set(k,value)},importComponentByKeyAsync:k=>imports(k),getNodeByIdAsync:async id=>id==='icon'?icon:null,base64Encode:()=>'AQ==',commitUndo(){},viewport:{scrollAndZoomIntoView(){}}};
+  const frame={id:'frame',name:'Исходный фрейм',type:'FRAME',parent:page,findAllWithCriteria:()=>[icon]};icon.parent=frame;page.selection=[frame];
+  const api={currentPage:page,ui:{onmessage:'original'},on:(name,callback)=>{events[name]=callback;},clientStorage:{getAsync:async k=>storage.get(k),setAsync:async(k,value)=>storage.set(k,value)},importComponentByKeyAsync:k=>imports(k),getNodeByIdAsync:async id=>id==='icon'?icon:id==='frame'?frame:null,setCurrentPageAsync:async next=>{api.currentPage=next;},base64Encode:()=>'AQ==',commitUndo(){},viewport:{scrollAndZoomIntoView(){}}};
   const catalog={version:1,scenarioId:'default',oldIcons:[{key:'old',name:'Old'}],newIcons:[{key:'new',name:'New',familyId:'new',width:24,height:24}],mappings:[{oldKey:'old',newKey:'new'}]};
   const catalogs={default:catalog,services:Object.assign({},catalog,{scenarioId:'services',newIcons:[{key:'logo',name:'Logo'}],mappings:[{oldKey:'old',newKey:'logo'}]})};
   let changed=0,notify=()=>{};
@@ -20,7 +20,7 @@ function fixture() {
     const requestId='reglyph-test-'+(++sequence);notify=value=>{if(value.type==='reglyph-result'&&value.requestId===requestId)resolve(value);};
     bridge.accept({type:'reglyph-request',schemaVersion:p.SCHEMA,requestId,revision,operation,payload});
   });
-  return {api,icon,bridge,catalogs,messages,swaps,context,request,changed:()=>changed,setImports:fn=>{imports=fn;}};
+  return {api,icon,frame,bridge,catalogs,messages,swaps,context,request,changed:()=>changed,setImports:fn=>{imports=fn;}};
 }
 test('same ABM implementation works on iOS and Android without replacing the Apollo message handler',async()=>{
   for(const platform of ['iOS','Android']){
@@ -99,10 +99,10 @@ function historyClient(withResult=true) {
   client.setContext({channelId:'b2b',pickerLabel:'iOS'});client.open();
   feed({type:'catalog',catalog:{scenarioId:'default',newIcons:[{key:'new'},{key:'manual'}]}});settle();
   const rows=[{oldKey:'old',newKey:'new',ids:['icon'],name:'Old',image:'source-image'}];
-  if(withResult){feed({type:'scan',rows,observedRows:[{oldKey:'native',category:'native',ids:['native-icon']}]});client.choose('old','manual');settle();}
+  if(withResult){feed({type:'scan',scopeName:'Исходный фрейм',rows,observedRows:[{oldKey:'native',category:'native',ids:['native-icon']}]});client.choose('old','manual');settle();}
   return{client,sent,feed,settle,rows};
 }
-test('selection changes retain previous rows, manual choices, observed icons and previews without an error screen',()=>{
+test('actual scope invalidation retains previous rows, manual choices, observed icons and previews without an error screen',()=>{
   const f=historyClient(),before=f.client.getState();
   for(let i=0;i<3;i++){f.client.selection({valid:i!==1});f.feed({type:'stale'});}
   const after=f.client.getState();assert.equal(after.status,'preview');assert.equal(after.planStale,true);assert.equal(after.error,'');
@@ -116,7 +116,7 @@ test('a new completed scan restores replacement after the previous result became
   f.client.start();f.feed({type:'scan',rows:f.rows});f.settle();f.client.replace();
   assert.equal(f.client.getState().status,'replacing');assert.equal(f.sent.at(-1).operation,'replace');
 });
-test('completed replacement summary and remaining rows survive selection changes',()=>{
+test('completed replacement summary and remaining rows survive scope invalidation',()=>{
   const f=historyClient();f.feed({type:'done',remainingRows:f.rows,replaced:1,skipped:1,failed:0});const result=f.client.getState().result;
   f.feed({type:'stale'});assert.equal(f.client.getState().status,'done');assert.equal(f.client.getState().result,result);
   f.client.back();assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().planStale,true);
@@ -134,9 +134,56 @@ test('channel change still resets historical results and replacement failures re
   assert.equal(f.client.getState().status,'idle');assert.deepEqual(f.client.getState().rows,[]);assert.equal(f.client.getState().planStale,false);
   const g=historyClient();g.client.replace();g.feed({type:'stale'});g.feed({type:'error',requestType:'replace',text:'Swap failed'});assert.equal(g.client.getState().error,'Swap failed');assert.equal(g.client.getState().status,'error');
 });
-test('native validation still rejects a forced previous plan after selection changes with zero swaps',async()=>{
-  const f=fixture();f.context();await f.request('scan');f.api.currentPage.selection=[{id:'other-frame',type:'FRAME'}];f.bridge.selectionChanged();
-  await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,[]);assert.ok(f.messages.some(message=>message.event?.type==='error'));
+test('selection changes keep the original frame actionable, including focus, preview and replacement',async()=>{
+  const f=fixture();f.context();await f.request('scan');
+  assert.equal(f.messages.findLast(m=>m.event?.type==='scan').event.scopeName,'Исходный фрейм');
+  const other={id:'other',type:'FRAME',parent:f.api.currentPage};
+  f.api.currentPage.selection=[other];const start=f.messages.length;f.bridge.selectionChanged();
+  assert.equal(f.messages.slice(start).some(m=>m.event?.type==='stale'),false);
+  assert.equal((await f.request('icon-preview',{id:'icon',token:'preview'})).error,null);
+  assert.equal((await f.request('go-to',{id:'icon'})).error,null);assert.deepEqual(f.api.currentPage.selection,[f.icon]);
+  f.api.currentPage.selection=[other];f.bridge.selectionChanged();
+  await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,['new']);assert.deepEqual(f.api.currentPage.selection,[other]);
+});
+test('scan and scenario confirmation stay pinned when selection changes during or after reading',async()=>{
+  for(const confirm of [false,'same','switch']){
+    const f=fixture();f.context();if(confirm)await f.request('scenario',{id:'services'});
+    const other={id:'other',type:'FRAME',parent:f.api.currentPage};let changed=false;
+    f.icon.getMainComponentAsync=async()=>{if(!changed){changed=true;f.api.currentPage.selection=[other];f.bridge.selectionChanged();}return{key:'old'};};
+    await f.request('scan');const prompt=f.messages.findLast(m=>m.event?.type==='scan-confirmation')?.event;
+    if(confirm){assert.ok(prompt);await f.request('scan',{scenarioId:confirm==='switch'?'default':'services',confirmationToken:prompt.token});}
+    assert.ok(f.messages.findLast(m=>m.event?.type==='scan')?.event.rows.length);
+    await f.request('replace',{choices:[{oldKey:'old',newKey:confirm==='same'?'logo':'new'}]});assert.deepEqual(f.swaps,[confirm==='same'?'logo':'new']);
+  }
+});
+test('switching pages keeps the original plan and explicit navigation returns to its page',async()=>{
+  const f=fixture();f.context();await f.request('scan');const originalPage=f.api.currentPage;
+  const otherPage={id:'other-page',type:'PAGE',selection:[],findAllWithCriteria:()=>[]};f.api.currentPage=otherPage;f.bridge.selectionChanged();
+  await f.request('go-to',{id:'icon'});assert.equal(f.api.currentPage,originalPage);assert.deepEqual(originalPage.selection,[f.icon]);
+  f.api.currentPage=otherPage;f.bridge.selectionChanged();await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,['new']);assert.equal(f.api.currentPage,otherPage);
+});
+test('removed roots, moved sources and changed source components never use a saved plan',async()=>{
+  for(const problem of ['removed-root','moved-root','moved-icon','removed-icon','source']){
+    const f=fixture();f.context();await f.request('scan');const otherPage={id:'other-page',type:'PAGE'};
+    if(problem==='removed-root')f.frame.removed=true;
+    if(problem==='moved-root')f.frame.parent=otherPage;
+    if(problem==='moved-icon')f.icon.parent=f.api.currentPage;
+    if(problem==='removed-icon')f.icon.removed=true;
+    if(problem==='source')f.icon.getMainComponentAsync=async()=>({key:'changed'});
+    const start=f.messages.length;await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.ok(f.messages.slice(start).some(m=>m.event?.type==='error'),problem);assert.deepEqual(f.swaps,[],problem);
+  }
+});
+test('original scope is checked again after target import and immediately before swapping',async()=>{
+  for(const during of ['import','prewrite']){
+    const f=fixture();f.context();await f.request('scan');
+    if(during==='import')f.setImports(async key=>{f.icon.parent=f.api.currentPage;return{key};});
+    else {let reads=0;f.icon.getMainComponentAsync=async()=>{if(++reads===2)f.icon.parent=f.api.currentPage;return{key:'old'};};}
+    await f.request('replace',{choices:[{oldKey:'old',newKey:'new'}]});assert.deepEqual(f.swaps,[],during);
+  }
+});
+test('ordinary selection updates keep client choices, scope label and apply enabled',()=>{
+  const f=historyClient(),before=f.client.getState();f.client.selection({valid:false});f.feed({type:'selection',count:1});
+  assert.equal(f.client.getState().planStale,false);assert.equal(f.client.getState().rows,before.rows);assert.equal(f.client.getState().scopeName,'Исходный фрейм');f.client.replace();assert.equal(f.sent.at(-1).operation,'replace');
 });
 
 test('a pending navigation refused after selection change cannot replace the historical result with an error',()=>{

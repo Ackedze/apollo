@@ -253,7 +253,6 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     }
     return check(node.parent);
   }
-  let inspectionSelection = null;
   let scenario = 'default';
   let catalog = bundled || { version: 1, oldIcons: [], newIcons: [], mappings: [] };
   let snapshot = null;
@@ -270,8 +269,22 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
   let previewCache = {};
   const previewCacheKey = () => 'apollo-reglyph-abm-v1-preview' + (scenario === 'default' ? '' : '-' + scenario);
   const send = (type, payload = {}) => post(Object.assign({type}, payload));
-  const selectionKey = () => figma.currentPage.selection.map(n => n.id).sort().join('|');
-  const scopeMatches = plan => plan.pageId === figma.currentPage.id && (!selectionKey() || plan.scope === selectionKey() || (inspectionSelection !== null && inspectionSelection === selectionKey()));
+  const pageOf = node => { for (let part = node; part; part = part.parent) if (part.type === 'PAGE') return part; return null; };
+  const scopeMatches = plan => {
+    try { return !!plan && !plan.page.removed && plan.roots.length > 0 && plan.roots.every(root => !root.removed && pageOf(root)?.id === plan.page.id); }
+    catch (_) { return false; }
+  };
+  const containsNode = (plan, node) => {
+    if (!scopeMatches(plan) || !node || node.removed) return false;
+    for (let part = node; part && part.type !== 'PAGE'; part = part.parent) if (plan.roots.some(root => root.id === part.id)) return true;
+    return false;
+  };
+  function captureScope() {
+    const page = figma.currentPage, selectedIds = new Set(page.selection.map(node => node.id));
+    const roots = page.selection.filter(node => { for (let parent = node.parent; parent; parent = parent.parent) if (selectedIds.has(parent.id)) return false; return true; });
+    return { page, roots };
+  }
+  const scopeLabel = plan => plan.roots.length === 1 ? plan.roots[0].name : `Областей: ${plan.roots.length}`;
   const visibleInLayout = node => { for (let part = node; part; part = part.parent) if (part.removed || ('visible' in part && part.visible === false) || ('opacity' in part && part.opacity === 0)) return false; return true; };
   const knownIconKeys = () => new Set([catalog, ...Object.values(scenarios)].flatMap(c => [...c.oldIcons, ...c.newIcons, ...(c.observedIcons || [])]).map(icon => icon.key));
   async function serviceCardRoles(root, knownKeys, mainOf) {
@@ -456,23 +469,20 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
 
   function invalidate() {
     revision += 1;
-    inspectionSelection = null;
     snapshot = null;
     pendingScan = null;
     send('stale');
   }
   function selectionChanged() {
-    if (!(snapshot && scopeMatches(snapshot) && (!selectionKey() || inspectionSelection === selectionKey()))) invalidate();
+    if ((snapshot && !scopeMatches(snapshot)) || (pendingScan && !scopeMatches(pendingScan))) invalidate();
     send('selection', { count: figma.currentPage.selection.length });
   }
 
-  async function scan(confirmed = false) {
+  async function scan(confirmed = false, scope = captureScope()) {
     pendingScan = null;
-    inspectionSelection = null;
     snapshot = null;
     const scanRevision = revision;
-    const scope = selectionKey();
-    if (!scope) throw Object.assign(new Error('Выдели макеты в Figma'), { code: 'NO_SELECTION' });
+    if (!scope.roots.length) throw Object.assign(new Error('Выдели макеты в Figma'), { code: 'NO_SELECTION' });
     if (!catalog.oldIcons.length && !(catalog.observedIcons || []).length) throw new Error('Каталог иконок недоступен.');
     const old = new Map(catalog.oldIcons.map(i => [i.key, i]));
     const observed = new Map((catalog.observedIcons || []).map(i => [i.key, i]));
@@ -494,8 +504,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     const monitored = new Map();
     const sourcePreviews = [];
     const nodes = new Map();
-    const selectedIds = new Set(figma.currentPage.selection.map(node => node.id));
-    const roots = figma.currentPage.selection.filter(node => { for(let parent=node.parent;parent;parent=parent.parent)if(selectedIds.has(parent.id))return false;return true; });
+    const roots = scope.roots;
     for (const root of roots) {
       if (root.type === 'INSTANCE') nodes.set(root.id, root);
       if ('findAllWithCriteria' in root) {
@@ -556,8 +565,8 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       }
       const suggestedScenario = scenario === 'default' && hasServiceTitle ? 'services' : scenario === 'services' && !hasServiceTitle ? 'default' : null;
       if (suggestedScenario) {
-        if (revision !== scanRevision || selectionKey() !== scope) throw new Error('Выделение изменилось. Повторите проверку.');
-        pendingScan = { token: String(++scanPromptSerial), scope, pageId: figma.currentPage.id, revision };
+        if (revision !== scanRevision || !scopeMatches(scope)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+        pendingScan = Object.assign({}, scope, { token: String(++scanPromptSerial), revision });
         send('scan-confirmation', { token: pendingScan.token, suggestedScenario });
         return;
       }
@@ -566,7 +575,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     const progress = () => send('scan-progress', { processed, total: nodes.size });
     progress();
     for (const node of nodes.values()) {
-      if(scanRevision !== revision) throw new Error('Выделение изменилось. Повторите проверку.');
+      if(scanRevision !== revision) throw new Error('Проверяемая область изменилась. Повторите проверку.');
       try {
       if (!visibleInLayout(node)) continue;
       try { if (await insideProtectedComponent(node, mainOf, hiddenProtectedParents, false, false)) continue; }
@@ -642,15 +651,15 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         catch (_) { /* An unavailable image never removes an icon from results. */ }
       }
     }));
-    if (scanRevision !== revision || scope !== selectionKey()) throw new Error('Выделение изменилось. Повторите проверку.');
-    snapshot = { scope, pageId: figma.currentPage.id, rows: Array.from(found.values()), observedRows: Array.from(monitored.values()), revision };
-    send('scan', { rows: snapshot.rows, observedRows: snapshot.observedRows, unreadable });
+    if (scanRevision !== revision || !scopeMatches(scope)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+    snapshot = Object.assign({}, scope, { rows: Array.from(found.values()), observedRows: Array.from(monitored.values()), revision });
+    send('scan', { rows: snapshot.rows, observedRows: snapshot.observedRows, unreadable, scopeName: scopeLabel(snapshot) });
   }
 
   async function replace(choices) {
     assertActive();
     const plan = snapshot;
-    if (!plan || !scopeMatches(plan) || plan.revision !== revision) throw new Error('Повторите проверку выделения.');
+    if (!plan || !scopeMatches(plan) || plan.revision !== revision) throw new Error('Проверяемая область изменилась. Повторите проверку.');
     if (!Array.isArray(choices)) throw new Error('Некорректный список замен.');
     const allowed = new Set(catalog.newIcons.map(i => i.key));
     const selected = new Map();
@@ -665,47 +674,55 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
     // Resolve every chosen target before the first mutation.
     const targets = new Map();
     for (const key of new Set(selected.values())) if (key) targets.set(key, await component(key));
-    if (snapshot !== plan || !scopeMatches(plan)) throw new Error('Выделение изменилось. Повторите проверку.');
+    if (snapshot !== plan || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
     const jobs = [];
     const currentKnownKeys = knownIconKeys(), checkedCards = new Map();
+    async function validateOccurrence(row, node, checkedCards) {
+      if (snapshot !== plan || plan.revision !== revision || !containsNode(plan, node)) throw new Error('Иконка больше не находится в проверенной области. Повторите проверку.');
+      const id = node.id;
+      if (node && !visibleInLayout(node)) throw new Error('Иконка находится в скрытом слое. Повторите проверку.');
+      if (await insideProtectedComponent(node, n => n.getMainComponentAsync())) throw new Error('Иконка находится в исключённом компоненте. Повторите проверку.');
+      const occurrence = row.serviceOccurrences?.[id];
+      if (occurrence) {
+        const title = await figma.getNodeByIdAsync(occurrence.titleId);
+        const text = title?.type === 'TEXT' ? String(title.characters || '').normalize('NFC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase('ru') : '';
+        const ancestors = new Map();
+        for (let parent = node.parent; parent; parent = parent.parent) ancestors.set(parent.id, parent);
+        if (!title || !visibleInLayout(title) || text !== occurrence.title || !ancestors.has(occurrence.cardId) || !ancestors.has(occurrence.screenId)) throw new Error('Контекст сервиса изменился. Повторите проверку.');
+        if (!checkedCards.has(occurrence.cardId)) checkedCards.set(occurrence.cardId, await serviceCardRoles(ancestors.get(occurrence.cardId), currentKnownKeys, n => n.getMainComponentAsync()));
+        const roles = checkedCards.get(occurrence.cardId);
+        if (roles.map(role => role.kind).join(',') !== occurrence.structure || roles.find(role => role.kind === 'text')?.id !== occurrence.titleId) throw new Error('Структура карточки сервиса изменилась. Повторите проверку.');
+      }
+      if (row.outsideCatalog && !(await iconContext(node, n => n.getMainComponentAsync(), iconContainers, iconViewSets))) {
+        throw new Error('Контекст иконки изменился. Повторите проверку.');
+      }
+      const original = node.type === 'INSTANCE' ? await node.getMainComponentAsync() : null;
+      if (!original || original.key !== (row.sourceKeys?.[id] || row.oldKey)) {
+        throw new Error('Иконки в макете изменились. Повторите проверку.');
+      }
+      if (row.sourceArtwork !== undefined && currencyArtwork(node) !== row.sourceArtwork) throw new Error('Рисунок иконки изменился. Повторите проверку.');
+      assertActive();
+      if (snapshot !== plan || plan.revision !== revision || !containsNode(plan, node) || !visibleInLayout(node)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+      return original;
+    }
     for (const row of plan.rows) {
       const target = targets.get(selected.get(row.rowId || row.oldKey));
       if (!target) continue;
       for (const id of row.ids) {
         const node = await figma.getNodeByIdAsync(id);
-        const original = node && node.type === 'INSTANCE' ? await node.getMainComponentAsync() : null;
-        if (node && !visibleInLayout(node)) throw new Error('Иконка находится в скрытом слое. Повторите проверку.');
-        if (!original || original.key !== (row.sourceKeys?.[id] || row.oldKey)) {
-          throw new Error('Иконки в макете изменились. Повторите проверку.');
-        }
-        if (row.sourceArtwork !== undefined && currencyArtwork(node) !== row.sourceArtwork) throw new Error('Рисунок иконки изменился. Повторите проверку.');
-        if (await insideProtectedComponent(node, n => n.getMainComponentAsync())) throw new Error('Иконка находится в исключённом компоненте. Повторите проверку.');
-        const occurrence = row.serviceOccurrences?.[id];
-        if (occurrence) {
-          const title = await figma.getNodeByIdAsync(occurrence.titleId);
-          const text = title?.type === 'TEXT' ? String(title.characters || '').normalize('NFC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase('ru') : '';
-          const ancestors = new Map();
-          for (let parent = node.parent; parent; parent = parent.parent) ancestors.set(parent.id, parent);
-          if (!title || !visibleInLayout(title) || text !== occurrence.title || !ancestors.has(occurrence.cardId) || !ancestors.has(occurrence.screenId)) throw new Error('Контекст сервиса изменился. Повторите проверку.');
-          if (!checkedCards.has(occurrence.cardId)) checkedCards.set(occurrence.cardId, await serviceCardRoles(ancestors.get(occurrence.cardId), currentKnownKeys, n => n.getMainComponentAsync()));
-          const roles = checkedCards.get(occurrence.cardId);
-          if (roles.map(role => role.kind).join(',') !== occurrence.structure || roles.find(role => role.kind === 'text')?.id !== occurrence.titleId) throw new Error('Структура карточки сервиса изменилась. Повторите проверку.');
-        }
-        if (row.outsideCatalog && !(await iconContext(node, n => n.getMainComponentAsync(), iconContainers, iconViewSets))) {
-          throw new Error('Контекст иконки изменился. Повторите проверку.');
-        }
+        const original = await validateOccurrence(row, node, checkedCards);
         let depth = 0;
         for (let parent = node.parent; parent; parent = parent.parent) depth += 1;
-        jobs.push({ node, target, original, depth });
+        jobs.push({ node, row, target, original, depth });
       }
     }
-    if (snapshot !== plan || !scopeMatches(plan)) throw new Error('Выделение изменилось. Повторите проверку.');
+    if (snapshot !== plan || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
     if (!jobs.length) throw new Error('Выберите хотя бы одну замену.');
     const errors = [];
     let replaced = 0;
     const completed = new Set();
     // Descendants first, so swapping a parent cannot invalidate a pending child.
-    for (const { node, target, original } of jobs.sort((a, b) => b.depth - a.depth)) {
+    for (const { node, row, target, original } of jobs.sort((a, b) => b.depth - a.depth)) {
       const name = node.name;
       let swapped = false;
       let originalPaints;
@@ -720,7 +737,7 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
       try {
         assertActive();
         const captured = await captureColors(node);
-        assertActive();
+        await validateOccurrence(row, node, new Map());
         const savedColor = record => ({ paints: record.paints, styleId: record.styleId, alpha: record.alpha });
         originalPaints = captured.map(savedColor);
         const colors = colorTransferPlan(node, target, captured).map(pair => savedColor(pair.source));
@@ -786,29 +803,32 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
         send('catalog', { catalog });
         await restorePreviewCache();
       } else if (msg.type === 'reset') {
-        revision += 1; snapshot = null; pendingScan = null; inspectionSelection = null;
+        revision += 1; snapshot = null; pendingScan = null;
         send('reset');
       } else if (msg.type === 'scan') {
         const confirmed = msg.confirmationToken !== undefined;
+        let scope;
         if (confirmed) {
           const plan = pendingScan;
-          if (!plan || msg.confirmationToken !== plan.token || plan.revision !== revision || plan.pageId !== figma.currentPage.id || plan.scope !== selectionKey()) throw new Error('Выделение изменилось. Повторите проверку.');
+          if (!plan || msg.confirmationToken !== plan.token || plan.revision !== revision || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
           pendingScan = null;
+          scope = plan;
           if (!['default', 'services'].includes(msg.scenarioId) || !scenarios[msg.scenarioId]) throw new Error('Неизвестный сценарий.');
           const switched = msg.scenarioId !== scenario;
           if (switched) await activateScenario(msg.scenarioId);
-          if (revision !== plan.revision + Number(switched) || plan.scope !== selectionKey() || plan.pageId !== figma.currentPage.id) throw new Error('Выделение изменилось. Повторите проверку.');
+          if (revision !== plan.revision + Number(switched) || !scopeMatches(plan)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
         } else if (msg.scenarioId && msg.scenarioId !== scenario) throw new Error('Сценарий изменился. Повторите проверку.');
-        await scan(confirmed);
+        await scan(confirmed, scope);
       } else if (msg.type === 'scenario') {
         if (!Object.prototype.hasOwnProperty.call(scenarios, msg.id)) throw new Error('Неизвестный сценарий.');
         await activateScenario(msg.id);
       } else if (msg.type === 'go-to') {
-        if (!snapshot || snapshot.revision !== revision || !scopeMatches(snapshot) || ![...snapshot.rows, ...snapshot.observedRows].some(r => r.ids.includes(msg.id))) throw new Error('Повторите проверку выделения.');
-        const node = await figma.getNodeByIdAsync(msg.id);
-        if (!node || node.removed) throw new Error('Иконка больше не существует.');
-        inspectionSelection = node.id;
-        figma.currentPage.selection = [node];
+        if (!snapshot || snapshot.revision !== revision || !scopeMatches(snapshot) || ![...snapshot.rows, ...snapshot.observedRows].some(r => r.ids.includes(msg.id))) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+        const plan = snapshot, node = await figma.getNodeByIdAsync(msg.id);
+        if (!containsNode(plan, node)) throw new Error('Иконка больше не находится в проверенной области.');
+        if (figma.currentPage.id !== plan.page.id) await figma.setCurrentPageAsync(plan.page);
+        if (snapshot !== plan || !containsNode(plan, node)) throw new Error('Проверяемая область изменилась. Повторите проверку.');
+        plan.page.selection = [node];
         figma.viewport.scrollAndZoomIntoView([node]);
       } else if (msg.type === 'icon-preview') {
         let node, fallback, preserveColor = false;
@@ -816,11 +836,11 @@ function createReglyphEngine({api, catalogs, detection, post, assertActive = () 
           if (!catalog.newIcons.some(icon => icon.key === msg.key)) throw new Error('Неизвестная новая иконка.');
           node = await component(msg.key);preserveColor = scenario === 'services';
         } else {
-          if (!snapshot || !scopeMatches(snapshot) || snapshot.revision !== revision) throw new Error('Повторите проверку выделения.');
+          if (!snapshot || !scopeMatches(snapshot) || snapshot.revision !== revision) throw new Error('Проверяемая область изменилась. Повторите проверку.');
           const row = [...snapshot.rows, ...snapshot.observedRows].find(row => row.ids.includes(msg.id));
           if (!row) throw new Error('Иконка не входит в проверку.');
           node = await figma.getNodeByIdAsync(msg.id);preserveColor = row.category === 'logo' || row.preserveColor === true;
-          if (!node || !visibleInLayout(node)) throw new Error('Иконка больше не доступна.');
+          if (!containsNode(snapshot, node) || !visibleInLayout(node)) throw new Error('Иконка больше не доступна в проверенной области.');
           if (row.category !== 'protected' && await insideProtectedComponent(node, n => n.getMainComponentAsync())) throw new Error('Иконка находится в исключённом компоненте.');
           fallback = await node.getMainComponentAsync();
           node = iconPreviewNode(node);

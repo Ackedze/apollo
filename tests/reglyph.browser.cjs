@@ -13,11 +13,14 @@ function fixture(post){
   let key='old'+n;
   const icon={id:'icon'+n,name:'Старая иконка '+n,type:'INSTANCE',width:24,height:24,children:[],parent:null,getMainComponentAsync:async()=>target(key),exportAsync:async()=>png,swapComponent(component){key=component.key;swaps.push([this.id,key]);},resize(w,h){this.width=w;this.height=h;}};nodes.set(icon.id,icon);
  }
- const frame={id:'frame',type:'FRAME',name:'Экран',parent:page,findAllWithCriteria:()=>Array.from(nodes.values())};for(const node of nodes.values())node.parent=frame;page.selection=[frame];
+ const originalIcons=Array.from(nodes.values());
+ const frame={id:'frame',type:'FRAME',name:'Экран',parent:page,findAllWithCriteria:()=>originalIcons};for(const node of nodes.values())node.parent=frame;page.selection=[frame];
+ const otherFrame={id:'other-frame',name:'Другой фрейм',type:'FRAME',parent:page,findAllWithCriteria:()=>[otherIcon]};
+ const otherIcon={id:'other-icon',type:'INSTANCE',name:'Другая иконка',parent:otherFrame,width:24,height:24,children:[],getMainComponentAsync:async()=>target('old1'),exportAsync:async()=>png,swapComponent(component){swaps.push([this.id,component.key]);},resize(){}};nodes.set(otherIcon.id,otherIcon);
  const api={currentPage:page,clientStorage:{getAsync:async k=>storage.get(k),setAsync:async(k,v)=>storage.set(k,v)},importComponentByKeyAsync:async key=>target(key),getNodeByIdAsync:async id=>nodes.get(id),base64Encode:bytes=>Buffer.from(bytes).toString('base64'),commitUndo(){},viewport:{scrollAndZoomIntoView(){}}};
  const catalog={version:1,scenarioId:'default',oldIcons:[1,2,3].map(n=>({key:'old'+n,name:'Старая иконка '+n})),newIcons:[{key:'new1',name:'Alfa',baseName:'Альфа',searchDescription:'Альфа баллы',familyId:'a',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}},{key:'new2',name:'Calendar',baseName:'Календарь',searchDescription:'Дата поездки',familyId:'b',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}}],mappings:[{oldKey:'old1',newKey:'new1'},{oldKey:'old2',newKey:'new2'}]};
  const bridge=createReglyphBridge({api,post,catalogs:{default:catalog,services:Object.assign({},catalog,{scenarioId:'services'})},detection:{containers:[],iconViewSets:[]}});
- return{bridge,swaps,selection(other){page.selection=other?[{id:'other-frame',name:'Другой фрейм',type:'FRAME',parent:page,findAllWithCriteria:()=>[]}]:[frame];bridge.selectionChanged();}};
+ return{bridge,swaps,selection(other){page.selection=other?[otherFrame]:[frame];bridge.selectionChanged();}};
 }
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private output directory.');fs.mkdirSync(output,{recursive:true});
@@ -26,6 +29,7 @@ function fixture(post){
  const page=await browser.newPage({viewport:{width:800,height:860}}),errors=[],sent=[];page.on('pageerror',error=>errors.push(error.message));
  let delivery=Promise.resolve();const f=fixture(message=>{delivery=delivery.then(()=>page.evaluate(message=>window.emitPlugin(message),message));});
  await page.exposeFunction('changeFixtureSelection',other=>f.selection(other));
+ await page.exposeFunction('previewRequestCount',()=>sent.filter(message=>message.operation==='icon-preview').length);
  await page.exposeFunction('nativeRequest',message=>{
   sent.push(message);if(f.bridge.accept(message))return null;
   if(message.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:message.schemaVersion,requestId:message.requestId,operation:message.operation,result:null};return null;
@@ -69,27 +73,28 @@ function fixture(post){
  assert.equal(await page.locator('.apollo-reglyph-row').count(),3);
  const previousRows=await page.locator('.apollo-reglyph-row').allTextContents();
  await page.evaluate(()=>window.changeFixtureSelection(true));
- await page.getByText('Результат предыдущей проверки. Для применения замен запусти новую проверку.',{exact:true}).waitFor();
+ await page.getByText('Проверенная область: Экран',{exact:true}).waitFor();
  assert.deepEqual(await page.locator('.apollo-reglyph-row').allTextContents(),previousRows);assert.equal(await page.getByRole('alert').count(),0);assert.equal(await page.getByText('Нужна новая проверка',{exact:true}).count(),0);
- const apply=page.getByRole('button',{name:'Заменить · 2',exact:true});assert.equal(await apply.isDisabled(),true);
- await apply.evaluate(element=>element.click());assert.equal(f.swaps.length,0);
- assert.equal(await page.getByRole('button',{name:'Показать в макете',exact:true}).evaluateAll(buttons=>buttons.every(button=>button.disabled)),true);
+ const apply=page.getByRole('button',{name:'Заменить · 2',exact:true});assert.equal(await apply.isDisabled(),false);
+ assert.equal(await page.getByRole('button',{name:'Показать в макете',exact:true}).evaluateAll(buttons=>buttons.every(button=>!button.disabled)),true);
+ await page.getByRole('button',{name:'Показать в макете',exact:true}).first().click();
+ await page.waitForFunction(()=>!document.querySelector('.apollo-reglyph-small')?.disabled);
+ await page.evaluate(()=>window.changeFixtureSelection(true));
  const previewsBefore=sent.filter(message=>message.operation==='icon-preview').length;
  await page.locator('.apollo-reglyph-icon-card').first().getByRole('button',{name:/^Превью:/}).click();
- assert.equal(await page.getByRole('dialog').count(),2);assert.equal(sent.filter(message=>message.operation==='icon-preview').length,previewsBefore,'historical source preview uses its captured bitmap');
+ assert.equal(await page.getByRole('dialog').count(),2);await page.waitForFunction(async count=>await window.previewRequestCount()===count,previewsBefore+1);assert.equal(sent.filter(message=>message.operation==='icon-preview').length,previewsBefore+1,'original source preview stays actionable');
  await page.getByRole('dialog').last().getByRole('button',{name:/^Закрыть:/}).click();
- await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-history-800.png')});
+ await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-pinned-scope-800.png')});
  await page.setViewportSize({width:440,height:780});
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  assert.equal(await page.locator('dialog[open]').count(),1);
  const historyBounds=await page.locator('dialog[open]').boundingBox();assert.equal(historyBounds.y,8);assert.equal(historyBounds.height,764);
  const historyFooter=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(historyFooter.y+historyFooter.height<=780);
- await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-history-440.png')});
+ await page.screenshot({animations:'disabled',path:path.join(output,'reglyph-pinned-scope-440.png')});
  assert.equal(await page.locator('dialog').evaluate(element=>element.scrollWidth<=element.clientWidth),true);assert.equal(await page.getByRole('alert').count(),0);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.click();assert.deepEqual(await page.locator('.apollo-reglyph-row').allTextContents(),previousRows);
- await page.evaluate(()=>window.changeFixtureSelection(false));assert.equal(await apply.isDisabled(),true);assert.equal(await page.getByRole('alert').count(),0);
+ assert.equal(await apply.isDisabled(),false);assert.equal(await page.getByRole('alert').count(),0);
  await page.setViewportSize({width:800,height:860});
- await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByRole('heading',{name:/Готовы к замене/}).waitFor();
  await page.getByRole('button',{name:'Заменить · 2',exact:true}).click();
  await page.getByRole('heading',{name:'Точно заменяем?',exact:true}).waitFor();assert.equal(f.swaps.length,0);
  await page.getByRole('dialog').last().getByRole('button',{name:'Заменить · 2',exact:true}).click();
@@ -97,8 +102,8 @@ function fixture(post){
  await page.getByRole('button',{name:'Назад к замене',exact:true}).click();
  const row=page.locator('.apollo-reglyph-row').first();await row.getByRole('button',{name:'Выбрать',exact:true}).click();
  await page.getByRole('searchbox').fill('дата');await page.locator('.apollo-reglyph-option>button').getByText('Календарь',{exact:true}).click();assert.equal(await page.getByRole('dialog').count(),1);
- await page.getByRole('button',{name:'Заменить · 1',exact:true}).click();await page.getByRole('heading',{name:'Иконки обновлены',exact:true}).waitFor();assert.equal(f.swaps.length,3);
- await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();
+ await page.getByRole('button',{name:'Заменить · 1',exact:true}).click();await page.getByRole('heading',{name:'Иконки обновлены',exact:true}).waitFor();assert.equal(f.swaps.length,3);assert.ok(f.swaps.every(([id])=>id!=='other-icon'),'other selected frame is never changed');assert.equal(sent.filter(m=>m.operation==='scan').length,1,'all replacements use the original scan');
+ await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();assert.equal(await page.locator('.apollo-reglyph-row').count(),1);await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();
  await chooseScenario('Замена в сервисах');
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();
  await page.getByRole('button',{name:'iOS',exact:true}).click();await page.getByRole('button',{name:'Android',exact:true}).click();
@@ -110,6 +115,6 @@ function fixture(post){
  const box=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(box.y+box.height<=780);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.focus();assert.equal(await card.evaluate(element=>document.activeElement===element),true);
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN'},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, read-only scan, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
+ fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN'},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, pinned original scope across selection changes, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

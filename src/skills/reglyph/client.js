@@ -15,7 +15,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
   const listeners = new Set(),queue = [],previewPending = new Set(),previewAttempts = new Map(),priorityPreviews = new Set(),retryTimers = new Map();
   const identity = Date.now().toString(36)+'-'+(++clientSequence);
   let sequence=0,revision=0,active=null,opened=false,initialized=false;
-  let state={status:'idle',context:{channelId:'b2b',pickerLabel:'Desktop'},supported:false,available:true,validSelection:false,scenario:'default',planStale:false,catalog:null,rows:[],observedRows:[],images:new Map(),previewErrors:new Map(),error:'',confirmation:null,progress:null,result:null,largePreview:null};
+  let state={status:'idle',context:{channelId:'b2b',pickerLabel:'Desktop'},supported:false,available:true,validSelection:false,scenario:'default',planStale:false,scopeName:'',catalog:null,rows:[],observedRows:[],images:new Map(),previewErrors:new Map(),error:'',confirmation:null,progress:null,result:null,largePreview:null};
   function emit(patch) {state=Object.assign({},state,patch);for(const fn of listeners)fn();onChange();}
   const foreground = () => Boolean(active && !active.background) || queue.some(job=>!job.background);
   function request(operation,payload={},background=false) {
@@ -50,7 +50,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
   function receive(event) {
     if(event.type==='catalog') {
       initialized=true;previewPending.clear();previewAttempts.clear();
-      emit({planStale:false,catalog:event.catalog,scenario:event.catalog.scenarioId || state.scenario,rows:[],observedRows:[],status:'idle',result:null,error:'',images:new Map(),previewErrors:new Map(),confirmation:null});
+      emit({planStale:false,scopeName:'',catalog:event.catalog,scenario:event.catalog.scenarioId || state.scenario,rows:[],observedRows:[],status:'idle',result:null,error:'',images:new Map(),previewErrors:new Map(),confirmation:null});
       for(const icon of representatives())preview(icon.key);
     } else if(event.type==='preview-cache') {
       const images=new Map(state.images);for(const item of event.images)images.set(item.key,item);emit({images});
@@ -62,7 +62,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
     else if(event.type==='scan-confirmation')emit({status:'idle',confirmation:event});
     else if(event.type==='scan') {
       const rows=event.rows.map(row=>Object.assign({},row,{reviewGroup:reviewGroup(row)}));
-      emit({status:'preview',planStale:false,rows,observedRows:event.observedRows || [],error:event.unreadable?`Не удалось прочитать вхождений: ${event.unreadable}.`:''});
+      emit({status:'preview',planStale:false,scopeName:event.scopeName || '',rows,observedRows:event.observedRows || [],error:event.unreadable?`Не удалось прочитать вхождений: ${event.unreadable}.`:''});
       for(const row of rows)preview(row.newKey,true);
     } else if(event.type==='stale') {
       if(['preview','scanning','replacing','done'].includes(state.status) || state.confirmation)emit({planStale:true,confirmation:null});
@@ -96,13 +96,13 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
   function setContext(context) {
     if(!p.contextValid(context) || (revision>0 && p.contextKey(context)===p.contextKey(state.context)))return;
     revision++;initialized=false;discardQueue();
-    emit({context,supported:p.supported(context),status:'idle',planStale:false,catalog:null,rows:[],observedRows:[],images:new Map(),previewErrors:new Map(),error:'',confirmation:null,result:null});
+    emit({context,supported:p.supported(context),status:'idle',planStale:false,scopeName:'',catalog:null,rows:[],observedRows:[],images:new Map(),previewErrors:new Map(),error:'',confirmation:null,result:null});
     send({type:'reglyph-context',schemaVersion:p.SCHEMA,revision,context});
     if(opened && state.supported)void request('ready');
   }
   function start(confirmation) {
     if(!state.supported || isBusy() || foreground())return;
-    emit({status:'scanning',planStale:false,error:'',result:null,confirmation:null,progress:null});
+    emit({status:'scanning',planStale:false,scopeName:'',error:'',result:null,confirmation:null,progress:null});
     const payload=confirmation?{scenarioId:confirmation.scenario,confirmationToken:confirmation.token}:{scenarioId:state.scenario};
     void request('scan',payload);
   }
@@ -112,7 +112,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
     selection(message){emit({validSelection:message.valid});},
     start,confirmScenario(scenario){const confirmation=state.confirmation;if(confirmation)start({scenario,token:confirmation.token});},
     dismissConfirmation(){if(state.confirmation)emit({confirmation:null,status:'idle'});},
-    scenario(id){if(!['default','services'].includes(id) || id===state.scenario || foreground() || isBusy())return;discardQueue();emit({scenario:id,status:'idle',planStale:false,error:'',rows:[],observedRows:[],confirmation:null,result:null});void request('scenario',{id});},
+    scenario(id){if(!['default','services'].includes(id) || id===state.scenario || foreground() || isBusy())return;discardQueue();emit({scenario:id,status:'idle',planStale:false,scopeName:'',error:'',rows:[],observedRows:[],confirmation:null,result:null});void request('scenario',{id});},
     choose(rowId,newKey){if(state.status!=='preview' || foreground() || !state.catalog?.newIcons.some(icon=>icon.key===newKey))return;emit({rows:state.rows.map(row=>rowIdentity(row)===rowId?Object.assign({},row,{newKey}):row)});preview(newKey,true);},
     skip(rowId){if(state.status==='preview' && !foreground())emit({rows:state.rows.map(row=>rowIdentity(row)===rowId?Object.assign({},row,{newKey:''}):row)});},
     focus(id){if(!state.planStale)void request('go-to',{id});},preview,
@@ -122,7 +122,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
       emit({largePreview:null});void request('icon-preview',Object.assign({token},descriptor.key?{key:descriptor.key}:{id:descriptor.id}),true);
     },
     replace(){if(state.status!=='preview' || state.planStale || foreground() || isBusy())return;emit({status:'replacing',error:''});void request('replace',{choices:state.rows.map(row=>({rowId:rowIdentity(row),oldKey:row.oldKey,newKey:row.newKey}))});},
-    back(){emit({status:'preview'});},reset(){if(foreground())return;emit({status:'idle',planStale:false,rows:[],observedRows:[],result:null,error:'',confirmation:null});void request('reset');},
+    back(){emit({status:'preview'});},reset(){if(foreground())return;emit({status:'idle',planStale:false,scopeName:'',rows:[],observedRows:[],result:null,error:'',confirmation:null});void request('reset');},
     refreshPreviews(){discardQueue();void request('clear-preview-cache');},representatives
   };
 }

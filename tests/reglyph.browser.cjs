@@ -3,8 +3,10 @@ const assert=require('node:assert/strict'),path=require('node:path'),fs=require(
 const {pathToFileURL}=require('node:url');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const {createReglyphBridge}=require('../src/skills/reglyph/native');
+const {createTokenJournalBridge,PREFIX}=require('../src/token-journal-native');
 function fixture(post){
- const swaps=[],storage=new Map(),nodes=new Map();
+ const swaps=[],storage=new Map(),nodes=new Map();let quota=false;
+ const statsStorage={keysAsync:async()=>Array.from(storage.keys()),getAsync:async key=>storage.get(key),setAsync:async(key,value)=>{if(quota&&key.startsWith(PREFIX))throw Error('quota');storage.set(key,value);},deleteAsync:async key=>{storage.delete(key);}};
  const page={id:'page',type:'PAGE',selection:[],findAllWithCriteria:()=>[]};
  // Owned fixture PNG, no library assets or user data.
  const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAALUlEQVR42mNgGAWjYBSMgqkA4v///w8jYBSMglEwCkbBKBgFo2AUjIJRMApGwShAAABp0wX9vRJ7xQAAAABJRU5ErkJggg==','base64');
@@ -20,12 +22,18 @@ function fixture(post){
  const api={currentPage:page,clientStorage:{getAsync:async k=>storage.get(k),setAsync:async(k,v)=>storage.set(k,v)},importComponentByKeyAsync:async key=>target(key),getNodeByIdAsync:async id=>nodes.get(id),base64Encode:bytes=>Buffer.from(bytes).toString('base64'),commitUndo(){},viewport:{scrollAndZoomIntoView(){}}};
  const catalog={version:1,scenarioId:'default',oldIcons:[1,2,3].map(n=>({key:'old'+n,name:'Старая иконка '+n})),newIcons:[{key:'new1',name:'Alfa',baseName:'Альфа',searchDescription:'Альфа баллы',familyId:'a',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}},{key:'new2',name:'Calendar',baseName:'Календарь',searchDescription:'Дата поездки',familyId:'b',library:'Glyph 26',width:24,height:24,properties:{Style:'Line',Color:'False'}}],mappings:[{oldKey:'old1',newKey:'new1'},{oldKey:'old2',newKey:'new2'}]};
  const bridge=createReglyphBridge({api,post,catalogs:{default:catalog,services:Object.assign({},catalog,{scenarioId:'services'})},detection:{containers:[],iconViewSets:[]}});
- return{bridge,swaps,selection(other){page.selection=other?[otherFrame]:[frame];bridge.selectionChanged();}};
+ const statistics=createTokenJournalBridge({storage:statsStorage,post});
+ return{bridge:{accept:message=>statistics.accept(message)||bridge.accept(message)},swaps,statsPending:()=>Array.from(storage.keys()).filter(key=>key.startsWith(PREFIX)),quota:value=>{quota=value;},poison:value=>{if(value)storage.set(PREFIX+'poison',{private:'NEVER_EXPORT_THIS_VALUE'});else storage.delete(PREFIX+'poison');},selection(other){page.selection=other?[otherFrame]:[frame];bridge.selectionChanged();}};
 }
 (async()=>{
  const output=process.env.DESIGN_CHECK_QA_ROOT;if(!output)throw Error('Set DESIGN_CHECK_QA_ROOT to a private output directory.');fs.mkdirSync(output,{recursive:true});
  const browser=await chromium.launch({executablePath:process.env.CHROME_PATH,headless:true});
  try{
+ let deliveryMode='online',journal=null,postLocal=null;
+ if(process.env.APOLLO_STATISTICS_BROWSER_CASES){
+  if(!process.env.APOLLO_PROXY_SOURCE_ROOT)throw Error('Set APOLLO_PROXY_SOURCE_ROOT to the accepted Proxy source.');
+  const api=require(path.join(process.env.APOLLO_PROXY_SOURCE_ROOT,'src/token-journal'));journal=api.createTokenJournal(path.join(output,'proxy-journal'));api.mountJournalRoutes({get(){},post:(name,fn)=>{postLocal=fn;}},journal);
+ }
  const page=await browser.newPage({viewport:{width:800,height:860}}),errors=[],sent=[];page.on('pageerror',error=>errors.push(error.message));
  let delivery=Promise.resolve();const f=fixture(message=>{delivery=delivery.then(()=>page.evaluate(message=>window.emitPlugin(message),message));});
  await page.exposeFunction('changeFixtureSelection',other=>f.selection(other));
@@ -35,7 +43,14 @@ function fixture(post){
   if(message.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:message.schemaVersion,requestId:message.requestId,operation:message.operation,result:null};return null;
  });
  await page.addInitScript(()=>{window.emitPlugin=data=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:data}}));parent.postMessage=value=>{void window.nativeRequest(value.pluginMessage).then(reply=>{if(reply)window.emitPlugin(reply);});};});
- await page.route(/^https?:/,route=>route.abort());
+ await page.route(/^https?:/,async route=>{
+  if(!route.request().url().endsWith('/usage/local'))return route.abort();
+  if(deliveryMode==='offline')return route.abort();
+  const body=route.request().postDataJSON();let code=200,value={success:true,id:body.id,status:body.status};
+  if(postLocal)postLocal({body},{status:status=>{code=status;return{json:reply=>{value=reply;}};},json:reply=>{value=reply;}});
+  if(deliveryMode==='wrong-receipt')value={success:true,id:'wrong',status:body.status};
+  return route.fulfill({status:code,contentType:'application/json',body:JSON.stringify(value)});
+ });
  await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);await page.evaluate(()=>document.fonts.ready);
  await page.getByRole('button',{name:'Навыки',exact:true}).click();
  const card=page.getByRole('button',{name:'Обновить иконки',exact:true});await card.waitFor();
@@ -103,6 +118,29 @@ function fixture(post){
  const row=page.locator('.apollo-reglyph-row').first();await row.getByRole('button',{name:'Выбрать',exact:true}).click();
  await page.getByRole('searchbox').fill('дата');await page.locator('.apollo-reglyph-option>button').getByText('Календарь',{exact:true}).click();assert.equal(await page.getByRole('dialog').count(),1);
  await page.getByRole('button',{name:'Заменить · 1',exact:true}).click();await page.getByRole('heading',{name:'Иконки обновлены',exact:true}).waitFor();assert.equal(f.swaps.length,3);assert.ok(f.swaps.every(([id])=>id!=='other-icon'),'other selected frame is never changed');assert.equal(sent.filter(m=>m.operation==='scan').length,1,'all replacements use the original scan');
+ if(process.env.APOLLO_STATISTICS_BROWSER_CASES){
+  const beforeMutations=f.swaps.length,beforeRequests=sent.filter(m=>m.type==='reglyph-request'&&['scan','replace'].includes(m.operation)).length;
+  deliveryMode='offline';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();
+  const retry=page.getByRole('button',{name:'Повторить отправку',exact:true});await retry.waitFor();
+  assert.equal(await page.locator('.apollo-statistics-notice[role="status"]:visible').count(),1,'one active announcement inside the top modal');
+  assert.equal(await retry.evaluate(button=>!!button.closest('dialog[open]')),true);assert.equal(f.swaps.length,beforeMutations);
+  await page.screenshot({animations:'disabled',path:path.join(output,'statistics-offline-800.png')});
+  await page.setViewportSize({width:440,height:780});await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  assert.equal(await page.locator('dialog[open]').evaluate(node=>node.scrollWidth<=node.clientWidth),true);await page.screenshot({animations:'disabled',path:path.join(output,'statistics-offline-440.png')});
+  await retry.click();assert.equal(sent.filter(m=>m.type==='reglyph-request'&&['scan','replace'].includes(m.operation)).length,beforeRequests+1,'retry is only metadata delivery');
+  deliveryMode='online';await page.evaluate(()=>window.dispatchEvent(new Event('online')));await retry.waitFor({state:'hidden'});await page.waitForFunction(()=>!!document.activeElement?.closest('dialog[open]'));
+  assert.equal(f.statsPending().length,0);assert.equal(f.swaps.length,beforeMutations);
+  deliveryMode='wrong-receipt';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await retry.waitFor();assert.ok(f.statsPending().length,'mismatched receipt retains outbox');
+  const count=journal.read().records.length;deliveryMode='online';await retry.click();await retry.waitFor({state:'hidden'});assert.equal(journal.read().records.length,count,'receipt retry does not duplicate journal rows');
+  f.poison(true);await page.evaluate(()=>window.dispatchEvent(new Event('online')));await retry.waitFor();
+  const downloaded=page.waitForEvent('download');await page.getByRole('button',{name:'Скачать сведения',exact:true}).click();const download=await downloaded;await download.saveAs(path.join(output,'statistics-pending.json'));
+  const metadata=fs.readFileSync(path.join(output,'statistics-pending.json'),'utf8');assert.ok(metadata.includes('poison'));assert.ok(!metadata.includes('NEVER_EXPORT_THIS_VALUE'));
+  f.poison(false);await retry.click();await retry.waitFor({state:'hidden'});
+  f.quota(true);await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();await retry.waitFor();assert.equal(await page.locator('.apollo-reglyph-row').count(),1,'quota cannot replace the skill result');assert.equal(f.swaps.length,beforeMutations);
+  await page.screenshot({animations:'disabled',path:path.join(output,'statistics-quota-440.png')});f.quota(false);await retry.click();await retry.waitFor({state:'hidden'});assert.equal(f.statsPending().length,0);
+  assert.ok(journal.read().records.every(row=>row.totalTokens===0&&row.calls===0));assert.ok(journal.read().records.some(row=>row.operation.includes('Обновить иконки')));
+  await page.setViewportSize({width:800,height:860});
+ }
  await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();assert.equal(await page.locator('.apollo-reglyph-row').count(),1);await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.waitFor();
  await chooseScenario('Замена в сервисах');
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();
@@ -115,6 +153,6 @@ function fixture(post){
  const box=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(box.y+box.height<=780);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.focus();assert.equal(await card.evaluate(element=>document.activeElement===element),true);
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN'},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, pinned original scope across selection changes, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
+ fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN',statistics:journal?{records:journal.read().records.map(({operation,status,totalTokens,calls})=>({operation,status,totalTokens,calls})),faults:['offline/retry','wrong-receipt/idempotence','corrupt/export','quota/retry'],pending:f.statsPending().length}:null},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, pinned original scope across selection changes, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

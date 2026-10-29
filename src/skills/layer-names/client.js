@@ -2,9 +2,10 @@ const p = require('./run-protocol')(require('./protocol'));
 const {createOpaqueId} = require('../../design-check/opaque-id');
 const {readDiagnostics} = require('./diagnostics');
 const b = require('./batch-protocol');
-function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),endpoint='http://localhost:3001/skills/layer-names',isBusy=()=>false,onChange=()=>{}}) {
+const {activity}=require('../../token-journal-protocol');
+function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),endpoint='http://localhost:3001/skills/layer-names',isBusy=()=>false,onChange=()=>{},onOperation=()=>null}) {
   const listeners=new Set(),pending=new Map(),identity=createOpaqueId();
-  let sequence=0,revision=0,abort=null,activeRun=null,selectionKey=null,batchAttempt=null;
+  let sequence=0,revision=0,abort=null,activeRun=null,selectionKey=null,batchAttempt=null,analysisActivity=null;
   const batchByNode=new Map();
   let state={status:'idle',snapshot:null,plan:null,result:null,run:null,batch:null,batchIndex:0,batchChecked:0,diagnostics:null,diagnosticsAt:0,startedAt:0,selected:[],error:'',validSelection:false,available:true};
   const busy=()=>['reading','planning','reading-context','registering','applying','undoing'].includes(state.status);
@@ -45,7 +46,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
     const timer=setTimeout(cancel,30000);signal?.addEventListener('abort',cancel,{once:true});if(signal?.aborted)cancel();
     try{
       const response=await request(endpoint+path,{method:body===undefined?'GET':'POST',headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body),signal:controller.signal});
-      const value=await response.json();if(!response.ok || value.success!==true)throw Error(errorMessage(value.code,response.status));return value;
+      const value=await response.json();if(!response.ok || value.success!==true)throw Object.assign(Error(errorMessage(value.code,response.status)),{code:value.code});return value;
     }finally{clearTimeout(timer);signal?.removeEventListener('abort',cancel);}
   }
   function stopRemote(ticket){return ticket ? api('/runs/'+ticket.runId+'/cancel',{requestId:ticket.requestId}).catch(()=>null) : Promise.resolve(null);}
@@ -79,6 +80,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
         if(!p.contextValid(part,snapshot,ids))throw Error('Контекст слоёв несовместим. Повторите анализ.');
         context.nodes.push(...part.nodes);
       }
+      analysisActivity?.agent();
       let reply=await api('/runs',{schemaVersion:p.RUN_SCHEMA,wire:{version:p.WIRE_VERSION,sha256:p.WIRE_SHA256},requestId,snapshot,context,checkSession},controller.signal),run=reply.run;
       if(!p.runValid(run,snapshot,requestId))throw Error('Ответ агента несовместим. Обновите ApolloProxyControl и повторите анализ.');
       ticket={runId:run.runId,requestId};
@@ -88,7 +90,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
         if(!p.runValid(run,snapshot,requestId,ticket.runId))throw Error('Ответ запуска несовместим. Повторите анализ.');
         if(revision!==revisionId)throw cancelled();
         emit({status:run.status==='awaiting-context'?'reading-context':'planning',run,diagnostics:readDiagnostics(reply.diagnostics,run),diagnosticsAt:Date.now()});
-        if(run.status==='failed' || run.status==='cancelled')throw Error(errorMessage(run.error.code));
+        if(run.status==='failed' || run.status==='cancelled')throw Object.assign(Error(errorMessage(run.error.code)),{code:run.error.code,cancelled:run.status==='cancelled'});
         if(run.status==='completed')break;
         if(run.status==='awaiting-context'){
           const context=await read(run.pending.nodeIds);if(revision!==revisionId)throw cancelled();
@@ -141,6 +143,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
   async function start(options={}){
     if(busy() || isBusy())return;
     if(state.pendingMutation){await recoverMutation();return;}
+    const tracked=activity(onOperation,'layer-names-run');analysisActivity=tracked;let outcome='completed';
     const resume=!options.fresh && state.status==='error' && !state.result && state.batch;
     const revisionId=++revision,controller=new AbortController();abort=controller;
     if(!resume){batchByNode.clear();emit({status:'reading',snapshot:null,batch:null,batchSkill:null,batchIndex:0,batchChecked:0,plan:null,result:null,undoBlocked:false,run:null,diagnostics:null,diagnosticsAt:0,startedAt:Date.now(),selected:[],error:''});}
@@ -162,9 +165,10 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
       }
       await runBatches(revisionId,controller);
     }catch(error){
+      outcome=error.cancelled || error.code==='LAYER_NAMES_CANCELLED'?'cancelled':'failed';
       if(revision===revisionId)emit({status:'error',error:error.name==='AbortError'?'ApolloProxyControl не ответил вовремя. Проверьте состояние Proxy и повторите анализ.'
         : ['TypeError','SyntaxError'].includes(error.name)?'Не удалось связаться с ApolloProxyControl или прочитать его ответ. Проверьте подключение и версию Proxy, затем повторите анализ.':error.message});
-    }finally{if(revision===revisionId){abort=null;activeRun=null;}}
+    }finally{tracked?.finish(revision!==revisionId?'cancelled':outcome);if(analysisActivity===tracked)analysisActivity=null;if(revision===revisionId){abort=null;activeRun=null;}}
   }
   async function verifyBatch(result,operationId){
     while(result?.status==='verifying' && result.operationId===operationId){if(result.result)emit({result:result.result});result=await rpc('batch-verify',{sessionId:state.batch.sessionId,operationId});}
@@ -191,18 +195,21 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
   }
   async function apply(){
     if(state.status!=='preview' || state.pendingMutation || !state.selected.length || isBusy())return;
+    const tracked=activity(onOperation,'layer-names-apply');let outcome='completed';
     emit({status:'applying',error:'',undoBlocked:false});
     try{
       const result=state.batch?await mutateBatch('apply'):await rpc('apply',{snapshotId:state.snapshot.snapshotId,nodeIds:state.selected});
       if(!result || !Array.isArray(result.changes) || typeof result.verified!=='boolean')throw Error('Исход записи неизвестен. Проверьте слои и запустите новый анализ.');
+      if(!result.verified)outcome='failed';
       emit({status:'done',result});
-    }catch(error){emit({status:state.result?'done':'error',error:error.message});}
+    }catch(error){outcome='failed';emit({status:state.result?'done':'error',error:error.message});}finally{tracked?.finish(outcome);}
   }
   async function undo(){
     if(!['done','undone'].includes(state.status) || state.pendingMutation || state.undoBlocked || !state.result?.verified || !(state.result.undoAvailable || state.status==='done' && state.result.changes.length) || isBusy())return;
+    const tracked=activity(onOperation,'layer-names-undo');let outcome='completed';
     const previousStatus=state.status;
     emit({status:'undoing',error:''});
-    try{const result=state.batch?await mutateBatch('undo'):await rpc('undo',{});emit({status:'undone',result});}catch(error){emit({status:state.result?previousStatus:'error',undoBlocked:true,error:error.message});}
+    try{const result=state.batch?await mutateBatch('undo'):await rpc('undo',{});if(!result?.verified)outcome='failed';emit({status:'undone',result});}catch(error){outcome='failed';emit({status:state.result?previousStatus:'error',undoBlocked:true,error:error.message});}finally{tracked?.finish(outcome);}
   }
   return {getState:()=>state,subscribe(listener){listeners.add(listener);return()=>listeners.delete(listener);},accept,busy,start,apply,undo,
     selection(message){

@@ -92,8 +92,8 @@ test('background preview yields to another Apollo operation before sending the n
   assert.equal(sent.at(-1),preview);assert.equal(client.getState().available,false);
   otherBusy=false;client.refresh();assert.equal(sent.at(-1).operation,'preview');assert.equal(sent.at(-1).payload.key,'b');
 });
-function historyClient(withResult=true) {
-  const sent=[],handled=new Set();const client=createReglyphClient({send:message=>sent.push(message)});
+function historyClient(withResult=true,onOperation=()=>null) {
+  const sent=[],handled=new Set();const client=createReglyphClient({send:message=>sent.push(message),onOperation});
   const feed=event=>client.accept({type:'reglyph-event',schemaVersion:p.SCHEMA,revision:sent.find(message=>message.type==='reglyph-context').revision,event});
   function settle(){for(let i=0;i<sent.length;i++){const message=sent[i];if(message.type!=='reglyph-request'||handled.has(message.requestId))continue;handled.add(message.requestId);if(message.operation==='preview')feed({type:'preview',key:message.payload.key,image:'cached-'+message.payload.key});client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:message.revision,requestId:message.requestId});}}
   client.setContext({channelId:'b2b',pickerLabel:'iOS'});client.open();
@@ -192,4 +192,13 @@ test('a pending navigation refused after selection change cannot replace the his
   assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().error,'');
   f.client.accept({type:'reglyph-result',schemaVersion:p.SCHEMA,revision:request.revision,requestId:request.requestId,error:'Selection changed'});
   assert.equal(f.client.getState().status,'preview');assert.equal(f.client.getState().error,'');
+});
+
+test('ReGlyph statistics records scan and actual replacement; focus/previews do not add operations',()=>{
+ const events=[],f=historyClient(false,kind=>({finish:status=>events.push([kind,status])}));
+ f.client.start();f.feed({type:'scan',rows:f.rows,scopeName:'Original'});f.settle();
+ assert.deepEqual(events,[['reglyph-scan','completed']]);
+ f.client.focus('icon');f.settle();f.client.largePreview({id:'icon'},'preview');f.settle();assert.equal(events.length,1);
+ f.client.replace();f.feed({type:'done',remainingRows:f.rows,replaced:0,skipped:0,failed:1,errors:['source changed']});f.settle();
+ assert.deepEqual(events,[['reglyph-scan','completed'],['reglyph-replace','failed']]);
 });

@@ -80,13 +80,14 @@ test('capture schedules over-budget areas without claiming a complete scan',()=>
   const manifest=f.rpc('capture').result;assert.equal(manifest.schemaVersion,'apollo.layer-names-batches.v1');assert.equal(manifest.status,'capturing');assert.equal(manifest.batchCount,0);
 });
 test('UI client completes native capture → agent plan → frozen preview → selected apply; optional remains unselected',async()=>{
-  const f=fixture();let client;
+  const f=fixture(),traces=[];let client;
   const emit=message=>queueMicrotask(()=>client.accept(message));
   const bridge=createLayerNamesBridge({api:f.api,hash,post:emit});
-  client=createLayerNamesClient({send:m=>bridge.accept(m),request:async(url,options)=>{const body=JSON.parse(options.body);return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm'),f.change(f.manual,'CardTitle','optional')]})};}});
+  client=createLayerNamesClient({send:m=>bridge.accept(m),onOperation:kind=>({agent:()=>traces.push([kind,'agent']),finish:status=>traces.push([kind,status])}),request:async(url,options)=>{const body=JSON.parse(options.body);return{ok:true,json:async()=>completed(body,{changes:[f.change(f.form,'DeliveryForm'),f.change(f.manual,'CardTitle','optional')]})};}});
   await client.start();assert.equal(client.getState().status,'preview');assert.deepEqual(client.getState().selected,[f.form.id]);
   await client.apply();assert.equal(client.getState().status,'done');assert.equal(f.form.name,'DeliveryForm');assert.equal(f.manual.name,'_title');
   await client.undo();assert.equal(client.getState().status,'undone');assert.equal(f.form.name,'Frame 1');
+  assert.deepEqual(traces,[['layer-names-run','agent'],['layer-names-run','completed'],['layer-names-apply','completed'],['layer-names-undo','completed']]);
 });
 test('cancelled analysis ignores a late model reply and cannot register or apply it',async()=>{
   const f=fixture();let client,release,requested=false;const operations=[];
@@ -143,4 +144,9 @@ for (const scenario of [
   clock.advance(scenario.timeout?930000:scenario.delay);await work;assert.equal(f.form.name,'Frame 1');
   if(!scenario.message){assert.equal(client.getState().status,'preview');assert.deepEqual(operations,['capture','read','register']);}
   else{assert.equal(client.getState().status,'error');assert.match(client.getState().error,scenario.message);assert.doesNotMatch(client.getState().error,/меньш.*област/);assert.deepEqual(operations,['capture','read']);}
+});
+
+test('failed capture leaves a failed skill trace before any agent request',async()=>{
+ const traces=[];let client;client=createLayerNamesClient({send:m=>queueMicrotask(()=>client.accept({type:'layer-names-result',schemaVersion:p.SCHEMA,requestId:m.requestId,operation:m.operation,error:'No selection'})),request:async()=>{assert.fail('agent must not run');},onOperation:kind=>({agent:()=>assert.fail('capture failed before model'),finish:status=>traces.push([kind,status])})});
+ await client.start();assert.equal(client.getState().status,'error');assert.deepEqual(traces,[['layer-names-run','failed']]);
 });

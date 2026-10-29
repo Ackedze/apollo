@@ -1,5 +1,6 @@
 'use strict';
 const p = require('./protocol');
+const {activity}=require('../../token-journal-protocol');
 let clientSequence = 0;
 function pickerRepresentatives(icons) {
   const families = new Map();
@@ -11,7 +12,7 @@ function pickerRepresentatives(icons) {
 const searchText = value => String(value || '').normalize('NFC').toLocaleLowerCase('ru').replace(/ё/g,'е').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const rowIdentity = row => row.rowId || row.oldKey;
 const reviewGroup = row => (row.outsideCatalog && !row.verifiedCurrency) || row.category === 'unknown' ? 'unknown' : row.category === 'unused' ? 'unused' : new Set((row.candidates || []).map(c=>c.newKey)).size>1 ? 'ambiguous' : row.newKey ? 'ready' : 'unresolved';
-function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
+function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOperation=()=>null}) {
   const listeners = new Set(),queue = [],previewPending = new Set(),previewAttempts = new Map(),priorityPreviews = new Set(),retryTimers = new Map();
   const identity = Date.now().toString(36)+'-'+(++clientSequence);
   let sequence=0,revision=0,active=null,opened=false,initialized=false;
@@ -30,7 +31,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
     if(isBusy()){emit({available:false});return;}
     while(queue.length && queue[0].operation==='preview' && state.images.has(queue[0].payload.key)){const cached=queue.shift();previewPending.delete(cached.payload.key);cached.resolve(null);}
     if(!queue.length)return;
-    active=queue.shift();active.requestId='reglyph-'+identity+'-'+(++sequence);
+    active=queue.shift();if(['scan','replace'].includes(active.operation))active.activity=activity(onOperation,active.operation==='scan'?'reglyph-scan':'reglyph-replace');active.requestId='reglyph-'+identity+'-'+(++sequence);
     send({type:'reglyph-request',schemaVersion:p.SCHEMA,requestId:active.requestId,revision:active.revision,operation:active.operation,payload:active.payload});
     onChange();
   }
@@ -48,6 +49,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
   }
   function representatives(){if(!state.catalog)return[];return state.scenario==='services'?state.catalog.newIcons:pickerRepresentatives(state.catalog.newIcons);}
   function receive(event) {
+    if(active && (event.type==='error' && event.requestType===active.operation || event.type==='done' && event.failed>0))active.failed=true;
     if(event.type==='catalog') {
       initialized=true;previewPending.clear();previewAttempts.clear();
       emit({planStale:false,scopeName:'',catalog:event.catalog,scenario:event.catalog.scenarioId || state.scenario,rows:[],observedRows:[],status:'idle',result:null,error:'',images:new Map(),previewErrors:new Map(),confirmation:null});
@@ -85,7 +87,7 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {}}) {
     if(message.schemaVersion!==p.SCHEMA)return true;
     if(message.type==='reglyph-event'){if(message.revision===revision)receive(message.event);return true;}
     if(!active || message.requestId!==active.requestId)return true;
-    const job=active;active=null;
+    const job=active;active=null;job.activity?.finish(job.revision!==revision?'cancelled':message.error || job.failed?'failed':'completed');
     if(message.error && job.revision===revision){if(job.background){if(job.payload.key){const errors=new Map(state.previewErrors);errors.set(job.payload.key,message.error);emit({previewErrors:errors});}}else if(state.planStale && ['scan','go-to'].includes(job.operation)){
       if(job.operation==='scan')emit({status:state.rows.length || state.observedRows.length?'preview':'idle',error:''});
     }else emit({status:'error',error:message.error});}

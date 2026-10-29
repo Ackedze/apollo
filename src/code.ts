@@ -45,6 +45,7 @@ const {findReferenceCandidate}=require("./v3-binding/reference-candidate");
 const catalogPort=createCatalogPort(post);
 const catalogReaders=createCatalogReaders(catalogPort,figma,engine.stableHash);
 const { DISPLAY_METADATA_BUDGET_MS } = require("./document-audit/budgets");
+const tokenJournalBridge=require("./token-journal-native").createTokenJournalBridge({storage:figma.clientStorage,post});
 const designCheckUiBridge = createUiMainBridge({ storage: figma.clientStorage, resize: (width: number, height: number) => figma.ui.resize(width, height), post });
 const agentDraftStorage=createAgentDraftStorage({storage:figma.clientStorage,post});
 const generationSessionBridge = createSessionBridge({ storage: figma.clientStorage, post });
@@ -463,6 +464,7 @@ documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
+  if (tokenJournalBridge.accept(message)) return;
   if (reglyphBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;

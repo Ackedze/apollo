@@ -28,7 +28,7 @@ let promptPlanning=false,promptRevision=0,promptDirty=false;
 let sessionRevision=0,sessionLoaded=false,sessionTimer=null;
 const staticReviewTransport=createStaticReviewTransport(__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__);
 const BASE = 'http://localhost:3001';
-const tokenJournalClient = require('./token-journal-client').createTokenJournalClient();
+const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});
 const { createFrontendTransport } = require("./generation/frontend/ui");
 const { resolveGenerationContext } = require("./generation/proxy/ui");
 const { SOURCE_SCHEMA, sourceFromFiles, linkSourcePackages } = require("./authoring-source");
@@ -81,8 +81,8 @@ designCheck.subscribe(() => {
   lastCompact = compact; void uiClient.resize(compact).catch(error => status(error.message, true));
 });
 const nativeDiagnosticUi = createNativeDiagnosticUi(send,state=>{ $('native-diagnostic-status').textContent=state.busy?'Читаем выделение…':state.error?'Не удалось получить диагностику. Повторите чтение.':state.report?'Чтение завершено. Неподтверждённые связи указаны в JSON.':'Чтение текущего компонента без изменения макета.'; controls(); });
-layerNamesClient=createLayerNamesClient({send,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
-reglyphClient=createReglyphClient({send,isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+layerNamesClient=createLayerNamesClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+reglyphClient=createReglyphClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
 function dependencyReason(reason) {
   if (['dependency-reference-not-captured', 'dependency-reference-capture-failed', 'dependency-main-component-unavailable', 'dependency-instance-unavailable'].includes(reason)) return 'Не удалось получить независимый библиотечный эталон.';
@@ -278,7 +278,7 @@ window.onmessage = event => {
   while (event.source !== ancestor && ancestor !== ancestor.parent) ancestor = ancestor.parent;
   if (event.source !== ancestor) return;
   const data = event.data?.pluginMessage; if (!data) return;
-  if (uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
+  if (tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
   if (reglyphClient?.accept(data)) return;
   if (sessionClient.accept(data)) return;
@@ -518,7 +518,11 @@ $('native-diagnostic-export').onclick=()=>{
 
 agentUi=mountAgentGeneration({root:$('generation-agent-chat'),settingsRoot:$('generation-agent-settings'),send,onSettingsChange:changedSession,onBusy:()=>{controls();generationChatUi?.focusComposer();},isUnavailable:()=>busy||generationBusy||generationLoading||nativeDiagnosticUi.busy()||promptDirty||!sessionLoaded||designCheck.getState().documentAction.busy});
 generationChatUi=mountGenerationChat({root:$('generation-panel'),controller:designCheck});
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient });
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, statisticsClient:tokenJournalClient });
 void designCheck.restorePreferences();
 void restoreSession();
 window.addEventListener('pagehide',()=>void saveSession());
+
+// Retained metadata is retried independently of audits and model requests.
+void tokenJournalClient.flush();
+window.addEventListener('online',()=>{void tokenJournalClient.flush();});

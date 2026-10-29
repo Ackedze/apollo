@@ -2,7 +2,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),path=requir
 const {createProgressBarClient}=require('../../src/design-check/progressbar-client');
 const {PILOT,RESULT_SCHEMA,FAMILIES,RULE_IDS,validPreparation,validResult}=require('../../src/design-check/progressbar-protocol');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
-function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult}={}){
+function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult,onOperation,runStatus='queued'}={}){
  const requests=[],native=[],sourcePin='a'.repeat(64),knowledge={contentVersion:'synthetic-knowledge'};
  const familyIds=mixed?Object.keys(FAMILIES):['progressbar'];
  const subjects=familyIds.map((family,index)=>({nodeId:'1:'+String(index+2),family,profile:FAMILIES[family].profile,kind:FAMILIES[family].kinds[0],ruleIds:FAMILIES[family].ruleIds,library:family==='progressbar'?'Web :: Corp Presets':'Web _ Core'}));
@@ -17,12 +17,12 @@ function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixe
    sourceRefs:subject.ruleIds.map(ruleId=>({sourceId:'canonical-'+subject.profile,sha256:'b'.repeat(64),ruleId}))};})};
  mutatePrepared?.(prepared);mutateResult?.(result);
  let client;const response=value=>({ok:true,json:async()=>value});
- client=createProgressBarClient({endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',pollMs:1,request:async(url,options)=>{
+ client=createProgressBarClient({onOperation,endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',pollMs:1,request:async(url,options)=>{
   requests.push({url,options});if(options.method==='POST'){
    const body=JSON.parse(options.body);assert.equal(body.report.pilot,PILOT);
    if(body.report.phase==='prepare')return legacyProxy?{ok:false,json:async()=>({success:false,error:'Apollo pattern report facts.occurrences must be an array.'})}:response({success:true,preparation:prepared});
    if(sourceError)return {ok:false,json:async()=>({success:false,code:'PROGRESSBAR_SOURCE_STALE'})};
-   return response({success:true,run:{id:'run_12345678-abcd',status:'queued'}});
+   return response({success:true,run:{id:'run_12345678-abcd',status:runStatus}});
   }
   return response({success:true,run:{id:'run_12345678-abcd',status:'completed',validation:result}});
  },send:message=>{native.push(message);queueMicrotask(()=>client.accept({type:'progressbar-native-result',requestId:message.requestId,operation:message.operation,
@@ -93,4 +93,19 @@ test('mixed UI retains known libraries, per-rule modal details, error and warnin
   cards[3].querySelector('.apollo-finding-info-toggle').click();await tick();assert.match(d.querySelector('dialog').textContent,/icon-button-clear-context/);assert.doesNotMatch(d.querySelector('dialog').textContent,/goal-for-target-progress/);
   d.querySelector('[aria-label="Закрыть сведения проверки"]').click();await tick();cards[1].click();await tick();assert.equal(h.native.at(-1).nodeId,h.result.assessments[1].nodeId);
  }finally{close?.();h.client.close();w.close();}
+});
+
+test('pattern lifecycle traces early preparation failure separately from a model-backed completed run',async()=>{
+ const failed=[],a=harness({legacyProxy:true,onOperation:kind=>({agent:()=>failed.push('agent'),finish:status=>failed.push([kind,status])})});await a.client.start();assert.deepEqual(failed,[['pattern-check','failed']]);a.client.close();
+ const complete=[],b=harness({onOperation:kind=>({agent:()=>complete.push('agent'),finish:status=>complete.push([kind,status])})});await b.client.start();assert.deepEqual(complete,['agent',['pattern-check','completed']]);b.client.close();
+});
+
+test('pattern lifecycle retains remote cancellation and reports its local deadline as failure',async()=>{
+ const cancelled=[],h=harness({runStatus:'cancelled',onOperation:()=>({agent(){},finish:status=>cancelled.push(status)})});
+ assert.equal(await h.client.start(),false);assert.deepEqual(cancelled,['cancelled']);h.client.close();
+ const realSetTimeout=global.setTimeout,failed=[];let expire;
+ global.setTimeout=(fn,ms,...args)=>{if(ms===150000){expire=fn;return realSetTimeout(()=>{},150000);}return realSetTimeout(fn,ms,...args);};
+ const client=createProgressBarClient({endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',request:async()=>{throw Error('unexpected request');},send(){},onOperation:()=>({finish:status=>failed.push(status)})});
+ try{const run=client.start();expire();assert.equal(await run,false);assert.deepEqual(failed,['failed']);}
+ finally{global.setTimeout=realSetTimeout;client.close();}
 });

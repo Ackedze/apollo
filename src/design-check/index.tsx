@@ -1,3 +1,4 @@
+import {StatisticsNotice} from "../StatisticsNotice";
 import { DocumentAuditCards, documentCheckForTab } from "./DocumentAudit";
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -22,7 +23,7 @@ declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { skillsClient?: any; reglyphClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { skillsClient?: any; reglyphClient?: any; statisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 
 /** Existing v4 nodes keep their identities, listeners, report/export and generation controls. */
@@ -116,7 +117,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
   const [progressBarClient] = useState(() => typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
     ? createProgressBarClient({ send: (value: any) => window.parent.postMessage({ pluginMessage: value }, '*'), request: (url: string, options: RequestInit) => fetch(url, options),
-      endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
+      onOperation:(kind:string)=>dataOptions.statisticsClient?.begin(kind),endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
   useEffect(() => {
     if (!progressBarClient) return;
     const receive = (event: MessageEvent) => {
@@ -216,6 +217,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     <div className="design-check-background">
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
+        {dataOptions.statisticsClient && <StatisticsNotice client={dataOptions.statisticsClient}/>}
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">
           <div className={`apollo-contextbar${!groupId ? ' is-overview' : ''}`} hidden={!groupId && !scope}>
             {!groupId ? <span className="apollo-scope" title={scope}>{scope}</span> : <>
@@ -251,7 +253,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
-        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>}</SkillsPanel>}</section>
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient} statisticsClient={dataOptions.statisticsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} statisticsClient={dataOptions.statisticsClient}/>}</SkillsPanel>}</section>
         <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
           <ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}
         </section>

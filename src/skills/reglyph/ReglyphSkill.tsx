@@ -6,6 +6,7 @@ import {PickerButton} from '../../design-check/v3/ui-app/components/PickerButton
 import {OptionList} from '../../design-check/v3/ui-app/components/OptionList';
 import {OptionListCell} from '../../design-check/v3/ui-app/components/OptionListCell';
 import pickerStyles from '../../design-check/v3/ui-app/components/TopSection.module.css';
+import {StatisticsNotice} from '../../StatisticsNotice';
 import './ui.css';
 const icons = require('../layer-names/assets');
 const {rowIdentity, searchText} = require('./client');
@@ -120,7 +121,7 @@ function Picker({row,state,client,onClose,onPreview}:{row:any;state:any;client:a
     <footer className="apollo-skill-footer"><div className="apollo-skills-actions"><Button label="Пропустить" type="secondary" onPress={()=>{client.skip(rowIdentity(row));onClose();}}/></div></footer>
   </Dialog>;
 }
-export function ReglyphSkill({client}:{client:any}) {
+export function ReglyphSkill({client,statisticsClient}:{client:any;statisticsClient?:any}) {
   const state:any=useSyncExternalStore(client.subscribe,client.getState);
   const [open,setOpen]=useState(false),[picker,setPicker]=useState<any>(null),[confirm,setConfirm]=useState(false),[large,setLarge]=useState<any>(null);
   const previewToken=useRef(0);
@@ -148,6 +149,7 @@ export function ReglyphSkill({client}:{client:any}) {
     </button>
     {open && <Dialog title="Обновить иконки" onClose={()=>{setPicker(null);setLarge(null);setConfirm(false);client.dismissConfirmation();setOpen(false);}}>
       <main className={`apollo-skill-content apollo-reglyph-content${state.status==='preview'?' is-preview':''}`} aria-label="Результат навыка «Обновить иконки»" aria-busy={running}>
+        {statisticsClient && <StatisticsNotice client={statisticsClient}/>}
         <p className="apollo-skills-hint apollo-reglyph-context">{state.supported?contextLabel:'АБМ · iOS / Android'} · Без ИИ</p>
         {state.scopeName && <p className="apollo-skills-hint">Проверенная область: {state.scopeName}</p>}
         {!state.supported?<div className="apollo-reglyph-stage"><h3>Выбери iOS или Android</h3><p>Навык работает с правилами АБМ. Для Desktop и MobileWeb правила пока не подключены.</p></div>:

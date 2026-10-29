@@ -238,10 +238,10 @@ function saveReport(value,name) {
   const url=URL.createObjectURL(new Blob([JSON.stringify(value)],{type:'application/json'}));
   const anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-$('export').onclick=()=>{if(audit)saveReport(auditSummary(audit),`apollo-summary-${audit.auditId.slice(0,12)}.json`);};
+$('export').onclick=()=>{if(audit){const native=designCheck.getState().documentAudit;saveReport(Object.assign({},auditSummary(audit),{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,nativeAudit:{status:native.status,requestId:native.requestId,error:native.error,diagnostic:native.diagnostic||null}}),`apollo-summary-${audit.auditId.slice(0,12)}.json`);}};
 $('export-full').onclick=async()=>{
   if(!audit)return;const pinned=audit,button=$('export-full');button.disabled=true;button.textContent='Получаем диагностику…';
-  try{const full=await auditReports.request(pinned.auditId,'full');if(pinned===audit)saveReport(full,`apollo-v4-${full.auditId.slice(0,12)}.json`);}
+  try{const full=await auditReports.request(pinned.auditId,'full');if(pinned===audit)saveReport(Object.assign({},full,{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,nativeAudit:designCheck.getState().documentAudit}),`apollo-v4-${full.auditId.slice(0,12)}.json`);}
   catch(e){if(pinned===audit)status(e.message,true);}
   finally{button.disabled=false;button.textContent='Полная диагностика';}
 };

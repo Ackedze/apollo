@@ -229,7 +229,21 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  }
 
 }
-async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=16}){
+function factFailure(f,actual,reason,hash,stage){
+ const changedFields=[];
+ function compare(before,after,path='',depth=0){
+  if(changedFields.length>=24)return;
+  if(before!==after&&(before===undefined||after===undefined)){changedFields.push((path||'$').slice(0,200));return;}
+  if(hash(before===undefined?null:before)===hash(after===undefined?null:after))return;
+  if(depth<6&&before&&after&&typeof before==='object'&&typeof after==='object'){
+   for(const key of Array.from(new Set(Object.keys(before).concat(Object.keys(after)))).sort()){const next=path?path+'.'+key:key;if(Object.hasOwn(before,key)!==Object.hasOwn(after,key)){if(changedFields.length<24)changedFields.push(next.slice(0,200));}else compare(before[key],after[key],next,depth+1);}
+  }else changedFields.push((path||'$').slice(0,200));
+ }
+ compare(f.value,actual);
+ const resource=['style','variable','collection'].includes(f.kind);
+ return Object.assign(Error('NATIVE_FACTS_CHANGED'),{nativeFailure:{stage,factKind:f.kind,factId:f.id,nodeId:resource?null:f.id,resourceId:resource?f.id:null,reason,changedFields,expectedHash:hash(f.value===undefined?null:f.value),actualHash:hash(actual===undefined?null:actual)}});
+}
+async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=16,stage='native-recheck'}){
  const nodes=new Map();
  const read=fn=>boundedRead(fn,timeoutMs,assertCurrent);
  const node=id=>{if(!nodes.has(id))nodes.set(id,resolveNativeNode(api,id,{read,guard:assertCurrent}));return nodes.get(id);};
@@ -237,7 +251,7 @@ async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=
   if(f.kind==='style'){value=linkedStyleValue(await read(()=>api.getStyleByIdAsync(f.id)));}
   else if(f.kind==='variable'){value=variableValue(await read(()=>api.variables.getVariableByIdAsync(f.id)));}
   else if(f.kind==='collection'){try{value=collectionValue(await read(()=>api.variables.getVariableCollectionByIdAsync(f.id)));}catch(_){value=null;}}
-  else{const n=await node(f.id);if(!n||n.removed)throw Error('NATIVE_FACTS_CHANGED');
+  else{const n=await node(f.id);if(!n||n.removed)throw factFailure(f,null,'node-unavailable',hash,stage);
    if(f.kind==='node')value=nodeValue(n);
    else if(f.kind==='identity')value=mainValue(n);
    else if(f.kind==='pageModes')value=Object.assign({},n.explicitVariableModes||{});
@@ -247,7 +261,7 @@ async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=
    else if(f.kind==='styles')value=styleValue(n);
    else{let m=null;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync());}catch(e){if(e.message==='NATIVE_READ_TIMEOUT')throw e;}value=mainValue(m);}
   }
-  assertCurrent();if(hash(value)!==hash(f.value))throw Error('NATIVE_FACTS_CHANGED');
+  assertCurrent();if(hash(value)!==hash(f.value))throw factFailure(f,value,'value-mismatch',hash,stage);
  });
 }
 module.exports={LIMITS,signature,pageOf,collect,recheck};

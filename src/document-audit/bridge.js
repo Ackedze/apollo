@@ -50,7 +50,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
   const register=(observation,actionsAllowed=false)=>{const result=resultFor(observation);if(!resultValid(result))throw Error('NATIVE_RESPONSE_INVALID');session={runId:m.requestId,context:m.context,facts:observation.facts,targets:observation.targets,result,observation,roots,epoch,expires:now()+60000};if(actionsAllowed)session.actions=buildActionData(observation,m.requestId,m.context,hash);return result;};
   const checkpoint=async observation=>{
    const captured={checks:JSON.parse(JSON.stringify(observation.checks)),facts:observation.facts.slice(),targets:new Map(observation.targets),nodes:new Map(observation.nodes),units:new Map(Array.from(observation.units||[],([id,values])=>[id,new Set(values)])),modeGraph:new Map(observation.modeGraph||[]),resolvedStyles:new Map(observation.resolvedStyles||[])};
-   await recheck(api,captured.facts,{hash,assertCurrent,timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();latest=captured;
+   await recheck(api,captured.facts,{hash,assertCurrent,stage:'checkpoint-recheck',timeoutMs:Math.max(1,Math.min(1200,deadline-now()))});assertCurrent();latest=captured;
    const result=register(latest);post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,result});
   };
   try{
@@ -65,7 +65,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    if(latest&&['NATIVE_TIMEOUT','NATIVE_READ_TIMEOUT'].includes(e.message)){
     for(const c of latest.checks)if(c.status==='running'){c.status='incomplete';c.gaps.push('checker-timeout');}
     const result=register(latest,true);active=null;sequence++;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});
-   }else{active=null;session=null;sequence++;post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:e.message,message:errors[e.message]||'Не удалось прочитать данные макета. Повторите проверку.'});}
+   }else{active=null;session=null;sequence++;const diagnostic=e.nativeFailure?Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([m.requestId,ticket,now(),e.nativeFailure]).slice(0,24),requestId:m.requestId,code:e.message},e.nativeFailure):null;post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:e.message,message:errors[e.message]||'Не удалось прочитать данные макета. Повторите проверку.',diagnostic});}
   }}finally{clearTimeout(timer);}
  }
  async function refreshBindings(runId){

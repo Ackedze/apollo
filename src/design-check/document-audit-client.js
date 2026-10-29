@@ -1,10 +1,10 @@
 const {ACTION_SCHEMA}=require("../document-audit/actions");
-const {SCHEMA,resultValid}=require("../document-audit/protocol");
+const {SCHEMA,resultValid,failureValid}=require("../document-audit/protocol");
 const {REFRESH_CLIENT_TIMEOUT_MS}=require("../document-audit/budgets");
 function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeoutMs=REFRESH_CLIENT_TIMEOUT_MS,isBusy=()=>false,onRecheckStart=()=>{},onRecheckResult=()=>{},onRecheckError=()=>{}}){
  let current=null,context=null,timer=null,focusRequest=null,focusTimer=null,expectedFocus=null,seq=0,actionData=null,actionRequest=null,actionTimer=null,refresh=null,refreshTimer=null,staleFindings=new Set();
  const snapshot=()=>controller.getState().documentAudit.result||null;
- function publish(status,result=snapshot(),error=''){controller.setDocumentAudit({status,requestId:current?.requestId||null,result,error});}
+ function publish(status,result=snapshot(),error='',diagnostic=null){controller.setDocumentAudit({status,requestId:current?.requestId||diagnostic?.requestId||null,result,error,diagnostic});}
  function selection(data){
   const next=typeof data.pageId==='string'?{pageId:data.pageId,selectionSignature:typeof data.id==='string'?data.id:'',platform:controller.getState().settings.pickerLabel}:null;
   // Cursor/selection is only an input to the NEXT run. The observed roots and
@@ -21,7 +21,7 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
   current=null;focusRequest=null;expectedFocus=null;clearTimeout(timer);clearTimeout(focusTimer);
   publish(result?'stale':'idle',result,hadRun?message:'');
  }
- function fail(message){current=null;focusRequest=null;expectedFocus=null;clearTimeout(timer);clearTimeout(focusTimer);publish(snapshot()?'stale':'error',snapshot(),message);}
+ function fail(message,diagnostic=null){current=null;focusRequest=null;expectedFocus=null;clearTimeout(timer);clearTimeout(focusTimer);publish(snapshot()?'stale':'error',snapshot(),message,diagnostic);}
  function start(requestId,settings){
   invalidate('');staleFindings.clear();controller.setDocumentAction?.({busy:false,status:'idle',message:''});if(!context)return false;
   const expected=Object.assign({},context,{platform:settings.pickerLabel});current={requestId:requestId+':native',context:expected,phase:'loading'};publish('loading');
@@ -101,7 +101,7 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
   if(current.phase!=='loading')return true;
   if(m.type==='document-audit-progress'){if(resultValid(m.result)&&m.result.runId===current.requestId&&['pageId','selectionSignature','platform'].every(k=>m.result.context[k]===current.context[k]))publish('loading',snapshot()&&snapshot().runId!==current.requestId?snapshot():m.result);return true;}
   clearTimeout(timer);
-  if(m.type==='document-audit-error'){fail(m.message||'Не удалось прочитать данные макета.');return true;}
+  if(m.type==='document-audit-error'){fail(m.message||'Не удалось прочитать данные макета.',failureValid(m.diagnostic)&&m.diagnostic.requestId===m.requestId?m.diagnostic:null);return true;}
   if(m.type!=='document-audit-result'||!resultValid(m.result)||m.result.runId!==current.requestId||m.result.checks.some(c=>c.status==='running')||['pageId','selectionSignature','platform'].some(key=>m.result.context[key]!==current.context[key])){
    fail('Результат проверки документа несовместим с текущим запуском. Повторите проверку.');return true;
   }

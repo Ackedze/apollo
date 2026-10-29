@@ -17,4 +17,5 @@ function resultValid(r) {
  });
  } catch (_) { return false; }
 }
-module.exports={SCHEMA,platforms,contextValid,requestValid,focusValid,resultValid};
+function failureValid(v){try{return closed(v,['schemaVersion','errorId','requestId','code','stage','factKind','factId','nodeId','resourceId','reason','changedFields','expectedHash','actualHash'])&&v.schemaVersion==='apollo.native-audit-failure.v1'&&/^native:[a-f0-9]{24}$/.test(v.errorId)&&text(v.requestId,150)&&v.code==='NATIVE_FACTS_CHANGED'&&text(v.stage,100)&&['node','main','identity','pageModes','explicitModes','sceneModes','detached','styles','style','variable','collection'].includes(v.factKind)&&text(v.factId,250)&&(v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))&&['node-unavailable','value-mismatch'].includes(v.reason)&&Array.isArray(v.changedFields)&&v.changedFields.length<=24&&v.changedFields.every(s=>text(s,200))&&[v.expectedHash,v.actualHash].every(s=>typeof s==='string'&&/^[a-f0-9]{64}$/.test(s));}catch(_){return false;}}
+module.exports={SCHEMA,platforms,contextValid,requestValid,focusValid,resultValid,failureValid};

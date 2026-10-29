@@ -4,7 +4,7 @@ export const AREA_COMPONENT_LIMIT = 1000;
 export const AREA_IDENTITY_BUDGET_MS = 15000;
 export function selectionSignature(nodes: readonly SceneNode[]) { return nodes.map(node => node.id).sort().join('|'); }
 
-export async function scanArea(selection: readonly SceneNode[], assertCurrent: () => void) {
+export async function scanArea(selection: readonly SceneNode[], assertCurrent: () => void, observe?: (nodes: Map<string, SceneNode>) => void) {
   const selected = new Set(selection.map(node => node.id));
   const roots = selection.filter(node => {
     let parent = node.parent;
@@ -57,6 +57,8 @@ export async function scanArea(selection: readonly SceneNode[], assertCurrent: (
     }
     if ('children' in node) stack.push(...Array.from(node.children).reverse());
   }
+  // Observe the synchronous scene before yielding to library identity reads.
+  observe?.(nodes);
   // Cold library sources can take seconds; queued waves share one deadline.
   const identityDeadline=Date.now()+AREA_IDENTITY_BUDGET_MS;
   await parallel(identityReads,12,(read:()=>Promise<void>)=>read());

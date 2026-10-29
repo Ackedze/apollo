@@ -174,7 +174,7 @@ async function audit(requestId: string, options:any={}) {
     const started = Date.now();
     return () => timings.stages.push(Object.assign({stage,durationMs:Math.max(0,Date.now()-started)},scopeId ? {scopeId} : {}));
   };
-  busy = true;if(!options.quiet){lastAudit = null; focusNodes.clear();}
+  busy = true;if(!options.quiet){areaNotificationProof?.close();areaNotificationProof=null;verifyLastArea=null;lastAudit = null; focusNodes.clear();}
   const current = generation, pageId=figma.currentPage.id, fileMode = localMode;
   activeArea={requestId,pageId,cancelling:false};areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...roots.map(n=>n.id)]);
   const assertCurrent = () => {options.guard?.(); if (generation !== current || figma.currentPage.id!==pageId || roots.some(node => node.removed)) throw new Error('Область или её свойства изменились во время захвата. Повторите проверку. (AUDIT_CONTEXT_CHANGED)'); };
@@ -182,7 +182,10 @@ async function audit(requestId: string, options:any={}) {
   try {
     progress('Собираем ключи компонентов в выделенной области…');
     let endStage = time('scan');
-    const scan = await scanArea(roots, assertCurrent);endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
+    const scan = await scanArea(roots, assertCurrent,options.quiet?undefined:nodes=>{
+      areaObservedIds=new Set(nodes.keys());
+      setAreaNotificationProof(nodes,async()=>assertCurrent(),assertCurrent);
+    });endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
     const components: any[] = [], notChecked: any[] = [], governedComponents: any[] = [], rules: any[] = [], warnings: string[] = [];
     let items = Array.from(localContracts.values()), releaseId: string | undefined = fileMode ? undefined : options.releaseId;
     const identityId = (identity: any) => JSON.stringify([identity.componentKey, identity.componentSetKey]);
@@ -367,7 +370,7 @@ async function audit(requestId: string, options:any={}) {
     endStage();
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
     post(Object.assign({type:'audit-result',requestId},auditDelivery({audit:lastAudit,rules,displayMetadata,focusTargets:focus.sidecar})));
-  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped)post({type:'audit-cancelled',requestId}); }
+  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped)post({type:'audit-cancelled',requestId}); }
 }
 function buildContractFocus(components:any[],captures:any[],pageId:string,auditId:string){return contractFocusTargets({components,captures,pageId,auditId,hash:engine.stableHash,dependencyMap:(entry:any,capture:any)=>{let snapshot=capture.captured.snapshot,contract=capture.contract,dep=entry.dependency;let map:any=Object.fromEntries(snapshot.nodes.map((n:any)=>[n.id,n.id]));for(let depth=0;dep&&depth<8;depth++){const pins=(contract.componentDependencies||[]).filter((p:any)=>p.id===dep.dependencyId&&p.componentId===dep.componentId&&p.compiledHash===dep.compiledHash);if(pins.length!==1||!pins[0].contract)return null;const pin=pins[0],bindings=pin.bindings.filter((b:any)=>b.id===dep.bindingId);if(bindings.length!==1)return null;const resolved=resolveFixedNestedBinding(snapshot,pin,bindings[0],false,contract);if(resolved.status!=='active'||!resolved.nodeId||!resolved.identityValid)return null;const child=validatedDependencyCapture(snapshot,resolved.nodeId,pin.contract);if(!child.snapshot||!child.nodeMap)return null;const composed:any={};for(const [id,parentId] of Object.entries(child.nodeMap))if(map[parentId as string])composed[id]=map[parentId as string];map=composed;snapshot=child.snapshot;contract=pin.contract;dep=dep.nested;}return dep?null:map;}});}
 function setAreaNotificationProof(nodes:Map<string,SceneNode>,verify:any,guard:()=>void){areaNotificationProof?.close();areaNotificationProof=createNotificationProof({nodes:observationNodes(nodes.values()),hash:engine.stableHash,guard,verify:async(g:()=>void)=>{g();await verify(g);g();},onError:()=>invalidateArea()});}

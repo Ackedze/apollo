@@ -16,7 +16,8 @@ import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-
 import { allowedComponentPropertyNames } from "../packages/component-contract-core/src/instance-validation";
 import { nativeSlotCapturePlan } from "../packages/component-contract-core/src/native-slot-capture";
 import { scanArea, selectionSignature, AREA_IDENTITY_BUDGET_MS } from "./area-scan";
-import { collectContractOwnedParts, scopeContractCaptureWarnings } from "./area-ownership";
+import { collectContractOwnedParts } from "./area-ownership";
+import { scopeNativeSlotCaptureWarnings } from "./native-slot-diagnostics";
 import { validatedDependencyCapture, resolveFixedNestedBinding } from "../packages/component-contract-core/src/component-dependencies";
 const runtime = require("./runtime"), engine = require('@apollo/predicate-engine');
 const {auditDelivery,createAuditReportBridge}=require("./audit-report");
@@ -283,7 +284,7 @@ async function audit(requestId: string, options:any={}) {
       endStage();
       endStage = time('index-component', subject.id);
       const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: engine.stableHash(contract) });
-      const diagnostics = scopeContractCaptureWarnings(captured, contract);
+      const diagnostics = scopeNativeSlotCaptureWarnings(captured);
       const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
         warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };
       if (ownerContext) Object.assign(component, { ownerContext: { scopeId: owner.subject.id,

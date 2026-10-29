@@ -6,6 +6,22 @@ const groups = [
 const tabTitles = { changes: 'Кастомы', deprecated: 'Устаревшие', update: 'Пора обновить', detached: 'Детач', local: 'Локальные', customStyles: 'Кастомы', deprecatedStyles: 'Устаревшие', detachedStyles: 'Детач', localStyles: 'Локальные' };
 const checkIds = { local: 'local', current: 'freshness', update: 'freshness', themization: 'theme', detached: 'detached', customStyles: 'customStyles' };
 const final = new Set(['compliant', 'allowed', 'not-applicable', 'current', 'theme-current', 'font-current']);
+function coverageDetails(state, categories) {
+  const titles={local:'Локальные компоненты',freshness:'Версии компонентов',theme:'Темизация страницы',font:'Шрифт страницы',detached:'Происхождение слоёв',customStyles:'Стили и токены'};
+  const details=(state.documentAudit.result?.checks||[]).filter(check=>check.status==='incomplete').map(check=>{
+    const gaps=(check.gaps||[]).filter(gap=>gap!=='v3-catalog-policy-not-connected');
+    const reason=!gaps.length&&check.id==='customStyles'&&(check.gaps||[]).includes('v3-catalog-policy-not-connected')&&!check.findings.some(f=>f.status==='unknown')?'Дополнительные правила и исключения дизайн-системы пока не подключены. Связи со стилями и токенами проверены.'
+      :gaps.some(gap=>gap.includes('timeout'))?'Часть данных не удалось прочитать вовремя.'
+      :gaps.some(gap=>gap.includes('limit'))?'Проверена только часть выбранной области.'
+      :check.id==='font'?'Не удалось подтвердить режим шрифта страницы.'
+      :check.id==='theme'?'Не удалось подтвердить режим темы страницы.'
+      :check.id==='customStyles'?'Связи части слоёв со стилями или токенами недоступны.'
+      :'Источники или свойства части слоёв недоступны.';
+    return{id:check.id,title:titles[check.id]||check.id,reason};
+  });
+  if(categories.some(category=>category.id==='changes'&&category.incomplete))details.push({id:'contracts',title:'Правила компонентов',reason:'Не все данные компонентов удалось проверить по подключённым контрактам.'});
+  return details;
+}
 function baseCheck(result) {
   const checks = result?.checks.filter(check => ['theme', 'font'].includes(check.id)) || [];
   if (!checks.length) return null;
@@ -41,7 +57,7 @@ function buildResultGroups(state, tabs, getItems) {
   const available = categories.some(category => category.connected);
   return { groups: summaries, theme, total: available ? collectUnique(categories) : null,
     stale: state.auditStale || state.documentAudit.status === 'stale',
-    incomplete: categories.some(category => category.connected && category.incomplete) };
+    incomplete: categories.some(category => category.connected && category.incomplete),coverageDetails:coverageDetails(state,categories) };
 }
 /** Presentation only: the mascot uses the same red/yellow meanings as finding cards. */
 /** @returns {'unchecked' | 'clean' | 'warning' | 'violation'} */

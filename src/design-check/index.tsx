@@ -1,4 +1,3 @@
-import {StatisticsNotice} from "../StatisticsNotice";
 import { DocumentAuditCards, documentCheckForTab } from "./DocumentAudit";
 import React, { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -217,7 +216,6 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     <div className="design-check-background">
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
-        {dataOptions.statisticsClient && <StatisticsNotice client={dataOptions.statisticsClient}/>}
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">
           <div className={`apollo-contextbar${!groupId ? ' is-overview' : ''}`} hidden={!groupId && !scope}>
             {!groupId ? <span className="apollo-scope" title={scope}>{scope}</span> : <>
@@ -253,7 +251,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
-        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient} statisticsClient={dataOptions.statisticsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient} statisticsClient={dataOptions.statisticsClient}/>}</SkillsPanel>}</section>
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Навыки">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>}</SkillsPanel>}</section>
         <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
           <ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}
         </section>

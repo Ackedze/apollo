@@ -87,3 +87,10 @@ test('overview retains mascot and actual total in its accessible description aft
   assert.ok(w.document.querySelector('.apollo-mascot.quality-clean'));assert.match(w.document.querySelector('.apollo-mascot').getAttribute('aria-label'),/замечаний: 0/);assert.equal(w.document.querySelector('.apollo-overview-number'),null);assert.equal(w.document.querySelector('.apollo-overview-caption').textContent,'Область А');
  });
 });
+
+test('overview names incomplete checks and explains them without a generic global warning',async()=>{
+ const summary={groups:[],theme:null,total:0,stale:false,incomplete:true,coverageDetails:[{id:'font',title:'Шрифт страницы',reason:'Не удалось подтвердить режим шрифта страницы.'},{id:'customStyles',title:'Стили и токены',reason:'Дополнительные правила пока не подключены.'}]};
+ await harness('overview',{state:{auditProgress:''},summary,busy:false,checkedScope:'Область А',onOpen:()=>{},onBase:()=>{}},async w=>{
+ const details=w.document.querySelector('details.apollo-overview-coverage');assert.ok(details);assert.match(details.querySelector('summary').textContent,/Шрифт страницы, Стили и токены/);assert.equal(details.querySelectorAll('li').length,2);assert.ok(!w.document.body.textContent.includes('Покрытие отдельных проверок неполное'));assert.ok(w.document.querySelector('.quality-warning'));
+ });
+});

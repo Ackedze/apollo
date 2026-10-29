@@ -58,3 +58,9 @@ test('a rejected batch of 32 records cannot starve a later valid record',async t
 test('temporary unsaved memory is bounded and overflow is explicit rather than silent',async t=>{
  const f=fixture({quota:true,client:{memoryLimit:2}});t.after(()=>f.client.close());for(let i=0;i<4;i++)f.client.begin('reglyph-scan').finish('failed');await until(()=>f.client.diagnostics().overflow);assert.ok(f.client.diagnostics().unsaved.length<=2);assert.ok(f.client.diagnostics().lastUnsaved);await until(()=>f.client.getState().message.includes('Часть записей'));
 });
+
+test('statistics retries offline and incompatible Proxy automatically without a user action',async t=>{
+ let compatible=false;const f=fixture({client:{retryMs:10},respond:body=>({ok:compatible,status:compatible?200:400,json:async()=>compatible?{success:true,id:body.id,status:body.status}:{success:false}})});t.after(()=>f.client.close());
+ f.online(false);f.client.begin('check').finish('completed');await until(()=>f.pending().some(x=>x.status==='completed'));f.online(true);await until(()=>f.client.diagnostics().rejected.length>0);compatible=true;
+ await until(()=>f.pending().length===0);assert.equal(f.client.getState().error,false);assert.equal(new Set(f.sent.map(x=>x.id)).size,1);
+});

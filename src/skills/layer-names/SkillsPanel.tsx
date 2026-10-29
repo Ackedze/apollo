@@ -2,7 +2,6 @@ import React, {useEffect, useId, useRef, useState, useSyncExternalStore} from 'r
 import {createPortal} from 'react-dom';
 import {Button} from '../../design-check/v3/ui-app/components/Button';
 import {AuditMascot} from '../../design-check/AuditMascot';
-import {StatisticsNotice} from '../../StatisticsNotice';
 import './ui.css';
 const icons = require('./assets');
 const diagnosticPhases:Record<string,string>={preparing:'Подготавливаем запрос…','waiting-agent':'Ожидаем события от агента…',connecting:'Ожидаем ответа сервиса…',retrying:'Агент повторяет подключение…',receiving:'Получаем ответ агента…','reading-context':'Уточняем содержимое слоёв…',validating:'Проверяем предложения…',completed:'Анализ завершён',failed:'Анализ завершился с ошибкой',cancelled:'Анализ остановлен'};
@@ -37,7 +36,7 @@ function AnalysisProgress({progress}: {progress:string}) {
     <h3>{progress}</h3>
   </div>;
 }
-export function SkillsPanel({client,children,statisticsClient}: {client:any;children?:React.ReactNode;statisticsClient?:any}) {
+export function SkillsPanel({client,children}: {client:any;children?:React.ReactNode}) {
   const state:any = useSyncExternalStore(client.subscribe,client.getState);
   const [detailOpen,setDetailOpen] = useState(false);
   const cardRef = useRef<HTMLButtonElement>(null), dialogRef = useRef<HTMLDialogElement>(null), titleId = useId();
@@ -88,7 +87,6 @@ export function SkillsPanel({client,children,statisticsClient}: {client:any;chil
       </header>
       {running && <p className="design-check-sr-only" role="status">{progress}{state.run && ` Изучено подробно слоёв: ${state.run.readCount}.`}{state.run?.step>0 && ` Проход анализа: ${state.run.step}.`}</p>}
       <main className={preview || finished || partial ? 'apollo-skill-content' : running ? 'apollo-skill-stage is-running' : 'apollo-skill-stage'} tabIndex={preview || finished || partial ? 0 : undefined} aria-label="Результат навыка «Переназвать слои»" aria-busy={running}>
-        {statisticsClient && <StatisticsNotice client={statisticsClient}/>}
         {state.status==='idle' && <div className="apollo-skill-invitation">
           <p className="apollo-skill-prompt">Выбери область и запусти проверку</p>
           <p>Предложим понятные названия по содержимому слоёв,<br className="apollo-skill-wide-break" /> а ты выберешь, какие применить</p>

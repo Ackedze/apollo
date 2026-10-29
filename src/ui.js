@@ -66,7 +66,7 @@ const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferen
 });
 function startContractAudit(requestId) {
     tokenJournalClient.start(requestId);
-    clearResult(false); busy = true; contractStopping=false;activeRequest = requestId; controls();
+    if(audit)markContractStale();else clearResult(false); busy = true; contractStopping=false;activeRequest = requestId; controls();
     clearTimeout(contractTimer);contractTimer=setTimeout(()=>{if(activeRequest===requestId&&busy){contractStopping=true;designCheck.setAuditProgress(requestId,'Останавливаем проверку контрактов: ожидаем подтверждение от Figma…');send({type:'audit-cancel',requestId});}},60000);
     status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
 }

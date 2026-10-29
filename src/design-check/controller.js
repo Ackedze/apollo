@@ -123,9 +123,7 @@ function createDesignCheckController(options = {}) {
   }
   function beginContractAudit(requestId) {
     activeAudit = requestId;
-    const tabs = Object.assign({}, state.tabs);
-    if (tabs.changes) tabs.changes = { status: 'not-connected', count: null, items: [] };
-    emit({ audit: null, auditStale: false, tabs, auditBusy: true, auditProgress: '', auditError: '' });
+    emit({ auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
   }
   async function startDocumentAudit() {
     if (!state.documentPageAvailable || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed || !options.onDocumentAudit) return false;

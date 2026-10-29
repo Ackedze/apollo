@@ -69,3 +69,8 @@ test('current theme is clean; theme mismatch is red and unavailable theme remain
   const value=state();check(value,'theme',[{findingId:'theme',status}]);assert.equal(auditQuality(summary(value)),expected);
  }
 });
+
+test('coverage identifies the concrete incomplete check and keeps policy limits separate from read failures',()=>{
+ const value=state();check(value,'customStyles',[],'incomplete',['v3-catalog-policy-not-connected']);check(value,'font',[],'incomplete',['font-collection-unavailable']);
+ const details=summary(value).coverageDetails;assert.equal(details.length,2);assert.match(details.find(x=>x.id==='customStyles').reason,/Дополнительные правила/);assert.match(details.find(x=>x.id==='font').title,/Шрифт/);assert.equal(summary(value).incomplete,true);
+});

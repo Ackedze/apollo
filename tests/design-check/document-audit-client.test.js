@@ -54,3 +54,11 @@ test('manual deselect and selection changes leave accepted and in-flight root co
  const f=acceptedSnapshot();for(const id of ['', 'other']){f.port.selection({pageId:'page',id,invalidated:true});assert.equal(f.state.documentAudit.status,'available');assert.equal(f.state.documentAudit.result,f.result);}assert.equal(f.port.focus('finding','target'),true);f.port.invalidate('');
  const next=setup();next.port.start('running',next.state.settings);next.port.selection({pageId:'page',id:'',invalidated:true});assert.equal(next.state.documentAudit.status,'loading');assert.equal(next.messages.some(m=>m.type==='document-audit-cancel'),false);next.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'running:native',result:result('running:native')});assert.equal(next.state.documentAudit.status,'available');next.port.invalidate('');
 });
+
+ test('new native progress keeps old findings visible until a valid terminal replacement',()=>{
+ const f=acceptedSnapshot();f.port.start('next',f.state.settings);const progress=result('next:native');progress.checks[0].status='running';
+ f.port.accept({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:'next:native',result:progress});
+ assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.status,'loading');assert.equal(f.port.focus('finding','target'),false);
+ const completed=result('next:native');f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'next:native',result:completed});
+ assert.equal(f.state.documentAudit.result,completed);assert.equal(f.state.documentAudit.status,'available');f.port.invalidate('');
+});

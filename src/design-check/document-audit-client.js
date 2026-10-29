@@ -99,7 +99,7 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
   if(!current||m.requestId!==current.requestId)return true;
   if(m.type==='document-audit-cancelled'&&current.phase==='cancelling'){fail(snapshot()?'Чтение макета не завершилось вовремя. Доступные результаты сохранены; повторите проверку.':'Не удалось завершить чтение макета вовремя. Повторите проверку.');return true;}
   if(current.phase!=='loading')return true;
-  if(m.type==='document-audit-progress'){if(resultValid(m.result)&&m.result.runId===current.requestId&&['pageId','selectionSignature','platform'].every(k=>m.result.context[k]===current.context[k]))publish('loading',m.result);return true;}
+  if(m.type==='document-audit-progress'){if(resultValid(m.result)&&m.result.runId===current.requestId&&['pageId','selectionSignature','platform'].every(k=>m.result.context[k]===current.context[k]))publish('loading',snapshot()&&snapshot().runId!==current.requestId?snapshot():m.result);return true;}
   clearTimeout(timer);
   if(m.type==='document-audit-error'){fail(m.message||'Не удалось прочитать данные макета.');return true;}
   if(m.type!=='document-audit-result'||!resultValid(m.result)||m.result.runId!==current.requestId||m.result.checks.some(c=>c.status==='running')||['pageId','selectionSignature','platform'].some(key=>m.result.context[key]!==current.context[key])){

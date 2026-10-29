@@ -38,6 +38,8 @@ function fixture(post){
  let delivery=Promise.resolve();const f=fixture(message=>{delivery=delivery.then(()=>page.evaluate(message=>window.emitPlugin(message),message));});
  await page.exposeFunction('changeFixtureSelection',other=>f.selection(other));
  await page.exposeFunction('previewRequestCount',()=>sent.filter(message=>message.operation==='icon-preview').length);
+ await page.exposeFunction('statisticsPendingCount',()=>f.statsPending().length);
+ await page.exposeFunction('statisticsJournalCount',()=>journal?.read().records.length||0);
  await page.exposeFunction('nativeRequest',message=>{
   sent.push(message);if(f.bridge.accept(message))return null;
   if(message.type==='design-check-ui-request')return{type:'design-check-ui-result',schemaVersion:message.schemaVersion,requestId:message.requestId,operation:message.operation,result:null};return null;
@@ -119,25 +121,21 @@ function fixture(post){
  await page.getByRole('searchbox').fill('дата');await page.locator('.apollo-reglyph-option>button').getByText('Календарь',{exact:true}).click();assert.equal(await page.getByRole('dialog').count(),1);
  await page.getByRole('button',{name:'Заменить · 1',exact:true}).click();await page.getByRole('heading',{name:'Иконки обновлены',exact:true}).waitFor();assert.equal(f.swaps.length,3);assert.ok(f.swaps.every(([id])=>id!=='other-icon'),'other selected frame is never changed');assert.equal(sent.filter(m=>m.operation==='scan').length,1,'all replacements use the original scan');
  if(process.env.APOLLO_STATISTICS_BROWSER_CASES){
-  const beforeMutations=f.swaps.length,beforeRequests=sent.filter(m=>m.type==='reglyph-request'&&['scan','replace'].includes(m.operation)).length;
+  const beforeMutations=f.swaps.length;
+  const serviceUi=()=>page.locator('.apollo-statistics-notice').count();
   deliveryMode='offline';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();
-  const retry=page.getByRole('button',{name:'Повторить отправку',exact:true});await retry.waitFor();
-  assert.equal(await page.locator('.apollo-statistics-notice[role="status"]:visible').count(),1,'one active announcement inside the top modal');
-  assert.equal(await retry.evaluate(button=>!!button.closest('dialog[open]')),true);assert.equal(f.swaps.length,beforeMutations);
+  await page.waitForFunction(async()=>await window.statisticsPendingCount()>0);
+  assert.equal(await serviceUi(),0);assert.equal(await page.getByRole('button',{name:'Повторить отправку',exact:true}).count(),0);assert.equal(await page.getByRole('button',{name:'Скачать сведения',exact:true}).count(),0);assert.equal(f.swaps.length,beforeMutations);
   await page.screenshot({animations:'disabled',path:path.join(output,'statistics-offline-800.png')});
   await page.setViewportSize({width:440,height:780});await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
   assert.equal(await page.locator('dialog[open]').evaluate(node=>node.scrollWidth<=node.clientWidth),true);await page.screenshot({animations:'disabled',path:path.join(output,'statistics-offline-440.png')});
-  await retry.click();assert.equal(sent.filter(m=>m.type==='reglyph-request'&&['scan','replace'].includes(m.operation)).length,beforeRequests+1,'retry is only metadata delivery');
-  deliveryMode='online';await page.evaluate(()=>window.dispatchEvent(new Event('online')));await retry.waitFor({state:'hidden'});await page.waitForFunction(()=>!!document.activeElement?.closest('dialog[open]'));
-  assert.equal(f.statsPending().length,0);assert.equal(f.swaps.length,beforeMutations);
-  deliveryMode='wrong-receipt';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await retry.waitFor();assert.ok(f.statsPending().length,'mismatched receipt retains outbox');
-  const count=journal.read().records.length;deliveryMode='online';await retry.click();await retry.waitFor({state:'hidden'});assert.equal(journal.read().records.length,count,'receipt retry does not duplicate journal rows');
-  f.poison(true);await page.evaluate(()=>window.dispatchEvent(new Event('online')));await retry.waitFor();
-  const downloaded=page.waitForEvent('download');await page.getByRole('button',{name:'Скачать сведения',exact:true}).click();const download=await downloaded;await download.saveAs(path.join(output,'statistics-pending.json'));
-  const metadata=fs.readFileSync(path.join(output,'statistics-pending.json'),'utf8');assert.ok(metadata.includes('poison'));assert.ok(!metadata.includes('NEVER_EXPORT_THIS_VALUE'));
-  f.poison(false);await retry.click();await retry.waitFor({state:'hidden'});
-  f.quota(true);await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();await retry.waitFor();assert.equal(await page.locator('.apollo-reglyph-row').count(),1,'quota cannot replace the skill result');assert.equal(f.swaps.length,beforeMutations);
-  await page.screenshot({animations:'disabled',path:path.join(output,'statistics-quota-440.png')});f.quota(false);await retry.click();await retry.waitFor({state:'hidden'});assert.equal(f.statsPending().length,0);
+  deliveryMode='online';await page.evaluate(()=>window.dispatchEvent(new Event('online')));await page.waitForFunction(async()=>await window.statisticsPendingCount()===0);assert.equal(f.swaps.length,beforeMutations);
+  deliveryMode='wrong-receipt';await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.waitForFunction(async()=>await window.statisticsPendingCount()>0);
+  const count=journal.read().records.length;deliveryMode='online';await page.evaluate(()=>window.dispatchEvent(new Event('online')));await page.waitForFunction(async()=>await window.statisticsPendingCount()===0);assert.equal(journal.read().records.length,count,'automatic receipt retry does not duplicate journal rows');
+  f.poison(true);await page.evaluate(()=>window.dispatchEvent(new Event('online')));await page.waitForFunction(async()=>await window.statisticsPendingCount()>0);assert.equal(await serviceUi(),0);assert.ok(f.statsPending().some(key=>key.endsWith('poison')),'corrupt metadata retained for technical diagnosis');
+  f.poison(false);await page.evaluate(()=>window.dispatchEvent(new Event('online')));await page.waitForFunction(async()=>await window.statisticsPendingCount()===0);
+  const beforeQuota=journal.read().records.length;f.quota(true);await page.getByRole('button',{name:'Новая проверка',exact:true}).click();await check.click();await page.getByText('Проверенная область: Другой фрейм',{exact:true}).waitFor();assert.equal(await page.locator('.apollo-reglyph-row').count(),1,'quota cannot replace the skill result');assert.equal(f.swaps.length,beforeMutations);assert.equal(await serviceUi(),0);
+  await page.screenshot({animations:'disabled',path:path.join(output,'statistics-quota-440.png')});f.quota(false);await page.evaluate(()=>window.dispatchEvent(new Event('online')));await page.waitForFunction(async before=>await window.statisticsJournalCount()>before,beforeQuota);await page.waitForFunction(async()=>await window.statisticsPendingCount()===0);
   assert.ok(journal.read().records.every(row=>row.totalTokens===0&&row.calls===0));assert.ok(journal.read().records.some(row=>row.operation.includes('Обновить иконки')));
   await page.setViewportSize({width:800,height:860});
  }
@@ -153,6 +151,6 @@ function fixture(post){
  const box=await page.locator('.apollo-skill-footer').boundingBox();assert.ok(box.y+box.height<=780);
  await page.getByRole('button',{name:'Закрыть: Обновить иконки',exact:true}).click();await card.focus();assert.equal(await card.evaluate(element=>document.activeElement===element),true);
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN',statistics:journal?{records:journal.read().records.map(({operation,status,totalTokens,calls})=>({operation,status,totalTokens,calls})),faults:['offline/retry','wrong-receipt/idempotence','corrupt/export','quota/retry'],pending:f.statsPending().length}:null},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, pinned original scope across selection changes, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
+ fs.writeFileSync(path.join(output,'result.json'),JSON.stringify({status:'PASS',swaps:f.swaps,reglyphRequests:sent.filter(m=>m.type==='reglyph-request').map(m=>m.operation),liveFigma:'NOT_RUN',statistics:journal?{records:journal.read().records.map(({operation,status,totalTokens,calls})=>({operation,status,totalTokens,calls})),faults:['offline/automatic recovery','wrong-receipt/idempotence','corrupt retention without service UI','quota/automatic retry'],pending:f.statsPending().length}:null},null,2));console.log('ReGlyph integrated UI PASS: two cards, native gate, pinned original scope across selection changes, partial confirmation, remaining rows, picker/search, replacement, scenario, Android, custom picker keyboard/outside close/16px type/chevron, 800/440 footer.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

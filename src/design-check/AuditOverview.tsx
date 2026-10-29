@@ -4,7 +4,7 @@ import { AuditMascot } from "./AuditMascot";
 import { auditQuality } from "./result-groups";
 type Category = { id: string; title: string; count: number | null; connected: boolean; entries: any[]; issues: any[]; incomplete: boolean };
 export type ResultGroup = { id: string; title: string; description: string; count: number | null; connected: boolean; categories: Category[] };
-export type ResultGroups = { groups: ResultGroup[]; theme: Category | null; total: number | null; stale: boolean; incomplete: boolean };
+export type ResultGroups = { groups: ResultGroup[]; theme: Category | null; total: number | null; stale: boolean; incomplete: boolean; coverageDetails?: {id:string;title:string;reason:string}[] };
 export function AuditOverview({ state, summary, busy, checkedScope, onOpen, onBase }: {
   state: ControllerState; summary: ResultGroups; busy: boolean; checkedScope: string; onOpen: (group: ResultGroup) => void; onBase: () => void;
 }) {
@@ -15,7 +15,10 @@ export function AuditOverview({ state, summary, busy, checkedScope, onOpen, onBa
     <div className="apollo-overview-total">
       <AuditMascot checking={busy} quality={quality} label={qualityLabel + (summary.total === null || busy ? '' : ` · замечаний: ${summary.total}`)} />
       <p className="apollo-overview-caption" role={busy ? 'status' : undefined}>{busy ? state.auditProgress || 'Проверяем область…' : summary.total === null ? 'Выбери область и нажми Проверить' : checkedScope || 'Проверенная область'}</p>
-      {summary.incomplete && !busy && <p className="apollo-overview-coverage">Покрытие отдельных проверок неполное. Подробности — в результатах.</p>}
+      {summary.incomplete && !busy && <details className="apollo-overview-coverage">
+        <summary>{summary.coverageDetails?.length ? `Не полностью проверены: ${summary.coverageDetails.map(item=>item.title).join(', ')}` : 'Есть непроверенные данные'}</summary>
+        <ul>{summary.coverageDetails?.length ? summary.coverageDetails.map(item=><li key={item.id}><strong>{item.title}:</strong> {item.reason}</li>) : <li>Подробности доступны в соответствующих разделах результатов.</li>}</ul>
+      </details>}
     </div>
     {theme && <button className="apollo-base-result" onClick={onBase} type="button" aria-label={'База: ' + (theme.count === null ? 'проверка ещё не запускалась' : theme.count + ' замечаний')}>
       <span>База</span>

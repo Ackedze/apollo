@@ -13,22 +13,23 @@ const audit = () => ({ auditId: 'synthetic-audit', result: { engine: { evaluatio
 ] }, coverage: { scope: 'available-component-contracts-in-selected-area', executionComplete: false } } });
 const tick = () => new Promise(resolve => setImmediate(resolve));
 
-test('a failed new audit cannot display the preceding contract results or accept a late reply', async () => {
+test('a failed rerun retains preceding results as stale and rejects late replies', async () => {
   const controller = createDesignCheckController({ tabs });
   controller.setAudit(audit());
+  const previous=controller.getState().audit;
   const native = { status: 'available', requestId: 'native-current', result: { checks: [] }, error: '' };
   controller.setDocumentAudit(native);
   controller.setTabData('current', { status: 'available', scope: 'native', executionComplete: true, items: [{ findingId: 'native-current' }] });
   controller.beginContractAudit('new-area');
-  assert.equal(controller.getState().audit, null);
-  assert.equal(controller.getState().tabs.changes.count, null);
-  assert.deepEqual(controller.getTabItems('changes'), []);
+  assert.equal(controller.getState().audit, previous);
+  assert.equal(controller.getState().tabs.changes.count, 3);
+  assert.equal(controller.getTabItems('changes').length, 3);assert.equal(controller.getState().auditStale,true);
   assert.equal(controller.getState().documentAudit, native);
   assert.equal(controller.getState().tabs.current.count, 1);
   assert.equal(controller.acceptAuditResult('previous-area', audit()), false);
   assert.equal(controller.acceptAuditError('new-area', 'AUDIT_CAPTURE_CHANGED'), true);
   assert.equal(controller.getState().auditBusy, false);
-  assert.equal(controller.getState().audit, null);
+  assert.equal(controller.getState().audit, previous);
   assert.equal(controller.getState().auditError, 'AUDIT_CAPTURE_CHANGED');
   controller.beginContractAudit('retry');
   assert.equal(controller.acceptAuditResult('new-area', audit()), false);
@@ -37,14 +38,14 @@ test('a failed new audit cannot display the preceding contract results or accept
   controller.destroy();
 });
 
-test('the standalone audit path clears previous results before an asynchronous failure', async () => {
+test('the standalone audit path keeps previous results through an asynchronous failure', async () => {
   const pending = deferred(), controller = createDesignCheckController({ tabs, onAudit: () => pending.promise });
   controller.setAuditReady(true); controller.setAudit(audit());
-  const run = controller.startAudit();
-  assert.equal(controller.getState().audit, null);
+  const previous=controller.getState().audit,run = controller.startAudit();
+  assert.equal(controller.getState().audit, previous);
   pending.reject(Error('new capture failed')); await run;
   assert.equal(controller.getState().auditError, 'new capture failed');
-  assert.equal(controller.getState().tabs.changes.count, null);
+  assert.equal(controller.getState().tabs.changes.count, 3);assert.equal(controller.getState().auditStale,true);
   controller.destroy();
 });
 

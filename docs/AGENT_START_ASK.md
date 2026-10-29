@@ -1,10 +1,14 @@
 # Старт агента: раздел «Спросить» в Apollo
 
 Это инструкция для разработчика, который дорабатывает чат Apollo вместе с Proxy.
+Это специализированный документ. Общий вход —
+[AGENT_START_PROMPT.md](AGENT_START_PROMPT.md); карта модулей — [PROJECT_GUIDE.md](PROJECT_GUIDE.md).
 Дизайнеру сначала пройти [общую инструкцию старта](DESIGNER_START.md).
 Установку готового Proxy выполняйте по
 [инструкции поставки](https://github.com/Ackedze/apollo-proxy/blob/main/macos-app/DELEGATION.md).
 Владелец обоих проектов и окончательный ревьюер — **@Ackedze**.
+Готовый промпт для первого подключения агента ко всем четырём репозиториям —
+[AGENT_START_PROMPT.md](AGENT_START_PROMPT.md).
 
 Первая переносимая поставка включает проверку, «Спросить» и Figma MCP.
 По решению владельца от 20.10.2026 переносимость frontend с собственным SDK —
@@ -30,9 +34,13 @@
   выбранный CLI-агент, данные и доставка обновлений.
 - [design-system_ab](https://github.com/Ackedze/design-system_ab) — контракты и
   факты компонентов. Рабочие данные потребитель получает из версии поставки Proxy.
+- [design-system_abm](https://github.com/Ackedze/design-system_abm) — каталоги
+  Figma ABM, reference manifest и индексы компонентов. Область данных уточнять по
+  README этого репозитория; не смешивать его каталоги с `design-system_ab`.
 
 Использовать переданные владельцем ветку/commit и выпуск данных. До начала работы
-записать `git rev-parse HEAD` обоих репозиториев, версии `package.json`, dataId и
+записать `git rev-parse HEAD` всех четырёх доступных репозиториев, версии
+`package.json` Apollo и Proxy, dataId и
 runtime profile из принятой поставки. Если исходники ещё не опубликованы,
 попросить конкретный доступный ref или исходный архив; не заменять его старым main.
 Пакет данных связан с code runtimeId. Несовместимый пакет не перепривязывать вручную.
@@ -53,12 +61,30 @@ runtime profile из принятой поставки. Если исходни�
 <своя папка>/
   projects/Apollo/
   services/apollo-proxy/
-  shared/design-system_ab/   # для полного каталожного integration suite
+  shared/design-system_ab/
+  shared/design-system_abm/
 ```
 
-Папка `workplace` и пути автора не нужны. Checkout Apollo и Proxy выполняется
-через собственный доступ к GitHub. В каждом репозитории создать свою ветку от
-согласованного ref; не сбрасывать незакоммиченные изменения другого участника.
+Из новой пустой рабочей папки:
+
+```bash
+mkdir -p projects services shared
+git clone https://github.com/Ackedze/apollo.git projects/Apollo
+git clone https://github.com/Ackedze/apollo-proxy.git services/apollo-proxy
+git clone https://github.com/Ackedze/design-system_ab.git shared/design-system_ab
+git clone https://github.com/Ackedze/design-system_abm.git shared/design-system_abm
+```
+
+Папка `workplace` и пути автора не нужны. Checkout выполняется через собственный
+доступ к GitHub. В Apollo и Proxy создать свои ветки от согласованного ref;
+репозитории данных в задаче по чату читать без изменений. Для существующих копий
+сначала проверить remote, ветку и рабочее дерево; не сбрасывать чужие изменения.
+При 404 или отказе доступа записать точный URL и ошибку, проверить свой доступ;
+не подставлять похожий репозиторий и не объявлять подключение успешным.
+
+Клонирование данных само по себе не обновляет установленный Proxy. Он использует
+совместимый пакет через свой механизм Git-обновлений. Не менять автоматически
+raw URL, runtime manifest или индексы из-за переименования репозитория.
 
 Нужны Node.js 22 и npm. Внутри Apollo:
 
@@ -121,7 +147,8 @@ checkout он уже есть, проверить его настройки и �
 ## Текущий путь запроса
 
 Текущий UI использует `source: codex` как существующее имя локальной ветки API.
-Она запускает выбранный в Proxy CLI — Codex или Claude. Прежняя скрытая настройка
+Она использует выбранного в Proxy провайдера — Codex, Claude или AlfaGen.
+Прежняя скрытая настройка
 Langflow при восстановлении переводится в локальную ветку; это не меняет источник
 старых сообщений. Явный Langflow API сохранён для других клиентов.
 

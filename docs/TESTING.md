@@ -13,7 +13,7 @@ regression-тесты `tests/*.test.js` и `tests/design-check/*.test.js`, вк�
 Core/generation/adapter/pattern bundles; готовый `dist`, личные skills и каталоги
 дизайн-системы не требуются. Release integration tests используют исходники
 Proxy рядом в `services/apollo-proxy`, поэтому для полного validate клонируйте
-оба репозитория по структуре из `docs/AGENT_START_ASK.md`. CI создаёт эту структуру.
+оба репозитория по структуре из `docs/AGENT_START_PROMPT.md`. CI создаёт эту структуру.
 
 После любого изменения Apollo должен быть пересобран. Перед публикацией используется чистая установка зависимостей через `npm ci`.
 

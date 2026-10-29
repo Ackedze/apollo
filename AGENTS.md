@@ -1,5 +1,17 @@
 # Apollo Agent Notes
 
+## Start Here
+
+- General onboarding: `docs/AGENT_START_PROMPT.md`; module and capability map:
+  `docs/PROJECT_GUIDE.md`. Read specialized documents for the assigned task.
+- Apollo is the Figma plugin; Apollo Proxy is a separate repository/process.
+  Contracts, mappings and installed data are separate from both code checkouts.
+- External contributors use their own branches and PRs; @Ackedze makes final
+  review, merge and release decisions. Follow `CONTRIBUTING.md`.
+- Never push or publish `arui-private`, its copies, credentials or real user reports.
+- A successful build, installed manual, historical pilot or Draft result does
+  not establish feature availability or full rule coverage.
+
 ## Figma Runtime Compatibility
 
 - The Figma plugin main runtime parser can reject object spread syntax in `code.ts` / `dist/code.js`.

@@ -5,11 +5,12 @@
 
 ## Что получить перед началом
 
-- Задачу с ожидаемым результатом и границами. Первое направление — раздел
-  «Спросить»: чат, формат ответов, Markdown, ссылки и состояния запроса.
+- Задачу с ожидаемым результатом и границами: интерфейс, проверка, генерация,
+  навыки, данные или Proxy — в зависимости от поручения.
 - Версионный ZIP `ApolloProxyControl-macOS-<build>.zip` и способ запуска
   совместимого Apollo: опубликованный плагин либо исходники для Development.
-- Для разработки — доступный ref/commit обоих репозиториев и свои доступы GitHub.
+- Для разработки — доступные ref/commit Apollo, Proxy, `design-system_ab` и
+  `design-system_abm`, а также свои доступы GitHub.
   Обычно база — актуальный `main`. Если нужные изменения ещё не отправлены,
   владелец передаёт доступный ref или архив: старый публичный `main` не считается
   заменой согласованной сборки.
@@ -81,27 +82,37 @@
 <своя папка>/
   projects/Apollo/
   services/apollo-proxy/
-  shared/design-system_ab/  # только для каталожной интеграции
+  shared/design-system_ab/
+  shared/design-system_abm/
 ```
 
 Из новой пустой рабочей папки с доступом на запись в репозитории:
 
 ```bash
+mkdir -p projects services shared
 git clone https://github.com/Ackedze/apollo.git projects/Apollo
 git clone https://github.com/Ackedze/apollo-proxy.git services/apollo-proxy
-git -C projects/Apollo switch -c designer/ask-links
-git -C services/apollo-proxy switch -c designer/ask-links
+git clone https://github.com/Ackedze/design-system_ab.git shared/design-system_ab
+git clone https://github.com/Ackedze/design-system_abm.git shared/design-system_abm
+git -C projects/Apollo switch -c designer/first-task
+git -C services/apollo-proxy switch -c designer/first-task
 npm --prefix projects/Apollo ci
 npm --prefix services/apollo-proxy ci
 npm --prefix projects/Apollo run validate
 ```
 
-Имя `designer/ask-links` заменить своим. Перед следующей задачей получить свежий
+Имя `designer/first-task` заменить своим. Перед следующей задачей получить свежий
 `origin/main` и создать новую ветку от него. Без `Write` использовать forks;
 сохранить оригинальные репозитории как `upstream`, PR направлять в их `main`.
 При переданном другом ref начать именно с него и указать его в PR.
+Репозитории данных используются для чтения, если задача не требует их правки. Их checkout
+не активирует данные в установленном Proxy. Если репозиторий недоступен, сначала
+проверить собственный доступ и записать точную ошибку; не заменять его другим.
+Готовый промпт для агента: [AGENT_START_PROMPT.md](AGENT_START_PROMPT.md).
 
-Тесты чата Proxy выполняются из `services/apollo-proxy`:
+Проверки выбираются по затронутому модулю из [карты Apollo](PROJECT_GUIDE.md) и
+[карты Proxy](https://github.com/Ackedze/apollo-proxy/blob/main/docs/PROJECT_GUIDE.md).
+Например, self-contained тесты диалога выполняются из `services/apollo-proxy`:
 
 ```bash
 TMPDIR=/private/tmp node --test test/dialogue-source.test.js test/dialogue-runtime.test.js test/cli-agent.test.js
@@ -115,7 +126,7 @@ TMPDIR=/private/tmp node --test test/dialogue-source.test.js test/dialogue-runti
 
 Для UI-доработки достаточно собственной сборки плагина и выданного Proxy.
 Для изменения Proxy агент запускает checkout с личной конфигурацией и принятыми
-runtime/данными по [инструкции разработчику](AGENT_START_ASK.md#рабочая-папка).
+runtime/данными по [карте Proxy](https://github.com/Ackedze/apollo-proxy/blob/main/docs/PROJECT_GUIDE.md).
 Простое `npm start` без полной базы знаний не является готовой установкой.
 Managed-приложение не начинает исполнять изменённый checkout автоматически.
 Клиент сейчас использует `http://localhost:3001`; при другом порте нужен
@@ -148,8 +159,8 @@ Proxy получает контрактные обновления из выда
   указать проверенную пару commit, dataId, порядок обновления и совместимость
   со старой версией второй стороны. Код и данные не менять одной скрытой подменой.
 - Перед PR выполнить проверки затронутой стороны. Для Apollo обязателен
-  `npm run validate`; для видимого UI — ручная проверка Figma: длинный ответ,
-  ссылки, прокрутка, клавиатура, loading, ошибка, отмена и повторный запрос.
+  `npm run validate`; для видимого UI — ручная проверка Figma: размеры окна,
+  прокрутка, клавиатура, loading, ошибка, отмена и состояния затронутого сценария.
   Приложить обезличенные скриншоты/результаты и назвать непроверенные сценарии.
 - Не включать `.env`, историю, реальные отчёты, закрытые знания, SDK и собранные
   приложения. Не менять manifest ID, версии выпуска, защиту веток или stable channel.
@@ -161,14 +172,7 @@ Proxy получает контрактные обновления из выда
 
 ## Поручение своему агенту
 
-> Мы дорабатываем Apollo и Apollo Proxy; финальный ревьюер — @Ackedze.
-> Прочитай CONTRIBUTING обоих checkout и применимые AGENTS.md, затем
-> `docs/AGENT_START_ASK.md` в Apollo. Работай в моих ветках от согласованного ref,
-> сохрани чужие изменения. Начни с пути вопрос → Proxy → ответ и выбери один
-> законченный сценарий из моего поручения. Используй мои доступы и выданные
-> runtime/данные; пути, аккаунты и закрытые каталоги автора не требуются.
-> Сначала используй синтетические тесты без модели. Реальный вызов выполняй
-> только в пределах моего поручения и тестового файла. Не меняй нормы проверки,
-> генерацию, manifest ID или выпуск в задаче по чату. Не публикуй arui-private
-> и приватные данные. Проверь изменение, подготовь связанные PR при необходимости,
-> укажи commit/dataId, результаты и ограничения. Ничего не мержи и не публикуй.
+Передайте агенту [полный общий промпт в Markdown](AGENT_START_PROMPT.md).
+Он подключает четыре репозитория, описывает функции, данные, сборку, права
+внешнего участника и передачу PR. Поручение по конкретному изменению добавьте
+отдельно: общий старт не назначает работу над одной вкладкой.

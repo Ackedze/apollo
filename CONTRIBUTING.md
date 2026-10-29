@@ -6,9 +6,10 @@ Apollo принимает внешние исправления и функци�
 [`docs/DESIGNER_START.md`](docs/DESIGNER_START.md): установка, доступы, собственная
 рабочая копия и условия передачи результата.
 
-Для совместной работы над разделом «Спросить» используйте
-[`docs/AGENT_START_ASK.md`](docs/AGENT_START_ASK.md): локальная сборка Apollo и
-Proxy, фактический API чата, тесты и связанные PR. Окончательное ревью и выпуск
+Общий старт агента — [`docs/AGENT_START_PROMPT.md`](docs/AGENT_START_PROMPT.md),
+карта функций и модулей — [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md).
+Для диалога есть отдельный [`docs/AGENT_START_ASK.md`](docs/AGENT_START_ASK.md).
+Окончательное ревью и выпуск
 остаётся у @Ackedze; новая роль участника не меняет единственного обязательного
 code owner.
 
@@ -42,17 +43,22 @@ code owner.
 Требуется Node.js 22 и npm.
 
 ```bash
+mkdir -p projects services shared
 git clone https://github.com/Ackedze/apollo.git projects/Apollo
 git clone https://github.com/Ackedze/apollo-proxy.git services/apollo-proxy
+git clone https://github.com/Ackedze/design-system_ab.git shared/design-system_ab
+git clone https://github.com/Ackedze/design-system_abm.git shared/design-system_abm
 cd projects/Apollo
-git switch -c contributor/ask-links
+git switch -c contributor/first-task
 npm ci
 npm run validate
 ```
 
-Вместо `contributor/ask-links` выберите своё имя ветки. Для fork замените URL
+Вместо `contributor/first-task` выберите своё имя ветки. Для fork замените URL
 Apollo своим и сохраните `Ackedze/apollo` как `upstream`. Proxy нужен полному
 validate; установка и команды второй стороны описаны в инструкции старта.
+Вне поручения на изменение данных оба репозитория используются для чтения. Полный
+стартовый промпт с проверкой доступов и версий: [docs/AGENT_START_PROMPT.md](docs/AGENT_START_PROMPT.md).
 
 Для ручной проверки соберите плагин и импортируйте `manifest.json` через `Figma -> Plugins -> Development -> Import plugin from manifest`.
 
@@ -64,13 +70,14 @@ validate; установка и команды второй стороны оп�
 - Не добавляйте fallback, скрывающий ошибку reference manifest, component index или contract package.
 - Не используйте object spread в main runtime Apollo. Ограничение и пример описаны в `AGENTS.md`.
 - Не добавляйте каталоги дизайн-системы в репозиторий Apollo. Данные контрактов
-  хранятся в `design-system_ab`; изменение pipeline при необходимости оформляется
+  хранятся в `design-system_ab`, каталоги ABM — в `design-system_abm`;
+  изменение pipeline при необходимости оформляется
   связанными PR в Apollo Proxy и репозитории данных.
 - Никаких абсолютных путей автора, зависимости от его `workplace`, установленного
   skill или аккаунта. Используйте конфигурацию, относительные пути проекта и
   синтетические fixtures. Данные и runtime подключаются из согласованной поставки.
 - `arui-private` нельзя push-ить, включать в архивы, fixtures или копировать
-  в публичные репозитории. Для текущего вклада в чат он не нужен.
+  в публичные репозитории. Переносимая поставка его не содержит.
 - Не меняйте версию плагина, release metadata и публикационные токены. Это делает maintainer перед выпуском.
 - После каждого изменения выполняйте сборку. Перед PR обязательно запускайте `npm run validate`.
 - Изменение пользовательского поведения должно обновлять `README.md`. Публикационное изменение также обновляет README рабочего пространства.

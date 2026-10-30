@@ -89,6 +89,22 @@ component-owned записей в самостоятельные редакти�
 
 ### CC-COMPAT-INSTANCE-PATH-PROJECTION-01 — облегчённый поиск native экземпляров
 
+30.10.2026 — **TWO_READS_LOCAL_VERIFIED / OWNER_TIMING_PENDING**.
+По прямому поручению владельца убран промежуточный `verify-capture` в Apollo
+area audit. Остаются исходный capture и финальный `checkCapture` каждого scope
+после metadata/release awaits; расчёт правил до него считается предварительным.
+Изменение внутри первого capture, раннего scope при чтении позднего scope или
+во время финального чтения не позволяет выдать актуальный результат.
+Final topology/identity, cancellation/current, release/source pins, SLOT scope
+и последующая проверка актуальности действий сохранены. Общий reader Core0.1.25,
+Editor, Proxy и данные контрактов не меняются; перестраивается только Apollo.
+Configured Apollo validate:1438 PASS,0 FAIL,1 прежний skip. Регрессии initial/
+later/final mutation, SLOT, release/source drift и отмены прошли; отдельный
+before-run сохраняет4 ожидаемых отказа старой схемы чтения. Нужен новый owner
+timing; прежние9.084с промежуточного этапа являются наблюдением c97, а не
+измеренным ускорением новой сборки.
+Evidence: workspace `.local/capture-two-reads-2026-10-30/`.
+
 30.10.2026 — **LOCAL_CAPTURE_PERFORMANCE_VERIFIED / OWNER_TIMING_PENDING**.
 При неизменных Core0.1.24/Editor0.2.108 и packaged runtime d058 общий native
 capture ограничивает параллельное чтение pristine sources шестью задачами;

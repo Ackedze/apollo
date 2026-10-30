@@ -122,11 +122,15 @@ test('metadata reads cannot hide a property mutation before final audit delivery
   assert.match(p.messages.find(m => m.type === 'error').message, /изменились/);
 });
 
-for (const mutateRead of [null, 4, 5]) test(`SLOT freshness keeps the captured representation and detects mutations: ${mutateRead}`, async () => {
+for (const mutation of [null, 'during-final', 'before-final']) test(`SLOT freshness keeps the captured representation and detects mutations: ${mutation}`, async () => {
   let reads = 0, p;
   p = plugin({ nativeSlot: true, onMainRead(node) {
-    if (node === p.actual && ++reads === mutateRead) p.actual.children[0].opacity = .5;
+    if (node === p.actual && ++reads === 4 && mutation === 'during-final') p.actual.children[0].opacity = .5;
   } });
+  if (mutation === 'before-final') {
+    const key = 'b'.repeat(40); p.actual.fillStyleId = `S:${key},1:2`;
+    p.figma.getStyleByIdAsync = async id => { p.actual.children[0].opacity = .5; return {id,key,name:'Synthetic surface'}; };
+  }
   const source = authored.source();
   source.manual.representations.push({ id: 'frontend', kind: 'code', platform: 'desktop', status: 'draft',
     locator: { packageName: 'synthetic-ui', importPath: 'synthetic-ui/test', exportName: 'Test' } });
@@ -138,10 +142,10 @@ for (const mutateRead of [null, 4, 5]) test(`SLOT freshness keeps the captured r
   await p.send({ type: 'load-contract', source });
   assert.equal(p.messages.some(m => m.type === 'error'), false, JSON.stringify(p.messages));
   await p.send({ type: 'audit', requestId: 'shared-slot-boundary' });
-  if (mutateRead) {
+  if (mutation) {
     assert.equal(p.messages.some(m => m.type === 'audit-result'), false);
     assert.match(p.messages.find(m => m.type === 'error').message,
-      new RegExp(`AUDIT_CAPTURE_CHANGED · ${mutateRead === 4 ? 'verify-capture' : 'verify-final-capture'}`));
+      /AUDIT_CAPTURE_CHANGED · verify-final-capture/);
     assert.match(p.messages.find(m => m.type === 'error').message, /узла actual/);
     assert.ok(p.created.every(n => n.removed));
     return;
@@ -180,6 +184,16 @@ for (const [label, opacity, expected] of [['PASS', 1, 'compliant'], ['FAIL', .5,
     assert.match(p.messages.at(-1).message, /устарел/);
   });
 }
+
+test('a mutation inside initial capture is rejected by the final freshness read', async () => {
+  let armed = false, opacity = .5, p;
+  p = plugin({onMainRead: node => { if (node.id === 'reference') armed = true; }});
+  Object.defineProperty(p.actual, 'opacity', {get() { const value = opacity; if (armed) { armed = false; opacity = .2; } return value; }, set(value) { opacity = value; }});
+  await p.send({type:'load-contract', source:authored.source()}); await p.send({type:'audit',requestId:'initial-mutation'});
+  assert.equal(p.messages.some(m=>m.type==='audit-result'), false);
+  assert.match(p.messages.find(m=>m.type==='error').message, /AUDIT_CAPTURE_CHANGED · verify-final-capture/);
+  assert.ok(p.created.every(n=>n.removed)); assert.ok(p.pages.every(n=>n.removed));
+});
 
 test('layout changed during freshness read never publishes success and always cleans temporary nodes', async () => {
     let reads = 0, p;
@@ -542,12 +556,12 @@ test('stage timings account for native reads without changing canonical audit or
   assert.equal(timing.schemaVersion, 'apollo.audit-timings.v1');
   assert.equal(timing.scope, 'contract-area-audit-before-delivery');
   assert.equal(timing.clock, 'Date.now');
-  assert.equal(timing.totalMs, 49);
-  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','verify-capture','evaluate','contract-hash','index-component','display-metadata','verify-final-capture','final-scan','aggregate','shared-area-snapshot','focus-targets']);
+  assert.equal(timing.totalMs, 42);
+  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','evaluate','contract-hash','index-component','display-metadata','verify-final-capture','final-scan','aggregate','shared-area-snapshot','focus-targets']);
   assert.equal(timing.stages.find(s => s.stage === 'capture').durationMs, 21);
   assert.equal(timing.stages.find(s => s.stage === 'capture').scopeId, 'actual');
   assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')).reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);
-  assert.equal(second.audit.timings.totalMs, 91);
+  assert.equal(second.audit.timings.totalMs, 78);
   delete first.audit.timings; delete second.audit.timings;
   delete first.delivery; delete second.delivery;
   assert.deepEqual(first, second);

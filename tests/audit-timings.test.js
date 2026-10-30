@@ -29,7 +29,8 @@ test('one contract hash per unique compiled source, fresh on each audit',async()
    const sources=new Set(full.components.map(c=>c.release.contractHash));
    assert(full.components.length>sources.size,'fixture must repeat a compiled contract');
    assert.equal(full.timings.stages.filter(s=>s.stage==='contract-hash').length,sources.size);
-   assert.equal(full.timings.stages.filter(s=>s.stage==='verify-capture').length,full.components.length);
+   assert.equal(full.timings.stages.filter(s=>s.stage==='capture').length,full.components.length);
+   assert.equal(full.timings.stages.filter(s=>s.stage==='verify-capture').length,0,'no intermediate full reread');
    assert.equal(full.timings.stages.filter(s=>s.stage==='verify-final-capture').length,full.components.length);
    hashes.push([...sources].sort().join(','));
   }

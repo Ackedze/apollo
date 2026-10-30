@@ -260,10 +260,6 @@ async function audit(requestId: string, options:any={}) {
       } catch (error) { assertCurrent(); gap('capture-failed', error instanceof Error ? error.message : String(error)); continue; }
       finally { endCapture(); }
       assertCurrent();
-      endStage = time('verify-capture', subject.id);
-      const check = await checkCapture(subject, contract, captured);
-      if (engine.stableHash(captured.anatomy) !== engine.stableHash(check.anatomy)) throw new Error(`Свойства узла ${subject.id} изменились во время захвата. Повторите проверку. (AUDIT_CAPTURE_CHANGED · verify-capture)`);
-      endStage();
       endStage = time('evaluate', subject.id);
       applyAuditPlatform(captured.snapshot, contract, options.platform);
       const scopeId = subject.id, ownership = ownedParts.get(scopeId);
@@ -340,8 +336,8 @@ async function audit(requestId: string, options:any={}) {
       if (verified.releaseId !== releaseId) throw new Error('Версия контрактов изменилась. Повторите проверку.');
       endStage();
     }
-    // Recheck every earlier scope after later asynchronous captures, plus the
-    // visible membership and identity of the entire selected area.
+    // One final reread covers changes during capture and later asynchronous work;
+    // provisional evaluations are never delivered before this check succeeds.
     for (const capture of captures) {
       assertCurrent();
       endStage = time('verify-final-capture', capture.subject.id);

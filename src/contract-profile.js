@@ -9,6 +9,7 @@ const SNAPSHOT_PROFILES = new Set([
 const RUNTIME_VERSIONS = {
   declaredTargetIdentityVersion: [1, 2, 3],
   declaredTargetConfigurationVersion: [1, 2],
+  portableSwapIdentityVersion: [1],
   textContentFactsVersion: [1],
   nativeTargetPropertyFactsVersion: [1],
   representationEvidenceVersion: [1],
@@ -31,7 +32,7 @@ const RUNTIME_VERSIONS = {
   nativeSourceContinuityVersion: [1],
   dependencyCompletionVersion: [1],
   slotTargetFactsVersion: [1],
-  nativeSlotTargetsVersion: [1],
+  nativeSlotTargetsVersion: [1, 2],
   transitionFactsVersion: [1],
   ruleOwnershipVersion: [1],
   validationIntentVersion: [1, 2],
@@ -108,6 +109,7 @@ function assertSingleContract(contract, engine, mode) {
   try { declaredIdentity.assertNativeInstanceReplacementPolicy(contract); } catch (error) { reject(error.message); }
   if (contract.runtimePolicy.nativeInstanceReplacements !== undefined
     && contract.runtimePolicy.nativeInstanceReplacementsVersion !== 1) reject('Native instance replacements require their runtime version');
+  if (contract.runtimePolicy.nativeSlotTargetsVersion === 2 && contract.package.sourceExportVersion !== 'component-contract-editor@0.2.110') reject('Native SLOT absence requires its explicit producer stamp');
   const representationShape=representation.contractRepresentationShape(contract),representationFlags=representation.representationFeatureFlags(representationShape);
   const representationErrors=representation.representationEvidenceErrors(representationShape);
   if(representationErrors.length || representationFlags.evidence!==(contract.runtimePolicy.representationEvidenceVersion===1) || contract.runtimePolicy.crossRepresentationBindingsVersion!==representationFlags.bindingVersion)reject('Unsupported representation evidence/bindings: '+representationErrors.join('; '));

@@ -46,6 +46,7 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
   if (manual.schemaVersion !== 'apollo.component-contract.manual.v2-experimental') {
     error('SCHEMA_VERSION', '/schemaVersion', 'Unsupported manual source schema version.');
   }
+  if (manual.metadata.nativeSlotTargetsVersion !== undefined && manual.metadata.nativeSlotTargetsVersion !== 2) error('NATIVE_SLOT_TARGETS_VERSION', '/metadata/nativeSlotTargetsVersion', 'Unsupported SLOT absence proof version.');
   if (manual.metadata.instanceMainComponentAliasesVersion !== undefined && manual.metadata.instanceMainComponentAliasesVersion !== 1) {
     error('INSTANCE_MAIN_COMPONENT_ALIASES_VERSION', '/metadata/instanceMainComponentAliasesVersion', 'Unsupported native main identity aliases.');
   }
@@ -191,7 +192,7 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
     }
   });
 
-  for (const message of declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,targets:manual.targets,representations:manual.representations})) {
+  for (const message of declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,portableSwapVersion:manual.metadata.portableSwapIdentityVersion,targets:manual.targets,representations:manual.representations})) {
     error('DECLARED_TARGET_IDENTITY', '/targets', message);
   }
   for (const message of nativeSourceContinuityErrors(manual.targets)) error('TARGET_NATIVE_SOURCE_CONTINUITY', '/targets', message);

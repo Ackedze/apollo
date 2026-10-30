@@ -506,6 +506,8 @@ Installed Link r3, Editor 0.2.100 / core 0.1.16, 10.10.2026 17:47–17:48 MSK: *
 
 ### CC-COMPAT-DECLARED-TARGET-CONFIGURATION-04 — конфигурация и native identity
 
+30.10.2026 — **LOCAL_PORTABLE_READER_NATIVE_PENDING**. Core0.1.25 / Apollo0.4.1 принимает explicit `portableSwapIdentityVersion=1` и per-binding `portableSwapReferenceHash` (producer0.2.109). Native lookup сохраняет все скрытые INSTANCE_SWAP и сопоставляет local ID с точным published component key; missing lookup остаётся UNKNOWN. Прежние v1/v2 pins и envelopes не мигрируют автоматически. В same-key nested owner учитывается только explicit main-alias policy с проверкой source occurrence и ближайшего actual/reference owner. Новая explicit absence binding требует pinned reference, отсутствующий exact target path и source-proven уникальный parent. IconView r12 сохраняет нормы r11. Retained b7 теперь оставляет70 UNKNOWN:5 отсутствовавших nested swap references не дорисовывались. Новая capture-chain должна быть подтверждена свежим прогоном владельца; full Ready и поставка не приняты. Editor0.2.109 producer semantics реализованы в shared Core этого checkout; отдельная сборка/интеграция Editor не проверялась. Парный backlog: [CC-COMPAT-PORTABLE-DECLARED-TARGET-02 — переносимые привязки целей](../../ComponentContractEditor/docs/BACKLOG.ru.md#cc-compat-portable-declared-target-02--переносимые-привязки-целей) и [CC-COMPAT-DECLARED-TARGET-IDENTITY-01 — local shared application](../../ComponentContractEditor/docs/BACKLOG.ru.md#cc-compat-declared-target-identity-01--local-shared-application).
+
 30.10.2026 — **OPEN_PORTABILITY_GAP**. В native b7 один опубликованный Size72
 IconView имеет разные configuration v1 pins в CSM и ResultScreen из-за локальных
 ID скрытого INSTANCE_SWAP Emoji. 568 UNKNOWN не закрываются одним новым pin;
@@ -1147,6 +1149,8 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   после ручного authoring нового контракта.
 
 ### APOLLO-V4-PARITY-002 — Безопасный bounded capture внешнего native SLOT
+
+30.10.2026 — **LOCAL_ABSENCE_PROOF_NATIVE_PENDING**. Core0.1.25 / producer0.2.110 поддерживает opt-in `nativeSlotTargetsVersion=2`: отсутствие требует согласованной published variant structure, полного независимого reference/correspondence, точного known nearest owner и отсутствия SLOT/портов в обоих деревьях. Helper и Fixer не становятся external; их baseline constraints сохраняются. Select r3 регенерирует full facts штатным importer из явно названной derived projection одного variant; все724 variant identities и720 library-text records сохранены, исходные Athena JSON неизменны. На двух retained Select50→0 UNKNOWN; обнаруженные2 root sizing baseline findings сохранены для owner review. Старый v1 unchanged; производитель и native-live consumer gates отдельно.
 
 30.10.2026 — **OPEN_LEGACY_SOURCE_GAP**. Вложенный Select в двух native FCS
 имеет опубликованный helper с INSTANCE_SWAP, тогда как Athena описывает три

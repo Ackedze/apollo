@@ -16,7 +16,7 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
   const childPaths: string[] = [];
   let ownershipUnknown = !paths;
   if (contract.customizationPolicy.some(rule => rule.boundaryPolicy === 'component-owned@1')) {
-    if (contract.runtimePolicy.nativeSlotTargetsVersion === 1) {
+    if ([1,2].includes(contract.runtimePolicy.nativeSlotTargetsVersion || 0)) {
       const nativeTargets = new Set(contract.customizationPolicy.filter(rule => rule.status !== 'deprecated'
         && ['allowed', 'constrained'].includes(rule.permission)).flatMap(rule => rule.controlPaths
         .filter(control => control.kind === 'slot-api' && control.contentOwnership === 'external').map(control => control.target)));

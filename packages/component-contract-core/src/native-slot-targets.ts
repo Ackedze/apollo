@@ -10,7 +10,7 @@ const unknown = (node: Record<string, unknown>, fact: string) => ((node.unknownF
 /** Prove the native SLOT boundary, not its payload or a child contract. */
 export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract: CompiledContract,
   comparison: InstanceComparison, paths: Map<string, string>): void {
-  if (contract.runtimePolicy.nativeSlotTargetsVersion !== 1 || snapshot.source?.truncated
+  if (![1,2].includes(contract.runtimePolicy.nativeSlotTargetsVersion || 0) || snapshot.source?.truncated
     || !comparison.complete || !snapshot.variantReference?.complete) return;
   const ref = snapshot.variantReference;
   const roots = snapshot.nodes.filter(node => snapshot.selection.includes(String(node.id)));
@@ -21,6 +21,44 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
     return selectedTargetPathHint(target,reps[0].id,ref.componentKey,contract.facts.variantEvidence?.occurrenceAddressVersion===1)?.split(' / ').slice(1).join(' / ');
   };
   for (const target of contract.facts.targets) {
+    if (contract.runtimePolicy.nativeSlotTargetsVersion === 2) {
+      if (contract.package.sourceExportVersion !== 'component-contract-editor@0.2.110') throw new Error('NATIVE_SLOT_ABSENCE_UNSUPPORTED');
+      const declarations = contract.customizationPolicy.filter(r => r.targetId === target.id && r.status !== 'deprecated' && ['allowed','constrained'].includes(r.permission))
+        .flatMap(r => r.controlPaths.filter(p => p.kind === 'slot-api' && p.target === target.id && p.property && p.ownerTargetId));
+      const ownerIds = [...new Set(declarations.map(p => p.ownerTargetId))];
+      const owners = ownerIds.length === 1 ? contract.facts.targets.filter(t => t.id === ownerIds[0] && t.resolution === 'resolved') : [];
+      const ownerPath = owners.length === 1 ? pathFor(owners[0]) : undefined, slotPath = pathFor(target);
+      const variants = contract.facts.variantEvidence?.variants.filter(v => v.componentKey === ref.componentKey && v.componentSetKey === ref.componentSetKey) || [];
+      const catalog = variants.length === 1 ? contract.facts.variantEvidence?.structures[variants[0].structureId] : undefined;
+      const expected = ownerPath === undefined ? undefined : ref.nodeProperties[ownerPath];
+      const actual = ownerPath === undefined ? [] : snapshot.nodes.filter(n => n.type === 'INSTANCE' && record(n.semantic).role === owners[0].semanticRole
+        && comparison.referencePaths?.[paths.get(String(n.id))!] === ownerPath);
+      if (target.resolution === 'resolved' && declarations.length && ownerPath && slotPath
+        && slotPath.split(' / ').slice(0,-1).join(' / ') === ownerPath && Array.isArray(catalog)
+        && !catalog.some(n => n.path === slotPath || n.type === 'SLOT' && n.path.split(' / ').slice(0,-1).join(' / ') === ownerPath)
+        && !ref.nodes.some(n => n.path === slotPath || n.type === 'SLOT' && n.path.split(' / ').slice(0,-1).join(' / ') === ownerPath)
+        && actual.length === 1 && expected?.identity?.componentKey
+        && ['verified','partial'].includes(String(record(roots[0].variantAvailability).status))) {
+        const owner = actual[0], component = record(owner.component), identity = record(component.identity);
+        const proof = record(owner.baselineProvenance);
+        const boundary = comparison.boundaries.some(b => ownerPath === b.referencePath || ownerPath.startsWith(b.referencePath + ' / '));
+        if (!boundary && proof.status === 'matched' && proof.referencePath === ownerPath
+          && identity.componentKey === expected.identity.componentKey && identity.componentSetKey === expected.identity.componentSetKey
+          && identity.mainComponentId === expected.identity.mainComponentId
+          && !unknown(owner,'component.identity') && !unknown(owner,'component.propertyTypes') && !unknown(owner,'component.properties')
+          && declarations.every(p => component.propertyTypes?.[p.property!] === undefined && expected.propertyTypes[p.property!] === undefined)
+          && !Object.values(component.propertyTypes || {}).includes('SLOT') && !Object.values(expected.propertyTypes).includes('SLOT')
+          && !snapshot.nodes.some(n => n.parentId === owner.id && n.type === 'SLOT')) {
+          for (const node of snapshot.nodes) {
+            const available = record(node.variantAvailability);
+            available.targets = {...record(available.targets), [target.semanticRole]:{present:false,referenceState:'absent',evidence:'independent-native-slot-absence-v2'}};
+            node.variantAvailability = available;
+            node.unknownFacts = ((node.unknownFacts || []) as string[]).filter(p => p !== `variantAvailability.targets.${target.semanticRole}.present`);
+          }
+          continue;
+        }
+      }
+    }
     const controls = contract.customizationPolicy.filter(rule => rule.targetId === target.id
       && rule.status !== 'deprecated' && ['allowed', 'constrained'].includes(rule.permission))
       .flatMap(rule => rule.controlPaths.filter(control => control.kind === 'slot-api' && control.target === target.id && control.property))

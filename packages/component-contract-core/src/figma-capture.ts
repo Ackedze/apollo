@@ -29,7 +29,7 @@ export type CaptureSelectionOptions = {
   componentKey: string; acceptedComponentKeys: string[]; allowedComponentProperties: string[];
   platform: string; manualSourceHash: string; captureTransitionContext?: boolean; expectedRootNodeId?: string;
   componentDependencyKeys?: string[]; directChildDependenciesVersion?:1; representations?: ComponentRepresentation[]; nativeSlotCapturePlan?: NativeSlotCapturePlan;
-  instanceMainComponentAliasesVersion?:1; includePreview?:boolean;
+  instanceMainComponentAliasesVersion?:1; portableSwapIdentityVersion?:1; includePreview?:boolean;
   onTiming?:(stage:string,durationMs:number)=>void;
 };
 const transitionSessionId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -777,6 +777,16 @@ export function appendUnmatchedBaselineWarning(warnings: string[], unmatchedNode
   return diagnostic;
 }
 
+export async function captureSwapComponentKeys(reference: NonNullable<PreviewSnapshot['variantReference']>, resolve: (id:string)=>Promise<BaseNode|null>):Promise<Record<string,string>> {
+  const keys: Record<string,string> = {};
+  const ids = [...new Set(Object.values(reference.nodeProperties).flatMap(n => Object.entries(n.propertyTypes).filter(([,t])=>t==='INSTANCE_SWAP').map(([p])=>n.properties[p])).filter((id):id is string=>typeof id==='string'))];
+  let next = 0;
+  await Promise.all(Array.from({length:Math.min(6,ids.length)},async()=>{
+    while(next<ids.length){const id=ids[next++];try{const node=await resolve(id);if(node?.type==='COMPONENT' && node.id===id && /^[a-f0-9]{40}$/.test(node.key))keys[id]=node.key;}catch{ /* Unresolved identities stay UNKNOWN. */ }}
+  }));
+  return keys;
+}
+
 export async function captureInstanceAudit(subject: InstanceNode, message: CaptureSelectionOptions) {
   const timed = async <T>(stage:string, work:()=>T|Promise<T>):Promise<T> => {
     const started = Date.now();
@@ -823,11 +833,16 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
     }
     const independentReference=captureVariantReference(baseline.snapshot,main.key,componentSetKey,
       Object.keys((main.parent?.type==='COMPONENT_SET'?main.parent:main).componentPropertyDefinitions));
+    let swapComponentKeys: Record<string,string> | undefined;
+    if (message.portableSwapIdentityVersion === 1) {
+      swapComponentKeys = await captureSwapComponentKeys(independentReference, id => figma.getNodeByIdAsync(id));
+    }
     const requestedPlan=message.nativeSlotCapturePlan;
     const boundaries=requestedPlan?.manualSourceHash===message.manualSourceHash?
       confirmedNativeSlotCaptureBoundaries(requestedPlan,independentReference,representation?.id||'',main.key,componentSetKey):[];
     const actual = await timed('actual', () => collectNodes(subject, platform, modes,boundaries.length?{manualSourceHash:message.manualSourceHash,boundaries}:undefined));
     if (actual.snapshot.source) {
+      if (swapComponentKeys) actual.snapshot.source.swapComponentKeys = swapComponentKeys;
       actual.snapshot.source.componentKey = main.key;
       actual.snapshot.source.componentSetKey = componentSetKey;
       if (representation) actual.snapshot.source.representationId = representation.id;

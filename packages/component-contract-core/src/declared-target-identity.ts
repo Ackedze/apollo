@@ -60,7 +60,27 @@ export function publicSwapDeclaredTargetReferenceHash(reference: NonNullable<Pre
     referenceHash: configurationDeclaredTargetReferenceHash(projectPublicSwapReference(reference, shape))});
 }
 
-function contractConfigurationHash(reference: NonNullable<PreviewSnapshot['variantReference']>, contract: CompiledContract): string | undefined {
+/** Preserve every swap value, including hidden ports; only independently resolved local IDs become published keys. */
+export function portableSwapDeclaredTargetReferenceHash(reference: NonNullable<PreviewSnapshot['variantReference']>, swapComponentKeys: Record<string,string> = {}): string | undefined {
+  const projected = JSON.parse(JSON.stringify(reference));
+  const keys = record(swapComponentKeys);
+  const normalize = (properties: Record<string, any>, types: Record<string, any>): boolean => {
+    for (const [name, type] of Object.entries(types)) if (type === 'INSTANCE_SWAP') {
+      const value = properties[name], key = typeof value === 'string' ? keys[value] : undefined;
+      if (typeof key !== 'string' || !/^[a-f0-9]{40}$/.test(key)) return false;
+      properties[name] = { componentKey: key };
+    }
+    return true;
+  };
+  if (!normalize(record(projected.properties), record(projected.propertyTypes))) return;
+  for (const data of Object.values(record(projected.nodeProperties))) {
+    if (!normalize(record(record(data).properties), record(record(data).propertyTypes))) return;
+  }
+  return stableHash({schemaVersion:'apollo.portable-swap-reference.v1',referenceHash:configurationDeclaredTargetReferenceHash(projected)});
+}
+
+function contractConfigurationHash(reference: NonNullable<PreviewSnapshot['variantReference']>, contract: CompiledContract, keys?: Record<string,string>): string | undefined {
+  if (contract.runtimePolicy.portableSwapIdentityVersion === 1 && contract.facts.targets.some(t => t.identityBindingsV1?.some(b => b.componentKey === reference.componentKey && b.portableSwapReferenceHash))) return portableSwapDeclaredTargetReferenceHash(reference, keys);
   if (contract.runtimePolicy.declaredTargetConfigurationVersion === 2) return publicSwapDeclaredTargetReferenceHash(reference, {targets: contract.facts.targets, policies: contract.customizationPolicy, representations: contract.facts.representations});
   if (contract.runtimePolicy.declaredTargetConfigurationVersion === 1) return configurationDeclaredTargetReferenceHash(reference);
 }
@@ -74,12 +94,13 @@ function configuredReferencePath(reference: NonNullable<PreviewSnapshot['variant
   return binding.referencePath;
 }
 
-type Shape = { version?: unknown; configurationVersion?: unknown; targets: SemanticTarget[]; representations: ManualSource['representations'] };
+type Shape = { version?: unknown; configurationVersion?: unknown; portableSwapVersion?: unknown; targets: SemanticTarget[]; representations: ManualSource['representations'] };
 /** Technical authoring shape only. Locator validity does not prove a live target. */
 export function declaredTargetIdentityErrors(shape: Shape): string[] {
   const bindings = shape.targets.flatMap(t => t.identityBindingsV1 === undefined ? [] : [t.identityBindingsV1]);
   if (shape.version === undefined && shape.configurationVersion === undefined && !bindings.length) return [];
   const errors: string[] = [];
+  if (shape.portableSwapVersion !== undefined && (shape.portableSwapVersion !== 1 || shape.configurationVersion !== 1 || shape.version !== 3)) errors.push('portable swap identity requires explicit version 1, configuration v1 and native identity v3');
   if (shape.configurationVersion !== undefined && (shape.configurationVersion !== 1 && shape.configurationVersion !== 2 || shape.version !== 3)) errors.push('declared target configuration requires version 1 or 2 and identity policy v3');
   if (typeof shape.version !== 'number' || ![1,2,3].includes(shape.version)) errors.push('declared target bindings require explicit supported policy version 1, 2 or 3');
   if (!bindings.length) errors.push('declared target policy requires explicit bindings');
@@ -91,7 +112,7 @@ export function declaredTargetIdentityErrors(shape: Shape): string[] {
     if (!Array.isArray(target.identityBindingsV1) || !target.identityBindingsV1.length) { errors.push('target bindings must be a nonempty array'); continue; }
     const keys = new Set<string>();
     for (const b of target.identityBindingsV1) {
-      if (!closed(b,['representationId','componentKey','componentSetKey','referenceHash','referencePath','nodeType'],[1,2].includes(Number(shape.configurationVersion)) ? ['nativeSource','portableReferenceHash','configurationReferenceHash'] : shape.version === 2 || shape.version === 3 ? ['nativeSource','portableReferenceHash'] : ['nativeSource'])
+      if (!closed(b,['representationId','componentKey','componentSetKey','referenceHash','referencePath','nodeType'],[1,2].includes(Number(shape.configurationVersion)) ? ['nativeSource','portableReferenceHash','configurationReferenceHash', ...(shape.portableSwapVersion === 1 ? ['portableSwapReferenceHash','absent'] : [])] : shape.version === 2 || shape.version === 3 ? ['nativeSource','portableReferenceHash'] : ['nativeSource'])
         || !text(b.representationId) || !text(b.componentKey) || typeof b.componentSetKey !== 'string'
         || !/^[a-f0-9]{64}$/.test(b.referenceHash) || b.portableReferenceHash !== undefined && !/^[a-f0-9]{64}$/.test(b.portableReferenceHash) || typeof b.referencePath !== 'string'
         || b.referencePath !== b.referencePath.trim() || !types.has(b.nodeType)
@@ -100,6 +121,8 @@ export function declaredTargetIdentityErrors(shape: Shape): string[] {
         errors.push('malformed typed declared target binding'); continue;
       }
       if ([1,2].includes(Number(shape.configurationVersion)) && (!/^[a-f0-9]{64}$/.test(b.configurationReferenceHash || '') || !b.portableReferenceHash)) errors.push('configuration binding requires exact portable and configuration SHA256 pins');
+      if (b.portableSwapReferenceHash !== undefined && !/^[a-f0-9]{64}$/.test(b.portableSwapReferenceHash)) errors.push('portable swap binding requires an exact SHA256 pin');
+      if (b.absent !== undefined && (b.absent !== true || !b.portableSwapReferenceHash || !b.referencePath)) errors.push('absence binding requires an explicit portable pin and non-root source path');
       const key = JSON.stringify([b.representationId,b.componentKey,b.componentSetKey]);
       if (keys.has(key)) errors.push('duplicate selected-variant target binding'); keys.add(key);
       if (b.referencePath === '') {
@@ -115,11 +138,12 @@ export function assertDeclaredTargetContract(contract: CompiledContract): void {
   contract = sharedUsageContract(contract);
   const errors = declaredTargetIdentityErrors({ version:contract.runtimePolicy.declaredTargetIdentityVersion,
     configurationVersion:contract.runtimePolicy.declaredTargetConfigurationVersion,
+    portableSwapVersion:contract.runtimePolicy.portableSwapIdentityVersion,
     targets:contract.facts.targets, representations:contract.facts.representations });
   if (contract.runtimePolicy.declaredTargetIdentityVersion !== undefined && !contract.facts.variantEvidence) errors.push('independent variant anatomy is required');
   if ([1,2,3].includes(contract.runtimePolicy.declaredTargetIdentityVersion || 0)) {
     for (const target of contract.facts.targets) if (!contract.capabilities.facts.includes(`declaredTargetMembershipV1.${declaredTargetMembershipKey(target.id)}`)) errors.push('declared membership capability missing');
-    const exporter = contract.runtimePolicy.nativeInstanceReplacementsVersion === 1 ? 'component-contract-editor@0.2.108' : contract.runtimePolicy.declaredTargetConfigurationVersion === 2 ? 'component-contract-editor@0.2.103' : contract.runtimePolicy.declaredTargetConfigurationVersion === 1 ? 'component-contract-editor@0.2.99' : contract.runtimePolicy.declaredTargetIdentityVersion === 3 ? 'component-contract-editor@0.2.95' : contract.runtimePolicy.textContentFactsVersion === 1 || contract.runtimePolicy.nativeTargetPropertyFactsVersion === 1 ? 'component-contract-editor@0.2.94' : contract.runtimePolicy.declaredTargetIdentityVersion === 2 ? 'component-contract-editor@0.2.93' : 'component-contract-editor@0.2.92';
+    const exporter = contract.runtimePolicy.nativeSlotTargetsVersion === 2 ? 'component-contract-editor@0.2.110' : contract.runtimePolicy.portableSwapIdentityVersion === 1 ? 'component-contract-editor@0.2.109' : contract.runtimePolicy.nativeInstanceReplacementsVersion === 1 ? 'component-contract-editor@0.2.108' : contract.runtimePolicy.declaredTargetConfigurationVersion === 2 ? 'component-contract-editor@0.2.103' : contract.runtimePolicy.declaredTargetConfigurationVersion === 1 ? 'component-contract-editor@0.2.99' : contract.runtimePolicy.declaredTargetIdentityVersion === 3 ? 'component-contract-editor@0.2.95' : contract.runtimePolicy.textContentFactsVersion === 1 || contract.runtimePolicy.nativeTargetPropertyFactsVersion === 1 ? 'component-contract-editor@0.2.94' : contract.runtimePolicy.declaredTargetIdentityVersion === 2 ? 'component-contract-editor@0.2.93' : 'component-contract-editor@0.2.92';
     if (contract.package.sourceExportVersion !== exporter) errors.push('declared target exporter compatibility stamp missing');
     if (contract.rules.some(rule => {
       const inspect = (value: any): boolean => Array.isArray(value) ? value.some(inspect) : value && typeof value === 'object'
@@ -133,7 +157,7 @@ export function assertDeclaredTargetContract(contract: CompiledContract): void {
 }
 
 type TargetFact = { targetId: string; semanticRole: string; status: 'resolved' | 'unknown' | 'ambiguous'; reason: string;
-  nodeId?: string; nodeType?: string; present?: true; effectiveVisible?: boolean; referencePath?: string };
+  nodeId?: string; nodeType?: string; present?: boolean; effectiveVisible?: boolean; referencePath?: string };
 type Ledger = { schemaVersion: typeof DECLARED_TARGET_IDENTITY_SCHEMA; manualSourceHash: string; referenceHash?: string; portableReferenceHash?: string; configurationReferenceHash?: string; targets: TargetFact[] };
 
 /** Complete rooted chains are checked without names, ordering or diagnostic roles. */
@@ -198,7 +222,9 @@ function sourceMatches(node: Record<string, any>, path: string, binding: Pick<De
   while (parent && reference.nodes.find(n => n.path === parent)?.type !== 'INSTANCE') parent = parent.split(' / ').slice(0,-1).join(' / ');
   const refOwner = reference.nodeProperties[parent]?.identity;
   if (refOwner?.componentKey !== expected.ownerComponentKey || refOwner.mainComponentId !== independentlyCaptured.ownerMainComponentId
-    || refOwner.mainComponentId !== identity.mainComponentId || !portable && refOwner.mainComponentId !== expected.ownerMainComponentId) return false;
+    || refOwner.mainComponentId !== identity.mainComponentId && (snapshot.source?.instanceMainComponentAliasesVersion !== 1
+      || unknown(owner,'component.identity.componentSetKey') || (refOwner.componentSetKey || '') !== (identity.componentSetKey || ''))
+    || !portable && refOwner.mainComponentId !== expected.ownerMainComponentId) return false;
   if (owner === topology.root) return parent === '';
   // Equal component variants can occur in different branches; prove each native owner occurrence up to the root.
   const ownerSource = reference.nodeProperties[parent]?.sourceIdentity;
@@ -230,8 +256,9 @@ export function materializeNativeTargetProperties(snapshot: PreviewSnapshot, con
     const bindings = target.identityBindingsV1?.filter(b => b.representationId === reps[0].id && b.componentKey === ref.componentKey && b.componentSetKey === ref.componentSetKey) || [];
     if (bindings.length !== 1) continue;
     const b = bindings[0], portable = [2,3].includes(contract.runtimePolicy.declaredTargetIdentityVersion || 0) && b.portableReferenceHash !== undefined;
-    const configurationHash = contractConfigurationHash(ref, contract), referencePath = configuredReferencePath(ref, b, contract);
-    if (configurationHash ? b.configurationReferenceHash !== configurationHash
+    const configurationHash = contractConfigurationHash(ref, contract, snapshot.source?.swapComponentKeys), referencePath = configuredReferencePath(ref, b, contract);
+    if (b.portableSwapReferenceHash && !configurationHash) continue;
+    if (configurationHash ? (b.portableSwapReferenceHash || b.configurationReferenceHash) !== configurationHash
       : portable ? b.portableReferenceHash !== portableDeclaredTargetReferenceHash(ref) : b.referenceHash !== stableHash(ref)) continue;
     const candidates = snapshot.nodes.filter(n => referencePath === '' ? n === root : sourceMatches(n, referencePath, b, snapshot, topology, portable));
     if (candidates.length !== 1 || candidates[0].type !== b.nodeType) continue;
@@ -291,7 +318,7 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
   const refHash = ref ? stableHash(ref) : undefined; ledger.referenceHash = refHash;
   const portableHash = ref && [2,3].includes(contract.runtimePolicy.declaredTargetIdentityVersion || 0) ? portableDeclaredTargetReferenceHash(ref) : undefined;
   if (portableHash) ledger.portableReferenceHash = portableHash;
-  const configurationHash = ref ? contractConfigurationHash(ref, contract) : undefined;
+  const configurationHash = ref ? contractConfigurationHash(ref, contract, snapshot.source?.swapComponentKeys) : undefined;
   if (configurationHash) ledger.configurationReferenceHash = configurationHash;
   let independent: PreviewSnapshot | undefined;
   const configuredEvidence=()=>{
@@ -310,7 +337,18 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
     if (bindings.length !== 1) {fact.status=bindings.length>1?'ambiguous':'unknown';fact.reason='selected-binding-unavailable';continue;}
     const b = bindings[0], referencePath = configuredReferencePath(ref!, bindings[0], contract);
     const portable = [2,3].includes(contract.runtimePolicy.declaredTargetIdentityVersion || 0) && b.portableReferenceHash !== undefined;
-    if (configurationHash ? b.configurationReferenceHash !== configurationHash : portable ? b.portableReferenceHash !== portableHash : b.referenceHash !== refHash) {fact.reason='reference-pin-stale';continue;}
+    if (b.portableSwapReferenceHash && !configurationHash) {fact.reason='swap-identity-unavailable';continue;}
+    if (configurationHash ? (b.portableSwapReferenceHash || b.configurationReferenceHash) !== configurationHash : portable ? b.portableReferenceHash !== portableHash : b.referenceHash !== refHash) {fact.reason='reference-pin-stale';continue;}
+    if (b.absent === true) {
+      const parent = referencePath.split(' / ').slice(0,-1).join(' / ');
+      const anchors = snapshot.nodes.filter(n => paths.get(String(n.id)) !== undefined
+        && comparison?.referencePaths?.[paths.get(String(n.id))!] === parent && sourceMatches(n,parent,b,snapshot,topology!,portable));
+      if (comparison?.complete && availability?.status !== 'unknown' && target.pathHint?.split(' / ').slice(1).join(' / ') === referencePath
+        && anchors.length === 1 && !ref!.nodes.some(n => n.path === referencePath) && !comparison.boundaries.some(n => withinBoundary(referencePath,n.referencePath))) {
+        Object.assign(fact,{status:'resolved',reason:'exact-independent-native-absence',present:false,referencePath});
+      }
+      continue;
+    }
     const referenceNodes = ref!.nodes.filter(n => n.path === referencePath && n.type === (referencePath === '' ? 'ROOT' : b.nodeType));
     if (referenceNodes.length !== 1 || contract.runtimePolicy.declaredTargetIdentityVersion !== 3
       && comparison?.boundaries.some(boundary => withinBoundary(referencePath,boundary.referencePath))) {fact.reason='independent-correspondence-unavailable';continue;}
@@ -353,9 +391,9 @@ export function materializeDeclaredTargetIdentities(snapshot: PreviewSnapshot, c
       const key = declaredTargetMembershipKey(fact.targetId);
       if (fact.status === 'resolved') {
         membership[key] = fact.nodeId === node.id;
-        targets[fact.semanticRole] = {resolved:true,present:true}; availabilityFacts[fact.semanticRole] = {present:true};
-        relations[fact.semanticRole] = fact.nodeId!;
-        if (fact.effectiveVisible !== undefined) targets[fact.semanticRole].visibilityKnown = true;
+        targets[fact.semanticRole] = {resolved:true,present:fact.present !== false}; availabilityFacts[fact.semanticRole] = {present:fact.present !== false};
+        if (fact.nodeId) relations[fact.semanticRole] = fact.nodeId;
+        if (fact.present === false || fact.effectiveVisible !== undefined) targets[fact.semanticRole].visibilityKnown = true;
         else missing.add(`semanticTargets.${fact.semanticRole}.visibilityKnown`);
         if (fact.nodeId === node.id && !record(node.semantic).role) record(node.semantic).role = fact.semanticRole;
       } else {

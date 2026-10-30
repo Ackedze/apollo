@@ -538,7 +538,7 @@ function sourceCapabilities(rule: RuleIr): CompiledContract['capabilities'] {
 }
 
 export function compileManualSource(manual: ManualSource, variantEvidence?: VariantEvidence, dependencyContracts: CompiledContract[] = []): CompileResult {
-  const identityErrors = declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,targets:manual.targets,representations:manual.representations});
+  const identityErrors = declaredTargetIdentityErrors({version:manual.metadata.declaredTargetIdentityVersion,configurationVersion:manual.metadata.declaredTargetConfigurationVersion,portableSwapVersion:manual.metadata.portableSwapIdentityVersion,targets:manual.targets,representations:manual.representations});
   if (manual.metadata.declaredTargetIdentityVersion !== undefined && !variantEvidence) identityErrors.push('independent variant anatomy is required');
   if (identityErrors.length) throw Object.assign(new Error('DECLARED_TARGET_IDENTITY_UNSUPPORTED: ' + identityErrors.join('; ')),{code:'DECLARED_TARGET_IDENTITY_UNSUPPORTED'});
   if (variantEvidence) {
@@ -1026,7 +1026,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
           .filter((path): path is string => !!path).map(path => path.split(' / ').slice(1).join(' / '));
         return Object.values(variantEvidence?.structures || {}).some(nodes =>
           nodes.some(node => node.type === 'SLOT' && paths.includes(node.path)));
-      })) ? { nativeSlotTargetsVersion: 1 as const } : {}),
+      })) ? { nativeSlotTargetsVersion: manual.metadata.nativeSlotTargetsVersion === 2 ? 2 as const : 1 as const } : {}),
       ...(configurations || semanticTargetVisibility || manual.rules.some(rule => rule.boundaryPolicy || rule.targetApplicability || rule.constraints.some(c => c.mapping || (c.type==='propertyForbidden' && c.targetRoles?.length))) ? { ruleScopeFactsVersion: 1 as const } : {}),
       ...(semanticTargetVisibility ? { semanticTargetVisibilityVersion: 1 as const } : {}),
       ...(transitions.length ? { transitionFactsVersion: 1 as const } : {}),
@@ -1063,6 +1063,11 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
   }
 
   if (contract.runtimePolicy.nativeInstanceReplacementsVersion===1) contract.package.sourceExportVersion='component-contract-editor@0.2.108';
+  if (manual.metadata.portableSwapIdentityVersion === 1) {
+    contract.runtimePolicy.portableSwapIdentityVersion = 1;
+    contract.package.sourceExportVersion = 'component-contract-editor@0.2.109';
+  }
+  if (contract.runtimePolicy.nativeSlotTargetsVersion === 2) contract.package.sourceExportVersion = 'component-contract-editor@0.2.110';
   return decorateDependencyUsages(manual, { contract, issues });
 }
 

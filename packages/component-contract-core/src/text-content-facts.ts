@@ -15,7 +15,7 @@ export function assertNativeRuleFactPolicies(contract: CompiledContract): void {
   for (const [prefix, version] of [['textContentV1.', contract.runtimePolicy.textContentFactsVersion],
     ['nativeTargetPropertiesV1.', contract.runtimePolicy.nativeTargetPropertyFactsVersion]] as const) {
     if (version !== undefined && version !== 1 || [...facts].some(f => f.startsWith(prefix)) && version !== 1
-      || version === 1 && contract.package.sourceExportVersion !== (contract.runtimePolicy.declaredTargetConfigurationVersion === 2 ? 'component-contract-editor@0.2.103' : contract.runtimePolicy.declaredTargetConfigurationVersion === 1 ? 'component-contract-editor@0.2.99' : contract.runtimePolicy.declaredTargetIdentityVersion === 3 ? 'component-contract-editor@0.2.95' : 'component-contract-editor@0.2.94'))
+      || version === 1 && contract.package.sourceExportVersion !== (contract.runtimePolicy.nativeSlotTargetsVersion === 2 ? 'component-contract-editor@0.2.110' : contract.runtimePolicy.portableSwapIdentityVersion === 1 ? 'component-contract-editor@0.2.109' : contract.runtimePolicy.declaredTargetConfigurationVersion === 2 ? 'component-contract-editor@0.2.103' : contract.runtimePolicy.declaredTargetConfigurationVersion === 1 ? 'component-contract-editor@0.2.99' : contract.runtimePolicy.declaredTargetIdentityVersion === 3 ? 'component-contract-editor@0.2.95' : 'component-contract-editor@0.2.94'))
       throw new Error('NATIVE_RULE_FACT_POLICY_UNSUPPORTED');
   }
 }

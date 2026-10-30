@@ -254,7 +254,7 @@ async function audit(requestId: string, options:any={}) {
           directChildDependenciesVersion: contract.runtimePolicy.directChildDependenciesVersion,
           instanceMainComponentAliasesVersion: contract.runtimePolicy.instanceMainComponentAliasesVersion,
           representations: contract.facts.representations, allowedComponentProperties: allowedComponentPropertyNames(contract), platform: contract.facts.component.platform,
-          manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
+          portableSwapIdentityVersion: contract.runtimePolicy.portableSwapIdentityVersion, manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
           onTiming:(stage,durationMs)=>timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id}),
           captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 });
       } catch (error) { assertCurrent(); gap('capture-failed', error instanceof Error ? error.message : String(error)); continue; }

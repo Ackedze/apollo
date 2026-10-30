@@ -38,6 +38,46 @@ test('ownership records the exact declared part, independent reference and curre
   assert.equal(JSON.stringify(f), before);
 });
 
+function hiddenPartAudit() {
+  const f = fixture(1), part = f.snapshot.nodes[1];
+  f.snapshot.source.captureTopology = { complete:true, limitReached:false, issues:[] };
+  part.semantic.role = 'part-0';
+  part.visible = false; f.sync();
+  const rule = f.contract.rules[0], policy = f.contract.customizationPolicy[0];
+  rule.select.traverse = 'self-and-descendants';
+  rule.select.where = [{predicate:'equals',actual:{fact:'semantic.role'},expected:{literal:'part-0'},missingPolicy:'unknown'}];
+  policy.targetId = 'part-0'; policy.targetScope = 'self';
+  return { ...f, part, audit: () => require('../dist/runtime.cjs').auditContractSnapshot(f.snapshot,f.contract) };
+}
+test('a proven hidden target retains its raw not-applicable verdict without an empty-selector coverage gap', () => {
+  const f = hiddenPartAudit(), before = JSON.stringify(f.snapshot), result = f.audit();
+  assert.equal(result.engine.evaluations[0].classification,'not-applicable');
+  assert.equal(result.engine.evaluations[0].trace.reason,'selector matched no visible nodes');
+  assert.equal(result.coverage.executionComplete,true);
+  assert.equal(result.hiddenTargetScopes[0].nodeId,f.part.id);
+  assert.equal(JSON.stringify(f.snapshot),before);
+});
+for (const [name, edit] of [
+  ['missing independent reference', f=>delete f.snapshot.variantReference],
+  ['incomplete independent reference', f=>f.snapshot.variantReference.complete=false],
+  ['unknown visibility', f=>f.part.unknownFacts.push('visible')],
+  ['unknown ancestor visibility', f=>f.snapshot.nodes[0].unknownFacts=['visible']],
+  ['missing target', f=>{f.snapshot.nodes.splice(1,1);f.snapshot.nodes[0].childIds=[];}],
+  ['changed source identity', f=>f.part.component.identity.componentKey='foreign'],
+  ['unresolved target', f=>f.contract.facts.targets[1].resolution='unknown'],
+  ['visibility requirement', f=>{f.contract.customizationPolicy[0].capability='visibility';f.contract.rules[0].assert.actual.fact='visible';}],
+]) test(name+' cannot turn an empty selector into complete hidden-target coverage',()=>{
+  const f=hiddenPartAudit();edit(f);const result=f.audit();
+  assert.equal(result.coverage.executionComplete,false);
+  assert.equal(result.hiddenTargetScopes?.length||0,0);
+});
+test('a visible target still executes its assertion; unrelated missing facts are not hidden',()=>{
+  const f=hiddenPartAudit();f.part.visible=true;f.part.appearance={opacity:0.5};
+  const result=f.audit();assert.equal(result.engine.evaluations[0].classification,'violation');
+  assert.equal(result.hiddenTargetScopes?.length||0,0);
+  delete f.part.appearance.opacity;assert.equal(f.audit().coverage.executionComplete,false);
+});
+
 test('declared external content cannot be reclassified as an internal part', () => {
   const f = fixture(1);
   f.contract.customizationPolicy[0].controlPaths = [{ kind: 'slot-api', target: 'part-0', contentOwnership: 'external' }];

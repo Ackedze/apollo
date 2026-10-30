@@ -18,6 +18,40 @@ const record = (value: unknown): Record<string, any> => value && typeof value ==
 const unknown = (node: Record<string, unknown>, fact: string) => ((node.unknownFacts || []) as string[])
   .some(path => path === fact || fact.startsWith(path + '.') || path.startsWith(fact + '.'));
 
+/** Coverage evidence only. A known hidden target is not a missing target;
+ * assertions, including presence/visibility violations, remain untouched. */
+export function hiddenContractTarget(snapshot: PreviewSnapshot, contract: CompiledContract, targetId: string) {
+  const paths = snapshotPaths(snapshot), reference = snapshot.variantReference;
+  if (!paths || !reference?.complete || snapshot.selection.length !== 1 || snapshot.source?.truncated
+    || snapshot.source?.captureTopology?.complete !== true || snapshot.source.captureTopology.limitReached
+    || snapshot.source.captureTopology.issues?.length) return;
+  const target = contract.facts.targets.find(t => t.id === targetId && t.resolution === 'resolved');
+  if (!target) return;
+  const available = variantAvailability(snapshot, contract), resolved = available.targets[target.semanticRole];
+  if (available.status === 'unknown' || resolved?.state !== 'present') return;
+  const comparison = compareInstanceBoundaries(snapshot, reference);
+  const matches = snapshot.nodes.filter(n => correspondingPath(comparison, paths.get(String(n.id))!) === resolved.path);
+  if (matches.length !== 1 || snapshot.selection.includes(String(matches[0].id))) return;
+  const node = matches[0], path = paths.get(String(node.id))!;
+  if (comparison.boundaries.some(b => withinBoundary(path, b.actualPath))) return;
+  if (contract.runtimePolicy.declaredTargetIdentityVersion) {
+    const identity = record(record(snapshot).declaredTargetIdentitiesV1).targets?.filter((t: Record<string, unknown>) => t.targetId === targetId);
+    if (identity?.length !== 1 || identity[0].status !== 'resolved' || identity[0].present !== true
+      || identity[0].nodeId !== node.id || identity[0].effectiveVisible !== false) return;
+  }
+  const byId = new Map(snapshot.nodes.map(n => [String(n.id), n]));
+  let ancestor: typeof node | undefined = node, hidden = false;
+  while (ancestor) {
+    if (unknown(ancestor, 'visible') || unknown(ancestor, 'visibility.effective')
+      || unknown(ancestor, 'parentId') || unknown(ancestor, 'type')
+      || typeof ancestor.visible !== 'boolean') return;
+    hidden ||= ancestor.visible === false;
+    ancestor = ancestor.parentId === null ? undefined : byId.get(String(ancestor.parentId));
+  }
+  return hidden ? { targetId, nodeId: String(node.id), referencePath: resolved.path,
+    reason: 'exact independent target is effectively hidden', manualSourceHash: contract.package.manualSourceHash } : undefined;
+}
+
 /** Attribution only. A declared semantic part needs independent correspondence;
  * this never executes rules, hides host gaps or grants a library baseline. */
 export function collectContractOwnedParts(snapshot: PreviewSnapshot, contract: CompiledContract): OwnedAreaPart[] {

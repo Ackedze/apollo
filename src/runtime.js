@@ -3,7 +3,7 @@ const engine = require('@apollo/predicate-engine');
 const dependencies = require('@apollo/component-contract-dependencies');
 const { CONTRACT_SCHEMA, assertRuntimeContract, contractEvaluationMode, collectContractKeys, collectContractRules, collectContractDependencies } = require("./contract-profile");
 const authoring = require("./authoring-source");
-const { collectContractOwnedParts } = require('./area-ownership');
+const { collectContractOwnedParts, hiddenContractTarget } = require('./area-ownership');
 const RUNTIME_VERSION = '0.4.1';
 
 function loadRuntimeContract(contract, options) {
@@ -58,9 +58,22 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     }
     snapshot = proof.snapshot;
     ownerBaseline = proof.ownerBaseline;
-    const parentResult = core.evaluateCompiledContract(owner.snapshot, owner.evaluationMode === 'authoring-preview'
-      ? core.prepareAuthoringPreviewContract(parent) : parent);
-    for (const evaluation of parentResult.evaluations) {
+    // Baseline facts retain the enclosing authority, but child guards operate
+    // in child-relative coordinates (not the parent's reference path).
+    const prefix = ownerBaseline?.[snapshot.selection[0]]?.provenance?.referencePath;
+    if (typeof prefix === 'string' && prefix) for (const baseline of Object.values(ownerBaseline)) {
+      const path = baseline.provenance?.referencePath;
+      if (typeof path === 'string' && (path === prefix || path.startsWith(prefix + ' / '))) {
+        baseline.provenance = { ...baseline.provenance, enclosingReferencePath: path,
+          referencePath: path === prefix ? '' : path.slice(prefix.length + 3) };
+      }
+    }
+    const hasOwnerFillConstraint = parent.customizationPolicy.some(policy => policy.status !== 'deprecated'
+      && policy.permission === 'constrained' && policy.capability === 'appearance.fill'
+      && (policy.targetScope || 'self') === 'self');
+    const parentEvaluations = hasOwnerFillConstraint ? core.evaluateCompiledContract(owner.snapshot,
+      owner.evaluationMode === 'authoring-preview' ? core.prepareAuthoringPreviewContract(parent) : parent).evaluations : [];
+    for (const evaluation of parentEvaluations) {
       if (evaluation.applicability !== 'applicable' || !['compliant', 'violation'].includes(evaluation.classification)) continue;
       const ir = parent.rules.find(rule => rule.ruleId === evaluation.ruleId);
       const policy = parent.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
@@ -90,8 +103,25 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     ruleId: entry.id, route: entry.execution.route,
   }));
   const missingRules = contract.rules.filter((rule) => !result.evaluations.some((entry) => entry.ruleId === rule.ruleId)).map((rule) => rule.ruleId);
+  const hiddenTargetScopes = [];
+  let checkedSnapshot;
+  for (const entry of result.evaluations) {
+    if (entry.classification !== 'not-applicable' || entry.applicability !== 'not-applicable'
+      || entry.trace?.reason !== 'selector matched no visible nodes') continue;
+    const ir = contract.rules.find(rule => rule.ruleId === entry.ruleId);
+    const policy = contract.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
+    // Never exempt a recursive, presence or visibility assertion by its label.
+    if (!policy || (policy.targetScope || 'self') !== 'self' || policy.capability === 'visibility'
+      || !['matches-effective-baseline','one-of','equals'].includes(ir.assert?.predicate)
+      || ir.assert?.actual?.fact === 'visible') continue;
+    checkedSnapshot ||= core.prepareValidationSnapshot(snapshot, contract);
+    const proof = hiddenContractTarget(checkedSnapshot, contract, policy.targetId);
+    if (proof) hiddenTargetScopes.push({ ruleId: entry.ruleId, ...proof });
+  }
+  const hiddenRules = new Set(hiddenTargetScopes.map(proof => proof.ruleId));
   const uncertain = result.evaluations.filter((entry) => !['compliant', 'allowed', 'violation', 'not-applicable'].includes(entry.classification)
-    || entry.trace?.reason === 'selector matched no visible nodes' || entry.trace?.reason === 'rule authority is not active'
+    || entry.trace?.reason === 'selector matched no visible nodes' && !hiddenRules.has(entry.ruleId)
+    || entry.trace?.reason === 'rule authority is not active'
     || contract.runtimePolicy.memberCollectionsVersion === 1 && entry.collection?.missing?.length
       && !(entry.applicability === 'not-applicable' && entry.trace?.truth === 'false')).length;
   const incompleteDependencies = (result.dependencyRuns || []).filter((run) => !['executed', 'not-applicable'].includes(run.status)).length;
@@ -107,6 +137,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
       schemaVersion: contract.schemaVersion, manualSourceHash: contract.package.manualSourceHash,
     },
     engine: result,
+    ...(hiddenTargetScopes.length ? { hiddenTargetScopes } : {}),
     ...(ownerPropertyRules.length ? { ownerFieldConstraints: ownerPropertyRules } : {}),
     coverage: {
       scope: 'compiled-predicate-execution',

@@ -1,17 +1,22 @@
 /** Empty TEXT can expose the base style value while its bound variable resolves in another mode. */
-export async function captureResolvedEmptyText(node: TextNode, mixed: symbol): Promise<{
+import type { CaptureReadControl } from './figma-capture';
+export async function captureResolvedEmptyText(node: TextNode, mixed: symbol, readControl?: CaptureReadControl): Promise<{
   text: Record<string, any>; unknownFacts: string[];
 }> {
+  readControl?.guard();
   const result = {text:{} as Record<string,any>,unknownFacts:[] as string[]};
   if (node.characters !== '') return result;
   for (const field of ['fontFamily','letterSpacing'] as const) {
+    readControl?.guard();
     const fact = field === 'fontFamily' ? 'text.fontName' : 'text.letterSpacing';
     try {
       const binding = node.boundVariables?.[field];
       if (binding === undefined) continue;
       const aliases = Array.isArray(binding) ? binding : [binding];
       if (aliases.length !== 1 || aliases[0]?.type !== 'VARIABLE_ALIAS' || !aliases[0].id) throw new Error('ambiguous binding');
-      const variable = await figma.variables.getVariableByIdAsync(aliases[0].id);
+      const work = () => figma.variables.getVariableByIdAsync(aliases[0].id);
+      const variable = await (readControl ? readControl.read(work) : work());
+      readControl?.guard();
       if (!variable) throw new Error('unreadable variable');
       const resolved = variable.resolveForConsumer(node);
       if (field === 'fontFamily') {
@@ -24,7 +29,7 @@ export async function captureResolvedEmptyText(node: TextNode, mixed: symbol): P
           || spacing === mixed || !['PIXELS','PERCENT'].includes((spacing as LetterSpacing).unit)) throw new Error('unresolved spacing');
         result.text.letterSpacing = {unit:(spacing as LetterSpacing).unit,value:resolved.value};
       }
-    } catch { result.unknownFacts.push(fact); }
+    } catch { readControl?.guard();result.unknownFacts.push(fact); }
   }
   return result;
 }

@@ -25,12 +25,40 @@ import type { AnatomyNode, JsonValue, PreviewSnapshot, ComponentRepresentation }
 import type { NativeSlotCapturePlan } from './native-slot-capture';
 import { configureInstanceMainAliases } from './instance-main-aliases';
 
+export type CaptureReadControl = {
+  guard: () => void;
+  read: <T>(work: () => T | Promise<T>) => Promise<T>;
+};
+
+async function captureRead<T>(control: CaptureReadControl | undefined, work: () => T | Promise<T>): Promise<T> {
+  control?.guard();
+  const value = await (control ? control.read(work) : work());
+  control?.guard();
+  return value;
+}
+
+async function captureWork<T>(control: CaptureReadControl | undefined, work: () => T | Promise<T>): Promise<T> {
+  control?.guard();
+  const value = await work();
+  control?.guard();
+  return value;
+}
+
+async function captureAll<T>(control: CaptureReadControl | undefined, workers: Promise<T>[]): Promise<T[]> {
+  if (!control) return Promise.all(workers);
+  // Cancellation must drain sibling finally blocks before their owning scratch page is removed.
+  const settled = await Promise.allSettled(workers);
+  control.guard();
+  return settled.map(result => {if (result.status === 'rejected') throw result.reason;return result.value;});
+}
+
 export type CaptureSelectionOptions = {
   componentKey: string; acceptedComponentKeys: string[]; allowedComponentProperties: string[];
   platform: string; manualSourceHash: string; captureTransitionContext?: boolean; expectedRootNodeId?: string;
   componentDependencyKeys?: string[]; directChildDependenciesVersion?:1; representations?: ComponentRepresentation[]; nativeSlotCapturePlan?: NativeSlotCapturePlan;
   instanceMainComponentAliasesVersion?:1; portableSwapIdentityVersion?:1; includePreview?:boolean;
   onTiming?:(stage:string,durationMs:number)=>void;
+  readControl?: CaptureReadControl;
 };
 const transitionSessionId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 let transitionSequence = 0;
@@ -206,11 +234,12 @@ function textFacts(node: SceneNode): Record<string, JsonValue> {
 }
 
 async function collectSceneNodes(root: SceneNode, platform: string, modes: Record<string, string>,
-  captureScope?: {manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]}, projection: 'full'|'anatomy'|'identity'='full'): Promise<{
+  captureScope?: {manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]}, projection: 'full'|'anatomy'|'identity'='full', readControl?: CaptureReadControl): Promise<{
   anatomy: AnatomyNode[];
   snapshot: PreviewSnapshot;
   nativeInstances: Map<string, InstanceNode>;
 }> {
+  readControl?.guard();
   const identityOnly = projection === 'identity';
   const roleCounts = new Map<string, number>();
   const omissions:NonNullable<NonNullable<PreviewSnapshot['source']>['nativeSlotCaptureScope']>['omissions']=[];
@@ -236,23 +265,24 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
     return {...entry,node:entry.node as SceneNode,role};
   });
   const collectionIds = new Set(identityOnly ? [] : entries.flatMap(entry => Object.keys(entry.node.resolvedVariableModes || {})));
-  const resolvedCollections = (await Promise.all(Array.from(collectionIds).map(async id => {
-    try { return await figma.variables.getVariableCollectionByIdAsync(id); }
-    catch { return null; }
+  const resolvedCollections = (await captureAll(readControl, Array.from(collectionIds).map(async id => {
+    try { return await captureRead(readControl, () => figma.variables.getVariableCollectionByIdAsync(id)); }
+    catch { readControl?.guard(); return null; }
   }))).filter((collection): collection is VariableCollection => Boolean(collection));
   const identities = new Map<string, Record<string, JsonValue>>();
   const mains = new Map<string, ComponentNode>();
   const instances = entries.filter(entry=>entry.node.type === 'INSTANCE');
   let nextIdentity = 0;
-  await Promise.all(Array.from({length:Math.min(6,instances.length)},async()=>{
+  await captureAll(readControl, Array.from({length:Math.min(6,instances.length)},async()=>{
     while (nextIdentity < instances.length) {
+      readControl?.guard();
       const instance = instances[nextIdentity++].node as InstanceNode;
       try {
-        const main = await instance.getMainComponentAsync();
+        const main = await captureRead(readControl, () => instance.getMainComponentAsync());
         if (main) mains.set(instance.id, main);
         if (main) identities.set(instance.id,{componentKey:main.key,mainComponentId:main.id,
           ...(main.parent?.type === 'COMPONENT_SET' ? {componentSetKey:main.parent.key} : {})});
-      } catch { /* Unknown identity stays explicit; never fall back to layer names. */ }
+      } catch { readControl?.guard(); /* Unknown identity stays explicit; never fall back to layer names. */ }
     }
   }));
   const pristineSources = new Map<string, PristineInstanceSource>();
@@ -270,22 +300,24 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
     }
     const sources = Array.from(requested.values());
     let nextSource = 0;
-    await Promise.all(Array.from({length: Math.min(6, sources.length)}, async () => {
+    await captureAll(readControl, Array.from({length: Math.min(6, sources.length)}, async () => {
       while (nextSource < sources.length) {
+        readControl?.guard();
         const index = nextSource++, main = sources[index];
         let pristine: InstanceNode | undefined;
         const diagnostic: {mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}={mainComponentId:main.id,componentKey:main.key,status:'unavailable'};
         try {
+          readControl?.guard();
           pristine=main.createInstance();
           diagnostic.sourceInstanceId=pristine.id;
-          const selected=await pristine.getMainComponentAsync();
+          const selected=await captureRead(readControl, () => pristine!.getMainComponentAsync());
           if (!selected || selected.id!==main.id || selected.key!==main.key) diagnostic.reason='pristine-source-identity-mismatch';
           else {
             const sourceTopology=captureSceneTopology(pristine,500,(entry,index)=>index>0 && (entry.type==='INSTANCE'||entry.type==='SLOT'));
             if (!sourceTopology.complete) diagnostic.reason='incomplete-pristine-source-topology';
             else {pristineSources.set(main.id,{mainComponentId:main.id,componentKey:main.key,topology:sourceTopology});diagnostic.status='captured';}
           }
-        } catch {diagnostic.reason='pristine-source-capture-unavailable';}
+        } catch {readControl?.guard();diagnostic.reason='pristine-source-capture-unavailable';}
         finally {pristine?.remove();}
         sourceCapture[index] = diagnostic;
       }
@@ -295,44 +327,48 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
   const roleToId = new Map(entries.map((entry, index) => [entry.role, `preview:${index}`]));
   const styleKeys = new Map<string, Promise<string | undefined>>();
   const resolveStyleKey = (id: string) => {
-    if (!styleKeys.has(id)) styleKeys.set(id, figma.getStyleByIdAsync(id).then(s => s?.type === 'TEXT' ? s.key : undefined).catch(() => undefined));
+    readControl?.guard();
+    if (!styleKeys.has(id)) styleKeys.set(id, captureRead(readControl, () => figma.getStyleByIdAsync(id)).then(s => s?.type === 'TEXT' ? s.key : undefined).catch(() => {readControl?.guard();return undefined;}));
     return styleKeys.get(id)!;
   };
   const styleEvidence = new Map<string, Record<string, JsonValue>>();
   const fillEvidence = new Map<string, Record<string, JsonValue>>();
   const variableKeys = new Map<string, Promise<string | undefined>>();
   const resolveVariableKey = (id: string) => {
-    if (!variableKeys.has(id)) variableKeys.set(id, figma.variables.getVariableByIdAsync(id)
-      .then(v=>v?.resolvedType==='COLOR'?v.key:undefined).catch(()=>undefined));
+    readControl?.guard();
+    if (!variableKeys.has(id)) variableKeys.set(id, captureRead(readControl, () => figma.variables.getVariableByIdAsync(id))
+      .then(v=>v?.resolvedType==='COLOR'?v.key:undefined).catch(()=>{readControl?.guard();return undefined;}));
     return variableKeys.get(id)!;
   };
   const textEntries = identityOnly ? [] : entries.filter(entry => entry.node.type === 'TEXT');
   let nextText = 0;
   const emptyTextEvidence = new Map<string, Awaited<ReturnType<typeof captureResolvedEmptyText>>>();
   // Only independent reads overlap; pristine instance creation stays sequential.
-  await Promise.all(Array.from({length:Math.min(6,textEntries.length)}, async () => {
+  await captureAll(readControl, Array.from({length:Math.min(6,textEntries.length)}, async () => {
     while (nextText < textEntries.length) {
+      readControl?.guard();
       const node = textEntries[nextText++].node as TextNode;
-      emptyTextEvidence.set(node.id, await captureResolvedEmptyText(node, figma.mixed));
-      styleEvidence.set(node.id, await captureTextStyleEvidence(node, resolveStyleKey));
-      fillEvidence.set(node.id, await captureTextFillEvidence(node, paintFacts, resolveVariableKey));
+      emptyTextEvidence.set(node.id, await captureWork(readControl, () => captureResolvedEmptyText(node, figma.mixed, readControl)));
+      styleEvidence.set(node.id, await captureWork(readControl, () => captureTextStyleEvidence(node, resolveStyleKey)));
+      fillEvidence.set(node.id, await captureWork(readControl, () => captureTextFillEvidence(node, paintFacts, resolveVariableKey)));
     }
   }));
 
   const usageEvidence = new Map<string, HostVariableUsage>();
   const bindingVariables = new Map<string, Promise<{variable:Variable;collection:VariableCollection} | undefined>>();
   const resolveBindingCollection = async (id: string, modes: Record<string, unknown>) => {
+    readControl?.guard();
     if (!bindingVariables.has(id)) bindingVariables.set(id, (async () => {
       try {
-        const variable = await figma.variables.getVariableByIdAsync(id);
+        const variable = await captureRead(readControl, () => figma.variables.getVariableByIdAsync(id));
         if (!variable) return;
         const collection = resolvedCollections.find(c => c.id === variable.variableCollectionId)
-          || await figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId);
+          || await captureRead(readControl, () => figma.variables.getVariableCollectionByIdAsync(variable.variableCollectionId));
         if (!collection || !/^[a-f0-9]{40}$/i.test(collection.key)) return;
         return {variable,collection};
-      } catch { return; }
+      } catch { readControl?.guard(); return; }
     })());
-    const proof = await bindingVariables.get(id)!;
+    const proof = await captureWork(readControl, () => bindingVariables.get(id)!);
     if (!proof) return;
     const mode = modes[proof.collection.id], values = proof.variable.valuesByMode;
     if (typeof mode !== 'string' || !values || !Object.prototype.hasOwnProperty.call(values,mode)) return;
@@ -345,10 +381,11 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
       referencedVariableIds:alias ? [(value as VariableAlias).id] : []};
   };
   let nextUsage = 0;
-  await Promise.all(Array.from({length:identityOnly ? 0 : Math.min(6,entries.length)},async () => {
+  await captureAll(readControl, Array.from({length:identityOnly ? 0 : Math.min(6,entries.length)},async () => {
     while (nextUsage < entries.length) {
+      readControl?.guard();
       const entry = entries[nextUsage++];
-      usageEvidence.set(entry.node.id,await captureHostVariableUsage(entry.node,resolveBindingCollection));
+      usageEvidence.set(entry.node.id,await captureWork(readControl, () => captureHostVariableUsage(entry.node,resolveBindingCollection)));
     }
   }));
 
@@ -516,34 +553,39 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
     if (entry.node.type === 'INSTANCE') nativeInstances.set(entry.figmaNodeId, entry.node as InstanceNode);
   }
   if (!topology.complete) nativeInstances.clear();
+  readControl?.guard();
   return {anatomy:result.anatomy,snapshot:result.snapshot,nativeInstances};
 }
 
 export async function collectNodes(root: SceneNode, platform: string, modes: Record<string, string>,
-  captureScope?: {manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]}): Promise<{anatomy:AnatomyNode[];snapshot:PreviewSnapshot}> {
-  const result = await collectSceneNodes(root, platform, modes, captureScope);
+  captureScope?: {manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]}, readControl?: CaptureReadControl): Promise<{anatomy:AnatomyNode[];snapshot:PreviewSnapshot}> {
+  const result = await collectSceneNodes(root, platform, modes, captureScope, 'full', readControl);
+  readControl?.guard();
   return {anatomy:result.anatomy,snapshot:result.snapshot};
 }
 
 /** Freshness reads keep every native fact; only unused snapshot projection is omitted. */
 export async function collectAnatomy(root:SceneNode,platform:string,modes:Record<string,string>,
-  captureScope?:{manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]}) {
-  const result=await collectSceneNodes(root,platform,modes,captureScope,'anatomy');
+  captureScope?:{manualSourceHash:string;boundaries:NativeSlotCaptureBoundary[]},readControl?:CaptureReadControl) {
+  const result=await collectSceneNodes(root,platform,modes,captureScope,'anatomy',readControl);
+  readControl?.guard();
   return {anatomy:result.anatomy};
 }
 
-export async function applyModes(instance: InstanceNode, modes: Record<string, string>): Promise<string[]> {
+export async function applyModes(instance: InstanceNode, modes: Record<string, string>, readControl?: CaptureReadControl): Promise<string[]> {
+  readControl?.guard();
   const warnings: string[] = [];
   for (const [collectionId, modeId] of Object.entries(modes)) {
     try {
-      const collection = await figma.variables.getVariableCollectionByIdAsync(collectionId);
-      if (collection) instance.setExplicitVariableModeForCollection(collection, modeId);
+      const collection = await captureRead(readControl, () => figma.variables.getVariableCollectionByIdAsync(collectionId));
+      if (collection) {readControl?.guard();instance.setExplicitVariableModeForCollection(collection, modeId);}
       else warnings.push(`Коллекция ${collectionId} недоступна; mode ${modeId} не применён к reference instance.`);
     } catch {
+      readControl?.guard();
       warnings.push(`Не удалось применить mode ${modeId} коллекции ${collectionId} к reference instance.`);
     }
   }
-  return warnings;
+  readControl?.guard();return warnings;
 }
 
 export function referenceProperties(
@@ -573,7 +615,8 @@ export function referenceProperties(
 
 /** Resolve a fresh proved occurrence, then use capture-local native provenance.
  * Local graph IDs, sibling indexes and names never establish source identity. */
-async function instanceAtPath(root: InstanceNode, path: string, expected: PreviewSnapshot): Promise<InstanceNode | undefined> {
+async function instanceAtPath(root: InstanceNode, path: string, expected: PreviewSnapshot, readControl?: CaptureReadControl): Promise<InstanceNode | undefined> {
+  readControl?.guard();
   if (path.split(' / ').some(segment => segment.startsWith('@local:') || segment.startsWith('@catalog:'))) return undefined;
   const priorScope = expected.source?.nativeSlotCaptureScope;
   const captureScope = priorScope ? {manualSourceHash:priorScope.manualSourceHash,
@@ -581,7 +624,8 @@ async function instanceAtPath(root: InstanceNode, path: string, expected: Previe
       representationId:expected.source?.representationId || ''}))} : undefined;
   // Re-prove the same native frontier; resolving a host occurrence must not
   // expand caller-owned SLOT payload that the original capture excluded.
-  const current = await collectSceneNodes(root, expected.context.platform, expected.context.modes, captureScope, 'identity');
+  const current = await collectSceneNodes(root, expected.context.platform, expected.context.modes, captureScope, 'identity', readControl);
+  readControl?.guard();
   // Historical callers keep their exact name-path route, including reserved names.
   if (expected.source?.occurrenceAddressVersion !== 1 && current.snapshot.source) delete current.snapshot.source.occurrenceAddressVersion;
   const paths = snapshotPaths(current.snapshot), expectedPaths = snapshotPaths(expected);
@@ -610,14 +654,16 @@ async function instanceAtPath(root: InstanceNode, path: string, expected: Previe
 
 export async function captureInstanceContentReferences(
   subject: InstanceNode, pristine: InstanceNode, page: PageNode,
-  snapshot: PreviewSnapshot, base: PreviewSnapshot, modesReliable: boolean,
+  snapshot: PreviewSnapshot, base: PreviewSnapshot, modesReliable: boolean, readControl?: CaptureReadControl,
 ): Promise<void> {
+  readControl?.guard();
   const attempts: NonNullable<PreviewSnapshot['instanceContentReferences']>['attempts'] = [];
   snapshot.instanceContentReferences = { schemaVersion: 'apollo.instance-content-references.v4', hostContextVariableModesVersion: 1, base, attempts };
   const boundaries = planInstanceContentReferences(snapshot);
   let captured = 0;
   const capture = async (boundaries: InstanceBoundary[], contextHost: InstanceNode, contextSnapshot: PreviewSnapshot, parentBoundaryNodeId?: string): Promise<void> => {
     for (const boundary of boundaries) {
+      readControl?.guard();
       const attempt: typeof attempts[number] = { boundaryNodeId: boundary.nodeId, ...(parentBoundaryNodeId?{parentBoundaryNodeId}:{}) };
       attempts.push(attempt);
       if (!modesReliable) { attempt.failure = 'variable-modes-unavailable'; continue; }
@@ -628,15 +674,16 @@ export async function captureInstanceContentReferences(
       if (captured++ >= INSTANCE_CONTENT_REFERENCE_LIMIT) { attempt.failure = 'reference-capture-limit'; continue; }
       let host: InstanceNode | undefined;
       try {
-        const actual = await instanceAtPath(subject, boundary.actualPath, snapshot);
-        const main = actual && await actual.getMainComponentAsync();
+        const actual = await instanceAtPath(subject, boundary.actualPath, snapshot, readControl);
+        const main = actual && await captureRead(readControl, () => actual.getMainComponentAsync());
         if (!main || main.key !== boundary.actualComponentKey) { attempt.failure = 'replacement-component-unavailable'; continue; }
         // Clone only a verified independent library stage, NEVER the user's instance.
-        host = contextHost.clone();
+        readControl?.guard();host = contextHost.clone();
+        readControl?.guard();
         page.appendChild(host);
-        const consumer = await instanceAtPath(host, boundary.referencePath, contextSnapshot);
-        const before = consumer && await consumer.getMainComponentAsync();
-        const owner = boundary.ownerPath !== undefined ? await instanceAtPath(host, boundary.ownerPath, contextSnapshot) : undefined;
+        const consumer = await instanceAtPath(host, boundary.referencePath, contextSnapshot, readControl);
+        const before = consumer && await captureRead(readControl, () => consumer.getMainComponentAsync());
+        const owner = boundary.ownerPath !== undefined ? await instanceAtPath(host, boundary.ownerPath, contextSnapshot, readControl) : undefined;
         const provenControl = variant
           ? before?.parent?.type === 'COMPONENT_SET' && main.parent?.type === 'COMPONENT_SET'
             && before.parent.key === boundary.componentSetKey && main.parent.key === boundary.componentSetKey
@@ -654,8 +701,8 @@ export async function captureInstanceContentReferences(
             typeof value !== 'string' || consumer.componentProperties[name]?.type !== 'VARIANT')) {
             attempt.failure = 'variant-properties-unavailable'; continue;
           }
-          consumer.setProperties(properties);
-          const selected = await consumer.getMainComponentAsync();
+          readControl?.guard();consumer.setProperties(properties);
+          const selected = await captureRead(readControl, () => consumer.getMainComponentAsync());
           if (!selected || selected.key !== main.key || selected.parent?.type !== 'COMPONENT_SET'
             || selected.parent.key !== boundary.componentSetKey) {
             attempt.failure = 'variant-switch-identity-mismatch'; continue;
@@ -664,9 +711,9 @@ export async function captureInstanceContentReferences(
         } else {
           // An explicit icon replacement must discard the OLD icon's overrides.
           // Its enclosing host/PaintMe is outside the replaced subtree.
-          consumer.mainComponent = main;
+          readControl?.guard();consumer.mainComponent = main;
         }
-        const reference = (await collectNodes(host, snapshot.context.platform, snapshot.context.modes)).snapshot;
+        const reference = (await collectNodes(host, snapshot.context.platform, snapshot.context.modes, undefined, readControl)).snapshot;
         configureInstanceMainAliases(reference,snapshot.source?.instanceMainComponentAliasesVersion===1);
         if (reference.source) {
           reference.source.componentKey = base.source?.componentKey;
@@ -680,6 +727,7 @@ export async function captureInstanceContentReferences(
           await capture(planNestedInstanceContentReferences(snapshot, reference, boundary), host, reference, boundary.nodeId);
         }
       } catch {
+        readControl?.guard();
         // Library/API failure is coverage uncertainty, never permission or a pass.
         attempt.failure = 'reference-capture-failed';
       } finally {
@@ -688,18 +736,22 @@ export async function captureInstanceContentReferences(
     }
   };
   await capture(boundaries, pristine, base);
+  readControl?.guard();
   materializeInstanceContentReferences(snapshot);
 }
 
 export async function captureComponentDependencies(
   anatomy: AnatomyNode[], snapshot: PreviewSnapshot, temporaryPage: PageNode, acceptedKeys: string[] = [], directChildDependenciesVersion?:1, instanceMainComponentAliasesVersion?:1,
+  readControl?: CaptureReadControl,
 ): Promise<void> {
+  readControl?.guard();
   if (!acceptedKeys.length) return;
   snapshot.componentDependencyCaptures=[];
   const keys=new Set(acceptedKeys);
   const candidates=snapshot.nodes.filter(n=>!snapshot.selection.includes(String(n.id)) && n.type==='INSTANCE'
     && (()=>{const identity=(n.component as any)?.identity;return identity&&(keys.has(identity.componentKey)||keys.has(identity.componentSetKey));})());
   for(const [index,node] of candidates.entries()) {
+    readControl?.guard();
     const attempt:NonNullable<PreviewSnapshot['componentDependencyCaptures']>[number]={nodeId:String(node.id)};
     snapshot.componentDependencyCaptures.push(attempt);
     if(index>=(directChildDependenciesVersion===1?DIRECT_CHILD_DEPENDENCY_CAPTURE_LIMIT:COMPONENT_DEPENDENCY_CAPTURE_LIMIT)){attempt.failure='dependency-reference-capture-limit';continue;}
@@ -707,25 +759,26 @@ export async function captureComponentDependencies(
     let stage:DependencyCaptureStage='resolve-instance';
     try {
       const locator=anatomy.find(n=>n.id===node.id)?.figmaNodeId;
-      const instance=locator?await figma.getNodeByIdAsync(locator):null;
+      const instance=locator?await captureRead(readControl, () => figma.getNodeByIdAsync(locator)):null;
       if(!instance||instance.type!=='INSTANCE'){attempt.failure='dependency-instance-unavailable';continue;}
       stage='read-main-component';
-      const main=await instance.getMainComponentAsync();
+      const main=await captureRead(readControl, () => instance.getMainComponentAsync());
       if(!main){attempt.failure='dependency-main-component-unavailable';continue;}
       stage='create-reference-instance';
-      reference=main.createInstance();
+      readControl?.guard();reference=main.createInstance();
       stage='append-reference-instance';
+      readControl?.guard();
       temporaryPage.appendChild(reference);
       stage='read-variable-modes';
       const modes=Object.assign({},instance.resolvedVariableModes);
       stage='apply-variable-modes';
-      const warnings=await applyModes(reference,modes);
+      const warnings=await applyModes(reference,modes,readControl);
       // The entire validation context must be reproducible; a mode mismatch cannot pass.
       if(warnings.length){attempt.failure='dependency-variable-modes-unavailable';continue;}
       stage='capture-actual';
-      const actual=await collectNodes(instance,snapshot.context.platform,modes);
+      const actual=await collectNodes(instance,snapshot.context.platform,modes,undefined,readControl);
       stage='capture-reference';
-      const baseline=await collectNodes(reference,snapshot.context.platform,modes);
+      const baseline=await collectNodes(reference,snapshot.context.platform,modes,undefined,readControl);
       const setKey=main.parent?.type==='COMPONENT_SET'?main.parent.key:'';
       for(const s of [actual.snapshot,baseline.snapshot])if(s.source){s.source.componentKey=main.key;s.source.componentSetKey=setKey;}
       configureInstanceMainAliases(actual.snapshot,instanceMainComponentAliasesVersion===1);
@@ -736,11 +789,12 @@ export async function captureComponentDependencies(
       materialized.snapshot.variantReference=captureVariantReference(baseline.snapshot,main.key,setKey,
         Object.keys((main.parent?.type==='COMPONENT_SET'?main.parent:main).componentPropertyDefinitions));
       stage='capture-nested-reference';
-      await captureInstanceContentReferences(instance,reference,temporaryPage,materialized.snapshot,baseline.snapshot,true);
+      await captureInstanceContentReferences(instance,reference,temporaryPage,materialized.snapshot,baseline.snapshot,true,readControl);
       stage='map-node-ids';
       attempt.nodeMap=Object.fromEntries(actual.anatomy.map(local=>[local.id,anatomy.find(host=>host.figmaNodeId===local.figmaNodeId)?.id||'']));
       attempt.snapshot=materialized.snapshot;
     } catch(error) {
+      readControl?.guard();
       attempt.failure='dependency-reference-capture-failed';
       attempt.failureDetails=dependencyCaptureFailureDetails(stage,error);
     }
@@ -748,13 +802,14 @@ export async function captureComponentDependencies(
   }
 }
 
-export async function exportPreview(node: SceneNode): Promise<{ dataUrl: string; width: number; height: number }> {
+export async function exportPreview(node: SceneNode, readControl?: CaptureReadControl): Promise<{ dataUrl: string; width: number; height: number }> {
+  readControl?.guard();
   const longest = Math.max(node.width, node.height, 1);
   const scale = Math.min(2, 1600 / longest);
-  const bytes = await node.exportAsync({
+  const bytes = await captureRead(readControl, () => node.exportAsync({
     format: 'PNG',
     constraint: { type: 'SCALE', value: scale },
-  });
+  }));
   return {
     dataUrl: `data:image/png;base64,${figma.base64Encode(bytes)}`,
     width: node.width,
@@ -777,27 +832,30 @@ export function appendUnmatchedBaselineWarning(warnings: string[], unmatchedNode
   return diagnostic;
 }
 
-export async function captureSwapComponentKeys(reference: NonNullable<PreviewSnapshot['variantReference']>, resolve: (id:string)=>Promise<BaseNode|null>):Promise<Record<string,string>> {
+export async function captureSwapComponentKeys(reference: NonNullable<PreviewSnapshot['variantReference']>, resolve: (id:string)=>Promise<BaseNode|null>, readControl?: CaptureReadControl):Promise<Record<string,string>> {
+  readControl?.guard();
   const keys: Record<string,string> = {};
   const ids = [...new Set(Object.values(reference.nodeProperties).flatMap(n => Object.entries(n.propertyTypes).filter(([,t])=>t==='INSTANCE_SWAP').map(([p])=>n.properties[p])).filter((id):id is string=>typeof id==='string'))];
   let next = 0;
-  await Promise.all(Array.from({length:Math.min(6,ids.length)},async()=>{
-    while(next<ids.length){const id=ids[next++];try{const node=await resolve(id);if(node?.type==='COMPONENT' && node.id===id && /^[a-f0-9]{40}$/.test(node.key))keys[id]=node.key;}catch{ /* Unresolved identities stay UNKNOWN. */ }}
+  await captureAll(readControl, Array.from({length:Math.min(6,ids.length)},async()=>{
+    while(next<ids.length){readControl?.guard();const id=ids[next++];try{const node=await captureRead(readControl, () => resolve(id));if(node?.type==='COMPONENT' && node.id===id && /^[a-f0-9]{40}$/.test(node.key))keys[id]=node.key;}catch{readControl?.guard(); /* Unresolved identities stay UNKNOWN. */ }}
   }));
-  return keys;
+  readControl?.guard();return keys;
 }
 
 export async function captureInstanceAudit(subject: InstanceNode, message: CaptureSelectionOptions) {
+  const readControl = message.readControl;
+  readControl?.guard();
   const timed = async <T>(stage:string, work:()=>T|Promise<T>):Promise<T> => {
     const started = Date.now();
-    try { return await work(); } finally { message.onTiming?.(stage, Math.max(0,Date.now()-started)); }
+    try { return await captureWork(readControl, work); } finally { message.onTiming?.(stage, Math.max(0,Date.now()-started)); }
   };
   if (message.expectedRootNodeId && message.expectedRootNodeId !== subject.id) {
     throw new Error('Выделение изменилось. Задайте ожидаемые параметры для нового instance и повторите проверку.');
   }
   const temporalStart=message.captureTransitionContext?captureTransitionContext(subject):undefined;
   const temporalSequence=temporalStart?++transitionSequence:0;
-  const main = await subject.getMainComponentAsync();
+  const main = await captureRead(readControl, () => subject.getMainComponentAsync());
   if (!main) throw new Error('У выделенного instance не найден main component.');
   const acceptedKeys = new Set([message.componentKey, ...message.acceptedComponentKeys].filter(Boolean));
   const componentSetKey = main.parent?.type === 'COMPONENT_SET' ? main.parent.key : '';
@@ -814,18 +872,22 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
   let temporaryPage: PageNode | null = null;
   let reference: InstanceNode | null = null;
   try {
+    readControl?.guard();
     temporaryPage = figma.createPage();
+    readControl?.guard();
     temporaryPage.name = '__Apollo_IndependentReference__';
+    readControl?.guard();
     reference = main.createInstance();
+    readControl?.guard();
     temporaryPage.appendChild(reference);
 
     const compatible = referenceProperties(subject, reference, message.allowedComponentProperties);
-    if (Object.keys(compatible).length) reference.setProperties(compatible);
+    if (Object.keys(compatible).length) {readControl?.guard();reference.setProperties(compatible);}
     const modes = { ...subject.resolvedVariableModes };
-    const warnings = await applyModes(reference, modes);
+    const warnings = await applyModes(reference, modes, readControl);
 
     // Capture the independent reference before planning a bounded actual walk.
-    const baseline = await timed('reference', () => collectNodes(reference!, platform, modes));
+    const baseline = await timed('reference', () => collectNodes(reference!, platform, modes, undefined, readControl));
     if (baseline.snapshot.source) {
       baseline.snapshot.source.componentKey = main.key;
       baseline.snapshot.source.componentSetKey = componentSetKey;
@@ -835,12 +897,12 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
       Object.keys((main.parent?.type==='COMPONENT_SET'?main.parent:main).componentPropertyDefinitions));
     let swapComponentKeys: Record<string,string> | undefined;
     if (message.portableSwapIdentityVersion === 1) {
-      swapComponentKeys = await captureSwapComponentKeys(independentReference, id => figma.getNodeByIdAsync(id));
+      swapComponentKeys = await captureSwapComponentKeys(independentReference, id => figma.getNodeByIdAsync(id), readControl);
     }
     const requestedPlan=message.nativeSlotCapturePlan;
     const boundaries=requestedPlan?.manualSourceHash===message.manualSourceHash?
       confirmedNativeSlotCaptureBoundaries(requestedPlan,independentReference,representation?.id||'',main.key,componentSetKey):[];
-    const actual = await timed('actual', () => collectNodes(subject, platform, modes,boundaries.length?{manualSourceHash:message.manualSourceHash,boundaries}:undefined));
+    const actual = await timed('actual', () => collectNodes(subject, platform, modes,boundaries.length?{manualSourceHash:message.manualSourceHash,boundaries}:undefined,readControl));
     if (actual.snapshot.source) {
       if (swapComponentKeys) actual.snapshot.source.swapComponentKeys = swapComponentKeys;
       actual.snapshot.source.componentKey = main.key;
@@ -851,13 +913,13 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
     configureInstanceMainAliases(baseline.snapshot,message.instanceMainComponentAliasesVersion===1);
     const materialized = await timed('baseline', () => materializeEffectiveBaseline(actual.snapshot, baseline.snapshot, true));
     materialized.snapshot.variantReference = independentReference;
-    await timed('content-references', () => captureInstanceContentReferences(subject, reference!, temporaryPage!, materialized.snapshot, baseline.snapshot, warnings.length === 0));
-    await timed('dependencies', () => captureComponentDependencies(actual.anatomy,materialized.snapshot,temporaryPage!,message.componentDependencyKeys,message.directChildDependenciesVersion,message.instanceMainComponentAliasesVersion));
+    await timed('content-references', () => captureInstanceContentReferences(subject, reference!, temporaryPage!, materialized.snapshot, baseline.snapshot, warnings.length === 0, readControl));
+    await timed('dependencies', () => captureComponentDependencies(actual.anatomy,materialized.snapshot,temporaryPage!,message.componentDependencyKeys,message.directChildDependenciesVersion,message.instanceMainComponentAliasesVersion,readControl));
     materialized.unmatchedNodeIds = materialized.snapshot.nodes
       .filter(node => (node.baselineProvenance as {status?: string})?.status !== 'matched').map(node => String(node.id));
     materialized.matchedNodes = materialized.snapshot.nodes.length - materialized.unmatchedNodeIds.length;
     const preview = message.includePreview === false
-      ? { dataUrl: '', width: subject.width, height: subject.height } : await exportPreview(subject);
+      ? { dataUrl: '', width: subject.width, height: subject.height } : await exportPreview(subject, readControl);
     if(temporalStart){
       const end=captureTransitionContext(subject),complete=temporalStart.complete&&end.complete&&temporalStart.fingerprint===end.fingerprint;
       materialized.snapshot.transitionCapture={schemaVersion:'apollo.transition-capture.v1',sessionId:transitionSessionId,
@@ -867,7 +929,7 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
     const baselineDiagnostics = appendUnmatchedBaselineWarning(warnings, materialized.unmatchedNodeIds);
     if(actual.snapshot.source?.captureTopology?.issues.length)warnings.push('Захват дерева остановлен: повторные/противоречивые Figma ID или недоступные узлы. Проверка неполная.');
     if(actual.snapshot.source?.nativeSlotCaptureScope)warnings.push('Внешнее содержимое native SLOT не обходилось: проверены только host и граница слота. Правила содержимого не проверялись.');
-    return {
+    readControl?.guard();return {
       componentKey: main.key,
       anatomy: actual.anatomy,
       snapshot: materialized.snapshot,
@@ -881,7 +943,6 @@ export async function captureInstanceAudit(subject: InstanceNode, message: Captu
       manualSourceHash: message.manualSourceHash,
     };
   } finally {
-    reference?.remove();
-    temporaryPage?.remove();
+    try { reference?.remove(); } finally { temporaryPage?.remove(); }
   }
 }

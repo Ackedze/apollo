@@ -268,23 +268,28 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
       const main=ownerIndex===null?undefined:mains.get(topology.entries[ownerIndex].figmaNodeId);
       if (main?.remote) requested.set(main.id,main);
     }
-    for (const main of requested.values()) {
-      let pristine: InstanceNode | undefined;
-      const diagnostic: {mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}={mainComponentId:main.id,componentKey:main.key,status:'unavailable'};
-      try {
-        pristine=main.createInstance();
-        diagnostic.sourceInstanceId=pristine.id;
-        const selected=await pristine.getMainComponentAsync();
-        if (!selected || selected.id!==main.id || selected.key!==main.key) diagnostic.reason='pristine-source-identity-mismatch';
-        else {
-          const sourceTopology=captureSceneTopology(pristine,500,(entry,index)=>index>0 && (entry.type==='INSTANCE'||entry.type==='SLOT'));
-          if (!sourceTopology.complete) diagnostic.reason='incomplete-pristine-source-topology';
-          else {pristineSources.set(main.id,{mainComponentId:main.id,componentKey:main.key,topology:sourceTopology});diagnostic.status='captured';}
-        }
-      } catch {diagnostic.reason='pristine-source-capture-unavailable';}
-      finally {pristine?.remove();}
-      sourceCapture.push(diagnostic);
-    }
+    const sources = Array.from(requested.values());
+    let nextSource = 0;
+    await Promise.all(Array.from({length: Math.min(6, sources.length)}, async () => {
+      while (nextSource < sources.length) {
+        const index = nextSource++, main = sources[index];
+        let pristine: InstanceNode | undefined;
+        const diagnostic: {mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}={mainComponentId:main.id,componentKey:main.key,status:'unavailable'};
+        try {
+          pristine=main.createInstance();
+          diagnostic.sourceInstanceId=pristine.id;
+          const selected=await pristine.getMainComponentAsync();
+          if (!selected || selected.id!==main.id || selected.key!==main.key) diagnostic.reason='pristine-source-identity-mismatch';
+          else {
+            const sourceTopology=captureSceneTopology(pristine,500,(entry,index)=>index>0 && (entry.type==='INSTANCE'||entry.type==='SLOT'));
+            if (!sourceTopology.complete) diagnostic.reason='incomplete-pristine-source-topology';
+            else {pristineSources.set(main.id,{mainComponentId:main.id,componentKey:main.key,topology:sourceTopology});diagnostic.status='captured';}
+          }
+        } catch {diagnostic.reason='pristine-source-capture-unavailable';}
+        finally {pristine?.remove();}
+        sourceCapture[index] = diagnostic;
+      }
+    }));
   }
   const sourceIdentities = topology.complete ? captureInstanceSourceIdentities(topology.entries, mains, pristineSources, true) : new Map<string, InstanceSourceIdentity>();
   const roleToId = new Map(entries.map((entry, index) => [entry.role, `preview:${index}`]));

@@ -89,6 +89,19 @@ component-owned записей в самостоятельные редакти�
 
 ### CC-COMPAT-INSTANCE-PATH-PROJECTION-01 — облегчённый поиск native экземпляров
 
+30.10.2026 — **LOCAL_CAPTURE_PERFORMANCE_VERIFIED / OWNER_TIMING_PENDING**.
+При неизменных Core0.1.24/Editor0.2.108 и packaged runtime d058 общий native
+capture ограничивает параллельное чтение pristine sources шестью задачами;
+Apollo переиспользует hash неизменного объекта контракта только внутри запуска.
+Сохранены независимый эталон, source identity, очистка временных экземпляров,
+обе перепроверки capture, release pin и отмена. Synthetic регрессии проверяют
+границу concurrency, отказ одного источника, порядок, cleanup и сброс hash cache
+при новом запуске/источнике. Apollo validate:1413 PASS,0 FAIL,1 прежний skip.
+Старый owner-замер66.158с не пересчитан в предполагаемое ускорение; свежий
+замер и установка — OWNER_ONLY. Editor bundle и Proxy не пересобирались;
+Editor consumer uptake остаётся отдельно от Apollo integration.
+Evidence: workspace `.local/corp-four-native-repair-2026-10-30/author/`.
+
 19.10.2026. **IMPLEMENTED / CONFIGURED_GATES_PASS / PLUGIN_BUILT / NATIVE_TIMING_PENDING**.
 Core **0.1.20**, Editor **0.2.107**. General — единственный shared writer;
 Contract Creation, Mapping, Generation, DesignCheck подтвердили HOLD.
@@ -492,6 +505,15 @@ Installed Link r3, Editor 0.2.100 / core 0.1.16, 10.10.2026 17:47–17:48 MSK: *
 
 
 ### CC-COMPAT-DECLARED-TARGET-CONFIGURATION-04 — конфигурация и native identity
+
+30.10.2026 — **OPEN_PORTABILITY_GAP**. В native b7 один опубликованный Size72
+IconView имеет разные configuration v1 pins в CSM и ResultScreen из-за локальных
+ID скрытого INSTANCE_SWAP Emoji. 568 UNKNOWN не закрываются одним новым pin;
+удаление скрытых свойств и ослабление identity ledger не применялись. Нужна
+переносимая идентичность всех сохранённых swap values с independent source proof,
+версионной совместимостью и отрицательными контролями; текущая data-only партия
+не меняет этот reader. Это повтор ограничения file-local ports, уже записанного
+для BenefitCard/Link13.10; Ready и новые схемы не заявлены.
 
 11.10.2026 — **PUBLIC_SWAP_SHARED_FIX_AND_LOCAL_CONSUMER_PASS**. Core **0.1.17**,
 Editor **0.2.103**, Link **r4** добавляют configuration v2 / producer 0.2.103.
@@ -1125,6 +1147,14 @@ APOLLO-V4-GEN-001 и не закрывает contract-reading/coverage acceptanc
   после ручного authoring нового контракта.
 
 ### APOLLO-V4-PARITY-002 — Безопасный bounded capture внешнего native SLOT
+
+30.10.2026 — **OPEN_LEGACY_SOURCE_GAP**. Вложенный Select в двух native FCS
+имеет опубликованный helper с INSTANCE_SWAP, тогда как Athena описывает три
+SLOT wrappers. Подстановка одной новой структуры не закрывает typed slot proof:
+остаётся 50 UNKNOWN исходного запуска. Старый helper не объявлен целиком external,
+SLOT-нормы и unknown guard сохранены. Требуется отдельная приёмка совместимого
+источника или явно доказанного legacy/native binding; data-only нормализация
+эталона FCS не означает закрытие дочернего Select.
 
 - [ ] Подтвердить границы захвата и coverage в component/area audit v4.
 - Приоритет: P1. Статус: capture plan реализован в shared core (Editor 0.2.71);

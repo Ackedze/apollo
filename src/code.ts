@@ -225,6 +225,7 @@ async function audit(requestId: string, options:any={}) {
       endStage();
     }
     const covered = new Map<string, any>(), ownedParts = new Map<string, any>(), captures: any[] = [];
+    const contractHashes = new Map<any, string>();
     for (const identity of scan.selection.components) {
       assertCurrent();
       if (covered.has(identity.nodeId)) { governedComponents.push(Object.assign({}, identity, covered.get(identity.nodeId))); continue; }
@@ -282,8 +283,14 @@ async function audit(requestId: string, options:any={}) {
       catch (error) { if ((error as any)?.code !== 'APOLLO_V4_OWNER_CONTEXT_UNAVAILABLE') throw error;
         endStage(); gap('owner-context-unavailable', 'Не подтверждён эталон вложенного компонента в текущей сборке. Повторите проверку.'); continue; }
       endStage();
+      // The compiled source is immutable for this audit; release freshness is rechecked below.
+      if (!contractHashes.has(contract)) {
+        const endHash = time('contract-hash');
+        contractHashes.set(contract, engine.stableHash(contract));
+        endHash();
+      }
       endStage = time('index-component', subject.id);
-      const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: engine.stableHash(contract) });
+      const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: contractHashes.get(contract) });
       const diagnostics = scopeNativeSlotCaptureWarnings(captured);
       const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
         warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };

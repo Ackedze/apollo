@@ -4,6 +4,19 @@ const digest=r=>crypto.createHash('sha256').update(p.canonical(r)).digest('hex')
 const source=()=>({release:{id:'data123'},selection:{roots:[{nodeId:'1:2'}],scannedNodes:4,components:[{componentKey:'keyA'},{componentKey:'keyA'}]},components:[{}],governedComponents:[{}],notChecked:[],result:{coverage:{executionComplete:false},engine:{evaluations:[{ruleId:'r1',classification:'compliant',trace:{truth:'unknown',actual:'PRIVATE TEXT'}},{ruleId:'r2',classification:'violation',trace:{truth:'false'}},{ruleId:'r3',classification:'human-review',trace:{truth:'unknown'}}]}}});
 const sample=(reportId='test-1')=>createReport({reportId,runId:'run1',origin:'contract-area',startedAt:'2026-10-29T00:00:00.000Z',durationMs:25,result:source()});
 const wait=async check=>{for(let i=0;i<500;i++){if(check())return;await new Promise(r=>setTimeout(r,2));}throw Error('bounded test wait');};
+test('built native statistics bridge persists reports without browser or Node encoding globals',async()=>{
+ const code=require('esbuild').buildSync({entryPoints:[require.resolve('../src/audit-statistics/native')],bundle:true,platform:'neutral',format:'cjs',write:false}).outputFiles[0].text;
+ const sandbox={module:{exports:{}},console};require('node:vm').runInNewContext(code,sandbox);assert.equal(sandbox.TextEncoder,undefined);assert.equal(sandbox.Buffer,undefined);
+ const map=new Map(),messages=[],bridge=sandbox.module.exports.createStatisticsBridge({storage:{keysAsync:async()=>Array.from(map.keys()),getAsync:async k=>map.get(k),setAsync:async(k,v)=>map.set(k,v),deleteAsync:async k=>map.delete(k)},post:m=>messages.push(m),onError:()=>{}}),r=sample('native-vm');
+ bridge.accept({type:'audit-statistics-request',requestId:'native-vm:put',operation:'put',report:r});await wait(()=>messages.length===1);assert.equal(messages[0].error,undefined);assert.equal(map.size,1);
+ bridge.accept({type:'audit-statistics-request',requestId:'native-vm:pending',operation:'pending',report:null});await wait(()=>messages.length===2);assert.equal(messages[1].result.reports[0].reportId,r.reportId);assert.equal(messages[1].result.unreadable,0);
+ bridge.accept({type:'audit-statistics-request',requestId:'native-vm:ack',operation:'ack',report:r});await wait(()=>messages.length===3);assert.equal(messages[2].error,undefined);assert.equal(map.size,0);
+});
+test('sandbox byte count preserves UTF-8 limits and rejects oversized or private reports',()=>{
+ for(const v of [{text:'ASCII'},{text:'Кнопка🙂'},{text:'\ud800'}])assert.equal(p.byteSize(v),Buffer.byteLength(p.canonical(v),'utf8'));
+ const r=sample('compatible'),oversized=JSON.parse(JSON.stringify(r));oversized.metrics.rules=Array.from({length:1000},()=>({ruleId:'r'.repeat(180),classification:'violation',count:1}));
+ assert.equal(p.valid(r),true);assert.equal(p.valid(oversized),false);assert.equal(p.valid(Object.assign({},r,{snapshot:{text:'PRIVATE'}})),false);
+});
 function harness({map=new Map(),request,storageWrite=async(k,v)=>map.set(k,v),sessionId='session1',...options}={}){
  let client;const errors=[];const storage={keysAsync:async()=>Array.from(map.keys()),getAsync:async k=>map.get(k),setAsync:storageWrite,deleteAsync:async k=>map.delete(k)};
  const bridge=createStatisticsBridge({storage,post:m=>client.accept(m),onError:c=>errors.push(c)});

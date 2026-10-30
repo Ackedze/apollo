@@ -1,5 +1,11 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {fixture,hash,bridge,request,settle}=require('./document-audit.test'),{recheck}=require('../src/document-audit/engine');
+test('post-result observer retains the exact changed fact diagnostic',async()=>{
+ const f=fixture(),node=f.node('frame');f.page.selection=[node];const b=bridge(f);
+ try{b.accept(request(f,'observer-diag'));await settle(f,'document-audit-result','observer-diag');node.name='PRIVATE RENAMED';await f.mutate({nodeChanges:[{id:node.id}]});
+  const event=f.messages.find(m=>m.type==='document-audit-invalidated');assert.equal(event.reason,'NATIVE_FACTS_CHANGED');assert.equal(event.diagnostic.requestId,'observer-diag');assert.equal(event.diagnostic.stage,'observer-recheck');assert.equal(event.diagnostic.nodeId,node.id);assert.deepEqual(event.diagnostic.changedFields,['name']);assert.equal(JSON.stringify(event.diagnostic).includes('PRIVATE'),false);assert.equal(f.writes.length,0);
+ }finally{b.stop();}
+});
 test('native mismatch identifies exact fact and changed fields without layout values',async()=>{
  const f=fixture(),node=f.node('frame');f.page.selection=[node];const captured=await f.capture();node.name='PRIVATE LAYOUT TEXT';
  await assert.rejects(recheck(f.api,captured.facts,{hash,assertCurrent:()=>{}}),e=>{assert.equal(e.message,'NATIVE_FACTS_CHANGED');assert.equal(e.nativeFailure.factKind,'node');assert.equal(e.nativeFailure.nodeId,'frame');assert.deepEqual(e.nativeFailure.changedFields,['name']);assert.equal(JSON.stringify(e.nativeFailure).includes('PRIVATE'),false);return true;});

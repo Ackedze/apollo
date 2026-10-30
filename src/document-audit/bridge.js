@@ -9,11 +9,12 @@ const {REFRESH_TIMEOUT_MS}=require("./budgets");
 function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null}){
  let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0;
  const errors={NATIVE_FACTS_CHANGED:'Свойства или зависимости изменились. Повторите проверку.',NATIVE_CONTEXT_CHANGED:'Страница или платформа изменились. Повторите проверку.',NATIVE_TIMEOUT:'Чтение заняло слишком много времени. Повторите проверку.',NATIVE_RESULT_STALE:'Результат устарел. Повторите проверку.'};
- function invalidate(reason='NATIVE_RESULT_STALE'){
+ function failureDiagnostic(error,requestId,ticket=sequence){return error.nativeFailure?Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([requestId,ticket,now(),error.nativeFailure]).slice(0,24),requestId,code:error.message},error.nativeFailure):null;}
+ function invalidate(reason='NATIVE_RESULT_STALE',diagnostic=null){
   epoch++;
   if(refreshTask){const task=refreshTask;refreshTask=null;task.notificationProof?.close();sequence++;clearTimeout(task.timer);task.operations?.fail?.();post({type:'document-recheck-error',schemaVersion:SCHEMA,requestId:task.requestId,runId:task.old.runId,message:errors[reason]||errors.NATIVE_RESULT_STALE});}
   if(actionTask)finishAction(actionTask,{status:'error',refreshAllowed:false,message:'Исходные данные изменились. Повторите проверку.'});
-  if(session){const runId=session.runId;session=null;if(active){sequence++;active=null;}post({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId,reason});}
+  if(session){const runId=session.runId;session=null;if(active){sequence++;active=null;}const reply={type:'document-audit-invalidated',schemaVersion:SCHEMA,runId,reason};if(diagnostic)reply.diagnostic=diagnostic;post(reply);}
  }
  function bind(){
   if(page&&nodeListener)try{page.off('nodechange',nodeListener);}catch(_){/* fail closed below */}
@@ -30,9 +31,9 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
   let timer;
   const guard=()=>{if(session!==s||epoch!==revision)throw Error('NATIVE_OBSERVER_SUPERSEDED');};
   try{
-   await Promise.race([recheck(api,s.facts,{hash,assertCurrent:guard}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);
+   await Promise.race([recheck(api,s.facts,{hash,assertCurrent:guard,stage:'observer-recheck'}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);
    guard();s.epoch=revision;
-  }catch(e){if(session===s&&epoch===revision)invalidate(e.message==='NATIVE_FACTS_CHANGED'?'NATIVE_FACTS_CHANGED':'NATIVE_RESULT_STALE');}
+  }catch(e){if(session===s&&epoch===revision)invalidate(e.message==='NATIVE_FACTS_CHANGED'?'NATIVE_FACTS_CHANGED':'NATIVE_RESULT_STALE',failureDiagnostic(e,s.runId,revision));}
   finally{clearTimeout(timer);}
  }
  function selected(){if(active&&api.currentPage.id!==active.context.pageId){sequence++;active=null;invalidate('NATIVE_CONTEXT_CHANGED');}if(session&&api.currentPage.id!==session.context.pageId)invalidate('NATIVE_CONTEXT_CHANGED');}
@@ -65,7 +66,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    if(latest&&['NATIVE_TIMEOUT','NATIVE_READ_TIMEOUT'].includes(e.message)){
     for(const c of latest.checks)if(c.status==='running'){c.status='incomplete';c.gaps.push('checker-timeout');}
     const result=register(latest,true);active=null;sequence++;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});
-   }else{active=null;session=null;sequence++;const diagnostic=e.nativeFailure?Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([m.requestId,ticket,now(),e.nativeFailure]).slice(0,24),requestId:m.requestId,code:e.message},e.nativeFailure):null;post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:e.message,message:errors[e.message]||'Не удалось прочитать данные макета. Повторите проверку.',diagnostic});}
+   }else{active=null;session=null;sequence++;const diagnostic=failureDiagnostic(e,m.requestId,ticket);post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:e.message,message:errors[e.message]||'Не удалось прочитать данные макета. Повторите проверку.',diagnostic});}
   }}finally{clearTimeout(timer);}
  }
  async function refreshBindings(runId){

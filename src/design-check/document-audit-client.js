@@ -12,14 +12,14 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
   if(context&&next&&context.pageId!==next.pageId&&(current||snapshot()))invalidate('Страница изменилась. Показан предыдущий результат; повторите проверку.');
   context=next;
  }
- function invalidate(message='Настройки или исходные данные изменились. Показан предыдущий результат; повторите проверку.'){
+ function invalidate(message='Настройки или исходные данные изменились. Показан предыдущий результат; повторите проверку.',diagnostic=null){
   if(refresh){send({type:'document-recheck-cancel',schemaVersion:SCHEMA,requestId:refresh.requestId});refresh=null;clearTimeout(refreshTimer);controller.setDocumentAction?.({busy:false,status:'error',message});}
   if(actionRequest){actionRequest.cancelling=true;send({type:'document-action-cancel',schemaVersion:ACTION_SCHEMA,requestId:actionRequest.requestId});}
   actionData=null;controller.setDocumentActions?.(null);
   const result=snapshot(),hadRun=Boolean(current||result);
   if(current)send({type:'document-audit-cancel',schemaVersion:SCHEMA,requestId:current.requestId});
   current=null;focusRequest=null;expectedFocus=null;clearTimeout(timer);clearTimeout(focusTimer);
-  publish(result?'stale':'idle',result,hadRun?message:'');
+  publish(result?'stale':'idle',result,hadRun?message:'',diagnostic);
  }
  function fail(message,diagnostic=null){current=null;focusRequest=null;expectedFocus=null;clearTimeout(timer);clearTimeout(focusTimer);publish(snapshot()?'stale':'error',snapshot(),message,diagnostic);}
  function start(requestId,settings){
@@ -91,7 +91,7 @@ function createDocumentAuditClient({send,controller,timeoutMs=20000,refreshTimeo
   if(typeof m?.type!=='string'||!m.type.startsWith('document-audit-'))return false;
   if(m.schemaVersion!==SCHEMA)return true;
   if(m.type==='document-audit-invalidated'){
-   if(current?.requestId===m.runId)invalidate('Результат проверки документа устарел. Показан предыдущий результат; повторите проверку.');return true;
+   if(current?.requestId===m.runId)invalidate('Результат проверки документа устарел. Показан предыдущий результат; повторите проверку.',m.reason==='NATIVE_FACTS_CHANGED'&&failureValid(m.diagnostic)&&m.diagnostic.requestId===m.runId?m.diagnostic:null);return true;
   }
   if(m.type==='document-audit-focus-result'){
    if(m.requestId===focusRequest&&m.runId===current?.requestId){clearTimeout(focusTimer);focusRequest=null;if(m.success!==true)invalidate(m.message||'Переход не подтверждён. Повторите проверку.');}return true;

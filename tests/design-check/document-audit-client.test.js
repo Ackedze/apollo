@@ -33,6 +33,14 @@ test('aggregate branch busy blocks a second launch until contract terminal reply
 });
 
 function acceptedSnapshot(){const f=setup();f.port.start('run',f.state.settings);const r=result('run:native');r.checks[0].findings=[{findingId:'finding',status:'local',name:'Local',message:'Local definition',componentKey:null,owner:null,occurrences:['a'],targets:[{id:'target',kind:'occurrence',nodeId:'focus-node',pageId:'page'}],evidence:{synthetic:true}}];f.port.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:'run:native',result:r});return Object.assign(f,{result:r});}
+test('post-result invalidation keeps its correlated diagnostic and the old findings',()=>{
+ const f=acceptedSnapshot(),d=diagnostic('run:native');f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native',reason:'NATIVE_FACTS_CHANGED',diagnostic:d});
+ assert.equal(f.state.documentAudit.status,'stale');assert.equal(f.state.documentAudit.result,f.result);assert.deepEqual(f.state.documentAudit.diagnostic,d);assert.equal(f.state.documentAudit.requestId,'run:native');assert.equal(f.port.focus('finding','target'),false);f.port.invalidate('');
+});
+for(const kind of ['foreign','extra','wrong-reason'])test('invalidation rejects '+kind+' diagnostic',()=>{
+ const f=acceptedSnapshot(),d=diagnostic(kind==='foreign'?'other:native':'run:native');if(kind==='extra')d.snapshot={characters:'PRIVATE'};
+ f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native',reason:kind==='wrong-reason'?'NATIVE_CONTEXT_CHANGED':'NATIVE_FACTS_CHANGED',diagnostic:d});assert.equal(f.state.documentAudit.status,'stale');assert.equal(f.state.documentAudit.result,f.result);assert.equal(f.state.documentAudit.diagnostic,null);f.port.invalidate('');
+});
 for(const cause of ['main-invalidation','page','settings','focus-error','focus-timeout'])test('visible snapshot survives '+cause+' and stale actions stay blocked',async()=>{
  const f=acceptedSnapshot();assert.equal(f.state.documentAudit.status,'available');
  if(cause==='main-invalidation')f.port.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:'run:native'});

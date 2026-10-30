@@ -29,7 +29,8 @@ let sessionRevision=0,sessionLoaded=false,sessionTimer=null;
 const staticReviewTransport=createStaticReviewTransport(__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__);
 const BASE = 'http://localhost:3001';
 const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});
-const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
+let statisticsUserName=null;
+const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({userName:()=>statisticsUserName,send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
 const { createFrontendTransport } = require("./generation/frontend/ui");
 const { resolveGenerationContext } = require("./generation/proxy/ui");
 const { SOURCE_SCHEMA, sourceFromFiles, linkSourcePackages } = require("./authoring-source");
@@ -324,7 +325,7 @@ window.onmessage = event => {
   if (data.type === 'error' && data.requestId === generationRequest) { generationBusy = false; generationResult = null; $('generation-status').textContent = data.message; }
   if (data.type === 'generation-error' && data.requestId === generationRequest) { generationBusy = false; generationResult = null; $('generation-status').textContent = data.message; }
   if (agentUi?.accept(data)) {controls();return;}
-  if (data.type === 'selection') { layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
+  if (data.type === 'selection') { statisticsUserName=typeof data.statisticsUserName==='string'?data.statisticsUserName:null; layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
   if (data.type === 'contract-loaded') { $('contract-name').textContent = `${data.name} · r${data.revision} · локальный авторский контракт`; status('Локальный пакет загружен. Можно проверять выделение.'); }
   if (data.type === 'source-mode') { clearResult(); $('contract-name').textContent = 'Прокси подберёт контракты по ключам компонентов'; status('Автоматическая загрузка контрактов включена.'); }
   if(['v3-catalog-request','v3-catalog-cancel'].includes(data.type)){void catalogTransport.accept(data);return;}

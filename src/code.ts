@@ -92,6 +92,7 @@ const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
   return lastAudit;
 }});
+function statisticsUserName():string|null {try{return figma.currentUser?.name||null;}catch(_){return null;}}
 function refreshSelection() {
   documentAuditBridge.selectionChanged();
   reglyphBridge?.selectionChanged();
@@ -103,7 +104,7 @@ function refreshSelection() {
     // retain their own existing selection-bound invalidation contract.
     for (const [requestId,request] of pending) if(requestId.startsWith('generation-native:')) {clearTimeout(request.timer);request.reject(new Error('Выделение изменилось. Повторите проверку.'));pending.delete(requestId);}
   }
-  post({ type: 'selection', pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
+  post({ type: 'selection', statisticsUserName: statisticsUserName(), pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
 }
 function requestContracts(requestId: string, components: any[], releaseId?: string, guard?:()=>void): Promise<any> {
   return new Promise((resolve, reject) => {

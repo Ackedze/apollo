@@ -4,6 +4,16 @@ const digest=r=>crypto.createHash('sha256').update(p.canonical(r)).digest('hex')
 const source=()=>({release:{id:'data123'},selection:{roots:[{nodeId:'1:2'}],scannedNodes:4,components:[{componentKey:'keyA'},{componentKey:'keyA'}]},components:[{}],governedComponents:[{}],notChecked:[],result:{coverage:{executionComplete:false},engine:{evaluations:[{ruleId:'r1',classification:'compliant',trace:{truth:'unknown',actual:'PRIVATE TEXT'}},{ruleId:'r2',classification:'violation',trace:{truth:'false'}},{ruleId:'r3',classification:'human-review',trace:{truth:'unknown'}}]}}});
 const sample=(reportId='test-1')=>createReport({reportId,runId:'run1',origin:'contract-area',startedAt:'2026-10-29T00:00:00.000Z',durationMs:25,result:source()});
 const wait=async check=>{for(let i=0;i<500;i++){if(check())return;await new Promise(r=>setTimeout(r,2));}throw Error('bounded test wait');};
+test('V3 filing uses Figma name and local completion time, validates dates and keeps legacy reports readable',()=>{
+ const f=require('../src/audit-statistics/filing'),at=new Date(2026,9,31,12,13,42);
+ const r=createReport({reportId:'filing',runId:'run',origin:'contract-area',startedAt:at.toISOString(),finishedAt:at,userName:' User / Name ',durationMs:1,result:source()});
+ assert.deepEqual(r.user,{name:'User / Name',slug:'User-Name'});
+ assert.equal(r.suggestedFileName,'User-Name_31-10-2026_12-13-42_metrics-contract-area.json');
+ assert.equal(f.reportPath(r),'apollo/stats/User-Name/31-10-2026/'+r.suggestedFileName);
+ assert.equal(f.reportPath(sample()),'apollo/stats/Unknown-User/29-10-2026/Unknown-User_29-10-2026_00-00-00_metrics-contract-area.json');
+ for(const edit of [{user:{name:'User / Name',slug:'..'}},{suggestedFileName:'../private.json'},{suggestedFileName:r.suggestedFileName.replace('31-10','31-02')},{suggestedFileName:r.suggestedFileName.replace('12-13-42','24-13-42')},{user:{...r.user,id:'extra'}},{snapshot:{}}])assert.equal(p.valid({...r,...edit}),false);
+ assert.equal(p.valid(sample()),true);assert.equal(p.valid(r),true);
+});
 test('built native statistics bridge persists reports without browser or Node encoding globals',async()=>{
  const code=require('esbuild').buildSync({entryPoints:[require.resolve('../src/audit-statistics/native')],bundle:true,platform:'neutral',format:'cjs',write:false}).outputFiles[0].text;
  const sandbox={module:{exports:{}},console};require('node:vm').runInNewContext(code,sandbox);assert.equal(sandbox.TextEncoder,undefined);assert.equal(sandbox.Buffer,undefined);
@@ -53,6 +63,10 @@ test('deadline includes stalled HTTP body; no acknowledgement or audit error UI'
 });
 test('recheck references its actual prior report; repeated finish creates no duplicate',async()=>{
  const h=harness({request:async()=>{throw Error('OFFLINE');}});try{h.client.start('run','contract-area');h.client.finish('run','contract-area',source());h.client.finish('run','contract-area',source());await wait(()=>h.map.size===1);const first=Array.from(h.map.values())[0];h.client.start('recheck','contract-area',null,'recheck','run');h.client.finish('recheck','contract-area',source());await wait(()=>h.map.size===2);const second=Array.from(h.map.values()).find(r=>r.runId==='recheck');assert.equal(second.operation,'recheck');assert.equal(second.sourceReportId,first.reportId);}finally{h.client.close();}
+});
+test('author is pinned when the run starts and filename is persisted once across retries',async()=>{
+ let name='First User';const h=harness({userName:()=>name,request:async()=>{throw Error('OFFLINE');}});
+ try{h.client.start('named-run','contract-area');name='Different User';h.client.finish('named-run','contract-area',source());await wait(()=>h.map.size===1);const r=Array.from(h.map.values())[0];assert.equal(r.user.name,'First User');const bytes=p.canonical(r);await h.client.flush();assert.equal(p.canonical(Array.from(h.map.values())[0]),bytes);}finally{h.client.close();}
 });
 test('failed native run retains only its own accepted checkpoint and honest partial coverage',async()=>{
  const h=harness({request:async()=>{throw Error('OFFLINE');}});try{const context={pageId:'page',selectionSignature:'root',platform:'Desktop'};h.client.start('native','native-document',context);h.client.checkpoint('native',{runId:'native',context:{...context,pageId:'wrong'},checks:[]});h.client.checkpoint('native',{runId:'native',context,checks:[{id:'theme',status:'running',checked:2,findings:[{status:'unknown',componentKey:null}]}]});h.client.finish('native','native-document',null,'failed');await wait(()=>h.map.size===1);const r=Array.from(h.map.values())[0];assert.equal(r.status,'failed');assert.equal(r.metrics.coverage.complete,false);assert.equal(r.metrics.coverage.unknown,1);assert.equal(r.metrics.coverage.byStatus.running,1);assert.equal(r.scope.rootCount,1);}finally{h.client.close();}

@@ -13,5 +13,8 @@
       "http://localhost:3001"
     ],
     "reasoning": "Connect to Apollo Proxy for contracts, audit explanations and screen generation."
-  }
+  },
+  "permissions": [
+    "currentuser"
+  ]
 }

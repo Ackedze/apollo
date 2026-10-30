@@ -1,4 +1,5 @@
 'use strict';
+const {validFiling}=require('./filing');
 const SCHEMA='apollo.audit-metrics.v2',MAX_BYTES=131072;
 const exact=(v,keys)=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join(',')===keys.slice().sort().join(',');
 const id=v=>typeof v==='string'&&/^[a-zA-Z0-9_.:-]{1,180}$/.test(v);
@@ -9,7 +10,7 @@ const canonical=v=>JSON.stringify(sort(v));
 // Figma main has no TextEncoder; match UTF-8 limits without browser globals.
 const byteSize=v=>encodeURIComponent(canonical(v)).replace(/%[0-9A-F]{2}/g,'x').length;
 function sort(v){return Array.isArray(v)?v.map(sort):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,sort(v[k])])):v;}
-function valid(r){try{return exact(r,['schemaVersion','reportKind','reportId','runId','sourceReportId','origin','operation','status','startedAt','durationMs','versions','scope','metrics','excludeFromAnalytics'])
+function valid(r){try{return exact(r,['schemaVersion','reportKind','reportId','runId','sourceReportId','origin','operation','status','startedAt','durationMs','versions','scope','metrics','excludeFromAnalytics'].concat('user' in r?['user','suggestedFileName']:[]))&&(!('user' in r)||validFiling(r))
  &&r.schemaVersion===2&&r.reportKind==='apollo-audit-metrics'&&id(r.reportId)&&id(r.runId)&&(r.sourceReportId===null||id(r.sourceReportId))
  &&['contract-area','native-document','pattern-agent'].includes(r.origin)&&['check','recheck','pattern-check'].includes(r.operation)&&['completed','partial','failed','cancelled'].includes(r.status)
  &&typeof r.startedAt==='string'&&r.startedAt.length<=40&&Number.isFinite(Date.parse(r.startedAt))&&nullableCount(r.durationMs)&&typeof r.excludeFromAnalytics==='boolean'

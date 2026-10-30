@@ -35,7 +35,7 @@ const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
-const {boundedRead}=require("./document-audit/reads");
+const {boundedRead,cooperativeRead}=require("./document-audit/reads");
 const {minimalRoots}=require("./document-audit/scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./document-audit/notification-proof");
 const { collectAuditDisplayMetadata } = require("./audit-display-resources");
@@ -73,6 +73,7 @@ let nativeScopeSequence = 0;
 let busy = false, generation = 0, lastAudit: any = null, selectionId = '', localMode = false;
 const localContracts = new Map<string, any>(), focusNodes = new Map<string, string>();
 const pending = new Map<string, { resolve: (value: any) => void; reject: (error: Error) => void; timer: any }>();
+let activeAuditRun:any=null;
 let activeArea: {requestId:string; pageId:string; cancelling:boolean} | null = null, auditPageId = '', lastAreaRequestId='';
 let areaPage: PageNode | null = null, areaObservedIds = new Set<string>(), verifyLastArea: ((operationGuard?:()=>void)=>Promise<void>) | null = null;
 let contractFocusRegistry=new Map<string,any>(),contractFocusTask:any=null,lastAuditRevision:number|null=null,areaSession:any=null,areaNotificationProof:any=null;
@@ -104,9 +105,10 @@ function refreshSelection() {
   }
   post({ type: 'selection', pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
 }
-function requestContracts(requestId: string, components: any[], releaseId?: string): Promise<any> {
+function requestContracts(requestId: string, components: any[], releaseId?: string, guard?:()=>void): Promise<any> {
   return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => { pending.delete(requestId); reject(new Error('Прокси не ответил. Проверьте ApolloProxyControl и повторите аудит.')); }, 30000);
+    const monitor=()=>{const request=pending.get(requestId);if(!request)return;try{guard?.();request.timer=setTimeout(monitor,100);}catch(error){pending.delete(requestId);post({type:'resolve-contracts-cancel',requestId});reject(error);}};
+    const timer=guard?setTimeout(monitor,100):setTimeout(()=>{pending.delete(requestId);reject(new Error('Прокси не ответил. Проверьте ApolloProxyControl и повторите аудит.'));},30000);
     pending.set(requestId, { resolve, reject, timer });
     post({ type: 'resolve-contracts', requestId, components, releaseId });
   });
@@ -147,13 +149,19 @@ function appendUiRules(contract: any, scopeId: string, rules: any[], snapshot?: 
   }
   for (const pin of contract.componentDependencies || []) appendUiRules(pin.contract, scopeId, rules);
 }
-function checkCapture(scope: any, contract: any, captured: any) {
+async function withCaptureReads<T>(guard:()=>void,visit:(control:any)=>Promise<T>):Promise<T>{
+ let active=true;
+ const check=()=>{guard();if(!active)throw Error('AUDIT_CAPTURE_SUPERSEDED');};
+ const read=async(work:any)=>{let attempt=0;while(true){check();try{return await cooperativeRead(work,1000,check);}catch(error:any){check();const run=activeAuditRun;if(run){const diagnostic=require('./document-audit/protocol').failureDiagnostic(error,run.requestId,run.stage,engine.stableHash,[++attempt,Date.now()]);run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);post({type:'audit-recovery',requestId:run.requestId,diagnostic,message:'Повторяем чтение источника Figma…'});}if(!require('./document-audit/reads').retryableRead(error))throw error;await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,Math.min(2000,attempt*100))),100,check);}}};
+ try{return await visit({guard:check,read});}finally{active=false;}
+}
+function checkCapture(scope: any, contract: any, captured: any,guard:()=>void=()=>{}) {
   const plan = nativeSlotCapturePlan(contract), omissions = captured.snapshot.source?.nativeSlotCaptureScope?.omissions || [];
   const captureScope = omissions.length ? { manualSourceHash: contract.package.manualSourceHash,
     // Reuse the representation proved by capture; another adapter can expose the same port.
     boundaries: (plan?.boundaries || []).filter(boundary => boundary.representationId === captured.snapshot.source.representationId
       && omissions.some((entry: any) => entry.targetId === boundary.targetId && entry.property === boundary.property && entry.path === boundary.path)) } : undefined;
-  return collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope);
+  return withCaptureReads(guard,control=>collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope,control));
 }
 function attachSharedArea(data:any) {
   if (!progressBarPilot) return;
@@ -164,6 +172,35 @@ function attachSharedArea(data:any) {
   };
   data.sharedArea=require('./shared-area-capture').createSharedAreaCapture({scan:data.scan,captures:data.captures,roots:data.roots,auditId:report.auditId,pageId:auditPageId,hash:engine.stableHash,verify});
 }
+async function runAuditRequest(message:any){
+ if(activeAuditRun)throw Error('AUDIT_BUSY');
+ const run:any={requestId:message.requestId,cancelled:false,completed:false,stage:'selection',attempt:0,failures:[]};activeAuditRun=run;
+ const assertRun=()=>{if(run.cancelled||!run.completed&&activeAuditRun!==run)throw Error('AUDIT_CANCELLED');};
+ const context=message.context;
+ try{
+  if(context&&!require('./document-audit/protocol').contextValid(context))throw Error('AUDIT_REQUEST_INVALID');
+  const pageId=context?.pageId||figma.currentPage.id;
+  const roots:SceneNode[]=context?await Promise.all(context.selectionSignature.split('|').filter(Boolean).map((id:string)=>resolveNativeNode(figma,id,{read:(read:any)=>cooperativeRead(read,1000,assertRun),guard:assertRun}))):Array.from(figma.currentPage.selection);
+  if(!roots.length||roots.some(n=>!n))throw Error('AUDIT_ROOT_UNAVAILABLE');
+  while(!run.cancelled){
+   assertRun();run.attempt++;
+   try{
+    if(figma.currentPage.id!==pageId)throw Error('AUDIT_CONTEXT_CHANGED');
+    await audit(message.requestId,{platform:message.platform,roots,guard:assertRun});assertRun();run.completed=true;return;
+   }catch(error:any){
+    if(run.cancelled)return;
+    const changed=/(AUDIT_CONTEXT_CHANGED|AUDIT_CAPTURE_CHANGED|AUDIT_TOPOLOGY_CHANGED|NATIVE_FACTS_CHANGED|Результат устарел|^Версия контрактов изменилась)/i.test(error.message||'');
+    const transient=changed||/TIMEOUT|TEMPORAR|UNAVAILABLE/.test(error.code||error.message||'')||/^Прокси не ответил\./.test(error.message||'');
+    if(!transient)throw error;
+    const diagnostic=require('./document-audit/protocol').failureDiagnostic({code:changed?'AUDIT_CONTEXT_CHANGED':error.code||'PROXY_UNAVAILABLE'},message.requestId,run.stage,engine.stableHash,[run.attempt,Date.now()]);
+    run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);
+    post({type:'audit-recovery',requestId:message.requestId,diagnostic,message:changed?'Данные изменились. Собираем и проверяем область заново…':'Ожидаем восстановление связи с Proxy…'});
+    await cooperativeRead(()=>new Promise(resolve=>setTimeout(resolve,Math.min(2000,run.attempt*100))),100,assertRun);
+   }
+  }
+ }catch(error:any){if(!run.cancelled){error.auditFailure=require('./document-audit/protocol').failureDiagnostic(error,message.requestId,run.stage,engine.stableHash,[run.attempt,Date.now()]);throw error;}}
+ finally{if(activeAuditRun===run)activeAuditRun=null;if(run.cancelled)post({type:'audit-cancelled',requestId:message.requestId});}
+}
 async function audit(requestId: string, options:any={}) {
   if (busy || reglyphBridge?.busy()) throw new Error('Проверка уже выполняется.');
   const roots:SceneNode[] = options.roots||Array.from(figma.currentPage.selection);
@@ -173,7 +210,7 @@ async function audit(requestId: string, options:any={}) {
     scope: options.quiet ? 'scoped-contract-audit-before-merge' : 'contract-area-audit-before-delivery',
     clock: 'Date.now', totalMs: 0, stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
   const time = (stage:string, scopeId?:string) => {
-    const started = Date.now();
+    const started = Date.now();if(activeAuditRun?.requestId===requestId)activeAuditRun.stage=stage;
     return () => timings.stages.push(Object.assign({stage,durationMs:Math.max(0,Date.now()-started)},scopeId ? {scopeId} : {}));
   };
   busy = true;if(!options.quiet){areaNotificationProof?.close();areaNotificationProof=null;verifyLastArea=null;lastAudit = null; focusNodes.clear();}
@@ -184,10 +221,10 @@ async function audit(requestId: string, options:any={}) {
   try {
     progress('Собираем ключи компонентов в выделенной области…');
     let endStage = time('scan');
-    const scan = await scanArea(roots, assertCurrent,options.quiet?undefined:nodes=>{
+    const scan = await withCaptureReads(assertCurrent,control=>scanArea(roots, assertCurrent,options.quiet?undefined:nodes=>{
       areaObservedIds=new Set(nodes.keys());
       setAreaNotificationProof(nodes,async()=>assertCurrent(),assertCurrent);
-    });endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
+    },control.read));endStage();areaObservedIds=new Set([...(options.quiet&&areaSession?areaSession.scan.nodes.keys():[]),...scan.nodes.keys()]);
     const components: any[] = [], notChecked: any[] = [], governedComponents: any[] = [], rules: any[] = [], warnings: string[] = [];
     let items = Array.from(localContracts.values()), releaseId: string | undefined = fileMode ? undefined : options.releaseId;
     const identityId = (identity: any) => JSON.stringify([identity.componentKey, identity.componentSetKey]);
@@ -198,7 +235,7 @@ async function audit(requestId: string, options:any={}) {
         requested.set(identityId(component), { componentKey: component.componentKey, componentSetKey: component.componentSetKey });
       progress('Получаем контракты компонентов через Proxy…');
       endStage = time('resolve-contracts');
-      const response = await requestContracts(requestId + ':resolve', Array.from(requested.values()), releaseId);
+      const response = await requestContracts(requestId + ':attempt-' + (activeAuditRun?.requestId===requestId?activeAuditRun.attempt:0) + ':resolve', Array.from(requested.values()), releaseId, assertCurrent);
       endStage();
       endStage = time('compile-contracts');
       assertCurrent();
@@ -249,14 +286,14 @@ async function audit(requestId: string, options:any={}) {
       let captured: any;
       const endCapture = time('capture', subject.id);
       try {
-        captured = await captureInstanceAudit(subject, { componentKey: contract.facts.component.componentKey,
+        captured = await withCaptureReads(assertCurrent,readControl=>captureInstanceAudit(subject, {readControl, componentKey: contract.facts.component.componentKey,
           acceptedComponentKeys: Array.from(runtime.collectContractKeys(contract)), componentDependencyKeys: runtime.componentDependencyKeys(contract),
           directChildDependenciesVersion: contract.runtimePolicy.directChildDependenciesVersion,
           instanceMainComponentAliasesVersion: contract.runtimePolicy.instanceMainComponentAliasesVersion,
           representations: contract.facts.representations, allowedComponentProperties: allowedComponentPropertyNames(contract), platform: contract.facts.component.platform,
           portableSwapIdentityVersion: contract.runtimePolicy.portableSwapIdentityVersion, manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
           onTiming:(stage,durationMs)=>timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id}),
-          captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 });
+          captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 }));
       } catch (error) { assertCurrent(); gap('capture-failed', error instanceof Error ? error.message : String(error)); continue; }
       finally { endCapture(); }
       assertCurrent();
@@ -332,7 +369,7 @@ async function audit(requestId: string, options:any={}) {
     if (releaseId) {
       endStage = time('verify-release');
       progress('Подтверждаем версию контрактов через Proxy…');
-      const verified = await requestContracts(requestId + ':verify', [], releaseId);
+      const verified = await requestContracts(requestId + ':attempt-' + (activeAuditRun?.requestId===requestId?activeAuditRun.attempt:0) + ':verify', [], releaseId, assertCurrent);
       if (verified.releaseId !== releaseId) throw new Error('Версия контрактов изменилась. Повторите проверку.');
       endStage();
     }
@@ -341,12 +378,12 @@ async function audit(requestId: string, options:any={}) {
     for (const capture of captures) {
       assertCurrent();
       endStage = time('verify-final-capture', capture.subject.id);
-      const check = await checkCapture(capture.subject, capture.contract, capture.captured);
+      const check = await checkCapture(capture.subject, capture.contract, capture.captured,assertCurrent);
       if (engine.stableHash(check.anatomy) !== engine.stableHash(capture.captured.anatomy)) throw new Error(`Свойства узла ${capture.subject.id} изменились во время захвата. Повторите проверку. (AUDIT_CAPTURE_CHANGED · verify-final-capture)`);
       endStage();
     }
     endStage = time('final-scan');
-    const finalScan = await scanArea(roots, assertCurrent);
+    const finalScan = await withCaptureReads(assertCurrent,control=>scanArea(roots,assertCurrent,undefined,control.read));
     if (engine.stableHash(finalScan.topology) !== engine.stableHash(scan.topology)) throw new Error('Состав или свойства выбранной области изменились. Повторите проверку. (AUDIT_TOPOLOGY_CHANGED · final-scan)');
     assertCurrent();
     endStage();
@@ -356,7 +393,7 @@ async function audit(requestId: string, options:any={}) {
     if (scan.selection.issues.includes('area-identity-read-failed')) warnings.push('Figma отклонила чтение части источников компонентов. Проверка неполная. (AREA_IDENTITY_READ_FAILED)');
     const result = runtime.aggregateAreaResult(components, notChecked, scan.selection, governedComponents);
     const auditId = engine.stableHash({ selection: scan.selection, components: components.map(component => component.auditId), generation: current });
-    const report:any = { schemaVersion: 'apollo.area-audit.v1-experimental', mode: 'selected-area', auditId,
+    const report:any = { recoveryDiagnostics:activeAuditRun?.requestId===requestId?activeAuditRun.failures.slice():[], schemaVersion: 'apollo.area-audit.v1-experimental', mode: 'selected-area', auditId,
       release: { id: releaseId, channel: fileMode ? 'local-file' : 'local-pilot' }, selection: scan.selection,
       components, notChecked, governedComponents, result, warnings };
     if(components.length===1)report.snapshot=components[0].snapshot;
@@ -367,7 +404,7 @@ async function audit(requestId: string, options:any={}) {
     const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform};
     if(options.quiet)return data;
     auditPageId=pageId;lastAudit=report;lastAuditRevision=current;areaSession=data;
-    verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured);assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await scanArea(roots,()=>{assertCurrent();operationGuard();});assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
+    verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured,()=>{assertCurrent();operationGuard();});assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await withCaptureReads(()=>{assertCurrent();operationGuard();},control=>scanArea(roots,()=>{assertCurrent();operationGuard();},undefined,control.read));assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
     setAreaNotificationProof(scan.nodes,verifyLastArea,()=>{if(generation!==current||lastAudit!==report||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
     endStage = time('shared-area-snapshot');attachSharedArea(data);endStage();
     endStage = time('focus-targets');
@@ -375,7 +412,7 @@ async function audit(requestId: string, options:any={}) {
     endStage();
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
     post(Object.assign({type:'audit-result',requestId},auditDelivery({audit:lastAudit,rules,displayMetadata,focusTargets:focus.sidecar})));
-  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped)post({type:'audit-cancelled',requestId}); }
+  } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped&&!activeAuditRun)post({type:'audit-cancelled',requestId}); }
 }
 function buildContractFocus(components:any[],captures:any[],pageId:string,auditId:string){return contractFocusTargets({components,captures,pageId,auditId,hash:engine.stableHash,dependencyMap:(entry:any,capture:any)=>{let snapshot=capture.captured.snapshot,contract=capture.contract,dep=entry.dependency;let map:any=Object.fromEntries(snapshot.nodes.map((n:any)=>[n.id,n.id]));for(let depth=0;dep&&depth<8;depth++){const pins=(contract.componentDependencies||[]).filter((p:any)=>p.id===dep.dependencyId&&p.componentId===dep.componentId&&p.compiledHash===dep.compiledHash);if(pins.length!==1||!pins[0].contract)return null;const pin=pins[0],bindings=pin.bindings.filter((b:any)=>b.id===dep.bindingId);if(bindings.length!==1)return null;const resolved=resolveFixedNestedBinding(snapshot,pin,bindings[0],false,contract);if(resolved.status!=='active'||!resolved.nodeId||!resolved.identityValid)return null;const child=validatedDependencyCapture(snapshot,resolved.nodeId,pin.contract);if(!child.snapshot||!child.nodeMap)return null;const composed:any={};for(const [id,parentId] of Object.entries(child.nodeMap))if(map[parentId as string])composed[id]=map[parentId as string];map=composed;snapshot=child.snapshot;contract=pin.contract;dep=dep.nested;}return dep?null:map;}});}
 function setAreaNotificationProof(nodes:Map<string,SceneNode>,verify:any,guard:()=>void){areaNotificationProof?.close();areaNotificationProof=createNotificationProof({nodes:observationNodes(nodes.values()),hash:engine.stableHash,guard,verify:async(g:()=>void)=>{g();await verify(g);g();},onError:()=>invalidateArea()});}
@@ -400,7 +437,7 @@ function beginScopedRecheck(plan:any,requestId:string){
  const verify=async(operationGuard:()=>void)=>{
   guard();operationGuard();
   if(!candidate)return;
-  for(const capture of candidate.captures){guard();operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured);guard();operationGuard();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}
+  for(const capture of candidate.captures){guard();operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured,()=>{guard();operationGuard();});guard();operationGuard();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}
   const checked=await scanArea(previous.roots,()=>{guard();operationGuard();});guard();operationGuard();
   const sort=(topology:any[])=>topology.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
   if(engine.stableHash(sort(checked.topology))!==engine.stableHash(sort(candidate.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');
@@ -438,7 +475,7 @@ function beginScopedRecheck(plan:any,requestId:string){
  },verify,commit:(data:any,operationGuard:()=>void)=>{
   guard();operationGuard();if(!data)return null;lastAudit=data.audit;lastAuditRevision=revision;areaSession=data;contractFocusRegistry=data.focusRegistry;areaObservedIds=new Set(data.scan.nodes.keys());auditPageId=pageId;
   // The commit changes the report identity; retain the same revision guard for future focus.
-  verifyLastArea=async(g=()=>{})=>{g();if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==data.audit)throw Error('NATIVE_RESULT_STALE');for(const c of data.captures){const check=await checkCapture(c.subject,c.contract,c.captured);g();if(generation!==revision||engine.stableHash(check.anatomy)!==engine.stableHash(c.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}const checked=await scanArea(data.roots,g);g();const normalize=(rows:any[])=>rows.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));if(generation!==revision||engine.stableHash(normalize(checked.topology))!==engine.stableHash(normalize(data.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');};
+  verifyLastArea=async(g=()=>{})=>{g();if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==data.audit)throw Error('NATIVE_RESULT_STALE');for(const c of data.captures){const check=await checkCapture(c.subject,c.contract,c.captured,g);g();if(generation!==revision||engine.stableHash(check.anatomy)!==engine.stableHash(c.captured.anatomy))throw Error('NATIVE_FACTS_CHANGED');}const checked=await withCaptureReads(g,control=>scanArea(data.roots,g,undefined,control.read));g();const normalize=(rows:any[])=>rows.slice().sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));if(generation!==revision||engine.stableHash(normalize(checked.topology))!==engine.stableHash(normalize(data.scan.topology)))throw Error('NATIVE_FACTS_CHANGED');};
   setAreaNotificationProof(data.scan.nodes,verifyLastArea,()=>{if(generation!==revision||lastAudit!==data.audit||figma.currentPage.id!==pageId)throw Error('NATIVE_CONTEXT_CHANGED');});
   attachSharedArea(data);
   return auditDelivery({audit:data.audit,rules:data.rules,displayMetadata:data.displayMetadata,focusTargets:data.focusTargets,staleScopeIds:data.staleScopeIds});
@@ -487,10 +524,15 @@ figma.ui.onmessage = async (message: any) => {
     if((documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
     // Resolve RPC before busy checks: preparation is waiting for this response.
     if (generationFrontend.accept(message)||generationProxy.accept(message)) return;
+    if(message.type==='contracts-progress'){
+      const run=activeAuditRun;if(run&&typeof message.requestId==='string'&&message.requestId.startsWith(run.requestId+':')&&pending.has(message.requestId)&&['PROXY_TIMEOUT','PROXY_UNAVAILABLE'].includes(message.code)){
+        const diagnostic=require('./document-audit/protocol').failureDiagnostic({code:message.code},run.requestId,run.stage,engine.stableHash,[message.requestId,Date.now()]);run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);post({type:'audit-recovery',requestId:run.requestId,diagnostic,message:'Ожидаем ответ Proxy. Проверка продолжится автоматически…'});
+      }return;
+    }
     if (message.type === 'contracts-resolved') {
       const request = pending.get(message.requestId); if (!request) return;
       clearTimeout(request.timer); pending.delete(message.requestId);
-      if (message.error) request.reject(new Error(message.error)); else request.resolve(message.data);
+      if (message.error) request.reject(Object.assign(new Error(message.error),{code:message.code})); else request.resolve(message.data);
       return;
     }
     if (message.type === 'generation-invalidate') { invalidateNativeDiagnostic(); generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); return; }
@@ -527,8 +569,13 @@ figma.ui.onmessage = async (message: any) => {
       post({ type: 'contract-loaded', name: next.package.family || next.facts.component.family || next.package.id, revision: loaded.source.manual.metadata.revision });
       refreshSelection(); return;
     }
-    if(message.type==='audit-cancel'){if(activeArea&&activeArea.requestId===message.requestId){activeArea.cancelling=true;generation++;for(const [id,request] of pending)if(id.startsWith(message.requestId+':')){clearTimeout(request.timer);pending.delete(id);request.reject(new Error('Проверка области остановлена.'));}}else if(!activeArea&&lastAreaRequestId===message.requestId)post({type:'audit-cancelled',requestId:message.requestId});return;}
-    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.'); await audit(message.requestId,{platform:message.platform}); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
+    if(message.type==='audit-cancel'){
+      if(activeAuditRun?.requestId===message.requestId)activeAuditRun.cancelled=true;
+      if(activeArea&&activeArea.requestId===message.requestId){activeArea.cancelling=true;generation++;}
+      for(const [id,request]of pending)if(id.startsWith(message.requestId+':')){clearTimeout(request.timer);pending.delete(id);post({type:'resolve-contracts-cancel',requestId:id});request.reject(Error('AUDIT_CANCELLED'));}
+      if(!activeAuditRun&&!activeArea&&lastAreaRequestId===message.requestId)post({type:'audit-cancelled',requestId:message.requestId});return;
+    }
+    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.'); await runAuditRequest(message); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
     if (message.type === 'focus' || message.type === 'focus-scope') {
       if (!lastAudit || message.auditId !== lastAudit.auditId || auditPageId!==figma.currentPage.id) throw new Error('Результат устарел. Повторите проверку.');
       if(verifyLastArea)await verifyLastArea();
@@ -541,5 +588,5 @@ figma.ui.onmessage = async (message: any) => {
       selectionId = selectionSignature([node as SceneNode]);
       figma.currentPage.selection = [node as SceneNode]; figma.viewport.scrollAndZoomIntoView([node as SceneNode]);
     }
-  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error) }); }
+  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error),diagnostic:(error as any)?.auditFailure||null }); }
 };

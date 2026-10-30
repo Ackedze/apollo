@@ -42,8 +42,6 @@ let generationLoading = false, generationLoadRevision = 0;
 let validSelection = false, busy = false, sequence = 0, activeRequest = '', cancelledAuditRequest = '', audit = null, agentSequence = 0;
 const send = value => {
   if(value.type==='document-audit-request')auditStatisticsClient.start(value.requestId,'native-document',value.context||null);
-  if(value.type==='document-audit-cancel')auditStatisticsClient.finish(value.requestId,'native-document',null,designCheck.getState().documentAudit.status==='cancelling'?'failed':'cancelled');
-  if(value.type==='audit-cancel')auditStatisticsClient.finish(value.requestId,'contract-area',null,contractStopping?'failed':'cancelled');
   parent.postMessage({ pluginMessage: value }, '*');
 };
 const {createCatalogTransport}=require("./v3-binding/catalog-port");
@@ -56,7 +54,8 @@ const {SESSION_SCHEMA,createSessionClient}=require("./generation/session/client"
 const sessionClient=createSessionClient(send);
 const dialogue = createExistingDialoguePort({ request: (url, options) => fetch(url, options), endpoint: BASE + '/analyze',
   createSessionId: () => 'apollo-v4-' + createOpaqueId() });
-let lastCompact = false, contractTimer=null, contractStopping=false, currentPageId='';
+let pendingContractDelivery=null,pendingNativeDelivery=null,contractContext=null;
+let lastCompact = false, contractStopping=false, currentPageId='';
 const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferenceScope: 'agent-source', preferences: uiClient.preferences, dialogue,
   onSettingChange: key => { if (['pickerLabel','channelId','pageTypeId'].includes(key)) {documentAuditClient.invalidate();markContractStale(true);} },
   onDocumentAction:(findingId,targetId,actionId)=>{documentAuditClient.action(findingId,targetId,actionId);controls();},
@@ -68,19 +67,24 @@ const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferen
     if (legacyOperationUnavailable()) return;
     designCheck.beginContractAudit(requestId); startContractAudit(requestId);
   },
+  onStopAudit:()=>stopAudit(),
   onAudit: ({ requestId }) => { startContractAudit(requestId); }
 });
-function startContractAudit(requestId) {
-    auditStatisticsClient.start(requestId,'contract-area',designCheck.getState().settings.pickerLabel);
-    tokenJournalClient.start(requestId);
+function startContractAudit(requestId,retry=false) {
+    if(!retry){auditStatisticsClient.start(requestId,'contract-area',designCheck.getState().settings.pickerLabel);tokenJournalClient.start(requestId);contractContext=documentAuditClient.context();}
     if(audit)markContractStale();else clearResult(false); busy = true; contractStopping=false;activeRequest = requestId; controls();
-    clearTimeout(contractTimer);contractTimer=setTimeout(()=>{if(activeRequest===requestId&&busy){contractStopping=true;designCheck.setAuditProgress(requestId,'Останавливаем проверку контрактов: ожидаем подтверждение от Figma…');send({type:'audit-cancel',requestId});}},60000);
-    status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
+    status('Собираем факты и независимый библиотечный эталон…'); send({ type: 'audit', requestId, context:contractContext, platform: ({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'})[designCheck.getState().settings.pickerLabel] });
 }
 const documentAuditClient = createDocumentAuditClient({send,controller:designCheck,isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy(),onRecheckStart:m=>{for(const origin of ['native-document','contract-area'])auditStatisticsClient.start(m.requestId,origin,designCheck.getState().settings.pickerLabel,'recheck',origin==='contract-area'?m.runId.replace(/:native$/,''):m.runId);markContractStale();},onRecheckResult:m=>{auditStatisticsClient.finish(m.requestId,'native-document',m.result);if(m.contract){auditStatisticsClient.finish(m.requestId,'contract-area',Object.assign({},m.contract.audit,{statisticsMetrics:m.contract.statisticsMetrics}));render(m.contract);designCheck.setAudit(Object.assign({},m.contract.audit,{displayMetadata:m.contract.displayMetadata}));}else auditStatisticsClient.discard(m.requestId,'contract-area');controls();},onRecheckError:m=>{for(const origin of ['native-document','contract-area'])auditStatisticsClient.finish(m.requestId,origin,null,'failed');markContractStale();}});
 const contractFocusClient=createAuditFocusClient({send,onStatus:status,isBusy:()=>designCheck.getState().documentAction.busy});
+function flushAuditDeliveries(){
+ const state=designCheck.getState();
+ if(pendingContractDelivery&&state.audit?.auditId===pendingContractDelivery.audit.auditId&&!state.auditStale){const delivered=pendingContractDelivery;pendingContractDelivery=null;render(delivered);auditStatisticsClient.finish(delivered.requestId,'contract-area',Object.assign({},delivered.audit,{statisticsMetrics:delivered.statisticsMetrics}));}
+ if(pendingNativeDelivery&&state.documentAudit.status==='available'&&state.documentAudit.result===pendingNativeDelivery.result){const delivered=pendingNativeDelivery;pendingNativeDelivery=null;auditStatisticsClient.finish(delivered.requestId,'native-document',delivered.result);}
+}
 designCheck.subscribe(() => {
   tokenJournalClient.observe(designCheck.getState());
+  flushAuditDeliveries();
   const settings=designCheck.getState().settings;
   reglyphClient?.setContext({channelId:settings.channelId,pickerLabel:settings.pickerLabel});
   const compact = settings.compact;
@@ -238,10 +242,10 @@ function saveReport(value,name) {
   const url=URL.createObjectURL(new Blob([JSON.stringify(value)],{type:'application/json'}));
   const anchor=document.createElement('a');anchor.href=url;anchor.download=name;anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-$('export').onclick=()=>{if(audit){const native=designCheck.getState().documentAudit;saveReport(Object.assign({},auditSummary(audit),{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,nativeAudit:{status:native.status,requestId:native.requestId,error:native.error,diagnostic:native.diagnostic||null}}),`apollo-summary-${audit.auditId.slice(0,12)}.json`);}};
+$('export').onclick=()=>{if(audit){const native=designCheck.getState().documentAudit;saveReport(Object.assign({},auditSummary(audit),{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,auditFailures:designCheck.getState().auditFailures,nativeAudit:{status:native.status,requestId:native.requestId,error:native.error,diagnostic:native.diagnostic||null,failures:native.failures||[],progress:native.progress||''}}),`apollo-summary-${audit.auditId.slice(0,12)}.json`);}};
 $('export-full').onclick=async()=>{
   if(!audit)return;const pinned=audit,button=$('export-full');button.disabled=true;button.textContent='Получаем диагностику…';
-  try{const full=await auditReports.request(pinned.auditId,'full');if(pinned===audit)saveReport(Object.assign({},full,{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,nativeAudit:designCheck.getState().documentAudit}),`apollo-v4-${full.auditId.slice(0,12)}.json`);}
+  try{const full=await auditReports.request(pinned.auditId,'full');if(pinned===audit)saveReport(Object.assign({},full,{pluginBuildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,auditFailures:designCheck.getState().auditFailures,nativeAudit:designCheck.getState().documentAudit}),`apollo-v4-${full.auditId.slice(0,12)}.json`);}
   catch(e){if(pinned===audit)status(e.message,true);}
   finally{button.disabled=false;button.textContent='Полная диагностика';}
 };
@@ -270,14 +274,38 @@ $('explain').onclick = async () => {
   } catch (error) { if (current === agentSequence && pinned === audit) $('explanation').textContent = error.message; }
   finally { if (current === agentSequence && pinned === audit) $('explain').disabled = false; }
 };
-async function resolve(data) {
-  try {
-    const body = await fetchJson('/v2/contracts/resolve', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ components: data.components, releaseId: data.releaseId }) });
-    designCheck.setProxyStatus({ available: true, version: designCheck.getState().chat.proxy.version });
-    send({ type: 'contracts-resolved', requestId: data.requestId, data: body });
-  } catch (error) { void designCheck.refreshProxyStatus(); send({ type: 'contracts-resolved', requestId: data.requestId, error: `ApolloProxyControl: ${error.message}` }); }
+const contractRequests=new Map();
+function stopAudit(){
+ pendingContractDelivery=null;pendingNativeDelivery=null;
+ if(activeRequest&&busy){contractStopping=true;designCheck.setAuditProgress(activeRequest,'Останавливаем проверку…');send({type:'audit-cancel',requestId:activeRequest});for(const [id,request]of contractRequests)if(id.startsWith(activeRequest+':')){request.abort.abort();contractRequests.delete(id);}}
+ documentAuditClient.stop();controls();
 }
+window.addEventListener('offline',()=>{if(busy||designCheck.getState().documentAudit.status==='loading'){designCheck.stopAudit('offline');status('Потеряно соединение с интернетом. Проверка остановлена; доступные результаты сохранены.',true);}});
+async function resolve(data) {
+ contractRequests.get(data.requestId)?.abort.abort();
+ const task={abort:new AbortController()};contractRequests.set(data.requestId,task);let attempt=0;
+ try{
+  while(contractRequests.get(data.requestId)===task){
+   const abort=new AbortController(),cancel=()=>abort.abort();task.abort.signal.addEventListener('abort',cancel,{once:true});
+   const timer=setTimeout(()=>abort.abort(),20000);
+   try{
+    const response=await fetch(BASE+'/v2/contracts/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({components:data.components,releaseId:data.releaseId}),signal:abort.signal});
+    const body=await response.json();if(task.abort.signal.aborted)return;
+    if(!response.ok||body.success===false){const error=Object.assign(Error(body.error||'PROXY_RESPONSE_INVALID'),{code:response.status>=500?'PROXY_UNAVAILABLE':body.code||'PROXY_RESPONSE_INVALID'});throw error;}
+    designCheck.setProxyStatus({available:true,version:designCheck.getState().chat.proxy.version});send({type:'contracts-resolved',requestId:data.requestId,data:body});return;
+   }catch(error){
+    if(task.abort.signal.aborted)return;
+    const auditRequest=activeRequest&&data.requestId.startsWith(activeRequest+':')&&!contractStopping;
+    const transient=error instanceof TypeError||error.name==='AbortError'||error.code==='PROXY_UNAVAILABLE';
+    if(!auditRequest||!transient){send({type:'contracts-resolved',requestId:data.requestId,code:error.code||'PROXY_UNAVAILABLE',error:'ApolloProxyControl: '+error.message});return;}
+    send({type:'contracts-progress',requestId:data.requestId,code:error.name==='AbortError'?'PROXY_TIMEOUT':'PROXY_UNAVAILABLE'});
+    designCheck.setAuditProgress(activeRequest,'Ожидаем ответ Proxy. Проверка продолжится автоматически…');
+    await new Promise(resolve=>{const delay=setTimeout(resolve,Math.min(2000,++attempt*250));task.abort.signal.addEventListener('abort',()=>{clearTimeout(delay);resolve();},{once:true});});
+   }finally{clearTimeout(timer);task.abort.signal.removeEventListener('abort',cancel);}
+  }
+ }finally{if(contractRequests.get(data.requestId)===task)contractRequests.delete(data.requestId);}
+}
+
 window.onmessage = event => {
   // Figma can deliver its bridge message from an outer editor frame instead
   // of the immediate sandbox parent. Accept only windows in our ancestor chain.
@@ -300,18 +328,20 @@ window.onmessage = event => {
   if (data.type === 'contract-loaded') { $('contract-name').textContent = `${data.name} · r${data.revision} · локальный авторский контракт`; status('Локальный пакет загружен. Можно проверять выделение.'); }
   if (data.type === 'source-mode') { clearResult(); $('contract-name').textContent = 'Прокси подберёт контракты по ключам компонентов'; status('Автоматическая загрузка контрактов включена.'); }
   if(['v3-catalog-request','v3-catalog-cancel'].includes(data.type)){void catalogTransport.accept(data);return;}
-  if (data.type === 'resolve-contracts') resolve(data);
+  if(data.type==='resolve-contracts-cancel'){const request=contractRequests.get(data.requestId);request?.abort.abort();contractRequests.delete(data.requestId);return;}
+  if (data.type === 'resolve-contracts') void resolve(data);
   if (data.type === 'generation-frontend-request') generationFrontendTransport.execute(data);
   if (data.type === 'generation-frontend-cancel') generationFrontendTransport.cancel(data);
   if (data.type === 'generation-context-request') resolveGenerationContext(data, send);
-  if(data.type==='audit-invalidated'&&audit?.auditId===data.auditId)markContractStale();
+  if(data.type==='audit-invalidated'){if(pendingContractDelivery?.audit.auditId===data.auditId){const requestId=pendingContractDelivery.requestId;pendingContractDelivery=null;designCheck.beginContractAudit(requestId);startContractAudit(requestId,true);return;}if(audit?.auditId===data.auditId)markContractStale();}
+  if(data.type==='audit-recovery'&&data.requestId===activeRequest&&!contractStopping){designCheck.recordAuditFailure(data.diagnostic);status(data.message);designCheck.setAuditProgress(activeRequest,data.message);return;}
   if (data.type === 'audit-progress' && data.requestId === activeRequest&&!contractStopping) {status(data.message);designCheck.setAuditProgress(activeRequest,data.message);}
-  if(data.type==='audit-cancelled'&&data.requestId===activeRequest&&contractStopping){busy=false;clearTimeout(contractTimer);designCheck.acceptAuditError(activeRequest,'Проверка контрактов остановлена после таймаута. Полученные native-результаты сохранены.');activeRequest='';contractStopping=false;controls();return;}
+  if(data.type==='audit-cancelled'&&data.requestId===activeRequest&&contractStopping){busy=false;auditStatisticsClient.finish(activeRequest,'contract-area',null,'cancelled');designCheck.acceptAuditCancelled(activeRequest);activeRequest='';contractStopping=false;controls();return;}
   if (data.requestId && data.requestId === cancelledAuditRequest && ['audit-result', 'error'].includes(data.type)) { busy = false; cancelledAuditRequest = ''; controls(); return; }
-  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { auditStatisticsClient.finish(data.requestId,'contract-area',Object.assign({},data.audit,{statisticsMetrics:data.statisticsMetrics}));busy = false;clearTimeout(contractTimer); render(data); designCheck.acceptAuditResult(data.requestId, Object.assign({},data.audit,{displayMetadata:data.displayMetadata})); activeRequest = ''; }
-  if (data.type === 'error' && ((!data.requestId&&!activeRequest) || data.requestId === activeRequest&&!contractStopping)) { auditStatisticsClient.finish(activeRequest,'contract-area',null,'failed');busy = false;clearTimeout(contractTimer); designCheck.acceptAuditError(activeRequest, data.message); activeRequest = ''; status(data.message, true); }
-  if(data.type==='document-audit-invalidated'&&audit)markContractStale();
-  if (documentAuditClient.accept(data)) {const state=designCheck.getState().documentAudit;if(data.type==='document-audit-progress'&&require('./document-audit/protocol').resultValid(data.result))auditStatisticsClient.checkpoint(data.requestId,data.result);if(data.type==='document-audit-result'&&state.status==='available'&&state.result===data.result)auditStatisticsClient.finish(data.requestId,'native-document',data.result);else if(data.type==='document-audit-error')auditStatisticsClient.finish(data.requestId,'native-document',null,'failed');controls(); return; }
+  if (data.type === 'audit-result' && data.requestId === activeRequest && designCheck.getState().auditBusy&&!contractStopping) { busy = false;pendingContractDelivery=data; designCheck.acceptAuditResult(data.requestId, Object.assign({},data.audit,{displayMetadata:data.displayMetadata})); activeRequest = ''; }
+  if (data.type === 'error' && ((!data.requestId&&!activeRequest) || data.requestId === activeRequest&&!contractStopping)) { if(pendingNativeDelivery){auditStatisticsClient.finish(pendingNativeDelivery.requestId,'native-document',pendingNativeDelivery.result);pendingNativeDelivery=null;}designCheck.recordAuditFailure(data.diagnostic);auditStatisticsClient.finish(activeRequest,'contract-area',null,'failed');busy = false; designCheck.acceptAuditError(activeRequest, data.message); activeRequest = ''; status(data.message, true); }
+  if(data.type==='document-audit-invalidated'){if(pendingNativeDelivery?.result.runId===data.runId)pendingNativeDelivery=null;if(audit)markContractStale();}
+  if (documentAuditClient.accept(data)) {const state=designCheck.getState().documentAudit;if(data.type==='document-audit-progress'&&require('./document-audit/protocol').resultValid(data.result))auditStatisticsClient.checkpoint(data.requestId,data.result);if(data.type==='document-audit-result'&&documentAuditClient.isAcceptedResult(data.requestId,data.result)){pendingNativeDelivery=data;flushAuditDeliveries();}else if(data.type==='document-audit-error')auditStatisticsClient.finish(data.requestId,'native-document',null,'failed');else if(data.type==='document-audit-cancelled'&&state.cancelled)auditStatisticsClient.finish(data.requestId,'native-document',null,'cancelled');controls(); return; }
   controls();
 };
 

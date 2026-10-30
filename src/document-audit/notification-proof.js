@@ -1,3 +1,4 @@
+const {cooperativeRead}=require('./reads');
 // Notifications indicate when to verify an observation, not whether it changed.
 // These synchronous fields cover the native scene projections read by the consumer.
 // Async identities/resources still require guarded native/contract rechecks below.
@@ -34,16 +35,17 @@ function createNotificationProof({nodes,hash,guard=()=>{},verify=async()=>{},onE
   if(closed)return Promise.resolve(false);
   try{assertStable();}catch(e){invalidate(e);return Promise.resolve(false);}
   serial++;
-  if(!pending){const work=async()=>{for(let attempt=0;attempt<32;attempt++){const version=serial;assertStable();let timer;
-   try{await Promise.race([verify(assertCurrent),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_TIMEOUT')),timeoutMs);})]);assertStable();}finally{clearTimeout(timer);}
+  if(!pending){const work=async()=>{while(true){const version=serial;assertStable();
+   const verification=verify(assertCurrent);await cooperativeRead(()=>verification,timeoutMs,assertStable);assertStable();
    if(version===serial){verified=version;return true;}
-  }throw Error('NATIVE_OBSERVER_SUPERSEDED');};
+   await new Promise(resolve=>setTimeout(resolve,0));
+  }};
    pending=work().catch(e=>{invalidate(e);return false;}).finally(()=>{pending=null;});
   }
   return pending;
  }
  async function settle(){if(pending)await pending;assertStable();}
- async function finish(publish){for(let attempt=0;attempt<32;attempt++){await settle();if(!pending&&verified===serial){assertStable();return publish();}}throw Error('NATIVE_OBSERVER_SUPERSEDED');}
+ async function finish(publish){while(true){await settle();if(!pending&&verified===serial){assertStable();return publish();}await new Promise(resolve=>setTimeout(resolve,0));}}
  return{notify,settle,finish,assertCurrent,assertStable,hasPending:()=>Boolean(pending),close:()=>{closed=true;}};
 }
 module.exports={createNotificationProof,observationNodes};

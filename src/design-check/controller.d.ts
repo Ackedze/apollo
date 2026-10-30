@@ -7,7 +7,7 @@ export type Evaluation = { evaluationId?: string; ruleId?: string; classificatio
 export type Tab = { id: string; title: string; emptyMessage?: string };
 export type TabData = { status: 'available' | 'incomplete' | 'not-connected'; count?: number | null;
   items: Evaluation[]; scope?: string | null; executionComplete?: boolean };
-export type DocumentAuditState = { status: 'idle' | 'loading' | 'cancelling' | 'available' | 'stale' | 'error'; requestId: string | null; result: any; error: string; staleFindingIds?:string[] };
+export type DocumentAuditState = { status: 'idle' | 'loading' | 'cancelling' | 'available' | 'stale' | 'error'; requestId: string | null; result: any; error: string; progress?:string;failures?:any[];diagnostic?:any;cancelled?:boolean; staleFindingIds?:string[] };
 export type Audit = { auditId: string; result: { engine: { evaluations: Evaluation[] }; coverage?: { scope?: string; executionComplete: boolean } }; [key: string]: unknown };
 export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v1';
   settings: Partial<UISettings>; agentSource: 'langflow' | 'codex' };
@@ -21,6 +21,7 @@ export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source'
   preferences?: { load(): Promise<Preferences | null>; save(value: Preferences): Promise<unknown> };
   dialogue?: DialoguePort;
   onAudit?(input: { requestId: string; uiPreferences: UISettings }): Promise<Audit | void> | void;
+  onStopAudit?():void;
   onDocumentAudit?(input: { requestId: string; uiPreferences: UISettings }): Promise<void> | void;
   onDocumentFocus?(findingId: string, targetId: string): void;
   onDocumentAction?(findingId:string,targetId:string,actionId:string):void;
@@ -30,7 +31,7 @@ export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source'
 };
 export type ControllerState = {
   settings: UISettings; selectedTab: string | null; view: string; mode: 'check' | 'generation' | 'skills'; settingsNotice: string;
-  preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean; auditProgress: string; auditStale: boolean;
+  preferenceStatus: string; preferenceError: string; auditReady: boolean; auditBusy: boolean;auditStopping:boolean;auditCancelled:boolean;auditNotice:string;auditFailures:any[]; auditProgress: string; auditStale: boolean;
   documentPageAvailable: boolean;documentActions:any;documentAction:{busy:boolean;status:string;message:string;[key:string]:unknown}; documentAudit: DocumentAuditState; auditError: string; audit: Audit | null; contextKey: string | null; tabs: Record<string, TabData>;
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;
     messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }[];
@@ -43,7 +44,7 @@ export type DesignCheckController = {
   restorePreferences(): Promise<void>; updateSetting(key: string, value: unknown): boolean;
   selectTab(id: string): boolean; setView(view: string): boolean; setMode(mode: string): boolean; setAudit(audit: Audit): void;
   acceptAuditResult(requestId: string, audit: Audit): boolean; acceptAuditError(requestId: string, message: string): boolean;
-  setDocumentPageAvailable(value: boolean): void; beginContractAudit(requestId: string): void; startDocumentAudit(): Promise<boolean>; hasDocumentAuditPort(): boolean;
+  setDocumentPageAvailable(value: boolean): void; beginContractAudit(requestId: string): void; startDocumentAudit(): Promise<boolean>;stopAudit(reason?:'user'|'offline'):boolean;recordAuditFailure(value:unknown):void;acceptAuditCancelled(requestId:string):boolean; hasDocumentAuditPort(): boolean;
   actOnDocumentFinding(findingId:string,targetId:string,actionId:string):void;setDocumentActions(value:any):void;setDocumentAction(value:any):void;
   focusDocumentFinding(findingId: string, targetId: string): void; setDocumentAudit(value: DocumentAuditState): void;
   setAuditProgress(requestId:string,message:string):void; setAuditStale():void;

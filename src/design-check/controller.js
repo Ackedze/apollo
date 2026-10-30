@@ -8,10 +8,10 @@ function createDesignCheckController(options = {}) {
   const sourceOnly = options.preferenceScope === 'agent-source';
   const listeners = new Set(), revisions = {}, settingCapabilities = options.settingCapabilities || {};
   let destroyed = false, sequence = 0, loadSequence = 0, saveQueue = Promise.resolve();
-  let activeChat = null, activeAudit = null, proxySequence = 0;
+  let activeChat = null, activeAudit = null, proxySequence = 0, pendingCheck=null;
   let state = { settings: clone(DEFAULT_SETTINGS), selectedTab: 'current', view: 'audit', mode: 'check',
     settingsNotice: '', preferenceStatus: 'session-only', preferenceError: '',
-    auditReady: false, auditBusy: false, auditProgress: '', auditStale: false, auditError: '', audit: null, contextKey: null,
+    auditReady: false, auditBusy: false, auditStopping:false, auditCancelled:false,auditNotice:'',auditFailures:[], auditProgress: '', auditStale: false, auditError: '', audit: null, contextKey: null,
     documentPageAvailable: false, documentActions:null,documentAction:{busy:false,status:'idle',message:''},
     documentAudit: { status: 'idle', requestId: null, result: null, error: '' },
     tabs: Object.fromEntries(definitions.map(tab => [tab.id, { status: 'not-connected', count: null, items: [] }])),
@@ -109,31 +109,51 @@ function createDesignCheckController(options = {}) {
     if (!['audit', 'report', 'texts'].includes(view)) return false;
     emit({ view }); options.onViewChange?.(view); return true;
   }
-  function setAudit(audit) {
+  function setAudit(audit,extra={}) {
     if (!audit?.auditId || !Array.isArray(audit.result?.engine?.evaluations)) throw new TypeError('Expected an existing v4 audit result.');
     activeAudit = null;
     const tabs = clone(state.tabs);
     const items = audit.result.engine.evaluations.filter(entry => !finalClassifications.has(entry.classification) || entry.classification === 'allowed');
     if (tabs.changes) tabs.changes = { status: 'available', count: items.length, items,
       scope: audit.result.coverage?.scope || null, executionComplete: audit.result.coverage?.executionComplete === true };
-    emit({ audit, auditBusy: false, auditProgress: '', auditStale: false, auditError: '', tabs });
+    emit(Object.assign({ audit, auditBusy: false, auditStopping:false,auditCancelled:false,auditNotice:'',auditProgress: '', auditStale: false, auditError: '', tabs },extra));
   }
   function setDocumentPageAvailable(value) {
     if (state.documentPageAvailable !== Boolean(value)) emit({ documentPageAvailable: Boolean(value) });
   }
   function beginContractAudit(requestId) {
-    activeAudit = requestId;
-    emit({ auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
+    activeAudit = requestId;if(pendingCheck?.requestId===requestId){pendingCheck.needsContract=true;pendingCheck.contract=null;}
+    emit({ auditStopping:false,auditCancelled:false,auditNotice:'',auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
   }
   async function startDocumentAudit() {
     if (!state.documentPageAvailable || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed || !options.onDocumentAudit) return false;
-    const requestId = `design-check-audit-${++sequence}`;
+    emit({auditNotice:''});const requestId = `design-check-audit-${++sequence}`;pendingCheck={requestId,needsContract:false,contract:null,native:null,previousDocument:state.documentAudit,contractError:null};
     try { await options.onDocumentAudit({ requestId, uiPreferences: clone(state.settings) }); }
     catch (error) { emit({ documentAudit: { status: state.documentAudit.result ? 'stale' : 'error', requestId, result: state.documentAudit.result, error: error.message || 'Не удалось начать проверку документа.' } }); }
     return true;
   }
+  function recordAuditFailure(value){if(!require('../document-audit/protocol').failureValid(value)||state.auditFailures.some(v=>v.errorId===value.errorId))return;const all=state.auditFailures.concat(value);emit({auditFailures:all.length<=20?all:[all[0],...all.slice(-19)]});}
+  function failedPair(){
+    const old=pendingCheck.previousDocument,history=pendingCheck.native?.failures||state.documentAudit.failures,error=pendingCheck.contractError;pendingCheck=null;
+    emit({auditBusy:false,auditStopping:false,auditStale:Boolean(state.audit),auditError:error,auditProgress:'',documentAudit:Object.assign({},old,{status:old.result?'stale':'error',progress:'',failures:history,error:'Новая проверка не завершена. Доступные результаты сохранены.'})});
+  }
   function setDocumentAudit(value) {
-    emit({ documentAudit: value });
+    if(pendingCheck&&value.requestId===pendingCheck.requestId+':native'&&value.status!=='available')pendingCheck.native=null;
+    if(pendingCheck&&value.requestId===pendingCheck.requestId+':native'&&['available','error'].includes(value.status)&&pendingCheck.needsContract){
+      pendingCheck.native=value.status==='available'?value:Object.assign({},value,{result:value.result?.runId===value.requestId?value.result:null});
+      if(pendingCheck.contractError){failedPair();return;}
+      if(!pendingCheck.contract){emit({documentAudit:Object.assign({},state.documentAudit,{status:'loading',progress:'Ожидаем проверку контрактов…',failures:value.failures})});return;}
+      const contract=pendingCheck.contract,native=pendingCheck.native;pendingCheck=null;setAudit(contract,{documentAudit:native});return;
+    }
+    emit({documentAudit:value,auditStopping:state.auditStopping&&(state.auditBusy||value.status==='cancelling')});
+  }
+  function stopAudit(reason='user'){
+    if(destroyed||state.auditStopping||state.documentAction.busy||!state.auditBusy&&!['loading','cancelling'].includes(state.documentAudit.status)||!options.onStopAudit)return false;
+    pendingCheck=null;emit({auditStopping:true,auditNotice:reason==='offline'?'Потеряно соединение с интернетом. Проверка остановлена; доступные результаты сохранены.':'Проверка остановлена. Доступные результаты сохранены.'});options.onStopAudit();return true;
+  }
+  function acceptAuditCancelled(requestId){
+    if(!requestId||activeAudit!==requestId)return false;
+    activeAudit=null;pendingCheck=null;emit({auditBusy:false,auditCancelled:true,auditProgress:'',auditError:'',auditStopping:state.documentAudit.status==='cancelling'});return true;
   }
   function setTabData(id, data) {
     if (!Object.hasOwn(state.tabs, id) || !data || !['available', 'not-connected', 'incomplete'].includes(data.status)
@@ -142,11 +162,12 @@ function createDesignCheckController(options = {}) {
   }
   function acceptAuditResult(requestId, audit) {
     if (destroyed || !requestId || activeAudit !== requestId) return false;
+    if(pendingCheck?.requestId===requestId&&pendingCheck.needsContract){pendingCheck.contract=audit;if(!pendingCheck.native){emit({auditBusy:false,auditProgress:'Ожидаем проверку документа…'});return true;}const native=pendingCheck.native;pendingCheck=null;setAudit(audit,{documentAudit:native});return true;}
     setAudit(audit); return true;
   }
   function acceptAuditError(requestId, message) {
     if (destroyed || !requestId || activeAudit !== requestId) return false;
-    activeAudit = null; emit({ auditBusy: false, auditProgress: '', auditError: message }); return true;
+    activeAudit=null;if(pendingCheck?.requestId===requestId){pendingCheck.contractError=message;if(pendingCheck.native){failedPair();return true;}}emit({auditBusy:false,auditStopping:false,auditProgress:'',auditError:message}); return true;
   }
   async function startAudit() {
     if (!state.auditReady || state.auditBusy || !options.onAudit) return false;
@@ -221,7 +242,7 @@ function createDesignCheckController(options = {}) {
     emit({ contextKey: key, chat: Object.assign({}, state.chat, { busy: false, messages: [], error: '', unreadCount: 0 }) });
   }
   return { getState: () => state, subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
-    getVisibleTabs, getTabItems, restorePreferences, updateSetting, selectTab, setView, setMode, setAudit, setTabData, setDocumentAudit, setDocumentPageAvailable, beginContractAudit, startDocumentAudit, setDocumentActions:value=>emit({documentActions:value}),setDocumentAction:value=>emit({documentAction:value}),actOnDocumentFinding:(findingId,targetId,actionId)=>options.onDocumentAction?.(findingId,targetId,actionId),hasDocumentAuditPort: () => Boolean(options.onDocumentAudit), focusDocumentFinding: (findingId, targetId) => options.onDocumentFocus?.(findingId, targetId), acceptAuditResult, acceptAuditError,
+    getVisibleTabs, getTabItems, restorePreferences, updateSetting, selectTab, setView, setMode, setAudit, setTabData, setDocumentAudit, setDocumentPageAvailable, beginContractAudit, startDocumentAudit, stopAudit,acceptAuditCancelled,recordAuditFailure, setDocumentActions:value=>emit({documentActions:value}),setDocumentAction:value=>emit({documentAction:value}),actOnDocumentFinding:(findingId,targetId,actionId)=>options.onDocumentAction?.(findingId,targetId,actionId),hasDocumentAuditPort: () => Boolean(options.onDocumentAudit), focusDocumentFinding: (findingId, targetId) => options.onDocumentFocus?.(findingId, targetId), acceptAuditResult, acceptAuditError,
     setAuditProgress: (requestId,message)=>{if(activeAudit===requestId)emit({auditProgress:message});}, setAuditStale: ()=>emit({auditStale:true}),
     setAuditReady: ready => emit({ auditReady: ready === true && Boolean(options.onAudit) }), startAudit,
     invalidateAudit, openChat, closeChat, setAgentSource, sendChat, cancelChat, setContext, refreshProxyStatus, setProxyStatus,

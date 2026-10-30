@@ -156,6 +156,11 @@ stale/cancel/focus/scoped recheck регрессии включены в V4 gate
 
 ### CC-COMPAT-AUDIT-PERFORMANCE-01 — индексы, capture и компактный отчёт
 
+**31.10.2026 · P0 audit lifecycle — IMPLEMENTED / AUTOMATED_PASS / OWNER_FIGMA_PENDING.**
+Core0.1.25 / профиль0.4.1: optional producer-only `CaptureReadControl` передаёт guard/read в captureInstanceAudit, collectNodes/collectAnatomy и вложенные main/style/variable/reference reads. Все cancellation catches повторно проверяют guard; controlled parallel workers дожидаются finally, scratch cleanup не блокируется отменой. Editor и другие consumers без control сохраняют прежнюю сигнатуру/выход; schema, compiler predicates, norms и готовность Editor не менялись. Итоговый configured validate:1480PASS/0FAIL/1прежний skip; read/cleanup producer tests11PASS. Два headless-прогона собранных UI/main проверили общий контекст, staged recapture, Stop/late replies, HTTP503/таймаут/retry и сохранение диагностики в экспорте. Build48c5579ee343d4cb84e0af7cf486f316474e442baff350e82d490317c916f7a7; полная история проверок — workspace .local/audit-flow-p0-2026-10-31. Реальная Figma/установка не запускались. Общий consumer/build review выполняет General; live/Figma installation остаётся владельцу.
+
+Apollo: убраны абсолютные watchdog15/20/60с для исходной проверки; source-key scan также использует управляемое ожидание вместо общего identity deadline. Один pinned context для обеих веток, attempt-specific RPC IDs и guards, coalesced observers, автоматический повтор подтверждённого drift, атомарная смена пары результатов, явный Stop и ограниченная история первого/последних отказов. Непрочитанный ресурс не считается изменённым: сравнение native facts только после успешного чтения. Защита: tests/audit-capture-cancellation.test.js, audit-flow-p0.test.js, design-check/audit-flow-p0.test.js и автоматический audit-flow-p0.browser.cjs на реальных bundle с вымышленным Figma API.
+
 Продолжение: локальные индексы происхождения и проверка pin.
 
 19.10.2026. **IMPLEMENTED / CONFIGURED_GATES_PASS / INSTALLED / NATIVE_TIMING_PENDING**. Core **0.1.20**,

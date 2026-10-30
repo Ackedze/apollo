@@ -158,12 +158,12 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   useEffect(() => {
     const pending = pendingScope.current;
     if (!pending) return;
-    if ((state.audit && state.audit !== pending.audit && !state.auditStale) || (state.documentAudit.status === 'available' && state.documentAudit.result && state.documentAudit.result !== pending.native)) {
+    if (!state.auditBusy && !['loading','cancelling'].includes(state.documentAudit.status) && ((state.audit && state.audit !== pending.audit && !state.auditStale) || (state.documentAudit.status === 'available' && state.documentAudit.result && state.documentAudit.result !== pending.native))) {
       setCheckedScope(pending.name); pendingScope.current = null;
     } else if (state.auditError || ['stale', 'error'].includes(state.documentAudit.status) && state.documentAudit.error) {
       pendingScope.current = null;
     }
-  }, [state.audit, state.auditStale, state.auditError, state.documentAudit.status, state.documentAudit.result, state.documentAudit.error]);
+  }, [state.audit, state.auditBusy, state.auditStale, state.auditError, state.documentAudit.status, state.documentAudit.result, state.documentAudit.error]);
   const capabilities = controller.getSettingCapabilities();
   const summary = buildResultGroups(state, controller.getVisibleTabs(), controller.getTabItems);
   const selectedGroup = summary.groups.find((group: any) => group.id === groupId);
@@ -187,11 +187,15 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   }
   const proxyError = state.auditError.startsWith('ApolloProxyControl:') ? state.auditError : '';
   const contextChanged = /^(Страница изменилась\.|Настройки или исходные данные изменились\.|Результат проверки документа устарел\.)/.test(state.documentAudit.error);
+  const failures=(state.auditFailures||[]).concat(state.documentAudit.failures||[]);
   const notices = <div className="apollo-status-messages">
+    {state.auditNotice&&<p className="design-check-note" role="status">{state.auditNotice}</p>}
     {state.auditError && !proxyError && <p className="design-check-error" role="alert">{state.auditError}</p>}
     {state.documentAudit.error && !contextChanged && <p className="design-check-note" role={state.documentAudit.result ? 'status' : 'alert'}>{state.documentAudit.error}</p>}
+    {state.documentAudit.status==='loading'&&state.documentAudit.progress&&<p className="design-check-note" role="status">{state.documentAudit.progress}</p>}
     {groupId && state.auditBusy && <p className="design-check-note" role="status">{state.auditProgress || 'Проверка контрактов выбранной области продолжается…'}</p>}
     {groupId && summary.stale && (!state.documentAudit.error || contextChanged) && <p className="design-check-note" role="status">{state.documentAction.status === 'refreshing' ? 'Перепроверяем изменённый объект. До свежего результата сохраняем прежние замечания.' : 'Показаны сохранённые результаты. Повторите проверку.'}</p>}
+    {failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}</li>)}</ul></details>}
     {state.documentAction.message && <p className="design-check-note" role={state.documentAction.status === 'error' ? 'alert' : 'status'}>{state.documentAction.message}</p>}
   </div>;
   return <div className="shell design-check-shell apollo-new">
@@ -261,14 +265,14 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           </div>
         </section>
           <footer className={`apollo-audit-footer${activeScreen === 'texts' ? ' apollo-texts-footer' : ''}`} aria-label="Запуск проверки" hidden={activeScreen !== 'check' && activeScreen !== 'texts'}>          <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={activeScreen === 'check' || activeScreen === 'texts'} overlayScope={`${state.mode}:${state.chat.open}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
-            actionLabel={activeScreen === 'texts' ? 'Проверить' : state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : actionBusy ? 'Проверяем' : 'Проверить'} actionDisabled={activeScreen === 'texts' || !state.auditReady || actionBusy}
-            actionLoading={activeScreen === 'check' && actionBusy} actionType={activeScreen === 'check' && actionBusy ? 'secondary' : 'primary'} compact={false}
+            actionLabel={activeScreen === 'texts' ? 'Проверить' : state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={activeScreen === 'texts' || state.documentAction.busy || state.auditStopping || !actionBusy&&!state.auditReady}
+            actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
             shellAuditEnabled={settings.shellAuditEnabled} showExpectedCustomizations={settings.showExpectedCustomizations}
             hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
             controlAvailability={{ pageTypeId: true, channelId: true, pickerLabel: true, compact: false,
               showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true,
               experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
-            onActionPress={() => { if (activeScreen !== 'check') return; setCheckedScope(''); pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result }; void (documentAction ? controller.startDocumentAudit() : controller.startAudit()); }} onToggleCompact={() => apply('compact', !settings.compact)}
+            onActionPress={() => { if (activeScreen !== 'check') return;if(actionBusy){controller.stopAudit();return;} pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result }; void (documentAction ? controller.startDocumentAudit() : controller.startAudit()); }} onToggleCompact={() => apply('compact', !settings.compact)}
             onPageTypeChange={value => apply('pageTypeId', value)} onChannelChange={value => apply('channelId', value)}
             onPickerChange={value => apply('pickerLabel', value)} onShellAuditToggle={() => apply('shellAuditEnabled', !settings.shellAuditEnabled)}
             onShowExpectedToggle={() => apply('showExpectedCustomizations', !settings.showExpectedCustomizations)}

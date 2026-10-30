@@ -14,7 +14,7 @@ for(const repeat of [false,true])for(const change of ['unchanged','property','to
   };
   await f.api.ui.onmessage({type:'audit',requestId:'notification'});assert.equal(notified,true);
   const reply=f.messages.find(m=>m.requestId==='notification'&&['audit-result','error'].includes(m.type));assert.ok(reply);
-  assert.equal(reply.type,change==='unchanged'?'audit-result':'error');
-  if(change!=='unchanged')assert.match(reply.message,/AUDIT_CONTEXT_CHANGED|AUDIT_CAPTURE_CHANGED|AUDIT_TOPOLOGY_CHANGED/);
+  assert.equal(reply.type,'audit-result');
+  if(change!=='unchanged'){assert.ok(f.messages.some(m=>m.type==='audit-recovery'&&m.requestId==='notification'));assert.ok(reply.audit.recoveryDiagnostics.some(d=>d.code==='AUDIT_CONTEXT_CHANGED'));const full=[];const post=f.api.ui.postMessage;f.api.ui.postMessage=m=>full.push(m);await f.api.ui.onmessage({type:'audit-report-request',requestId:'fresh-report',auditId:reply.audit.auditId,componentAuditId:null,operation:'full'});f.api.ui.postMessage=post;const fresh=full.find(m=>m.type==='audit-report-result').data;assert.ok(fresh);if(change==='property')assert.ok(fresh.components.some(c=>c.snapshot.nodes.some(n=>n.appearance?.opacity===.2)));if(change==='topology')assert.equal(fresh.selection.scannedNodes,(function count(n){return 1+(n.children||[]).reduce((sum,c)=>sum+count(c),0);})(f.area));}
  }finally{f.emit('close');}
 });

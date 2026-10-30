@@ -69,7 +69,7 @@ function createTokenJournalClient({send,request=(...args)=>fetch(...args),endpoi
   function finishCheck(status){if(!current)return;const run=current;current=null;run.activity.finish(status);}
   function schedule(){if(scheduled)return;scheduled=true;queueMicrotask(()=>{scheduled=false;
     if(!current || !latest || latest.auditBusy || current.document && ['loading','cancelling'].includes(latest.documentAudit?.status))return;
-    finishCheck(latest.auditError || current.document && latest.documentAudit?.error?'failed':latest.auditStale || current.document && latest.documentAudit?.status==='stale'?'cancelled':'completed');
+    finishCheck(latest.auditCancelled||latest.documentAudit?.cancelled?'cancelled':latest.auditError || current.document && latest.documentAudit?.error?'failed':latest.auditStale || current.document && latest.documentAudit?.status==='stale'?'cancelled':'completed');
   });}
   return{begin,diagnostics:()=>({schemaVersion:p.SCHEMA,records:lastSnapshot.records,unreadable:lastSnapshot.unreadable,invalidIds:lastSnapshot.invalidIds || [],unsaved:Array.from(unsaved.values()),overflow,lastUnsaved,rejected:Array.from(rejected.values()),message:state.message}),flush:()=>flush(true),subscribe:fn=>{listeners.add(fn);return()=>listeners.delete(fn);},getState:()=>state,
     start(id,document=false){if(current?.id===id){current.document ||= document;return;}if(current)finishCheck('cancelled');current={id,document,activity:begin('check')};schedule();},

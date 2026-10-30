@@ -118,8 +118,7 @@ test('metadata reads cannot hide a property mutation before final audit delivery
   p.actual.fillStyleId = id;
   p.figma.getStyleByIdAsync = async () => { p.actual.opacity = .3; return { id, key, name: 'Surface/Primary' }; };
   await p.send({ type: 'load-contract', source }); await p.send({ type: 'audit', requestId: 'metadata-mutation' });
-  assert.equal(p.messages.some(m => m.type === 'audit-result'), false);
-  assert.match(p.messages.find(m => m.type === 'error').message, /изменились/);
+  assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.3));
 });
 
 for (const mutation of [null, 'during-final', 'before-final']) test(`SLOT freshness keeps the captured representation and detects mutations: ${mutation}`, async () => {
@@ -143,12 +142,8 @@ for (const mutation of [null, 'during-final', 'before-final']) test(`SLOT freshn
   assert.equal(p.messages.some(m => m.type === 'error'), false, JSON.stringify(p.messages));
   await p.send({ type: 'audit', requestId: 'shared-slot-boundary' });
   if (mutation) {
-    assert.equal(p.messages.some(m => m.type === 'audit-result'), false);
-    assert.match(p.messages.find(m => m.type === 'error').message,
-      /AUDIT_CAPTURE_CHANGED · verify-final-capture/);
-    assert.match(p.messages.find(m => m.type === 'error').message, /узла actual/);
-    assert.ok(p.created.every(n => n.removed));
-    return;
+    const recovery=p.messages.find(m=>m.type==='audit-recovery');assert.ok(recovery);assert.equal(recovery.diagnostic.code,'AUDIT_CONTEXT_CHANGED');
+    const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.5));assert.ok(p.created.every(n=>n.removed));return;
   }
   assert.deepEqual(p.messages.filter(m => m.type === 'error'), []);
   const result = p.messages.find(m => m.type === 'audit-result'); assert.ok(result);
@@ -190,16 +185,14 @@ test('a mutation inside initial capture is rejected by the final freshness read'
   p = plugin({onMainRead: node => { if (node.id === 'reference') armed = true; }});
   Object.defineProperty(p.actual, 'opacity', {get() { const value = opacity; if (armed) { armed = false; opacity = .2; } return value; }, set(value) { opacity = value; }});
   await p.send({type:'load-contract', source:authored.source()}); await p.send({type:'audit',requestId:'initial-mutation'});
-  assert.equal(p.messages.some(m=>m.type==='audit-result'), false);
-  assert.match(p.messages.find(m=>m.type==='error').message, /AUDIT_CAPTURE_CHANGED · verify-final-capture/);
+  assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
   assert.ok(p.created.every(n=>n.removed)); assert.ok(p.pages.every(n=>n.removed));
 });
 
 test('layout changed during freshness read never publishes success and always cleans temporary nodes', async () => {
     let reads = 0, p;
     p = plugin({ onMainRead: node => { if (node.id === 'actual' && ++reads === 4) p.actual.opacity = .2; } }); await p.send({ type: 'load-contract', source: authored.source() }); await p.send({ type: 'audit', requestId: 'one' });
-    assert.equal(p.messages.filter(m => m.type === 'audit-result').length, 0);
-    assert.match(p.messages.at(-1).message, /изменились/);
+    assert.ok(p.messages.some(m=>m.type==='audit-recovery'));const fresh=p.messages.find(m=>m.type==='audit-result');assert.ok(fresh);assert.ok(fresh.audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
     assert.ok(p.created.every(n => n.removed)); assert.ok(p.pages.every(n => n.removed));
 });
 
@@ -289,8 +282,9 @@ async function proxyAudit(p, sources = [authored.source()], alter) {
       if (alter) alter(reply, request);
       await p.send(reply);
     }
-    await new Promise(resolve => setImmediate(resolve));
+    await new Promise(resolve => setTimeout(resolve,1));
   }
+  if(!done){await p.send({type:'audit-cancel',requestId:'auto'});await running;}
   for (const request of p.messages.filter(m => m.type === 'resolve-contracts')) if (!seen.has(request.requestId))
     await p.send({ type: 'contracts-resolved', requestId: request.requestId, error: 'test interrupted' });
   assert.equal(done, true, 'Proxy handshake must finish'); await running;
@@ -370,8 +364,7 @@ test('an earlier instance changed while a later scope captures cannot publish a 
   let reads = 0, p;
   p = plugin({ onMainRead: node => { if (node.id === 'second' && ++reads === 2) p.actual.opacity = .2; } });
   p.figma.currentPage.selection = [p.frame('area', [p.actual, p.instance('second', 1)])];
-  assert.equal(await proxyAudit(p), undefined);
-  assert.match(p.messages.at(-1).message, /изменились/);
+  const fresh=await proxyAudit(p);assert.ok(fresh);assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(fresh.components.find(c=>c.scopeId==='actual').snapshot.nodes.some(n=>n.appearance?.opacity===.2));
 });
 
 test('deselection during contract resolution preserves captured roots and rejects foreign late replies', async () => {
@@ -397,7 +390,7 @@ for (const [label, alter] of [
   ['changed release on final verification', (reply, request) => { if (!request.components.length) { reply.error = 'Версия контрактов изменилась.'; } }],
 ]) test(`${label} cannot publish a result`, async () => {
   const p = plugin(); assert.equal(await proxyAudit(p, [authored.source()], alter), undefined);
-  assert.equal(p.messages.at(-1).type, 'error');
+  if(label==='changed release on final verification'){assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(p.messages.some(m=>m.type==='audit-cancelled'));}else assert.equal(p.messages.at(-1).type,'error');
 });
 
 test('empty areas and component definitions remain explicitly incomplete', async () => {
@@ -423,15 +416,15 @@ test('properties changed during final release verification cannot escape the fin
   const audit = await proxyAudit(p, [authored.source()], (reply, request) => {
     if (!request.components.length) p.actual.opacity = .2;
   });
-  assert.equal(audit, undefined); assert.match(p.messages.at(-1).message, /изменились/);
+  assert.ok(audit);assert.ok(p.messages.some(m=>m.type==='audit-recovery'));assert.ok(audit.snapshot.nodes.some(n=>n.appearance?.opacity===.2));
 });
 
 test('area membership changed during the final request invalidates the report', async () => {
-  const p = plugin(), frame = p.frame('area', [p.actual]); p.figma.currentPage.selection = [frame];
+  const p = plugin(), frame = p.frame('area', [p.actual]); p.figma.currentPage.selection = [frame];let changed=false;
   const audit = await proxyAudit(p, [authored.source()], (reply, request) => {
-    if (!request.components.length) { const child = p.instance('new-child', 1); child.parent = frame; frame.children.push(child); }
+    if (!request.components.length&&!changed) {changed=true; const child = p.instance('new-child', 1); child.parent = frame; frame.children.push(child); }
   });
-  assert.equal(audit, undefined); assert.match(p.messages.at(-1).message, /Состав/);
+  assert.ok(audit);assert.ok(audit.components.some(c=>c.scopeId==='new-child'));assert.ok(p.messages.some(m=>m.type==='audit-recovery'));
 });
 
 

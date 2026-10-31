@@ -1,4 +1,5 @@
 const routes = {
+  deprecatedStyles: '/v1/style-token-catalog/deprecated-styles',
   names: '/v2/resources/display-names', resolve: '/v2/resources/display-names/resolve',
   inventory: '/v1/style-token-catalog/inventory', catalogs: '/v1/style-token-catalog/catalogs', query: '/v1/style-token-catalog/query',
 };

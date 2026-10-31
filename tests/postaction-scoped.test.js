@@ -9,7 +9,7 @@ if(require.main===module)test('built main automatically rechecks all categories 
  const {f,native,contract}=await setup();try{
   assert.ok(contract.audit.result.engine.evaluations.some(e=>e.componentScopeId==='actual'&&e.classification==='violation'&&e.ruleId.includes('fill')));
   const peer=JSON.stringify(contract.audit.components.find(c=>c.scopeId==='peer')),req=request(native,'Составной компонент');f.page.selection=[];f.emit('selectionchange');f.messages.length=0;await f.api.ui.onmessage(req);
-  const result=await wait(f,'document-recheck-result');assert.deepEqual(result.result.checks.map(c=>c.id),['local','freshness','theme','detached','customStyles','font']);assert.equal(f.actual.main.id,f.latest.id);assert.notEqual(f.peer.main.id,f.latest.id);
+  const result=await wait(f,'document-recheck-result');assert.deepEqual(result.result.checks.map(c=>c.id),['local','freshness','theme','detached','customStyles','font','deprecatedStyles']);assert.equal(f.actual.main.id,f.latest.id);assert.notEqual(f.peer.main.id,f.latest.id);
   assert.equal(result.result.context.selectionSignature,native.result.context.selectionSignature);assert.ok(!result.result.checks[1].findings.some(x=>x.name==='Составной компонент'&&x.status==='update'));
   assert.ok(result.result.checks[1].findings.some(x=>x.name==='Второй экземпляр'&&x.status==='update'));
   assert.equal(JSON.stringify(result.contract.audit.components.find(c=>c.scopeId==='peer')),peer);

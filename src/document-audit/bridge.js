@@ -1,3 +1,4 @@
+const {verifyDeprecatedStyles}=require('./deprecated-styles');
 const {resolveNativeNode,currentPageTarget}=require("../canvas-target");
 const {boundedRead,cooperativeRead,retryableRead}=require("./reads");
 const {ACTION_SCHEMA,actionRequestValid,buildActionData,performAction}=require("./actions");
@@ -6,7 +7,7 @@ const {collect,recheck,signature,pageOf}=require("./engine");
 const {impact,mergeObservation}=require("./scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./notification-proof");
 const {REFRESH_TIMEOUT_MS}=require("./budgets");
-function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null}){
+function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null,deprecatedStyleReader=null}){
  let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0,observerTask=null;
  const errors={NATIVE_FACTS_CHANGED:'Свойства или зависимости изменились. Повторите проверку.',NATIVE_CONTEXT_CHANGED:'Страница или платформа изменились. Повторите проверку.',NATIVE_TIMEOUT:'Чтение заняло слишком много времени. Повторите проверку.',NATIVE_RESULT_STALE:'Результат устарел. Повторите проверку.'};
  function failureDiagnostic(error,requestId,ticket=sequence,stage='native-read'){return makeFailureDiagnostic(error,requestId,stage,hash,[ticket,now()]);}
@@ -67,9 +68,9 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
     };
     try{
      stage='collect';progress(attempt===1?'Читаем свойства, стили и токены…':'Перечитываем изменившиеся данные Figma…');
-     const observation=await collect(api,m.context,{hash,assertCurrent:assertAttempt,limits,roots,onProgress:checkpoint,readOperation:readAttempt,onReadFailure:error=>{assertAttempt();if(!retryableRead(error))post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)});}});
+     const observation=await collect(api,m.context,{hash,assertCurrent:assertAttempt,limits,roots,deprecatedStyleReader,onProgress:checkpoint,readOperation:readAttempt,onReadFailure:error=>{assertAttempt();if(!retryableRead(error))post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)});}});
      if(!observerAvailable)for(const c of observation.checks)if(c.status!=='not-applicable'){c.status='incomplete';c.gaps.push('current-page-observer-unavailable');}
-     stage='final-recheck';await recheck(api,observation.facts,{hash,assertCurrent:assertAttempt,stage,readOperation:readAttempt});assertAttempt();
+     stage='final-recheck';await verifyDeprecatedStyles(deprecatedStyleReader,observation);assertAttempt();await recheck(api,observation.facts,{hash,assertCurrent:assertAttempt,stage,readOperation:readAttempt});assertAttempt();
      const result=resultFor(observation);if(!resultValid(result))throw Error('NATIVE_RESPONSE_INVALID');
      session={runId:m.requestId,context:m.context,facts:observation.facts,targets:observation.targets,result,observation,roots,epoch,expires:now()+60000};session.actions=buildActionData(observation,m.requestId,m.context,hash);
      active=null;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);return;
@@ -108,7 +109,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    invalidatesCurrent=true;focusTask=m;
    const deadline=now()+timeoutMs;
    const guard=()=>{if(actionTask||focusTask!==m||session!==s||epoch!==s.epoch||now()>deadline||api.currentPage.id!==s.context.pageId)throw Error('NATIVE_RESULT_STALE');};
-   guard();const work=async()=>{await recheck(api,s.facts,{hash,assertCurrent:guard});const n=await resolveNativeNode(api,target.nodeId,{read:fn=>boundedRead(fn,1200,guard),guard});guard();return n;};
+   guard();const work=async()=>{if(f.status==='deprecated-style'&&s.result.checks.find(c=>c.id==='deprecatedStyles')?.findings.includes(f)){await verifyDeprecatedStyles(deprecatedStyleReader,s.observation);if(f.status==='unknown')throw Error('NATIVE_RESULT_STALE');}await recheck(api,s.facts,{hash,assertCurrent:guard});const n=await resolveNativeNode(api,target.nodeId,{read:fn=>boundedRead(fn,1200,guard),guard});guard();return n;};
    const n=await Promise.race([work(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('NATIVE_RESULT_STALE')),timeoutMs);})]);guard();
    if(!currentPageTarget(n,s.context.pageId))throw Error('NATIVE_RESULT_STALE');
    focus(n);
@@ -125,9 +126,11 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
    guard();task.notificationProof.assertStable();const retained=old.facts.filter(f=>!plan.ids.has(f.id)&&!(plan.action.kind==='theme'&&f.kind==='pageModes'));
    await recheck(api,retained,{hash,assertCurrent:guard});guard();task.notificationProof.assertStable();
    progress('Перепроверяем изменения в макете…');
-   const fresh=await collect(api,old.context,{hash,assertCurrent:guard,limits,roots:plan.roots,scoped:true,onProgress:async observation=>{guard();for(const fact of observation.facts){const key=fact.kind+':'+fact.id,previous=task.notificationFacts.get(key);if(previous&&hash(previous.value)!==hash(fact.value))throw Error('NATIVE_FACTS_CHANGED');task.notificationFacts.set(key,fact);}guard();},readTimeoutMs:()=>Math.max(0,Math.min(1200,task.deadline-now()))});guard();
+   const fresh=await collect(api,old.context,{hash,assertCurrent:guard,limits,roots:plan.roots,scoped:true,deprecatedStyleReader,onProgress:async observation=>{guard();for(const fact of observation.facts){const key=fact.kind+':'+fact.id,previous=task.notificationFacts.get(key);if(previous&&hash(previous.value)!==hash(fact.value))throw Error('NATIVE_FACTS_CHANGED');task.notificationFacts.set(key,fact);}guard();},readTimeoutMs:()=>Math.max(0,Math.min(1200,task.deadline-now()))});guard();
    task.notificationProof.assertStable();const contract=await task.operations.run(guard,progress);guard();task.notificationProof.assertStable();
    plan.includeCurrent();const observation=mergeObservation(old.observation,fresh,plan);
+   if(old.observation.deprecatedIndexId&&old.observation.deprecatedIndexId!==fresh.deprecatedIndexId)throw Error('NATIVE_FACTS_CHANGED');
+   observation.deprecatedIndexId=fresh.deprecatedIndexId;await verifyDeprecatedStyles(deprecatedStyleReader,observation);guard();
    const bindings=bindingAdapter?await bindingAdapter.resolve(observation,old.context,guard,contract):new Map();guard();
    progress('Подтверждаем актуальность результатов…');
    await recheck(api,observation.facts,{hash,assertCurrent:guard});await task.operations.verify?.(guard);guard();task.notificationProof.assertStable();

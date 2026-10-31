@@ -4,10 +4,10 @@ const groups = [
   { id: 'patterns', title: 'Паттерны', tabs: [], description: 'Правила сочетания компонентов и построения экранов.' },
 ];
 const tabTitles = { changes: 'Кастомы', deprecated: 'Устаревшие', update: 'Пора обновить', detached: 'Детач', local: 'Локальные', customStyles: 'Кастомы', deprecatedStyles: 'Устаревшие', detachedStyles: 'Детач', localStyles: 'Локальные' };
-const checkIds = { local: 'local', current: 'freshness', update: 'freshness', themization: 'theme', detached: 'detached', customStyles: 'customStyles' };
+const checkIds = { local: 'local', current: 'freshness', update: 'freshness', themization: 'theme', detached: 'detached', customStyles: 'customStyles', deprecatedStyles: 'deprecatedStyles' };
 const final = new Set(['compliant', 'allowed', 'not-applicable', 'current', 'theme-current', 'font-current']);
 function coverageDetails(state, categories) {
-  const titles={local:'Локальные компоненты',freshness:'Версии компонентов',theme:'Темизация страницы',font:'Шрифт страницы',detached:'Происхождение слоёв',customStyles:'Стили и токены'};
+  const titles={local:'Локальные компоненты',freshness:'Версии компонентов',theme:'Темизация страницы',font:'Шрифт страницы',detached:'Происхождение слоёв',customStyles:'Стили и токены',deprecatedStyles:'Устаревшие стили'};
   const details=(state.documentAudit.result?.checks||[]).filter(check=>check.status==='incomplete').map(check=>{
     const gaps=(check.gaps||[]).filter(gap=>gap!=='v3-catalog-policy-not-connected');
     const reason=!gaps.length&&check.id==='customStyles'&&(check.gaps||[]).includes('v3-catalog-policy-not-connected')&&!check.findings.some(f=>f.status==='unknown')?'Дополнительные правила и исключения дизайн-системы пока не подключены. Связи со стилями и токенами проверены.'
@@ -15,6 +15,7 @@ function coverageDetails(state, categories) {
       :gaps.some(gap=>gap.includes('limit'))?'Проверена только часть выбранной области.'
       :check.id==='font'?'Не удалось подтвердить режим шрифта страницы.'
       :check.id==='theme'?'Не удалось подтвердить режим темы страницы.'
+      :check.id==='deprecatedStyles'?'Индекс устаревания или связь части стилей с библиотекой недоступны.'
       :check.id==='customStyles'?'Связи части слоёв со стилями или токенами недоступны.'
       :'Источники или свойства части слоёв недоступны.';
     return{id:check.id,title:titles[check.id]||check.id,reason};

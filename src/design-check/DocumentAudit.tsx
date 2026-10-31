@@ -7,7 +7,7 @@ import { baseCheck } from "./result-groups";
 type Target = { id: string; kind: string; nodeId: string; pageId: string };
 type Finding = { findingId: string; status: string; name: string; message: string; componentKey?: string | null; owner: { name: string; pageId: string } | null; occurrences: string[]; targets: Target[]; evidence: unknown };
 type Check = { id: string; status: string; findings: Finding[]; gaps: string[]; checked: number; scope: string };
-const labels: Record<string,string> = { local: 'Локальные компоненты', freshness: 'Версии библиотечных экземпляров', theme: 'Темизация страницы', font: 'Шрифт страницы', base: 'База', detached: 'Детач', customStyles: 'Кастомные стили и токены' };
+const labels: Record<string,string> = { local: 'Локальные компоненты', freshness: 'Версии библиотечных экземпляров', theme: 'Темизация страницы', font: 'Шрифт страницы', base: 'База', detached: 'Детач', customStyles: 'Кастомные стили и токены', deprecatedStyles: 'Устаревшие стили' };
 function bindingLabel(action: any, metadata: any): string {
  const kind = action.kind === 'bind-variable' ? 'token' : action.kind === 'bind-style' ? 'style' : null;
  const key = action.binding?.key, name = kind ? labelFor(metadata,kind,key) : null;
@@ -28,7 +28,7 @@ function layerLocation(finding: Finding, audit: any): string {
 }
 export function documentCheckForTab(state: DocumentAuditState, tab: string | null): Check | null {
  if(tab === 'themization')return baseCheck(state.result);
- const id = tab === 'local' ? 'local' : tab === 'current' || tab === 'update' ? 'freshness' : tab === 'themization' ? 'theme' : tab === 'detached' ? 'detached' : tab === 'customStyles' ? 'customStyles' : null;
+ const id = tab === 'local' ? 'local' : tab === 'current' || tab === 'update' ? 'freshness' : tab === 'themization' ? 'theme' : tab === 'detached' ? 'detached' : tab === 'customStyles' ? 'customStyles' : tab === 'deprecatedStyles' ? 'deprecatedStyles' : null;
  return state.result && id ? state.result?.checks.find((c: Check) => c.id === id) || null : null;
 }
 export function documentItems(check: Check, tab: string | null) {
@@ -36,6 +36,7 @@ export function documentItems(check: Check, tab: string | null) {
 }
 function checkSummary(c: Check): string {
  if(c.status==='running')return 'проверяется';
+ if(c.id==='deprecatedStyles')return c.status==='incomplete'?'есть непроверенные данные':`${c.findings.filter(f=>f.status==='deprecated-style').length} найдено`;
  if(c.id==='detached'||c.id==='customStyles')return `${c.findings.length} найдено`;
  if (c.status === 'not-applicable') return 'не применяется';
  if (c.status === 'incomplete') return 'есть непроверенные данные';
@@ -47,6 +48,7 @@ function checkSummary(c: Check): string {
 }
 export function documentCoverageMessage(check: Check) {
  if(check.status!=='incomplete')return null;
+ if(check.id==='deprecatedStyles')return {className:'document-audit-warning',text:check.gaps.includes('deprecated-style-index-unavailable')?'Индекс устаревших стилей недоступен. Обновите данные Proxy и повторите проверку. Отсутствие результатов не означает отсутствие устаревших стилей.':'Статус части стилей не подтверждён: связь с библиотекой недоступна или сведения каталогов противоречат друг другу.'};
  const gaps=check.gaps.filter(g=>g!=='v3-catalog-policy-not-connected');
  if(!gaps.length&&check.id==='customStyles')return {className:'document-audit-coverage',text:'Проверена связь со стилями и токенами. Дополнительные правила и исключения дизайн-системы пока не проверяются.'};
  if(gaps.some(g=>g.includes('limit')))return {className:'document-audit-warning',text:'Проверка неполная: достигнут лимит этой проверки. Выберите меньшую область и повторите проверку.'};
@@ -61,7 +63,7 @@ export function DocumentAuditSummary({state,onSelect,branchBusy=false}: {state:D
   {state.error && <p role="status">{state.error}</p>}
   {state.result && ['stale','cancelling'].includes(state.status) && <p>Показан снимок предыдущей проверки. Переходы к слоям отключены до нового результата.</p>}
   {state.result && ['available','loading'].includes(state.status) && <><p>{state.status==='loading'||branchBusy ? 'Проверка области продолжается. Уже полученные результаты доступны по категориям.' : 'Проверки документа завершены. Покрытие указано для каждой проверки.'}</p><div className="document-audit-summary-links">
-   {state.result.checks.map((c:Check) => <button key={c.id} type="button" onClick={()=>onSelect(c.id === 'freshness' ? 'update' : ['theme','font'].includes(c.id) ? 'themization' : c.id === 'detached' ? 'detached' : c.id === 'customStyles' ? 'customStyles' : 'local')}>
+   {state.result.checks.map((c:Check) => <button key={c.id} type="button" onClick={()=>onSelect(c.id === 'freshness' ? 'update' : ['theme','font'].includes(c.id) ? 'themization' : c.id === 'detached' ? 'detached' : c.id === 'customStyles' ? 'customStyles' : c.id === 'deprecatedStyles' ? 'deprecatedStyles' : 'local')}>
     {labels[c.id]}: {checkSummary(c)}
    </button>)}
   </div></>}
@@ -70,20 +72,20 @@ export function DocumentAuditSummary({state,onSelect,branchBusy=false}: {state:D
 export function DocumentAuditCards({check,tab,onFocus,actionsEnabled,mutationEnabled=false,actionData,onAction,staleFindingIds=[],audit}: {check:Check;tab:string|null;actionsEnabled:boolean;mutationEnabled?:boolean;actionData?:any;staleFindingIds?:string[];audit?:any;onAction?:(finding:string,target:string,action:string)=>void;onFocus:(finding:string,target:string)=>void}) {
  const items=documentItems(check,tab),staleFindings=new Set(staleFindingIds),actionsByFinding=new Map<string,any[]>(actionData?.items.map((item:any)=>[item.findingId,item.actions])||[]),coverage=documentCoverageMessage(check);
  return <section className="document-audit-results" aria-label={labels[check.id]}>
-  <p className="document-audit-coverage">{check.id === 'base' ? 'Область: текущая страница. Проверяются режим Corp в Theme и AlfaSans в Font, включая автоматический режим шрифта.' : check.id === 'theme' ? 'Область: текущая страница. Проверяется явный режим Corp; замены Corporate-компонентов пока не проверяются.' : check.id === 'font' ? 'Область: текущая страница. Проверяется режим Font, включая режим коллекции по умолчанию.' : check.id === 'freshness' ? 'Область: исходно проверенные слои и зависимости локальных определений. Проверяется опубликованная версия; соответствие правилам дизайн-системы проверяется отдельно.' : check.id==='detached' ? 'Область: проверенные видимые слои. Происхождение из библиотеки подтверждается native detachedInfo; имена и внешний вид не используются.' : check.id==='customStyles' ? 'Область: проверенные видимые слои. Показано отсутствие связи со стилем или переменной; история отвязки и соответствие всей дизайн-системе не утверждаются.' : 'Область: проверенные видимые слои и связанные локальные определения.'}</p>
+  <p className="document-audit-coverage">{check.id === 'base' ? 'Область: текущая страница. Проверяются режим Corp в Theme и AlfaSans в Font, включая автоматический режим шрифта.' : check.id === 'theme' ? 'Область: текущая страница. Проверяется явный режим Corp; замены Corporate-компонентов пока не проверяются.' : check.id === 'font' ? 'Область: текущая страница. Проверяется режим Font, включая режим коллекции по умолчанию.' : check.id === 'freshness' ? 'Область: исходно проверенные слои и зависимости локальных определений. Проверяется опубликованная версия; соответствие правилам дизайн-системы проверяется отдельно.' : check.id==='detached' ? 'Область: проверенные видимые слои. Происхождение из библиотеки подтверждается native detachedInfo; имена и внешний вид не используются.' : check.id==='customStyles' ? 'Область: проверенные видимые слои. Показано отсутствие связи со стилем или переменной; история отвязки и соответствие всей дизайн-системе не утверждаются.' : check.id==='deprecatedStyles' ? 'Область: стили видимых слоёв, включая участки текста. Библиотечные ключи сверяются с индексом устаревших стилей из пакета знаний; устаревание токенов не проверяется.' : 'Область: проверенные видимые слои и связанные локальные определения.'}</p>
   {check.status==='running' ? <p role="status">Эта проверка ещё выполняется. Показаны уже полученные находки.</p> : check.status === 'not-applicable' ? <p>Темизация страницы применяется только к Desktop и MobileWeb.</p> : <>
    {coverage && <p role="status" className={coverage.className}>{coverage.text}</p>}
    {check.id==='customStyles'&&actionData?.bindingStatus?.state==='unavailable'&&<p role="status" className="document-audit-warning">{actionData.bindingStatus.message}</p>}
-   {!items.length && <p>{check.status === 'incomplete' ? check.id === 'base' ? 'В полученных данных замечаний нет. Часть проверки не завершена.' : 'Нет подтверждённых результатов для этого списка. Это не означает отсутствие проблем.' : check.id === 'base' ? 'В проверенных данных замечаний по базе нет.' : tab === 'current' ? 'В проверенной области не найдено экземпляров с подтверждённой опубликованной версией.' : tab === 'update' ? 'В проверенной области не найдено экземпляров с подтверждённым обновлением.' : check.id === 'theme' ? 'Нет подтверждённого результата темизации страницы.' : check.id==='detached' ? 'В проверенной области не найдено подтверждённых библиотечных детачей.' : check.id==='customStyles' ? 'В проверенной области не найдено подтверждённых непривязанных стилей.' : 'В проверенной области не найдено локальных компонентов.'}</p>}
+   {!items.length && <p>{check.status === 'incomplete' ? check.id === 'base' ? 'В полученных данных замечаний нет. Часть проверки не завершена.' : 'Нет подтверждённых результатов для этого списка. Это не означает отсутствие проблем.' : check.id === 'base' ? 'В проверенных данных замечаний по базе нет.' : tab === 'current' ? 'В проверенной области не найдено экземпляров с подтверждённой опубликованной версией.' : tab === 'update' ? 'В проверенной области не найдено экземпляров с подтверждённым обновлением.' : check.id === 'theme' ? 'Нет подтверждённого результата темизации страницы.' : check.id==='detached' ? 'В проверенной области не найдено подтверждённых библиотечных детачей.' : check.id==='customStyles' ? 'В проверенной области не найдено подтверждённых непривязанных стилей.' : check.id==='deprecatedStyles' ? 'В проверенной области не найдено стилей из подключённого индекса устаревания.' : 'В проверенной области не найдено локальных компонентов.'}</p>}
    <div className="document-audit-list">{items.map(f=>{
     const actions=actionsByFinding.get(f.findingId)||[], stale=staleFindings.has(f.findingId), first=f.targets[0], evidence=f.evidence as any;
     const propertyLabels:Record<string,string>={fill:'Заливка',fills:'Заливка',stroke:'Обводка',strokes:'Обводка',effects:'Эффекты',typography:'Типографика'};
     const bindingLibrary = actions.length === 1 ? knownLibrary(actions[0].binding?.library) : null;
-    const location = check.id === 'customStyles' ? layerLocation(f,audit) : f.name;
+    const location = ['customStyles','deprecatedStyles'].includes(check.id) ? layerLocation(f,audit) : f.name;
     const actionDescription = (a:any) => a.binding ? bindingLabel(a,audit?.displayMetadata) : a.description;
     return <FindingCard key={f.findingId} title={f.message}
       tone={['unknown','update','local','detached'].includes(f.status)?'warning':['theme-current','font-current','current'].includes(f.status)?'current':'violation'}
-      library={documentFindingLibrary(audit,f)}
+      library={check.id==='deprecatedStyles'?knownLibrary(evidence?.library):documentFindingLibrary(audit,f)}
       location={first?<button type="button" data-finding-focus disabled={!actionsEnabled||stale} title={location} aria-label={`${first.kind==='owner'?'Открыть определение':'Найти в макете'}: ${location}`} onClick={()=>onFocus(f.findingId,first.id)}>{location}</button>:<span>{location}</span>}
       actions={actions.map((a:any)=><button key={a.actionId} type="button" title={actionDescription(a)} aria-label={`${a.label}: ${actionDescription(a)}`} disabled={!mutationEnabled||!actionsEnabled||stale} onClick={()=>onAction?.(f.findingId,a.targetId,a.actionId)}>{a.label}</button>)}
       information={<>
@@ -92,6 +94,7 @@ export function DocumentAuditCards({check,tab,onFocus,actionsEnabled,mutationEna
         {actions.map((a:any)=><div key={a.actionId}><p>{a.description}</p>{a.binding&&<p>Ключ: {a.binding.key}</p>}</div>)}
         <pre>{JSON.stringify(f.evidence,null,2)}</pre>
       </>}>
+      {check.id==='deprecatedStyles'&&<FindingComparison property={propertyLabels[evidence?.property]||'Стиль'} before={evidence?.styleName||'Не удалось прочитать стиль'} beforeLabel="Применённый стиль" />}
       {f.status==='custom-style'&&<FindingComparison property={propertyLabels[evidence?.property]||'Связь со стилем'} before={evidence?.styleId === 'mixed' ? 'Есть непривязанные участки' : 'Не задана'} after={actions.length===1&&actions[0].binding?bindingLabel(actions[0],audit?.displayMetadata):undefined} beforeLabel="Сейчас" afterLabel="Рекомендуемая привязка" />}
       {check.id==='customStyles'&&f.status==='unknown'&&<FindingComparison property={propertyLabels[evidence?.property]||'Связь со стилем'} before="Не подтверждена" beforeLabel="Состояние привязки" />}
       {f.status==='custom-style'&&bindingLibrary&&<p className="apollo-finding-note" title={bindingLibrary}>Библиотека привязки: {bindingLibrary}</p>}

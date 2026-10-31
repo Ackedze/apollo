@@ -17,6 +17,10 @@ async function until(check){for(let i=0;i<1000;i++){const value=check();if(value
   const check=()=>page.getByRole('button',{name:'Проверить',exact:true}),stop=()=>page.getByRole('button',{name:'Остановить',exact:true});
   await check().click();await until(()=>f.messages.filter(m=>m.type==='audit-result').length===1&&f.messages.filter(m=>m.type==='document-audit-result').length===1);await check().waitFor();assert.equal(await check().isEnabled(),true);
   const baselineCount=f.messages.filter(m=>m.type==='audit-result').length;holdNative=true;await check().click();await until(()=>heldNative&&f.messages.filter(m=>m.type==='audit-result').length>baselineCount);
+  await page.waitForFunction(()=>document.querySelector('.apollo-overview-caption[role=status]')?.textContent.includes('Читаем'));
+  assert.equal(await page.locator('.apollo-status-messages [role=status]').count(),0);
+  for(const height of [900,640]){await page.setViewportSize({width:800,height});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:path.join(out,'progress-800-'+height+'.png')});}
+  await page.setViewportSize({width:800,height:900});
   assert.equal(await stop().isEnabled(),true);const logical=host.filter(m=>m.type==='audit').at(-1),pinned=logical.context.selectionSignature;
   f.page.selection=[f.peer];f.emit('selectionchange');const before=f.messages.filter(m=>m.type==='audit-result').length;f.actual.opacity=.2;await f.mutate({nodeChanges:[{id:f.actual.id,node:f.actual,type:'PROPERTY_CHANGE'}]});
   await until(()=>host.filter(m=>m.type==='audit'&&m.requestId===logical.requestId).length===2);await until(()=>f.messages.filter(m=>m.type==='audit-result').length>before);assert.ok(host.filter(m=>m.type==='audit'&&m.requestId===logical.requestId).every(m=>m.context.selectionSignature===pinned));

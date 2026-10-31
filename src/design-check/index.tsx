@@ -187,16 +187,18 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
   }
   const proxyError = state.auditError.startsWith('ApolloProxyControl:') ? state.auditError : '';
   const contextChanged = /^(Страница изменилась\.|Настройки или исходные данные изменились\.|Результат проверки документа устарел\.)/.test(state.documentAudit.error);
+  const progress = state.auditStopping ? 'Останавливаем проверку…'
+    : state.documentAction.busy ? state.documentAction.message || 'Перепроверяем область…'
+    : (state.auditBusy ? state.auditProgress || state.documentAudit.progress : state.documentAudit.progress || state.auditProgress) || 'Проверяем область…';
   const failures=(state.auditFailures||[]).concat(state.documentAudit.failures||[]);
   const notices = <div className="apollo-status-messages">
-    {state.auditNotice&&<p className="design-check-note" role="status">{state.auditNotice}</p>}
+    {state.auditNotice&&!actionBusy&&<p className="design-check-note" role="status">{state.auditNotice}</p>}
     {state.auditError && !proxyError && <p className="design-check-error" role="alert">{state.auditError}</p>}
     {state.documentAudit.error && !contextChanged && <p className="design-check-note" role={state.documentAudit.result ? 'status' : 'alert'}>{state.documentAudit.error}</p>}
-    {state.documentAudit.status==='loading'&&state.documentAudit.progress&&<p className="design-check-note" role="status">{state.documentAudit.progress}</p>}
-    {groupId && state.auditBusy && <p className="design-check-note" role="status">{state.auditProgress || 'Проверка контрактов выбранной области продолжается…'}</p>}
+    {groupId && actionBusy && <p className="design-check-note" role="status">{progress}</p>}
     {groupId && summary.stale && (!state.documentAudit.error || contextChanged) && <p className="design-check-note" role="status">{state.documentAction.status === 'refreshing' ? 'Перепроверяем изменённый объект. До свежего результата сохраняем прежние замечания.' : 'Показаны сохранённые результаты. Повторите проверку.'}</p>}
     {failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}</li>)}</ul></details>}
-    {state.documentAction.message && <p className="design-check-note" role={state.documentAction.status === 'error' ? 'alert' : 'status'}>{state.documentAction.message}</p>}
+    {state.documentAction.message && !state.documentAction.busy && <p className="design-check-note" role={state.documentAction.status === 'error' ? 'alert' : 'status'}>{state.documentAction.message}</p>}
   </div>;
   return <div className="shell design-check-shell apollo-new">
     <header className="apollo-topbar">
@@ -232,7 +234,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           </div>
           {!groupId ? <>
             {notices}
-            <AuditOverview state={state} summary={summary} busy={actionBusy} checkedScope={checkedScope} onOpen={openGroup}
+            <AuditOverview progress={progress} summary={summary} busy={actionBusy} checkedScope={checkedScope} onOpen={openGroup}
               onBase={() => { setGroupId('base'); setCategoryId(null); controller.setView('audit'); controller.selectTab('themization'); }} />
           </> : <main className="apollo-results" aria-label="Результаты проверки">
             {notices}

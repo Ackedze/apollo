@@ -46,8 +46,7 @@ function runtimeBuildOptions(write = true) {
 }
 
 async function build() {
-  await Promise.all(['component-contract-core/build.js', 'generation-core/build.js',
-    'adapter-figma/build.js', 'adapter-frontend/build.js', 'pattern-core/build.cjs'].map(script =>
+  await Promise.all(['component-contract-core/build.js', 'generation-core/build.js', 'pattern-core/build.cjs'].map(script =>
     runNode(process.execPath, [path.join(root, 'packages', script)], { cwd: root })));
   for (const file of [runtimePath, enginePath, registryPath]) {
     if (!fs.existsSync(file)) {
@@ -57,14 +56,13 @@ async function build() {
   const dist = path.join(root, "./dist");
   fs.mkdirSync(dist, { recursive: true });
   const result = await esbuild.build(runtimeBuildOptions());
-  const agentScopePath=process.env.APOLLO_AGENT_NATIVE_SCOPE_PATH;
-  let agentScope=null,agentScopeInput=null;
-  if(agentScopePath){const file=path.resolve(agentScopePath),bytes=fs.readFileSync(file);agentScope=JSON.parse(bytes);if(agentScope.schemaVersion!=='apollo.general-native-read-scope.v1'||agentScope.status!=='ADMITTED_CONFIGURATION_ONLY_ACTUAL_NATIVE_NOT_RUN'||agentScope.acceptedWriteOperations?.length!==0||agentScope.limits?.treeTraversal!==false||agentScope.limits?.maxNodes!==1||!Array.isArray(agentScope.destination?.allowedNodeIds)||agentScope.destination.allowedNodeIds.length!==1)throw Error('AGENT_NATIVE_SCOPE_INVALID');agentScopeInput={path:file,sha256:crypto.createHash('sha256').update(bytes).digest('hex')};}
+  if(process.env.APOLLO_AGENT_NATIVE_SCOPE_PATH||process.env.APOLLO_NATIVE_DIAGNOSTIC_INPUTS_PATH)throw Error('LEGACY_GENERATION_BUILD_CONFIGURATION_RETIRED');
+  const agentScope=null,agentScopeInput=null;
   const agentProtocol=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/protocol.js"],outfile:path.join(dist,'agent-protocol.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   const agentFigmaProtocol=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/figma/protocol.js"],outfile:path.join(dist,'agent-figma-protocol.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   const agentFigmaPostconditions=await esbuild.build({absWorkingDir:root,entryPoints:["src/generation/agent/figma/postconditions.js"],outfile:path.join(dist,'agent-figma-postconditions.cjs'),bundle:true,platform:'node',format:'cjs',target:['node18'],alias:aliases,metafile:true});
   fs.writeFileSync(path.join(dist,'agent-figma-provider-descriptor.json'),JSON.stringify({schemaVersion:'apollo.agent-figma-provider-descriptor.v1',sourceHash:require(path.join(dist,'agent-figma-postconditions.cjs')).SOURCE_HASH,protocol:'agent-figma-protocol.cjs',postconditions:'agent-figma-postconditions.cjs',observation:'apollo.agent-figma-observation.v3',snapshot:'apollo.agent-figma-run-snapshot.v3',Ready:false},null,2)+'\n');
-  const diagnosticInputs = await require("./scripts/native-diagnostic-inputs.cjs").prepareDiagnosticInputs(root);
+  const diagnosticInputs = null;
   fs.writeFileSync(path.join(dist, 'native-diagnostic-inputs.json'), JSON.stringify(diagnosticInputs, null, 2) + '\n');
   const mainOptions = {
     absWorkingDir: root, entryPoints: ['src/code.ts'], outfile: path.join(dist, 'code.js'),
@@ -76,10 +74,7 @@ async function build() {
   // Collect actual UI dependencies before sealing the build hash; the UI build uses that seal later.
   const uiOptions = {absWorkingDir: root, entryPoints: ['src/ui.js'], outfile: path.join(dist, 'ui.js'), loader: { '.module.css': 'local-css' }, bundle: true, platform: 'browser', format: 'iife', target: ['es2020'], write: false, alias: aliases, metafile: true, define: {'process.env.NODE_ENV': '"production"', __APOLLO_PLUGIN_VERSION__: JSON.stringify(require('./package.json').version), __APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__: '"pending"', __APOLLO_PROGRESSBAR_PILOT__: 'true', __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: JSON.stringify('http://localhost:3001/v1/analyze/codex/runs')}};
   const uiInputs = await esbuild.build(uiOptions);
-  const readPortInputs = ['build.js','scripts/contract-catalog.cjs','scripts/generation-package-inputs.js','scripts/load-generation-packages.js','scripts/static-producer-review-inputs.cjs','scripts/static-review-consumer-binding.cjs','src/ui.html',
-    // Resolver/config metadata affects the actual UI bundle as well as imported JS/CSS bytes.
-    'src/design-check/tsconfig.json','tsconfig.json','package.json','tsconfig.json','package.json',
-    'scripts/agent-run-inputs.cjs','scripts/agent-figma-current-consumer.cjs','scripts/agent-generation-skills.cjs','instructions/agent-generation/skill-profile.json','scripts/agent-frontend-workspace.cjs','scripts/agent-page-background.cjs','instructions/agent-generation/frontend.md','instructions/agent-generation/figma.md','instructions/agent-generation/figma-owned.md','instructions/agent-generation/figma-owned-mapping.json','packages/generation-core/src/agent-types.ts','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
+  const readPortInputs = ['build.js','src/ui.html','src/design-check/tsconfig.json','tsconfig.json','package.json','instructions/landing/figma-workflow.md','instructions/agent-generation/figma-owned-mapping.json','node_modules/react/package.json','node_modules/react-dom/package.json','node_modules/scheduler/package.json'];
   const inputs = Array.from(new Set(Object.keys(result.metafile.inputs).concat(Object.keys(main.metafile.inputs), Object.keys(uiInputs.metafile.inputs),Object.keys(agentProtocol.metafile.inputs),Object.keys(agentFigmaProtocol.metafile.inputs),Object.keys(agentFigmaPostconditions.metafile.inputs),readPortInputs))).filter(input => input !== '<define:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__>' && input !== '<define:__APOLLO_AGENT_NATIVE_SCOPE__>').sort().map((input) => {
     const absolutePath = path.resolve(root, input);
     if (path.relative(repository, absolutePath).startsWith('..')) {

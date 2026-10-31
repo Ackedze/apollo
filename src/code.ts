@@ -1,14 +1,5 @@
 import { createCurrentPageDiagnosticObserver } from "./generation/native/observer";
-import { createNativeDiagnostic, type DiagnosticInputs } from "./generation/native/diagnostic";
-import { createNativeDiagnosticBridge } from "./generation/native/diagnostic-bridge";
-declare const __APOLLO_NATIVE_DIAGNOSTIC_INPUTS__: DiagnosticInputs | null;
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
-import { GenerationController } from "./generation/controller";
-import { createGenerationFrontendPort } from "./generation/frontend/port";
-import { createGenerationProxyPort } from "./generation/proxy/port";
-import { createGenerationFigmaHost } from "./generation/figma/host";
-import { createGenerationNativeCapture } from "./generation/figma/capture";
-import { readAcceptedNativeBinding, acceptedPrimitivePolicy } from "./generation/native/bindings";
 import { captureInstanceAudit, collectAnatomy } from "../packages/component-contract-core/src/figma-capture";
 import { selectedTargetPathHint } from "../packages/component-contract-core/src/occurrence-address";
 import { applyAuditPlatform } from './audit-platform';
@@ -23,12 +14,6 @@ const runtime = require("./runtime"), engine = require('@apollo/predicate-engine
 const {auditDelivery,createAuditReportBridge}=require("./audit-report");
 declare const __html__: string;
 const { createUiMainBridge } = require("./design-check/ui-protocol");
-declare const __APOLLO_AGENT_NATIVE_SCOPE__: any;
-const {createAgentNativeBroker}=require("./generation/agent/native");
-const {createAgentFigmaBroker}=require("./generation/agent/figma/embedded");
-import {createAgentFigmaPolicy} from "./generation/agent/figma/policy";
-const {createAgentDraftStorage}=require("./generation/agent/storage");
-const {createMcpScope}=require("./generation/agent/mcp/scope");
 const { createSessionBridge } = require("./generation/session/protocol");
 const { createDocumentAuditBridge } = require("./document-audit/bridge");
 const {createLayerNamesBridge}=require("./skills/layer-names/native");
@@ -49,27 +34,9 @@ const { DISPLAY_METADATA_BUDGET_MS } = require("./document-audit/budgets");
 const tokenJournalBridge=require("./token-journal-native").createTokenJournalBridge({storage:figma.clientStorage,post});
 const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post});
 const designCheckUiBridge = createUiMainBridge({ storage: figma.clientStorage, resize: (width: number, height: number) => figma.ui.resize(width, height), post });
-const agentDraftStorage=createAgentDraftStorage({storage:figma.clientStorage,post});
 const generationSessionBridge = createSessionBridge({ storage: figma.clientStorage, post });
-// Only Proxy supplies fresh canonical source and Code Connect evidence.
-const generationProxy = createGenerationProxyPort(post, runtime.contractHash);
-const generationFigmaHost = createGenerationFigmaHost({ api: figma, hash: runtime.contractHash, readContext: generationProxy.readContext,
-  readBinding: readAcceptedNativeBinding, primitives: acceptedPrimitivePolicy,
-  capture: createGenerationNativeCapture(runtime, async mapping => {
-    const reply = await requestContracts('generation-native:' + (++nativeScopeSequence), [{ componentKey: mapping.figma.componentKey }]);
-    return reply;
-  }) });
-const generationFrontend = createGenerationFrontendPort(post,runtime.contractHash,generationProxy.readContext);
-const generationController = new GenerationController({ hash: runtime.contractHash, readContext: generationProxy.readContext, figma: generationFigmaHost,frontend:generationFrontend.host });
-let nativeDiagnosticEpoch = 0;
 const nativePageObserver = createCurrentPageDiagnosticObserver(figma,invalidateNativeDiagnostic);
-const nativeDiagnostic = createNativeDiagnostic({api:figma, hash:runtime.contractHash, inputs:__APOLLO_NATIVE_DIAGNOSTIC_INPUTS__, buildInputsSha256:__APOLLO_NATIVE_BUILD_INPUTS_SHA__, readContext:generationProxy.readContext, epoch:()=>nativeDiagnosticEpoch, observer:()=>nativePageObserver.snapshot()});
-const nativeDiagnosticBridge = createNativeDiagnosticBridge(post,nativeDiagnostic);
-const agentNativeBroker=createAgentNativeBroker({api:figma,scope:__APOLLO_AGENT_NATIVE_SCOPE__,hash:engine.stableHash,epoch:()=>nativeDiagnosticEpoch,observer:()=>nativePageObserver.snapshot(),post});
-const agentFigmaBroker=createAgentFigmaBroker({api:figma,hash:engine.stableHash,post,policy:createAgentFigmaPolicy({api:figma,flushDraft:()=>agentDraftStorage.flush(),evaluateRuleIR:require("./generation/agent/figma/rule-ir").createReadOnlyRuleIR({contracts:require("./generation/agent/figma/principal-contracts.json")})})});
-const agentMcpScope=createMcpScope({api:figma,hash:engine.stableHash,post,evaluateRuleIR:require("./generation/agent/figma/rule-ir").createReadOnlyRuleIR({contracts:require("./generation/agent/figma/principal-contracts.json")})});
-function invalidateNativeDiagnostic(){nativeDiagnosticEpoch++;agentNativeBroker.invalidate();nativeDiagnosticBridge.invalidate();post({type:'native-diagnostic-invalidated'});}
-let nativeScopeSequence = 0;
+function invalidateNativeDiagnostic(){post({type:'native-diagnostic-invalidated'});}
 let busy = false, generation = 0, lastAudit: any = null, selectionId = '', localMode = false;
 const localContracts = new Map<string, any>(), focusNodes = new Map<string, string>();
 const pending = new Map<string, { resolve: (value: any) => void; reject: (error: Error) => void; timer: any }>();
@@ -81,12 +48,13 @@ function invalidateArea(){areaNotificationProof?.close();areaNotificationProof=n
 function observeArea(event:NodeChangeEvent){if(documentAuditBridge.isActionApplying())return;if(event.nodeChanges?.some(change=>areaObservedIds.has(change.id)||('node' in change&&change.node&&'parent' in change.node&&change.node.parent&&areaObservedIds.has(change.node.parent.id)))){if(documentAuditBridge.observeRefreshChange())return;if(areaNotificationProof)void areaNotificationProof.notify();else invalidateArea();}}
 function bindAreaPage(){if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);areaPage=figma.currentPage;if(typeof areaPage.on==='function')areaPage.on('nodechange',observeArea);}
 
-let reglyphBridge:any=null;
-const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
+let reglyphBridge:any=null,landingCanvas:any=null;
+const documentAuditBridge = createDocumentAuditBridge({ api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
   selectionId = selectionSignature([node]); figma.currentPage.selection = [node]; figma.viewport.scrollAndZoomIntoView([node]);
 } });
-const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
-reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();}});
+const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
+landingCanvas=require('./landing/native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
 function post(value: any) { figma.ui.postMessage(value); }
 const auditReportBridge=createAuditReportBridge({post,read:(id:string)=>{
   if(busy||documentAuditBridge.isActionBusy()||lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==figma.currentPage.id||lastAudit?.auditId!==id)throw Error('AUDIT_REPORT_STALE');
@@ -100,9 +68,6 @@ function refreshSelection() {
   const nodes = figma.currentPage.selection, id = selectionSignature(nodes), invalidated = selectionId !== id;
   if (invalidated) {
     selectionId = id;
-    // Selection remains an input to the next area audit. Generation-native RPCs
-    // retain their own existing selection-bound invalidation contract.
-    for (const [requestId,request] of pending) if(requestId.startsWith('generation-native:')) {clearTimeout(request.timer);request.reject(new Error('Выделение изменилось. Повторите проверку.'));pending.delete(requestId);}
   }
   post({ type: 'selection', statisticsUserName: statisticsUserName(), pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
 }
@@ -420,7 +385,7 @@ function setAreaNotificationProof(nodes:Map<string,SceneNode>,verify:any,guard:(
 function beginScopedRecheck(plan:any,requestId:string){
  areaNotificationProof?.close();areaNotificationProof=null;
  const previous=areaSession,report=lastAudit,revision=++generation,pageId=figma.currentPage.id;
- invalidateNativeDiagnostic();generationController.invalidate();generationProxy.invalidate();generationFrontend.invalidate();
+ invalidateNativeDiagnostic();
  const guard=()=>{if(generation!==revision||figma.currentPage.id!==pageId||lastAudit!==report&&lastAudit!==candidate?.audit)throw Error('NATIVE_CONTEXT_CHANGED');};
  const affectedScopes=new Set<string>();
  if(previous&&report){
@@ -490,7 +455,7 @@ const progressBarPilot = typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && 
 progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
 figma.on('selectionchange', refreshSelection);
-bindAreaPage();figma.on('currentpagechange',()=>{invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
+bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
 async function focusAuditFinding(message:any){
   const report=lastAudit,revision=lastAuditRevision;
   const reply=(success:boolean,text='',nodeId?:string)=>post({type:'audit-focus-result',requestId:message.requestId,auditId:message.auditId,targetId:message.targetId,success,message:text,nodeId});
@@ -508,6 +473,7 @@ async function focusAuditFinding(message:any){
 nativePageObserver.start();
 documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
+  if (landingCanvas.accept(message)) return;
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
   if (auditStatisticsBridge.accept(message) || tokenJournalBridge.accept(message)) return;
@@ -515,16 +481,13 @@ figma.ui.onmessage = async (message: any) => {
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;
-  if (agentMcpScope.accept(message)||agentDraftStorage.accept(message)||agentNativeBroker.accept(message)||agentFigmaBroker.accept(message)) return;
   if (documentAuditBridge.accept(message)) return;
   if (!message || typeof message.type !== 'string') return;
   if(message.type==='audit-focus'){void focusAuditFinding(message);return;}
   if(message.type==='audit-focus-cancel'){if(Object.keys(message).length===2&&typeof message.requestId==='string'&&message.requestId.length<=150){if(contractFocusTask?.requestId===message.requestId)contractFocusTask=null;post({type:'audit-focus-cancelled',requestId:message.requestId});}return;}
   if(message.type==='audit-context-invalidated'){if(Object.keys(message).length===2&&lastAudit?.auditId===message.auditId)invalidateArea();return;}
   try {
-    if((documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
-    // Resolve RPC before busy checks: preparation is waiting for this response.
-    if (generationFrontend.accept(message)||generationProxy.accept(message)) return;
+    if((landingCanvas.busy()||documentAuditBridge.isActionBusy()||reglyphBridge.busy())&&['audit','load-contract','use-proxy','generation-prepare','generation-execute','native-diagnostic-request','focus','focus-scope'].includes(message.type))throw new Error('Дождитесь завершения действия с макетом.');
     if(message.type==='contracts-progress'){
       const run=activeAuditRun;if(run&&typeof message.requestId==='string'&&message.requestId.startsWith(run.requestId+':')&&pending.has(message.requestId)&&['PROXY_TIMEOUT','PROXY_UNAVAILABLE'].includes(message.code)){
         const diagnostic=require('./document-audit/protocol').failureDiagnostic({code:message.code},run.requestId,run.stage,engine.stableHash,[message.requestId,Date.now()]);run.failures.push(diagnostic);if(run.failures.length>20)run.failures.splice(1,1);post({type:'audit-recovery',requestId:run.requestId,diagnostic,message:'Ожидаем ответ Proxy. Проверка продолжится автоматически…'});
@@ -536,28 +499,10 @@ figma.ui.onmessage = async (message: any) => {
       if (message.error) request.reject(Object.assign(new Error(message.error),{code:message.code})); else request.resolve(message.data);
       return;
     }
-    if (message.type === 'generation-invalidate') { invalidateNativeDiagnostic(); generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); return; }
-    if (message.type === 'native-diagnostic-request') {
-      if(busy){post({type:'native-diagnostic-result',requestId:message.requestId,error:'NATIVE_DIAGNOSTIC_BUSY'});return;}
-      busy=true;try{await nativeDiagnosticBridge.handle(message);}finally{busy=false;}return;
-    }
-    if (message.type === 'generation-prepare' || message.type === 'generation-execute') {
-      if (busy) throw new Error('Дождитесь завершения текущей операции.');
-      busy = true;
-      try {
-        const result = message.type === 'generation-prepare'
-          ? await generationController.prepare(message.spec)
-          : await generationController.execute(message.sessionId, message.targets);
-        post({ type: 'generation-result', requestId: message.requestId, result });
-      } catch (error) {
-        post({ type: 'generation-error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error) });
-      } finally { busy = false; }
-      return;
-    }
     if (message.type === 'ready') { void catalogReaders.initialize(); refreshSelection(); return; }
     if (message.type === 'use-proxy') {
       if (busy) throw new Error('Дождитесь завершения проверки.');
-      generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); localMode = false; localContracts.clear(); generation++; lastAudit = null; focusNodes.clear();
+       localMode = false; localContracts.clear(); generation++; lastAudit = null; focusNodes.clear();
       post({ type: 'source-mode', mode: 'proxy' }); return;
     }
     if (message.type === 'load-contract') {
@@ -565,7 +510,7 @@ figma.ui.onmessage = async (message: any) => {
       const loaded = runtime.loadAuthoringSource(message.source), next = loaded.contract;
       if (message.release && (message.release.contractHash !== engine.stableHash(next) || message.release.sourceHash !== loaded.sourceHash
         || message.release.manualSourceHash !== next.package.manualSourceHash)) throw new Error('Авторский контракт не совпадает с выбранной версией пакета.');
-      generationController.invalidate(); generationProxy.invalidate(); generationFrontend.invalidate(); localContracts.clear(); registerLocal(message.source); localMode = true;
+       localContracts.clear(); registerLocal(message.source); localMode = true;
       generation++; lastAudit = null; focusNodes.clear();
       post({ type: 'contract-loaded', name: next.package.family || next.facts.component.family || next.package.id, revision: loaded.source.manual.metadata.revision });
       refreshSelection(); return;

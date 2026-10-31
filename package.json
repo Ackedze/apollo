@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "test": "node --test --test-concurrency=4 tests/*.test.js tests/design-check/*.test.js",
-    "test:ui": "node tests/ui.browser.cjs && node tests/generation-ui.browser.cjs && node tests/generation-prompt-chat.browser.cjs && node tests/generation-session.browser.cjs && node tests/native-diagnostic-ui.browser.cjs && node tests/generation-static-review.browser.cjs && node tests/design-check/integrated-ui.browser.cjs && node tests/design-check/navigation-ui.browser.cjs",
+    "test:ui": "node tests/ui.browser.cjs && node tests/landing-ui.browser.cjs && node tests/audit-flow-p0.browser.cjs && node tests/audit-proxy-p0.browser.cjs && node tests/design-check/integrated-ui.browser.cjs && node tests/design-check/navigation-ui.browser.cjs",
     "type-check": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p src/design-check/tsconfig.json",
     "validate": "npm run type-check && npm run build && npm test",
     "release:pilot": "npm run build && node scripts/build-pilot-release.js",

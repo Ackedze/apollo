@@ -3,50 +3,6 @@
 <section class="card" aria-labelledby="contract-heading"><h2 id="contract-heading">Контракты компонентов</h2><div id="contract-name" class="muted">Прокси подберёт контракты по ключам компонентов</div><div class="controls"><button id="proxy">Использовать прокси</button><button id="file">Из файлов / ZIP</button></div><input id="contract-file" type="file" accept=".json,.zip,application/json,application/zip" multiple><p class="muted">Контракты из прокси загружаются автоматически. Для локального пакета выберите manual с фактами или authoring ZIP Editor.</p></section>
 <section class="card" aria-labelledby="selection-heading"><h2 id="selection-heading">Выделение в Figma</h2><div id="selection" class="muted">Выделите область или слои с компонентами</div><button class="primary" id="audit" hidden disabled>Проверить выделение</button></section>
 <div id="status" class="status" role="status" aria-live="polite"></div>
-</div><section class="v4-legacy generation-workspace" id="generation-panel" aria-label="Чат генерации">
-  <section id="generation-conversation" class="generation-chat" aria-label="Диалог о создании экрана">
-    <p id="generation-chat-empty" class="muted">Опишите экран, который нужно создать.<br>Уточняйте детали в диалоге с Apollo.</p>
-    <div id="generation-chat-log" role="log" aria-label="История генерации" aria-live="polite" aria-relevant="additions" aria-atomic="false"></div>
-    <p id="generation-chat-pending" class="muted" role="status" aria-live="polite" hidden>Apollo составляет черновик…</p>
-    <div id="generation-agent-chat"></div>
-  </section>
-  <p id="generation-session-status" class="muted" role="status" aria-live="polite" hidden></p>
-  <form id="generation-prompt-form" class="generation-prompt-form">
-    <label id="generation-prompt-label" class="design-check-sr-only" for="generation-prompt">Описание экрана</label>
-    <div class="apollo-message-field">
-      <textarea id="generation-prompt" rows="1" maxlength="12000" placeholder="Опишите экран или уточните детали" aria-describedby="generation-prompt-hint" required></textarea>
-      <span id="generation-prompt-hint" class="design-check-sr-only">Enter — отправить, Shift+Enter — новая строка. История и черновик сохраняются на этом устройстве.</span>
-      <button id="generation-plan-prompt" class="generation-icon-button generation-send" type="submit" aria-label="Отправить сообщение" title="Отправить сообщение" disabled><img src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJhcnJvdy11cC1jaXJjbGUiPgo8cGF0aCBpZD0iaWNvbiIgZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMiAyMkMxNy41MjI4IDIyIDIyIDE3LjUyMjggMjIgMTJDMjIgNi40NzcxNSAxNy41MjI4IDIgMTIgMkM2LjQ3NzE1IDIgMiA2LjQ3NzE1IDIgMTJDMiAxNy41MjI4IDYuNDc3MTUgMjIgMTIgMjJaTTE1LjU2ODYgMTIuNTQ1OUwxNi45MDQgMTEuMDU3TDExLjk5ODEgNi42NTY5Nkw3LjA5NTk4IDExLjA2MDhMOC40MzI1NyAxMi41NDg2TDEwLjk5ODcgMTAuMjQzNEwxMC45OTg3IDE3LjAwMDdMMTIuOTk4NyAxNy4wMDA3TDEyLjk5ODcgMTAuMjQwOUwxNS41Njg2IDEyLjU0NTlaIiBmaWxsPSIjNzQ3NDc0Ii8+CjwvZz4KPC9zdmc+Cg==" alt=""></button>
-      <button id="generation-prompt-cancel" class="generation-icon-button generation-send is-stop" type="button" aria-label="Остановить ожидание" title="Остановить ожидание" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg></button>
-    </div>
-    <div class="apollo-generation-options">
-      <button id="generation-chat-reset" class="apollo-new-chat" type="button" disabled><span class="apollo-option-icon" aria-hidden="true"><span class="apollo-option-plus" style="mask-image:url('data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDAgMjAgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJwbHVzIj4KPHBhdGggaWQ9Imljb24iIGQ9Ik0xMSA5SDE2VjExSDExVjE2SDlWMTFINFY5SDlWNEgxMVY5WiIgZmlsbD0iIzkwMzJFRSIvPgo8L2c+Cjwvc3ZnPgo=')"></span></span><span class="apollo-option-label">Новый чат</span></button>
-      <div class="apollo-generation-options-right">
-        <div id="generation-target-holder" class="apollo-target-control"></div>
-        <button id="generation-settings-toggle" type="button" aria-label="Настройки экрана" title="Настройки экрана" aria-expanded="false" aria-controls="generation-settings"><span class="apollo-option-label">Настройки экрана</span><span class="apollo-option-icon" aria-hidden="true"><span class="apollo-option-chevron" style="mask-image:url('data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEwLjQxNDEiIGhlaWdodD0iNi42MjEwOSIgdmlld0JveD0iMCAwIDEwLjQxNDEgNi42MjEwOSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggaWQ9Imljb24iIGQ9Ik0xMC40MTQxIDEuNDE0MDZMNS4yMDcwMyA2LjYyMTA5TDAgMS40MTQwNkwxLjQxNDA2IDBMNS4yMDcwMyAzLjc5Mjk3TDkgMEwxMC40MTQxIDEuNDE0MDZaIiBmaWxsPSIjOTAzMkVFIi8+Cjwvc3ZnPgo=')"></span></span></button>
-      </div>
-    </div>
-  </form>
-  <section id="generation-settings" class="generation-settings" role="dialog" aria-labelledby="generation-settings-heading" hidden>
-    <div class="row"><h2 id="generation-settings-heading">Настройки экрана</h2><button id="generation-settings-close" class="generation-icon-button" type="button" aria-label="Закрыть настройки генерации"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
-    <div id="generation-agent-settings"></div>
-    <div class="generation-prompt-fields">
-      <div><label for="generation-platform">Платформа</label><select id="generation-platform" form="generation-prompt-form"><option value="desktop">Desktop</option><option value="mobile-web">Mobile web</option></select></div>
-      <div><label for="generation-width">Ширина, px</label><input id="generation-width" form="generation-prompt-form" type="number" min="1" max="8192" value="1600" required></div>
-      <div><label for="generation-height">Высота, px</label><input id="generation-height" form="generation-prompt-form" type="number" min="1" max="8192" value="900" required></div>
-    </div>
-    <details id="generation-spec-preview" hidden><summary>Текущая спецификация</summary><p id="generation-contracts" class="muted"></p><pre id="generation-spec-json"></pre><button id="generation-spec-export" disabled>Сохранить ScreenSpec JSON</button></details>
-    <details id="generation-tools"><summary>Служебные инструменты</summary>
-      <div id="generation-dropzone" class="spec-dropzone" aria-describedby="generation-drop-hint"><p>Загрузить спецификацию</p><p id="generation-drop-hint" class="muted">ScreenSpec или producer review · один JSON до 1 МБ</p><button id="generation-file">Выбрать JSON</button></div>
-      <div class="controls"><button id="generation-review" disabled>Проверить для review</button><button id="generation-prepare" disabled>Проверить план</button></div>
-      <input id="generation-spec-file" type="file" accept=".json,application/json"><p id="generation-name" class="muted">Спецификация не загружена</p>
-      <label for="generation-target">Результат ручной сборки</label><select id="generation-target"><option value="both">Figma и фронт</option><option value="figma">Figma</option><option value="frontend">Фронт</option></select>
-      <button id="generation-execute" disabled>Создать результат</button>
-      <div id="generation-status" role="status" aria-live="polite"></div><div id="generation-stages"></div><div id="generation-diagnostics"></div><div id="generation-receipts"></div>
-      <div class="controls"><button id="native-diagnostic">Снять диагностику выделения</button><button id="native-diagnostic-export" disabled>Сохранить диагностику JSON</button></div>
-      <p id="native-diagnostic-status" role="status" aria-live="polite" class="muted">Чтение текущего компонента без изменения макета.</p>
-    </details>
-  </section>
-</section>
+</div><section class="v4-legacy" id="generation-panel" aria-label="Генерация лендинга"></section>
 <section class="v4-legacy" id="result" aria-label="Результат проверки" hidden><div class="v4-legacy" id="audit-diagnostics"><div class="row"><h2 id="result-heading">Результат проверки</h2><button id="export">Сохранить сводку</button><button id="export-full">Полная диагностика</button></div><div id="stats" class="stats"></div><p id="coverage"></p><div id="warnings"></div><div id="gaps"></div></div><div id="findings"></div><section class="card" id="codex-explanation" hidden><h2>Объяснение Codex</h2><p class="muted">Выберите проверенный компонент и передайте его снимок локальному агенту.</p><select id="explain-scope" aria-label="Компонент для объяснения"></select><button id="explain">Объяснить результат</button><pre id="explanation" aria-live="polite"></pre></section></section>
 </div><script>__APOLLO_UI__</script></body></html>

@@ -11,7 +11,7 @@ Apollo — Figma-плагин. Он читает документ через nat
 | --- | --- | --- |
 | Дизайн | Сбор фактов области/документа, проверки стилей, компонентов и контрактов, findings и отчёты | Неполное покрытие не означает отсутствие нарушений |
 | Спросить | Вопрос и история → Proxy → выбранный агент → ответ | Выделение и весь audit report не передаются автоматически |
-| Генерация | Планирование ScreenSpec, доступный адаптер и ссылка на результат | Созданный Draft не становится Ready |
+| Генерация | Навык лендинга: диалог, MCP, независимое чтение результата и правки секций | Созданный Draft не становится Ready |
 | Навыки | Отдельные сценарии; переименование слоёв с предложениями и выбранным применением | Навык не даёт агенту произвольную запись в Figma |
 | Данные Apollo | Метаданные контрактов и статусы подключения по адаптерам | Наличие manual не доказывает готовность mapping |
 
@@ -21,10 +21,9 @@ Apollo — Figma-плагин. Он читает документ через nat
 Проверка контракта, Figma mapping и frontend mapping подключаются отдельно.
 Точный набор определяется активной поставкой, а не списком в README.
 
-Figma MCP работает в режиме generation-only: DS-проверки не запускаются,
-результат сохраняется как Draft, в том числе при прерывании. Frontend adapter
-есть в исходниках, но переносимость frontend с собственным SDK не входит
-в первую переносимую поставку. Не включайте `arui-private` для обхода.
+Генерация лендингов использует канонический навык DS AB и собственный Codex/Figma MCP.
+Прежние исполнители генерации, включая frontend, отключены. Модули чтения контрактов
+и mapping сохранены. Условия подключения и диагностика: [LANDING.md](LANDING.md).
 
 ## Путь выполнения
 
@@ -48,8 +47,8 @@ Figma MCP работает в режиме generation-only: DS-проверки 
 | Контрактный runtime | [`src/runtime.js`](../src/runtime.js), [`packages/component-contract-core/`](../packages/component-contract-core) |
 | Отчёты и findings | [`src/audit-report.js`](../src/audit-report.js), [`src/finding-presentation.js`](../src/finding-presentation.js) |
 | Диалог и Markdown | [`src/design-check/dialogue-port.js`](../src/design-check/dialogue-port.js), [`src/design-check/markdown.js`](../src/design-check/markdown.js) |
-| Генерация | [`src/generation/`](../src/generation), [`packages/generation-core/`](../packages/generation-core) |
-| Адаптеры | [`packages/adapter-figma/`](../packages/adapter-figma), [`packages/adapter-frontend/`](../packages/adapter-frontend) |
+| Генерация лендингов | [`src/landing/`](../src/landing), [`instructions/landing/`](../instructions/landing) |
+| Исторические форматы и чтение mapping | [`src/generation/`](../src/generation), [`packages/generation-core/`](../packages/generation-core) |
 | Навыки | [`src/skills/`](../src/skills), [`skills/`](../skills) |
 | Проверки и сборка | [`tests/`](../tests), [`build.js`](../build.js), [`package.json`](../package.json) |
 

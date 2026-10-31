@@ -1,11 +1,11 @@
 const { createOpaqueId } = require('./opaque-id');
 const {activity}=require('../token-journal-protocol');
-const { PILOT, CAPTURE_SCHEMA, validPreparation, validResult } = require('./progressbar-protocol');
+const { PILOT, CAPTURE_SCHEMA, validPreparation, validResult, sameContext } = require('./progressbar-protocol');
 const messages = {
   capture: 'Читаем выбранную область и скриншот…', prepare: 'Подключаем нормы компонентов…', verify: 'Проверяем актуальность макета…',
   running: 'Агент проверяет применение компонентов…', complete: 'Агентская проверка завершена.', stale: 'Макет изменился. Повторите проверку.',
 };
-function createProgressBarClient({ send, request, endpoint, now = Date.now, pollMs = 500, nativeTimeoutMs = 30000,onOperation=()=>null,onOutcome=()=>{} }) {
+function createProgressBarClient({ send, request, endpoint, now = Date.now, pollMs = 500, nativeTimeoutMs = 30000,onOperation=()=>null,onOutcome=()=>{}, getContext=()=>({basis:'audit-settings',channel:null,platform:null}) }) {
   const url = new URL(endpoint);
   if (url.protocol !== 'http:' || !['localhost','127.0.0.1'].includes(url.hostname) || url.username || url.password || url.search || url.hash || url.pathname !== '/v1/analyze/codex/runs') throw Error('PROGRESSBAR_ENDPOINT_INVALID');
   const identity = createOpaqueId(), pending = new Map(), listeners = new Set();
@@ -40,7 +40,8 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
     const stages = {}; let currentStage = null, stageStarted = started;
     const finishStage = () => { const at = now(); if (currentStage) stages[currentStage] = (stages[currentStage] || 0) + Math.max(0, at - stageStarted); stageStarted = at; };
     capture = null;
-    const guard = () => { if (disposed || generation !== ticket || signal.aborted || now() >= deadline) throw Error('PROGRESSBAR_CAPTURE_STALE'); };
+    const declaredContext = Object.assign({}, getContext());
+    const guard = () => { if (disposed || generation !== ticket || signal.aborted || now() >= deadline || !sameContext(declaredContext, getContext())) throw Error('PROGRESSBAR_CAPTURE_STALE'); };
     const phase = key => { guard(); finishStage(); currentStage = key; emit({ phase: key, busy: true, message: messages[key], error: '' }); };
     let deadlineTimer,timedOut=false,remoteCancelled=false;
     try {
@@ -48,9 +49,9 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
       phase('capture'); const observed = await native('capture'); guard();
       if (observed?.schemaVersion !== CAPTURE_SCHEMA || observed.complete !== true || !Array.isArray(observed.nodes) || !observed.nodes.length) throw Error('PROGRESSBAR_CAPTURE_INCOMPLETE');
       capture = observed; emit({ capture: observed }); phase('prepare');
-      const report = { reportKind: 'apollo-pattern-audit-report', pilot: PILOT, reportId: observed.captureId, phase: 'prepare', capture: observed, sourcePin: null };
+      const report = { reportKind: 'apollo-pattern-audit-report', pilot: PILOT, reportId: observed.captureId, phase: 'prepare', capture: observed, sourcePin: null, context: declaredContext };
       const prepared = (await json(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ report }) }, signal)).preparation; guard();
-      if (!validPreparation(prepared, observed)) throw Error('PATTERN_PREPARATION_INVALID');
+      if (!validPreparation(prepared, observed, declaredContext)) throw Error('PATTERN_PREPARATION_INVALID');
       phase('verify'); if (await native('verify', observed.captureId) !== true) throw Error('PROGRESSBAR_CAPTURE_STALE'); guard();
       report.phase = 'run'; report.sourcePin = prepared.sourcePin; phase('running');tracked?.agent();
       let run = (await json(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ report }) }, signal)).run; guard();
@@ -79,7 +80,7 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
     try { return await native('focus', capture.captureId, nodeId) === true; }
     catch { invalidate(); return false; }
   }
-  return { start, focus, getState: () => state, subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
+  return { start, focus, invalidateContext() { if (state.report && !sameContext(state.report.declaredContext,getContext())) invalidate(); }, getState: () => state, subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener); },
     accept(message) {
       if (message?.type === 'progressbar-invalidated') { if (capture?.captureId === message.captureId) invalidate(); return true; }
       if (message?.type !== 'progressbar-native-result') return false;

@@ -2,14 +2,16 @@ const test=require('node:test'),assert=require('node:assert/strict'),path=requir
 const {createProgressBarClient}=require('../../src/design-check/progressbar-client');
 const {PILOT,RESULT_SCHEMA,FAMILIES,RULE_IDS,validPreparation,validResult}=require('../../src/design-check/progressbar-protocol');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
-function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult,onOperation,runStatus='queued'}={}){
+function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult,onOperation,runStatus='queued',onNative}={}){
  const requests=[],native=[],sourcePin='a'.repeat(64),knowledge={contentVersion:'synthetic-knowledge'};
  const familyIds=mixed?Object.keys(FAMILIES):['progressbar'];
+ const declaredContext={basis:'audit-settings',channel:'ab',platform:'desktop'};
  const subjects=familyIds.map((family,index)=>({nodeId:'1:'+String(index+2),family,profile:FAMILIES[family].profile,kind:FAMILIES[family].kinds[0],ruleIds:FAMILIES[family].ruleIds,library:family==='progressbar'?'Web :: Corp Presets':'Web _ Core'}));
+ for(const subject of subjects)if(subject.family==='link')subject.contextNodeIds=['1:1',subject.nodeId];
  const capture={schemaVersion:'apollo.progressbar-capture.v1',captureId:'synthetic',complete:true,nodes:[{id:'1:1',name:'Area'},...subjects.map(subject=>({id:subject.nodeId,parentId:'1:1',name:subject.kind}))]};
  const sources=Array.from(new Set(subjects.map(subject=>subject.profile))).map(profile=>({sourceId:'canonical-'+profile,path:'patterns/synthetic-'+profile+'.md',sha256:'b'.repeat(64)}));
- const prepared={pilot:PILOT,reportId:capture.captureId,captureId:capture.captureId,sourcePin,knowledge,subjects,sources,requestedRuleIds:RULE_IDS.filter(id=>subjects.some(subject=>subject.ruleIds.includes(id)))};
- const result={schemaVersion:RESULT_SCHEMA,pilot:PILOT,mode:'agent-pattern-pilot',reportId:capture.captureId,captureId:capture.captureId,sourcePin,knowledge,sources,deterministicFindingsIncluded:false,
+ const prepared={declaredContext:Object.assign({},declaredContext),pilot:PILOT,reportId:capture.captureId,captureId:capture.captureId,sourcePin,knowledge,subjects,sources,requestedRuleIds:RULE_IDS.filter(id=>subjects.some(subject=>subject.ruleIds.includes(id)))};
+ const result={declaredContext:Object.assign({},declaredContext),schemaVersion:RESULT_SCHEMA,pilot:PILOT,mode:'agent-pattern-pilot',reportId:capture.captureId,captureId:capture.captureId,sourcePin,knowledge,sources,deterministicFindingsIncluded:false,
   assessments:subjects.map(subject=>{const outcome=mixed?(['amount','icon-button'].includes(subject.family)?'violation':'compliant'):'insufficient-data';return {
    nodeId:foreignResult?'9:9':subject.nodeId,family:subject.family,kind:subject.kind,library:subject.library,severity:outcome==='violation'?(subject.family==='icon-button'?'warning':'error'):null,
    outcome,observation:'Synthetic observation.',reason:outcome==='insufficient-data'?'Purpose is unknown.':'Synthetic reason.',ruleIds:subject.ruleIds,
@@ -17,7 +19,7 @@ function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixe
    sourceRefs:subject.ruleIds.map(ruleId=>({sourceId:'canonical-'+subject.profile,sha256:'b'.repeat(64),ruleId}))};})};
  mutatePrepared?.(prepared);mutateResult?.(result);
  let client;const response=value=>({ok:true,json:async()=>value});
- client=createProgressBarClient({onOperation,endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',pollMs:1,request:async(url,options)=>{
+ client=createProgressBarClient({getContext:()=>declaredContext,onOperation,endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',pollMs:1,request:async(url,options)=>{
   requests.push({url,options});if(options.method==='POST'){
    const body=JSON.parse(options.body);assert.equal(body.report.pilot,PILOT);
    if(body.report.phase==='prepare')return legacyProxy?{ok:false,json:async()=>({success:false,error:'Apollo pattern report facts.occurrences must be an array.'})}:response({success:true,preparation:prepared});
@@ -25,9 +27,9 @@ function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixe
    return response({success:true,run:{id:'run_12345678-abcd',status:runStatus}});
   }
   return response({success:true,run:{id:'run_12345678-abcd',status:'completed',validation:result}});
- },send:message=>{native.push(message);queueMicrotask(()=>client.accept({type:'progressbar-native-result',requestId:message.requestId,operation:message.operation,
+ },send:message=>{native.push(message);onNative?.(message,declaredContext);queueMicrotask(()=>client.accept({type:'progressbar-native-result',requestId:message.requestId,operation:message.operation,
   ...(message.operation==='verify'&&staleAtVerify?{error:'PROGRESSBAR_CAPTURE_STALE'}:{result:message.operation==='capture'?capture:true})}));}});
- return{client,requests,native,result,capture,prepared};
+ return{client,requests,native,result,capture,prepared,declaredContext};
 }
 test('explicit pilot uses capture → source preparation → native verify → existing run/poll → final native verify; focus and recheck stay separate',async()=>{
  const h=harness();assert.equal(h.requests.length,0);assert.equal(await h.client.start(),true);assert.equal(h.client.getState().phase,'complete');assert.deepEqual(h.client.getState().report.assessments,h.result.assessments);
@@ -57,21 +59,21 @@ test('Patterns panel shows a separate labelled report with source details, node 
  }finally{close?.();h.client.close();w.close();}
 });
 
-test('mixed pilot uses exactly 2 / 2 / 1 / 1 eligible rules and refuses missing, extra, duplicate, foreign, mismatched and inconsistent responses',()=>{
+test('mixed pilot uses all eight Link rules plus the retained 2 / 2 / 1 / 1 eligible rules and refuses missing, extra, duplicate, foreign, mismatched and inconsistent responses',()=>{
  const h=harness({mixed:true});try{
   assert.equal(validPreparation(h.prepared,h.capture),true);assert.equal(validResult(h.result,h.capture,h.prepared),true);
-  assert.deepEqual(h.result.assessments.map(item=>item.ruleIds.length),[2,2,1,1]);
+  assert.deepEqual(h.result.assessments.map(item=>item.ruleIds.length),[8,2,2,1,1]);
   const changes=[
    value=>value.assessments.pop(),value=>value.assessments.push(value.assessments[0]),value=>value.assessments[1].nodeId=value.assessments[0].nodeId,
-   value=>value.schemaVersion='apollo.progressbar-assessment.v1',value=>value.assessments[1].ruleIds=FAMILIES.progressbar.ruleIds,
-   value=>value.assessments[2].ruleResults.push(value.assessments[2].ruleResults[0]),value=>value.assessments[0].ruleResults[0].evidenceNodeIds=['foreign'],
-   value=>value.assessments[1].family='progressbar',value=>value.assessments[1].library='Web :: Corp Presets',value=>value.assessments[3].severity='error',
-   value=>value.assessments[1].outcome='compliant',value=>value.assessments[0].sourceRefs[0].sha256='c'.repeat(64),
-   value=>value.assessments[1].sourceRefs[0].sourceId='canonical-progressbar',value=>value.assessments[0].evidenceNodeIds=[],
+   value=>value.schemaVersion='apollo.progressbar-assessment.v1',value=>value.assessments[0].ruleIds=FAMILIES.progressbar.ruleIds,
+   value=>value.assessments[3].ruleResults.push(value.assessments[3].ruleResults[0]),value=>value.assessments[0].ruleResults[0].evidenceNodeIds=['foreign'],
+   value=>value.assessments[2].family='progressbar',value=>value.assessments[2].library='Web :: Corp Presets',value=>value.assessments[4].severity='error',
+   value=>value.assessments[2].outcome='compliant',value=>value.assessments[0].sourceRefs[0].sha256='c'.repeat(64),
+   value=>value.assessments[2].sourceRefs[0].sourceId='canonical-progressbar',value=>value.assessments[0].evidenceNodeIds=[],
    value=>value.deterministicFindingsIncluded=true,value=>value.sourcePin='c'.repeat(64),value=>value.captureId='foreign'
   ];
   changes.forEach((change,index)=>{const value=structuredClone(h.result);change(value);assert.equal(validResult(value,h.capture,h.prepared),false,'mutation '+index);});
-  for(const change of [value=>value.pilot='progressbar-goal-limit-v1',value=>value.subjects[1].ruleIds=FAMILIES.progressbar.ruleIds,value=>value.requestedRuleIds.pop()]){
+  for(const change of [value=>value.pilot='progressbar-goal-limit-v1',value=>value.subjects[2].ruleIds=FAMILIES.progressbar.ruleIds,value=>value.requestedRuleIds.pop()]){
    const value=structuredClone(h.prepared);change(value);assert.equal(validPreparation(value,h.capture),false);
   }
  }finally{h.client.close();}
@@ -87,11 +89,11 @@ test('mixed UI retains known libraries, per-rule modal details, error and warnin
  const dom=new JSDOM('<div id="root"></div>',{runScripts:'outside-only',pretendToBeVisual:true}),w=dom.window,d=w.document,h=harness({mixed:true});let close;
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
  try{w.eval(bundle+'\nwindow.PilotTest=PilotTest;');close=w.PilotTest.mount(d.querySelector('#root'),h.client);d.querySelector('.apollo-progressbar-start').click();await tick();await tick();
-  const cards=Array.from(d.querySelectorAll('.apollo-finding-card'));assert.equal(cards.length,4);assert.match(d.querySelector('h2').textContent,/Паттерны компонентов/);
-  assert.match(cards[1].querySelector('.apollo-finding-library').textContent,/Web _ Core/);assert.match(cards[1].querySelector('.apollo-finding-status').className,/violation/);
-  assert.equal(cards[3].querySelector('h3').textContent,'Замечание');assert.match(cards[3].querySelector('.apollo-finding-status').className,/warning/);
-  cards[3].querySelector('.apollo-finding-info-toggle').click();await tick();assert.match(d.querySelector('dialog').textContent,/icon-button-clear-context/);assert.doesNotMatch(d.querySelector('dialog').textContent,/goal-for-target-progress/);
-  d.querySelector('[aria-label="Закрыть сведения проверки"]').click();await tick();cards[1].click();await tick();assert.equal(h.native.at(-1).nodeId,h.result.assessments[1].nodeId);
+  const cards=Array.from(d.querySelectorAll('.apollo-finding-card'));assert.equal(cards.length,5);assert.match(d.querySelector('h2').textContent,/Паттерны компонентов/);
+  assert.match(cards[2].querySelector('.apollo-finding-library').textContent,/Web _ Core/);assert.match(cards[2].querySelector('.apollo-finding-status').className,/violation/);
+  assert.equal(cards[4].querySelector('h3').textContent,'Замечание');assert.match(cards[4].querySelector('.apollo-finding-status').className,/warning/);
+  cards[4].querySelector('.apollo-finding-info-toggle').click();await tick();assert.match(d.querySelector('dialog').textContent,/icon-button-clear-context/);assert.doesNotMatch(d.querySelector('dialog').textContent,/goal-for-target-progress/);
+  d.querySelector('[aria-label="Закрыть сведения проверки"]').click();await tick();cards[2].click();await tick();assert.equal(h.native.at(-1).nodeId,h.result.assessments[2].nodeId);
  }finally{close?.();h.client.close();w.close();}
 });
 
@@ -108,4 +110,21 @@ test('pattern lifecycle retains remote cancellation and reports its local deadli
  const client=createProgressBarClient({endpoint:'http://127.0.0.1:3007/v1/analyze/codex/runs',request:async()=>{throw Error('unexpected request');},send(){},onOperation:()=>({finish:status=>failed.push(status)})});
  try{const run=client.start();expire();assert.equal(await run,false);assert.deepEqual(failed,['failed']);}
  finally{global.setTimeout=realSetTimeout;client.close();}
+});
+
+
+test('declared context cannot change during the run or silently keep a completed Link report current',async()=>{
+ const a=harness({onNative:(message,context)=>{if(message.operation==='verify')context.platform='mobile-web';}});
+ try{assert.equal(await a.client.start(),false);assert.equal(a.requests.length,1);assert.equal(a.client.getState().report,null);}finally{a.client.close();}
+ const b=harness();try{assert.equal(await b.client.start(),true);b.declaredContext.channel='other';b.client.invalidateContext();assert.equal(b.client.getState().phase,'stale');assert.equal(await b.client.focus('1:2'),false);}finally{b.client.close();}
+});
+test('Link context scope and exact source identity are independently checked by the plugin',()=>{
+ const h=harness({mixed:true});try{
+  const mobile=structuredClone(h.prepared);mobile.declaredContext.platform='mobile-web';
+  const result=structuredClone(h.result);result.declaredContext.platform='mobile-web';
+  assert.equal(validResult(result,h.capture,mobile),false);
+  result.assessments[0].outcome='not-applicable';for(const rule of result.assessments[0].ruleResults)rule.outcome='not-applicable';
+  assert.equal(validResult(result,h.capture,mobile),true);
+  result.declaredContext.platform='desktop';assert.equal(validResult(result,h.capture,mobile),false);
+ }finally{h.client.close();}
 });

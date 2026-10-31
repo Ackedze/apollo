@@ -116,6 +116,7 @@ function Chat({ controller, restoreFocus }: { controller: Controller; restoreFoc
 function DesignCheckShell({ controller, slots, dataOptions }: { controller: Controller; slots: Slots; dataOptions: DataOptions }) {
   const [progressBarClient] = useState(() => typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && __APOLLO_PROGRESSBAR_PILOT__
     ? createProgressBarClient({ send: (value: any) => window.parent.postMessage({ pluginMessage: value }, '*'), request: (url: string, options: RequestInit) => fetch(url, options),
+      getContext:()=>{const s=controller.getState().settings;return {basis:'audit-settings',channel:s.channelId==='b2b'?'ab':s.channelId?'other':null,platform:({Desktop:'desktop',MobileWeb:'mobile-web',iOS:'ios',Android:'android'} as Record<string,string>)[s.pickerLabel]||null};},
       onOperation:(kind:string)=>dataOptions.statisticsClient?.begin(kind),onOutcome:(value:any)=>dataOptions.auditStatisticsClient?.record(value),endpoint: __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__ }) : null);
   useEffect(() => {
     if (!progressBarClient) return;
@@ -126,8 +127,9 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       if (event.source === ancestor) progressBarClient.accept(event.data?.pluginMessage);
     };
     window.addEventListener('message', receive);
-    return () => { window.removeEventListener('message', receive); progressBarClient.close(); };
-  }, [progressBarClient]);
+    const unsubscribeContext = controller.subscribe(()=>progressBarClient.invalidateContext());
+    return () => { unsubscribeContext(); window.removeEventListener('message', receive); progressBarClient.close(); };
+  }, [progressBarClient, controller]);
   const state = useSyncExternalStore(controller.subscribe, controller.getState), settings = state.settings;
   const launcher = useRef<HTMLButtonElement>(null);
   const activeScreen = state.chat.open ? 'chat' : state.mode === 'skills' ? 'skills' : state.mode === 'generation' ? 'generation' : state.view === 'texts' ? 'texts' : 'check';

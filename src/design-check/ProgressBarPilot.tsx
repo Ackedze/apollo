@@ -10,7 +10,7 @@ export function ProgressBarPilot({ client, blocked = false }: { client: any; blo
   const stale = state.phase !== 'complete';
   return <section className="apollo-progressbar-pilot" aria-label="Агентская проверка паттернов">
     <h2>Паттерны компонентов</h2>
-    <p className="apollo-progressbar-caption">Goal / Limit, Amount и кнопки. Выбери область вместе с подписями и контекстом — агент проверит её по подключённым нормам.</p>
+    <p className="apollo-progressbar-caption">Link, Goal / Limit, Amount и кнопки. Для Link применяются контекстные правила AB desktop. Выбери область вместе с подписями и контекстом — агент проверит её по подключённым нормам.</p>
     <button type="button" className="apollo-progressbar-start" disabled={state.busy || blocked} onClick={() => void client.start()}>{state.busy ? 'Проверяем паттерны…' : report ? 'Перепроверить паттерны' : 'Проверить паттерны'}</button>
     {state.busy && <div className="apollo-progressbar-progress"><AuditMascot checking /><p role="status">{state.message}</p></div>}
     {!state.busy && state.message && <p role="status">{state.message}</p>}
@@ -18,7 +18,7 @@ export function ProgressBarPilot({ client, blocked = false }: { client: any; blo
     {report && <>
       {stale && <p className="apollo-progressbar-caption">Показан предыдущий агентский отчёт. Для актуального результата повторите проверку.</p>}
       <p className="apollo-progressbar-caption">Версия знаний: {report.knowledge.contentVersion}. Эта проверка не входит в результаты детерминированных правил.</p>
-      {!report.assessments.length && <p>Подключённые ProgressBar Goal / Limit, Amount, Button и IconButton в выбранной области не найдены.</p>}
+      {!report.assessments.length && <p>Подключённые ProgressBar Goal / Limit, Amount, Button, IconButton и Link в выбранной области не найдены.</p>}
       {report.assessments.map((item: any) => {
         const node = state.capture?.nodes.find((n: any) => n.id === item.nodeId), focus = <button type="button" data-finding-focus disabled={stale || blocked || state.busy} onClick={() => void client.focus(item.nodeId)}>Показать в макете</button>;
         if (item.outcome === 'not-applicable') return <article key={item.nodeId} className="apollo-progressbar-not-applicable"><h3>{labels[item.outcome]}</h3><p>{item.reason}</p>{focus}</article>;

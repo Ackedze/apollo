@@ -2,6 +2,24 @@
 
 ## Apollo: совместимость с ComponentContract Editor
 
+### CC-COMPAT-MIXED-TEXT-FILL-01 — сравнение заливок текстовых диапазонов
+
+31.10.2026. Core **0.1.25**, Editor **0.2.108**. Существующий
+`matches-effective-baseline` для TEXT использует полные `textFillEvidenceV1`
+диапазоны, когда общая `appearance.fill` равна mixed/null. Независимый reference
+передаёт эти данные через `effectiveFacts`; host-context equality остаётся прежним.
+Поддержаны SOLID paints и пустые диапазоны; неполные, неизвестные и неподдержанные
+данные сохраняют UNKNOWN. Смена цвета, токена или прозрачности остаётся нарушением.
+Нормы, RuleIR, операторы, схемы и версии пакетов не меняются.
+
+Общий код сразу доступен Apollo и исходникам Editor через существующие wrappers.
+Editor typecheck и целевые проверки общего reader выполнены без его пересборки;
+новая сборка Editor и её ручная приёмка не заявляются. Apollo проходит configured
+validate на текущей конфигурации; результаты, первый replay failure старой
+проекции и финальные pins: `.local/fcs03-mixed-fill-core-2026-10-31` в workspace.
+Проверка владельцем в Figma остаётся отдельной; Proxy/data/runtime не изменяются.
+Парная запись: [CC-COMPAT-MIXED-TEXT-FILL-01](../../ComponentContractEditor/docs/BACKLOG.ru.md).
+
 28.10.2026 — **Core0.1.24 / source correction, paired adoption pending**.
 Text r2 исключает неприменимые layout.mode/radius для TEXT. Slider r2 проверяет
 типографику на Pips с явными variant bindings, включая доказанное отсутствие.

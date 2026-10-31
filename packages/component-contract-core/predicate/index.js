@@ -7,6 +7,7 @@ const crypto = { createHash: function (algorithm) {
     digest: function (format) { if (format !== 'hex') throw new Error('Only hex digest is supported'); return sha256Hex(value); } };
 } };
 const registry = require('../schemas/apollo-predicate-capabilities.v1.json');
+const { textPaintRuns } = require('./text-paint-ranges');
 
 const TRUTH = Object.freeze({ TRUE: 'true', FALSE: 'false', UNKNOWN: 'unknown' });
 const APPLICABILITY = Object.freeze({
@@ -640,10 +641,21 @@ function evaluateExpression(expression, subject, snapshot) {
   if (['all', 'any', 'not'].includes(expression.predicate)) {
     return evaluateLogicExpression(expression, subject, snapshot);
   }
-  const actual = resolveValue(expression.actual, subject, snapshot);
-  const expected = expression.expected
+  let actual = resolveValue(expression.actual, subject, snapshot);
+  let expected = expression.expected
     ? resolveValue(expression.expected, subject, snapshot)
     : { state: 'known', value: null, factPaths: [] };
+  if (expression.predicate === 'matches-effective-baseline' && subject.type === 'TEXT'
+    && expression.actual?.fact === 'appearance.fill' && expression.expected?.fact === 'baseline.effective.appearance.fill'
+    && (subject.appearance?.fill === null || subject.baseline?.effective?.appearance?.fill === null)) {
+    const resolveRuns = (source, prefix, value) => {
+      const paths = ['appearance.fill', 'textFillEvidenceV1', 'text.characters'].map(p => prefix + p);
+      const runs = paths.some(p => unknownFactMatches(subject.unknownFacts, p)) ? undefined : textPaintRuns(source, deepEqual);
+      return { state: runs ? 'known' : 'unknown', value: runs, factPaths: Array.from(new Set(value.factPaths.concat(paths))) };
+    };
+    actual = resolveRuns(subject, '', actual);
+    expected = resolveRuns(subject.baseline?.effective, 'baseline.effective.', expected);
+  }
   const factPaths = Array.from(new Set([...actual.factPaths, ...expected.factPaths])).sort();
 
   if (expression.predicate === 'exists') {

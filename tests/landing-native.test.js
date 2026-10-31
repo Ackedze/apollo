@@ -39,6 +39,18 @@ test('context resolves the selected section; a landing appends an owned frame an
  assert.equal(t.parentNodeId,parent.id);assert.equal(root.parent,parent);assert.ok(parent.children.includes(content));assert.equal(content.characters,'User content');
  root.height=2000;const read=await h.observe(t);assert.equal(read.error,null);assert.ok(parent.height>=root.y+2000);content.x++;assert.equal((await h.observe(t)).error.code,'LANDING_OUTSIDE_CHANGED');h.bridge.close();
 });
+
+test('missing or restricted fileKey is reported as null; an explicit key retains native ownership guards',async()=>{
+ assert.equal(require('../manifest.json').enablePrivatePluginApi,true);
+ for(const restricted of [false,true]){
+  const h=harness();
+  if(restricted)Object.defineProperty(h.api,'fileKey',{get(){throw Error('Private API unavailable');}});else delete h.api.fileKey;
+  const context=await h.call('context');assert.equal(context.error,null);assert.equal(context.value.fileKey,null);assert.equal(context.value.pageId,h.page.id);
+  const opened=await h.open();assert.equal(opened.error,null);const t=opened.value.target;assert.equal(t.fileKey,'FileKey123');
+  h.nodes.get(t.rootNodeId).setSharedPluginData(NS,'owner','foreign');assert.equal((await h.observe(t)).error.code,'LANDING_CANVAS_STALE');h.bridge.close();
+ }
+ const h=harness();assert.equal((await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'OtherFile123',rootNodeId:null,ownerNonce:null})).error.code,'LANDING_CANVAS_INVALID');h.bridge.close();
+});
 test('new-section placement creates exactly one section/root and resumes it after reload',async()=>{
  const h=harness(),payload={chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,placement:{mode:'new-section',sectionId:null}};
  const first=await h.call('open',payload),again=await h.call('open',payload);assert.equal(first.error,null);assert.deepEqual(again.value.target,first.value.target);const t=first.value.target,parent=h.nodes.get(t.parentNodeId);assert.equal(parent.type,'SECTION');assert.equal(parent.children.length,1);assert.equal(h.page.children.filter(n=>n.type==='SECTION').length,1);

@@ -8,6 +8,7 @@
     "figma"
   ],
   "documentAccess": "dynamic-page",
+  "enablePrivatePluginApi": true,
   "networkAccess": {
     "allowedDomains": [
       "http://localhost:3001"

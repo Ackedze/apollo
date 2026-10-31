@@ -165,7 +165,7 @@ test('Skills is the last top navigation action and keeps existing mode and chat 
  try{
   w.eval(js+'\nwindow.SkillUi=SkillUi;');shell=w.SkillUi.mountNavigation(d.querySelector('#root'));await tick();
   const buttons=Array.from(d.querySelectorAll('nav[aria-label="Разделы Apollo"] > button'));
-  assert.deepEqual(buttons.map(b=>b.getAttribute('aria-label')),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Навыки']);
+  assert.deepEqual(buttons.map(b=>b.getAttribute('aria-label')),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Тулзы']);
   buttons[4].click();await tick();assert.equal(shell.getState().mode,'skills');assert.equal(buttons[4].getAttribute('aria-pressed'),'true');
   buttons[2].click();await tick();assert.equal(shell.getState().mode,'generation');
   buttons[3].click();await tick();assert.equal(shell.getState().chat.open,true);

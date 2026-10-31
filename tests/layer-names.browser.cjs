@@ -39,12 +39,12 @@ async function run(){
     await page.route('http://localhost:3001/health',route=>route.fulfill({json:{success:true,version:'owned-fixture'}}));
     await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);
     await page.evaluate(()=>document.fonts.ready);
-    await page.getByRole('button',{name:'Навыки',exact:true}).click();
-    assert.equal(await page.getByRole('button',{name:'Навыки',exact:true}).getAttribute('aria-pressed'),'true');
-    assert.deepEqual(await page.getByRole('navigation',{name:'Разделы Apollo'}).getByRole('button').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('aria-label'))),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Навыки']);
-    await page.getByRole('button',{name:'Навыки',exact:true}).evaluate(node=>Promise.all(node.getAnimations({subtree:true}).map(animation=>animation.finished)));
-    assert.ok(Math.abs((await page.getByRole('button',{name:'Навыки',exact:true}).boundingBox()).width-104)<.1);
-    const skillsButton=page.getByRole('button',{name:'Навыки',exact:true});
+    await page.getByRole('button',{name:'Тулзы',exact:true}).click();
+    assert.equal(await page.getByRole('button',{name:'Тулзы',exact:true}).getAttribute('aria-pressed'),'true');
+    assert.deepEqual(await page.getByRole('navigation',{name:'Разделы Apollo'}).getByRole('button').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('aria-label'))),['Проверка','Тексты','Генерация','Открыть чат с Apollo','Тулзы']);
+    await page.getByRole('button',{name:'Тулзы',exact:true}).evaluate(node=>Promise.all(node.getAnimations({subtree:true}).map(animation=>animation.finished)));
+    assert.ok(Math.abs((await page.getByRole('button',{name:'Тулзы',exact:true}).boundingBox()).width-104)<.1);
+    const skillsButton=page.getByRole('button',{name:'Тулзы',exact:true});
     const iconSlot=await skillsButton.locator('.apollo-skill-nav-icon').boundingBox();
     assert.ok(iconSlot,'Skills icon has the Figma 16px addon slot');
     assert.equal(iconSlot.width,16);assert.equal(iconSlot.height,16);
@@ -86,7 +86,7 @@ async function run(){
     await rowBoxes.first().uncheck();const previewCalls=planCalls;await back.click();await card.click();
     assert.equal(await rowBoxes.first().isChecked(),false);assert.equal(planCalls,previewCalls);
     await rowBoxes.first().check();
-    await back.click();await page.getByRole('button',{name:'Проверка',exact:true}).click();await page.getByRole('button',{name:'Навыки',exact:true}).click();await card.click();assert.equal(await rowBoxes.count(),rowCount);
+    await back.click();await page.getByRole('button',{name:'Проверка',exact:true}).click();await page.getByRole('button',{name:'Тулзы',exact:true}).click();await card.click();assert.equal(await rowBoxes.count(),rowCount);
     assert.deepEqual(await page.getByRole('columnheader').allTextContents(),['Было','Стало','Почему']);
     const results=page.getByRole('main',{name:'Результат навыка «Переназвать слои»'});
     async function pinnedActions(){

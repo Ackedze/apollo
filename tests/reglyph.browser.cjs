@@ -54,7 +54,7 @@ function fixture(post){
   return route.fulfill({status:code,contentType:'application/json',body:JSON.stringify(value)});
  });
  await page.goto(pathToFileURL(path.resolve(__dirname,'../dist/ui.html')).href);await page.evaluate(()=>document.fonts.ready);
- await page.getByRole('button',{name:'Навыки',exact:true}).click();
+ await page.getByRole('button',{name:'Тулзы',exact:true}).click();
  const card=page.getByRole('button',{name:'Обновить иконки',exact:true});await card.waitFor();
  assert.equal(await page.locator('.apollo-skills-catalog>.apollo-skill-card').count(),2,'both skills share the existing catalogue');
  await page.screenshot({animations:'disabled',path:path.join(output,'skills-catalog.png')});

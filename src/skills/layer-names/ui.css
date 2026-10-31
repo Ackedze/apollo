@@ -1,8 +1,8 @@
 .apollo-skills-screen { display:flex; min-height:0; max-width:calc(100vw - 16px); overflow:hidden; }
 .apollo-skills { --apollo-text:rgba(3,3,6,.88); --apollo-muted:rgba(4,4,19,.55); display:flex; flex:1; min-width:0; min-height:0; flex-direction:column; overflow:hidden; font-size:14px; line-height:20px; }
 .apollo-skills-catalog { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:20px; overflow:auto; }
-.apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] { padding-inline:12px; gap:4px; }
-.apollo-navigation button[aria-label="Навыки"][aria-pressed="true"] .apollo-nav-label { padding-inline:4px; }
+.apollo-navigation button[aria-label="Тулзы"][aria-pressed="true"] { padding-inline:12px; gap:4px; }
+.apollo-navigation button[aria-label="Тулзы"][aria-pressed="true"] .apollo-nav-label { padding-inline:4px; }
 .apollo-skill-nav-icon { position:relative; width:16px; height:16px; flex:0 0 16px; }
 /* The 20px Figma glyph stays centered in the existing 16px addon. */
 .apollo-skill-nav-icon .apollo-nav-icon { position:absolute; left:-2px; top:-2px; }

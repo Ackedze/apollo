@@ -24,6 +24,7 @@ const skillIcons = require("../skills/layer-names/assets");
 type Controller = ReturnType<typeof createDesignCheckController>;
 type DataOptions = { skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
+const readReasonLabels:Record<string,string>={'access-denied':'нет доступа','not-found-or-unpublished':'не найден или не опубликован',network:'ошибка соединения',timeout:'таймаут','invalid-response':'некорректный ответ',unavailable:'источник недоступен',cancelled:'чтение отменено',unknown:'причина не определена'};
 
 /** Existing v4 nodes keep their identities, listeners, report/export and generation controls. */
 function ExistingSlot({ node, expand = false }: { node?: HTMLElement; expand?: boolean }) {
@@ -199,7 +200,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
     {state.documentAudit.error && !contextChanged && <p className="design-check-note" role={state.documentAudit.result ? 'status' : 'alert'}>{state.documentAudit.error}</p>}
     {groupId && actionBusy && <p className="design-check-note" role="status">{progress}</p>}
     {groupId && summary.stale && (!state.documentAudit.error || contextChanged) && <p className="design-check-note" role="status">{state.documentAction.status === 'refreshing' ? 'Перепроверяем изменённый объект. До свежего результата сохраняем прежние замечания.' : 'Показаны сохранённые результаты. Повторите проверку.'}</p>}
-    {failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}</li>)}</ul></details>}
+    {failures.length>0&&<details className="design-check-note"><summary>Диагностика проверки · {failures.length}</summary><p>История сбоев чтения и перепроверки, включая предыдущие попытки. Итоговое покрытие указано в результатах.</p><ul>{failures.map(f=><li key={f.errorId}>{f.code} · {f.stage} · {f.requestId}{f.read&&<> · {f.read.operation} · {readReasonLabels[f.read.sourceReason]||'причина не определена'}{f.read.sourceCode&&<> ({f.read.sourceCode})</>}{(f.resourceId||f.nodeId)&&<> · <span title={f.resourceId||f.nodeId}>{(f.resourceId||f.nodeId).slice(0,40)}{(f.resourceId||f.nodeId).length>40?'…':''}</span></>}</>}</li>)}</ul></details>}
     {state.documentAction.message && !state.documentAction.busy && <p className="design-check-note" role={state.documentAction.status === 'error' ? 'alert' : 'status'}>{state.documentAction.message}</p>}
   </div>;
   return <div className="shell design-check-shell apollo-new">

@@ -16,7 +16,7 @@ test('obsolete styles route to the existing Styles tab with actual style identit
  const markup=renderToStaticMarkup(React.createElement(m.exports.DocumentAuditCards,{check:obsolete,tab:'deprecatedStyles',actionsEnabled:false,onFocus:()=>{}}));
  assert.match(markup,/Устаревший стиль: Synthetic style/);assert.match(markup,/Synthetic style library/);assert.match(markup,/disabled=""/);assert.match(markup,/Применённый стиль/);
  const missing=documentCoverageMessage(Object.assign({},obsolete,{status:'incomplete',gaps:['deprecated-style-index-unavailable'],findings:[]}));
- assert.match(missing.text,/Индекс устаревших стилей недоступен/);
+ assert.match(missing.text,/Актуальность индекса устаревших стилей не подтверждена/);assert.match(missing.text,/Причина сохранена в диагностике/);
  const {buildResultGroups,auditQuality}=require('../../src/design-check/result-groups');
  const full={documentAudit:{status:'available',result:{checks:[obsolete]}},tabs:{},auditStale:false};
  const summary=buildResultGroups(full,[{id:'deprecatedStyles',title:'Устаревшие'}],()=>[]);assert.equal(summary.groups[0].count,1);assert.equal(auditQuality(summary),'violation');

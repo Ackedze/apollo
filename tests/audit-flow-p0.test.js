@@ -16,6 +16,11 @@ for(const kind of ['collection','main'])test(kind+' read rejection is not a chan
 test('every failed native operation has a bounded diagnostic without raw exception text',()=>{
  const d=failureDiagnostic(Error('PRIVATE layout contents'),'run:native','collect',hash,1);assert.equal(failureValid(d),true);assert.equal(d.code,'NATIVE_READ_FAILED');assert.equal(d.stage,'collect');assert.equal(JSON.stringify(d).includes('PRIVATE'),false);assert.equal(failureValid(Object.assign({},d,{payload:'leak'})),false);
 });
+test('a frozen native exception keeps read metadata through a safe fallback',()=>{
+ const {readError}=require('../src/document-audit/reads'),error=Object.freeze(Error('PRIVATE native exception'));
+ const annotated=readError(error,{operation:'getMainComponentAsync',nodeId:'node',resourceId:null});
+ const diagnostic=failureDiagnostic(annotated,'run','collect',hash,1);assert.ok(failureValid(diagnostic));assert.equal(diagnostic.read.operation,'getMainComponentAsync');assert.equal(JSON.stringify(diagnostic).includes('PRIVATE'),false);
+});
 test('native capture outlives its former absolute deadline and validates before delivery',async()=>{
  const f=fixture(),n=f.node('root');f.page.selection=[n];const original=f.api.getNodeByIdAsync;f.api.getNodeByIdAsync=async id=>{await wait(8);return original(id);};const b=bridge(f,{timeoutMs:5});
  try{b.accept(request(f,'slow-healthy'));const result=await settle(f,'document-audit-result','slow-healthy');assert.equal(result.result.runId,'slow-healthy');assert.equal(f.messages.some(m=>m.type==='document-audit-error'),false);}finally{b.stop();}

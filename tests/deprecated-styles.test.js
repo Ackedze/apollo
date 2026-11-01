@@ -58,6 +58,16 @@ test('unavailable final index proof preserves uncertainty rather than a false ob
  const observation={deprecatedIndexId:'a'.repeat(64),checks:[{id:'deprecatedStyles',status:'complete',gaps:[],findings:[{status:'deprecated-style',message:'Old style'}]}]};
  await verifyDeprecatedStyles({read:async()=>{throw Error('offline');}},observation);assert.equal(check(observation).status,'incomplete');assert.equal(check(observation).findings[0].status,'unknown');
 });
+test('final index refusal keeps its original diagnostic context and cancellation is not UNKNOWN',async()=>{
+ const {failureDiagnostic,failureValid}=require('../src/document-audit/protocol');
+ const observation=()=>({deprecatedIndexId:'a'.repeat(64),checks:[{id:'deprecatedStyles',status:'complete',gaps:[],findings:[{status:'deprecated-style',message:'Old style'}]}]});
+ for(const code of ['CATALOG_HTTP_403','CATALOG_TIMEOUT','DEPRECATED_STYLE_INDEX_INVALID']){
+  const o=observation(),errors=[];await verifyDeprecatedStyles({read:async()=>{throw Error(code);}},o,{onReadFailure:error=>errors.push(error)});
+  assert.equal(check(o).findings[0].status,'unknown');assert.equal(errors.length,1);
+  const d=failureDiagnostic(errors[0],'run','deprecated-style-index-recheck',hash,1);assert.equal(failureValid(d),true);assert.equal(d.read.operation,'deprecatedStyles.index');assert.equal(d.read.sourceCode,code);assert.equal(d.resourceId,o.deprecatedIndexId);
+ }
+ const o=observation();await assert.rejects(verifyDeprecatedStyles({read:async()=>{throw Error('CATALOG_UNAVAILABLE');}},o,{guard:()=>{throw Error('NATIVE_CANCELLED');}}),/NATIVE_CANCELLED/);assert.equal(check(o).findings[0].status,'deprecated-style');
+});
 
 test('catalog-declared effect/text styles use native type; truncated area remains incomplete',async()=>{
  for(const [type,properties,property]of [['EFFECT',{effects:[{type:'DROP_SHADOW',visible:true}],effectStyleId:'native-id'},'effects'],['TEXT',{characters:'Sample',textStyleId:'native-id'},'typography']]){

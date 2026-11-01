@@ -17,13 +17,40 @@ function resultValid(r) {
  });
  } catch (_) { return false; }
 }
+const readOperations=['getMainComponentAsync','importComponentByKeyAsync','getNodeByIdAsync','getStyleByIdAsync','variables.getVariableByIdAsync','variables.getVariableCollectionByIdAsync','readNativeStyles','deprecatedStyles.index'];
+const readReasons=['access-denied','not-found-or-unpublished','network','timeout','invalid-response','unavailable','cancelled','unknown'];
+const errorNames=['Error','TypeError','RangeError','ReferenceError','SyntaxError','AbortError','DOMException','FigmaError'];
 function failureValid(v){try{
- if(!closed(v,['schemaVersion','errorId','requestId','code','stage','factKind','factId','nodeId','resourceId','reason','changedFields','expectedHash','actualHash'])||v.schemaVersion!=='apollo.native-audit-failure.v1'||!/^native:[a-f0-9]{24}$/.test(v.errorId)||!text(v.requestId,150)||!text(v.stage,100)||!text(v.factId,250)||!Array.isArray(v.changedFields)||v.changedFields.length>24||!v.changedFields.every(s=>text(s,200)))return false;
- if(v.factKind==='operation')return typeof v.code==='string'&&/^[A-Z][A-Z0-9_]{0,79}$/.test(v.code)&&v.nodeId===null&&v.resourceId===null&&v.reason==='read-failed'&&v.changedFields.length===0&&v.expectedHash===null&&v.actualHash===null;
+ const version2=v?.schemaVersion==='apollo.native-audit-failure.v2',keys=['schemaVersion','errorId','requestId','code','stage','factKind','factId','nodeId','resourceId','reason','changedFields','expectedHash','actualHash'];
+ if(!closed(v,version2?keys.concat('read'):keys)||!['apollo.native-audit-failure.v1','apollo.native-audit-failure.v2'].includes(v.schemaVersion)||!/^native:[a-f0-9]{24}$/.test(v.errorId)||!text(v.requestId,150)||!text(v.stage,100)||!text(v.factId,250)||!Array.isArray(v.changedFields)||v.changedFields.length>24||!v.changedFields.every(s=>text(s,200)))return false;
+ if(v.factKind==='operation'){
+  if(typeof v.code!=='string'||!/^[A-Z][A-Z0-9_]{0,79}$/.test(v.code)||v.reason!=='read-failed'||v.changedFields.length!==0||v.expectedHash!==null||v.actualHash!==null)return false;
+  if(!version2)return v.nodeId===null&&v.resourceId===null;
+  return (v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))
+   &&closed(v.read,['operation','sourceCode','sourceReason','sourceName','sourceMessageHash'])&&readOperations.includes(v.read.operation)
+   &&(v.read.sourceCode===null||typeof v.read.sourceCode==='string'&&/^[A-Za-z0-9_:-]{1,80}$/.test(v.read.sourceCode))
+   &&readReasons.includes(v.read.sourceReason)&&errorNames.includes(v.read.sourceName)&&typeof v.read.sourceMessageHash==='string'&&/^[a-f0-9]{64}$/.test(v.read.sourceMessageHash);
+ }
+ if(version2)return false;
  return v.code==='NATIVE_FACTS_CHANGED'&&['node','main','identity','pageModes','explicitModes','sceneModes','detached','styles','style','variable','collection'].includes(v.factKind)&&(v.nodeId===null||text(v.nodeId,250))&&(v.resourceId===null||text(v.resourceId,250))&&['node-unavailable','value-mismatch'].includes(v.reason)&&[v.expectedHash,v.actualHash].every(s=>typeof s==='string'&&/^[a-f0-9]{64}$/.test(s));
  }catch(_){return false;}}
+let failureSequence=0;
 function failureDiagnostic(error,requestId,stage,hash,identity){
  const supplied=error?.code||error?.message,code=typeof supplied==='string'&&/^[A-Z][A-Z0-9_]{0,79}$/.test(supplied)?supplied:'NATIVE_READ_FAILED';
- return Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([requestId,identity,code,stage]).slice(0,24),requestId,code},error?.nativeFailure||{stage,factKind:'operation',factId:stage,nodeId:null,resourceId:null,reason:'read-failed',changedFields:[],expectedHash:null,actualHash:null});
+ const diagnostic=Object.assign({schemaVersion:'apollo.native-audit-failure.v1',errorId:'native:'+hash([requestId,identity,code,stage,++failureSequence]).slice(0,24),requestId,code},error?.nativeFailure||{stage,factKind:'operation',factId:stage,nodeId:null,resourceId:null,reason:'read-failed',changedFields:[],expectedHash:null,actualHash:null});
+ const context=error?.nativeRead;
+ if(!error?.nativeFailure&&readOperations.includes(context?.operation)){
+  const message=typeof error?.message==='string'?error.message.slice(0,4096):'',sourceCode=typeof error?.code==='string'&&/^[A-Za-z0-9_:-]{1,80}$/.test(error.code)?error.code:/^[A-Z][A-Z0-9_]{0,79}$/.test(message)?message:null;
+  const source=String(sourceCode||'')+' '+message;
+  const sourceReason=/access.denied|permission|forbidden|not authorized|HTTP_40[13]/i.test(source)?'access-denied'
+   :/not.found|does not exist|could not find|unpublished|not published|HTTP_404/i.test(source)?'not-found-or-unpublished'
+   :/timed?.?out|timeout/i.test(source)?'timeout':/network|offline|failed to fetch|connection|ENOTFOUND|ECONN/i.test(source)?'network'
+   :/invalid.response|response.invalid|invalid.*index|index.invalid|JSON|SyntaxError/i.test(source)?'invalid-response':/cancelled|canceled|AbortError/i.test(source)?'cancelled'
+   :/unavailable|HTTP_5[0-9]{2}/i.test(source)?'unavailable':'unknown';
+  diagnostic.schemaVersion='apollo.native-audit-failure.v2';diagnostic.factId=context.operation;
+  diagnostic.nodeId=text(context.nodeId,250)?context.nodeId:null;diagnostic.resourceId=text(context.resourceId,250)?context.resourceId:null;
+  diagnostic.read={operation:context.operation,sourceCode,sourceReason,sourceName:errorNames.includes(error?.name)?error.name:'Error',sourceMessageHash:hash(message)};
+ }
+ return diagnostic;
 }
 module.exports={SCHEMA,platforms,contextValid,requestValid,focusValid,resultValid,failureValid,failureDiagnostic};

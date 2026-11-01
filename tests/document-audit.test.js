@@ -79,6 +79,24 @@ if(require.main===module){
   const f=fixture();f.theme();f.page.selection=[f.node('frame')];const b=bridge(f);b.accept(request(f,'new'));const r=await settle(f,'document-audit-result','new');
   b.accept({type:'document-audit-focus',schemaVersion:SCHEMA,requestId:'old-focus',runId:'old',findingId:r.result.checks[2].findings[0].findingId,targetId:'old-target'});await settle(f,'document-audit-focus-result','old-focus');assert.equal(f.messages.some(m=>m.type==='document-audit-invalidated'),false);b.stop();
  });
+ test('one rejected physical import emits one contextual diagnostic while every occurrence remains UNKNOWN',async()=>{
+  const f=fixture(),key='a'.repeat(40),main=f.component('source',true,key),failures=[];let imports=0;
+  f.page.selection=['one','two','three'].map(id=>f.instance(id,main));
+  f.api.importComponentByKeyAsync=async()=>{imports++;throw Object.assign(Error('Permission denied for synthetic library'),{code:'LIBRARY_ACCESS_DENIED'});};
+  const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},readOperation:fn=>Promise.resolve().then(fn),onReadFailure:e=>failures.push(e)});
+  assert.equal(imports,1);assert.equal(failures.length,1);assert.equal(failures[0].nativeRead.operation,'importComponentByKeyAsync');assert.equal(failures[0].nativeRead.resourceId,key);
+  assert.equal(o.checks.find(c=>c.id==='freshness').findings.filter(f=>f.status==='unknown').length,3);
+ });
+ test('same-millisecond native failures preserve distinct API identities and safe original reasons',()=>{
+  const {failureDiagnostic,failureValid}=require('../src/document-audit/protocol'),{readError}=require('../src/document-audit/reads');
+  const make=(error,key)=>failureDiagnostic(readError(error,{operation:'importComponentByKeyAsync',nodeId:'node',resourceId:key}),'run','collect',hash,[[1,1],1234]);
+  const denied=make(Object.assign(Error('Permission denied: PRIVATE SYNTHETIC MESSAGE'),{code:'LIBRARY_ACCESS_DENIED'}),'a'.repeat(40)),missing=make(Error('Component is not published'),'b'.repeat(40));
+  assert.notEqual(denied.errorId,missing.errorId);assert.ok(failureValid(denied)&&failureValid(missing));assert.equal(denied.schemaVersion,'apollo.native-audit-failure.v2');assert.equal(denied.read.sourceCode,'LIBRARY_ACCESS_DENIED');assert.equal(denied.read.sourceReason,'access-denied');assert.equal(missing.read.sourceReason,'not-found-or-unpublished');assert.equal(JSON.stringify(denied).includes('PRIVATE'),false);
+  const unknown=make(Error('Unexpected synthetic condition'),'c'.repeat(40));assert.equal(unknown.read.sourceReason,'unknown');assert.equal(unknown.read.sourceCode,null);
+  const token=make(Error('private_exception_token'),'c'.repeat(40));assert.equal(token.read.sourceCode,null);assert.equal(token.read.sourceReason,'unknown');assert.match(token.read.sourceMessageHash,/^[a-f0-9]{64}$/);assert.equal(JSON.stringify(token).includes('private_exception_token'),false);
+  for(const message of ['Network request failed','CATALOG_TIMEOUT','CATALOG_RESPONSE_INVALID'])assert.equal(make(Error(message),'d'.repeat(40)).read.sourceReason,{'Network request failed':'network',CATALOG_TIMEOUT:'timeout',CATALOG_RESPONSE_INVALID:'invalid-response'}[message]);
+  assert.equal(failureValid(Object.assign({},denied,{read:Object.assign({},denied.read,{rawMessage:'PRIVATE'})})),false);
+ });
  test('request is closed and result coverage is always a native subset',()=>{const f=fixture();assert.equal(requestValid(request(f)),true);assert.equal(requestValid(Object.assign(request(f),{contractReady:true})),false);});
 }
 module.exports={fixture,hash,bridge,request,settle};

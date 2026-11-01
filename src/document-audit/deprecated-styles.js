@@ -1,4 +1,5 @@
 const {linkedStyleValue}=require('./styles');
+const {readError}=require('./reads');
 const SCHEMA='apollo.deprecated-styles.v1',KEY=/^[a-f0-9]{40}$/,HASH=/^[a-f0-9]{64}$/;
 function validateIndex(value,hash){
  const closed=(v,keys)=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===keys.slice().sort().join('|');
@@ -12,7 +13,10 @@ function validateIndex(value,hash){
  const data=Object.assign({},value);delete data.indexId;if(hash(data)!==value.indexId)throw Error('DEPRECATED_STYLE_INDEX_INVALID');
  return{indexId:value.indexId,policyVersion:value.policyVersion,styles};
 }
-function createDeprecatedStyleReader(port,hash){return{read:async()=>validateIndex(await port.read('deprecatedStyles'),hash)};}
+function createDeprecatedStyleReader(port,hash){return{read:async(guard=()=>{})=>{
+ guard();try{const value=await port.read('deprecatedStyles',null,null,guard);guard();return validateIndex(value,hash);}
+ catch(error){guard();throw readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:null});}
+}};}
 async function describeDeprecatedStyles(api,node,{read,styleCache,index}){
  const findings=[],resources=[],gaps=[],bindings=[];
  const add=(property,id,type)=>{if(id)bindings.push({property,id,type});};
@@ -31,7 +35,7 @@ async function describeDeprecatedStyles(api,node,{read,styleCache,index}){
   const identity=b.property+':'+String(b.id);if(seen.has(identity))continue;seen.add(identity);
   let style=null;
   if(typeof b.id==='string'){
-   if(!styleCache.has(b.id))styleCache.set(b.id,read(()=>api.getStyleByIdAsync(b.id)).then(linkedStyleValue).catch(()=>null));
+   if(!styleCache.has(b.id))styleCache.set(b.id,read(()=>api.getStyleByIdAsync(b.id),{operation:'getStyleByIdAsync',nodeId:node.id,resourceId:b.id}).then(linkedStyleValue).catch(()=>null));
    style=await styleCache.get(b.id);resources.push({kind:'style',id:b.id,value:style});
   }
   const row=style&&KEY.test(style.key)?index.styles.get(style.key):null;
@@ -42,11 +46,14 @@ async function describeDeprecatedStyles(api,node,{read,styleCache,index}){
  return{findings,resources,gaps};
 }
 // A missing index never turns an incomplete check into an empty successful one.
-async function verifyDeprecatedStyles(reader,observation){
+async function verifyDeprecatedStyles(reader,observation,{guard=()=>{},onReadFailure=()=>{}}={}){
  if(!reader||!observation.deprecatedIndexId)return;
- try{const next=await reader.read();if(next.indexId!==observation.deprecatedIndexId)throw Error('NATIVE_FACTS_CHANGED');}
+ try{const next=await reader.read(guard);guard();if(next.indexId!==observation.deprecatedIndexId)throw Error('NATIVE_FACTS_CHANGED');}
  catch(error){
+  guard();
   if(error.message==='NATIVE_FACTS_CHANGED')throw error;
+  const failure=readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:observation.deprecatedIndexId});
+  failure.nativeRead=Object.assign({},failure.nativeRead,{resourceId:observation.deprecatedIndexId});onReadFailure(failure);
   const check=observation.checks.find(c=>c.id==='deprecatedStyles');check.status='incomplete';
   if(!check.gaps.includes('deprecated-style-index-unavailable'))check.gaps.push('deprecated-style-index-unavailable');
   for(const f of check.findings){f.status='unknown';f.message='Не удалось подтвердить актуальность индекса устаревших стилей.';}

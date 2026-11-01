@@ -20,4 +20,15 @@ function cooperativeRead(read,intervalMs,guard=()=>{},onWait=()=>{}){
  });
 }
 const retryableRead=error=>/TIMEOUT|TEMPORAR|UNAVAILABLE|SUPERSEDED|CANCELLED|CONTEXT_CHANGED/.test(String(error?.code||error?.message||''));
-module.exports={boundedRead,cooperativeRead,parallel,retryableRead};
+function readError(error,context){
+ if(error&&typeof error==='object'&&typeof error.message==='string'){
+  try{if(!error.nativeRead&&context)error.nativeRead=context;if(error.nativeRead||!context)return error;}catch(_){}
+ }
+ const failure=Error(typeof error?.message==='string'?error.message:typeof error==='string'?error:'NATIVE_READ_FAILED');
+ failure.name=typeof error?.name==='string'?error.name:'Error';
+ if(error?.code!==undefined)failure.code=error.code;
+ if(error?.nativeFailure)failure.nativeFailure=error.nativeFailure;
+ failure.nativeRead=error?.nativeRead||context;
+ return failure;
+}
+module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError};

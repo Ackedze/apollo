@@ -2,7 +2,7 @@ const {resolveNativeNode}=require("../canvas-target");
 // Native evidence only. No reference loader, contract engine or corrective action.
 const {getDetachedLibraryComponentKey,detachedValue}=require("./detached");
 const {styleValue,variableValue,linkedStyleValue,describeNativeStyles}=require("./styles");
-const {parallel,boundedRead,retryableRead}=require("./reads");
+const {parallel,boundedRead,retryableRead,readError}=require("./reads");
 const {describeDeprecatedStyles}=require('./deprecated-styles');
 const LIMITS={selection:10000,definitions:1000,source:10000,page:10000,findings:1800,imports:300,collections:300,concurrency:12,readMs:1200};
 const signature=nodes=>nodes.map(n=>n.id).sort().join('|');
@@ -26,14 +26,14 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  const units=new Map(checks.map(c=>[c.id,new Set()])),modeGraph=new Map(),resolvedStyles=new Map();
  const observation=()=>({checks,facts:Array.from(facts.values()),targets,nodes,units,modeGraph,resolvedStyles,deprecatedIndexId});
  let readFailure=null;const runGuard=assertCurrent;assertCurrent=()=>{runGuard();if(readFailure)throw readFailure;};
- const read=async fn=>{try{return await(readOperation?readOperation(fn):boundedRead(fn,readTimeoutMs?readTimeoutMs():bound.readMs,assertCurrent));}catch(error){if(readOperation){onReadFailure(error);if(retryableRead(error))readFailure=error;}throw error;}};
+ const read=async(fn,context)=>{try{return await(readOperation?readOperation(fn):boundedRead(fn,readTimeoutMs?readTimeoutMs():bound.readMs,assertCurrent));}catch(error){const failure=context?readError(error,context):error;if(readOperation){onReadFailure(failure);if(retryableRead(failure))readFailure=failure;}throw failure;}};
  let progressQueue=Promise.resolve();
  const checkpoint=()=>{const o=observation(),snapshot={checks:JSON.parse(JSON.stringify(o.checks)).map(c=>{if(!finished.has(c.id))c.status='running';return c;}),facts:o.facts,targets:new Map(o.targets),nodes:new Map(o.nodes),units:new Map(Array.from(o.units,([id,values])=>[id,new Set(values)])),modeGraph:new Map(o.modeGraph),resolvedStyles:new Map(o.resolvedStyles)};progressQueue=progressQueue.then(async()=>{assertCurrent();await onProgress(snapshot);assertCurrent();});return progressQueue;};
  function gap(c,reason){c.status='incomplete';if(!c.gaps.includes(reason)&&c.gaps.length<1900)c.gaps.push(reason);}
  function remember(n){if(!n||n.removed)return;nodes.set(n.id,n);facts.set('node:'+n.id,{kind:'node',id:n.id,value:nodeValue(n)});}
  async function main(n){
   if(!mainCache.has(n.id))mainCache.set(n.id,(async()=>{
-   let m=null,available=true;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync());}catch(_){available=false;}
+   let m=null,available=true;try{m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync(),{operation:'getMainComponentAsync',nodeId:n.id,resourceId:null});}catch(_){available=false;}
    assertCurrent();if(available)facts.set('main:'+n.id,{kind:'main',id:n.id,value:mainValue(m)});return m;
   })());return mainCache.get(n.id);
  }
@@ -56,9 +56,9 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   if(!key){gap(fresh,'component-key-missing');finding(fresh,'unknown',n,'Не удалось определить библиотечный ключ компонента.',common);return;}
   if(!published.has(key)){
    if(published.size>=bound.imports){gap(fresh,'published-import-limit');finding(fresh,'unknown',n,'Достигнут лимит чтения опубликованных компонентов.',common);return;}
-   published.set(key,Promise.resolve().then(()=>api.importComponentByKeyAsync(key)));
+   published.set(key,read(()=>api.importComponentByKeyAsync(key),{operation:'importComponentByKeyAsync',nodeId:n.id,resourceId:key}));
   }
-  let latest;try{latest=await read(()=>published.get(key));}catch(_){assertCurrent();gap(fresh,'component-import-failed');finding(fresh,'unknown',n,'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
+  let latest;try{latest=await published.get(key);}catch(_){assertCurrent();gap(fresh,'component-import-failed');finding(fresh,'unknown',n,'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
   assertCurrent();common.evidence.latestComponentId=latest?.id||null;
   if(!latest||latest.key!==key||latest.remote!==true||typeof latest.id!=='string'){gap(fresh,'component-import-identity-mismatch');finding(fresh,'unknown',n,'Опубликованный компонент не совпал с библиотечным ключом.',common);return;}
   facts.set('identity:'+latest.id,{kind:'identity',id:latest.id,value:mainValue(latest)});
@@ -106,11 +106,11 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  async function checkStyles(){
  styles.status=roots.length?'complete':'incomplete';const styleCache=new Map(),variableCache=new Map();
  let deprecatedIndex=null;
- if(deprecated){try{deprecatedIndex=await deprecatedStyleReader.read();deprecatedIndexId=deprecatedIndex.indexId;deprecated.status=roots.length?'complete':'incomplete';if(!roots.length)gap(deprecated,'empty-selection');}catch(_){gap(deprecated,'deprecated-style-index-unavailable');}assertCurrent();if(local.gaps.includes('selection-node-limit'))gap(deprecated,'selection-node-limit');}
+ if(deprecated){try{deprecatedIndex=await deprecatedStyleReader.read(assertCurrent);deprecatedIndexId=deprecatedIndex.indexId;deprecated.status=roots.length?'complete':'incomplete';if(!roots.length)gap(deprecated,'empty-selection');}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:null}));gap(deprecated,'deprecated-style-index-unavailable');}assertCurrent();if(local.gaps.includes('selection-node-limit'))gap(deprecated,'selection-node-limit');}
  await parallel(Array.from(nodes.values()).filter(n=>n.type!=='PAGE'&&n.type!=='DOCUMENT'),bound.concurrency,async n=>{
   if(n.type==='SECTION')return;styles.checked++;units.get(styles.id).add(n.id);let diagnostic;
   try{const value=styleValue(n);facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache});}
-  catch(_){if(deprecatedIndex){gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
+  catch(error){assertCurrent();onReadFailure(readError(error,{operation:'readNativeStyles',nodeId:n.id,resourceId:null}));if(deprecatedIndex){gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
   assertCurrent();
   resolvedStyles.set(n.id,diagnostic.resolved);
   for(const reason of diagnostic.gaps)gap(styles,reason);
@@ -178,7 +178,7 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
    if(collectionIds.has(id))return;
    if(collectionIds.size>=bound.collections){gap(theme,'collection-limit');gap(font,'collection-limit');return;}
    collectionIds.add(id);let c=null;
-   try{c=await read(()=>api.variables.getVariableCollectionByIdAsync(id));}catch(_){assertCurrent();gap(theme,'variable-collection-unavailable');gap(font,'variable-collection-unavailable');return;}
+   try{c=await read(()=>api.variables.getVariableCollectionByIdAsync(id),{operation:'variables.getVariableCollectionByIdAsync',nodeId:page.id,resourceId:id});}catch(_){assertCurrent();gap(theme,'variable-collection-unavailable');gap(font,'variable-collection-unavailable');return;}
    assertCurrent();facts.set('collection:'+id,{kind:'collection',id,value:collectionValue(c)});
    if(!c){gap(theme,'variable-collection-unavailable');gap(font,'variable-collection-unavailable');return;}
    // Different native IDs can represent the same published collection. Only an exact
@@ -261,12 +261,12 @@ function factFailure(f,actual,reason,hash,stage){
 }
 async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=16,stage='native-recheck',readOperation}){
  const nodes=new Map();
- const read=readOperation||(fn=>boundedRead(fn,timeoutMs,assertCurrent));
- const node=id=>{if(!nodes.has(id))nodes.set(id,resolveNativeNode(api,id,{read,guard:assertCurrent}));return nodes.get(id);};
+ const read=async(fn,context)=>{try{return await(readOperation?readOperation(fn):boundedRead(fn,timeoutMs,assertCurrent));}catch(error){throw readError(error,context);}};
+ const node=id=>{if(!nodes.has(id))nodes.set(id,resolveNativeNode(api,id,{read:fn=>read(fn,{operation:'getNodeByIdAsync',nodeId:id,resourceId:null}),guard:assertCurrent}));return nodes.get(id);};
  await parallel(facts,concurrency,async f=>{assertCurrent();let value;
-  if(f.kind==='style'){value=linkedStyleValue(await read(()=>api.getStyleByIdAsync(f.id)));}
-  else if(f.kind==='variable'){value=variableValue(await read(()=>api.variables.getVariableByIdAsync(f.id)));}
-  else if(f.kind==='collection'){value=collectionValue(await read(()=>api.variables.getVariableCollectionByIdAsync(f.id)));}
+  if(f.kind==='style'){value=linkedStyleValue(await read(()=>api.getStyleByIdAsync(f.id),{operation:'getStyleByIdAsync',nodeId:null,resourceId:f.id}));}
+  else if(f.kind==='variable'){value=variableValue(await read(()=>api.variables.getVariableByIdAsync(f.id),{operation:'variables.getVariableByIdAsync',nodeId:null,resourceId:f.id}));}
+  else if(f.kind==='collection'){value=collectionValue(await read(()=>api.variables.getVariableCollectionByIdAsync(f.id),{operation:'variables.getVariableCollectionByIdAsync',nodeId:null,resourceId:f.id}));}
   else{const n=await node(f.id);if(!n||n.removed)throw factFailure(f,null,'node-unavailable',hash,stage);
    if(f.kind==='node')value=nodeValue(n);
    else if(f.kind==='identity')value=mainValue(n);
@@ -274,8 +274,8 @@ async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=
    else if(f.kind==='explicitModes')value=Object.assign({},n.explicitVariableModes||{});
    else if(f.kind==='sceneModes')value=Object.assign({},n.resolvedVariableModes||{});
    else if(f.kind==='detached')value=detachedValue(n);
-   else if(f.kind==='styles')value=styleValue(n);
-   else{const m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync());value=mainValue(m);}
+   else if(f.kind==='styles'){try{value=styleValue(n);}catch(error){throw readError(error,{operation:'readNativeStyles',nodeId:f.id,resourceId:null});}}
+   else{const m=['COMPONENT','COMPONENT_SET'].includes(n.type)?n:await read(()=>n.getMainComponentAsync(),{operation:'getMainComponentAsync',nodeId:f.id,resourceId:null});value=mainValue(m);}
   }
   assertCurrent();if(hash(value)!==hash(f.value))throw factFailure(f,value,'value-mismatch',hash,stage);
  });

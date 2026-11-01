@@ -15,12 +15,12 @@ async function describeNativeStyles(api,node,{read,styleCache,variableCache,poli
  const linked=async(id,type)=>{
   if(typeof id==='symbol'||id&&typeof id!=='string'){gaps.push('linked-style-incompatible');return null;}
   if(typeof id!=='string'||!id)return false;
-  if(!styleCache.has(id))styleCache.set(id,read(()=>api.getStyleByIdAsync(id)).then(linkedStyleValue).catch(()=>null));
+  if(!styleCache.has(id))styleCache.set(id,read(()=>api.getStyleByIdAsync(id),{operation:'getStyleByIdAsync',nodeId:node.id,resourceId:id}).then(linkedStyleValue).catch(()=>null));
   const value=await styleCache.get(id);resources.push({kind:'style',id,value});
   if(!value||value.id!==id||value.type!==type){gaps.push('linked-style-unavailable');return null;}return true;
  };
  const variable=async id=>{
-  if(!variableCache.has(id))variableCache.set(id,read(()=>api.variables.getVariableByIdAsync(id)).then(variableValue).catch(()=>null));
+  if(!variableCache.has(id))variableCache.set(id,read(()=>api.variables.getVariableByIdAsync(id),{operation:'variables.getVariableByIdAsync',nodeId:node.id,resourceId:id}).then(variableValue).catch(()=>null));
   const value=await variableCache.get(id);resources.push({kind:'variable',id,value});
   if(!value||value.resolvedType!=='COLOR'){gaps.push('linked-token-unavailable');return null;}return true;
  };

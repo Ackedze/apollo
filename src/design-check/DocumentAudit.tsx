@@ -48,7 +48,7 @@ function checkSummary(c: Check): string {
 }
 export function documentCoverageMessage(check: Check) {
  if(check.status!=='incomplete')return null;
- if(check.id==='deprecatedStyles')return {className:'document-audit-warning',text:check.gaps.includes('deprecated-style-index-unavailable')?'Индекс устаревших стилей недоступен. Обновите данные Proxy и повторите проверку. Отсутствие результатов не означает отсутствие устаревших стилей.':'Статус части стилей не подтверждён: связь с библиотекой недоступна или сведения каталогов противоречат друг другу.'};
+ if(check.id==='deprecatedStyles')return {className:'document-audit-warning',text:check.gaps.includes('deprecated-style-index-unavailable')?'Актуальность индекса устаревших стилей не подтверждена. Причина сохранена в диагностике проверки. Отсутствие результатов не означает отсутствие устаревших стилей.':'Статус части стилей не подтверждён: связь с библиотекой недоступна или сведения каталогов противоречат друг другу.'};
  const gaps=check.gaps.filter(g=>g!=='v3-catalog-policy-not-connected');
  if(!gaps.length&&check.id==='customStyles')return {className:'document-audit-coverage',text:'Проверена связь со стилями и токенами. Дополнительные правила и исключения дизайн-системы пока не проверяются.'};
  if(gaps.some(g=>g.includes('limit')))return {className:'document-audit-warning',text:'Проверка неполная: достигнут лимит этой проверки. Выберите меньшую область и повторите проверку.'};

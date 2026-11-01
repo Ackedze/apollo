@@ -61,5 +61,8 @@ for(const[name,edit]of[
 test('main uses the native-only scoper without exporting it in the portable runtime',()=>{
   const main=fs.readFileSync(path.join(__dirname,'../src/code.ts'),'utf8');
   assert.match(main,/const diagnostics = scopeNativeSlotCaptureWarnings\(captured\)/);
+  assert.match(main,/auditContractSnapshot\(captured.snapshot, contract, item.evaluationOptions, ownerContext, diagnostics\)/);
+  assert.match(main,/Object.assign\(diagnostics, result.captureDiagnostics\)/);
+  assert.match(main,/delete result.captureDiagnostics/);
   assert.doesNotMatch(fs.readFileSync(path.join(__dirname,'../src/runtime.js'),'utf8'),/native-slot-diagnostics/);
 });

@@ -3,14 +3,14 @@ const engine = require('@apollo/predicate-engine');
 const dependencies = require('@apollo/component-contract-dependencies');
 const { CONTRACT_SCHEMA, assertRuntimeContract, contractEvaluationMode, collectContractKeys, collectContractRules, collectContractDependencies } = require("./contract-profile");
 const authoring = require("./authoring-source");
-const { collectContractOwnedParts, hiddenContractTarget, emptyOwnedTextScope } = require('./area-ownership');
+const { collectContractOwnedParts, hiddenContractTarget, emptyOwnedTextScope, scopeOwnerBaselineCaptureWarnings } = require('./area-ownership');
 const RUNTIME_VERSION = '0.4.1';
 
 function loadRuntimeContract(contract, options) {
   return assertRuntimeContract(contract, engine, options);
 }
 
-function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
+function auditContractSnapshot(snapshot, inputContract, options, ownerContext, captureDiagnostics) {
   const mode = contractEvaluationMode(options), contract = loadRuntimeContract(inputContract, options);
   if (!snapshot || snapshot.schemaVersion !== 'apollo.predicate-snapshot.v2'
     || !Array.isArray(snapshot.nodes) || !Array.isArray(snapshot.selection)
@@ -154,6 +154,9 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     },
   };
   if (mode === 'authoring-preview') Object.assign(audit, { evaluationMode: mode, sourceStatus: contract.status, Ready: false });
+  if (captureDiagnostics) Object.assign(audit, {
+    captureDiagnostics: scopeOwnerBaselineCaptureWarnings(captureDiagnostics, snapshot, ownerBaseline),
+  });
   return audit;
 }
 

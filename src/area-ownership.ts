@@ -19,6 +19,41 @@ const record = (value: unknown): Record<string, any> => value && typeof value ==
 const unknown = (node: Record<string, unknown>, fact: string) => ((node.unknownFacts || []) as string[])
   .some(path => path === fact || fact.startsWith(path + '.') || path.startsWith(fact + '.'));
 
+/** Use only the transient enclosing baseline validated by auditContractSnapshot.
+ * Captured matched annotations cannot resolve an unmatched capture warning. */
+export function scopeOwnerBaselineCaptureWarnings(diagnostics: {
+  warnings: string[]; baselineDiagnostics: Record<string, any>;
+}, snapshot: PreviewSnapshot, ownerBaseline?: Parameters<typeof prepareValidationSnapshot>[3]) {
+  if (!ownerBaseline) return diagnostics;
+  const raw = diagnostics.baselineDiagnostics, marker = record(raw.producer), index = marker.warningIndex;
+  const unmatched = raw.rawUnmatchedBaselineNodeIds, unresolved = raw.unresolvedBaselineNodeIds;
+  if (!raw.markerAccepted || !Array.isArray(unmatched) || !unmatched.length
+    || unmatched.some(id => typeof id !== 'string') || new Set(unmatched).size !== unmatched.length
+    || !Array.isArray(unresolved) || !unresolved.length || new Set(unresolved).size !== unresolved.length
+    || unresolved.some(id => !unmatched.includes(id)) || !Array.isArray(raw.rawWarnings)
+    || Object.keys(marker).sort().join(',') !== 'kind,unmatchedNodeIds,warning,warningIndex'
+    || marker.kind !== 'unmatched-baseline' || !Number.isSafeInteger(index) || index < 0
+    || raw.rawWarnings[index] !== marker.warning || !Array.isArray(marker.unmatchedNodeIds)
+    || marker.unmatchedNodeIds.length !== unmatched.length || marker.unmatchedNodeIds.some((id: string, i: number) => id !== unmatched[i])) return diagnostics;
+  const expectedWarnings = raw.rawWarnings.slice();
+  if (unresolved.length !== unmatched.length) expectedWarnings[index] = `${unresolved.length} узлов instance не сопоставлены с reference baseline.`;
+  if (JSON.stringify(expectedWarnings) !== JSON.stringify(diagnostics.warnings)) return diagnostics;
+  const nodes = new Map(snapshot.nodes.map(node => [String(node.id), node]));
+  const matched = unresolved.filter(id => {
+    const node = nodes.get(id), baseline = ownerBaseline[id];
+    return node && (node.unknownFacts === undefined || Array.isArray(node.unknownFacts) && node.unknownFacts.every(fact => typeof fact === 'string'))
+      && !['id', 'type', 'parentId', 'component.identity'].some(fact => unknown(node, fact))
+      && baseline?.provenance.status === 'matched' && typeof baseline.provenance.referencePath === 'string'
+      && Object.keys(record(baseline.effective)).length > 0;
+  });
+  if (!matched.length) return diagnostics;
+  const remaining = unresolved.filter(id => !matched.includes(id)), warnings = diagnostics.warnings.slice();
+  warnings.splice(index, 1, ...(remaining.length ? [`${remaining.length} узлов instance не сопоставлены с reference baseline.`] : []));
+  return { warnings, baselineDiagnostics: Object.assign({}, raw, {
+    unresolvedBaselineNodeIds: remaining, ownerBaselineMatchedNodeIds: matched,
+  }) };
+}
+
 /** Coverage evidence only. A known hidden target is not a missing target;
  * assertions, including presence/visibility violations, remain untouched. */
 export function hiddenContractTarget(snapshot: PreviewSnapshot, contract: CompiledContract, targetId: string,

@@ -292,6 +292,48 @@ test('area audit revalidates independent enclosing configuration without mutatin
   const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext).engine.evaluations[0];
   assert.equal(result.classification,'violation');assert.equal(result.trace.expected,.8);
 });
+function ownedWarningFixture(ids) {
+  const a=ownedAuditFixture(), warnings=['Unrelated capture warning'], unmatchedBaselineNodeIds=ids||[a.part.id];
+  const captured={snapshot:a.child,warnings,unmatchedBaselineNodeIds,
+    baselineDiagnostics:appendUnmatchedBaselineWarning(warnings,unmatchedBaselineNodeIds)};
+  return Object.assign(a,{diagnostics:scopeContractCaptureWarnings(captured,a.contract)});
+}
+test('owner warning projection reuses the current validated baseline, preserving raw diagnostics and verdicts',()=>{
+  const a=ownedWarningFixture(), before=JSON.stringify(a);
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext,a.diagnostics);
+  const unchanged=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext);
+  assert.deepEqual(result.engine,unchanged.engine);assert.deepEqual(result.coverage,unchanged.coverage);
+  assert.deepEqual(result.captureDiagnostics.warnings,['Unrelated capture warning']);
+  assert.deepEqual(result.captureDiagnostics.baselineDiagnostics.ownerBaselineMatchedNodeIds,[a.part.id]);
+  assert.deepEqual(result.captureDiagnostics.baselineDiagnostics.unresolvedBaselineNodeIds,[]);
+  for(const key of ['rawWarnings','rawUnmatchedBaselineNodeIds','producer','externalSlotPayloadNodeIds'])
+    assert.deepEqual(result.captureDiagnostics.baselineDiagnostics[key],a.diagnostics.baselineDiagnostics[key]);
+  assert.equal(JSON.stringify(a),before);
+});
+test('a missing node keeps its warning while independently matched owner nodes reduce only the indexed count',()=>{
+  const a=ownedWarningFixture(['part-0','missing']);
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext,a.diagnostics).captureDiagnostics;
+  assert.deepEqual(result.warnings,['Unrelated capture warning','1 узлов instance не сопоставлены с reference baseline.']);
+  assert.deepEqual(result.baselineDiagnostics.unresolvedBaselineNodeIds,['missing']);
+});
+test('an identical unrelated warning at another index is never removed',()=>{
+  const a=ownedWarningFixture(),d=a.diagnostics;
+  d.warnings[0]=d.baselineDiagnostics.rawWarnings[0]=d.warnings[1];
+  const result=auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext,d).captureDiagnostics;
+  assert.deepEqual(result.warnings,[d.warnings[0]]);
+});
+for(const [name,edit] of [
+  ['no enclosing evidence',a=>{a.options.ownerContext=undefined;a.child.nodes[0].baselineProvenance={status:'matched',referencePath:''};}],
+  ['missing marker',a=>{delete a.diagnostics.baselineDiagnostics.producer;}],
+  ['unaccepted marker',a=>{a.diagnostics.baselineDiagnostics.markerAccepted=false;}],
+  ['foreign marker index',a=>{a.diagnostics.baselineDiagnostics.producer.warningIndex=0;}],
+  ['foreign marker IDs',a=>{a.diagnostics.baselineDiagnostics.producer.unmatchedNodeIds=['foreign'];}],
+  ['duplicate unmatched IDs',a=>{a.diagnostics.baselineDiagnostics.rawUnmatchedBaselineNodeIds.push('part-0');}],
+  ['unrelated warning projection',a=>{a.diagnostics.warnings[1]='Other warning';}],
+]) test(name+' cannot suppress unmatched owner diagnostics',()=>{
+  const a=ownedWarningFixture();edit(a);
+  assert.deepEqual(auditContractSnapshot(a.child,a.contract,undefined,a.options.ownerContext,a.diagnostics).captureDiagnostics,a.diagnostics);
+});
 for(const [name,mutate] of [
   ['foreign mapping',a=>a.options.ownerContext.nodeMap[a.part.id]='root'],
   ['stale child actual',a=>a.child.nodes[0].appearance.opacity=.4],

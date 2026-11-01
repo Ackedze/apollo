@@ -26,7 +26,14 @@ export function materializeRuleScopeFacts(snapshot: PreviewSnapshot, contract: C
         if (record(record(root?.variantAvailability).targets)[target?.semanticRole || '']?.present === false && nodes.length === 0) continue;
         // BOOLEAN/INSTANCE slots retain their existing behavior. This addition
         // handles only proven native SLOT descendants, never the slot boundary.
-        if (nodes.length === 1 && nodes[0].type === 'INSTANCE') continue;
+        if (nodes.length === 1 && nodes[0].type === 'INSTANCE') {
+          const boundary = record(nodes[0].slotBoundaryV1);
+          if (boundary.contentOwnership === 'external' && boundary.evidence === 'native-instance-swap-reference') {
+            const path = paths?.get(String(nodes[0].id));
+            if (path) childPaths.push(path); else ownershipUnknown = true;
+          }
+          continue;
+        }
         if (nodes.length !== 1 || nodes[0].type !== 'SLOT'
           || record(nodes[0].slotBoundaryV1).contentOwnership !== 'external') { ownershipUnknown = true; continue; }
         const path = paths?.get(String(nodes[0].id));

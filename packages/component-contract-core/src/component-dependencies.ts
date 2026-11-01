@@ -252,7 +252,8 @@ function dependencyActualFacts(node: Record<string, unknown>): Record<string, un
 /** Transient reader result only; never captured or authored in a contract. */
 export type DependencyOwnerBaseline = Record<string, {effective: Record<string, unknown>; provenance: Record<string, unknown>; unknownFacts?:string[]}>;
 function dependencyOwnerBaseline(snapshot: PreviewSnapshot, nodeMap: Record<string,string>, childRoot: string, contract:CompiledContract): {baseline?:DependencyOwnerBaseline;reason?:string} {
-  if (!contract.capabilities.facts.some(f=>f==='baseline.effective'||f.startsWith('baseline.effective.'))) return {};
+  if (!contract.capabilities.facts.some(f=>f==='baseline.effective'||f.startsWith('baseline.effective.')
+    || f.startsWith('selectedTextBindingV1.') || f.startsWith('dependencies.'))) return {};
   if (snapshot.instanceContentReferences===undefined && snapshot.instanceContentResults===undefined) return {};
   const root=snapshot.nodes.find(n=>snapshot.selection.includes(String(n.id)));
   // Historical non-occurrence captures keep their original standalone semantics.

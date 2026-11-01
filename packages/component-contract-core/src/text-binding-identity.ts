@@ -1,6 +1,7 @@
 import type { CompiledContract, ManualSource, PreviewSnapshot, TypedConstraint, VariantEvidence } from './types';
 import { stableHash } from './stable';
 import { matchesCaptureRepresentation } from './capture-representation';
+import type { DependencyOwnerBaseline } from './component-dependencies';
 
 const record = (v: any): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v : {};
 const unknown = (n: Record<string, any>, fact: string) => (n.unknownFacts || []).some((p: string) => p === fact || fact.startsWith(p + '.') || p.startsWith(fact + '.'));
@@ -60,7 +61,7 @@ function ranges(node: Record<string, any>, evidence: Record<string, any>): any[]
 }
 
 /** Facts have identity/validity, never a rule verdict. RuleIR performs equality. */
-export function materializeTextBindingIdentities(snapshot: PreviewSnapshot, contract: CompiledContract): void {
+export function materializeTextBindingIdentities(snapshot: PreviewSnapshot, contract: CompiledContract, ownerBaseline?: DependencyOwnerBaseline): void {
   if (contract.runtimePolicy.textBindingIdentityFactsVersion !== 1) return;
   for (const node of snapshot.nodes) {
     delete node.textBindingIdentityV1; delete node.selectedTextBindingV1;
@@ -134,7 +135,12 @@ export function materializeTextBindingIdentities(snapshot: PreviewSnapshot, cont
       const targets=contract.facts.targets.filter(t=>t.semanticRole===role), target=targets[0];
       const hints=target?.representationHints?.filter(h=>h.representationId===reps[0]?.id) || [];
       const targetPath=hints.length===1 ? hints[0].pathHint : target?.pathHint;
-      const key=targetPath && styleKey(variants[0]?.styleKeysByPath?.[targetPath.split(' / ').slice(1).join(' / ')]);
+      const candidates = snapshot.nodes.filter(node=>node.type==='TEXT' && record(node.semantic).role===role);
+      const inherited = candidates.length === 1 ? ownerBaseline?.[String(candidates[0].id)] : undefined;
+      const key=ownerBaseline ? inherited?.provenance.status === 'matched'
+        && !inherited.unknownFacts?.some(f=>f==='baseline.effective.appearance'||f.startsWith('baseline.effective.appearance.typography'))
+        ? styleKey(record(record(inherited.effective.appearance).typography).styleId) : undefined
+        : targetPath && styleKey(variants[0]?.styleKeysByPath?.[targetPath.split(' / ').slice(1).join(' / ')]);
       if (targets.length!==1 || hints.length>1 || !key) valid=false;
       else keys.push(key);
     }

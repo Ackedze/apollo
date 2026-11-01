@@ -5,6 +5,7 @@ import { compareInstanceBoundaries, correspondingPath, withinBoundary } from './
 import { captureVariantReference } from './variant-facts';
 import { resolveFixedNestedBinding } from './component-dependencies';
 import { collectionPropertyMatches, typedCollectionValue } from './member-collections';
+import type { DependencyOwnerBaseline } from './component-dependencies';
 
 const record = (v: unknown): Record<string, any> => v && typeof v === 'object' && !Array.isArray(v) ? v as Record<string, any> : {};
 const propertyName = (name: string) => name.replace(/#[^#]+$/, '');
@@ -112,7 +113,7 @@ export function extractAssetCatalogs(inputs: Record<string, unknown>[]): AssetCa
 }
 
 /** Read facts only. Permission and domain checks are compiled into canonical RuleIR. */
-export function materializeDependencyFacts(snapshot: PreviewSnapshot, contract: CompiledContract): void {
+export function materializeDependencyFacts(snapshot: PreviewSnapshot, contract: CompiledContract, ownerBaseline?: DependencyOwnerBaseline): void {
   const bindings = contract.facts.dependencyBindings || [];
   const root = snapshot.nodes.filter(n => snapshot.selection.includes(String(n.id)));
   const paths = snapshotPaths(snapshot);
@@ -258,7 +259,22 @@ export function materializeDependencyFacts(snapshot: PreviewSnapshot, contract: 
     const boundary = (snapshot.instanceBoundaries || comparison.boundaries).find(b => b.nodeId === String(icon.id));
     const portComparison = snapshot.source?.instanceIdentityVersion === 1 ? compareInstanceBoundaries(snapshot,portReference,true) : undefined;
     const iconPath = correspondingPath(portComparison,paths.get(String(icon.id))!);
-    const original = boundary ? portReference.nodeProperties[boundary.referencePath] : iconPath !== undefined ? portReference.nodeProperties[iconPath] : undefined;
+    let original = boundary ? portReference.nodeProperties[boundary.referencePath] : iconPath !== undefined ? portReference.nodeProperties[iconPath] : undefined;
+    if (ownerBaseline) {
+      const asset = ownerBaseline[String(icon.id)], host = ownerBaseline[String(owner.id)];
+      const source = record(record(asset?.effective).component), sourceOwner = record(record(host?.effective).component);
+      const expected = record(source.identity), expectedOwner = record(sourceOwner.identity), actualOwner = record(component.identity);
+      if (asset?.provenance.status !== 'matched' || host?.provenance.status !== 'matched'
+        || !expected.componentKey || !expected.mainComponentId || actualOwner.componentKey !== expectedOwner.componentKey
+        || (actualOwner.componentSetKey || '') !== (expectedOwner.componentSetKey || '')
+        || record(source.propertyReferenceBindings).mainComponent !== property
+        || record(sourceOwner.propertyTypes)[property] !== 'INSTANCE_SWAP'
+        || record(sourceOwner.properties)[property] !== expected.mainComponentId
+        || [...(asset?.unknownFacts || []), ...(host?.unknownFacts || [])].some(f=>f==='baseline.effective.component'||f.startsWith('baseline.effective.component.'))) {
+        f.reason = 'enclosing-port-unproven'; continue;
+      }
+      original = source as typeof original;
+    }
     if (original?.propertyReferenceBindings?.mainComponent !== property || !original.identity?.componentKey) { f.reason = 'original-port-unproven'; continue; }
     f.applicable = true;
     f.changed = iconIdentity.componentKey !== original.identity.componentKey;

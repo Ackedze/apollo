@@ -7,7 +7,7 @@ import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-
 import { allowedComponentPropertyNames } from "../packages/component-contract-core/src/instance-validation";
 import { nativeSlotCapturePlan } from "../packages/component-contract-core/src/native-slot-capture";
 import { scanArea, selectionSignature, AREA_IDENTITY_BUDGET_MS } from "./area-scan";
-import { collectContractOwnedParts } from "./area-ownership";
+import { collectContractOwnedParts, collectPermittedExternalParts } from "./area-ownership";
 import { scopeNativeSlotCaptureWarnings } from "./native-slot-diagnostics";
 import { validatedDependencyCapture, resolveFixedNestedBinding } from "../packages/component-contract-core/src/component-dependencies";
 const runtime = require("./runtime"), engine = require('@apollo/predicate-engine');
@@ -229,7 +229,7 @@ async function audit(requestId: string, options:any={}) {
       if (resolutions.size !== requested.size) throw new Error('Прокси не ответил по всем ключам компонентов.');
       endStage();
     }
-    const covered = new Map<string, any>(), ownedParts = new Map<string, any>(), captures: any[] = [];
+    const covered = new Map<string, any>(), ownedParts = new Map<string, any>(), externalParts = new Map<string, any>(), captures: any[] = [];
     const contractHashes = new Map<any, string>();
     for (const identity of scan.selection.components) {
       assertCurrent();
@@ -246,6 +246,11 @@ async function audit(requestId: string, options:any={}) {
       if (!item) {
         const ownership = identity.type === 'INSTANCE' && ownedParts.get(identity.nodeId);
         if (ownership) { governedComponents.push(Object.assign({}, identity, ownership)); continue; }
+        const external = externalParts.get(identity.nodeId);
+        if (external) {
+          notChecked.push(Object.assign({}, identity, external, { message: 'Содержимое разрешённого Slot или swap: граница проверена, собственные правила содержимого не проверены.' }));
+          continue;
+        }
         gap('contract-not-found', 'В прокси нет главного контракта этого компонента.'); continue;
       }
       if (identity.type !== 'INSTANCE') { gap('component-definition', 'Выбрано определение компонента: проверка экземпляра по независимому эталону не выполнена.'); continue; }
@@ -317,6 +322,10 @@ async function audit(requestId: string, options:any={}) {
       const localMap: Record<string, string> = {};
       captured.snapshot.nodes.forEach((node: any) => { localMap[node.id] = node.id; });
       registerParts(captured.snapshot, contract, localMap);
+      for (const part of collectPermittedExternalParts(captured.snapshot, contract)) {
+        const id = map.get(String(part.snapshotNodeId));
+        if (id) externalParts.set(id, Object.assign({}, part, { byScopeId: scopeId }));
+      }
       for (const run of result.engine.dependencyRuns || []) if (run.status === 'executed' && run.nodeId) {
         const pin = contract.componentDependencies?.find((pin: any) => pin.id === run.dependencyId
           && pin.componentId === run.componentId && pin.compiledHash === run.compiledHash);

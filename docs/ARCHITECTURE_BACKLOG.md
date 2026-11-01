@@ -320,6 +320,18 @@ Frontend блокируется отдельно отсутствующим mapp
 
 ### CC-COMPAT-NESTED-OWNER-TARGETS-01 — owner baseline и точные configured targets во вложенных проверках
 
+01.11.2026 — targeted reader repair: native SLOT / INSTANCE_SWAP через нейтральный
+контейнер получает границу только по typed native binding и независимому owner.
+Вложенные проверки glyph и selected text style используют доказанный эталон
+родительской сборки; actual не становится expected. Скрытые configured targets и
+пустой собственный TEXT scope снимают только coverage-gap уже полученного
+notApplicable при полном независимом proof. 32 сохранённых native кейса и 17
+вложенных: 12 ожидаемых violations, 0 human-review, полное исполнение этих 49
+контрактных проверок. 48 внешних вложений — boundary-only, внутренние правила
+unverified; полная проверка выбранной области не заявляется. Исправление требует
+новой сборки Apollo и нового пакета данных; Proxy / Editor не пересобираются.
+Свежая ручная приёмка владельцем остаётся NOT_RUN_USER_ONLY.
+
 26.10.2026 — проверка сохранённых native captures обнаружила отдельный пробел
 в разрешённых полях ребёнка: Custom-fill родителя конфликтовал с фиксированным
 fill Core Status. Минимальный SDK-кандидат учитывает только активный exact direct

@@ -20,6 +20,31 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
   const pathFor = (target: CompiledContract['facts']['targets'][number]) => {
     return selectedTargetPathHint(target,reps[0].id,ref.componentKey,contract.facts.variantEvidence?.occurrenceAddressVersion===1)?.split(' / ').slice(1).join(' / ');
   };
+  const byId = new Map(snapshot.nodes.map(node => [String(node.id), node]));
+  const ownerOf = (node: PreviewSnapshot['nodes'][number]) => {
+    const seen = new Set<string>();
+    let current = node;
+    while (current.parentId !== null) {
+      if (unknown(current, 'parentId') || seen.has(String(current.parentId))) return;
+      seen.add(String(current.parentId));
+      const parent = byId.get(String(current.parentId));
+      if (!parent || unknown(parent, 'type')) return;
+      if (parent.type === 'INSTANCE') return parent;
+      if (!['FRAME', 'GROUP', 'BOOLEAN_OPERATION'].includes(String(parent.type))) return;
+      current = parent;
+    }
+  };
+  const referenceOwnerOf = (path: string): string | undefined => {
+    let parent = path.split(' / ').slice(0, -1).join(' / ');
+    while (parent) {
+      const nodes = ref.nodes.filter(node => node.path === parent);
+      if (nodes.length !== 1) return;
+      if (nodes[0].type === 'INSTANCE') return parent;
+      if (!['FRAME', 'GROUP', 'BOOLEAN_OPERATION'].includes(nodes[0].type)) return;
+      parent = parent.split(' / ').slice(0, -1).join(' / ');
+    }
+    return '';
+  };
   for (const target of contract.facts.targets) {
     if (contract.runtimePolicy.nativeSlotTargetsVersion === 2) {
       if (contract.package.sourceExportVersion !== 'component-contract-editor@0.2.110') throw new Error('NATIVE_SLOT_ABSENCE_UNSUPPORTED');
@@ -65,7 +90,7 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
       .filter(control => {
         const owner = control.ownerTargetId ? contract.facts.targets.find(t => t.id === control.ownerTargetId) : undefined;
         const ownerPath = owner ? pathFor(owner) : control.ownerTargetId ? undefined : '';
-        return ownerPath !== undefined && ref.nodeProperties[ownerPath]?.propertyTypes[control.property!] === 'SLOT';
+        return ownerPath !== undefined && ['SLOT', 'INSTANCE_SWAP'].includes(String(ref.nodeProperties[ownerPath]?.propertyTypes[control.property!]));
       });
     const anchors = [...new Set(controls.map(control => control.property!))];
     const ownerIds = [...new Set(controls.map(control => control.ownerTargetId || ''))];
@@ -76,7 +101,7 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
     const owners = ownerIds[0] ? contract.facts.targets.filter(other => other.id === ownerIds[0] && other.resolution === 'resolved') : [];
     if (ownerIds[0] && owners.length !== 1) continue;
     const ownerPath = owners.length ? pathFor(owners[0]) : '';
-    if (ownerPath === undefined || slotPath.split(' / ').slice(0, -1).join(' / ') !== ownerPath) continue;
+    if (ownerPath === undefined || referenceOwnerOf(slotPath) !== ownerPath) continue;
     const actualOwners = ownerIds[0] ? snapshot.nodes.filter(node => node.type === 'INSTANCE'
       && record(node.semantic).role === owners[0].semanticRole
       && comparison.referencePaths?.[paths.get(String(node.id))!] === ownerPath) : roots;
@@ -110,21 +135,33 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
         continue;
       }
     }
-    if (!expectedIdentity?.componentKey || identity.componentKey !== expectedIdentity.componentKey
+    const nativeType = String(expectedOwner?.propertyTypes[property] || '');
+    if (!['SLOT', 'INSTANCE_SWAP'].includes(nativeType)
+      || !expectedIdentity?.componentKey || identity.componentKey !== expectedIdentity.componentKey
       || (identity.componentSetKey || '') !== (expectedIdentity.componentSetKey || '')
       || unknown(owner, 'component.identity') || unknown(owner, `component.propertyTypes.${property}`)
-      || record(record(owner.component).propertyTypes)[property] !== 'SLOT'
-      || expectedOwner.propertyTypes[property] !== 'SLOT') continue;
-    const nativeActual = snapshot.nodes.filter(node => node.type === 'SLOT' && node.parentId === owner.id
-      && record(record(node.component).propertyReferenceBindings).slotContentId === property);
-    const nativeRef = ref.nodes.filter(node => node.type === 'SLOT'
-      && node.path.split(' / ').slice(0, -1).join(' / ') === ownerPath
-      && ref.nodeProperties[node.path]?.propertyReferenceBindings?.slotContentId === property);
+      || record(record(owner.component).propertyTypes)[property] !== nativeType) continue;
+    const nodeType = nativeType === 'SLOT' ? 'SLOT' : 'INSTANCE';
+    const binding = nativeType === 'SLOT' ? 'slotContentId' : 'mainComponent';
+    const nativeActual = snapshot.nodes.filter(node => node.type === nodeType && ownerOf(node) === owner
+      && record(record(node.component).propertyReferenceBindings)[binding] === property);
+    const nativeRef = ref.nodes.filter(node => node.type === nodeType && referenceOwnerOf(node.path) === ownerPath
+      && ref.nodeProperties[node.path]?.propertyReferenceBindings?.[binding] === property);
     if (nativeActual.length !== 1 || nativeRef.length !== 1 || nativeRef[0].path !== slotPath) continue;
     const node = nativeActual[0], actualPath = paths.get(String(node.id));
-    if (!actualPath || comparison.referencePaths?.[actualPath] !== slotPath
+    const boundary = comparison.boundaries.filter(entry => entry.nodeId === node.id);
+    const swapped = nativeType === 'INSTANCE_SWAP' && boundary.length === 1 && boundary[0].reason === 'instance-swap'
+      && boundary[0].referencePath === slotPath && boundary[0].property === property && boundary[0].ownerPath === ownerPath;
+    if (!actualPath || (!swapped && comparison.referencePaths?.[actualPath] !== slotPath)
       || unknown(node, 'component.propertyReferenceBindings') || unknown(node, 'type') || unknown(node, 'parentId')
       || snapshot.nodes.some(other => other !== node && record(other.semantic).role === target.semanticRole)) continue;
+    if (nativeType === 'INSTANCE_SWAP') {
+      const actualIdentity = record(record(node.component).identity), expected = ref.nodeProperties[slotPath]?.identity;
+      if (!actualIdentity.componentKey || !actualIdentity.mainComponentId || !expected?.componentKey || !expected.mainComponentId
+        || unknown(node, 'component.identity') || unknown(owner, `component.properties.${property}`)
+        || record(record(owner.component).properties)[property] !== actualIdentity.mainComponentId
+        || expectedOwner.properties[property] !== expected.mainComponentId) continue;
+    }
     node.semantic = { ...record(node.semantic), role: target.semanticRole };
     node.unknownFacts = ((node.unknownFacts || []) as string[]).filter(path => path !== 'semantic.role');
     for (const entry of snapshot.nodes) {
@@ -138,7 +175,8 @@ export function materializeNativeSlotTargets(snapshot: PreviewSnapshot, contract
     }
     if (controls.some(control => control.contentOwnership === 'external')) {
       node.slotBoundaryV1 = { contentOwnership: 'external', targetId: target.id, property,
-        evidence: 'native-slot-content-reference', ...(ownerIds[0] ? { ownerTargetId: ownerIds[0] } : {}) };
+        evidence: nativeType === 'SLOT' ? 'native-slot-content-reference' : 'native-instance-swap-reference',
+        ...(ownerIds[0] ? { ownerTargetId: ownerIds[0] } : {}) };
     }
   }
 }

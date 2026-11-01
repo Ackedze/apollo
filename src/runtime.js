@@ -3,7 +3,7 @@ const engine = require('@apollo/predicate-engine');
 const dependencies = require('@apollo/component-contract-dependencies');
 const { CONTRACT_SCHEMA, assertRuntimeContract, contractEvaluationMode, collectContractKeys, collectContractRules, collectContractDependencies } = require("./contract-profile");
 const authoring = require("./authoring-source");
-const { collectContractOwnedParts, hiddenContractTarget } = require('./area-ownership');
+const { collectContractOwnedParts, hiddenContractTarget, emptyOwnedTextScope } = require('./area-ownership');
 const RUNTIME_VERSION = '0.4.1';
 
 function loadRuntimeContract(contract, options) {
@@ -103,22 +103,27 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     ruleId: entry.id, route: entry.execution.route,
   }));
   const missingRules = contract.rules.filter((rule) => !result.evaluations.some((entry) => entry.ruleId === rule.ruleId)).map((rule) => rule.ruleId);
-  const hiddenTargetScopes = [];
+  const hiddenTargetScopes = [], emptyOwnedTextScopes = [];
   let checkedSnapshot;
   for (const entry of result.evaluations) {
     if (entry.classification !== 'not-applicable' || entry.applicability !== 'not-applicable'
       || entry.trace?.reason !== 'selector matched no visible nodes') continue;
     const ir = contract.rules.find(rule => rule.ruleId === entry.ruleId);
     const policy = contract.customizationPolicy.find(rule => rule.id === ir?.source?.anchor);
+    if (policy?.targetScope === 'self-and-descendants'
+      && (ir.assert?.actual?.fact?.startsWith('text.') || ir.assert?.actual?.fact === 'appearance.typography.styleId')) {
+      const proof = emptyOwnedTextScope(snapshot, contract, policy.id);
+      if (proof) emptyOwnedTextScopes.push({ ruleId: entry.ruleId, ...proof });
+    }
     // Never exempt a recursive, presence or visibility assertion by its label.
     if (!policy || (policy.targetScope || 'self') !== 'self' || policy.capability === 'visibility'
-      || !['matches-effective-baseline','one-of','equals'].includes(ir.assert?.predicate)
+      || !['matches-effective-baseline','one-of','equals','compare'].includes(ir.assert?.predicate)
       || ir.assert?.actual?.fact === 'visible') continue;
-    checkedSnapshot ||= core.prepareValidationSnapshot(snapshot, contract);
-    const proof = hiddenContractTarget(checkedSnapshot, contract, policy.targetId);
+    checkedSnapshot ||= core.prepareValidationSnapshot(snapshot, contract, undefined, ownerBaseline);
+    const proof = hiddenContractTarget(checkedSnapshot, contract, policy.targetId, ownerBaseline);
     if (proof) hiddenTargetScopes.push({ ruleId: entry.ruleId, ...proof });
   }
-  const hiddenRules = new Set(hiddenTargetScopes.map(proof => proof.ruleId));
+  const hiddenRules = new Set(hiddenTargetScopes.concat(emptyOwnedTextScopes).map(proof => proof.ruleId));
   const uncertain = result.evaluations.filter((entry) => !['compliant', 'allowed', 'violation', 'not-applicable'].includes(entry.classification)
     || entry.trace?.reason === 'selector matched no visible nodes' && !hiddenRules.has(entry.ruleId)
     || entry.trace?.reason === 'rule authority is not active'
@@ -138,6 +143,7 @@ function auditContractSnapshot(snapshot, inputContract, options, ownerContext) {
     },
     engine: result,
     ...(hiddenTargetScopes.length ? { hiddenTargetScopes } : {}),
+    ...(emptyOwnedTextScopes.length ? { emptyOwnedTextScopes } : {}),
     ...(ownerPropertyRules.length ? { ownerFieldConstraints: ownerPropertyRules } : {}),
     coverage: {
       scope: 'compiled-predicate-execution',

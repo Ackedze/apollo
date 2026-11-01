@@ -102,11 +102,11 @@ export function prepareValidationSnapshot(source: PreviewSnapshot, contract: Com
   materializeNativeTargetProperties(snapshot, contract);
   materializeTextContent(snapshot, contract);
   if (['component-facts-v2', 'variant-facts-v3', 'variant-facts-v4', 'dependency-facts-v5'].includes(contract.package.snapshotProfile || '')) materializeComponentFacts(snapshot, contract);
-  if (contract.package.snapshotProfile === 'dependency-facts-v5') materializeDependencyFacts(snapshot, contract);
+  if (contract.package.snapshotProfile === 'dependency-facts-v5') materializeDependencyFacts(snapshot, contract, ownerBaseline);
   if (contract.runtimePolicy.gradientPaintFactsVersion === 1) materializeGradientPaintEvidence(snapshot);
   if (contract.runtimePolicy.paintBindingFactsVersion === 1) materializePaintBindings(snapshot);
   materializeTextStyleBindings(snapshot, contract);
-  materializeTextBindingIdentities(snapshot, contract);
+  materializeTextBindingIdentities(snapshot, contract, ownerBaseline);
   if (contract.runtimePolicy.ruleScopeFactsVersion === 1) materializeRuleScopeFacts(snapshot, contract);
   materializeTargetSemanticFacts(snapshot, contract);
   materializeStructuralOrder(snapshot, contract);

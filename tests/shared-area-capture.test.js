@@ -82,3 +82,18 @@ test('private actual main routes contract audit into shared native pattern captu
   f.actual.opacity=.1;await request('pattern:stale','capture');assert.ok((await wait('pattern:stale','progressbar-native-result')).error);assert.equal(exports,1);
  }finally{f.emit('close');}
 });
+
+test('completed shared pattern findings ignore selection but retain shared-resource freshness proofs',async()=>{
+ const f=fixture(),shared=f.create(),bridge=createProgressBarCapture({api:f.api,hash,post:m=>f.posts.push(m),readShared:()=>shared});
+ f.api.viewport={scrollAndZoomIntoView(){}};
+ const c=await bridge.capture('pattern:retained');
+ async function request(operation){const requestId='retained:'+f.posts.length;bridge.accept({type:'progressbar-native-request',requestId,operation,captureId:c.captureId,nodeId:operation==='focus'?'1:2':null});await new Promise(resolve=>setTimeout(resolve,10));return f.posts.find(m=>m.requestId===requestId);}
+ assert.equal((await request('complete')).result,true);
+ f.page.selection=[];assert.equal((await request('focus')).result,true);
+ f.invalidate();assert.equal((await request('focus')).error,'PROGRESSBAR_CAPTURE_INCOMPLETE');
+ const g=fixture(),stale=g.create(),pending=createProgressBarCapture({api:g.api,hash,post:m=>g.posts.push(m),readShared:()=>stale});
+ const before=await pending.capture('pattern:pending');g.invalidate();
+ pending.accept({type:'progressbar-native-request',requestId:'pending:complete',operation:'complete',captureId:before.captureId,nodeId:null});
+ await new Promise(resolve=>setTimeout(resolve,10));assert.equal(g.posts.find(m=>m.requestId==='pending:complete').error,'PROGRESSBAR_CAPTURE_INCOMPLETE');
+ await assert.rejects(pending.capture('pattern:stale'),/SHARED_AREA_STALE/);
+});

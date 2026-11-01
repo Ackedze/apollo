@@ -35,7 +35,8 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
   }
   function selectionChanged() {
     if (expectedFocusId && api.currentPage.selection.length === 1 && api.currentPage.selection[0].id === expectedFocusId) { expectedFocusId = null; return; }
-    expectedFocusId = null; invalidate();
+    expectedFocusId = null;
+    if (!current?.completed) invalidate();
   }
   function bind() {
     page?.off?.('nodechange', observe); page = api.currentPage; page?.on?.('nodechange', observe); invalidate();
@@ -125,11 +126,15 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
     const reply = value => post(Object.assign({ type: 'progressbar-native-result', requestId: message.requestId, operation: message.operation }, value));
     try {
       if (Object.keys(message).sort().join(',') !== 'captureId,nodeId,operation,requestId,type' || typeof message.requestId !== 'string' || !message.requestId || message.requestId.length > 160
-        || !['capture', 'verify', 'focus', 'cancel'].includes(message.operation) || (message.captureId !== null && typeof message.captureId !== 'string')
+        || !['capture', 'verify', 'complete', 'focus', 'cancel'].includes(message.operation) || (message.captureId !== null && typeof message.captureId !== 'string')
         || (message.nodeId !== null && typeof message.nodeId !== 'string')) throw error('PROGRESSBAR_REQUEST_INVALID');
       if (message.operation === 'cancel') { invalidate(); reply({ result: true }); return; }
       if (message.operation === 'capture') { reply({ result: await capture(message.requestId) }); return; }
       const entry = await verify(message.captureId, message.operation !== 'focus');
+      if (message.operation === 'complete') {
+        // Keep saved navigation independent of selection, with every freshness proof intact.
+        entry.completed = true;
+      }
       if (message.operation === 'focus') {
         const node = entry.refs.get(message.nodeId); if (!node || node.removed) throw error('PROGRESSBAR_TARGET_UNAVAILABLE');
         expectedFocusId = node.id; api.currentPage.selection = [node]; api.viewport.scrollAndZoomIntoView([node]);

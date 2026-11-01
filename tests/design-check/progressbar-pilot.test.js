@@ -2,7 +2,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),path=requir
 const {createProgressBarClient}=require('../../src/design-check/progressbar-client');
 const {PILOT,RESULT_SCHEMA,FAMILIES,RULE_IDS,validPreparation,validResult}=require('../../src/design-check/progressbar-protocol');
 const tick=()=>new Promise(resolve=>setTimeout(resolve,10));
-function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult,onOperation,runStatus='queued',onNative}={}){
+function harness({staleAtVerify=false,staleAtComplete=false,sourceError=false,foreignResult=false,mixed=false,legacyProxy=false,mutatePrepared,mutateResult,onOperation,runStatus='queued',onNative}={}){
  const requests=[],native=[],sourcePin='a'.repeat(64),knowledge={contentVersion:'synthetic-knowledge'};
  const familyIds=mixed?Object.keys(FAMILIES):['progressbar'];
  const declaredContext={basis:'audit-settings',channel:'ab',platform:'desktop'};
@@ -28,13 +28,13 @@ function harness({staleAtVerify=false,sourceError=false,foreignResult=false,mixe
   }
   return response({success:true,run:{id:'run_12345678-abcd',status:'completed',validation:result}});
  },send:message=>{native.push(message);onNative?.(message,declaredContext);queueMicrotask(()=>client.accept({type:'progressbar-native-result',requestId:message.requestId,operation:message.operation,
-  ...(message.operation==='verify'&&staleAtVerify?{error:'PROGRESSBAR_CAPTURE_STALE'}:{result:message.operation==='capture'?capture:true})}));}});
+  ...((message.operation==='verify'&&staleAtVerify||message.operation==='complete'&&staleAtComplete)?{error:'PROGRESSBAR_CAPTURE_STALE'}:{result:message.operation==='capture'?capture:true})}));}});
  return{client,requests,native,result,capture,prepared,declaredContext};
 }
-test('explicit pilot uses capture → source preparation → native verify → existing run/poll → final native verify; focus and recheck stay separate',async()=>{
+test('explicit pilot uses capture → source preparation → native verify → existing run/poll → final native completion; focus and recheck stay separate',async()=>{
  const h=harness();assert.equal(h.requests.length,0);assert.equal(await h.client.start(),true);assert.equal(h.client.getState().phase,'complete');assert.deepEqual(h.client.getState().report.assessments,h.result.assessments);
  const timings=h.client.getState().report.timings;assert.deepEqual(Object.keys(timings.stagesMs),['capture','prepare','verify','running']);assert.ok(timings.totalMs>=0);assert.ok(Object.values(timings.stagesMs).every(ms=>ms>=0));
- assert.deepEqual(h.native.map(n=>n.operation),['capture','verify','verify']);assert.equal(h.requests.filter(r=>r.options.method==='POST').length,2);assert.equal(await h.client.focus('9:9'),false);assert.equal(await h.client.focus('1:2'),true);
+ assert.deepEqual(h.native.map(n=>n.operation),['capture','verify','complete']);assert.equal(h.requests.filter(r=>r.options.method==='POST').length,2);assert.equal(await h.client.focus('9:9'),false);assert.equal(await h.client.focus('1:2'),true);
  assert.equal(h.native.at(-1).operation,'focus');assert.equal(await h.client.start(),true);h.client.close();
 });
 test('stale capture refuses before the paid POST; source drift and foreign node responses cannot display PASS',async()=>{
@@ -127,4 +127,9 @@ test('Link context scope and exact source identity are independently checked by 
   assert.equal(validResult(result,h.capture,mobile),true);
   result.declaredContext.platform='desktop';assert.equal(validResult(result,h.capture,mobile),false);
  }finally{h.client.close();}
+});
+
+test('the client completes the native proof before exposing a focusable report and rejects a stale completion',async()=>{
+ const h=harness();try{assert.equal(await h.client.start(),true);assert.equal(h.native.at(-1).operation,'complete');assert.equal(await h.client.focus('1:2'),true);}finally{h.client.close();}
+ const old=harness({staleAtComplete:true});try{assert.equal(await old.client.start(),false);assert.equal(old.client.getState().phase,'error');assert.equal(old.client.getState().report,null);assert.equal(await old.client.focus('1:2'),false);}finally{old.client.close();}
 });

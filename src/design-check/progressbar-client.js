@@ -65,7 +65,7 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
       }
       const result = run.validation;
       if (!validResult(result, observed, prepared)) throw Error('PATTERN_RESULT_INVALID');
-      phase('verify'); if (await native('verify', observed.captureId) !== true) throw Error('PROGRESSBAR_CAPTURE_STALE'); guard();
+      phase('verify'); if (await native('complete', observed.captureId) !== true) throw Error('PROGRESSBAR_CAPTURE_STALE'); guard();
       finishStage();
       emit({ phase: 'complete', busy: false, message: messages.complete, error: '', report: Object.assign({}, result, { timings: { totalMs: Math.max(0, now() - started), stagesMs: stages } }), capture: observed }); return true;
     } catch (error) {

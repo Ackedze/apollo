@@ -376,3 +376,7 @@ Producer Core0.1.25 получил необязательный `CaptureReadCont
 Профиль охватывает экземпляры компонента Link. Гиперссылки в обычном TEXT,
 фактическое открытие вкладки и точная идентичность цветовых токенов не
 объявляются проверенными по скриншоту.
+
+### Saved pattern finding navigation
+
+After the final native proof completes, pattern findings remain focusable when the selection is cleared or changed. Actual captured-node edits, page changes and audit-context changes still make the report stale. A completed read-only finding retains its original capture root and every shared-resource freshness proof for navigation. Pending checks retain the original selection and shared-source freshness guards.

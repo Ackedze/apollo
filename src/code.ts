@@ -22,6 +22,7 @@ const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
 const {boundedRead,cooperativeRead}=require("./document-audit/reads");
 const {trace:auditTrace}=require('./document-audit/trace');
+const {verifyFinalCaptures}=require('./audit-final-captures');
 const {minimalRoots}=require("./document-audit/scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./document-audit/notification-proof");
 const { collectAuditDisplayMetadata } = require("./audit-display-resources");
@@ -352,13 +353,10 @@ async function audit(requestId: string, options:any={}) {
     }
     // One final reread covers changes during capture and later asynchronous work;
     // provisional evaluations are never delivered before this check succeeds.
-    for (const capture of captures) {
-      assertCurrent();
-      endStage = time('verify-final-capture', capture.subject.id);
-      const check = await checkCapture(capture.subject, capture.contract, capture.captured,assertCurrent);
-      if (engine.stableHash(check.anatomy) !== engine.stableHash(capture.captured.anatomy)) throw new Error(`Свойства узла ${capture.subject.id} изменились во время захвата. Повторите проверку. (AUDIT_CAPTURE_CHANGED · verify-final-capture)`);
-      endStage();
-    }
+    const endVerification=time('verify-final-captures');
+    await verifyFinalCaptures(captures,{guard:assertCurrent,hash:engine.stableHash,time:(id:string)=>time('verify-final-capture',id),
+      check:(capture:any,guard:()=>void)=>checkCapture(capture.subject,capture.contract,capture.captured,guard)});
+    endVerification();
     endStage = time('final-scan');
     const finalScan = await withCaptureReads(assertCurrent,control=>scanArea(roots,assertCurrent,undefined,control.read));
     if (engine.stableHash(finalScan.topology) !== engine.stableHash(scan.topology)) throw new Error('Состав или свойства выбранной области изменились. Повторите проверку. (AUDIT_TOPOLOGY_CHANGED · final-scan)');

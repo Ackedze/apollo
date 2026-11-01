@@ -4,6 +4,8 @@ const {getDetachedLibraryComponentKey,detachedValue}=require("./detached");
 const {styleValue,variableValue,linkedStyleValue,describeNativeStyles}=require("./styles");
 const {parallel,boundedRead,retryableRead,readError}=require("./reads");
 const {describeDeprecatedStyles}=require('./deprecated-styles');
+const {readFailureReason}=require('./protocol');
+const {publishedSet,publishedVariant}=require('./published-variant');
 const LIMITS={selection:10000,definitions:1000,source:10000,page:10000,findings:1800,imports:300,collections:300,concurrency:12,readMs:1200};
 const signature=nodes=>nodes.map(n=>n.id).sort().join('|');
 function pageOf(node){let n=node,seen=new Set();while(n&&!seen.has(n.id)){seen.add(n.id);if(n.type==='PAGE')return n;n=n.parent;}return null;}
@@ -12,7 +14,7 @@ function nodeValue(n){const scene=n.type!=='PAGE'&&n.type!=='DOCUMENT';return {i
 function mainValue(n){return n?{id:n.id,key:typeof n.key==='string'?n.key:null,remote:typeof n.remote==='boolean'?n.remote:null,pageId:pageOf(n)?.id||null,name:String(n.name||'Компонент')}:null;}
 function collectionValue(c){return c?{id:c.id,name:String(c.name),key:typeof c.key==='string'?c.key:null,remote:typeof c.remote==='boolean'?c.remote:null,defaultModeId:typeof c.defaultModeId==='string'?c.defaultModeId:null,modes:c.modes.map(m=>({modeId:m.modeId,name:m.name}))}:null;}
 async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedRoots,onProgress=async()=>{},readTimeoutMs,readOperation,onReadFailure=()=>{},scoped=false,deprecatedStyleReader=null,onTrace=null}){
- const bound=Object.assign({},LIMITS,limits),facts=new Map(),targets=new Map(),nodes=new Map(),mainCache=new Map(),published=new Map();
+ const bound=Object.assign({},LIMITS,limits),facts=new Map(),targets=new Map(),nodes=new Map(),mainCache=new Map(),published=new Map(),publishedSets=new Map(),publishedSetKeys=new Map();
  const checks=[{id:'local',scope:'visible-selected-area-and-local-source-definitions',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'freshness',scope:'published-version-at-run; independent-instances-and-local-source-dependencies',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'theme',scope:'current-page-explicit-theme-mode; Desktop/MobileWeb',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false}];
  checks.push({id:'detached',scope:'visible-selected-area; native-library-detachedInfo-only',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
  checks.push({id:'customStyles',scope:'visible-selected-area; native-unbound-paints-effects-typography; no DS-membership or detach-history claim',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
@@ -57,10 +59,28 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
   if(!key){gap(fresh,'component-key-missing');finding(fresh,'unknown',n,'Не удалось определить библиотечный ключ компонента.',common);return;}
   if(!published.has(key)){
    if(published.size>=bound.imports){gap(fresh,'published-import-limit');finding(fresh,'unknown',n,'Достигнут лимит чтения опубликованных компонентов.',common);return;}
-   published.set(key,read(()=>api.importComponentByKeyAsync(key),{operation:'importComponentByKeyAsync',nodeId:n.id,resourceId:key}));
+   published.set(key,(async()=>{
+    try{return await read(()=>api.importComponentByKeyAsync(key),{operation:'importComponentByKeyAsync',nodeId:n.id,resourceId:key});}
+    catch(error){
+     assertCurrent();const parent=m.parent;
+     if(readFailureReason(error)!=='not-found-or-unpublished'||typeof api.importComponentSetByKeyAsync!=='function'||parent?.type!=='COMPONENT_SET'||parent.remote!==true||typeof parent.key!=='string'||!parent.key)throw error;
+     const setKey=parent.key;
+     facts.set('parentIdentity:'+m.id,{kind:'parentIdentity',id:m.id,value:mainValue(parent)});
+     if(!publishedSets.has(setKey))publishedSets.set(setKey,read(async()=>{
+      const set=await api.importComponentSetByKeyAsync(setKey);assertCurrent();
+      return publishedSet(set,setKey);
+     },{operation:'importComponentSetByKeyAsync',nodeId:n.id,resourceId:setKey}));
+     const set=await publishedSets.get(setKey);assertCurrent();
+     // A matching name/property combination never establishes variant identity.
+     const latest=publishedVariant(set,setKey,key);publishedSetKeys.set(key,setKey);facts.set('identity:'+set.id,{kind:'identity',id:set.id,value:mainValue(set)});
+     if(!facts.has('parentIdentity:'+latest.id))facts.set('parentIdentity:'+latest.id,{kind:'parentIdentity',id:latest.id,value:mainValue(set)});
+     return latest;
+    }
+   })());
   }
-  let latest;try{latest=await published.get(key);}catch(_){assertCurrent();gap(fresh,'component-import-failed');finding(fresh,'unknown',n,'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
+  let latest;try{latest=await published.get(key);}catch(error){assertCurrent();const absent=error.message==='PUBLISHED_VARIANT_UNAVAILABLE';gap(fresh,absent?'published-variant-unavailable':'component-import-failed');if(absent)common.evidence.componentSetKey=error.componentSetKey;finding(fresh,'unknown',n,absent?'Опубликованный набор доступен, но вариант с этим библиотечным ключом не найден.':'Опубликованная версия недоступна. Проверьте доступ к библиотеке и повторите проверку.',common);return;}
   assertCurrent();common.evidence.latestComponentId=latest?.id||null;
+  if(publishedSetKeys.has(key))common.evidence.componentSetKey=publishedSetKeys.get(key);
   if(!latest||latest.key!==key||latest.remote!==true||typeof latest.id!=='string'){gap(fresh,'component-import-identity-mismatch');finding(fresh,'unknown',n,'Опубликованный компонент не совпал с библиотечным ключом.',common);return;}
   facts.set('identity:'+latest.id,{kind:'identity',id:latest.id,value:mainValue(latest)});
   finding(fresh,latest.id===m.id?'current':'update',n,latest.id===m.id?'Экземпляр использует опубликованную версию. Соответствие дизайн-системе проверяется отдельно.':'Доступна новая опубликованная версия компонента.',common);
@@ -107,18 +127,19 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  }
  // Imported library resources must settle before their bindings become evidence.
  local.status='running';fresh.status='running';theme.status='running';styles.status='running';
- async function checkStyles(){
+ async function checkStyles(beforeStyles=new Map()){
  styles.status=roots.length?'complete':'incomplete';const styleCache=new Map(),variableCache=new Map();
+ let materialized=0;
  let deprecatedIndex=null;
  if(deprecated){try{deprecatedIndex=await deprecatedStyleReader.read(assertCurrent);deprecatedIndexId=deprecatedIndex.indexId;deprecated.status=roots.length?'complete':'incomplete';if(!roots.length)gap(deprecated,'empty-selection');}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:null}));gap(deprecated,'deprecated-style-index-unavailable');}assertCurrent();if(local.gaps.includes('selection-node-limit'))gap(deprecated,'selection-node-limit');}
  await parallel(areaNodes.filter(n=>n.type!=='PAGE'&&n.type!=='DOCUMENT'),bound.concurrency,async n=>{
   if(n.type==='SECTION')return;styles.checked++;units.get(styles.id).add(n.id);let diagnostic,value;
   try{
-   const before=onTrace?styleValue(n):null;
+   const before=onTrace?beforeStyles.get(n.id)||styleValue(n):null;
    await describeNativeStyles(api,n,{read,styleCache,variableCache});
    if(deprecatedIndex)await describeDeprecatedStyles(api,n,{read,styleCache,index:deprecatedIndex});
    assertCurrent();value=styleValue(n);
-   if(before&&hash(before)!==hash(value))trace('phase-drift',factFailure({kind:'styles',id:n.id,value:before},value,'value-mismatch',hash,'style-resource-loading').nativeFailure);
+   if(before&&hash(before)!==hash(value)){materialized++;if(materialized<=8)trace('phase-drift',factFailure({kind:'styles',id:n.id,value:before},value,'value-mismatch',hash,'style-resource-loading').nativeFailure);}
    facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache});
   }
   catch(error){assertCurrent();onReadFailure(readError(error,{operation:'readNativeStyles',nodeId:n.id,resourceId:null}));if(deprecatedIndex){gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
@@ -142,6 +163,7 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  // Native binding state is not a replacement for v3's catalog and policy gates.
  // Exact library/context exceptions require authority that this subset lacks.
  if(styles.findings.length)gap(styles,'v3-catalog-policy-not-connected');
+ if(materialized)trace('phase-summary',{stage:'style-resource-loading',count:materialized});
  finished.add('customStyles');await checkpoint();
  }
  async function checkLocal(){
@@ -179,12 +201,12 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  fresh.status=fresh.gaps.length?'incomplete':'complete';
  await parallel(versions,bound.concurrency,async args=>{await version(...args);});
  assertCurrent();trace('phase-end',{stage:'published-imports',count:published.size});
- let materialized=0;
- for(const entry of beforeImports)try{const actual=styleValue(entry.node);if(hash(entry.value)!==hash(actual)){
+ let materialized=0;const beforeStyles=new Map();
+ for(const entry of beforeImports)try{const actual=styleValue(entry.node);beforeStyles.set(entry.node.id,actual);if(hash(entry.value)!==hash(actual)){
   materialized++;if(materialized<=8)trace('phase-drift',factFailure({kind:'styles',id:entry.node.id,value:entry.value},actual,'value-mismatch',hash,'published-imports').nativeFailure);
- }}catch(_){}
+ }entry.value=actual;}catch(_){}
  if(materialized)trace('phase-summary',{stage:'published-imports',count:materialized});
- trace('phase-start',{stage:'styles',count:areaNodes.length});await checkStyles();
+ trace('phase-start',{stage:'styles',count:areaNodes.length});await checkStyles(beforeStyles);
  // Late-discovered occurrences share the source-owner diagnostic, without duplicate entries.
  for(const f of fresh.findings)if(f.owner&&owners.has(f.owner.id)){
   const o=owners.get(f.owner.id);f.occurrences=Array.from(o.occurrences);f.targets=f.occurrences.map(id=>target(nodes.get(id),'occurrence')).filter(Boolean);const own=target(o.node,'owner');if(own)f.targets.push(own);
@@ -293,6 +315,7 @@ async function recheck(api,facts,{hash,assertCurrent,timeoutMs=1200,concurrency=
   else{const n=await node(f.id);if(!n||n.removed)throw factFailure(f,null,'node-unavailable',hash,stage);
    if(f.kind==='node')value=nodeValue(n);
    else if(f.kind==='identity')value=mainValue(n);
+   else if(f.kind==='parentIdentity')value=mainValue(n.parent);
    else if(f.kind==='pageModes')value=Object.assign({},n.explicitVariableModes||{});
    else if(f.kind==='explicitModes')value=Object.assign({},n.explicitVariableModes||{});
    else if(f.kind==='sceneModes')value=Object.assign({},n.resolvedVariableModes||{});

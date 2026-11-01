@@ -1,4 +1,5 @@
 const {contextValid}=require("./protocol");
+const {publishedVariant}=require('./published-variant');
 const ACTION_SCHEMA='apollo.document-actions.v1';
 const closed=(v,keys)=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
 const id=v=>typeof v==='string'&&v.length>0&&v.length<=150;
@@ -11,6 +12,7 @@ function buildActionData(observation,runId,context,hash,bindings=new Map()){
    const n=observation.nodes.get(target.nodeId);let action=null;
    if(check.id==='freshness'&&f.status==='update'&&['independent-instance','projected-slot-root'].includes(f.evidence.scope)&&f.occurrences.includes(target.nodeId)&&n?.type==='INSTANCE'&&typeof n.swapComponent==='function'&&f.componentKey&&f.evidence.currentComponentId&&f.evidence.latestComponentId){
     action={kind:'update',nodeId:n.id,expectedKey:f.componentKey,currentId:f.evidence.currentComponentId,latestId:f.evidence.latestComponentId,label:'Обновить',description:'Обновить только этот экземпляр до проверенной опубликованной версии.'};
+    if(f.evidence.componentSetKey)action.componentSetKey=f.evidence.componentSetKey;
    }
    if(check.id==='theme'&&f.status==='theme-mismatch'&&f.evidence.collectionKey&&f.evidence.collectionRemote===true&&f.evidence.collectionId&&f.evidence.expectedModeId&&target.kind==='page-anchor'&&typeof observation.nodes.get(context.pageId)?.setExplicitVariableModeForCollection==='function'){
     action={kind:'theme',nodeId:target.nodeId,collectionId:f.evidence.collectionId,collectionKey:f.evidence.collectionKey,modeId:f.evidence.expectedModeId,label:'Сменить',description:'Сменить Theme текущей страницы на Corp.'};
@@ -63,7 +65,7 @@ async function performAction(api,action,node,{read,guard,hash,beforeWrite,onWrit
  const source=instanceState(node),fingerprint=hash(source);
  const current=await read(()=>node.getMainComponentAsync());guard();
  if(!current||current.remote!==true||current.key!==action.expectedKey||current.id!==action.currentId)throw Error('ACTION_COMPONENT_IDENTITY_CHANGED');
- const latest=await read(()=>api.importComponentByKeyAsync(action.expectedKey));guard();
+ const latest=action.componentSetKey?publishedVariant(await read(()=>api.importComponentSetByKeyAsync(action.componentSetKey)),action.componentSetKey,action.expectedKey):await read(()=>api.importComponentByKeyAsync(action.expectedKey));guard();
  if(!latest||latest.type!=='COMPONENT'||latest.remote!==true||latest.key!==action.expectedKey||latest.id!==action.latestId)throw Error('ACTION_PUBLISHED_IDENTITY_CHANGED');
  await beforeWrite();guard();if(hash(instanceState(node))!==fingerprint)throw Error('ACTION_INSTANCE_CHANGED');
  node.swapComponent(latest);onWritten();

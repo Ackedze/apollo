@@ -59,3 +59,26 @@ test('a real later fill change still fails the unchanged strict fact comparison'
  const {f,text}=scene(),o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{}});text.fills=[{type:'SOLID',color:{r:0,g:0,b:1}}];
  await assert.rejects(recheck(f.api,o.facts,{hash,assertCurrent:()=>{}}),e=>e.message==='NATIVE_FACTS_CHANGED'&&e.nativeFailure.nodeId===text.id&&e.nativeFailure.changedFields.includes('fills.0.color.b'));
 });
+test('materialization trace stays bounded while every selected style fact is still captured and rechecked',async()=>{
+ const {f}=scene(),events=[],texts=[];
+ for(let i=0;i<24;i++)texts.push(f.node('lazy-'+i,'TEXT',f.page.selection[0],{characters:'Synthetic',fills:[{type:'SOLID',color:{r:1,g:0,b:0}}],fillStyleId:'old-'+i}));
+ f.api.getStyleByIdAsync=async id=>{const text=texts.find(n=>n.fillStyleId===id);if(text&&id.startsWith('old-'))text.fillStyleId=id.replace('old-','new-');return{id,key:'a'.repeat(40),type:'PAINT',name:'Synthetic'};};
+ const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},onTrace:(event,data)=>events.push({event,data})});await recheck(f.api,o.facts,{hash,assertCurrent:()=>{}});
+ assert.equal(events.filter(e=>e.event==='phase-drift'&&e.data.stage==='style-resource-loading').length,8);
+ assert.equal(events.find(e=>e.event==='phase-summary'&&e.data.stage==='style-resource-loading').data.count,24);
+ assert.equal(o.facts.filter(f=>f.kind==='styles').length,26);
+ texts[23].fillStyleId='changed-after-capture';await assert.rejects(recheck(f.api,o.facts,{hash,assertCurrent:()=>{}}),/NATIVE_FACTS_CHANGED/);
+});
+test('tracing preserves exact facts and findings with at most two extra text-segment reads per node',async()=>{
+ const observations=[];
+ for(const enabled of [false,true]){
+  const {f}=scene();let segments=0;
+  for(let i=0;i<20;i++){
+   const n=f.node('text-'+i,'TEXT',f.page.selection[0],{characters:'Synthetic',fills:[],textStyleId:''});
+   n.getStyledTextSegments=fields=>{segments++;const row={start:0,end:9};for(const field of fields)row[field]=n[field];return[row];};
+  }
+  const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},onTrace:enabled?()=>{}:null});observations.push({segments,checks:o.checks,facts:o.facts});
+ }
+ assert.deepEqual(observations[0].facts,observations[1].facts);assert.deepEqual(observations[0].checks,observations[1].checks);
+ assert(observations[1].segments-observations[0].segments<=40,'diagnostic tracing must not add a third full text traversal');
+});

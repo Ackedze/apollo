@@ -550,10 +550,10 @@ test('stage timings account for native reads without changing canonical audit or
   assert.equal(timing.scope, 'contract-area-audit-before-delivery');
   assert.equal(timing.clock, 'Date.now');
   assert.equal(timing.totalMs, 42);
-  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','evaluate','contract-hash','index-component','display-metadata','verify-final-capture','final-scan','aggregate','shared-area-snapshot','focus-targets']);
+  assert.deepEqual(timing.stages.filter(s=>!s.stage.startsWith('capture.')).map(s => s.stage), ['scan','capture','evaluate','contract-hash','index-component','display-metadata','verify-final-capture','verify-final-captures','final-scan','aggregate','shared-area-snapshot','focus-targets']);
   assert.equal(timing.stages.find(s => s.stage === 'capture').durationMs, 21);
   assert.equal(timing.stages.find(s => s.stage === 'capture').scopeId, 'actual');
-  assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')).reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);
+  assert.equal(timing.stages.filter(s=>!s.stage.startsWith('capture.')&&s.stage!=='verify-final-capture').reduce((sum,s) => sum + s.durationMs, 0), timing.totalMs);
   assert.equal(second.audit.timings.totalMs, 78);
   delete first.audit.timings; delete second.audit.timings;
   delete first.delivery; delete second.delivery;

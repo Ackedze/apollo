@@ -6,16 +6,21 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function until(check){for(let i=0;i<1000;i++){const value=check();if(value)return value;await sleep(5);}throw Error('Condition not reached');}
 (async()=>{
  const out=process.env.DOCUMENT_AUDIT_QA_ROOT;if(!out)throw Error('Set DOCUMENT_AUDIT_QA_ROOT');fs.mkdirSync(out,{recursive:true});
- const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});const errors=[],host=[],f=actionScene();let ready=false,queued=[],holdNative=false,heldNative=null;const page=await browser.newPage({viewport:{width:800,height:900},acceptDownloads:true});
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});const errors=[],host=[],trace=[],f=actionScene();let ready=false,queued=[],holdNative=false,heldNative=null;const page=await browser.newPage({viewport:{width:800,height:900},acceptDownloads:true});
+ const imported=f.api.importComponentByKeyAsync;let hydrated=false;
+ f.api.importComponentByKeyAsync=async key=>{const main=await imported(key);if(!hydrated&&key==='host-key'){hydrated=true;f.raw.fillStyleId='hydrated-style';f.raw.fills=[{type:'SOLID',color:{r:0,g:1,b:0}}];}return main;};
+ f.api.getStyleByIdAsync=async id=>id==='hydrated-style'?{id,key:'a'.repeat(40),type:'PAINT',name:'Synthetic bound style'}:null;
+ const nativeConsole=Object.create(console);nativeConsole.info=(prefix,entry)=>{if(prefix==='[Apollo audit]')trace.push(JSON.parse(JSON.stringify(entry)));};
  try{
   f.api.ui.postMessage=m=>{f.messages.push(JSON.parse(JSON.stringify(m)));if(ready)void page.evaluate(m=>window.emitPlugin(m),m).catch(()=>{});else queued.push(m);};
-  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../dist/code.js'),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../dist/code.js'),'utf8'),{figma:f.api,__html__:'',console:nativeConsole,TextEncoder,setTimeout,clearTimeout});
   await page.exposeFunction('nativeHost',m=>{host.push(m);if(holdNative&&m.type==='document-audit-request'){heldNative=m;return;}return f.api.ui.onmessage(m);});
   await page.addInitScript(()=>{parent.postMessage=m=>void window.nativeHost(m.pluginMessage);window.emitPlugin=m=>window.dispatchEvent(new MessageEvent('message',{source:window,data:{pluginMessage:m}}));const timer=setTimeout;window.auditDeadlineCallbacks=[];window.setTimeout=(fn,ms,...args)=>{if(ms===60000||ms===20000)window.auditDeadlineCallbacks.push({ms,fn:()=>fn(...args)});return timer(fn,ms,...args);};});
   page.on('pageerror',e=>errors.push(e.message));await page.route(/^https?:/,r=>r.abort());await page.goto(pathToFileURL(path.join(__dirname,'../dist/ui.html')).href);ready=true;for(const m of queued)await page.evaluate(m=>window.emitPlugin(m),m);queued=[];
   await f.api.ui.onmessage({type:'load-contract',source:authored.nested().source});
   const check=()=>page.getByRole('button',{name:'Проверить',exact:true}),stop=()=>page.getByRole('button',{name:'Остановить',exact:true});
   await check().click();await until(()=>f.messages.filter(m=>m.type==='audit-result').length===1&&f.messages.filter(m=>m.type==='document-audit-result').length===1);await check().waitFor();assert.equal(await check().isEnabled(),true);
+  assert.ok(hydrated);assert.ok(trace.some(e=>e.event==='phase-drift'&&e.stage==='published-imports'&&e.nodeId===f.raw.id));assert.equal(f.messages.some(m=>m.type.startsWith('document-audit-')&&m.diagnostic?.code==='NATIVE_FACTS_CHANGED'),false);
   const baselineCount=f.messages.filter(m=>m.type==='audit-result').length;holdNative=true;await check().click();await until(()=>heldNative&&f.messages.filter(m=>m.type==='audit-result').length>baselineCount);
   await page.waitForFunction(()=>document.querySelector('.apollo-overview-caption[role=status]')?.textContent.includes('Читаем'));
   assert.equal(await page.locator('.apollo-status-messages [role=status]').count(),0);
@@ -33,6 +38,6 @@ async function until(check){for(let i=0;i<1000;i++){const value=check();if(value
   let fail=true;f.actual.getMainComponentAsync=async()=>{if(fail){fail=false;throw Error('NATIVE_READ_TIMEOUT');}return original();};await check().click();await check().waitFor();await until(()=>f.messages.some(m=>m.diagnostic));
   const downloadPromise=page.waitForEvent('download');await page.evaluate(()=>document.getElementById('export').click());const download=await downloadPromise;const target=path.join(out,'summary.json');await download.saveAs(target);const report=JSON.parse(fs.readFileSync(target,'utf8'));
   const failures=(report.auditFailures||[]).concat(report.nativeAudit?.failures||[]);assert.ok(failures.some(d=>d.code==='NATIVE_READ_TIMEOUT'&&d.stage&&d.requestId));assert.ok(report.auditId);await page.setViewportSize({width:800,height:640});await page.screenshot({path:path.join(out,'complete-800-640.png')});
-  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({status:'PASS',actualBuiltMain:true,actualBuiltUI:true,syntheticOnly:true,liveFigma:false,stopBeforeRPCResolution:true,lateReplyRejected:true,stagedContractRecaptured:true,pinnedContext:true,firstFailureInExport:true,viewports:[[800,900],[800,640]],errors},null,2)+'\n');console.log('P0 browser PASS: pinned scope, staged recapture, Stop/late response, retained diagnostics.');
+  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'RESULT.json'),JSON.stringify({status:'PASS',actualBuiltMain:true,actualBuiltUI:true,syntheticOnly:true,liveFigma:false,importMaterializationBeforeSnapshot:true,consoleTraceIdentifiedPhase:true,stopBeforeRPCResolution:true,lateReplyRejected:true,stagedContractRecaptured:true,pinnedContext:true,firstFailureInExport:true,viewports:[[800,900],[800,640]],errors},null,2)+'\n');fs.writeFileSync(path.join(out,'CONSOLE-TRACE.json'),JSON.stringify(trace,null,2)+'\n');console.log('P0 browser PASS: materialization/console trace, pinned scope, staged recapture, Stop/late response, retained diagnostics.');
  }finally{f.emit('close');await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

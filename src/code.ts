@@ -21,6 +21,7 @@ const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
 const {boundedRead,cooperativeRead}=require("./document-audit/reads");
+const {trace:auditTrace}=require('./document-audit/trace');
 const {minimalRoots}=require("./document-audit/scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./document-audit/notification-proof");
 const { collectAuditDisplayMetadata } = require("./audit-display-resources");
@@ -177,7 +178,8 @@ async function audit(requestId: string, options:any={}) {
     clock: 'Date.now', totalMs: 0, stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
   const time = (stage:string, scopeId?:string) => {
     const started = Date.now();if(activeAuditRun?.requestId===requestId)activeAuditRun.stage=stage;
-    return () => timings.stages.push(Object.assign({stage,durationMs:Math.max(0,Date.now()-started)},scopeId ? {scopeId} : {}));
+    auditTrace('phase-start',{runId:requestId,stage:'contract.'+stage,nodeId:scopeId});
+    return () => {const durationMs=Math.max(0,Date.now()-started);auditTrace('phase-end',{runId:requestId,stage:'contract.'+stage,nodeId:scopeId,durationMs});timings.stages.push(Object.assign({stage,durationMs},scopeId ? {scopeId} : {}));};
   };
   busy = true;if(!options.quiet){areaNotificationProof?.close();areaNotificationProof=null;verifyLastArea=null;lastAudit = null; focusNodes.clear();}
   const current = generation, pageId=figma.currentPage.id, fileMode = localMode;
@@ -258,7 +260,7 @@ async function audit(requestId: string, options:any={}) {
           instanceMainComponentAliasesVersion: contract.runtimePolicy.instanceMainComponentAliasesVersion,
           representations: contract.facts.representations, allowedComponentProperties: allowedComponentPropertyNames(contract), platform: contract.facts.component.platform,
           portableSwapIdentityVersion: contract.runtimePolicy.portableSwapIdentityVersion, manualSourceHash: contract.package.manualSourceHash, expectedRootNodeId: subject.id, nativeSlotCapturePlan: nativeSlotCapturePlan(contract), includePreview: false,
-          onTiming:(stage,durationMs)=>timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id}),
+          onTiming:(stage,durationMs)=>{auditTrace('phase-end',{runId:requestId,stage:'contract.capture.'+stage,nodeId:subject.id,durationMs});timings.stages.push({stage:`capture.${stage}`,durationMs,scopeId:subject.id});},
           captureTransitionContext: contract.runtimePolicy.transitionFactsVersion === 1 }));
       } catch (error) { assertCurrent(); gap('capture-failed', error instanceof Error ? error.message : String(error)); continue; }
       finally { endCapture(); }

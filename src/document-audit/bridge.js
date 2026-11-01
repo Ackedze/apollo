@@ -7,10 +7,11 @@ const {collect,recheck,signature,pageOf}=require("./engine");
 const {impact,mergeObservation}=require("./scoped-recheck");
 const {createNotificationProof,observationNodes}=require("./notification-proof");
 const {REFRESH_TIMEOUT_MS}=require("./budgets");
+const {trace}=require('./trace');
 function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,timeoutMs=15000,refreshTimeoutMs=REFRESH_TIMEOUT_MS,observeSelection=true,isBusy=()=>false,onMutation=()=>{},onRecheckStart=null,bindingAdapter=null,deprecatedStyleReader=null}){
  let sequence=0,active=null,session=null,page=null,nodeListener=null,started=false,epoch=0,observerAvailable=false,actionTask=null,lastActionReply=null,actionSequence=0,focusTask=null,refreshTask=null,bindingSequence=0,observerTask=null;
  const errors={NATIVE_FACTS_CHANGED:'Свойства или зависимости изменились. Повторите проверку.',NATIVE_CONTEXT_CHANGED:'Страница или платформа изменились. Повторите проверку.',NATIVE_TIMEOUT:'Чтение заняло слишком много времени. Повторите проверку.',NATIVE_RESULT_STALE:'Результат устарел. Повторите проверку.'};
- function failureDiagnostic(error,requestId,ticket=sequence,stage='native-read'){return makeFailureDiagnostic(error,requestId,stage,hash,[ticket,now()]);}
+ function failureDiagnostic(error,requestId,ticket=sequence,stage='native-read'){const diagnostic=makeFailureDiagnostic(error,requestId,stage,hash,[ticket,now()]);if(diagnostic.code==='NATIVE_FACTS_CHANGED')trace('facts-changed',Object.assign({runId:requestId},diagnostic));return diagnostic;}
  function invalidate(reason='NATIVE_RESULT_STALE',diagnostic=null){
   epoch++;
   if(refreshTask){const task=refreshTask;refreshTask=null;task.notificationProof?.close();sequence++;clearTimeout(task.timer);task.operations?.fail?.();post({type:'document-recheck-error',schemaVersion:SCHEMA,requestId:task.requestId,runId:task.old.runId,message:errors[reason]||errors.NATIVE_RESULT_STALE});}
@@ -49,6 +50,7 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
   if(actionTask){post({type:'document-audit-error',schemaVersion:SCHEMA,requestId:m.requestId,code:'ACTION_BUSY',message:'Дождитесь завершения действия.',diagnostic:failureDiagnostic(Error('ACTION_BUSY'),m.requestId,sequence,'request-start')});return;}
   const ticket=++sequence;let roots=[],stage='selection',attempt=0,attemptGeneration=0;
   session=null;active={ticket,requestId:m.requestId,context:m.context};
+  trace('audit-start',{runId:m.requestId,stage:'native',nodeId:m.context.selectionSignature});
   const guard=()=>{if(sequence!==ticket)throw Error('NATIVE_CANCELLED');if(api.currentPage.id!==m.context.pageId||roots.some(n=>n.removed||pageOf(n)?.id!==m.context.pageId))throw Error('NATIVE_CONTEXT_CHANGED');};
   const progress=message=>{guard();post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,message,stage});};
   const readOperation=read=>cooperativeRead(read,Math.max(10,Math.min(timeoutMs,1200)),guard,()=>progress('Ожидаем данные Figma. Проверка продолжается…'));
@@ -68,12 +70,12 @@ function createDocumentAuditBridge({api,hash,post,focus,now=Date.now,limits,time
     };
     try{
      stage='collect';progress(attempt===1?'Читаем свойства, стили и токены…':'Перечитываем изменившиеся данные Figma…');
-     const observation=await collect(api,m.context,{hash,assertCurrent:assertAttempt,limits,roots,deprecatedStyleReader,onProgress:checkpoint,readOperation:readAttempt,onReadFailure:error=>{assertAttempt();if(!retryableRead(error)||error.nativeRead?.operation==='deprecatedStyles.index')post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)});}});
+     const observation=await collect(api,m.context,{hash,assertCurrent:assertAttempt,limits,roots,deprecatedStyleReader,onProgress:checkpoint,readOperation:readAttempt,onTrace:(event,data)=>trace(event,Object.assign({runId:m.requestId,attempt},data)),onReadFailure:error=>{assertAttempt();if(!retryableRead(error)||error.nativeRead?.operation==='deprecatedStyles.index')post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)});}});
      if(!observerAvailable)for(const c of observation.checks)if(c.status!=='not-applicable'){c.status='incomplete';c.gaps.push('current-page-observer-unavailable');}
      stage='deprecated-style-index-recheck';await verifyDeprecatedStyles(deprecatedStyleReader,observation,{guard:assertAttempt,onReadFailure:error=>post({type:'document-audit-progress',schemaVersion:SCHEMA,requestId:m.requestId,stage,diagnostic:failureDiagnostic(error,m.requestId,[ticket,attempt],stage)})});assertAttempt();stage='final-recheck';await recheck(api,observation.facts,{hash,assertCurrent:assertAttempt,stage,readOperation:readAttempt});assertAttempt();
      const result=resultFor(observation);if(!resultValid(result))throw Error('NATIVE_RESPONSE_INVALID');
      session={runId:m.requestId,context:m.context,facts:observation.facts,targets:observation.targets,result,observation,roots,epoch,expires:now()+60000};session.actions=buildActionData(observation,m.requestId,m.context,hash);
-     active=null;post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);return;
+     active=null;trace('audit-complete',{runId:m.requestId,attempt,stage:'native',count:observation.facts.length});post({type:'document-audit-result',schemaVersion:SCHEMA,requestId:m.requestId,result,actionData:session.actions.sidecar});if(bindingAdapter)void refreshBindings(m.requestId);return;
     }catch(error){
      attemptGeneration++;if(sequence!==ticket)return;
      const diagnostic=failureDiagnostic(error,m.requestId,[ticket,attempt],stage);

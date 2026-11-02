@@ -377,6 +377,24 @@ Producer Core0.1.25 получил необязательный `CaptureReadCont
 фактическое открытие вкладки и точная идентичность цветовых токенов не
 объявляются проверенными по скриншоту.
 
+Native capture `apollo.progressbar-capture.v2` дополняет дерево и PNG полем
+`contextEvidence` (`apollo.link-context-evidence.v1`). Для каждого наблюдаемого
+узла передаются actual fills, цветовые variable bindings с ключами переменной и
+коллекции, цепочкой алиасов и выбранными режимами; для текста — отдельные
+сегменты с fills и hyperlinks. Имена токенов и совпадение RGB не заменяют ключи.
+Public component properties, componentPropertyReferences и узлы SLOT сохраняют
+фактический контекст вложения: Caption не становится action-слотом по имени слоя.
+Prototype reactions и annotations описывают намерение в макете; они не доказывают
+работоспособность frontend или согласование исключения дизайн-системой.
+
+Отсутствующее значение, неподдерживаемое свойство и отказ чтения различаются
+явными статусами. Поле включено в fingerprint и повторное native чтение до
+запуска агента, после ответа и при навигации к результату. Изменение binding,
+алиаса, режима, слота, prototype или annotation делает capture устаревшим;
+shared-resource proof сохраняется. UI принимает прежний capture v1 и новый v2;
+для v2 нужен совместимый Proxy. Выбирайте область с контейнером ссылки:
+контекст за границей выбранного дерева не добавляется автоматически.
+
 ### Saved pattern finding navigation
 
 After the final native proof completes, pattern findings remain focusable when the selection is cleared or changed. Actual captured-node edits, page changes and audit-context changes still make the report stale. A completed read-only finding retains its original capture root and every shared-resource freshness proof for navigation. Pending checks retain the original selection and shared-source freshness guards.

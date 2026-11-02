@@ -1,5 +1,6 @@
 const PILOT = 'component-patterns-v3';
-const CAPTURE_SCHEMA = 'apollo.progressbar-capture.v1';
+const CAPTURE_SCHEMA = 'apollo.progressbar-capture.v2';
+const LEGACY_CAPTURE_SCHEMA = 'apollo.progressbar-capture.v1';
 const RESULT_SCHEMA = 'apollo.component-pattern-assessment.v3';
 const FAMILIES = {
   link: { profile: 'link', kinds: ['Link'], ruleIds: ["rule:components.link.supported-actions", "rule:components.link.pseudo-link", "rule:components.link.no-underline-exception", "rule:components.link.context-color", "rule:components.link.cards-actions", "rule:components.link.component-context", "rule:components.link.self-contained-text", "rule:components.link.punctuation"] },
@@ -68,4 +69,4 @@ function validResult(value, capture, prepared) {
         && ref.sourceId === 'canonical-' + subject.profile && prepared.sources.some(source => source.sourceId === ref.sourceId && source.sha256 === ref.sha256));
   });
 }
-module.exports = { contextValid, sameContext, PILOT, CAPTURE_SCHEMA, RESULT_SCHEMA, FAMILIES, RULE_IDS, OUTCOMES, validPreparation, validResult };
+module.exports = { contextValid, sameContext, PILOT, CAPTURE_SCHEMA, LEGACY_CAPTURE_SCHEMA, RESULT_SCHEMA, FAMILIES, RULE_IDS, OUTCOMES, validPreparation, validResult };

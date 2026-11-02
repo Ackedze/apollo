@@ -64,3 +64,14 @@ test('actual Patterns shell refuses null, sibling, child, self and uncorrelated 
     assert.equal(h.requests[0].report.phase, 'prepare');
   } finally { h.close(); }
 });
+
+test('actual Patterns shell forwards capture v2 context evidence intact to preparation', async () => {
+  const h = await harness();
+  try {
+    h.reply.result.schemaVersion = 'apollo.progressbar-capture.v2';
+    h.reply.result.contextEvidence = { schemaVersion: 'apollo.link-context-evidence.v1', nodes: [{ nodeId: 'synthetic-root', propertyReferences: { status: 'available', value: null } }] };
+    h.receive(h.parent); await tick();
+    assert.equal(h.requests.length, 1);
+    assert.deepEqual(h.requests[0].report.capture.contextEvidence, h.reply.result.contextEvidence);
+  } finally { h.close(); }
+});

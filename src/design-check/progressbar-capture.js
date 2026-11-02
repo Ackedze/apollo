@@ -1,5 +1,6 @@
 const { boundedRead } = require('../document-audit/reads');
 const { CAPTURE_SCHEMA } = require('./progressbar-protocol');
+const { captureContextEvidence } = require('./link-context-capture');
 
 // This pilot observes only the visible selected subtree. It never imports or edits components.
 function createProgressBarCapture({ api, hash, post, isBusy = () => false, now = Date.now, readShared = () => null }) {
@@ -82,7 +83,8 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
     guard(); if (captureId !== entry.capture.captureId) throw error('PROGRESSBAR_CAPTURE_STALE');
     if (entry.shared) { await boundedRead(() => entry.shared.verify(), Math.max(1, deadline - now()), guard); guard(); }
     const actual = await facts(entry.root, guard, deadline); guard();
-    if (hash(actual.nodes) !== hash(entry.capture.nodes) || actual.hidden !== entry.capture.excludedHidden) { invalidate(); throw error('PROGRESSBAR_CAPTURE_STALE'); }
+    const contextEvidence = await captureContextEvidence({ api, nodes: actual.nodes, refs: actual.refs, guard, deadline, now }); guard();
+    if (hash(actual.nodes) !== hash(entry.capture.nodes) || actual.hidden !== entry.capture.excludedHidden || hash(contextEvidence) !== hash(entry.capture.contextEvidence)) { invalidate(); throw error('PROGRESSBAR_CAPTURE_STALE'); }
     return entry;
   }
   async function capture(requestId) {
@@ -110,14 +112,16 @@ function createProgressBarCapture({ api, hash, post, isBusy = () => false, now =
       before = { nodes: shared.nodes, refs: shared.refs, hidden: shared.excludedHidden };
       for (const id of shared.observedIds) observation.ids.add(id);
     } else before = await facts(root, guard, deadline);
+    const contextBefore = await captureContextEvidence({ api, nodes: before.nodes, refs: before.refs, guard, deadline, now }); guard();
     if (!Number.isFinite(root.width) || !Number.isFinite(root.height) || root.width <= 0 || root.height <= 0) throw error('PROGRESSBAR_IMAGE_UNAVAILABLE');
     const bytes = await boundedRead(() => shared ? shared.image() : root.exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: Math.min(1, 1600 / root.width, 1600 / root.height) } }), Math.max(1, deadline - now()), guard);
     if (!bytes || bytes.length < 24 || bytes.length > 3 * 1024 * 1024) throw error('PROGRESSBAR_IMAGE_UNAVAILABLE');
     if (shared) { await boundedRead(() => shared.verify(), Math.max(1, deadline - now()), guard); guard(); }
     const after = shared ? before : await facts(root, guard, deadline); guard();
-    if (hash(before.nodes) !== hash(after.nodes) || before.hidden !== after.hidden) throw error('PROGRESSBAR_CAPTURE_STALE');
+    const contextAfter = await captureContextEvidence({ api, nodes: after.nodes, refs: after.refs, guard, deadline, now }); guard();
+    if (hash(before.nodes) !== hash(after.nodes) || before.hidden !== after.hidden || hash(contextBefore) !== hash(contextAfter)) throw error('PROGRESSBAR_CAPTURE_STALE');
     const value = { schemaVersion: CAPTURE_SCHEMA, captureId: shared ? shared.id : requestId, capturedAt: new Date(now()).toISOString(), pageId,
-      rootId: root.id, fileKey: api.fileKey || null, complete: true, excludedHidden: before.hidden, nodes: before.nodes,
+      rootId: root.id, fileKey: api.fileKey || null, complete: true, excludedHidden: before.hidden, nodes: before.nodes, contextEvidence: contextBefore,
       screenshot: { nodeId: root.id, mimeType: 'image/png', dataBase64: api.base64Encode(bytes) } };
     value.fingerprint = hash(value); current = { capture: value, refs: before.refs, root, revision: expected, shared }; active = null;
     return value;

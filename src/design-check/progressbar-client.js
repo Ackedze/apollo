@@ -1,6 +1,6 @@
 const { createOpaqueId } = require('./opaque-id');
 const {activity}=require('../token-journal-protocol');
-const { PILOT, CAPTURE_SCHEMA, validPreparation, validResult, sameContext } = require('./progressbar-protocol');
+const { PILOT, CAPTURE_SCHEMA, LEGACY_CAPTURE_SCHEMA, validPreparation, validResult, sameContext } = require('./progressbar-protocol');
 const messages = {
   capture: 'Читаем выбранную область и скриншот…', prepare: 'Подключаем нормы компонентов…', verify: 'Проверяем актуальность макета…',
   running: 'Агент проверяет применение компонентов…', complete: 'Агентская проверка завершена.', stale: 'Макет изменился. Повторите проверку.',
@@ -47,7 +47,7 @@ function createProgressBarClient({ send, request, endpoint, now = Date.now, poll
     try {
       deadlineTimer = setTimeout(() => { if (generation === ticket) {timedOut=true;invalidate();} }, 150000);
       phase('capture'); const observed = await native('capture'); guard();
-      if (observed?.schemaVersion !== CAPTURE_SCHEMA || observed.complete !== true || !Array.isArray(observed.nodes) || !observed.nodes.length) throw Error('PROGRESSBAR_CAPTURE_INCOMPLETE');
+      if (![CAPTURE_SCHEMA, LEGACY_CAPTURE_SCHEMA].includes(observed?.schemaVersion) || observed.complete !== true || !Array.isArray(observed.nodes) || !observed.nodes.length) throw Error('PROGRESSBAR_CAPTURE_INCOMPLETE');
       capture = observed; emit({ capture: observed }); phase('prepare');
       const report = { reportKind: 'apollo-pattern-audit-report', pilot: PILOT, reportId: observed.captureId, phase: 'prepare', capture: observed, sourcePin: null, context: declaredContext };
       const prepared = (await json(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ report }) }, signal)).preparation; guard();

@@ -37,6 +37,14 @@ test('explicit pilot uses capture → source preparation → native verify → e
  assert.deepEqual(h.native.map(n=>n.operation),['capture','verify','complete']);assert.equal(h.requests.filter(r=>r.options.method==='POST').length,2);assert.equal(await h.client.focus('9:9'),false);assert.equal(await h.client.focus('1:2'),true);
  assert.equal(h.native.at(-1).operation,'focus');assert.equal(await h.client.start(),true);h.client.close();
 });
+test('client sends v2 contextual evidence unchanged through prepare and run while preserving final native proof',async()=>{
+ const h=harness({mixed:true});h.capture.schemaVersion='apollo.progressbar-capture.v2';
+ h.capture.contextEvidence={schemaVersion:'apollo.link-context-evidence.v1',nodes:[]};
+ try{assert.equal(await h.client.start(),true);
+  for(const request of h.requests.filter(r=>r.options.method==='POST'))assert.deepEqual(JSON.parse(request.options.body).report.capture.contextEvidence,h.capture.contextEvidence);
+  assert.deepEqual(h.native.map(n=>n.operation),['capture','verify','complete']);
+ }finally{h.client.close();}
+});
 test('stale capture refuses before the paid POST; source drift and foreign node responses cannot display PASS',async()=>{
  const a=harness({staleAtVerify:true});assert.equal(await a.client.start(),false);assert.equal(a.requests.length,1);assert.equal(a.client.getState().report,null);a.client.close();
  for(const options of [{sourceError:true},{foreignResult:true}]){const h=harness(options);assert.equal(await h.client.start(),false);assert.equal(h.client.getState().phase,'error');assert.equal(h.client.getState().report,null);h.client.close();}

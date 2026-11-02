@@ -3,6 +3,22 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {actionScene}=require("./focus-actions.fixture.cjs"),authored=require("./authoring-fixtures");
 const code=fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function wait(fn){for(let i=0;i<300;i++){const v=fn();if(v)return v;await sleep(1);}throw Error('bounded wait expired');}
+for(const kind of ['audit-focus','focus-scope'])test('built '+kind+' navigates without creating reference nodes or changing the audit',async()=>{
+ const f=actionScene();vm.runInNewContext(code,{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});
+ try{
+  await f.api.ui.onmessage({type:'load-contract',source:authored.nested().source});await f.api.ui.onmessage({type:'audit',requestId:'initial'});
+  const result=await wait(()=>f.messages.find(m=>m.type==='audit-result')),before=JSON.stringify(result),writes=f.writes.length;
+  let creates=0;const forbidden=()=>{creates++;throw Error('FOCUS_MUST_NOT_MATERIALIZE');};f.api.createPage=forbidden;
+  for(const n of f.nodes.values())if(n.type==='COMPONENT')n.createInstance=forbidden;
+  const row=result.focusTargets.findings.find(r=>r.targets.some(t=>t.nodeId===f.child.id)),target=row.targets.find(t=>t.nodeId===f.child.id);
+  const req=kind==='audit-focus'?{type:kind,requestId:'readonly-focus',auditId:result.audit.auditId,evaluationId:row.findingId,targetId:target.id}:{type:kind,requestId:'readonly-focus',auditId:result.audit.auditId,nodeId:f.actual.id};
+  await f.api.ui.onmessage(req);
+  if(kind==='audit-focus')assert.equal((await wait(()=>f.messages.find(m=>m.type==='audit-focus-result'&&m.requestId===req.requestId))).success,true);
+  assert.equal(creates,0,'navigation must not run independent reference capture');
+  assert.equal(f.page.selection[0],kind==='audit-focus'?f.child:f.actual);
+  assert.equal(f.writes.slice(writes).filter(w=>w[0]==='focus').length,1);assert.equal(JSON.stringify(result),before);
+ }finally{f.emit('close');}
+});
 async function pendingFocus(id){
  const f=actionScene(),timeouts=new Map();
  vm.runInNewContext(code,{figma:f.api,__html__:'',TextEncoder,setTimeout:(fn,ms)=>{const timer=setTimeout(fn,ms);if(ms===15000)timeouts.set(timer,fn);return timer;},clearTimeout:timer=>{timeouts.delete(timer);clearTimeout(timer);}});

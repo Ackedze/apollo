@@ -479,9 +479,14 @@ async function focusAuditFinding(message:any){
   const task={requestId:message.requestId,report,deadline:Date.now()+15000};contractFocusTask=task;
   const guard=()=>{if(generation!==revision||areaNotificationProof?.hasPending()||Date.now()>task.deadline||contractFocusTask!==task||lastAudit!==report||report.auditId!==message.auditId||auditPageId!==figma.currentPage.id||documentAuditBridge.isActionBusy())throw Error('Переход устарел. Повторите проверку.');};
   const timer=setTimeout(()=>{if(contractFocusTask===task){contractFocusTask=null;reply(false,'Переход остановлен по таймауту. Повторите проверку.');}},15000);
-  try{guard();if(verifyLastArea)await verifyLastArea(guard);guard();const node=await resolveNativeNode(figma,registered.target.nodeId,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});guard();if(!currentPageTarget(node,registered.target.pageId))throw Error('Объект недоступен на проверенной странице.');guard();selectionId=selectionSignature([node]);guard();figma.currentPage.selection=[node];guard();figma.viewport.scrollAndZoomIntoView([node]);guard();reply(true,'Объект выбран в макете.',node.id);}
+  try{guard();assertFocusObservation(report,revision);const node=await resolveNativeNode(figma,registered.target.nodeId,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});guard();assertFocusObservation(report,revision);if(!currentPageTarget(node,registered.target.pageId))throw Error('Объект недоступен на проверенной странице.');guard();selectionId=selectionSignature([node]);guard();figma.currentPage.selection=[node];guard();figma.viewport.scrollAndZoomIntoView([node]);guard();reply(true,'Объект выбран в макете.',node.id);}
   catch(e){if(contractFocusTask===task)reply(false,e instanceof Error?e.message:String(e));}
   finally{clearTimeout(timer);if(contractFocusTask===task)contractFocusTask=null;}
+}
+function assertFocusObservation(report:any,revision:number|null){
+  if(!report||lastAudit!==report||lastAuditRevision!==revision||generation!==revision||!areaNotificationProof||areaNotificationProof.hasPending()||auditPageId!==figma.currentPage.id)throw Error('Результат устарел. Повторите проверку.');
+  // Navigation retains the accepted finding; it does not issue a new audit verdict.
+  areaNotificationProof.assertStable();
 }
 // Official current-page subscription; no global document observer or page loads.
 nativePageObserver.start();
@@ -537,10 +542,12 @@ figma.ui.onmessage = async (message: any) => {
     }
     if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.'); await runAuditRequest(message); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
     if (message.type === 'focus' || message.type === 'focus-scope') {
-      if (!lastAudit || message.auditId !== lastAudit.auditId || auditPageId!==figma.currentPage.id) throw new Error('Результат устарел. Повторите проверку.');
-      if(verifyLastArea)await verifyLastArea();
-      const id = message.type === 'focus' ? focusNodes.get(message.evaluationId) : lastAudit.selection.components.find((component: any) => component.nodeId === message.nodeId)?.nodeId;
-      const node = id && await resolveNativeNode(figma,id);
+      const report=lastAudit,revision=lastAuditRevision;
+      const guard=()=>{if(!report||lastAudit!==report||report.auditId!==message.auditId||revision!==generation||auditPageId!==figma.currentPage.id)throw Error('Результат устарел. Повторите проверку.');};
+      guard();assertFocusObservation(report,revision);
+      const id = message.type === 'focus' ? focusNodes.get(message.evaluationId) : report.selection.components.find((component: any) => component.nodeId === message.nodeId)?.nodeId;
+      const node = id && await resolveNativeNode(figma,id,{read:(fn:any)=>boundedRead(fn,1200,guard),guard});
+      guard();assertFocusObservation(report,revision);
       if (!currentPageTarget(node,figma.currentPage.id)) throw new Error('Узел больше недоступен. Повторите проверку.');
       let page: BaseNode | null = node;
       while (page && page.type !== 'PAGE') page = page.parent;

@@ -32,6 +32,9 @@ test('one contract hash per unique compiled source, fresh on each audit',async()
    assert.equal(full.timings.stages.filter(s=>s.stage==='capture').length,full.components.length);
    assert.equal(full.timings.stages.filter(s=>s.stage==='verify-capture').length,0,'no intermediate full reread');
    assert.equal(full.timings.stages.filter(s=>s.stage==='verify-final-capture').length,full.components.length);
+   assert.equal(full.timings.readScheduling.scope,'shared-reader-window');
+   for(const key of ['readCount','readWaitMs','hostYieldCount','hostYieldWaitMs'])assert(Number.isFinite(full.timings.readScheduling[key])&&full.timings.readScheduling[key]>=0,key);
+   assert(full.timings.readScheduling.readCount>0,'actual built capture reports reader activity');
    hashes.push([...sources].sort().join(','));
   }
   assert.notEqual(hashes[0],hashes[1],'changed manual must use a fresh source hash');

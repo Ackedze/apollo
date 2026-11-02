@@ -1,9 +1,9 @@
 const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
 const {fixture,request,settle}=require("./document-audit.test");
-function bundled(f){
+function bundled(f,Clock=Date){
  const original=f.api.ui.postMessage;
  f.api.ui.postMessage=m=>{original(m);if(m.type==='resolve-contracts')queueMicrotask(()=>f.api.ui.onmessage({type:'contracts-resolved',requestId:m.requestId,error:'Proxy offline'}));};
- vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout});return f;
+ vm.runInNewContext(fs.readFileSync(path.join(__dirname,"../dist/code.js"),'utf8'),{figma:f.api,__html__:'',TextEncoder,setTimeout,clearTimeout,Date:Clock});return f;
 }
 test('actual main publishes document results despite a failing independent contract audit',async()=>{
  const f=fixture(),main=f.component('old',true,'key');f.component('latest-key',true,'key');f.theme('base');f.page.selection=[f.instance('instance',main)];bundled(f);
@@ -23,14 +23,16 @@ test('actual main uses PAGE explicit Theme aliases while checking an individual 
 
 test('actual main receives Stop while cached Figma identities are still being read',async()=>{
  const f=fixture(),root=f.node('root'),main=f.component('remote',true,'fixture-key');let reads=0,stopTimer;
+ let elapsed=Date.now();class Clock extends Date{static now(){return elapsed;}}
  for(let i=0;i<512;i++){
   const instance=f.instance('instance-'+i,main,root);
   instance.getMainComponentAsync=async()=>{
+   elapsed++;
    if(++reads===1)stopTimer=setTimeout(()=>{void f.api.ui.onmessage({type:'document-audit-cancel',schemaVersion:'apollo.document-audit.v1',requestId:'cached-stop'});},0);
    return main;
   };
  }
- f.page.selection=[root];bundled(f);
+ f.page.selection=[root];bundled(f,Clock);
  try{
   await f.api.ui.onmessage(request(f,'cached-stop'));
   await settle(f,'document-audit-cancelled','cached-stop');

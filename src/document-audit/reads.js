@@ -1,11 +1,15 @@
 // Cached RPCs may resolve entirely in microtasks, starving host Stop messages.
-let workSinceYield=0,hostTurn=null;
+let sliceStarted=Date.now(),hostTurn=null;
+const scheduling={readCount:0,readWaitMs:0,hostYieldCount:0,hostYieldWaitMs:0};
 function yieldToHost(){
  if(hostTurn)return hostTurn;
- if(++workSinceYield<32)return null;
- workSinceYield=0;
- hostTurn=new Promise(resolve=>setTimeout(()=>{hostTurn=null;resolve();},0));
+ if(Date.now()-sliceStarted<8)return null;
+ const started=Date.now();scheduling.hostYieldCount++;
+ hostTurn=new Promise(resolve=>setTimeout(()=>{sliceStarted=Date.now();scheduling.hostYieldWaitMs+=Math.max(0,sliceStarted-started);hostTurn=null;resolve();},0));
  return hostTurn;
+}
+function readScheduling(since={}){
+ return{readCount:scheduling.readCount-(since.readCount||0),readWaitMs:scheduling.readWaitMs-(since.readWaitMs||0),hostYieldCount:scheduling.hostYieldCount-(since.hostYieldCount||0),hostYieldWaitMs:scheduling.hostYieldWaitMs-(since.hostYieldWaitMs||0)};
 }
 // Figma reads cannot be physically aborted. Only bounded, guarded results escape
 // a run; late resolutions do not write facts, emit progress or start more work.
@@ -22,10 +26,10 @@ async function parallel(items,concurrency,visit){
 // unabortable Figma call; cancellation is checked even while it is pending.
 function cooperativeRead(read,intervalMs,guard=()=>{},onWait=()=>{}){
  guard();return new Promise((resolve,reject)=>{
-  let settled=false,last=Date.now(),timer;
-  const finish=(error,value,failed=false)=>{if(settled)return;settled=true;clearTimeout(timer);if(failed)reject(error&&typeof error.message==='string'?error:Error(typeof error==='string'?error:'NATIVE_READ_FAILED'));else try{guard();resolve(value);}catch(e){reject(e);}};
+  let settled=false,last=Date.now(),timer,readStarted;
+  const finish=(error,value,failed=false)=>{if(settled)return;settled=true;if(readStarted!==undefined)scheduling.readWaitMs+=Math.max(0,Date.now()-readStarted);clearTimeout(timer);if(failed)reject(error&&typeof error.message==='string'?error:Error(typeof error==='string'?error:'NATIVE_READ_FAILED'));else try{guard();resolve(value);}catch(e){reject(e);}};
   const poll=()=>{if(settled)return;try{guard();if(Date.now()-last>=intervalMs){last=Date.now();onWait();}timer=setTimeout(poll,Math.max(5,Math.min(100,intervalMs)));}catch(e){finish(e,undefined,true);}};timer=setTimeout(poll,Math.max(5,Math.min(100,intervalMs)));
-  Promise.resolve().then(async()=>{const turn=yieldToHost();if(turn)await turn;guard();return read();}).then(value=>finish(null,value),error=>finish(error,undefined,true));
+  Promise.resolve().then(async()=>{const turn=yieldToHost();if(turn)await turn;if(settled)return;guard();readStarted=Date.now();scheduling.readCount++;return read();}).then(value=>finish(null,value),error=>finish(error,undefined,true));
  });
 }
 const retryableRead=error=>/TIMEOUT|TEMPORAR|UNAVAILABLE|SUPERSEDED|CANCELLED|CONTEXT_CHANGED/.test(String(error?.code||error?.message||''));
@@ -40,4 +44,4 @@ function readError(error,context){
  failure.nativeRead=error?.nativeRead||context;
  return failure;
 }
-module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError};
+module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError,readScheduling};

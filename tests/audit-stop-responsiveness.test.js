@@ -1,14 +1,47 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {cooperativeRead,parallel}=require('../src/document-audit/reads');
+function clockedReads(hostDelay=0){
+ const vm=require('node:vm'),fs=require('node:fs'),module={exports:{}};let now=0,yields=0;
+ class Clock extends Date{static now(){return Math.floor(now);}}
+ vm.runInNewContext(fs.readFileSync(require.resolve('../src/document-audit/reads'),'utf8'),{module,Date:Clock,setTimeout:(fn,ms)=>setTimeout(()=>{if(ms===0){now+=hostDelay;yields++;}fn();},ms),clearTimeout});
+ return{api:module.exports,work:ms=>{now+=ms;},yields:()=>yields};
+}
 
 for(const mode of ['cached native reads','cached parallel work'])test('Stop is delivered during '+mode,async()=>{
- let stopped=false,completed=0;
+ const clock=clockedReads(),{cooperativeRead,parallel}=clock.api;let stopped=false,completed=0;
  const timer=setTimeout(()=>{stopped=true;},0),guard=()=>{if(stopped)throw Error('AUDIT_CANCELLED');};
  try{
-  const work=mode==='cached native reads'?(async()=>{for(let i=0;i<512;i++){await cooperativeRead(()=>Promise.resolve(i),50,guard);completed++;}})():parallel(Array.from({length:512}),16,async()=>{guard();await Promise.resolve();guard();completed++;});
+  const work=mode==='cached native reads'?(async()=>{for(let i=0;i<512;i++){await cooperativeRead(()=>{clock.work(1);return Promise.resolve(i);},50,guard);completed++;}})():parallel(Array.from({length:512}),16,async()=>{guard();clock.work(1);await Promise.resolve();guard();completed++;});
   await assert.rejects(work,/AUDIT_CANCELLED/);
   assert(completed<512,'the host must receive Stop before all cached work completes');
  }finally{clearTimeout(timer);}
+});
+
+test('cheap cached facts do not force host waits before the time slice is used',async()=>{
+ const clock=clockedReads(100),values=[];
+ for(let i=0;i<512;i++)values.push(await clock.api.cooperativeRead(()=>{clock.work(.001);return i;},1000));
+ assert.deepEqual(values,Array.from({length:512},(_,i)=>i));
+ assert.equal(clock.yields(),0,'sub-millisecond work needs no forced host turn');
+});
+
+test('slow host timers are coalesced by elapsed work without losing facts or counting their wait as work',async()=>{
+ const clock=clockedReads(100),values=[];
+ for(let i=0;i<4096;i++)values.push(await clock.api.cooperativeRead(()=>{clock.work(.02);return i;},1000));
+ assert.deepEqual(values,Array.from({length:4096},(_,i)=>i));
+ assert(clock.yields()>=9&&clock.yields()<=12,'yield only after an 8ms work slice, including after a slow timer');
+ const metrics=clock.api.readScheduling();assert.equal(metrics.readCount,4096);
+ assert.equal(metrics.hostYieldCount,clock.yields());assert.equal(metrics.hostYieldWaitMs,clock.yields()*100);
+ assert(metrics.readWaitMs>=0&&metrics.readWaitMs<100,'host yield wait is separate from native read wait');
+});
+
+test('Stop while a native RPC is pending keeps its late value and timing outside the finished run',async()=>{
+ const clock=clockedReads();let stopped=false,resolveNative,delivered=false;
+ const native=new Promise(resolve=>{resolveNative=resolve;});
+ const work=clock.api.cooperativeRead(()=>native,5,()=>{if(stopped)throw Error('AUDIT_CANCELLED');}).then(()=>{delivered=true;});
+ await new Promise(resolve=>setTimeout(resolve,0));clock.work(3);stopped=true;
+ await assert.rejects(work,/AUDIT_CANCELLED/);
+ const finished=clock.api.readScheduling();clock.work(100);resolveNative('late');await new Promise(resolve=>setTimeout(resolve,0));
+ assert.equal(delivered,false);assert.deepEqual(clock.api.readScheduling(),finished);assert.equal(finished.readCount,1);assert.equal(finished.readWaitMs,3);
 });
 
 test('host yielding preserves every successful result and the parallel concurrency bound',async()=>{

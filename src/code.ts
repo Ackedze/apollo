@@ -20,7 +20,7 @@ const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
-const {boundedRead,cooperativeRead}=require("./document-audit/reads");
+const {boundedRead,cooperativeRead,readScheduling}=require("./document-audit/reads");
 const {trace:auditTrace}=require('./document-audit/trace');
 const {verifyFinalCaptures}=require('./audit-final-captures');
 const {minimalRoots}=require("./document-audit/scoped-recheck");
@@ -174,9 +174,10 @@ async function audit(requestId: string, options:any={}) {
   const roots:SceneNode[] = options.roots||Array.from(figma.currentPage.selection);
   if (!roots.length) throw new Error('Выделите область или слой, чтобы проверить компоненты.');
   const timingStarted = Date.now();
+  const readTimingStarted = readScheduling();
   const timings = { schemaVersion: 'apollo.audit-timings.v1',
     scope: options.quiet ? 'scoped-contract-audit-before-merge' : 'contract-area-audit-before-delivery',
-    clock: 'Date.now', totalMs: 0, stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
+    clock: 'Date.now', totalMs: 0, readScheduling: Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted)), stages: [] as {stage:string;durationMs:number;scopeId?:string}[] };
   const time = (stage:string, scopeId?:string) => {
     const started = Date.now();if(activeAuditRun?.requestId===requestId)activeAuditRun.stage=stage;
     auditTrace('phase-start',{runId:requestId,stage:'contract.'+stage,nodeId:scopeId});
@@ -378,6 +379,7 @@ async function audit(requestId: string, options:any={}) {
     // Diagnostics are outside canonical snapshots and audit identity. Delivery/render time is excluded.
     report.timings = timings;
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
+    timings.readScheduling = Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted));
     const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform};
     if(options.quiet)return data;
     auditPageId=pageId;lastAudit=report;lastAuditRevision=current;areaSession=data;
@@ -388,6 +390,7 @@ async function audit(requestId: string, options:any={}) {
     const focus=buildContractFocus(components,captures,pageId,auditId);contractFocusRegistry=focus.registry;
     endStage();
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
+    timings.readScheduling = Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted));
     post(Object.assign({type:'audit-result',requestId},auditDelivery({audit:lastAudit,rules,displayMetadata,focusTargets:focus.sidecar})));
   } finally { busy = false;lastAreaRequestId=requestId;const stopped=activeArea?.cancelling===true;activeArea=null;if(!options.quiet&&!lastAudit){areaNotificationProof?.close();areaNotificationProof=null;}if(options.quiet&&areaSession)areaObservedIds=new Set(areaSession.scan.nodes.keys());if(stopped&&!activeAuditRun)post({type:'audit-cancelled',requestId}); }
 }

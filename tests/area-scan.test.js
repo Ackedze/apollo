@@ -1,7 +1,7 @@
 const test = require('node:test'), assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), ts = require('typescript');
 function loadScanner() {
   const reads = { exports: {} }, moduleBox = { exports: {} };
-  vm.runInNewContext(fs.readFileSync(path.resolve(__dirname, "../src/document-audit/reads.js"), 'utf8'), {module:reads, setTimeout, clearTimeout});
+  vm.runInNewContext(fs.readFileSync(path.resolve(__dirname, "../src/document-audit/reads.js"), 'utf8'), {module:reads, Date, setTimeout, clearTimeout});
   vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.resolve(__dirname, "../src/area-scan.ts"), 'utf8'),
     { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText,
     { exports: moduleBox.exports, module: moduleBox, require: () => reads.exports, Date, setTimeout, clearTimeout });
@@ -37,7 +37,7 @@ test('cold native sources may resolve after 1.2 seconds without losing any of 28
   const source = new Promise(resolve => setTimeout(() => resolve({key:'native-key'}), 10811));
   root.children.forEach(node => { node.getMainComponentAsync = () => source; });
   const running = scanArea([root], () => {});
-  await settle(); t.mock.timers.tick(10811); await settle();
+  await settle(); t.mock.timers.tick(10811); await settle(); t.mock.timers.tick(0); await settle();
   const result = await running;
   assert.equal(result.selection.complete, true);
   assert.equal(result.selection.components.filter(c => c.componentKey === 'native-key').length, 28);
@@ -50,7 +50,7 @@ test('one shared identity deadline bounds all waves and late native replies cann
   const pending = new Promise(resolve => { release = resolve; });
   root.children.forEach(node => { node.getMainComponentAsync = () => { calls++; return pending; }; });
   const running = scanArea([root], () => {});
-  await settle(); t.mock.timers.tick(AREA_IDENTITY_BUDGET_MS); await settle();
+  await settle(); t.mock.timers.tick(AREA_IDENTITY_BUDGET_MS); await settle(); t.mock.timers.tick(0); await settle();
   const result = await running;
   assert.equal(calls, 12, 'expired queued reads must not start more native work');
   assert.equal(result.selection.complete, false);

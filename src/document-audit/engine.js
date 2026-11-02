@@ -3,6 +3,7 @@ const {resolveNativeNode}=require("../canvas-target");
 const {getDetachedLibraryComponentKey,detachedValue}=require("./detached");
 const {styleValue,variableValue,linkedStyleValue,describeNativeStyles}=require("./styles");
 const {parallel,boundedRead,retryableRead,readError}=require("./reads");
+const {contextPolicy}=require('./catalog-policy');
 const {describeDeprecatedStyles}=require('./deprecated-styles');
 const {readFailureReason}=require('./protocol');
 const {publishedSet,publishedVariant}=require('./published-variant');
@@ -13,7 +14,7 @@ function visible(node){let n=node,seen=new Set();while(n&&n.type!=='PAGE'&&!seen
 function nodeValue(n){const scene=n.type!=='PAGE'&&n.type!=='DOCUMENT';return {id:n.id,type:n.type,name:String(n.name||n.type),parent:n.parent?.id||null,pageId:pageOf(n)?.id||null,visible:scene?n.visible!==false:null,removed:!!n.removed,children:scene&&'children' in n?Array.from(n.children).map(x=>x.id):[],resolvedModes:null};}
 function mainValue(n){return n?{id:n.id,key:typeof n.key==='string'?n.key:null,remote:typeof n.remote==='boolean'?n.remote:null,pageId:pageOf(n)?.id||null,name:String(n.name||'Компонент')}:null;}
 function collectionValue(c){return c?{id:c.id,name:String(c.name),key:typeof c.key==='string'?c.key:null,remote:typeof c.remote==='boolean'?c.remote:null,defaultModeId:typeof c.defaultModeId==='string'?c.defaultModeId:null,modes:c.modes.map(m=>({modeId:m.modeId,name:m.name}))}:null;}
-async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedRoots,onProgress=async()=>{},readTimeoutMs,readOperation,onReadFailure=()=>{},scoped=false,deprecatedStyleReader=null,onTrace=null}){
+async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedRoots,onProgress=async()=>{},readTimeoutMs,readOperation,onReadFailure=()=>{},scoped=false,deprecatedStyleReader=null,catalogPolicyReader=null,onTrace=null}){
  const bound=Object.assign({},LIMITS,limits),facts=new Map(),targets=new Map(),nodes=new Map(),mainCache=new Map(),published=new Map(),publishedSets=new Map(),publishedSetKeys=new Map();
  const checks=[{id:'local',scope:'visible-selected-area-and-local-source-definitions',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'freshness',scope:'published-version-at-run; independent-instances-and-local-source-dependencies',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false},{id:'theme',scope:'current-page-explicit-theme-mode; Desktop/MobileWeb',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false}];
  checks.push({id:'detached',scope:'visible-selected-area; native-library-detachedInfo-only',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
@@ -21,12 +22,12 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  checks.push({id:'font',scope:'current-page-Font-mode; explicit-or-collection-default; Desktop/MobileWeb',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false});
  const deprecated=deprecatedStyleReader?{id:'deprecatedStyles',scope:'visible-selected-area; applied native style keys listed in packaged deprecation policy; no token lifecycle claim',status:'running',findings:[],gaps:[],checked:0,categoryComplete:false}:null;
  if(deprecated)checks.push(deprecated);
- let deprecatedIndexId=null;
+ let deprecatedIndexId=null,stylePolicyIndexId=null;
  const finished=new Set(['detached']);
  const [local,fresh,theme,detached,styles,font]=checks;const versions=[],versionSeen=new Set();
  const queueVersion=args=>{const id=args[0].id+':'+(args[1]?.id||'')+':'+args[3];if(!versionSeen.has(id)){versionSeen.add(id);versions.push(args);}};
  const units=new Map(checks.map(c=>[c.id,new Set()])),modeGraph=new Map(),resolvedStyles=new Map();
- const observation=()=>({checks,facts:Array.from(facts.values()),targets,nodes,units,modeGraph,resolvedStyles,deprecatedIndexId});
+ const observation=()=>({checks,facts:Array.from(facts.values()),targets,nodes,units,modeGraph,resolvedStyles,deprecatedIndexId,stylePolicyIndexId});
  let readFailure=null;const runGuard=assertCurrent;assertCurrent=()=>{runGuard();if(readFailure)throw readFailure;};
  const trace=(event,data)=>{try{onTrace?.(event,data);}catch(_){}};
  const read=async(fn,context)=>{const started=Date.now();if(context)trace('read-start',context);try{return await(readOperation?readOperation(fn):boundedRead(fn,readTimeoutMs?readTimeoutMs():bound.readMs,assertCurrent));}catch(error){const failure=context?readError(error,context):error;if(readOperation){onReadFailure(failure);if(retryableRead(failure))readFailure=failure;}throw failure;}finally{if(context)trace('read-end',Object.assign({durationMs:Date.now()-started},context));}};
@@ -130,24 +131,36 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  async function checkStyles(beforeStyles=new Map()){
  styles.status=roots.length?'complete':'incomplete';const styleCache=new Map(),variableCache=new Map();
  let materialized=0;
- let deprecatedIndex=null;
+ let deprecatedIndex=null,stylePolicyIndex=null;
+ if(catalogPolicyReader){try{stylePolicyIndex=await catalogPolicyReader.read(assertCurrent);stylePolicyIndexId=stylePolicyIndex.indexId;styles.scope='visible-selected-area; native bindings and V3 packaged style/token catalog membership with scoped exceptions';}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'catalogAuditPolicy.index',nodeId:null,resourceId:null}));gap(styles,'v3-catalog-policy-not-connected');}}
+ async function policyFor(n){
+  if(!stylePolicyIndex)return {};
+  const ancestors=[],seen=new Set();let p=n;
+  while(p&&p.type!=='PAGE'&&p.type!=='DOCUMENT'&&!seen.has(p.id)){
+   seen.add(p.id);if(!nodes.has(p.id))remember(p);let key=null;
+   if(['INSTANCE','COMPONENT','COMPONENT_SET'].includes(p.type)){const m=await main(p);if(!m||typeof m.key!=='string')throw Error('CATALOG_POLICY_CONTEXT_UNAVAILABLE');key=m.key;}
+   ancestors.push({key,name:String(p.name||''),self:p===n});p=p.parent;
+  }
+  return contextPolicy(stylePolicyIndex,String(n.name||''),ancestors);
+ }
  if(deprecated){try{deprecatedIndex=await deprecatedStyleReader.read(assertCurrent);deprecatedIndexId=deprecatedIndex.indexId;deprecated.status=roots.length?'complete':'incomplete';if(!roots.length)gap(deprecated,'empty-selection');}catch(error){assertCurrent();onReadFailure(readError(error,{operation:'deprecatedStyles.index',nodeId:null,resourceId:null}));gap(deprecated,'deprecated-style-index-unavailable');}assertCurrent();if(local.gaps.includes('selection-node-limit'))gap(deprecated,'selection-node-limit');}
  await parallel(areaNodes.filter(n=>n.type!=='PAGE'&&n.type!=='DOCUMENT'),bound.concurrency,async n=>{
   if(n.type==='SECTION')return;styles.checked++;units.get(styles.id).add(n.id);let diagnostic,value;
   try{
+   const policy=await policyFor(n);
    const before=onTrace?beforeStyles.get(n.id)||styleValue(n):null;
-   await describeNativeStyles(api,n,{read,styleCache,variableCache});
+   await describeNativeStyles(api,n,{read,styleCache,variableCache,policy});
    if(deprecatedIndex)await describeDeprecatedStyles(api,n,{read,styleCache,index:deprecatedIndex});
    assertCurrent();value=styleValue(n);
    if(before&&hash(before)!==hash(value)){materialized++;if(materialized<=8)trace('phase-drift',factFailure({kind:'styles',id:n.id,value:before},value,'value-mismatch',hash,'style-resource-loading').nativeFailure);}
-   facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache});
+   facts.set('styles:'+n.id,{kind:'styles',id:n.id,value});diagnostic=await describeNativeStyles(api,n,{read,styleCache,variableCache,policy});
   }
   catch(error){assertCurrent();onReadFailure(readError(error,{operation:'readNativeStyles',nodeId:n.id,resourceId:null}));if(deprecatedIndex){gap(deprecated,'deprecated-style-binding-unavailable');finding(deprecated,'unknown',n,'Не удалось прочитать применённые стили.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});}gap(styles,'native-style-read-unavailable');finding(styles,'unknown',n,'Не удалось прочитать связь со стилем. Её состояние не подтверждено.',{occurrences:[n.id],evidence:{nativeStyleRead:'unavailable'}});return;}
   assertCurrent();
   resolvedStyles.set(n.id,diagnostic.resolved);
   for(const reason of diagnostic.gaps)gap(styles,reason);
   for(const resource of diagnostic.resources)if(resource.value)facts.set(resource.kind+':'+resource.id,resource);
-  for(const entry of diagnostic.findings){const f=finding(styles,entry.status,n,entry.status==='unknown'?'Связанный стиль или токен недоступен. Его состояние не подтверждено.':'Не задана связь со стилем или переменной: '+({fills:'заливка',strokes:'обводка',effects:'эффекты',typography:'типографика'}[entry.property])+'.',{occurrences:[n.id],evidence:entry.evidence});if(f)f.findingId=hash(['customStyles',n.id,entry.property]);}
+  for(const entry of diagnostic.findings){const f=finding(styles,entry.status,n,entry.status==='unknown'?'Связанный стиль или токен недоступен. Его состояние не подтверждено.':(stylePolicyIndex?'Нет подтверждённой связи со стилем или токеном из каталога: ':'Не задана связь со стилем или переменной: ')+({fills:'заливка',strokes:'обводка',effects:'эффекты',typography:'типографика'}[entry.property])+'.',{occurrences:[n.id],evidence:entry.evidence});if(f)f.findingId=hash(['customStyles',n.id,entry.property]);}
   if(deprecatedIndex){
    deprecated.checked++;units.get(deprecated.id).add(n.id);
    try{
@@ -162,7 +175,7 @@ async function collect(api,context,{hash,assertCurrent,limits={},roots:capturedR
  });
  // Native binding state is not a replacement for v3's catalog and policy gates.
  // Exact library/context exceptions require authority that this subset lacks.
- if(styles.findings.length)gap(styles,'v3-catalog-policy-not-connected');
+ if(!stylePolicyIndex&&styles.findings.length)gap(styles,'v3-catalog-policy-not-connected');
  if(materialized)trace('phase-summary',{stage:'style-resource-loading',count:materialized});
  finished.add('customStyles');await checkpoint();
  }

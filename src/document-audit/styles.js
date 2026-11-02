@@ -1,5 +1,5 @@
 // Native binding diagnostics, derived from v3 auditViewBuilder/customStyleFilters.
-// This proves current binding state only, never historical detach or DS membership.
+// Catalog membership is checked only with a verified packaged policy; never infer detach history.
 function plain(value){if(typeof value==='symbol')return 'mixed';if(value===undefined)return null;if(value===null||typeof value!=='object')return value;if(Array.isArray(value))return value.map(plain);const out={};for(const key of Object.keys(value))out[key]=plain(value[key]);return out;}
 function styleValue(node){const out={};for(const key of ['fills','strokes','effects','fillStyleId','strokeStyleId','effectStyleId','textStyleId','characters','fontName','fontSize','lineHeight','letterSpacing','textCase','textDecoration','openTypeFeatures','boundVariables'])if(key in node)out[key]=plain(node[key]);if(node.type==='TEXT'&&typeof node.getStyledTextSegments==='function')out.segments=node.getStyledTextSegments(['textStyleId','fills','fillStyleId','fontName','fontSize','lineHeight','openTypeFeatures','textCase','textDecoration']).map(s=>{const out={};for(const key of ['start','end','textStyleId','fills','fillStyleId','fontName','fontSize','lineHeight','openTypeFeatures','textCase','textDecoration'])out[key]=plain(s[key]);return out;});return out;}
 function variableValue(v){return v?{id:v.id,key:v.key||null,name:v.name,resolvedType:v.resolvedType,variableCollectionId:v.variableCollectionId}:null;}
@@ -17,12 +17,16 @@ async function describeNativeStyles(api,node,{read,styleCache,variableCache,poli
   if(typeof id!=='string'||!id)return false;
   if(!styleCache.has(id))styleCache.set(id,read(()=>api.getStyleByIdAsync(id),{operation:'getStyleByIdAsync',nodeId:node.id,resourceId:id}).then(linkedStyleValue).catch(()=>null));
   const value=await styleCache.get(id);resources.push({kind:'style',id,value});
-  if(!value||value.id!==id||value.type!==type){gaps.push('linked-style-unavailable');return null;}return true;
+  if(!value||value.id!==id||value.type!==type){gaps.push('linked-style-unavailable');return null;}
+  if(policy.resources){if(!/^[a-f0-9]{40}$/.test(value.key)||policy.resources.has('style:'+value.key)&&policy.resources.get('style:'+value.key)!==type){gaps.push('catalog-style-identity-unconfirmed');return null;}return policy.resources.has('style:'+value.key);}
+  return true;
  };
  const variable=async id=>{
   if(!variableCache.has(id))variableCache.set(id,read(()=>api.variables.getVariableByIdAsync(id),{operation:'variables.getVariableByIdAsync',nodeId:node.id,resourceId:id}).then(variableValue).catch(()=>null));
   const value=await variableCache.get(id);resources.push({kind:'variable',id,value});
-  if(!value||value.resolvedType!=='COLOR'){gaps.push('linked-token-unavailable');return null;}return true;
+  if(!value||value.resolvedType!=='COLOR'){gaps.push('linked-token-unavailable');return null;}
+  if(policy.resources){if(!/^[a-f0-9]{40}$/.test(value.key)||policy.resources.has('variable:'+value.key)&&policy.resources.get('variable:'+value.key)!=='COLOR'){gaps.push('catalog-token-identity-unconfirmed');return null;}return policy.resources.has('variable:'+value.key);}
+  return true;
  };
  for(const [property,styleField] of [['fills','fillStyleId'],['strokes','strokeStyleId']]){
   const paints=node[property],ranges=Array.isArray(paints)?[{fills:paints,fillStyleId:node[styleField]}]:property==='fills'&&node.type==='TEXT'&&typeof node.getStyledTextSegments==='function'?node.getStyledTextSegments(['fills','fillStyleId']):null;
@@ -31,7 +35,7 @@ async function describeNativeStyles(api,node,{read,styleCache,variableCache,poli
   let unbound=0,unknown=false;
   for(const range of ranges)for(const paint of range.fills){if(!paint||paint.visible===false||paint.type!=='SOLID')continue;
    const alias=paint.boundVariables?.color;
-   if(alias){if(alias.type!=='VARIABLE_ALIAS'||typeof alias.id!=='string'||!alias.id){unknown=true;gaps.push('paint-binding-incompatible');}else if(await variable(alias.id)!==true)unknown=true;continue;}
+   if(alias){if(alias.type!=='VARIABLE_ALIAS'||typeof alias.id!=='string'||!alias.id){unknown=true;gaps.push('paint-binding-incompatible');}else{const state=await variable(alias.id);if(state===false)unbound++;else if(state===null)unknown=true;}continue;}
    const state=await linked(range.fillStyleId,'PAINT');if(state===false)unbound++;else if(state===null)unknown=true;
   }
   if(unbound||unknown)findings.push({property,status:unknown?'unknown':'custom-style',evidence:{property,styleId:plain(node[styleField]),unboundSolidPaints:unbound,linkedResourceUnavailable:unknown}});
@@ -46,6 +50,7 @@ async function describeNativeStyles(api,node,{read,styleCache,variableCache,poli
   if(unbound||unknown)findings.push({property:'typography',status:unknown?'unknown':'custom-style',evidence:{property:'typography',styleId:plain(node.textStyleId),unboundTextRanges:unbound,fontName:plain(node.fontName),fontSize:plain(node.fontSize)}});
   else if(ids.length)resolved.add('typography');
  }
+ if(policy.indexId)for(const f of findings){f.evidence.catalogIndexId=policy.indexId;f.evidence.catalogMembership='not-confirmed';}
  return{findings,resources,gaps,resolved};
 }
 module.exports={styleValue,variableValue,linkedStyleValue,technicalPaint,describeNativeStyles};

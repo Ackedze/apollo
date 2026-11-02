@@ -17,7 +17,7 @@ function resultValid(r) {
  });
  } catch (_) { return false; }
 }
-const readOperations=['getMainComponentAsync','importComponentByKeyAsync','importComponentSetByKeyAsync','getNodeByIdAsync','getStyleByIdAsync','variables.getVariableByIdAsync','variables.getVariableCollectionByIdAsync','readNativeStyles','deprecatedStyles.index'];
+const readOperations=['getMainComponentAsync','importComponentByKeyAsync','importComponentSetByKeyAsync','getNodeByIdAsync','getStyleByIdAsync','variables.getVariableByIdAsync','variables.getVariableCollectionByIdAsync','readNativeStyles','deprecatedStyles.index','catalogAuditPolicy.index'];
 const readReasons=['access-denied','not-found-or-unpublished','network','timeout','invalid-response','unavailable','cancelled','unknown'];
 const errorNames=['Error','TypeError','RangeError','ReferenceError','SyntaxError','AbortError','DOMException','FigmaError'];
 function failureValid(v){try{

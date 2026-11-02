@@ -61,3 +61,10 @@ test('Stop during set import prevents late recovered evidence and further style 
  const task=collect(s.f.api,s.f.context(),{hash,assertCurrent:()=>{if(stopped)throw Error('NATIVE_CANCELLED');},readOperation:f=>f()});
  const rejected=assert.rejects(task,/NATIVE_CANCELLED/);while(!release)await new Promise(r=>setTimeout(r,0));stopped=true;release(s.latestSet);await rejected;assert.equal(styleReads,0);
 });
+test('local Spacers variants retain all eleven occurrences and never read a published version',async()=>{
+ const s=scene();s.set.name='Spacers';s.set.remote=false;s.old.remote=false;
+ const second=s.f.component('local-second',false,'c'.repeat(40),s.set),third=s.f.component('local-third',false,'d'.repeat(40),s.set);
+ s.f.page.selection.forEach((n,i)=>{n.name='Spacers';n.getMainComponentAsync=async()=>i<3?s.old:i<9?second:third;});
+ const o=await s.capture(),local=o.checks.find(c=>c.id==='local'),fresh=o.checks.find(c=>c.id==='freshness');
+ assert.equal(local.status,'complete');assert.equal(local.findings.length,3);assert(local.findings.every(f=>f.status==='local'));assert.equal(local.findings.reduce((n,f)=>n+f.occurrences.length,0),11);assert.equal(s.calls.length,0);assert.equal(s.failures.length,0);assert.equal(fresh.findings.length,0);
+});

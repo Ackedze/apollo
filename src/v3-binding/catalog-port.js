@@ -1,4 +1,5 @@
 const routes = {
+  auditPolicy: '/v1/style-token-catalog/audit-policy',
   deprecatedStyles: '/v1/style-token-catalog/deprecated-styles',
   names: '/v2/resources/display-names', resolve: '/v2/resources/display-names/resolve',
   inventory: '/v1/style-token-catalog/inventory', catalogs: '/v1/style-token-catalog/catalogs', query: '/v1/style-token-catalog/query',
@@ -6,7 +7,7 @@ const routes = {
 function createCatalogPort(post) {
   const pending = new Map(); let sequence = 0;
   function read(operation, body, budgetMs = 1000, guard) {
-    const controlled=operation==='deprecatedStyles'&&budgetMs===null&&typeof guard==='function';
+    const controlled=['deprecatedStyles','auditPolicy'].includes(operation)&&budgetMs===null&&typeof guard==='function';
     if (!Object.hasOwn(routes, operation) || !controlled&&(!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > (operation === 'catalogs' ? 10000 : 1000))) return Promise.reject(Error('CATALOG_UNAVAILABLE'));
     if(controlled)try{guard();}catch(error){return Promise.reject(error);}
     const requestId = 'v3-catalog:' + ++sequence;
@@ -37,7 +38,7 @@ function createCatalogTransport(send, fetcher = fetch) {
     if (!['v3-catalog-request','v3-catalog-cancel'].includes(m?.type)) return false;
     if (!/^v3-catalog:[1-9][0-9]{0,15}$/.test(m.requestId)) return true;
     if (m.type === 'v3-catalog-cancel') { active.get(m.requestId)?.abort(); return true; }
-    const controlled=m.operation==='deprecatedStyles'&&m.budgetMs===null;
+    const controlled=['deprecatedStyles','auditPolicy'].includes(m.operation)&&m.budgetMs===null;
     if (active.has(m.requestId) || Object.keys(m).sort().join(',') !== 'body,budgetMs,operation,requestId,type' || !Object.hasOwn(routes,m.operation)
       || !controlled&&(!Number.isFinite(m.budgetMs) || m.budgetMs <= 0 || m.budgetMs > (m.operation === 'catalogs' ? 10000 : 1000))) return true;
     const abort = new AbortController(); active.set(m.requestId,abort);

@@ -10,6 +10,7 @@ const { createDocumentAuditClient } = require("./design-check/document-audit-cli
 const { createOpaqueId } = require("./design-check/opaque-id");
 require("./design-check/legacy.css");
 const BASE = 'http://localhost:3001';
+console.info('[Apollo] build',JSON.stringify({version:require('../package.json').version,buildId:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__}));
 const compatibility = require('./compatibility').createCompatibilityClient({ request: (url, options) => fetch(url, options),
   endpoint: BASE + '/health', onChange: value => designCheck.setProxyStatus(value) });
 const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});

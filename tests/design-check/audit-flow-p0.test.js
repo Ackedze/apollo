@@ -5,6 +5,23 @@ const {SCHEMA}=require('../../src/document-audit/protocol');
 const result=id=>({runId:id,context:{pageId:'page',selectionSignature:'a',platform:'Desktop'},observedAt:1,coverage:'native-subsets-only',checks:['local','freshness','theme'].map(id=>({id,scope:'test',status:'complete',findings:[],gaps:[],checked:0,categoryComplete:false}))});
 const audit=id=>({auditId:id,result:{engine:{evaluations:[]},coverage:{scope:'test',executionComplete:true}}});
 function setup(){const messages=[];let requestId,client;const controller=createDesignCheckController({onDocumentAudit:m=>{requestId=m.requestId;client.start(requestId,m.uiPreferences);controller.beginContractAudit(requestId);},onStopAudit:()=>client.stop()});client=createDocumentAuditClient({send:m=>messages.push(m),controller,timeoutMs:5});client.selection({pageId:'page',id:'a'});controller.setDocumentPageAvailable(true);controller.setAuditReady(true);return{controller,client,messages,id:()=>requestId,deliverNative(){const r=result(requestId+':native');client.accept({type:'document-audit-result',schemaVersion:SCHEMA,requestId:r.runId,result:r});return r;}};}
+for(const order of ['native-first','contract-first'])test('contract compile failure retains the correlated successful native result: '+order,async()=>{
+ const f=setup();await f.controller.startDocumentAudit();let native;
+ if(order==='native-first')native=f.deliverNative();
+ f.controller.acceptAuditError(f.id(),'Manual и факты не воспроизводят закреплённую проекцию.');
+ if(order==='contract-first')native=f.deliverNative();
+ assert.equal(f.controller.getState().documentAudit.result,native);
+ assert.equal(f.controller.getState().documentAudit.status,'available');
+ assert.equal(f.controller.getState().auditBusy,false);
+ assert.match(f.controller.getState().auditError,/не воспроизводят/);
+ f.client.invalidate('');f.controller.destroy();
+});
+test('a failed or invalidated native candidate never replaces the previous result after a contract error',async()=>{
+ const f=setup(),old=result('old:native');f.controller.setDocumentAudit({status:'available',requestId:old.runId,result:old,error:''});
+ await f.controller.startDocumentAudit();const candidate=f.deliverNative();f.client.accept({type:'document-audit-invalidated',schemaVersion:SCHEMA,runId:candidate.runId,reason:'NATIVE_FACTS_CHANGED'});
+ f.controller.acceptAuditError(f.id(),'INVALID_CONTRACT_RESPONSE');assert.notEqual(f.controller.getState().documentAudit.result,candidate);
+ f.client.stop();f.client.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:candidate.runId});f.controller.destroy();
+});
 for(const order of ['native-first','contract-first'])test('whole run commits matching pair together: '+order,async()=>{
  const f=setup(),old=audit('old');f.controller.setAudit(old);await f.controller.startDocumentAudit();const fresh=audit('fresh');let native;
  if(order==='native-first')native=f.deliverNative();else f.controller.acceptAuditResult(f.id(),fresh);

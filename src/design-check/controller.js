@@ -143,8 +143,10 @@ function createDesignCheckController(options = {}) {
   }
   function recordAuditFailure(value){if(!require('../document-audit/protocol').failureValid(value)||state.auditFailures.some(v=>v.errorId===value.errorId))return;const all=state.auditFailures.concat(value);emit({auditFailures:all.length<=20?all:[all[0],...all.slice(-19)]});}
   function failedPair(){
-    const old=pendingCheck.previousDocument,history=pendingCheck.native?.failures||state.documentAudit.failures,error=pendingCheck.contractError;pendingCheck=null;
-    emit({auditBusy:false,auditStopping:false,auditStale:Boolean(state.audit),auditError:error,auditProgress:'',documentAudit:Object.assign({},old,{status:old.result?'stale':'error',progress:'',failures:history,error:'Новая проверка не завершена. Доступные результаты сохранены.'})});
+    const old=pendingCheck.previousDocument,native=pendingCheck.native,history=native?.failures||state.documentAudit.failures,error=pendingCheck.contractError;
+    const fresh=native?.status==='available'&&native.result?.runId===pendingCheck.requestId+':native'&&require('../document-audit/protocol').resultValid(native.result);
+    pendingCheck=null;
+    emit({auditBusy:false,auditStopping:false,auditStale:Boolean(state.audit),auditError:error,auditProgress:'',documentAudit:Object.assign({},fresh?native:old,{status:fresh?'available':old.result?'stale':'error',progress:'',failures:history,error:fresh?'Проверки свойств, стилей и токенов сохранены. Правила компонентов не проверены.':'Новая проверка не завершена. Доступные результаты сохранены.'})});
   }
   function setDocumentAudit(value) {
     if(pendingCheck&&value.requestId===pendingCheck.requestId+':native'&&value.status!=='available')pendingCheck.native=null;

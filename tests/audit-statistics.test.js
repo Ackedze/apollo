@@ -3,6 +3,31 @@ const p=require('../src/audit-statistics/protocol'),{createReport,metrics}=requi
 const digest=r=>crypto.createHash('sha256').update(p.canonical(r)).digest('hex');
 const source=()=>({release:{id:'data123'},selection:{roots:[{nodeId:'1:2'}],scannedNodes:4,components:[{componentKey:'keyA'},{componentKey:'keyA'}]},components:[{}],governedComponents:[{}],notChecked:[],result:{coverage:{executionComplete:false},engine:{evaluations:[{ruleId:'r1',classification:'compliant',trace:{truth:'unknown',actual:'PRIVATE TEXT'}},{ruleId:'r2',classification:'violation',trace:{truth:'false'}},{ruleId:'r3',classification:'human-review',trace:{truth:'unknown'}}]}}});
 const sample=(reportId='test-1')=>createReport({reportId,runId:'run1',origin:'contract-area',startedAt:'2026-10-29T00:00:00.000Z',durationMs:25,result:source()});
+test('default browser client can verify a receipt without WebCrypto',async()=>{
+ const built=require('esbuild').buildSync({entryPoints:[require.resolve('../src/audit-statistics/client')],bundle:true,platform:'browser',format:'cjs',write:false}).outputFiles[0].text;
+ const sandbox={module:{exports:{}},console,AbortController,setTimeout,clearTimeout,queueMicrotask};require('node:vm').runInNewContext(built,sandbox);
+ assert.equal(sandbox.crypto,undefined);assert.equal(sandbox.TextEncoder,undefined);
+ const h=harness({clientFactory:options=>{delete options.hash;return sandbox.module.exports.createStatisticsClient(options);},sessionId:'no-webcrypto'});
+ h.put(sample('browser-no-crypto'));await wait(()=>h.map.size===0&&h.client.diagnostics().unsaved===0);
+ assert.deepEqual(h.errors,[]);h.client.close();
+});
+test('a full durable queue drains before saving new reports, without dropping entries',async()=>{
+ const prior=[sample('prior:1'),sample('prior:2')],map=new Map(prior.map(r=>[PREFIX+r.reportId,r])),delivered=[];
+ const h=harness({map,hash:null,bridgeOptions:{maxRecords:2},request:async(_url,o)=>{const r=JSON.parse(o.body);delivered.push(r.reportId);return{ok:true,json:async()=>({accepted:true,reportId:r.reportId,payloadHash:digest(r),state:'proxy-durable'})};}});
+ h.put(sample('next:1'));await wait(()=>delivered.length===3&&map.size===0&&h.client.diagnostics().unsaved===0);
+ assert.deepEqual(delivered,['prior:1','prior:2','next:1']);assert.deepEqual(h.errors,[]);h.client.close();
+});
+test('native queue progress refreshes only the matching idle watchdog',async()=>{
+ const map=new Map(Array.from({length:32},(_,i)=>{const r=sample('slow:'+i);return[PREFIX+r.reportId,r];}));
+ const h=harness({map,hash:null,timeoutMs:500,retryMs:60000,storageRead:async key=>{await new Promise(r=>setTimeout(r,20));return map.get(key);}});
+ await h.client.flush();assert.equal(map.size,0);assert.deepEqual(h.errors,[]);h.client.close();
+});
+test('an offline full queue retains durable and unsaved reports without immediate retry loops',async()=>{
+ const prior=[sample('offline:1'),sample('offline:2')],map=new Map(prior.map(r=>[PREFIX+r.reportId,r]));let calls=0;
+ const h=harness({map,hash:null,retryMs:60000,bridgeOptions:{maxRecords:2},request:async()=>{calls++;throw TypeError('offline');}});
+ h.put(sample('offline:3'));await wait(()=>h.errors.includes('AUDIT_STATISTICS_QUEUE_FULL'));
+ await new Promise(r=>setTimeout(r,30));assert.equal(calls,1);assert.equal(map.size,2);assert.equal(h.client.diagnostics().unsaved,1);h.client.close();
+});
 const wait=async check=>{for(let i=0;i<500;i++){if(check())return;await new Promise(r=>setTimeout(r,2));}throw Error('bounded test wait');};
 test('V3 filing uses Figma name and local completion time, validates dates and keeps legacy reports readable',()=>{
  const f=require('../src/audit-statistics/filing'),at=new Date(2026,9,31,12,13,42);
@@ -17,7 +42,7 @@ test('V3 filing uses Figma name and local completion time, validates dates and k
 test('built native statistics bridge persists reports without browser or Node encoding globals',async()=>{
  const code=require('esbuild').buildSync({entryPoints:[require.resolve('../src/audit-statistics/native')],bundle:true,platform:'neutral',format:'cjs',write:false}).outputFiles[0].text;
  const sandbox={module:{exports:{}},console};require('node:vm').runInNewContext(code,sandbox);assert.equal(sandbox.TextEncoder,undefined);assert.equal(sandbox.Buffer,undefined);
- const map=new Map(),messages=[],bridge=sandbox.module.exports.createStatisticsBridge({storage:{keysAsync:async()=>Array.from(map.keys()),getAsync:async k=>map.get(k),setAsync:async(k,v)=>map.set(k,v),deleteAsync:async k=>map.delete(k)},post:m=>messages.push(m),onError:()=>{}}),r=sample('native-vm');
+ const map=new Map(),messages=[],bridge=sandbox.module.exports.createStatisticsBridge({hash:digest,storage:{keysAsync:async()=>Array.from(map.keys()),getAsync:async k=>map.get(k),setAsync:async(k,v)=>map.set(k,v),deleteAsync:async k=>map.delete(k)},post:m=>{if(m.type==='audit-statistics-result')messages.push(m);},onError:()=>{}}),r=sample('native-vm');
  bridge.accept({type:'audit-statistics-request',requestId:'native-vm:put',operation:'put',report:r});await wait(()=>messages.length===1);assert.equal(messages[0].error,undefined);assert.equal(map.size,1);
  bridge.accept({type:'audit-statistics-request',requestId:'native-vm:pending',operation:'pending',report:null});await wait(()=>messages.length===2);assert.equal(messages[1].result.reports[0].reportId,r.reportId);assert.equal(messages[1].result.unreadable,0);
  bridge.accept({type:'audit-statistics-request',requestId:'native-vm:ack',operation:'ack',report:r});await wait(()=>messages.length===3);assert.equal(messages[2].error,undefined);assert.equal(map.size,0);
@@ -27,10 +52,10 @@ test('sandbox byte count preserves UTF-8 limits and rejects oversized or private
  const r=sample('compatible'),oversized=JSON.parse(JSON.stringify(r));oversized.metrics.rules=Array.from({length:1000},()=>({ruleId:'r'.repeat(180),classification:'violation',count:1}));
  assert.equal(p.valid(r),true);assert.equal(p.valid(oversized),false);assert.equal(p.valid(Object.assign({},r,{snapshot:{text:'PRIVATE'}})),false);
 });
-function harness({map=new Map(),request,storageWrite=async(k,v)=>map.set(k,v),sessionId='session1',...options}={}){
- let client;const errors=[];const storage={keysAsync:async()=>Array.from(map.keys()),getAsync:async k=>map.get(k),setAsync:storageWrite,deleteAsync:async k=>map.delete(k)};
- const bridge=createStatisticsBridge({storage,post:m=>client.accept(m),onError:c=>errors.push(c)});
- client=createStatisticsClient({send:m=>bridge.accept(m),request:request||(async(_url,o)=>{const r=JSON.parse(o.body);return{ok:true,json:async()=>({accepted:true,reportId:r.reportId,payloadHash:digest(r),state:'proxy-durable'})};}),hash:digest,sessionId,retryMs:10,timeoutMs:30,onError:c=>errors.push(c),...options});
+function harness({map=new Map(),request,storageWrite=async(k,v)=>map.set(k,v),sessionId='session1',clientFactory=createStatisticsClient,bridgeOptions={},storageRead=async k=>map.get(k),...options}={}){
+ let client;const errors=[];const storage={keysAsync:async()=>Array.from(map.keys()),getAsync:storageRead,setAsync:storageWrite,deleteAsync:async k=>map.delete(k)};
+ const bridge=createStatisticsBridge(Object.assign({storage,hash:digest,post:m=>client.accept(m),onError:c=>errors.push(c)},bridgeOptions));
+ client=clientFactory({send:m=>bridge.accept(m),request:request||(async(_url,o)=>{const r=JSON.parse(o.body);return{ok:true,json:async()=>({accepted:true,reportId:r.reportId,payloadHash:digest(r),state:'proxy-durable'})};}),hash:digest,sessionId,retryMs:10,timeoutMs:30,onError:c=>errors.push(c),...options});
  return{client,map,errors,put:r=>client.record(Object.assign({},r,{result:source()}))};
 }
 test('compact metrics retain actual classifications and UNKNOWN without layout text or legacy zeros',()=>{

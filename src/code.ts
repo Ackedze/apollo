@@ -34,7 +34,7 @@ const catalogPort=createCatalogPort(post);
 const catalogReaders=createCatalogReaders(catalogPort,figma,engine.stableHash);
 const { DISPLAY_METADATA_BUDGET_MS } = require("./document-audit/budgets");
 const tokenJournalBridge=require("./token-journal-native").createTokenJournalBridge({storage:figma.clientStorage,post});
-const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post});
+const auditStatisticsBridge=require('./audit-statistics/native').createStatisticsBridge({storage:figma.clientStorage,post,hash:engine.stableHash});
 const designCheckUiBridge = createUiMainBridge({ storage: figma.clientStorage, resize: (width: number, height: number) => figma.ui.resize(width, height), post });
 const generationSessionBridge = createSessionBridge({ storage: figma.clientStorage, post });
 const nativePageObserver = createCurrentPageDiagnosticObserver(figma,invalidateNativeDiagnostic);
@@ -545,5 +545,5 @@ figma.ui.onmessage = async (message: any) => {
       selectionId = selectionSignature([node as SceneNode]);
       figma.currentPage.selection = [node as SceneNode]; figma.viewport.scrollAndZoomIntoView([node as SceneNode]);
     }
-  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error),diagnostic:(error as any)?.auditFailure||null }); }
+  } catch (error) { if(message.type==='audit'&&activeArea?.cancelling)return;if((error as any)?.sourceProjection)console.warn('[Apollo][contract-source]',JSON.stringify({requestId:message.requestId,projection:(error as any).sourceProjection}));post({ type: 'error', requestId: message.requestId, message: error instanceof Error ? error.message : String(error),diagnostic:(error as any)?.auditFailure||null }); }
 };

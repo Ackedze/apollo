@@ -32,6 +32,14 @@ test('compiled-only input and a bare manual without facts are rejected', () => {
   assert.throws(() => runtime.loadAuthoringSource(require("./fixtures").contract()), { code: 'APOLLO_V4_SOURCE_INVALID' });
   assert.throws(() => runtime.loadAuthoringSource(fixture.source().manual), /факты/);
 });
+test('a projection refusal identifies the component and hashes without exposing source contents',()=>{
+ const source=fixture.source();source.projectionStamp={sourceExportVersion:'component-contract-editor@0.2.108',compiledHash:'0'.repeat(64)};
+ assert.throws(()=>runtime.loadAuthoringSource(source),error=>{
+  assert.equal(error.code,'APOLLO_V4_SOURCE_INVALID');assert.equal(error.sourceProjection.componentId,source.manual.component.componentId);
+  assert.equal(error.sourceProjection.expectedHash,'0'.repeat(64));assert.match(error.sourceProjection.actualHash,/^[a-f0-9]{64}$/);
+  assert.deepEqual(Object.keys(error.sourceProjection).sort(),['actualHash','componentId','expectedHash','revision','sourceExportVersion']);return true;
+ });
+});
 
 test('Editor compact anatomy can be reused but a stale or altered projection cannot supply norms', () => {
   const s = fixture.source(), c = runtime.loadAuthoringSource(s).contract;

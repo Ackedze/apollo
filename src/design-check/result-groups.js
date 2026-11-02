@@ -31,6 +31,7 @@ function baseCheck(result) {
     findings: checks.flatMap(check => check.findings), gaps: Array.from(new Set(checks.flatMap(check => check.gaps || []))), checked: checks.reduce((sum, check) => sum + (check.checked || 0), 0) };
 }
 function summarizeTab(state, tab, items) {
+  if(tab.id==='changes'&&state.auditError&&state.documentAudit.status==='available')return{id:tab.id,title:tabTitles[tab.id],connected:false,count:null,entries:[],issues:[],incomplete:true};
   const check = tab.id === 'themization' ? baseCheck(state.documentAudit.result) : state.documentAudit.result?.checks.find(value => value.id === checkIds[tab.id]);
   const entries = check ? check.findings.filter(f => tab.id === 'current' ? f.status === 'current' : tab.id === 'update' ? ['update', 'unknown'].includes(f.status) : true) : items;
   const connected = Boolean(check) || state.tabs[tab.id]?.status !== 'not-connected' && Boolean(state.tabs[tab.id]);
@@ -58,7 +59,7 @@ function buildResultGroups(state, tabs, getItems) {
   const available = categories.some(category => category.connected);
   return { groups: summaries, theme, total: available ? collectUnique(categories) : null,
     stale: state.auditStale || state.documentAudit.status === 'stale',
-    incomplete: categories.some(category => category.connected && category.incomplete),coverageDetails:coverageDetails(state,categories) };
+    incomplete: categories.some(category => category.incomplete && (category.connected || category.id==='changes')),coverageDetails:coverageDetails(state,categories) };
 }
 /** Presentation only: the mascot uses the same red/yellow meanings as finding cards. */
 /** @returns {'unchecked' | 'clean' | 'warning' | 'violation'} */

@@ -11,13 +11,15 @@ export type DocumentAuditState = { status: 'idle' | 'loading' | 'cancelling' | '
 export type Audit = { auditId: string; result: { engine: { evaluations: Evaluation[] }; coverage?: { scope?: string; executionComplete: boolean } }; [key: string]: unknown };
 export type Preferences = { schemaVersion: 'apollo.design-check-ui-preferences.v1';
   settings: Partial<UISettings>; agentSource: 'langflow' | 'codex' };
+export type CompatibilityStatus = { state: string; message: string };
 export type DialoguePort = { cancelScope: 'client-only';
   send(input: { requestId: string; source: string; question: string; dialogue: { role: string; text: string }[];
     context: null; signal: AbortSignal }): Promise<{ text: string; source?: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }>;
-  status?(): Promise<{ available: boolean; version: string | null }>;
+  status?(): Promise<{ available: boolean; version: string | null; compatibility?: CompatibilityStatus }>;
   resetSession?(): void;
 };
 export type ControllerOptions = { tabs?: Tab[]; preferenceScope?: 'agent-source' | 'all-ui'; settingCapabilities?: Partial<Record<keyof UISettings, boolean>>;
+  beforeOperation?(): Promise<void>;
   preferences?: { load(): Promise<Preferences | null>; save(value: Preferences): Promise<unknown> };
   dialogue?: DialoguePort;
   onAudit?(input: { requestId: string; uiPreferences: UISettings }): Promise<Audit | void> | void;
@@ -36,7 +38,7 @@ export type ControllerState = {
   chat: { open: boolean; source: 'langflow' | 'codex'; busy: boolean; error: string; unreadCount: number;
     messages: { role: 'user' | 'assistant'; text: string; requestId: string; source: string; returnedSource?: string | null; provider?: 'codex' | 'claude' | 'alfagen' | null; knowledgeRelease?: unknown }[];
     transport: 'configured' | 'not-connected'; cancelScope: string | null;
-    proxy: { available: boolean | null; version: string | null } };
+    proxy: { available: boolean | null; version: string | null; compatibility?: CompatibilityStatus | null } };
 };
 export type DesignCheckController = {
   getState(): ControllerState; subscribe(listener: () => void): () => void;

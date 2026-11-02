@@ -8,7 +8,14 @@ function createDesignCheckController(options = {}) {
   const sourceOnly = options.preferenceScope === 'agent-source';
   const listeners = new Set(), revisions = {}, settingCapabilities = options.settingCapabilities || {};
   let destroyed = false, sequence = 0, loadSequence = 0, saveQueue = Promise.resolve();
-  let activeChat = null, activeAudit = null, proxySequence = 0, pendingCheck=null;
+  let activeChat = null, activeAudit = null, proxySequence = 0, pendingCheck=null, preflightPending=false;
+  async function prepareOperation() {
+    if (preflightPending) return false;
+    preflightPending=true;
+    try { await options.beforeOperation(); return !destroyed; }
+    catch { return false; }
+    finally { preflightPending=false; }
+  }
   let state = { settings: clone(DEFAULT_SETTINGS), selectedTab: 'current', view: 'audit', mode: 'check',
     settingsNotice: '', preferenceStatus: 'session-only', preferenceError: '',
     auditReady: false, auditBusy: false, auditStopping:false, auditCancelled:false,auditNotice:'',auditFailures:[], auditProgress: '', auditStale: false, auditError: '', audit: null, contextKey: null,
@@ -127,6 +134,8 @@ function createDesignCheckController(options = {}) {
   }
   async function startDocumentAudit() {
     if (!state.documentPageAvailable || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed || !options.onDocumentAudit) return false;
+    if (options.beforeOperation && !await prepareOperation()) return false;
+    if (options.beforeOperation && (!state.auditReady || state.auditBusy || state.documentAction.busy || ['loading','cancelling'].includes(state.documentAudit.status))) return false;
     emit({auditNotice:''});const requestId = `design-check-audit-${++sequence}`;pendingCheck={requestId,needsContract:false,contract:null,native:null,previousDocument:state.documentAudit,contractError:null};
     try { await options.onDocumentAudit({ requestId, uiPreferences: clone(state.settings) }); }
     catch (error) { emit({ documentAudit: { status: state.documentAudit.result ? 'stale' : 'error', requestId, result: state.documentAudit.result, error: error.message || 'Не удалось начать проверку документа.' } }); }
@@ -171,6 +180,8 @@ function createDesignCheckController(options = {}) {
   }
   async function startAudit() {
     if (!state.auditReady || state.auditBusy || !options.onAudit) return false;
+    if (options.beforeOperation && !await prepareOperation()) return false;
+    if (!state.auditReady || state.auditBusy) return false;
     const requestId = `design-check-audit-${++sequence}`; beginContractAudit(requestId);
     try {
       const result = await options.onAudit({ requestId, uiPreferences: clone(state.settings) });
@@ -187,7 +198,8 @@ function createDesignCheckController(options = {}) {
   function setProxyStatus(proxy) {
     if (destroyed || !proxy || ![true, false, null].includes(proxy.available)) return;
     ++proxySequence;
-    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null } });
+    setChat({ proxy: { available: proxy.available, version: typeof proxy.version === 'string' ? proxy.version : null,
+      compatibility: proxy.compatibility || (proxy.available === false ? null : state.chat.proxy.compatibility) || null } });
   }
   async function refreshProxyStatus() {
     if (!options.dialogue?.status) return;
@@ -210,6 +222,7 @@ function createDesignCheckController(options = {}) {
     const text = typeof question === 'string' ? question.trim() : '';
     if (!text || state.chat.busy || !options.dialogue || destroyed) return false;
     if (text.length > 8000) { setChat({ error: 'Вопрос слишком длинный: максимум 8000 символов.' }); return false; }
+    if (options.beforeOperation && !await prepareOperation()) return false;
     // Sending consumes the chosen source even if its reply finishes before preference loading.
     revisions.agentSource = (revisions.agentSource || 0) + 1;
     const requestId = `design-check-chat-${++sequence}`, source = state.chat.source;

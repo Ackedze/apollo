@@ -12,7 +12,7 @@ function pickerRepresentatives(icons) {
 const searchText = value => String(value || '').normalize('NFC').toLocaleLowerCase('ru').replace(/ё/g,'е').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const rowIdentity = row => row.rowId || row.oldKey;
 const reviewGroup = row => (row.outsideCatalog && !row.verifiedCurrency) || row.category === 'unknown' ? 'unknown' : row.category === 'unused' ? 'unused' : new Set((row.candidates || []).map(c=>c.newKey)).size>1 ? 'ambiguous' : row.newKey ? 'ready' : 'unresolved';
-function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOperation=()=>null}) {
+function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOperation=()=>null,beforeOperation}) {
   const listeners = new Set(),queue = [],previewPending = new Set(),previewAttempts = new Map(),priorityPreviews = new Set(),retryTimers = new Map();
   const identity = Date.now().toString(36)+'-'+(++clientSequence);
   let sequence=0,revision=0,active=null,opened=false,initialized=false;
@@ -102,8 +102,9 @@ function createReglyphClient({send,isBusy = () => false,onChange = () => {},onOp
     send({type:'reglyph-context',schemaVersion:p.SCHEMA,revision,context});
     if(opened && state.supported)void request('ready');
   }
-  function start(confirmation) {
+  async function start(confirmation) {
     if(!state.supported || isBusy() || foreground())return;
+    if(beforeOperation){try{await beforeOperation();}catch(error){emit({error:error.message});return;}if(isBusy()||foreground())return;}
     emit({status:'scanning',planStale:false,scopeName:'',error:'',result:null,confirmation:null,progress:null});
     const payload=confirmation?{scenarioId:confirmation.scenario,confirmationToken:confirmation.token}:{scenarioId:state.scenario};
     void request('scan',payload);

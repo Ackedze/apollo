@@ -222,7 +222,12 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
       </nav>
       <div ref={setSettingsHost} className="apollo-settings-host" />
     </header>
-    <div className="design-check-background">
+    <div className={`design-check-background${state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' ? ' has-compatibility-notice' : ''}`}>
+        {state.chat.proxy.compatibility && state.chat.proxy.compatibility.state !== 'compatible' &&
+          <section className="apollo-compatibility design-check-note" role="status" aria-label="Совместимость Apollo">
+            <p>{state.chat.proxy.compatibility.message}</p>
+            <button type="button" onClick={() => { void controller.refreshProxyStatus(); }}>Проверить снова</button>
+          </section>}
       <div className="design-check-content">
         <h1 className="design-check-sr-only">Apollo</h1>
         <section className="design-check-check-screen" hidden={activeScreen !== 'check'} aria-label="Проверка макета">

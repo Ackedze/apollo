@@ -319,3 +319,4 @@
   line-height: 15px;
   color: rgba(5, 8, 29, 0.52);
 }
+.proxyBadge[data-state='update-required'] .proxyIndicator { background: #a45b00; }

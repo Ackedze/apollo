@@ -30,7 +30,7 @@ type TopSectionProps = {
   title: string;
   settingsHost?: HTMLElement | null;
   readContractData?: () => Promise<ContractData>;
-  proxy?: { available: boolean | null; version: string | null };
+  proxy?: { available: boolean | null; version: string | null; compatibility?: { state: string; message: string } | null };
   proxyError?: string;
   settingsMessage?: string;
   onProxyRefresh?: () => Promise<void>;
@@ -309,7 +309,9 @@ export function TopSection({
     compact ? 'compact' : 'full',
   ].join(':');
 
-  const proxyStatus = proxy?.available === null ? 'Не проверен' : proxy?.available ? 'Подключён' : 'Недоступен';
+  const needsUpdate = proxy?.available === true && Boolean(proxy.compatibility?.state.startsWith('update-'));
+  const compatible = proxy?.compatibility?.state === 'compatible';
+  const proxyStatus = proxy?.available === null ? 'Не проверен' : needsUpdate ? 'Требуется обновление' : proxy?.available ? compatible ? 'Совместим' : 'Совместимость не проверена' : 'Недоступен';
   const proxyLabel = `Proxy${proxy?.version ? ` v${proxy.version}` : ''}`;
 
   const platformControl = (
@@ -375,9 +377,9 @@ export function TopSection({
           {proxy && <button
             type="button"
             className={styles.proxyBadge}
-            data-state={proxy.available === null ? 'unknown' : proxy.available ? 'connected' : 'unavailable'}
+            data-state={proxy.available === null ? 'unknown' : needsUpdate ? 'update-required' : proxy.available ? compatible ? 'connected' : 'unknown' : 'unavailable'}
             aria-label={`${proxyLabel}: ${proxyStatus}. Проверить подключение`}
-            title={[proxyStatus, proxy.available === false ? proxyError || 'Запусти локальный Proxy.' : '', 'Нажми, чтобы проверить подключение.'].filter(Boolean).join('\n')}
+            title={[proxyStatus, needsUpdate ? proxy.compatibility?.message : proxy.available === false ? proxyError || 'Запусти локальный Proxy.' : '', 'Нажми, чтобы проверить подключение.'].filter(Boolean).join('\n')}
             disabled={!onProxyRefresh}
             onClick={() => { void onProxyRefresh?.(); }}
           >

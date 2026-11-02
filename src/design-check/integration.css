@@ -100,3 +100,9 @@ body { min-width: 0; }
 .document-audit-finding summary { cursor: pointer; }
 .document-audit-finding pre { max-width: 100%; overflow-x: auto; font-size: 12px; }
 .document-audit-warning { color: #9a4018; }
+.design-check-shell .apollo-compatibility { box-sizing: border-box; display: flex; align-items: center; align-self: flex-start; flex-wrap: wrap; gap: 12px; width: min(100%, calc(100vw - 32px)); min-width: 0; margin: 12px 0; flex-shrink: 0; }
+.design-check-shell .apollo-compatibility p { flex: 1 1 260px; margin: 0; overflow-wrap: anywhere; }
+.design-check-shell .apollo-compatibility button { flex-shrink: 0; color: var(--figma-color-text, #242424); background: var(--figma-color-bg, #fff); border: 1px solid var(--figma-color-border, #d0d0d0); border-radius: 8px; padding: 8px 12px; font: inherit; cursor: pointer; }
+.design-check-shell .apollo-compatibility button:focus-visible { outline: 2px solid var(--figma-color-border-selected, #267bff); outline-offset: 2px; }
+.design-check-shell .design-check-background.has-compatibility-notice { display: flex; flex-direction: column; }
+.design-check-shell .has-compatibility-notice .design-check-content { height: auto; }

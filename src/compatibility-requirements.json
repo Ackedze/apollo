@@ -1,0 +1,9 @@
+{
+  "minProxyVersion": "1.4.11",
+  "maxProxyVersionExclusive": "2.0.0",
+  "protocolVersion": 1,
+  "dataSchemaVersion": "apollo.proxy-data-release.v1",
+  "dataProfiles": ["0.4.1"],
+  "minDataGeneratedAt": "2026-11-02T12:13:09.774Z",
+  "deliveryProfile": "checking-ask-figma-mcp"
+}

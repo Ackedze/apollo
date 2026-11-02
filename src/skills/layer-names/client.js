@@ -3,7 +3,7 @@ const {createOpaqueId} = require('../../design-check/opaque-id');
 const {readDiagnostics} = require('./diagnostics');
 const b = require('./batch-protocol');
 const {activity}=require('../../token-journal-protocol');
-function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),endpoint='http://localhost:3001/skills/layer-names',isBusy=()=>false,onChange=()=>{},onOperation=()=>null}) {
+function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),endpoint='http://localhost:3001/skills/layer-names',isBusy=()=>false,onChange=()=>{},onOperation=()=>null,beforeOperation}) {
   const listeners=new Set(),pending=new Map(),identity=createOpaqueId();
   let sequence=0,revision=0,abort=null,activeRun=null,selectionKey=null,batchAttempt=null,analysisActivity=null;
   const batchByNode=new Map();
@@ -143,6 +143,7 @@ function createLayerNamesClient({send,request=(url,options)=>fetch(url,options),
   async function start(options={}){
     if(busy() || isBusy())return;
     if(state.pendingMutation){await recoverMutation();return;}
+    if(beforeOperation){try{await beforeOperation();}catch(error){emit({error:error.message});return;}if(busy()||isBusy())return;}
     const tracked=activity(onOperation,'layer-names-run');analysisActivity=tracked;let outcome='completed';
     const resume=!options.fresh && state.status==='error' && !state.result && state.batch;
     const revisionId=++revision,controller=new AbortController();abort=controller;

@@ -10,6 +10,8 @@ const { createDocumentAuditClient } = require("./design-check/document-audit-cli
 const { createOpaqueId } = require("./design-check/opaque-id");
 require("./design-check/legacy.css");
 const BASE = 'http://localhost:3001';
+const compatibility = require('./compatibility').createCompatibilityClient({ request: (url, options) => fetch(url, options),
+  endpoint: BASE + '/health', onChange: value => designCheck.setProxyStatus(value) });
 const tokenJournalClient = require('./token-journal-client').createTokenJournalClient({send:value=>parent.postMessage({pluginMessage:value},'*')});
 let statisticsUserName=null;
 const auditStatisticsClient=require('./audit-statistics/client').createStatisticsClient({userName:()=>statisticsUserName,send:value=>parent.postMessage({pluginMessage:value},'*'),versions:{plugin:require('../package.json').version,build:__APOLLO_STATIC_REVIEW_BUILD_INPUTS_SHA__,runtime:require('../packages/component-contract-core/package.json').version}});
@@ -31,10 +33,10 @@ const {auditSummary,createAuditReportClient}=require("./audit-report");
 const auditReports=createAuditReportClient(send);
 const contractData = require("./contract-data").createContractDataClient(send);
 const dialogue = createExistingDialoguePort({ request: (url, options) => fetch(url, options), endpoint: BASE + '/analyze',
-  createSessionId: () => 'apollo-v4-' + createOpaqueId() });
+  readStatus: compatibility.refresh, createSessionId: () => 'apollo-v4-' + createOpaqueId() });
 let pendingContractDelivery=null,pendingNativeDelivery=null,contractContext=null;
 let lastCompact = false, contractStopping=false, currentPageId='';
-const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferenceScope: 'agent-source', preferences: uiClient.preferences, dialogue,
+const designCheck = createDesignCheckController({ tabs: tabDefinitions, preferenceScope: 'agent-source', preferences: uiClient.preferences, dialogue, beforeOperation: compatibility.ensure,
   onSettingChange: key => { if (['pickerLabel','channelId','pageTypeId'].includes(key)) {documentAuditClient.invalidate();markContractStale(true);} },
   onDocumentAction:(findingId,targetId,actionId)=>{documentAuditClient.action(findingId,targetId,actionId);controls();},
   onDocumentFocus: (findingId, targetId) => documentAuditClient.focus(findingId, targetId),
@@ -69,8 +71,8 @@ designCheck.subscribe(() => {
   if (compact === lastCompact) return;
   lastCompact = compact; void uiClient.resize(compact).catch(error => status(error.message, true));
 });
-layerNamesClient=createLayerNamesClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
-reglyphClient=createReglyphClient({send,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+layerNamesClient=createLayerNamesClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
+reglyphClient=createReglyphClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
 function dependencyReason(reason) {
   if (['dependency-reference-not-captured', 'dependency-reference-capture-failed', 'dependency-main-component-unavailable', 'dependency-instance-unavailable'].includes(reason)) return 'Не удалось получить независимый библиотечный эталон.';
@@ -293,7 +295,7 @@ window.onmessage = event => {
 
 controls();
 send({ type: 'ready' });
-landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
+landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
 mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
 void designCheck.restorePreferences();
 designCheck.subscribe(()=>landingUi?.refresh());
@@ -304,3 +306,5 @@ void tokenJournalClient.flush();
 void auditStatisticsClient.flush();
 window.addEventListener('online',()=>{void auditStatisticsClient.flush();});
 window.addEventListener('online',()=>{void tokenJournalClient.flush();});
+
+void designCheck.refreshProxyStatus();

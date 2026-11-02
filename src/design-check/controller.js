@@ -160,7 +160,10 @@ function createDesignCheckController(options = {}) {
   }
   function stopAudit(reason='user'){
     if(destroyed||state.auditStopping||state.documentAction.busy||!state.auditBusy&&!['loading','cancelling'].includes(state.documentAudit.status)||!options.onStopAudit)return false;
-    pendingCheck=null;emit({auditStopping:true,auditNotice:reason==='offline'?'Потеряно соединение с интернетом. Проверка остановлена; доступные результаты сохранены.':'Проверка остановлена. Доступные результаты сохранены.'});options.onStopAudit();return true;
+    const nativeFailure=pendingCheck?.native?.status==='error'?pendingCheck.native:null;
+    // A failed native branch has no pending cancellation reply to clear loading.
+    const documentAudit=nativeFailure?Object.assign({},state.documentAudit,{status:state.documentAudit.result?'stale':'error',error:nativeFailure.error,progress:'',cancelled:true}):state.documentAudit;
+    pendingCheck=null;emit({documentAudit,auditStopping:true,auditNotice:reason==='offline'?'Потеряно соединение с интернетом. Проверка остановлена; доступные результаты сохранены.':'Проверка остановлена. Доступные результаты сохранены.'});options.onStopAudit();return true;
   }
   function acceptAuditCancelled(requestId){
     if(!requestId||activeAudit!==requestId)return false;

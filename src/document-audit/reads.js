@@ -1,3 +1,12 @@
+// Cached RPCs may resolve entirely in microtasks, starving host Stop messages.
+let workSinceYield=0,hostTurn=null;
+function yieldToHost(){
+ if(hostTurn)return hostTurn;
+ if(++workSinceYield<32)return null;
+ workSinceYield=0;
+ hostTurn=new Promise(resolve=>setTimeout(()=>{hostTurn=null;resolve();},0));
+ return hostTurn;
+}
 // Figma reads cannot be physically aborted. Only bounded, guarded results escape
 // a run; late resolutions do not write facts, emit progress or start more work.
 async function boundedRead(read,timeoutMs,guard=()=>{}){
@@ -6,7 +15,7 @@ async function boundedRead(read,timeoutMs,guard=()=>{}){
 }
 async function parallel(items,concurrency,visit){
  let next=0,failed=null;
- await Promise.all(Array.from({length:Math.min(items.length,concurrency)},async()=>{while(next<items.length&&!failed){const index=next++;try{await visit(items[index],index);}catch(e){failed=e;}}}));
+ await Promise.all(Array.from({length:Math.min(items.length,concurrency)},async()=>{while(next<items.length&&!failed){const turn=yieldToHost();if(turn)await turn;if(failed||next>=items.length)break;const index=next++;try{await visit(items[index],index);}catch(e){failed=e;}}}));
  if(failed)throw failed;
 }
 // Wait on the SAME native RPC. A slow read is not a reason to issue a second
@@ -16,7 +25,7 @@ function cooperativeRead(read,intervalMs,guard=()=>{},onWait=()=>{}){
   let settled=false,last=Date.now(),timer;
   const finish=(error,value,failed=false)=>{if(settled)return;settled=true;clearTimeout(timer);if(failed)reject(error&&typeof error.message==='string'?error:Error(typeof error==='string'?error:'NATIVE_READ_FAILED'));else try{guard();resolve(value);}catch(e){reject(e);}};
   const poll=()=>{if(settled)return;try{guard();if(Date.now()-last>=intervalMs){last=Date.now();onWait();}timer=setTimeout(poll,Math.max(5,Math.min(100,intervalMs)));}catch(e){finish(e,undefined,true);}};timer=setTimeout(poll,Math.max(5,Math.min(100,intervalMs)));
-  Promise.resolve().then(()=>{guard();return read();}).then(value=>finish(null,value),error=>finish(error,undefined,true));
+  Promise.resolve().then(async()=>{const turn=yieldToHost();if(turn)await turn;guard();return read();}).then(value=>finish(null,value),error=>finish(error,undefined,true));
  });
 }
 const retryableRead=error=>/TIMEOUT|TEMPORAR|UNAVAILABLE|SUPERSEDED|CANCELLED|CONTEXT_CHANGED/.test(String(error?.code||error?.message||''));

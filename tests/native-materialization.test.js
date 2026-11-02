@@ -77,8 +77,10 @@ test('tracing preserves exact facts and findings with at most two extra text-seg
    const n=f.node('text-'+i,'TEXT',f.page.selection[0],{characters:'Synthetic',fills:[],textStyleId:''});
    n.getStyledTextSegments=fields=>{segments++;const row={start:0,end:9};for(const field of fields)row[field]=n[field];return[row];};
   }
-  const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},onTrace:enabled?()=>{}:null});observations.push({segments,checks:o.checks,facts:o.facts});
+  const o=await collect(f.api,f.context(),{hash,assertCurrent:()=>{},onTrace:enabled?()=>{}:null});observations.push({segments,checks:o.checks.map(c=>Object.assign({},c,{findings:c.findings.slice().sort((a,b)=>a.findingId.localeCompare(b.findingId))})),facts:o.facts});
  }
- assert.deepEqual(observations[0].facts,observations[1].facts);assert.deepEqual(observations[0].checks,observations[1].checks);
+ // Parallel completion order is independent of tracing; compare every value by identity.
+ const byIdentity=(a,b)=>(a.kind+':'+a.id).localeCompare(b.kind+':'+b.id);
+ assert.deepEqual(observations[0].facts.slice().sort(byIdentity),observations[1].facts.slice().sort(byIdentity));assert.deepEqual(observations[0].checks,observations[1].checks);
  assert(observations[1].segments-observations[0].segments<=40,'diagnostic tracing must not add a third full text traversal');
 });

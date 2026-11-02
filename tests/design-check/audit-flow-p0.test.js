@@ -45,3 +45,14 @@ for(const order of ['native-first','contract-first'])test('contract final error 
 test('a contract candidate invalidated while native is pending must be recaptured before commit',async()=>{const f=setup();await f.controller.startDocumentAudit();const stale=audit('stale');f.controller.acceptAuditResult(f.id(),stale);f.controller.beginContractAudit(f.id());f.deliverNative();assert.notEqual(f.controller.getState().audit,stale);assert.equal(f.controller.getState().auditBusy,true);const fresh=audit('fresh');f.controller.acceptAuditResult(f.id(),fresh);assert.equal(f.controller.getState().audit,fresh);f.client.invalidate('');f.controller.destroy();});
 test('a correlated error code is retained even when an older main omitted the diagnostic envelope',async()=>{const f=setup();await f.controller.startDocumentAudit();f.client.accept({type:'document-audit-error',schemaVersion:SCHEMA,requestId:f.id()+':native',code:'NATIVE_READ_TIMEOUT',message:'generic failure'});f.controller.acceptAuditResult(f.id(),audit('partial'));assert.equal(f.controller.getState().documentAudit.failures[0].code,'NATIVE_READ_TIMEOUT');f.controller.destroy();});
 test('offline stops both branches with an explicit retained-results notice',async()=>{const f=setup();await f.controller.startDocumentAudit();assert.equal(f.controller.stopAudit('offline'),true);assert.match(f.controller.getState().auditNotice,/интернет/);f.client.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:f.id()+':native'});f.controller.acceptAuditCancelled(f.id());assert.equal(f.controller.getState().auditStopping,false);await f.controller.startDocumentAudit();assert.equal(f.controller.getState().auditNotice,'');f.controller.stopAudit();f.client.accept({type:'document-audit-cancelled',schemaVersion:SCHEMA,requestId:f.id()+':native'});f.controller.acceptAuditCancelled(f.id());f.controller.destroy();});
+
+for(const retained of [false,true])test('Stop after native failure clears loading with retained result='+retained,async()=>{
+ const f=setup(),old=retained?result('previous:native'):null;if(old)f.controller.setDocumentAudit({status:'available',requestId:old.runId,result:old,error:''});await f.controller.startDocumentAudit();
+ f.client.accept({type:'document-audit-error',schemaVersion:SCHEMA,requestId:f.id()+':native',code:'NATIVE_READ_FAILED',message:'Fixture read failed'});
+ assert.equal(f.controller.getState().documentAudit.status,retained?'stale':'loading');
+ assert.equal(f.controller.stopAudit(),true);f.controller.acceptAuditCancelled(f.id());
+ assert.equal(f.controller.getState().auditBusy,false);assert.equal(f.controller.getState().auditStopping,false);
+ assert(!['loading','cancelling'].includes(f.controller.getState().documentAudit.status));
+ assert.equal(f.controller.getState().documentAudit.result,old);
+ assert.equal(await f.controller.startDocumentAudit(),true);f.controller.destroy();
+});

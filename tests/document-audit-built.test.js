@@ -20,3 +20,22 @@ test('actual main uses PAGE explicit Theme aliases while checking an individual 
  const f=fixture();f.theme('base','page-alias');f.theme(null,'scene-alias');for(const c of f.collections.values())c.key='invented-same-library-theme';const frame=f.node('frame'),instance=f.instance('instance',null,frame),nested=f.node('sublayer','TEXT',instance);nested.resolvedVariableModes={'scene-alias':'base'};f.page.selection=[nested];bundled(f);await f.api.ui.onmessage(request(f,'nested'));
  const result=await settle(f,'document-audit-result','nested');assert.equal(result.result.checks[2].status,'complete');assert.equal(result.result.checks[2].findings[0].status,'theme-mismatch');assert.equal(result.result.checks[2].findings[0].evidence.aliasCount,2);assert.equal(result.result.context.selectionSignature,'sublayer');f.emit('close');
 });
+
+test('actual main receives Stop while cached Figma identities are still being read',async()=>{
+ const f=fixture(),root=f.node('root'),main=f.component('remote',true,'fixture-key');let reads=0,stopTimer;
+ for(let i=0;i<512;i++){
+  const instance=f.instance('instance-'+i,main,root);
+  instance.getMainComponentAsync=async()=>{
+   if(++reads===1)stopTimer=setTimeout(()=>{void f.api.ui.onmessage({type:'document-audit-cancel',schemaVersion:'apollo.document-audit.v1',requestId:'cached-stop'});},0);
+   return main;
+  };
+ }
+ f.page.selection=[root];bundled(f);
+ try{
+  await f.api.ui.onmessage(request(f,'cached-stop'));
+  await settle(f,'document-audit-cancelled','cached-stop');
+  assert(reads<512,'Stop must reach main before all cached identity reads finish');
+  await new Promise(resolve=>setTimeout(resolve,5));
+  assert.equal(f.messages.some(m=>m.type==='document-audit-result'&&m.requestId==='cached-stop'),false);
+ }finally{clearTimeout(stopTimer);f.emit('close');}
+});

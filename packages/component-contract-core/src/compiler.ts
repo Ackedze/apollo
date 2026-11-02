@@ -524,6 +524,14 @@ function assertionFor(
   return { selectRoot: false, reason: `Constraint ${constraint.type} is not compilable.` };
 }
 
+function uniqueCapabilityFacts(values: string[]): string[] {
+  // Preserve the published fact-path order without depending on the host's collation.
+  return Array.from(new Set(values.filter(Boolean))).sort((left, right) => {
+    const a = left.toLowerCase(), b = right.toLowerCase();
+    return a < b ? -1 : a > b ? 1 : left < right ? -1 : left > right ? 1 : 0;
+  });
+}
+
 function sourceCapabilities(rule: RuleIr): CompiledContract['capabilities'] {
   const selectors = ['selection-root', String((rule.select as Record<string, unknown>).traverse || 'self')];
   const serialized = JSON.stringify(rule);
@@ -531,7 +539,7 @@ function sourceCapabilities(rule: RuleIr): CompiledContract['capabilities'] {
   const operators = Array.from(serialized.matchAll(/"predicate":"([^"]+)"/g)).map((match) => match[1]);
   return {
     selectors: uniqueSorted(selectors),
-    facts: uniqueSorted(facts),
+    facts: uniqueCapabilityFacts(facts),
     operators: uniqueSorted(operators),
     remediations: rule.remediation ? [String((rule.remediation as Record<string, unknown>).kind || '')].filter(Boolean) : [],
   };
@@ -968,7 +976,7 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
     nonExecutableRules,
     capabilities: {
       selectors: uniqueSorted(capabilityParts.flatMap((part) => part.selectors)),
-      facts: uniqueSorted(capabilityParts.flatMap((part) => part.facts)),
+      facts: uniqueCapabilityFacts(capabilityParts.flatMap((part) => part.facts)),
       operators: uniqueSorted(capabilityParts.flatMap((part) => part.operators)),
       remediations: uniqueSorted(capabilityParts.flatMap((part) => part.remediations)),
     },

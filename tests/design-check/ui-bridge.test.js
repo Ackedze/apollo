@@ -4,6 +4,48 @@ const { createUiClient } = require("../../src/design-check/ui-client");
 const { createDesignCheckController } = require("../../src/design-check/controller");
 const request = (operation, payload, requestId = 'synthetic-1') => ({ type: 'design-check-ui-request', schemaVersion: UI_SCHEMA, requestId, operation, payload });
 const source = name => ({ schemaVersion: SOURCE_SCHEMA, source: name });
+
+test('catalog toggle round-trips through existing source preferences and old records default off', async () => {
+  let stored = source('codex'), client;
+  const writes = [];
+  const bridge = createUiMainBridge({ storage: {
+    getAsync: async key => { assert.equal(key, SOURCE_KEY); return stored; },
+    setAsync: async (key, value) => { assert.equal(key, SOURCE_KEY); stored = value; writes.push(value); }
+  }, resize() {}, post: m => client.accept(m) });
+  client = createUiClient(m => bridge.accept(m));
+  const first = createDesignCheckController({ preferenceScope: 'agent-source', preferences: client.preferences });
+  await first.restorePreferences();
+  assert.equal(first.getState().settings.connectCatalogs, false);
+  assert.equal(first.getState().preferenceStatus, 'ready');
+  first.updateSetting('connectCatalogs', true);
+  first.updateSetting('pageTypeId', 'form');
+  await first.flushPreferences();
+  assert.deepEqual(stored, Object.assign(source('codex'), { connectCatalogs: true }));
+  assert.equal(writes.length, 1, 'Other UI context remains session-only');
+  const second = createDesignCheckController({ preferenceScope: 'agent-source', preferences: client.preferences });
+  await second.restorePreferences();
+  assert.equal(second.getState().settings.connectCatalogs, true);
+  assert.equal(second.getState().settings.pageTypeId, null);
+  second.updateSetting('connectCatalogs', false);
+  await second.flushPreferences();
+  assert.deepEqual(stored, source('codex'));
+  const third = createDesignCheckController({ preferenceScope: 'agent-source', preferences: client.preferences });
+  await third.restorePreferences();
+  assert.equal(third.getState().settings.connectCatalogs, false);
+});
+
+test('catalog preference rejects non-booleans and extra context at the native storage boundary', async () => {
+  let writes = 0; const messages = [];
+  const bridge = createUiMainBridge({ storage: { getAsync: async () => null, setAsync: async () => writes++ }, resize() {}, post: m => messages.push(m) });
+  for (const value of ['true', 1, null, undefined]) bridge.accept(request('agent-source-set', Object.assign(source('codex'), { connectCatalogs: value })));
+  bridge.accept(request('agent-source-set', Object.assign(source('codex'), { connectCatalogs: true, pageTypeId: 'form' })));
+  await bridge.flush();
+  assert.equal(writes, 0);
+  assert.equal(messages.length, 5);
+  assert.ok(messages.every(m => typeof m.error === 'string'));
+  const client = createUiClient(() => { throw Error('Invalid value reached native storage'); });
+  await assert.rejects(client.preferences.save({ settings: { connectCatalogs: 'true' }, agentSource: 'codex' }), /логическим/);
+});
 test('closed UI main bridge serializes storage and bounds both window sizes', async () => {
   const messages = [], writes = [], sizes = []; let value;
   const bridge = createUiMainBridge({ storage: { getAsync: async key => { assert.equal(key, SOURCE_KEY); return value; },

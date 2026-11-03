@@ -5,7 +5,9 @@ const SOURCE_KEY = 'apollo-v4-agent-source';
 const sources = ['langflow', 'codex'];
 const closed = (value, keys) => value && typeof value === 'object' && !Array.isArray(value)
   && Object.keys(value).length === keys.length && keys.every(key => Object.hasOwn(value, key));
-const validSource = value => closed(value, ['schemaVersion', 'source']) && value.schemaVersion === SOURCE_SCHEMA && sources.includes(value.source);
+const validSource = value => (closed(value, ['schemaVersion', 'source'])
+  || closed(value, ['schemaVersion', 'source', 'connectCatalogs']) && typeof value.connectCatalogs === 'boolean')
+  && value.schemaVersion === SOURCE_SCHEMA && sources.includes(value.source);
 function validRequest(message) {
   if (!closed(message, ['type', 'schemaVersion', 'requestId', 'operation', 'payload'])
     || message.type !== 'design-check-ui-request' || message.schemaVersion !== UI_SCHEMA

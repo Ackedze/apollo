@@ -1,6 +1,6 @@
 export type UISettings = {
   pageTypeId: 'form' | 'details' | 'data-list' | 'landing' | 'dashboard' | 'other' | null;
-  channelId: string; pickerLabel: string; compact: boolean; shellAuditEnabled: boolean;
+  channelId: string; pickerLabel: string; compact: boolean; shellAuditEnabled: boolean; connectCatalogs: boolean;
   showExpectedCustomizations: boolean; hideCustomizations: boolean; experimentalContractV2Enabled: boolean;
 };
 export type Evaluation = { evaluationId?: string; ruleId?: string; classification: string; [key: string]: unknown };

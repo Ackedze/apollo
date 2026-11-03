@@ -277,14 +277,15 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <footer className={`apollo-audit-footer${activeScreen === 'texts' ? ' apollo-texts-footer' : ''}`} aria-label="Запуск проверки" hidden={activeScreen !== 'check' && activeScreen !== 'texts'}>          <TopSection title="Apollo" settingsHost={settingsHost} readContractData={dataOptions.readContractData} proxy={state.chat.proxy} proxyError={proxyError} settingsMessage={state.preferenceError || state.settingsNotice} onProxyRefresh={controller.refreshProxyStatus} auditControlsVisible={activeScreen === 'check' || activeScreen === 'texts'} overlayScope={`${state.mode}:${state.chat.open}`} pageTypeId={settings.pageTypeId} channelId={settings.channelId} pickerLabel={settings.pickerLabel}
             actionLabel={activeScreen === 'texts' ? 'Проверить' : state.documentAction.status==='refreshing' ? 'Перепроверяем' : state.documentAction.busy ? 'Выполняем' : state.auditStopping ? 'Останавливаем' : actionBusy ? 'Остановить' : 'Проверить'} actionDisabled={activeScreen === 'texts' || state.documentAction.busy || state.auditStopping || !actionBusy&&!state.auditReady}
             actionLoading={activeScreen === 'check' && state.documentAction.busy} actionType={activeScreen === 'check' && state.documentAction.busy ? 'secondary' : 'primary'} compact={false}
-            shellAuditEnabled={settings.shellAuditEnabled} showExpectedCustomizations={settings.showExpectedCustomizations}
+            shellAuditEnabled={settings.shellAuditEnabled} connectCatalogs={settings.connectCatalogs} showExpectedCustomizations={settings.showExpectedCustomizations}
             hideCustomizations={settings.hideCustomizations} experimentalContractV2Enabled={settings.experimentalContractV2Enabled}
             controlAvailability={{ pageTypeId: true, channelId: true, pickerLabel: true, compact: false,
-              showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true,
+              showExpectedCustomizations: capabilities.showExpectedCustomizations === true, hideCustomizations: true, shellAuditEnabled: capabilities.shellAuditEnabled === true, connectCatalogs: !actionBusy,
               experimentalContractV2Enabled: capabilities.experimentalContractV2Enabled === true, captureExample: controller.hasCapturePort() }}
             onActionPress={() => { if (activeScreen !== 'check') return;if(actionBusy){controller.stopAudit();return;} pendingScope.current = { name: selectedScopeName(), audit: state.audit, native: state.documentAudit.result }; void (documentAction ? controller.startDocumentAudit() : controller.startAudit()); }} onToggleCompact={() => apply('compact', !settings.compact)}
             onPageTypeChange={value => apply('pageTypeId', value)} onChannelChange={value => apply('channelId', value)}
             onPickerChange={value => apply('pickerLabel', value)} onShellAuditToggle={() => apply('shellAuditEnabled', !settings.shellAuditEnabled)}
+            onConnectCatalogsToggle={() => apply('connectCatalogs', !settings.connectCatalogs)}
             onShowExpectedToggle={() => apply('showExpectedCustomizations', !settings.showExpectedCustomizations)}
             onHideCustomizationsToggle={() => apply('hideCustomizations', !settings.hideCustomizations)}
             onExperimentalContractV2Toggle={() => apply('experimentalContractV2Enabled', !settings.experimentalContractV2Enabled)}

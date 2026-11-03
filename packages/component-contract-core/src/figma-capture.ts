@@ -24,10 +24,12 @@ import type { InstanceBoundary } from './instance-boundaries';
 import type { AnatomyNode, JsonValue, PreviewSnapshot, ComponentRepresentation } from './types';
 import type { NativeSlotCapturePlan } from './native-slot-capture';
 import { configureInstanceMainAliases } from './instance-main-aliases';
+import { capturePreparedSourceIdentities, type PreparedSourceTopology } from './prepared-source-identity';
 
 export type CaptureReadControl = {
   guard: () => void;
   read: <T>(work: () => T | Promise<T>) => Promise<T>;
+  preparedSourceTopology?: PreparedSourceTopology;
 };
 
 async function captureRead<T>(control: CaptureReadControl | undefined, work: () => T | Promise<T>): Promise<T> {
@@ -287,7 +289,7 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
   }));
   const pristineSources = new Map<string, PristineInstanceSource>();
   const sourceCapture: Array<{mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}> = [];
-  if (topology.complete) {
+  if (topology.complete && !readControl?.preparedSourceTopology) {
     const requested = new Map<string, ComponentNode>();
     for (const entry of topology.entries) {
       if (entry.parentIndex === null) continue;
@@ -323,7 +325,9 @@ async function collectSceneNodes(root: SceneNode, platform: string, modes: Recor
       }
     }));
   }
-  const sourceIdentities = topology.complete ? captureInstanceSourceIdentities(topology.entries, mains, pristineSources, true) : new Map<string, InstanceSourceIdentity>();
+  const sourceIdentities = topology.complete ? readControl?.preparedSourceTopology
+    ? capturePreparedSourceIdentities(topology.entries, mains, readControl.preparedSourceTopology, true)
+    : captureInstanceSourceIdentities(topology.entries, mains, pristineSources, true) : new Map<string, InstanceSourceIdentity>();
   const roleToId = new Map(entries.map((entry, index) => [entry.role, `preview:${index}`]));
   const styleKeys = new Map<string, Promise<string | undefined>>();
   const resolveStyleKey = (id: string) => {

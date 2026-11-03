@@ -34,6 +34,20 @@ Evidence workspace: `.local/catalog-audit-policy-404-2026-11-02/ROOT-CAUSE.*`
 
 ## Apollo: совместимость с ComponentContract Editor
 
+### CC-COMPAT-CATALOG-READONLY-PILOT-01 — подготовленная исходная топология
+
+03.11.2026: локальный пилот Apollo добавляет необязательный
+`CaptureReadControl.preparedSourceTopology`. При его передаче захват фактического
+дерева доказывает source identity по независимой исходной топологии и не создаёт
+pristine экземпляры. Без параметра действует прежний путь; Editor не передаёт
+параметр и его поведение не меняется. Компилятор, Predicate Engine, нормы,
+пакетные версии и публичные runtime exports не меняются. Новый каталоговый
+адаптер используется только Apollo, проверяет необходимые факты и контекст,
+не принимает старые raw-структуры за полные native facts. Финальная перепроверка
+использует ту же подготовленную топологию. Публикация и ручная приёмка не выполнены.
+См. [границы пилота](CATALOG_AUDIT_PILOT.md); автоматические проверки и точные pins
+фиксируются в локальном final handoff после закрытия source/build окна.
+
 ### CC-COMPAT-CAPABILITY-FACT-ORDER-01 — переносимая сортировка capabilities
 
 02.11.2026. Core **0.1.25**, Editor **0.2.108**. `capabilities.facts`

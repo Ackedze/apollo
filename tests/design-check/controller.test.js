@@ -5,6 +5,20 @@ const { PREFERENCE_VERSION } = require("../../src/design-check/definitions");
 const { createExistingDialoguePort } = require("../../src/design-check/dialogue-port");
 const tabs = ['themization', 'changesWip', 'changes', 'current'].map(id => ({ id, title: id }));
 function deferred() { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; }
+test('a delayed preference response cannot change the mechanism of an already started audit', async () => {
+  for (const kind of ['contract','document']) {
+    const pending = deferred(), controller = createDesignCheckController({
+      preferences:{load:()=>pending.promise}, onAudit:()=>{}, onDocumentAudit:async()=>{},
+    });
+    const restoring = controller.restorePreferences();
+    if (kind === 'contract') controller.beginContractAudit('accepted');
+    else { controller.setDocumentPageAvailable(true); await controller.startDocumentAudit(); }
+    pending.resolve({schemaVersion:PREFERENCE_VERSION,agentSource:'codex',settings:{connectCatalogs:true}});
+    await restoring;
+    assert.equal(controller.getState().settings.connectCatalogs,false);
+    controller.destroy();
+  }
+});
 const audit = () => ({ auditId: 'synthetic-audit', result: { engine: { evaluations: [
   { evaluationId: 'v', ruleId: 'fixture.width', classification: 'violation' },
   { evaluationId: 'u', ruleId: 'fixture.context', classification: 'unknown' },
@@ -12,6 +26,47 @@ const audit = () => ({ auditId: 'synthetic-audit', result: { engine: { evaluatio
   { evaluationId: 'p', ruleId: 'fixture.valid', classification: 'compliant' },
 ] }, coverage: { scope: 'available-component-contracts-in-selected-area', executionComplete: false } } });
 const tick = () => new Promise(resolve => setImmediate(resolve));
+
+test('catalog preference defaults off, validates booleans and invalidates through the context setting port', () => {
+  const { CONTEXT_FIELDS } = require('../../src/design-check/definitions');
+  const calls = [];
+  const controller = createDesignCheckController({ onSettingChange(key, value, settings) {
+    calls.push({ key, value, settings });
+    if (CONTEXT_FIELDS.has(key)) controller.setAuditStale();
+  } });
+  controller.setAudit(audit());
+  assert.equal(controller.getState().settings.connectCatalogs, false);
+  assert.equal(CONTEXT_FIELDS.has('connectCatalogs'), true);
+  assert.equal(controller.updateSetting('connectCatalogs', 'true'), false);
+  assert.equal(controller.updateSetting('connectCatalogs', true), true);
+  assert.equal(controller.getState().auditStale, true);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].key, 'connectCatalogs');
+  assert.equal(calls[0].settings.connectCatalogs, true);
+});
+
+test('catalog preference cannot change during either audit branch or a document action', () => {
+  for (const phase of ['contract', 'loading', 'cancelling', 'action']) {
+    const controller = createDesignCheckController();
+    if (phase === 'contract') controller.beginContractAudit('catalog-busy');
+    else if (phase === 'action') controller.setDocumentAction({ busy: true, status: 'pending', message: '' });
+    else controller.setDocumentAudit({ status: phase, requestId: 'catalog-busy:native', result: null, error: '' });
+    assert.equal(controller.updateSetting('connectCatalogs', true), false, phase);
+    assert.equal(controller.getState().settings.connectCatalogs, false, phase);
+  }
+});
+
+test('late catalog preference restore preserves a newer local toggle', async () => {
+  const load = deferred();
+  const controller = createDesignCheckController({ preferenceScope: 'agent-source', preferences: { load: () => load.promise, save: async () => {} } });
+  const restoring = controller.restorePreferences();
+  controller.updateSetting('connectCatalogs', true);
+  load.resolve({ schemaVersion: PREFERENCE_VERSION, settings: { connectCatalogs: false }, agentSource: 'codex' });
+  await restoring;
+  assert.equal(controller.getState().settings.connectCatalogs, true);
+  assert.equal(controller.getState().preferenceStatus, 'ready');
+  await controller.flushPreferences();
+});
 
 test('a failed rerun retains preceding results as stale and rejects late replies', async () => {
   const controller = createDesignCheckController({ tabs });

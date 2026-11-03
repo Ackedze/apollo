@@ -380,8 +380,13 @@ test('deselection during contract resolution preserves captured roots and reject
 });
 
 test('contract cancellation acknowledges only after pending work exits; a late reply cannot restore it',async()=>{
- const p=plugin();const running=p.send({type:'audit',requestId:'cancel'});for(let i=0;!p.messages.some(m=>m.type==='resolve-contracts')&&i<20;i++)await new Promise(r=>setImmediate(r));const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);
- await p.send({type:'audit-cancel',requestId:'foreign'});assert.equal(p.messages.some(m=>m.type==='audit-cancelled'),false);await p.send({type:'audit-cancel',requestId:'cancel'});await running;assert.ok(p.messages.some(m=>m.type==='audit-cancelled'&&m.requestId==='cancel'));await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
+ const p=plugin();const running=p.send({type:'audit',requestId:'cancel'}),deadline=Date.now()+2000;
+ try {
+  // Immediate-turn counts can expire before the cooperative reader's timer runs.
+  while(!p.messages.some(m=>m.type==='resolve-contracts')&&Date.now()<deadline)await new Promise(r=>setTimeout(r,1));
+  const request=p.messages.find(m=>m.type==='resolve-contracts');assert.ok(request);
+  await p.send({type:'audit-cancel',requestId:'foreign'});assert.equal(p.messages.some(m=>m.type==='audit-cancelled'),false);await p.send({type:'audit-cancel',requestId:'cancel'});await running;assert.ok(p.messages.some(m=>m.type==='audit-cancelled'&&m.requestId==='cancel'));await p.send({type:'contracts-resolved',requestId:request.requestId,data:proxyReply(request,[authored.source()])});assert.equal(p.messages.some(m=>m.type==='audit-result'),false);
+ } finally { await p.send({type:'audit-cancel',requestId:'cancel'});await running; }
 });
 
 for (const [label, alter] of [

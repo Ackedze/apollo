@@ -1,6 +1,7 @@
 import { createCurrentPageDiagnosticObserver } from "./generation/native/observer";
 declare const __APOLLO_NATIVE_BUILD_INPUTS_SHA__: string;
 import { captureInstanceAudit, collectAnatomy } from "../packages/component-contract-core/src/figma-capture";
+import { captureCatalogAudit } from './audit-catalog';
 import { selectedTargetPathHint } from "../packages/component-contract-core/src/occurrence-address";
 import { applyAuditPlatform } from './audit-platform';
 import { snapshotPaths } from "../packages/component-contract-core/src/snapshot-topology";
@@ -74,11 +75,17 @@ function refreshSelection() {
   post({ type: 'selection', statisticsUserName: statisticsUserName(), pageId: figma.currentPage.id, id, name: nodes.length === 1 ? nodes[0].name : nodes.length ? `Выбрано областей: ${nodes.length}` : '', valid: nodes.length > 0, invalidated });
 }
 function requestContracts(requestId: string, components: any[], releaseId?: string, guard?:()=>void): Promise<any> {
+  return requestContractData(requestId,{type:'resolve-contracts',components,releaseId},guard);
+}
+function requestCatalogReference(requestId:string,selection:any,releaseId:string|undefined,guard:()=>void):Promise<any>{
+  return requestContractData(requestId,{type:'resolve-catalog-reference',selection,releaseId},guard);
+}
+function requestContractData(requestId:string,payload:any,guard?:()=>void):Promise<any>{
   return new Promise((resolve, reject) => {
     const monitor=()=>{const request=pending.get(requestId);if(!request)return;try{guard?.();request.timer=setTimeout(monitor,100);}catch(error){pending.delete(requestId);post({type:'resolve-contracts-cancel',requestId});reject(error);}};
     const timer=guard?setTimeout(monitor,100):setTimeout(()=>{pending.delete(requestId);reject(new Error('Прокси не ответил. Проверьте ApolloProxyControl и повторите аудит.'));},30000);
     pending.set(requestId, { resolve, reject, timer });
-    post({ type: 'resolve-contracts', requestId, components, releaseId });
+    post(Object.assign({requestId},payload));
   });
 }
 function registerLocal(source: any) {
@@ -129,7 +136,8 @@ function checkCapture(scope: any, contract: any, captured: any,guard:()=>void=()
     // Reuse the representation proved by capture; another adapter can expose the same port.
     boundaries: (plan?.boundaries || []).filter(boundary => boundary.representationId === captured.snapshot.source.representationId
       && omissions.some((entry: any) => entry.targetId === boundary.targetId && entry.property === boundary.property && entry.path === boundary.path)) } : undefined;
-  return withCaptureReads(guard,control=>collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope,control));
+  return withCaptureReads(guard,control=>collectAnatomy(scope, captured.snapshot.context.platform, Object.assign({}, scope.resolvedVariableModes), captureScope,
+    captured.preparedSourceTopology ? Object.assign({},control,{preparedSourceTopology:captured.preparedSourceTopology}) : control));
 }
 function attachSharedArea(data:any) {
   if (!progressBarPilot) return;
@@ -154,7 +162,7 @@ async function runAuditRequest(message:any){
    assertRun();run.attempt++;
    try{
     if(figma.currentPage.id!==pageId)throw Error('AUDIT_CONTEXT_CHANGED');
-    await audit(message.requestId,{platform:message.platform,roots,guard:assertRun});assertRun();run.completed=true;return;
+    await audit(message.requestId,{platform:message.platform,connectCatalogs:message.connectCatalogs===true,roots,guard:assertRun});assertRun();run.completed=true;return;
    }catch(error:any){
     if(run.cancelled)return;
     const changed=/(AUDIT_CONTEXT_CHANGED|AUDIT_CAPTURE_CHANGED|AUDIT_TOPOLOGY_CHANGED|NATIVE_FACTS_CHANGED|Результат устарел|^Версия контрактов изменилась)/i.test(error.message||'');
@@ -261,7 +269,10 @@ async function audit(requestId: string, options:any={}) {
       let captured: any;
       const endCapture = time('capture', subject.id);
       try {
-        captured = await withCaptureReads(assertCurrent,readControl=>captureInstanceAudit(subject, {readControl, componentKey: contract.facts.component.componentKey,
+        if (options.connectCatalogs && (!releaseId || fileMode)) throw Object.assign(Error('Для каталожного пилота подключите пакет данных через Proxy. (CATALOG_DATA_RELEASE_REQUIRED)'), {code:'CATALOG_DATA_RELEASE_REQUIRED'});
+        captured = options.connectCatalogs ? await withCaptureReads(assertCurrent, readControl => captureCatalogAudit(subject, contract, releaseId!,
+          selection => requestCatalogReference(requestId + ':catalog:' + subject.id + ':' + engine.stableHash(selection), selection, releaseId!, assertCurrent), readControl))
+          : await withCaptureReads(assertCurrent,readControl=>captureInstanceAudit(subject, {readControl, componentKey: contract.facts.component.componentKey,
           acceptedComponentKeys: Array.from(runtime.collectContractKeys(contract)), componentDependencyKeys: runtime.componentDependencyKeys(contract),
           directChildDependenciesVersion: contract.runtimePolicy.directChildDependenciesVersion,
           instanceMainComponentAliasesVersion: contract.runtimePolicy.instanceMainComponentAliasesVersion,
@@ -303,6 +314,7 @@ async function audit(requestId: string, options:any={}) {
       endStage = time('index-component', subject.id);
       const auditId = engine.stableHash({ root: scopeId, generation: current, snapshot: engine.snapshotHash(captured.snapshot), contract: contractHashes.get(contract) });
       const component = { scopeId, name: identity.name, library: contract.package.library, auditId, release: item.release, result, snapshot: captured.snapshot,
+        referenceOrigin:captured.referenceOrigin || 'live-library',
         warnings: diagnostics.warnings, baselineDiagnostics: diagnostics.baselineDiagnostics };
       if (ownerContext) Object.assign(component, { ownerContext: { scopeId: owner.subject.id,
         nodeId: ownerContext.nodeId, nodeMap: ownerContext.nodeMap } });
@@ -373,6 +385,7 @@ async function audit(requestId: string, options:any={}) {
     const auditId = engine.stableHash({ selection: scan.selection, components: components.map(component => component.auditId), generation: current });
     const report:any = { recoveryDiagnostics:activeAuditRun?.requestId===requestId?activeAuditRun.failures.slice():[], schemaVersion: 'apollo.area-audit.v1-experimental', mode: 'selected-area', auditId,
       release: { id: releaseId, channel: fileMode ? 'local-file' : 'local-pilot' }, selection: scan.selection,
+      referenceMechanism:options.connectCatalogs ? 'catalog-pilot' : 'live-library',
       components, notChecked, governedComponents, result, warnings };
     if(components.length===1)report.snapshot=components[0].snapshot;
     endStage();
@@ -380,7 +393,7 @@ async function audit(requestId: string, options:any={}) {
     report.timings = timings;
     timings.totalMs = Math.max(0,Date.now()-timingStarted);
     timings.readScheduling = Object.assign({scope:'shared-reader-window'},readScheduling(readTimingStarted));
-    const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform};
+    const data={audit:report,rules,displayMetadata,scan,captures,roots,platform:options.platform,connectCatalogs:options.connectCatalogs===true};
     if(options.quiet)return data;
     auditPageId=pageId;lastAudit=report;lastAuditRevision=current;areaSession=data;
     verifyLastArea=async(operationGuard=()=>{})=>{operationGuard();assertCurrent();for(const capture of captures){operationGuard();const check=await checkCapture(capture.subject,capture.contract,capture.captured,()=>{assertCurrent();operationGuard();});assertCurrent();if(engine.stableHash(check.anatomy)!==engine.stableHash(capture.captured.anatomy))throw Error('Результат устарел. Повторите проверку.');operationGuard();}operationGuard();const checked=await withCaptureReads(()=>{assertCurrent();operationGuard();},control=>scanArea(roots,()=>{assertCurrent();operationGuard();},undefined,control.read));assertCurrent();operationGuard();if(engine.stableHash(checked.topology)!==engine.stableHash(scan.topology))throw Error('Результат устарел. Повторите проверку.');};
@@ -424,7 +437,7 @@ function beginScopedRecheck(plan:any,requestId:string){
  };
  return{guard,verifyNotification:verify,run:async(operationGuard:()=>void,progress:(message:string)=>void=()=>{})=>{
   guard();operationGuard();if(!previous||!report)return null;
-  const fresh=plan.roots.length?await audit(requestId,{roots:plan.roots,quiet:true,releaseId:report.release.id,platform:previous.platform,onProgress:progress,guard:()=>{guard();operationGuard();}}):null;guard();operationGuard();if(fresh&&fresh.audit.release.id!==report.release.id)throw Error('NATIVE_CONTEXT_CHANGED');
+  const fresh=plan.roots.length?await audit(requestId,{roots:plan.roots,quiet:true,releaseId:report.release.id,platform:previous.platform,connectCatalogs:previous.connectCatalogs,onProgress:progress,guard:()=>{guard();operationGuard();}}):null;guard();operationGuard();if(fresh&&fresh.audit.release.id!==report.release.id)throw Error('NATIVE_CONTEXT_CHANGED');
   const incomplete=new Set<string>();
   for(const id of affectedScopes)if(!fresh?.audit.components.some((c:any)=>c.scopeId===id&&c.result.coverage?.executionComplete))incomplete.add(id);
   const components=previous.audit.components.filter((c:any)=>!affectedScopes.has(c.scopeId)||incomplete.has(c.scopeId));
@@ -540,7 +553,7 @@ figma.ui.onmessage = async (message: any) => {
       for(const [id,request]of pending)if(id.startsWith(message.requestId+':')){clearTimeout(request.timer);pending.delete(id);post({type:'resolve-contracts-cancel',requestId:id});request.reject(Error('AUDIT_CANCELLED'));}
       if(!activeAuditRun&&!activeArea&&lastAreaRequestId===message.requestId)post({type:'audit-cancelled',requestId:message.requestId});return;
     }
-    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.'); await runAuditRequest(message); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
+    if (message.type === 'audit') { if (message.platform !== undefined && !['desktop','mobile-web','ios','android'].includes(message.platform)) throw new Error('Некорректная платформа проверки.');if(message.connectCatalogs!==undefined&&typeof message.connectCatalogs!=='boolean')throw Error('AUDIT_REQUEST_INVALID'); await runAuditRequest(message); void documentAuditBridge.refreshBindings(message.requestId+':native'); return; }
     if (message.type === 'focus' || message.type === 'focus-scope') {
       const report=lastAudit,revision=lastAuditRevision;
       const guard=()=>{if(!report||lastAudit!==report||report.auditId!==message.auditId||revision!==generation||auditPageId!==figma.currentPage.id)throw Error('Результат устарел. Повторите проверку.');};

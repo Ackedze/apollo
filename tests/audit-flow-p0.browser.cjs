@@ -25,6 +25,18 @@ async function until(check){for(let i=0;i<1000;i++){const value=check();if(value
   });await page.goto(pathToFileURL(path.join(__dirname,'../dist/ui.html')).href);ready=true;for(const m of queued)await page.evaluate(m=>window.emitPlugin(m),m);queued=[];
   await f.api.ui.onmessage({type:'load-contract',source:authored.nested().source});
   const check=()=>page.getByRole('button',{name:'Проверить',exact:true}),stop=()=>page.getByRole('button',{name:'Остановить',exact:true});
+  await page.getByRole('button',{name:'Открыть настройки Apollo',exact:true}).click();
+  const catalogs=page.getByRole('button',{name:'Подключить каталоги',exact:true});
+  assert.equal(await catalogs.getAttribute('aria-pressed'),'false');
+  await catalogs.focus();await page.keyboard.press('Space');
+  assert.equal(await catalogs.getAttribute('aria-pressed'),'true');
+  for(const height of [900,640]){
+   await page.setViewportSize({width:800,height});
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+   await page.screenshot({path:path.join(out,'catalog-settings-800-'+height+'.png')});
+  }
+  await catalogs.click();assert.equal(await catalogs.getAttribute('aria-pressed'),'false');
+  await page.keyboard.press('Escape');await page.setViewportSize({width:800,height:900});
   await check().click();await until(()=>f.messages.filter(m=>m.type==='audit-result').length===1&&f.messages.filter(m=>m.type==='document-audit-result').length===1);await check().waitFor();assert.equal(await check().isEnabled(),true);
   assert.ok(hydrated);assert.ok(trace.some(e=>e.event==='phase-drift'&&e.stage==='published-imports'&&e.nodeId===f.raw.id));assert.equal(f.messages.some(m=>m.type.startsWith('document-audit-')&&m.diagnostic?.code==='NATIVE_FACTS_CHANGED'),false);
   const baselineCount=f.messages.filter(m=>m.type==='audit-result').length;holdNative=true;await check().click();await until(()=>heldNative&&f.messages.filter(m=>m.type==='audit-result').length>baselineCount);

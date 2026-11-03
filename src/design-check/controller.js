@@ -48,13 +48,13 @@ function createDesignCheckController(options = {}) {
       ? items.filter(item => item.classification !== 'allowed') : items.slice();
   }
   function preferences() {
-    // v3 runtime flags are deliberately session-only. Restored UI is never an accepted audit context.
-    const settings = {};
+    // Other v3 runtime flags stay session-only; catalog choice is restored as a preference, never as audit evidence.
+    const settings = { connectCatalogs: state.settings.connectCatalogs };
     if (!sourceOnly) for (const key of ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations']) settings[key] = state.settings[key];
     return { schemaVersion: PREFERENCE_VERSION, settings, agentSource: state.chat.source };
   }
   function persist(key) {
-    if (sourceOnly && key !== 'agentSource') return Promise.resolve();
+    if (sourceOnly && key !== 'agentSource' && key !== 'connectCatalogs') return Promise.resolve();
     if (!options.preferences?.save) return Promise.resolve();
     const value = preferences();
     emit({ preferenceStatus: 'saving', preferenceError: '' });
@@ -71,7 +71,7 @@ function createDesignCheckController(options = {}) {
       const value = await options.preferences.load();
       if (destroyed || ticket !== loadSequence) return;
       if (value == null) { emit({ preferenceStatus: 'ready' }); return; }
-      const keys = sourceOnly ? [] : ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations'];
+      const keys = sourceOnly ? ['connectCatalogs'] : ['pageTypeId', 'channelId', 'pickerLabel', 'compact', 'showExpectedCustomizations', 'hideCustomizations', 'connectCatalogs'];
       if (value.schemaVersion !== PREFERENCE_VERSION || !value.settings || typeof value.settings !== 'object'
         || Object.keys(value.settings).some(key => !keys.includes(key) || !validSetting(key, value.settings[key]))
         || !['langflow', 'codex'].includes(value.agentSource)) throw new TypeError('Сохранённые настройки несовместимы. Тип страницы не подтверждён.');
@@ -93,8 +93,9 @@ function createDesignCheckController(options = {}) {
     if (['shellAuditEnabled', 'experimentalContractV2Enabled', 'showExpectedCustomizations'].includes(key) && settingCapabilities[key] !== true) return false;
     revisions[key] = (revisions[key] || 0) + 1;
     const settings = Object.assign({}, state.settings); settings[key] = value;
-    emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: CONTEXT_FIELDS.has(key)
-      ? 'Настройка выбрана. Применение в проверке требует подключённого обработчика.' : '' });
+    emit({ settings, selectedTab: selectVisibleTab(settings), settingsNotice: key === 'connectCatalogs'
+      ? (value ? 'Каталожный пилот включён.' : 'Каталожный пилот выключен.')
+      : CONTEXT_FIELDS.has(key) ? 'Настройка выбрана. Применение в проверке требует подключённого обработчика.' : '' });
     if (options.onSettingChange) {
       const current = revisions[key];
       const reject = error => { if (revisions[key] === current) emit({ settingsNotice: error.message || 'Не удалось применить настройку.' }); };
@@ -129,6 +130,8 @@ function createDesignCheckController(options = {}) {
     if (state.documentPageAvailable !== Boolean(value)) emit({ documentPageAvailable: Boolean(value) });
   }
   function beginContractAudit(requestId) {
+    // A late storage reply cannot change the mechanism of an accepted run.
+    revisions.connectCatalogs = (revisions.connectCatalogs || 0) + 1;
     activeAudit = requestId;if(pendingCheck?.requestId===requestId){pendingCheck.needsContract=true;pendingCheck.contract=null;}
     emit({ auditStopping:false,auditCancelled:false,auditNotice:'',auditStale: Boolean(state.audit), auditBusy: true, auditProgress: '', auditError: '' });
   }
@@ -136,6 +139,7 @@ function createDesignCheckController(options = {}) {
     if (!state.documentPageAvailable || state.documentAction.busy || state.auditBusy || ['loading','cancelling'].includes(state.documentAudit.status) || destroyed || !options.onDocumentAudit) return false;
     if (options.beforeOperation && !await prepareOperation()) return false;
     if (options.beforeOperation && (!state.auditReady || state.auditBusy || state.documentAction.busy || ['loading','cancelling'].includes(state.documentAudit.status))) return false;
+    revisions.connectCatalogs = (revisions.connectCatalogs || 0) + 1;
     emit({auditNotice:''});const requestId = `design-check-audit-${++sequence}`;pendingCheck={requestId,needsContract:false,contract:null,native:null,previousDocument:state.documentAudit,contractError:null};
     try { await options.onDocumentAudit({ requestId, uiPreferences: clone(state.settings) }); }
     catch (error) { emit({ documentAudit: { status: state.documentAudit.result ? 'stale' : 'error', requestId, result: state.documentAudit.result, error: error.message || 'Не удалось начать проверку документа.' } }); }

@@ -384,455 +384,26 @@ You will see snippets throughout documentation here. These snippets contain usef
 
 
 # Loaded workflow file: figma-use/references/plugin-api-standalone.index.md
-Source snapshot SHA256: 8dda6b014891d16fa99b41baf3d9e5c223116d3753d678ab63494d1ffcbac882
+# Portable Figma Plugin API
 
-# Plugin API Index
+Use the pinned symbol map instead of shell grep or sequentially reading all declarations.
+The portable declarations omit documentation comments. Original upstream line numbers do not address this file.
 
-> Full typings: `plugin-api-standalone.d.ts` (10,191 lines)
-> Grep by symbol name to jump to definition. All `L#` line numbers refer to that file.
-> This index describes the APIs available through `use_figma`. See the `.d.ts` for full type declarations.
+## Addressed reader
 
----
+- Symbol map resource: `workflow/figma-use/references/plugin-api-standalone.symbols.json`.
+- Read `mode=keys, path=["symbols"]` to discover names. Read `mode=read, path=["symbols","FrameNode"]` for the locations of a selected name.
+- Each location provides `offset`, exclusive `end`, line and a first-page `limit` for `workflow/figma-use/references/plugin-api-standalone.d.ts`.
+- Read that declaration with `path=[]`, its offset and limit. For a longer declaration follow the actual returned cursor, keeping each limit at most `min(16000, end - cursor)`; stop at its end.
+- Read referenced base interfaces and related value types the same way. A symbol summary is navigation, not a replacement for a required signature or normative source.
+- `sourceSha256` in the symbol map pins the exact trimmed declaration resource. Offsets use UTF-16 characters, matching the reader; UTF-8 byte offsets must not be substituted.
 
-## figma.\* — PluginAPI (L4)
+## API groups
 
-### Identity & State
+`PluginAPI` supplies file access, published component import, variables, fonts and node factories. Node interfaces and their mixins define properties, slots, text and layout. Read the actual interface before using an uncertain member.
+Keep the loaded figma-use operating rules, ownership checks, canonical font recipe and recovery rules. API signatures do not grant permission to mutate library or global definitions.
 
-| Member                          | Type                                                                                                                                             |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `apiVersion`                    | `'1.0.0'`                                                                                                                                        |
-| `editorType`                    | `'figma' \| 'figjam' \| 'dev' \| 'slides' \| 'buzz'`                                                                                             |
-| `fileKey`                       | `string \| undefined`                                                                                                                            |
-| `root`                          | `DocumentNode`                                                                                                                                   |
-| `currentPage`                   | `PageNode` — **read-only**; sync setter `figma.currentPage = page` does NOT work and throws; use `await figma.setCurrentPageAsync(page)` instead |
-| `mixed`                         | `unique symbol` — sentinel for mixed values in selection                                                                                         |
-| `skipInvisibleInstanceChildren` | `boolean`                                                                                                                                        |
-
-### Navigation & Lookup
-
-| Method                      | Returns                                                                                   |
-| --------------------------- | ----------------------------------------------------------------------------------------- |
-| `setCurrentPageAsync(page)` | `Promise<void>` — **MUST use this**; sync setter `figma.currentPage = page` does NOT work |
-| `getNodeByIdAsync(id)`      | `Promise<BaseNode \| null>`                                                               |
-| `getStyleByIdAsync(id)`     | `Promise<BaseStyle \| null>`                                                              |
-
-### Create Nodes
-
-| Method                              | Returns                                                                                                                                        |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `createFrame()`                     | `FrameNode`                                                                                                                                    |
-| `createAutoLayout(direction?)`      | `FrameNode`                                                                                                                                    |
-| `createComponent()`                 | `ComponentNode`                                                                                                                                |
-| `createComponentFromNode(node)`     | `ComponentNode`                                                                                                                                |
-| `createRectangle()`                 | `RectangleNode`                                                                                                                                |
-| `createEllipse()`                   | `EllipseNode`                                                                                                                                  |
-| `createLine()`                      | `LineNode`                                                                                                                                     |
-| `createPolygon()`                   | `PolygonNode`                                                                                                                                  |
-| `createStar()`                      | `StarNode`                                                                                                                                     |
-| `createVector()`                    | `VectorNode`                                                                                                                                   |
-| `createText()`                      | `TextNode`                                                                                                                                     |
-| `createSection()`                   | `SectionNode`                                                                                                                                  |
-| `createPage()`                      | `PageNode` — **Design files only** (`figma.com/design/...`); throws in both FigJam (`figma.com/board/...`) and Slides (`figma.com/slides/...`) |
-| `createSlice()`                     | `SliceNode`                                                                                                                                    |
-| `createTable(rows?, cols?)`         | `TableNode`                                                                                                                                    |
-| `createImage(data: Uint8Array)`     | `Image`                                                                                                                                        |
-| `createNodeFromSvg(svg)`            | `FrameNode`                                                                                                                                    |
-| `importComponentByKeyAsync(key)`    | `Promise<ComponentNode>`                                                                                                                       |
-| `importComponentSetByKeyAsync(key)` | `Promise<ComponentSetNode>`                                                                                                                    |
-| `importStyleByKeyAsync(key)`        | `Promise<BaseStyle>`                                                                                                                           |
-
-### Styles (Local)
-
-| Method                        | Returns                  |
-| ----------------------------- | ------------------------ |
-| `createPaintStyle()`          | `PaintStyle`             |
-| `createTextStyle()`           | `TextStyle`              |
-| `createEffectStyle()`         | `EffectStyle`            |
-| `createGridStyle()`           | `GridStyle`              |
-| `getLocalPaintStylesAsync()`  | `Promise<PaintStyle[]>`  |
-| `getLocalTextStylesAsync()`   | `Promise<TextStyle[]>`   |
-| `getLocalEffectStylesAsync()` | `Promise<EffectStyle[]>` |
-| `getLocalGridStylesAsync()`   | `Promise<GridStyle[]>`   |
-
-### Fonts
-
-| Method                      | Notes                              |
-| --------------------------- | ---------------------------------- |
-| `loadFontAsync(fontName)`   | **MUST call before any text edit** |
-| `listAvailableFontsAsync()` | `Promise<Font[]>`                  |
-| `hasMissingFont`            | `boolean`                          |
-
-### Plugin Lifecycle
-
-| Method                  | Notes                                                  |
-| ----------------------- | ------------------------------------------------------ |
-| `closePlugin(message?)` | Auto-called; use `return` instead to pass results back |
-
-> Undo, notifications, external URLs, version-history saves, and `closePluginWithFailure` are not available through `use_figma`.
-
-### Sub-APIs (properties on figma)
-
-| Property            | Interface        | L#    |
-| ------------------- | ---------------- | ----- |
-| `figma.variables`   | `VariablesAPI`   | L1093 |
-| `figma.motion`      | `MotionAPI`      | L1333 |
-| `figma.util`        | `UtilAPI`        | L1371 |
-| `figma.viewport`    | `ViewportAPI`    | L1495 |
-| `figma.parameters`  | `ParametersAPI`  | L1613 |
-| `figma.teamLibrary` | `TeamLibraryAPI` | L1289 |
-| `figma.annotations` | `AnnotationsAPI` | L1223 |
-
-> UI, client storage, codegen, payments, text review, timers, Buzz, and constants are not available through `use_figma`.
-
----
-
-## VariablesAPI — figma.variables (L1093)
-
-```
-getVariableByIdAsync(id)                 Promise<Variable | null>    ← preferred; sync deprecated
-getVariableCollectionByIdAsync(id)       Promise<VariableCollection | null>    ← preferred; sync deprecated
-getLocalVariablesAsync(type?)            Promise<Variable[]>         ← preferred; filter by VariableResolvedDataType; sync deprecated
-getLocalVariableCollectionsAsync()       Promise<VariableCollection[]>    ← preferred; sync deprecated
-createVariable(name, collection, type)   Variable
-createVariableCollection(name)           VariableCollection
-createVariableAlias(variable)            VariableAlias
-importVariableByKeyAsync(key)            Promise<Variable>
-setBoundVariableForPaint(paint, field, variable)    → returns NEW paint — reassign
-setBoundVariableForEffect(effect, field, variable)  → returns NEW effect — reassign
-setBoundVariableForLayoutGrid(grid, field, variable)
-```
-
-**Variable (L9130):** `name`, `resolvedType`, `codeSyntax`, `scopes`, `hiddenFromPublishing`, `valuesByMode`, `variableCollectionId`
-
-- `setVariableCodeSyntax(platform, value)` — platform: `'WEB' | 'ANDROID' | 'iOS'`
-- `setValueForMode(collectionId, modeId, value)`
-- `remove()`
-
-**VariableCollection (L9344):** `name`, `modes`, `variableIds`, `defaultModeId`, `hiddenFromPublishing`
-
-- `addMode(name)` → `modeId`; `removeMode(modeId)`; `renameMode(modeId, name)`
-
----
-
-## Node Types
-
-### Concrete Scene Nodes
-
-| Node                   | L#    | Key characteristics                                |
-| ---------------------- | ----- | -------------------------------------------------- |
-| `DocumentNode`         | L7942 | Root; `children: PageNode[]`                       |
-| `PageNode`             | L8089 | `children`, local styles, `backgrounds`            |
-| `FrameNode`            | L8223 | `DefaultFrameMixin` — auto-layout, clips, children |
-| `GroupNode`            | L8233 | Children only, no auto-layout                      |
-| `ComponentNode`        | L8597 | Like Frame + publishable                           |
-| `ComponentSetNode`     | L8580 | Variant set container                              |
-| `InstanceNode`         | L8632 | Like Frame; `mainComponent`, `detach()`            |
-| `RectangleNode`        | L8290 | `DefaultShapeMixin` + corners                      |
-| `EllipseNode`          | L8320 | + `arcData`                                        |
-| `LineNode`             | L8309 |                                                    |
-| `PolygonNode`          | L8341 |                                                    |
-| `StarNode`             | L8362 |                                                    |
-| `VectorNode`           | L8389 | Vector paths                                       |
-| `TextNode`             | L8407 | Rich text, fonts, segments                         |
-| `TextPathNode`         | L8479 | Text along path                                    |
-| `BooleanOperationNode` | L8725 | `booleanOperation` property                        |
-| `SliceNode`            | L8280 | Export only                                        |
-| `SectionNode`          | L9621 | Grouping + fills                                   |
-| `TableNode`            | L8786 | `TableCellNode` children                           |
-
-**FigJam only:** `StickyNode` L8746, `ConnectorNode` L9047, `ShapeWithTextNode` L8928, `StampNode` L8772, `CodeBlockNode` L9006, `EmbedNode` L9528, `LinkUnfurlNode` L9568, `MediaNode` L9588
-
-**Slides only:** `SlideNode` L9664, `SlideRowNode` L9694, `SlideGridNode` L9707
-
-**Union types:**
-
-```
-type SceneNode  (L9795) = FrameNode | GroupNode | SliceNode | RectangleNode | LineNode
-  | EllipseNode | PolygonNode | StarNode | VectorNode | TextNode | ComponentSetNode
-  | ComponentNode | InstanceNode | BooleanOperationNode | SectionNode | ...
-type BaseNode   (L9791) = DocumentNode | PageNode | SceneNode
-```
-
----
-
-## Mixin Interfaces
-
-| Mixin                        | L#    | Provides                                                                                        |
-| ---------------------------- | ----- | ----------------------------------------------------------------------------------------------- |
-| `BaseNodeMixin`              | L3944 | `id`, `name`, `type`, `parent`, `remove()`, plugin data                                         |
-| `SceneNodeMixin`             | L4092 | `visible`, `locked`, `opacity`, variable bindings                                               |
-| `ChildrenMixin`              | L4461 | `children`, `appendChild()`, `insertChild()`, `findAll()`, `findOne()`, `findAllWithCriteria()` |
-| `LayoutMixin`                | L4826 | `x`, `y`, `width`, `height`, `rotation`, `resize()`, `rescale()`                                |
-| `AutoLayoutMixin`            | L5106 | `layoutMode`, axis alignment, padding, `itemSpacing`, `layoutSizingHorizontal/Vertical`         |
-| `AutoLayoutChildrenMixin`    | L5926 | `layoutAlign`, `layoutGrow`, sizing — **set AFTER `appendChild()`**                             |
-| `GridLayoutMixin`            | L5668 | CSS Grid tracks, gap, template                                                                  |
-| `GridChildrenMixin`          | L5989 | grid child positioning                                                                          |
-| `GeometryMixin`              | L6348 | `fills`, `strokes`, `strokeWeight`, `strokeAlign`                                               |
-| `MinimalFillsMixin`          | L6192 | `fills` only                                                                                    |
-| `MinimalStrokesMixin`        | L6110 | `strokes`, `strokeWeight`                                                                       |
-| `BlendMixin`                 | L5022 | `opacity`, `blendMode`, `isMask`, `effects`                                                     |
-| `CornerMixin`                | L6400 | `cornerRadius`, `cornerSmoothing`                                                               |
-| `RectangleCornerMixin`       | L6423 | Per-corner radii                                                                                |
-| `ExportMixin`                | L6444 | `exportSettings`, `exportAsync()`                                                               |
-| `ReactionMixin`              | L6593 | `reactions` (prototyping)                                                                       |
-| `PublishableMixin`           | L6764 | `description`, `key`, `getPublishStatusAsync()`                                                 |
-| `ComponentPropertiesMixin`   | L7065 | `componentProperties`, `addComponentProperty()`                                                 |
-| `PluginDataMixin`            | L4035 | `getSharedPluginData()`, `setSharedPluginData()`, `getSharedPluginDataKeys()`                   |
-| `FramePrototypingMixin`      | L6540 | `overflowDirection`, `numberOfFixedChildren`                                                    |
-| `BaseFrameMixin`             | L6830 | ChildrenMixin + LayoutMixin + AutoLayoutMixin + GeometryMixin + …                               |
-| `DefaultFrameMixin`          | L6887 | BaseFrameMixin + FramePrototypingMixin + ReactionMixin                                          |
-| `DefaultShapeMixin`          | L6818 | BlendMixin + GeometryMixin + LayoutMixin + ExportMixin + ReactionMixin                          |
-| `ExplicitVariableModesMixin` | L8066 | `setExplicitVariableModeForCollection()`                                                        |
-
----
-
-## Paint & Fill (L2693)
-
-| Type            | L#    | Notes                                                                             |
-| --------------- | ----- | --------------------------------------------------------------------------------- |
-| `SolidPaint`    | L2490 | `type:'SOLID'`, `color: RGB`, `opacity`, `visible`, `blendMode`                   |
-| `GradientPaint` | L2545 | `type: 'GRADIENT_LINEAR\|RADIAL\|ANGULAR\|DIAMOND'`, `gradientStops: ColorStop[]` |
-| `ImagePaint`    | L2565 | `type:'IMAGE'`, `imageHash`, `scaleMode`                                          |
-| `VideoPaint`    | L2601 | `type:'VIDEO'`                                                                    |
-| `PatternPaint`  | L2637 | `type:'PATTERN'`                                                                  |
-| `type Paint`    | L2693 | Union of all five                                                                 |
-| `ColorStop`     | L2459 | `{ position: number, color: RGBA }`                                               |
-| `ImageFilters`  | L2478 | exposure, contrast, saturation, etc.                                              |
-
-> **CRITICAL**: Fills/strokes are **read-only arrays** — clone, modify, reassign.
-
----
-
-## Effects (L2115)
-
-| Type                               | L#    |
-| ---------------------------------- | ----- |
-| `DropShadowEffect`                 | L2115 |
-| `InnerShadowEffect`                | L2158 |
-| `BlurEffect` (Normal/Progressive)  | L2250 |
-| `NoiseEffect` (Mono/Duo/Multitone) | L2331 |
-| `TextureEffect`                    | L2335 |
-| `GlassEffect`                      | L2371 |
-| `type Effect`                      | L2437 |
-
----
-
-## Typography
-
-| Type                | L#    | Notes                                                                                  |
-| ------------------- | ----- | -------------------------------------------------------------------------------------- |
-| `FontName`          | L1802 | `{ family: string, style: string }`                                                    |
-| `TextNode`          | L8407 | `characters`, `textAlignHorizontal`, `fontSize`, `fontName`, `getStyledTextSegments()` |
-| `StyledTextSegment` | L3207 | Per-range text properties                                                              |
-| `LetterSpacing`     | L3147 | `{ value, unit: 'PIXELS'\|'PERCENT' }`                                                 |
-| `LineHeight`        | L3151 | `{ value, unit } \| { unit: 'AUTO' }`                                                  |
-| `TextCase`          | L1850 | `'ORIGINAL'\|'UPPER'\|'LOWER'\|'TITLE'\|'SMALL_CAPS'`                                  |
-| `TextDecoration`    | L1851 | `'NONE'\|'UNDERLINE'\|'STRIKETHROUGH'`                                                 |
-| `OpenTypeFeature`   | L1877 | Ligatures, numerals, etc.                                                              |
-
----
-
-## Variables & Bindings
-
-| Type                          | L#    | Notes                                                                         |
-| ----------------------------- | ----- | ----------------------------------------------------------------------------- |
-| `Variable`                    | L9130 | Core variable object                                                          |
-| `VariableCollection`          | L9344 | Collection of variables + modes                                               |
-| `VariableAlias`               | L9098 | Reference to another variable                                                 |
-| `VariableValue`               | L9102 | `boolean \| string \| number \| RGB \| RGBA \| MotionEasing \| VariableAlias` |
-| `VariableResolvedDataType`    | L9097 | `'BOOLEAN' \| 'COLOR' \| 'FLOAT' \| 'STRING' \| 'TIMING' \| 'EASING'`         |
-| `VariableDataType`            | L3348 | Includes `'VARIABLE_ALIAS' \| 'EXPRESSION'`                                   |
-| `VariableScope`               | L9103 | Where variable can be applied                                                 |
-| `CodeSyntaxPlatform`          | L9129 | `'WEB' \| 'ANDROID' \| 'iOS'`                                                 |
-| `VariableBindableNodeField`   | L4399 | Node fields that accept variable binding                                      |
-| `VariableBindableTextField`   | L4427 | Text-specific bindable fields                                                 |
-| `VariableBindablePaintField`  | L4436 | `'color'`                                                                     |
-| `VariableBindableEffectField` | L4439 | `'color'\|'radius'\|'spread'\|'offsetX'\|'offsetY'`                           |
-
----
-
-## Styles
-
-| Interface        | L#     | Notes                                                  |
-| ---------------- | ------ | ------------------------------------------------------ |
-| `BaseStyleMixin` | L9856  | `name`, `id`, `key`, `type`, `description`, `remove()` |
-| `PaintStyle`     | L9876  | `type:'PAINT'`, `paints: Paint[]`                      |
-| `TextStyle`      | L9892  | `type:'TEXT'`, font properties                         |
-| `EffectStyle`    | L9965  | `type:'EFFECT'`, `effects: Effect[]`                   |
-| `GridStyle`      | L9981  | `type:'GRID'`, `layoutGrids`                           |
-| `type BaseStyle` | L9997 | Union of all four                                      |
-| `type StyleType` | L9834  | `'PAINT' \| 'TEXT' \| 'EFFECT' \| 'GRID'`              |
-
----
-
-## Primitives & Geometry
-
-| Type             | L#    | Shape                                         |
-| ---------------- | ----- | --------------------------------------------- |
-| `Vector`         | L1751 | `{ x: number, y: number }`                    |
-| `Rect`           | L1755 | `{ x, y, width, height }`                     |
-| `RGB`            | L1764 | `{ r, g, b }` — **0–1 range, not 0–255**      |
-| `RGBA`           | L1772 | `{ r, g, b, a }` — **0–1 range**              |
-| `Transform`      | L1750 | `[[a,b,tx],[c,d,ty]]` 2×3 affine matrix       |
-| `ArcData`        | L2107 | `{ startingAngle, endingAngle, innerRadius }` |
-| `Constraints`    | L2452 | `{ horizontal, vertical }: ConstraintType`    |
-| `ConstraintType` | L2448 | `'MIN'\|'CENTER'\|'MAX'\|'STRETCH'\|'SCALE'`  |
-| `VectorPath`     | L3113 | `{ windingRule, data: string }`               |
-| `VectorNetwork`  | L3096 | vertices + segments + regions                 |
-| `Guide`          | L2803 | `{ axis, offset }`                            |
-
----
-
-## Prototyping
-
-| Type                  | L#    | Notes                                                     |
-| --------------------- | ----- | --------------------------------------------------------- |
-| `Reaction`            | L3344 | trigger + action pair                                     |
-| `Trigger`             | L3456 | what initiates the reaction                               |
-| `Action`              | L3383 | what happens                                              |
-| `Transition`          | L3455 | `SimpleTransition \| DirectionalTransition`               |
-| `Easing`              | L3492 | easing curve definition                                   |
-| `Navigation`          | L3488 | `'NAVIGATE'\|'SWAP'\|'OVERLAY'\|'SCROLL_TO'\|'CHANGE_TO'` |
-| `OverflowDirection`   | L3869 | `'NONE'\|'HORIZONTAL'\|'VERTICAL'\|'BOTH'`                |
-| `OverlayPositionType` | L3873 | overlay placement                                         |
-
----
-
-## Export
-
-| Type                        | L#    | Notes                                         |
-| --------------------------- | ----- | --------------------------------------------- |
-| `ExportSettingsImage`       | L2882 | PNG/JPG/WEBP/BMP                              |
-| `ExportSettingsSVG`         | L2955 |                                               |
-| `ExportSettingsPDF`         | L2974 |                                               |
-| `ExportSettingsREST`        | L2988 |                                               |
-| `ExportSettingsConstraints` | L2875 | `{ type: 'SCALE'\|'WIDTH'\|'HEIGHT', value }` |
-
----
-
-## Key Sub-API Surfaces
-
-**ViewportAPI (L1495):** `center: Vector`, `zoom: number`, `scrollAndZoomIntoView(nodes)`, `bounds: Rect`
-
-**UtilAPI (L1371):** `solidPaint(color, overrides?)`, `rgba(color)`, `rgb(color)`, `normalizeMarkdown(markdown)`, `getSfSymbolCharacter(name)`
-
-**TeamLibraryAPI (L1289):** `getAvailableLibraryVariableCollectionsAsync()`, `importVariableByKeyAsync(key)`
-
-**Image (L9998):** `hash`, `getBytesAsync()`, `getSizeAsync()`
-
----
-
-## All Symbols (flat — grep these against the .d.ts file)
-
-To find any symbol: `grep -n "^interface Foo\|^type Foo\|^declare type Foo" plugin-api-standalone.d.ts`
-
-```
-PluginAPI               VariablesAPI            LibraryVariableCollectionLibraryVariable
-AnnotationsAPI          BuzzTextField           BuzzMediaField          TeamLibraryAPI
-MotionAPI               UtilAPI                 ViewportAPI             SuggestionResults
-ParametersAPI           NodeChangeProperty      Transform               Vector
-Rect                    RGB                     RGBA                    FontName
-FontVariationSettings   FontNameInput           TextCase                TextDecoration
-TextDecorationStyle     FontStyle               TextDecorationOffset    TextDecorationThickness
-TextDecorationColor     OpenTypeFeature         ArcData                 DropShadowEffect
-InnerShadowEffect       BlurEffectBase          BlurEffectNormal        BlurEffectProgressive
-BlurEffect              NoiseEffectBase         NoiseEffectMonotone     NoiseEffectDuotone
-NoiseEffectMultitone    NoiseEffect             TextureEffect           GlassEffect
-ShaderEffect            Effect                  ConstraintType          Constraints
-ColorStop               ImageFilters            SolidPaint              GradientPaint
-ImagePaint              VideoPaint              PatternPaint            ShaderPaint
-Paint                   ShaderPropertyValue     ShaderPropertyDefinitionShader
-Guide                   RowsColsLayoutGrid      GridLayoutGrid          LayoutGrid
-ExportSettingsConstraintsExportSettingsImage     ExportSettingsSVGBase   ExportSettingsSVG
-ExportSettingsSVGString ExportSettingsPDF       ExportSettingsREST      ExportSettings
-WindingRule             VectorVertex            VectorSegment           VectorRegion
-VectorNetwork           VectorPath              VectorPaths             LetterSpacing
-LineHeight              LeadingTrim             TextWrapStyle           HyperlinkTarget
-TextListOptions         BlendMode               MaskType                Font
-TextStyleOverrideType   StyledTextSegment       TextPathStartData       Reaction
-VariableDataType        ExpressionFunction      Expression              VariableValueWithExpression
-VariableData            ConditionalBlock        Action                  SimpleTransition
-DirectionalTransition   Transition              Trigger                 Navigation
-Easing                  EasingFunctionBezier    EasingFunctionSpring    MotionEasing
-PhysicalSpring          NormalizedSpring        AnimationStylePropValue AvailableAnimationStylePropValue
-BaseAnimationStyle      AvailableAnimationStyle AnimationStyleConfigurationAppliedAnimationStyle
-KeyframeValue           ManualKeyframeInput     ManualKeyframeTrackInputManualKeyframe
-ManualKeyframeBinding   ManualKeyframeTrack     KeyframeBinding         KeyframePropertyFieldName
-EffectKeyframeFieldName KeyframeField           ComponentPropKeyframeTracksComponentPropKeyframeBindings
-PaintManualKeyframeTrackPaintKeyframeBinding    EffectManualKeyframeTracksEffectKeyframeBindings
-ManualKeyframeTracks    Animations              Timeline                OverflowDirection
-OverlayPositionType     OverlayBackground       OverlayBackgroundInteractionPublishStatus
-ConnectorEndpointPositionConnectorEndpointPositionAndEndpointNodeIdConnectorEndpointEndpointNodeIdAndMagnetConnectorEndpoint
-ConnectorStrokeCap      BaseNodeMixin           PluginDataMixin         SceneNodeMixin
-MotionNodeMixin         VariableBindableNodeFieldVariableBindableTextFieldVariableBindablePaintField
-VariableBindablePaintStyleFieldVariableBindableColorStopFieldVariableBindableEffectFieldVariableBindableEffectStyleField
-VariableBindableLayoutGridFieldVariableBindableGridStyleFieldVariableBindableComponentPropertyFieldVariableBindableComponentPropertyDefinitionField
-StickableMixin          ChildrenMixin           ConstraintMixin         DimensionAndPositionMixin
-LayoutMixin             AspectRatioLockMixin    BlendMixin              ContainerMixin
-StrokeCap               StrokeJoin              HandleMirroring         AutoLayoutMixin
-GridTrackSize           GridTrackReorderOptions GridTrackReorderEntry   GridLayoutMixin
-AutoLayoutChildrenMixin GridChildrenMixin       InferredAutoLayoutResultDetachedInfo
-MinimalStrokesMixin     IndividualStrokesMixin  MinimalFillsMixin       VariableWidthPoint
-PresetVariableWidthStrokePropertiesCustomVariableWidthStrokePropertiesVariableWidthStrokePropertiesComplexStrokeProperties
-ScatterBrushProperties  StretchBrushProperties  BrushStrokeProperties   DynamicStrokeProperties
-GeometryMixin           ComplexStrokesMixin     CornerMixin             RectangleCornerMixin
-ExportMixin             FramePrototypingMixin   VectorLikeMixin         ReactionMixin
-DocumentationLink       PublishableMixin        DefaultShapeMixin       BaseFrameMixin
-DefaultFrameMixin       OpaqueNodeMixin         MinimalBlendMixin       Annotation
-AnnotationProperty      AnnotationPropertyType  AnnotationsMixin        Measurement
-MeasurementSide         MeasurementOffset       MeasurementsMixin       ComponentPropertiesMixin
-BaseNonResizableTextMixinNonResizableTextMixin   NonResizableTextPathMixinTextSublayerNode
-DocumentNode            ExplicitVariableModesMixinPageNode                FrameNode
-GroupNode               TransformGroupNode      SliceNode               RectangleNode
-LineNode                EllipseNode             PolygonNode             StarNode
-VectorNode              TextNode                TextPathNode            ComponentPropertyType
-InstanceSwapPreferredValueSlotSettings            ComponentPropertyOptionsComponentPropertyDefinitions
-ComponentSetNode        ComponentNode           ComponentProperties     InstanceNode
-SlotNode                BooleanOperationNode    StickyNode              StampNode
-TableNode               TableCellNode           HighlightNode           WashiTapeNode
-ShapeWithTextNode       CodeBlockNode           LabelSublayerNode       ConnectorNode
-VariableResolvedDataTypeVariableAlias           VariableValue           VariableScope
-CodeSyntaxPlatform      Variable                VariableCollection      ExtendedVariableCollection
-AnnotationCategoryColor AnnotationCategory      WidgetNode              EmbedData
-EmbedNode               LinkUnfurlData          LinkUnfurlNode          MediaData
-MediaNode               SectionNode             SlideNode               SlideRowNode
-SlideGridNode           InteractiveSlideElementNodeSlideTransition         BaseNode
-SceneNode               NodeType                StyleType               InheritedStyleField
-StyleConsumers          BaseStyleMixin          PaintStyle              TextStyle
-EffectStyle             GridStyle               BaseStyle               Image
-FindAllCriteria         TransformModifier       RepeatModifier          LinearRepeatModifier
-RadialRepeatModifier    QueryResult             ScreenshotOptions
-```
-
----
-
-## use_figma Conveniences
-
-These helpers are available when running code with `use_figma`.
-
-### Node Methods
-
-| Method / Property                 | Returns / Type  | Description                                |
-| --------------------------------- | --------------- | ------------------------------------------ |
-| `node.query(selector)`            | `QueryResult`   | CSS-like selector search within subtree    |
-| `node.matches(selector)`          | `boolean`       | Test if node matches a selector            |
-| `node.set(props)`                 | `this`          | Set multiple properties at once, chainable |
-| `await node.screenshot(options?)` | `Promise<void>` | Capture PNG inline in tool response        |
-| `node.placeholder`                | `boolean`       | Show/hide shimmer overlay                  |
-
-### figma.io Namespace
-
-| Method                       | Returns | Description                                      |
-| ---------------------------- | ------- | ------------------------------------------------ |
-| `figma.io.write(path, data)` | `void`  | Write image/data to be returned in tool response |
-
-### Types
-
-| Type                | Description                                                                                                                         |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `QueryResult`       | Iterable result from `node.query()` with `.first()`, `.last()`, `.each()`, `.map()`, `.filter()`, `.values()`, `.set()`, `.query()` |
-| `ScreenshotOptions` | `{ scale?: number, contentsOnly?: boolean }`                                                                                        |
-
+Source SHA-256: `65533ae937918b38687684b2476f0a6522ab173570cecf4e5d0ccef2a7cf7e31`.
 
 # Loaded workflow file: figma-use/references/gotchas.md
 Source snapshot SHA256: 0e6b0031e957768b3e1eb8fec549e2397a0f643ef349387c93d2e813968398b3
@@ -4436,3 +4007,2732 @@ interface PageNode {
 export { PluginAPI, VariablesAPI, LibraryVariableCollection, LibraryVariable, AnnotationsAPI, BuzzTextField, BuzzMediaField, TeamLibraryAPI, MotionAPI, UtilAPI, ViewportAPI, SuggestionResults, ParametersAPI, NodeChangeProperty, Transform, Vector, Rect, RGB, RGBA, FontName, FontVariationSettings, FontNameInput, TextCase, TextDecoration, TextDecorationStyle, FontStyle, TextDecorationOffset, TextDecorationThickness, TextDecorationColor, OpenTypeFeature, ArcData, DropShadowEffect, InnerShadowEffect, BlurEffectBase, BlurEffectNormal, BlurEffectProgressive, BlurEffect, NoiseEffectBase, NoiseEffectMonotone, NoiseEffectDuotone, NoiseEffectMultitone, NoiseEffect, TextureEffect, GlassEffect, ShaderEffect, Effect, ConstraintType, Constraints, ColorStop, ImageFilters, SolidPaint, GradientPaint, ImagePaint, VideoPaint, PatternPaint, ShaderPaint, Paint, ShaderPropertyValue, ShaderPropertyDefinition, Shader, Guide, RowsColsLayoutGrid, GridLayoutGrid, LayoutGrid, ExportSettingsConstraints, ExportSettingsImage, ExportSettingsSVGBase, ExportSettingsSVG, ExportSettingsSVGString, ExportSettingsPDF, ExportSettingsREST, ExportSettings, WindingRule, VectorVertex, VectorSegment, VectorRegion, VectorNetwork, VectorPath, VectorPaths, LetterSpacing, LineHeight, LeadingTrim, TextWrapStyle, HyperlinkTarget, TextListOptions, BlendMode, MaskType, Font, TextStyleOverrideType, StyledTextSegment, TextPathStartData, Reaction, VariableDataType, ExpressionFunction, Expression, VariableValueWithExpression, VariableData, ConditionalBlock, Action, SimpleTransition, DirectionalTransition, Transition, Trigger, Navigation, Easing, EasingFunctionBezier, EasingFunctionSpring, MotionEasing, PhysicalSpring, NormalizedSpring, AnimationStylePropValue, AvailableAnimationStylePropValue, BaseAnimationStyle, AvailableAnimationStyle, AnimationStyleConfiguration, AppliedAnimationStyle, KeyframeValue, ManualKeyframeInput, ManualKeyframeTrackInput, ManualKeyframe, ManualKeyframeBinding, ManualKeyframeTrack, KeyframeBinding, KeyframePropertyFieldName, EffectKeyframeFieldName, KeyframeField, ComponentPropKeyframeTracks, ComponentPropKeyframeBindings, PaintManualKeyframeTrack, PaintKeyframeBinding, EffectManualKeyframeTracks, EffectKeyframeBindings, ManualKeyframeTracks, Animations, Timeline, OverflowDirection, OverlayPositionType, OverlayBackground, OverlayBackgroundInteraction, PublishStatus, ConnectorEndpointPosition, ConnectorEndpointPositionAndEndpointNodeId, ConnectorEndpointEndpointNodeIdAndMagnet, ConnectorEndpoint, ConnectorStrokeCap, BaseNodeMixin, PluginDataMixin, SceneNodeMixin, MotionNodeMixin, VariableBindableNodeField, VariableBindableTextField, VariableBindablePaintField, VariableBindablePaintStyleField, VariableBindableColorStopField, VariableBindableEffectField, VariableBindableEffectStyleField, VariableBindableLayoutGridField, VariableBindableGridStyleField, VariableBindableComponentPropertyField, VariableBindableComponentPropertyDefinitionField, StickableMixin, ChildrenMixin, ConstraintMixin, DimensionAndPositionMixin, LayoutMixin, AspectRatioLockMixin, BlendMixin, ContainerMixin, StrokeCap, StrokeJoin, HandleMirroring, AutoLayoutMixin, GridTrackSize, GridTrackReorderOptions, GridTrackReorderEntry, GridLayoutMixin, AutoLayoutChildrenMixin, GridChildrenMixin, InferredAutoLayoutResult, DetachedInfo, MinimalStrokesMixin, IndividualStrokesMixin, MinimalFillsMixin, VariableWidthPoint, PresetVariableWidthStrokeProperties, CustomVariableWidthStrokeProperties, VariableWidthStrokeProperties, ComplexStrokeProperties, ScatterBrushProperties, StretchBrushProperties, BrushStrokeProperties, DynamicStrokeProperties, GeometryMixin, ComplexStrokesMixin, CornerMixin, RectangleCornerMixin, ExportMixin, FramePrototypingMixin, VectorLikeMixin, ReactionMixin, DocumentationLink, PublishableMixin, DefaultShapeMixin, BaseFrameMixin, DefaultFrameMixin, OpaqueNodeMixin, MinimalBlendMixin, Annotation, AnnotationProperty, AnnotationPropertyType, AnnotationsMixin, Measurement, MeasurementSide, MeasurementOffset, MeasurementsMixin, ComponentPropertiesMixin, BaseNonResizableTextMixin, NonResizableTextMixin, NonResizableTextPathMixin, TextSublayerNode, DocumentNode, ExplicitVariableModesMixin, PageNode, FrameNode, GroupNode, TransformGroupNode, SliceNode, RectangleNode, LineNode, EllipseNode, PolygonNode, StarNode, VectorNode, TextNode, TextPathNode, ComponentPropertyType, InstanceSwapPreferredValue, SlotSettings, ComponentPropertyOptions, ComponentPropertyDefinitions, ComponentSetNode, ComponentNode, ComponentProperties, InstanceNode, SlotNode, BooleanOperationNode, StickyNode, StampNode, TableNode, TableCellNode, HighlightNode, WashiTapeNode, ShapeWithTextNode, CodeBlockNode, LabelSublayerNode, ConnectorNode, VariableResolvedDataType, VariableAlias, VariableValue, VariableScope, CodeSyntaxPlatform, Variable, VariableCollection, ExtendedVariableCollection, AnnotationCategoryColor, AnnotationCategory, WidgetNode, EmbedData, EmbedNode, LinkUnfurlData, LinkUnfurlNode, MediaData, MediaNode, SectionNode, SlideNode, SlideRowNode, SlideGridNode, InteractiveSlideElementNode, SlideTransition, BaseNode, SceneNode, NodeType, StyleType, InheritedStyleField, StyleConsumers, BaseStyleMixin, PaintStyle, TextStyle, EffectStyle, GridStyle, BaseStyle, Image, FindAllCriteria, TransformModifier, RepeatModifier, LinearRepeatModifier, RadialRepeatModifier, QueryResult, ScreenshotOptions };
 
 ```
+
+# Loaded workflow file: figma-use/references/plugin-api-standalone.symbols.json
+{
+  "schemaVersion": "apollo.landing-api-symbols.v1",
+  "sourceResource": "workflow/figma-use/references/plugin-api-standalone.d.ts",
+  "sourceSha256": "65533ae937918b38687684b2476f0a6522ab173570cecf4e5d0ccef2a7cf7e31",
+  "offsetUnits": "utf16-characters",
+  "symbols": {
+    "PluginAPI": [
+      {
+        "kind": "interface",
+        "offset": 119,
+        "end": 5042,
+        "line": 4,
+        "limit": 4923
+      },
+      {
+        "kind": "interface",
+        "offset": 82495,
+        "end": 82607,
+        "line": 1976,
+        "limit": 112
+      }
+    ],
+    "VariablesAPI": [
+      {
+        "kind": "interface",
+        "offset": 5042,
+        "end": 6242,
+        "line": 93,
+        "limit": 1200
+      }
+    ],
+    "LibraryVariableCollection": [
+      {
+        "kind": "interface",
+        "offset": 6242,
+        "end": 6342,
+        "line": 108,
+        "limit": 100
+      }
+    ],
+    "LibraryVariable": [
+      {
+        "kind": "interface",
+        "offset": 6342,
+        "end": 6451,
+        "line": 113,
+        "limit": 109
+      }
+    ],
+    "AnnotationsAPI": [
+      {
+        "kind": "interface",
+        "offset": 6451,
+        "end": 6779,
+        "line": 118,
+        "limit": 328
+      }
+    ],
+    "BuzzTextField": [
+      {
+        "kind": "interface",
+        "offset": 6779,
+        "end": 6927,
+        "line": 126,
+        "limit": 148
+      }
+    ],
+    "BuzzMediaField": [
+      {
+        "kind": "interface",
+        "offset": 6927,
+        "end": 7138,
+        "line": 131,
+        "limit": 211
+      }
+    ],
+    "TeamLibraryAPI": [
+      {
+        "kind": "interface",
+        "offset": 7138,
+        "end": 7356,
+        "line": 137,
+        "limit": 218
+      }
+    ],
+    "MotionAPI": [
+      {
+        "kind": "interface",
+        "offset": 7356,
+        "end": 7499,
+        "line": 141,
+        "limit": 143
+      }
+    ],
+    "UtilAPI": [
+      {
+        "kind": "interface",
+        "offset": 7499,
+        "end": 7793,
+        "line": 145,
+        "limit": 294
+      }
+    ],
+    "ViewportAPI": [
+      {
+        "kind": "interface",
+        "offset": 7793,
+        "end": 7949,
+        "line": 152,
+        "limit": 156
+      }
+    ],
+    "SuggestionResults": [
+      {
+        "kind": "interface",
+        "offset": 7949,
+        "end": 8232,
+        "line": 158,
+        "limit": 283
+      }
+    ],
+    "ParametersAPI": [
+      {
+        "kind": "interface",
+        "offset": 8232,
+        "end": 8260,
+        "line": 168,
+        "limit": 28
+      }
+    ],
+    "NodeChangeProperty": [
+      {
+        "kind": "type",
+        "offset": 8260,
+        "end": 10625,
+        "line": 170,
+        "limit": 2365
+      }
+    ],
+    "Transform": [
+      {
+        "kind": "type",
+        "offset": 10625,
+        "end": 10766,
+        "line": 171,
+        "limit": 141
+      }
+    ],
+    "Vector": [
+      {
+        "kind": "interface",
+        "offset": 10766,
+        "end": 10835,
+        "line": 183,
+        "limit": 69
+      }
+    ],
+    "Rect": [
+      {
+        "kind": "interface",
+        "offset": 10835,
+        "end": 10959,
+        "line": 187,
+        "limit": 124
+      }
+    ],
+    "RGB": [
+      {
+        "kind": "interface",
+        "offset": 10959,
+        "end": 11049,
+        "line": 193,
+        "limit": 90
+      }
+    ],
+    "RGBA": [
+      {
+        "kind": "interface",
+        "offset": 11049,
+        "end": 11164,
+        "line": 198,
+        "limit": 115
+      }
+    ],
+    "FontName": [
+      {
+        "kind": "interface",
+        "offset": 11164,
+        "end": 11300,
+        "line": 204,
+        "limit": 136
+      }
+    ],
+    "FontVariationSettings": [
+      {
+        "kind": "interface",
+        "offset": 11300,
+        "end": 11373,
+        "line": 209,
+        "limit": 73
+      }
+    ],
+    "FontNameInput": [
+      {
+        "kind": "interface",
+        "offset": 11373,
+        "end": 11515,
+        "line": 212,
+        "limit": 142
+      }
+    ],
+    "TextCase": [
+      {
+        "kind": "type",
+        "offset": 11515,
+        "end": 11610,
+        "line": 217,
+        "limit": 95
+      }
+    ],
+    "TextDecoration": [
+      {
+        "kind": "type",
+        "offset": 11610,
+        "end": 11672,
+        "line": 218,
+        "limit": 62
+      }
+    ],
+    "TextDecorationStyle": [
+      {
+        "kind": "type",
+        "offset": 11672,
+        "end": 11728,
+        "line": 219,
+        "limit": 56
+      }
+    ],
+    "FontStyle": [
+      {
+        "kind": "type",
+        "offset": 11728,
+        "end": 11767,
+        "line": 220,
+        "limit": 39
+      }
+    ],
+    "TextDecorationOffset": [
+      {
+        "kind": "type",
+        "offset": 11767,
+        "end": 11902,
+        "line": 221,
+        "limit": 135
+      }
+    ],
+    "TextDecorationThickness": [
+      {
+        "kind": "type",
+        "offset": 11902,
+        "end": 12040,
+        "line": 227,
+        "limit": 138
+      }
+    ],
+    "TextDecorationColor": [
+      {
+        "kind": "type",
+        "offset": 12040,
+        "end": 12138,
+        "line": 233,
+        "limit": 98
+      }
+    ],
+    "OpenTypeFeature": [
+      {
+        "kind": "type",
+        "offset": 12138,
+        "end": 14221,
+        "line": 238,
+        "limit": 2083
+      }
+    ],
+    "ArcData": [
+      {
+        "kind": "interface",
+        "offset": 14221,
+        "end": 14347,
+        "line": 239,
+        "limit": 126
+      }
+    ],
+    "DropShadowEffect": [
+      {
+        "kind": "interface",
+        "offset": 14347,
+        "end": 14740,
+        "line": 244,
+        "limit": 393
+      }
+    ],
+    "InnerShadowEffect": [
+      {
+        "kind": "interface",
+        "offset": 14740,
+        "end": 15090,
+        "line": 257,
+        "limit": 350
+      }
+    ],
+    "BlurEffectBase": [
+      {
+        "kind": "interface",
+        "offset": 15090,
+        "end": 15307,
+        "line": 269,
+        "limit": 217
+      }
+    ],
+    "BlurEffectNormal": [
+      {
+        "kind": "interface",
+        "offset": 15307,
+        "end": 15394,
+        "line": 277,
+        "limit": 87
+      }
+    ],
+    "BlurEffectProgressive": [
+      {
+        "kind": "interface",
+        "offset": 15394,
+        "end": 15591,
+        "line": 280,
+        "limit": 197
+      }
+    ],
+    "BlurEffect": [
+      {
+        "kind": "type",
+        "offset": 15591,
+        "end": 15651,
+        "line": 286,
+        "limit": 60
+      }
+    ],
+    "NoiseEffectBase": [
+      {
+        "kind": "interface",
+        "offset": 15651,
+        "end": 15936,
+        "line": 287,
+        "limit": 285
+      }
+    ],
+    "NoiseEffectMonotone": [
+      {
+        "kind": "interface",
+        "offset": 15936,
+        "end": 16030,
+        "line": 297,
+        "limit": 94
+      }
+    ],
+    "NoiseEffectDuotone": [
+      {
+        "kind": "interface",
+        "offset": 16030,
+        "end": 16157,
+        "line": 300,
+        "limit": 127
+      }
+    ],
+    "NoiseEffectMultitone": [
+      {
+        "kind": "interface",
+        "offset": 16157,
+        "end": 16283,
+        "line": 304,
+        "limit": 126
+      }
+    ],
+    "NoiseEffect": [
+      {
+        "kind": "type",
+        "offset": 16283,
+        "end": 16367,
+        "line": 308,
+        "limit": 84
+      }
+    ],
+    "TextureEffect": [
+      {
+        "kind": "interface",
+        "offset": 16367,
+        "end": 16625,
+        "line": 309,
+        "limit": 258
+      }
+    ],
+    "GlassEffect": [
+      {
+        "kind": "interface",
+        "offset": 16625,
+        "end": 16937,
+        "line": 318,
+        "limit": 312
+      }
+    ],
+    "ShaderEffect": [
+      {
+        "kind": "interface",
+        "offset": 16937,
+        "end": 17130,
+        "line": 329,
+        "limit": 193
+      }
+    ],
+    "Effect": [
+      {
+        "kind": "type",
+        "offset": 17130,
+        "end": 17254,
+        "line": 337,
+        "limit": 124
+      }
+    ],
+    "ConstraintType": [
+      {
+        "kind": "type",
+        "offset": 17254,
+        "end": 17324,
+        "line": 338,
+        "limit": 70
+      }
+    ],
+    "Constraints": [
+      {
+        "kind": "interface",
+        "offset": 17324,
+        "end": 17430,
+        "line": 339,
+        "limit": 106
+      }
+    ],
+    "ColorStop": [
+      {
+        "kind": "interface",
+        "offset": 17430,
+        "end": 17617,
+        "line": 343,
+        "limit": 187
+      }
+    ],
+    "ImageFilters": [
+      {
+        "kind": "interface",
+        "offset": 17617,
+        "end": 17870,
+        "line": 350,
+        "limit": 253
+      }
+    ],
+    "SolidPaint": [
+      {
+        "kind": "interface",
+        "offset": 17870,
+        "end": 18149,
+        "line": 359,
+        "limit": 279
+      }
+    ],
+    "GradientPaint": [
+      {
+        "kind": "interface",
+        "offset": 18149,
+        "end": 18473,
+        "line": 369,
+        "limit": 324
+      }
+    ],
+    "ImagePaint": [
+      {
+        "kind": "interface",
+        "offset": 18473,
+        "end": 18869,
+        "line": 377,
+        "limit": 396
+      }
+    ],
+    "VideoPaint": [
+      {
+        "kind": "interface",
+        "offset": 18869,
+        "end": 19265,
+        "line": 389,
+        "limit": 396
+      }
+    ],
+    "PatternPaint": [
+      {
+        "kind": "interface",
+        "offset": 19265,
+        "end": 19670,
+        "line": 401,
+        "limit": 405
+      }
+    ],
+    "ShaderPaint": [
+      {
+        "kind": "interface",
+        "offset": 19670,
+        "end": 19930,
+        "line": 412,
+        "limit": 260
+      }
+    ],
+    "Paint": [
+      {
+        "kind": "type",
+        "offset": 19930,
+        "end": 20026,
+        "line": 422,
+        "limit": 96
+      }
+    ],
+    "ShaderPropertyValue": [
+      {
+        "kind": "type",
+        "offset": 20026,
+        "end": 20516,
+        "line": 423,
+        "limit": 490
+      }
+    ],
+    "ShaderPropertyDefinition": [
+      {
+        "kind": "interface",
+        "offset": 20516,
+        "end": 20839,
+        "line": 450,
+        "limit": 323
+      }
+    ],
+    "Shader": [
+      {
+        "kind": "interface",
+        "offset": 20839,
+        "end": 21077,
+        "line": 456,
+        "limit": 238
+      }
+    ],
+    "Guide": [
+      {
+        "kind": "interface",
+        "offset": 21077,
+        "end": 21156,
+        "line": 465,
+        "limit": 79
+      }
+    ],
+    "RowsColsLayoutGrid": [
+      {
+        "kind": "interface",
+        "offset": 21156,
+        "end": 21585,
+        "line": 469,
+        "limit": 429
+      }
+    ],
+    "GridLayoutGrid": [
+      {
+        "kind": "interface",
+        "offset": 21585,
+        "end": 21817,
+        "line": 482,
+        "limit": 232
+      }
+    ],
+    "LayoutGrid": [
+      {
+        "kind": "type",
+        "offset": 21817,
+        "end": 21872,
+        "line": 491,
+        "limit": 55
+      }
+    ],
+    "ExportSettingsConstraints": [
+      {
+        "kind": "interface",
+        "offset": 21872,
+        "end": 21989,
+        "line": 492,
+        "limit": 117
+      }
+    ],
+    "ExportSettingsImage": [
+      {
+        "kind": "interface",
+        "offset": 21989,
+        "end": 22288,
+        "line": 496,
+        "limit": 299
+      }
+    ],
+    "ExportSettingsSVGBase": [
+      {
+        "kind": "interface",
+        "offset": 22288,
+        "end": 22620,
+        "line": 504,
+        "limit": 332
+      }
+    ],
+    "ExportSettingsSVG": [
+      {
+        "kind": "interface",
+        "offset": 22620,
+        "end": 22710,
+        "line": 513,
+        "limit": 90
+      }
+    ],
+    "ExportSettingsSVGString": [
+      {
+        "kind": "interface",
+        "offset": 22710,
+        "end": 22813,
+        "line": 516,
+        "limit": 103
+      }
+    ],
+    "ExportSettingsPDF": [
+      {
+        "kind": "interface",
+        "offset": 22813,
+        "end": 23049,
+        "line": 519,
+        "limit": 236
+      }
+    ],
+    "ExportSettingsREST": [
+      {
+        "kind": "interface",
+        "offset": 23049,
+        "end": 23119,
+        "line": 526,
+        "limit": 70
+      }
+    ],
+    "ExportSettings": [
+      {
+        "kind": "type",
+        "offset": 23119,
+        "end": 23202,
+        "line": 529,
+        "limit": 83
+      }
+    ],
+    "WindingRule": [
+      {
+        "kind": "type",
+        "offset": 23202,
+        "end": 23244,
+        "line": 530,
+        "limit": 42
+      }
+    ],
+    "VectorVertex": [
+      {
+        "kind": "interface",
+        "offset": 23244,
+        "end": 23477,
+        "line": 531,
+        "limit": 233
+      }
+    ],
+    "VectorSegment": [
+      {
+        "kind": "interface",
+        "offset": 23477,
+        "end": 23629,
+        "line": 539,
+        "limit": 152
+      }
+    ],
+    "VectorRegion": [
+      {
+        "kind": "interface",
+        "offset": 23629,
+        "end": 23831,
+        "line": 545,
+        "limit": 202
+      }
+    ],
+    "VectorNetwork": [
+      {
+        "kind": "interface",
+        "offset": 23831,
+        "end": 24016,
+        "line": 551,
+        "limit": 185
+      }
+    ],
+    "VectorPath": [
+      {
+        "kind": "interface",
+        "offset": 24016,
+        "end": 24116,
+        "line": 556,
+        "limit": 100
+      }
+    ],
+    "VectorPaths": [
+      {
+        "kind": "type",
+        "offset": 24116,
+        "end": 24162,
+        "line": 560,
+        "limit": 46
+      }
+    ],
+    "LetterSpacing": [
+      {
+        "kind": "interface",
+        "offset": 24162,
+        "end": 24259,
+        "line": 561,
+        "limit": 97
+      }
+    ],
+    "LineHeight": [
+      {
+        "kind": "type",
+        "offset": 24259,
+        "end": 24384,
+        "line": 565,
+        "limit": 125
+      }
+    ],
+    "LeadingTrim": [
+      {
+        "kind": "type",
+        "offset": 24384,
+        "end": 24426,
+        "line": 571,
+        "limit": 42
+      }
+    ],
+    "TextWrapStyle": [
+      {
+        "kind": "type",
+        "offset": 24426,
+        "end": 24478,
+        "line": 572,
+        "limit": 52
+      }
+    ],
+    "HyperlinkTarget": [
+      {
+        "kind": "type",
+        "offset": 24478,
+        "end": 24551,
+        "line": 573,
+        "limit": 73
+      }
+    ],
+    "TextListOptions": [
+      {
+        "kind": "type",
+        "offset": 24551,
+        "end": 24623,
+        "line": 577,
+        "limit": 72
+      }
+    ],
+    "BlendMode": [
+      {
+        "kind": "type",
+        "offset": 24623,
+        "end": 24897,
+        "line": 580,
+        "limit": 274
+      }
+    ],
+    "MaskType": [
+      {
+        "kind": "type",
+        "offset": 24897,
+        "end": 24947,
+        "line": 581,
+        "limit": 50
+      }
+    ],
+    "Font": [
+      {
+        "kind": "interface",
+        "offset": 24947,
+        "end": 24990,
+        "line": 582,
+        "limit": 43
+      }
+    ],
+    "TextStyleOverrideType": [
+      {
+        "kind": "type",
+        "offset": 24990,
+        "end": 25107,
+        "line": 585,
+        "limit": 117
+      }
+    ],
+    "StyledTextSegment": [
+      {
+        "kind": "interface",
+        "offset": 25107,
+        "end": 26196,
+        "line": 588,
+        "limit": 1089
+      }
+    ],
+    "TextPathStartData": [
+      {
+        "kind": "interface",
+        "offset": 26196,
+        "end": 26271,
+        "line": 623,
+        "limit": 75
+      }
+    ],
+    "Reaction": [
+      {
+        "kind": "type",
+        "offset": 26271,
+        "end": 26345,
+        "line": 627,
+        "limit": 74
+      }
+    ],
+    "VariableDataType": [
+      {
+        "kind": "type",
+        "offset": 26345,
+        "end": 26467,
+        "line": 631,
+        "limit": 122
+      }
+    ],
+    "ExpressionFunction": [
+      {
+        "kind": "type",
+        "offset": 26467,
+        "end": 26712,
+        "line": 632,
+        "limit": 245
+      }
+    ],
+    "Expression": [
+      {
+        "kind": "interface",
+        "offset": 26712,
+        "end": 26822,
+        "line": 633,
+        "limit": 110
+      }
+    ],
+    "VariableValueWithExpression": [
+      {
+        "kind": "type",
+        "offset": 26822,
+        "end": 26885,
+        "line": 637,
+        "limit": 63
+      }
+    ],
+    "VariableData": [
+      {
+        "kind": "interface",
+        "offset": 26885,
+        "end": 27027,
+        "line": 638,
+        "limit": 142
+      }
+    ],
+    "ConditionalBlock": [
+      {
+        "kind": "type",
+        "offset": 27027,
+        "end": 27109,
+        "line": 643,
+        "limit": 82
+      }
+    ],
+    "Action": [
+      {
+        "kind": "type",
+        "offset": 27109,
+        "end": 28494,
+        "line": 647,
+        "limit": 1385
+      }
+    ],
+    "SimpleTransition": [
+      {
+        "kind": "interface",
+        "offset": 28494,
+        "end": 28653,
+        "line": 688,
+        "limit": 159
+      }
+    ],
+    "DirectionalTransition": [
+      {
+        "kind": "interface",
+        "offset": 28653,
+        "end": 28924,
+        "line": 693,
+        "limit": 271
+      }
+    ],
+    "Transition": [
+      {
+        "kind": "type",
+        "offset": 28924,
+        "end": 28984,
+        "line": 700,
+        "limit": 60
+      }
+    ],
+    "Trigger": [
+      {
+        "kind": "type",
+        "offset": 28984,
+        "end": 29645,
+        "line": 701,
+        "limit": 661
+      }
+    ],
+    "Navigation": [
+      {
+        "kind": "type",
+        "offset": 29645,
+        "end": 29724,
+        "line": 723,
+        "limit": 79
+      }
+    ],
+    "Easing": [
+      {
+        "kind": "interface",
+        "offset": 29724,
+        "end": 30083,
+        "line": 724,
+        "limit": 359
+      }
+    ],
+    "EasingFunctionBezier": [
+      {
+        "kind": "interface",
+        "offset": 30083,
+        "end": 30182,
+        "line": 729,
+        "limit": 99
+      }
+    ],
+    "EasingFunctionSpring": [
+      {
+        "kind": "interface",
+        "offset": 30182,
+        "end": 30308,
+        "line": 735,
+        "limit": 126
+      }
+    ],
+    "MotionEasing": [
+      {
+        "kind": "interface",
+        "offset": 30308,
+        "end": 30678,
+        "line": 741,
+        "limit": 370
+      }
+    ],
+    "PhysicalSpring": [
+      {
+        "kind": "interface",
+        "offset": 30678,
+        "end": 30796,
+        "line": 746,
+        "limit": 118
+      }
+    ],
+    "NormalizedSpring": [
+      {
+        "kind": "interface",
+        "offset": 30796,
+        "end": 30856,
+        "line": 751,
+        "limit": 60
+      }
+    ],
+    "AnimationStylePropValue": [
+      {
+        "kind": "type",
+        "offset": 30856,
+        "end": 30945,
+        "line": 754,
+        "limit": 89
+      }
+    ],
+    "AvailableAnimationStylePropValue": [
+      {
+        "kind": "type",
+        "offset": 30945,
+        "end": 30993,
+        "line": 755,
+        "limit": 48
+      }
+    ],
+    "BaseAnimationStyle": [
+      {
+        "kind": "interface",
+        "offset": 30993,
+        "end": 31083,
+        "line": 756,
+        "limit": 90
+      }
+    ],
+    "AvailableAnimationStyle": [
+      {
+        "kind": "interface",
+        "offset": 31083,
+        "end": 31279,
+        "line": 760,
+        "limit": 196
+      }
+    ],
+    "AnimationStyleConfiguration": [
+      {
+        "kind": "interface",
+        "offset": 31279,
+        "end": 31478,
+        "line": 766,
+        "limit": 199
+      }
+    ],
+    "AppliedAnimationStyle": [
+      {
+        "kind": "interface",
+        "offset": 31478,
+        "end": 31595,
+        "line": 773,
+        "limit": 117
+      }
+    ],
+    "KeyframeValue": [
+      {
+        "kind": "type",
+        "offset": 31595,
+        "end": 32603,
+        "line": 776,
+        "limit": 1008
+      }
+    ],
+    "ManualKeyframeInput": [
+      {
+        "kind": "interface",
+        "offset": 32603,
+        "end": 32789,
+        "line": 822,
+        "limit": 186
+      }
+    ],
+    "ManualKeyframeTrackInput": [
+      {
+        "kind": "interface",
+        "offset": 32789,
+        "end": 32954,
+        "line": 828,
+        "limit": 165
+      }
+    ],
+    "ManualKeyframe": [
+      {
+        "kind": "interface",
+        "offset": 32954,
+        "end": 33087,
+        "line": 833,
+        "limit": 133
+      }
+    ],
+    "ManualKeyframeBinding": [
+      {
+        "kind": "interface",
+        "offset": 33087,
+        "end": 33242,
+        "line": 837,
+        "limit": 155
+      }
+    ],
+    "ManualKeyframeTrack": [
+      {
+        "kind": "interface",
+        "offset": 33242,
+        "end": 33416,
+        "line": 842,
+        "limit": 174
+      }
+    ],
+    "KeyframeBinding": [
+      {
+        "kind": "interface",
+        "offset": 33416,
+        "end": 33581,
+        "line": 847,
+        "limit": 165
+      }
+    ],
+    "KeyframePropertyFieldName": [
+      {
+        "kind": "type",
+        "offset": 33581,
+        "end": 34250,
+        "line": 852,
+        "limit": 669
+      }
+    ],
+    "EffectKeyframeFieldName": [
+      {
+        "kind": "type",
+        "offset": 34250,
+        "end": 34564,
+        "line": 853,
+        "limit": 314
+      }
+    ],
+    "KeyframeField": [
+      {
+        "kind": "type",
+        "offset": 34564,
+        "end": 35218,
+        "line": 854,
+        "limit": 654
+      }
+    ],
+    "ComponentPropKeyframeTracks": [
+      {
+        "kind": "type",
+        "offset": 35218,
+        "end": 35301,
+        "line": 877,
+        "limit": 83
+      }
+    ],
+    "ComponentPropKeyframeBindings": [
+      {
+        "kind": "type",
+        "offset": 35301,
+        "end": 35380,
+        "line": 878,
+        "limit": 79
+      }
+    ],
+    "PaintManualKeyframeTrack": [
+      {
+        "kind": "type",
+        "offset": 35380,
+        "end": 35495,
+        "line": 879,
+        "limit": 115
+      }
+    ],
+    "PaintKeyframeBinding": [
+      {
+        "kind": "type",
+        "offset": 35495,
+        "end": 35602,
+        "line": 882,
+        "limit": 107
+      }
+    ],
+    "EffectManualKeyframeTracks": [
+      {
+        "kind": "type",
+        "offset": 35602,
+        "end": 35762,
+        "line": 885,
+        "limit": 160
+      }
+    ],
+    "EffectKeyframeBindings": [
+      {
+        "kind": "type",
+        "offset": 35762,
+        "end": 35914,
+        "line": 888,
+        "limit": 152
+      }
+    ],
+    "ManualKeyframeTracks": [
+      {
+        "kind": "type",
+        "offset": 35914,
+        "end": 36237,
+        "line": 891,
+        "limit": 323
+      }
+    ],
+    "Animations": [
+      {
+        "kind": "type",
+        "offset": 36237,
+        "end": 36532,
+        "line": 896,
+        "limit": 295
+      }
+    ],
+    "Timeline": [
+      {
+        "kind": "interface",
+        "offset": 36532,
+        "end": 36611,
+        "line": 901,
+        "limit": 79
+      }
+    ],
+    "OverflowDirection": [
+      {
+        "kind": "type",
+        "offset": 36611,
+        "end": 36681,
+        "line": 905,
+        "limit": 70
+      }
+    ],
+    "OverlayPositionType": [
+      {
+        "kind": "type",
+        "offset": 36681,
+        "end": 36822,
+        "line": 906,
+        "limit": 141
+      }
+    ],
+    "OverlayBackground": [
+      {
+        "kind": "type",
+        "offset": 36822,
+        "end": 36945,
+        "line": 907,
+        "limit": 123
+      }
+    ],
+    "OverlayBackgroundInteraction": [
+      {
+        "kind": "type",
+        "offset": 36945,
+        "end": 37016,
+        "line": 913,
+        "limit": 71
+      }
+    ],
+    "PublishStatus": [
+      {
+        "kind": "type",
+        "offset": 37016,
+        "end": 37076,
+        "line": 914,
+        "limit": 60
+      }
+    ],
+    "ConnectorEndpointPosition": [
+      {
+        "kind": "interface",
+        "offset": 37076,
+        "end": 37177,
+        "line": 915,
+        "limit": 101
+      }
+    ],
+    "ConnectorEndpointPositionAndEndpointNodeId": [
+      {
+        "kind": "interface",
+        "offset": 37177,
+        "end": 37323,
+        "line": 921,
+        "limit": 146
+      }
+    ],
+    "ConnectorEndpointEndpointNodeIdAndMagnet": [
+      {
+        "kind": "interface",
+        "offset": 37323,
+        "end": 37484,
+        "line": 928,
+        "limit": 161
+      }
+    ],
+    "ConnectorEndpoint": [
+      {
+        "kind": "type",
+        "offset": 37484,
+        "end": 37624,
+        "line": 932,
+        "limit": 140
+      }
+    ],
+    "ConnectorStrokeCap": [
+      {
+        "kind": "type",
+        "offset": 37624,
+        "end": 37859,
+        "line": 933,
+        "limit": 235
+      }
+    ],
+    "BaseNodeMixin": [
+      {
+        "kind": "interface",
+        "offset": 37859,
+        "end": 38231,
+        "line": 934,
+        "limit": 372
+      },
+      {
+        "kind": "interface",
+        "offset": 82101,
+        "end": 82258,
+        "line": 1962,
+        "limit": 157
+      }
+    ],
+    "PluginDataMixin": [
+      {
+        "kind": "interface",
+        "offset": 38231,
+        "end": 38590,
+        "line": 947,
+        "limit": 359
+      }
+    ],
+    "SceneNodeMixin": [
+      {
+        "kind": "interface",
+        "offset": 38590,
+        "end": 39882,
+        "line": 955,
+        "limit": 1292
+      },
+      {
+        "kind": "interface",
+        "offset": 82258,
+        "end": 82495,
+        "line": 1967,
+        "limit": 237
+      }
+    ],
+    "MotionNodeMixin": [
+      {
+        "kind": "interface",
+        "offset": 39882,
+        "end": 40465,
+        "line": 988,
+        "limit": 583
+      }
+    ],
+    "VariableBindableNodeField": [
+      {
+        "kind": "type",
+        "offset": 40465,
+        "end": 40949,
+        "line": 999,
+        "limit": 484
+      }
+    ],
+    "VariableBindableTextField": [
+      {
+        "kind": "type",
+        "offset": 40949,
+        "end": 41112,
+        "line": 1000,
+        "limit": 163
+      }
+    ],
+    "VariableBindablePaintField": [
+      {
+        "kind": "type",
+        "offset": 41112,
+        "end": 41155,
+        "line": 1001,
+        "limit": 43
+      }
+    ],
+    "VariableBindablePaintStyleField": [
+      {
+        "kind": "type",
+        "offset": 41155,
+        "end": 41204,
+        "line": 1002,
+        "limit": 49
+      }
+    ],
+    "VariableBindableColorStopField": [
+      {
+        "kind": "type",
+        "offset": 41204,
+        "end": 41251,
+        "line": 1003,
+        "limit": 47
+      }
+    ],
+    "VariableBindableEffectField": [
+      {
+        "kind": "type",
+        "offset": 41251,
+        "end": 41341,
+        "line": 1004,
+        "limit": 90
+      }
+    ],
+    "VariableBindableEffectStyleField": [
+      {
+        "kind": "type",
+        "offset": 41341,
+        "end": 41392,
+        "line": 1005,
+        "limit": 51
+      }
+    ],
+    "VariableBindableLayoutGridField": [
+      {
+        "kind": "type",
+        "offset": 41392,
+        "end": 41482,
+        "line": 1006,
+        "limit": 90
+      }
+    ],
+    "VariableBindableGridStyleField": [
+      {
+        "kind": "type",
+        "offset": 41482,
+        "end": 41535,
+        "line": 1007,
+        "limit": 53
+      }
+    ],
+    "VariableBindableComponentPropertyField": [
+      {
+        "kind": "type",
+        "offset": 41535,
+        "end": 41590,
+        "line": 1008,
+        "limit": 55
+      }
+    ],
+    "VariableBindableComponentPropertyDefinitionField": [
+      {
+        "kind": "type",
+        "offset": 41590,
+        "end": 41662,
+        "line": 1009,
+        "limit": 72
+      }
+    ],
+    "StickableMixin": [
+      {
+        "kind": "interface",
+        "offset": 41662,
+        "end": 41722,
+        "line": 1010,
+        "limit": 60
+      }
+    ],
+    "ChildrenMixin": [
+      {
+        "kind": "interface",
+        "offset": 41722,
+        "end": 42377,
+        "line": 1013,
+        "limit": 655
+      }
+    ],
+    "ConstraintMixin": [
+      {
+        "kind": "interface",
+        "offset": 42377,
+        "end": 42437,
+        "line": 1026,
+        "limit": 60
+      }
+    ],
+    "DimensionAndPositionMixin": [
+      {
+        "kind": "interface",
+        "offset": 42437,
+        "end": 42806,
+        "line": 1029,
+        "limit": 369
+      }
+    ],
+    "LayoutMixin": [
+      {
+        "kind": "interface",
+        "offset": 42806,
+        "end": 43236,
+        "line": 1042,
+        "limit": 430
+      }
+    ],
+    "AspectRatioLockMixin": [
+      {
+        "kind": "interface",
+        "offset": 43236,
+        "end": 43378,
+        "line": 1051,
+        "limit": 142
+      }
+    ],
+    "BlendMixin": [
+      {
+        "kind": "interface",
+        "offset": 43378,
+        "end": 43596,
+        "line": 1056,
+        "limit": 218
+      }
+    ],
+    "ContainerMixin": [
+      {
+        "kind": "interface",
+        "offset": 43596,
+        "end": 43648,
+        "line": 1063,
+        "limit": 52
+      }
+    ],
+    "StrokeCap": [
+      {
+        "kind": "type",
+        "offset": 43648,
+        "end": 43797,
+        "line": 1066,
+        "limit": 149
+      }
+    ],
+    "StrokeJoin": [
+      {
+        "kind": "type",
+        "offset": 43797,
+        "end": 43852,
+        "line": 1067,
+        "limit": 55
+      }
+    ],
+    "HandleMirroring": [
+      {
+        "kind": "type",
+        "offset": 43852,
+        "end": 43922,
+        "line": 1068,
+        "limit": 70
+      }
+    ],
+    "AutoLayoutMixin": [
+      {
+        "kind": "interface",
+        "offset": 43922,
+        "end": 44601,
+        "line": 1069,
+        "limit": 679
+      }
+    ],
+    "GridTrackSize": [
+      {
+        "kind": "interface",
+        "offset": 44601,
+        "end": 44685,
+        "line": 1086,
+        "limit": 84
+      }
+    ],
+    "GridTrackReorderOptions": [
+      {
+        "kind": "interface",
+        "offset": 44685,
+        "end": 44791,
+        "line": 1090,
+        "limit": 106
+      }
+    ],
+    "GridTrackReorderEntry": [
+      {
+        "kind": "interface",
+        "offset": 44791,
+        "end": 44861,
+        "line": 1094,
+        "limit": 70
+      }
+    ],
+    "GridLayoutMixin": [
+      {
+        "kind": "interface",
+        "offset": 44861,
+        "end": 45433,
+        "line": 1098,
+        "limit": 572
+      }
+    ],
+    "AutoLayoutChildrenMixin": [
+      {
+        "kind": "interface",
+        "offset": 45433,
+        "end": 45606,
+        "line": 1111,
+        "limit": 173
+      }
+    ],
+    "GridChildrenMixin": [
+      {
+        "kind": "interface",
+        "offset": 45606,
+        "end": 45975,
+        "line": 1116,
+        "limit": 369
+      }
+    ],
+    "InferredAutoLayoutResult": [
+      {
+        "kind": "interface",
+        "offset": 45975,
+        "end": 46063,
+        "line": 1125,
+        "limit": 88
+      }
+    ],
+    "DetachedInfo": [
+      {
+        "kind": "type",
+        "offset": 46063,
+        "end": 46185,
+        "line": 1127,
+        "limit": 122
+      }
+    ],
+    "MinimalStrokesMixin": [
+      {
+        "kind": "interface",
+        "offset": 46185,
+        "end": 46635,
+        "line": 1134,
+        "limit": 450
+      }
+    ],
+    "IndividualStrokesMixin": [
+      {
+        "kind": "interface",
+        "offset": 46635,
+        "end": 46794,
+        "line": 1145,
+        "limit": 159
+      }
+    ],
+    "MinimalFillsMixin": [
+      {
+        "kind": "interface",
+        "offset": 46794,
+        "end": 47047,
+        "line": 1151,
+        "limit": 253
+      }
+    ],
+    "VariableWidthPoint": [
+      {
+        "kind": "interface",
+        "offset": 47047,
+        "end": 47121,
+        "line": 1157,
+        "limit": 74
+      }
+    ],
+    "PresetVariableWidthStrokeProperties": [
+      {
+        "kind": "interface",
+        "offset": 47121,
+        "end": 47265,
+        "line": 1161,
+        "limit": 144
+      }
+    ],
+    "CustomVariableWidthStrokeProperties": [
+      {
+        "kind": "interface",
+        "offset": 47265,
+        "end": 47403,
+        "line": 1164,
+        "limit": 138
+      }
+    ],
+    "VariableWidthStrokeProperties": [
+      {
+        "kind": "type",
+        "offset": 47403,
+        "end": 47523,
+        "line": 1168,
+        "limit": 120
+      }
+    ],
+    "ComplexStrokeProperties": [
+      {
+        "kind": "type",
+        "offset": 47523,
+        "end": 47636,
+        "line": 1169,
+        "limit": 113
+      }
+    ],
+    "ScatterBrushProperties": [
+      {
+        "kind": "interface",
+        "offset": 47636,
+        "end": 47982,
+        "line": 1172,
+        "limit": 346
+      }
+    ],
+    "StretchBrushProperties": [
+      {
+        "kind": "interface",
+        "offset": 47982,
+        "end": 48326,
+        "line": 1182,
+        "limit": 344
+      }
+    ],
+    "BrushStrokeProperties": [
+      {
+        "kind": "type",
+        "offset": 48326,
+        "end": 48404,
+        "line": 1188,
+        "limit": 78
+      }
+    ],
+    "DynamicStrokeProperties": [
+      {
+        "kind": "interface",
+        "offset": 48404,
+        "end": 48528,
+        "line": 1189,
+        "limit": 124
+      }
+    ],
+    "GeometryMixin": [
+      {
+        "kind": "interface",
+        "offset": 48528,
+        "end": 48760,
+        "line": 1195,
+        "limit": 232
+      }
+    ],
+    "ComplexStrokesMixin": [
+      {
+        "kind": "interface",
+        "offset": 48760,
+        "end": 48921,
+        "line": 1201,
+        "limit": 161
+      }
+    ],
+    "CornerMixin": [
+      {
+        "kind": "interface",
+        "offset": 48921,
+        "end": 49023,
+        "line": 1205,
+        "limit": 102
+      }
+    ],
+    "RectangleCornerMixin": [
+      {
+        "kind": "interface",
+        "offset": 49023,
+        "end": 49174,
+        "line": 1209,
+        "limit": 151
+      }
+    ],
+    "ExportMixin": [
+      {
+        "kind": "interface",
+        "offset": 49174,
+        "end": 49449,
+        "line": 1215,
+        "limit": 275
+      }
+    ],
+    "FramePrototypingMixin": [
+      {
+        "kind": "interface",
+        "offset": 49449,
+        "end": 49741,
+        "line": 1221,
+        "limit": 292
+      }
+    ],
+    "VectorLikeMixin": [
+      {
+        "kind": "interface",
+        "offset": 49741,
+        "end": 49966,
+        "line": 1228,
+        "limit": 225
+      }
+    ],
+    "ReactionMixin": [
+      {
+        "kind": "interface",
+        "offset": 49966,
+        "end": 50100,
+        "line": 1234,
+        "limit": 134
+      }
+    ],
+    "DocumentationLink": [
+      {
+        "kind": "interface",
+        "offset": 50100,
+        "end": 50158,
+        "line": 1238,
+        "limit": 58
+      }
+    ],
+    "PublishableMixin": [
+      {
+        "kind": "interface",
+        "offset": 50158,
+        "end": 50414,
+        "line": 1241,
+        "limit": 256
+      }
+    ],
+    "DefaultShapeMixin": [
+      {
+        "kind": "interface",
+        "offset": 50414,
+        "end": 50552,
+        "line": 1249,
+        "limit": 138
+      }
+    ],
+    "BaseFrameMixin": [
+      {
+        "kind": "interface",
+        "offset": 50552,
+        "end": 51166,
+        "line": 1251,
+        "limit": 614
+      }
+    ],
+    "DefaultFrameMixin": [
+      {
+        "kind": "interface",
+        "offset": 51166,
+        "end": 51259,
+        "line": 1260,
+        "limit": 93
+      }
+    ],
+    "OpaqueNodeMixin": [
+      {
+        "kind": "interface",
+        "offset": 51259,
+        "end": 51367,
+        "line": 1262,
+        "limit": 108
+      }
+    ],
+    "MinimalBlendMixin": [
+      {
+        "kind": "interface",
+        "offset": 51367,
+        "end": 51446,
+        "line": 1264,
+        "limit": 79
+      }
+    ],
+    "Annotation": [
+      {
+        "kind": "interface",
+        "offset": 51446,
+        "end": 51632,
+        "line": 1268,
+        "limit": 186
+      }
+    ],
+    "AnnotationProperty": [
+      {
+        "kind": "interface",
+        "offset": 51632,
+        "end": 51708,
+        "line": 1274,
+        "limit": 76
+      }
+    ],
+    "AnnotationPropertyType": [
+      {
+        "kind": "type",
+        "offset": 51708,
+        "end": 52252,
+        "line": 1277,
+        "limit": 544
+      }
+    ],
+    "AnnotationsMixin": [
+      {
+        "kind": "interface",
+        "offset": 52252,
+        "end": 52327,
+        "line": 1278,
+        "limit": 75
+      }
+    ],
+    "Measurement": [
+      {
+        "kind": "interface",
+        "offset": 52327,
+        "end": 52572,
+        "line": 1281,
+        "limit": 245
+      }
+    ],
+    "MeasurementSide": [
+      {
+        "kind": "type",
+        "offset": 52572,
+        "end": 52632,
+        "line": 1294,
+        "limit": 60
+      }
+    ],
+    "MeasurementOffset": [
+      {
+        "kind": "type",
+        "offset": 52632,
+        "end": 52747,
+        "line": 1295,
+        "limit": 115
+      }
+    ],
+    "MeasurementsMixin": [
+      {
+        "kind": "interface",
+        "offset": 52747,
+        "end": 53303,
+        "line": 1302,
+        "limit": 556
+      }
+    ],
+    "ComponentPropertiesMixin": [
+      {
+        "kind": "interface",
+        "offset": 53303,
+        "end": 53920,
+        "line": 1321,
+        "limit": 617
+      }
+    ],
+    "BaseNonResizableTextMixin": [
+      {
+        "kind": "interface",
+        "offset": 53920,
+        "end": 56734,
+        "line": 1333,
+        "limit": 2814
+      }
+    ],
+    "NonResizableTextMixin": [
+      {
+        "kind": "interface",
+        "offset": 56734,
+        "end": 59947,
+        "line": 1372,
+        "limit": 3213
+      }
+    ],
+    "NonResizableTextPathMixin": [
+      {
+        "kind": "interface",
+        "offset": 59947,
+        "end": 60021,
+        "line": 1414,
+        "limit": 74
+      }
+    ],
+    "TextSublayerNode": [
+      {
+        "kind": "interface",
+        "offset": 60021,
+        "end": 60101,
+        "line": 1416,
+        "limit": 80
+      }
+    ],
+    "DocumentNode": [
+      {
+        "kind": "interface",
+        "offset": 60101,
+        "end": 60937,
+        "line": 1418,
+        "limit": 836
+      }
+    ],
+    "ExplicitVariableModesMixin": [
+      {
+        "kind": "interface",
+        "offset": 60937,
+        "end": 61232,
+        "line": 1433,
+        "limit": 295
+      }
+    ],
+    "PageNode": [
+      {
+        "kind": "interface",
+        "offset": 61232,
+        "end": 62000,
+        "line": 1440,
+        "limit": 768
+      },
+      {
+        "kind": "interface",
+        "offset": 82607,
+        "end": 88124,
+        "line": 1981,
+        "limit": 5517
+      }
+    ],
+    "FrameNode": [
+      {
+        "kind": "interface",
+        "offset": 62000,
+        "end": 62102,
+        "line": 1462,
+        "limit": 102
+      }
+    ],
+    "GroupNode": [
+      {
+        "kind": "interface",
+        "offset": 62102,
+        "end": 62322,
+        "line": 1466,
+        "limit": 220
+      }
+    ],
+    "TransformGroupNode": [
+      {
+        "kind": "interface",
+        "offset": 62322,
+        "end": 62615,
+        "line": 1470,
+        "limit": 293
+      }
+    ],
+    "SliceNode": [
+      {
+        "kind": "interface",
+        "offset": 62615,
+        "end": 62755,
+        "line": 1475,
+        "limit": 140
+      }
+    ],
+    "RectangleNode": [
+      {
+        "kind": "interface",
+        "offset": 62755,
+        "end": 63006,
+        "line": 1479,
+        "limit": 251
+      }
+    ],
+    "LineNode": [
+      {
+        "kind": "interface",
+        "offset": 63006,
+        "end": 63161,
+        "line": 1483,
+        "limit": 155
+      }
+    ],
+    "EllipseNode": [
+      {
+        "kind": "interface",
+        "offset": 63161,
+        "end": 63382,
+        "line": 1487,
+        "limit": 221
+      }
+    ],
+    "PolygonNode": [
+      {
+        "kind": "interface",
+        "offset": 63382,
+        "end": 63605,
+        "line": 1492,
+        "limit": 223
+      }
+    ],
+    "StarNode": [
+      {
+        "kind": "interface",
+        "offset": 63605,
+        "end": 63844,
+        "line": 1497,
+        "limit": 239
+      }
+    ],
+    "VectorNode": [
+      {
+        "kind": "interface",
+        "offset": 63844,
+        "end": 64057,
+        "line": 1503,
+        "limit": 213
+      }
+    ],
+    "TextNode": [
+      {
+        "kind": "interface",
+        "offset": 64057,
+        "end": 64650,
+        "line": 1507,
+        "limit": 593
+      }
+    ],
+    "TextPathNode": [
+      {
+        "kind": "interface",
+        "offset": 64650,
+        "end": 65307,
+        "line": 1519,
+        "limit": 657
+      }
+    ],
+    "ComponentPropertyType": [
+      {
+        "kind": "type",
+        "offset": 65307,
+        "end": 65395,
+        "line": 1532,
+        "limit": 88
+      }
+    ],
+    "InstanceSwapPreferredValue": [
+      {
+        "kind": "type",
+        "offset": 65395,
+        "end": 65492,
+        "line": 1533,
+        "limit": 97
+      }
+    ],
+    "SlotSettings": [
+      {
+        "kind": "type",
+        "offset": 65492,
+        "end": 65696,
+        "line": 1537,
+        "limit": 204
+      }
+    ],
+    "ComponentPropertyOptions": [
+      {
+        "kind": "type",
+        "offset": 65696,
+        "end": 65844,
+        "line": 1544,
+        "limit": 148
+      }
+    ],
+    "ComponentPropertyDefinitions": [
+      {
+        "kind": "type",
+        "offset": 65844,
+        "end": 66293,
+        "line": 1549,
+        "limit": 449
+      }
+    ],
+    "ComponentSetNode": [
+      {
+        "kind": "interface",
+        "offset": 66293,
+        "end": 66502,
+        "line": 1562,
+        "limit": 209
+      }
+    ],
+    "ComponentNode": [
+      {
+        "kind": "interface",
+        "offset": 66502,
+        "end": 66774,
+        "line": 1567,
+        "limit": 272
+      }
+    ],
+    "ComponentProperties": [
+      {
+        "kind": "type",
+        "offset": 66774,
+        "end": 67095,
+        "line": 1574,
+        "limit": 321
+      }
+    ],
+    "InstanceNode": [
+      {
+        "kind": "interface",
+        "offset": 67095,
+        "end": 67798,
+        "line": 1584,
+        "limit": 703
+      }
+    ],
+    "SlotNode": [
+      {
+        "kind": "interface",
+        "offset": 67798,
+        "end": 68007,
+        "line": 1604,
+        "limit": 209
+      }
+    ],
+    "BooleanOperationNode": [
+      {
+        "kind": "interface",
+        "offset": 68007,
+        "end": 68300,
+        "line": 1610,
+        "limit": 293
+      }
+    ],
+    "StickyNode": [
+      {
+        "kind": "interface",
+        "offset": 68300,
+        "end": 68556,
+        "line": 1615,
+        "limit": 256
+      }
+    ],
+    "StampNode": [
+      {
+        "kind": "interface",
+        "offset": 68556,
+        "end": 68713,
+        "line": 1623,
+        "limit": 157
+      }
+    ],
+    "TableNode": [
+      {
+        "kind": "interface",
+        "offset": 68713,
+        "end": 69376,
+        "line": 1627,
+        "limit": 663
+      }
+    ],
+    "TableCellNode": [
+      {
+        "kind": "interface",
+        "offset": 69376,
+        "end": 69685,
+        "line": 1642,
+        "limit": 309
+      }
+    ],
+    "HighlightNode": [
+      {
+        "kind": "interface",
+        "offset": 69685,
+        "end": 69884,
+        "line": 1652,
+        "limit": 199
+      }
+    ],
+    "WashiTapeNode": [
+      {
+        "kind": "interface",
+        "offset": 69884,
+        "end": 70037,
+        "line": 1656,
+        "limit": 153
+      }
+    ],
+    "ShapeWithTextNode": [
+      {
+        "kind": "interface",
+        "offset": 70037,
+        "end": 70883,
+        "line": 1660,
+        "limit": 846
+      }
+    ],
+    "CodeBlockNode": [
+      {
+        "kind": "interface",
+        "offset": 70883,
+        "end": 71223,
+        "line": 1670,
+        "limit": 340
+      }
+    ],
+    "LabelSublayerNode": [
+      {
+        "kind": "interface",
+        "offset": 71223,
+        "end": 71296,
+        "line": 1676,
+        "limit": 73
+      }
+    ],
+    "ConnectorNode": [
+      {
+        "kind": "interface",
+        "offset": 71296,
+        "end": 71821,
+        "line": 1679,
+        "limit": 525
+      }
+    ],
+    "VariableResolvedDataType": [
+      {
+        "kind": "type",
+        "offset": 71821,
+        "end": 71917,
+        "line": 1692,
+        "limit": 96
+      }
+    ],
+    "VariableAlias": [
+      {
+        "kind": "interface",
+        "offset": 71917,
+        "end": 71989,
+        "line": 1693,
+        "limit": 72
+      }
+    ],
+    "VariableValue": [
+      {
+        "kind": "type",
+        "offset": 71989,
+        "end": 72081,
+        "line": 1697,
+        "limit": 92
+      }
+    ],
+    "VariableScope": [
+      {
+        "kind": "type",
+        "offset": 72081,
+        "end": 72453,
+        "line": 1698,
+        "limit": 372
+      }
+    ],
+    "CodeSyntaxPlatform": [
+      {
+        "kind": "type",
+        "offset": 72453,
+        "end": 72506,
+        "line": 1699,
+        "limit": 53
+      }
+    ],
+    "Variable": [
+      {
+        "kind": "interface",
+        "offset": 72506,
+        "end": 73605,
+        "line": 1700,
+        "limit": 1099
+      }
+    ],
+    "VariableCollection": [
+      {
+        "kind": "interface",
+        "offset": 73605,
+        "end": 74240,
+        "line": 1730,
+        "limit": 635
+      }
+    ],
+    "ExtendedVariableCollection": [
+      {
+        "kind": "interface",
+        "offset": 74240,
+        "end": 74841,
+        "line": 1750,
+        "limit": 601
+      }
+    ],
+    "AnnotationCategoryColor": [
+      {
+        "kind": "type",
+        "offset": 74841,
+        "end": 74949,
+        "line": 1768,
+        "limit": 108
+      }
+    ],
+    "AnnotationCategory": [
+      {
+        "kind": "interface",
+        "offset": 74949,
+        "end": 75219,
+        "line": 1769,
+        "limit": 270
+      }
+    ],
+    "WidgetNode": [
+      {
+        "kind": "interface",
+        "offset": 75219,
+        "end": 75438,
+        "line": 1778,
+        "limit": 219
+      }
+    ],
+    "EmbedData": [
+      {
+        "kind": "interface",
+        "offset": 75438,
+        "end": 75602,
+        "line": 1786,
+        "limit": 164
+      }
+    ],
+    "EmbedNode": [
+      {
+        "kind": "interface",
+        "offset": 75602,
+        "end": 75737,
+        "line": 1793,
+        "limit": 135
+      }
+    ],
+    "LinkUnfurlData": [
+      {
+        "kind": "interface",
+        "offset": 75737,
+        "end": 75870,
+        "line": 1798,
+        "limit": 133
+      }
+    ],
+    "LinkUnfurlNode": [
+      {
+        "kind": "interface",
+        "offset": 75870,
+        "end": 76031,
+        "line": 1804,
+        "limit": 161
+      }
+    ],
+    "MediaData": [
+      {
+        "kind": "interface",
+        "offset": 76031,
+        "end": 76073,
+        "line": 1809,
+        "limit": 42
+      }
+    ],
+    "MediaNode": [
+      {
+        "kind": "interface",
+        "offset": 76073,
+        "end": 76324,
+        "line": 1812,
+        "limit": 251
+      }
+    ],
+    "SectionNode": [
+      {
+        "kind": "interface",
+        "offset": 76324,
+        "end": 76694,
+        "line": 1819,
+        "limit": 370
+      }
+    ],
+    "SlideNode": [
+      {
+        "kind": "interface",
+        "offset": 76694,
+        "end": 76950,
+        "line": 1826,
+        "limit": 256
+      }
+    ],
+    "SlideRowNode": [
+      {
+        "kind": "interface",
+        "offset": 76950,
+        "end": 77075,
+        "line": 1834,
+        "limit": 125
+      }
+    ],
+    "SlideGridNode": [
+      {
+        "kind": "interface",
+        "offset": 77075,
+        "end": 77203,
+        "line": 1838,
+        "limit": 128
+      }
+    ],
+    "InteractiveSlideElementNode": [
+      {
+        "kind": "interface",
+        "offset": 77203,
+        "end": 77458,
+        "line": 1842,
+        "limit": 255
+      }
+    ],
+    "SlideTransition": [
+      {
+        "kind": "interface",
+        "offset": 77458,
+        "end": 78222,
+        "line": 1847,
+        "limit": 764
+      }
+    ],
+    "BaseNode": [
+      {
+        "kind": "type",
+        "offset": 78222,
+        "end": 78275,
+        "line": 1856,
+        "limit": 53
+      }
+    ],
+    "SceneNode": [
+      {
+        "kind": "type",
+        "offset": 78275,
+        "end": 78799,
+        "line": 1857,
+        "limit": 524
+      }
+    ],
+    "NodeType": [
+      {
+        "kind": "type",
+        "offset": 78799,
+        "end": 78833,
+        "line": 1858,
+        "limit": 34
+      }
+    ],
+    "StyleType": [
+      {
+        "kind": "type",
+        "offset": 78833,
+        "end": 78888,
+        "line": 1859,
+        "limit": 55
+      }
+    ],
+    "InheritedStyleField": [
+      {
+        "kind": "type",
+        "offset": 78888,
+        "end": 79038,
+        "line": 1860,
+        "limit": 150
+      }
+    ],
+    "StyleConsumers": [
+      {
+        "kind": "interface",
+        "offset": 79038,
+        "end": 79123,
+        "line": 1861,
+        "limit": 85
+      }
+    ],
+    "BaseStyleMixin": [
+      {
+        "kind": "interface",
+        "offset": 79123,
+        "end": 79344,
+        "line": 1865,
+        "limit": 221
+      }
+    ],
+    "PaintStyle": [
+      {
+        "kind": "interface",
+        "offset": 79344,
+        "end": 79563,
+        "line": 1872,
+        "limit": 219
+      }
+    ],
+    "TextStyle": [
+      {
+        "kind": "interface",
+        "offset": 79563,
+        "end": 80184,
+        "line": 1879,
+        "limit": 621
+      }
+    ],
+    "EffectStyle": [
+      {
+        "kind": "interface",
+        "offset": 80184,
+        "end": 80408,
+        "line": 1899,
+        "limit": 224
+      }
+    ],
+    "GridStyle": [
+      {
+        "kind": "interface",
+        "offset": 80408,
+        "end": 80634,
+        "line": 1906,
+        "limit": 226
+      }
+    ],
+    "BaseStyle": [
+      {
+        "kind": "type",
+        "offset": 80634,
+        "end": 80701,
+        "line": 1913,
+        "limit": 67
+      }
+    ],
+    "Image": [
+      {
+        "kind": "interface",
+        "offset": 80701,
+        "end": 80875,
+        "line": 1914,
+        "limit": 174
+      }
+    ],
+    "FindAllCriteria": [
+      {
+        "kind": "interface",
+        "offset": 80875,
+        "end": 81077,
+        "line": 1922,
+        "limit": 202
+      }
+    ],
+    "TransformModifier": [
+      {
+        "kind": "type",
+        "offset": 81077,
+        "end": 81147,
+        "line": 1932,
+        "limit": 70
+      }
+    ],
+    "RepeatModifier": [
+      {
+        "kind": "interface",
+        "offset": 81147,
+        "end": 81272,
+        "line": 1933,
+        "limit": 125
+      }
+    ],
+    "LinearRepeatModifier": [
+      {
+        "kind": "interface",
+        "offset": 81272,
+        "end": 81393,
+        "line": 1939,
+        "limit": 121
+      }
+    ],
+    "RadialRepeatModifier": [
+      {
+        "kind": "interface",
+        "offset": 81393,
+        "end": 81477,
+        "line": 1943,
+        "limit": 84
+      }
+    ],
+    "QueryResult": [
+      {
+        "kind": "interface",
+        "offset": 81477,
+        "end": 82021,
+        "line": 1946,
+        "limit": 544
+      }
+    ],
+    "ScreenshotOptions": [
+      {
+        "kind": "interface",
+        "offset": 82021,
+        "end": 82101,
+        "line": 1958,
+        "limit": 80
+      }
+    ]
+  }
+}

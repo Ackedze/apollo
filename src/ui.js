@@ -1,5 +1,7 @@
 
 let layerNamesClient=null;
+let figmaAuditClient=null;
+const {createFigmaAuditClient}=require("./figma-audit/client");
 let reglyphClient=null;
 const {createReglyphClient}=require("./skills/reglyph/client");
 const {createLayerNamesClient}=require("./skills/layer-names/client");
@@ -76,6 +78,7 @@ designCheck.subscribe(() => {
 layerNamesClient=createLayerNamesClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable()||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient=createReglyphClient({send,beforeOperation:compatibility.ensure,onOperation:kind=>tokenJournalClient.begin(kind),isBusy:()=>legacyOperationUnavailable(true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 reglyphClient.setContext({channelId:designCheck.getState().settings.channelId,pickerLabel:designCheck.getState().settings.pickerLabel});
+figmaAuditClient=createFigmaAuditClient({send,beforeOperation:compatibility.ensure,readPlatform:()=>designCheck.getState().settings.pickerLabel,isBusy:()=>legacyOperationUnavailable(false,true)||contractFocusClient.busy()||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onChange:()=>controls()});
 function dependencyReason(reason) {
   if (['dependency-reference-not-captured', 'dependency-reference-capture-failed', 'dependency-main-component-unavailable', 'dependency-instance-unavailable'].includes(reason)) return 'Не удалось получить независимый библиотечный эталон.';
   if (reason === 'dependency-variable-modes-unavailable') return 'Не удалось воспроизвести режимы переменных.';
@@ -85,9 +88,9 @@ function dependencyReason(reason) {
   return 'Недостаточно подтверждённых фактов о структуре, варианте или происхождении компонента.';
 }
 function status(text, error = false) { $('status').textContent = text; $('status').classList.toggle('error', error); }
-function legacyOperationUnavailable(ignoreReglyph=false) { return (!ignoreReglyph && Boolean(reglyphClient?.busy())) || Boolean(layerNamesClient?.busy()) || designCheck.getState().documentAction.busy || busy || generationBusy; }
+function legacyOperationUnavailable(ignoreReglyph=false,ignoreFigmaAudit=false) { return (!ignoreFigmaAudit && Boolean(figmaAuditClient?.busy())) || (!ignoreReglyph && Boolean(reglyphClient?.busy())) || Boolean(layerNamesClient?.busy()) || designCheck.getState().documentAction.busy || busy || generationBusy; }
 function controls() {
-  landingUi?.refresh();layerNamesClient?.refresh();reglyphClient?.refresh();
+  landingUi?.refresh();layerNamesClient?.refresh();reglyphClient?.refresh();figmaAuditClient?.refresh();
   const unavailable=legacyOperationUnavailable();
   $('audit').disabled=!validSelection||unavailable;
   $('audit').textContent=busy?'Проверяем…':'Проверить выделение';
@@ -280,11 +283,12 @@ window.onmessage = event => {
     return;
   }
   if (auditStatisticsClient.accept(data) || tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
+  if (figmaAuditClient?.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
   if (reglyphClient?.accept(data)) return;
   if (landingUi?.accept(data)) return;
   if(contractFocusClient.accept(data)){controls();return;}
-  if (data.type === 'selection') { statisticsUserName=typeof data.statisticsUserName==='string'?data.statisticsUserName:null; layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
+  if (data.type === 'selection') { statisticsUserName=typeof data.statisticsUserName==='string'?data.statisticsUserName:null; figmaAuditClient?.selection(data); layerNamesClient?.selection(data); reglyphClient?.selection(data); documentAuditClient.selection(data); if(currentPageId&&data.pageId&&currentPageId!==data.pageId)markContractStale();currentPageId=data.pageId||currentPageId; validSelection = data.valid; $('selection').textContent = data.name || 'Выделите область или слои с компонентами'; }
   if (data.type === 'contract-loaded') { $('contract-name').textContent = `${data.name} · r${data.revision} · локальный авторский контракт`; status('Локальный пакет загружен. Можно проверять выделение.'); }
   if (data.type === 'source-mode') { clearResult(); $('contract-name').textContent = 'Прокси подберёт контракты по ключам компонентов'; status('Автоматическая загрузка контрактов включена.'); }
   if(['v3-catalog-request','v3-catalog-cancel'].includes(data.type)){void catalogTransport.accept(data);return;}
@@ -304,8 +308,8 @@ window.onmessage = event => {
 
 controls();
 send({ type: 'ready' });
-landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
-mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
+landingUi=require('./landing/ui').mountLanding({root:$('generation-panel'),send,beforeOperation:compatibility.ensure,isVisible:()=>designCheck.getState().mode==='generation'&&!designCheck.getState().chat.open,readPlatform:()=>designCheck.getState().settings.pickerLabel,isUnavailable:()=>busy||Boolean(figmaAuditClient?.busy())||contractFocusClient.busy()||Boolean(reglyphClient?.busy())||Boolean(layerNamesClient?.busy())||designCheck.getState().documentAction.busy||['loading','cancelling'].includes(designCheck.getState().documentAudit.status),onBusy:value=>{generationBusy=value;controls();}});
+mountDesignCheck($('design-check-root'), designCheck, { setup: $('legacy-setup'), audit: $('result'), auditDiagnostics: $('audit-diagnostics'), generation: $('generation-panel') }, { readContractData: contractData.read, skillsClient: layerNamesClient, reglyphClient, figmaAuditClient, statisticsClient:tokenJournalClient, auditStatisticsClient });
 void designCheck.restorePreferences();
 designCheck.subscribe(()=>landingUi?.refresh());
 window.addEventListener('pagehide',()=>landingUi?.close());

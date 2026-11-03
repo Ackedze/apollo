@@ -14,6 +14,7 @@ import { AuditOverview } from "./AuditOverview";
 import { buildResultGroups } from "./result-groups";
 import assets from "./assets";
 import {SkillsPanel} from "../skills/layer-names/SkillsPanel";
+import {FigmaAuditSkill} from "../figma-audit/FigmaAuditSkill";
 import {ReglyphSkill} from "../skills/reglyph/ReglyphSkill";
 import { ProgressBarPilot } from './ProgressBarPilot';
 const { createProgressBarClient } = require('./progressbar-client');
@@ -22,7 +23,7 @@ declare const __APOLLO_PROGRESSBAR_PILOT_ENDPOINT__: string;
 const skillIcons = require("../skills/layer-names/assets");
 
 type Controller = ReturnType<typeof createDesignCheckController>;
-type DataOptions = { skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
+type DataOptions = { figmaAuditClient?: any; skillsClient?: any; reglyphClient?: any; statisticsClient?: any; auditStatisticsClient?: any; readContractData?: () => Promise<import('./ContractDataModal').ContractData> };
 type Slots = { setup?: HTMLElement; audit?: HTMLElement; auditDiagnostics?: HTMLElement; generation?: HTMLElement; patterns?: HTMLElement; texts?: HTMLElement };
 const readReasonLabels:Record<string,string>={'access-denied':'нет доступа','not-found-or-unpublished':'не найден или не опубликован',network:'ошибка соединения',timeout:'таймаут','invalid-response':'некорректный ответ',unavailable:'источник недоступен',cancelled:'чтение отменено',unknown:'причина не определена'};
 
@@ -265,7 +266,7 @@ function DesignCheckShell({ controller, slots, dataOptions }: { controller: Cont
           <details className="apollo-sources" hidden={!groupId || activeScreen !== 'check'}><summary>Источники проверки</summary><ExistingSlot node={slots.auditDiagnostics} /><ExistingSlot node={slots.setup} /></details>
 
         </section>
-        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Тулзы">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>}</SkillsPanel>}</section>
+        <section className="design-check-view-pane apollo-skills-screen" hidden={activeScreen !== 'skills'} aria-label="Тулзы">{dataOptions.skillsClient && <SkillsPanel client={dataOptions.skillsClient}>{dataOptions.reglyphClient && <ReglyphSkill client={dataOptions.reglyphClient}/>} {dataOptions.figmaAuditClient && <FigmaAuditSkill client={dataOptions.figmaAuditClient}/>}</SkillsPanel>}</section>
         <section className="design-check-view-pane" hidden={activeScreen !== 'texts'} aria-label="Тексты">
           <ExistingSlot node={slots.texts} />{!slots.texts && <p className="placeholder">Проверка текстов ещё не подключена.</p>}
         </section>

@@ -1,0 +1,6 @@
+.apollo-figma-audit{padding:0 28px 28px;color:inherit;font:inherit;min-width:0}
+.apollo-figma-audit h3{font-size:16px;margin:0 0 8px}.apollo-figma-audit p{margin:8px 0;line-height:1.45}.apollo-figma-audit-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.apollo-figma-audit details{padding:12px 0;border-top:1px solid #e5e5e5}.apollo-figma-audit summary{cursor:pointer;line-height:1.5}.apollo-figma-audit summary:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.apollo-figma-audit-path{overflow-wrap:anywhere;font-size:12px}.apollo-figma-audit blockquote{margin:8px 0;padding-left:12px;border-left:2px solid #ddd;font-size:12px}
+.apollo-figma-audit dl{display:grid;grid-template-columns:1fr auto;gap:4px 16px}.apollo-figma-audit dd{margin:0}.apollo-figma-audit th,.apollo-figma-audit td{text-align:left;padding:8px;vertical-align:top}.apollo-figma-audit table{width:100%;font-size:12px}
+.apollo-figma-audit-report{margin-top:16px}.apollo-figma-audit button:focus-visible,.apollo-figma-audit input:focus-visible{outline:2px solid currentColor;outline-offset:3px}

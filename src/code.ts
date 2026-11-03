@@ -51,10 +51,11 @@ function invalidateArea(){areaNotificationProof?.close();areaNotificationProof=n
 function observeArea(event:NodeChangeEvent){if(documentAuditBridge.isActionApplying())return;if(event.nodeChanges?.some(change=>areaObservedIds.has(change.id)||('node' in change&&change.node&&'parent' in change.node&&change.node.parent&&areaObservedIds.has(change.node.parent.id)))){if(documentAuditBridge.observeRefreshChange())return;if(areaNotificationProof)void areaNotificationProof.notify();else invalidateArea();}}
 function bindAreaPage(){if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);areaPage=figma.currentPage;if(typeof areaPage.on==='function')areaPage.on('nodechange',observeArea);}
 
-let reglyphBridge:any=null,landingCanvas:any=null;
+let reglyphBridge:any=null,landingCanvas:any=null,figmaAuditBridge:any=null;
 const documentAuditBridge = createDocumentAuditBridge({ catalogPolicyReader:require('./document-audit/catalog-policy').createCatalogPolicyReader(catalogPort,engine.stableHash), deprecatedStyleReader:require('./document-audit/deprecated-styles').createDeprecatedStyleReader(catalogPort,engine.stableHash), api: figma, hash: engine.stableHash, post, observeSelection: false, isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||Boolean(reglyphBridge?.busy()), onMutation:()=>{invalidateArea();invalidateNativeDiagnostic();}, onRecheckStart:beginScopedRecheck, bindingAdapter:createBindingAdapter(catalogReaders.readCatalogs,(nodeId,property,context,data)=>{if(data)return findReferenceCandidate(data,nodeId,property);if(lastAuditRevision!==generation||areaNotificationProof?.hasPending()||auditPageId!==context.pageId||!areaSession||selectionSignature(areaSession.roots)!==context.selectionSignature)return null;return findReferenceCandidate(areaSession,nodeId,property);},catalogReaders.verifyCatalog), focus: (node: SceneNode) => {
   selectionId = selectionSignature([node]); figma.currentPage.selection = [node]; figma.viewport.scrollAndZoomIntoView([node]);
 } });
+figmaAuditBridge=require('./figma-audit/native').createFigmaAuditBridge({api:figma,hash:engine.stableHash,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy())||layerNamesBridge.isApplying()});
 const layerNamesBridge=createLayerNamesBridge({api:figma,hash:engine.stableHash,post,observer:()=>nativePageObserver.snapshot(),isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||Boolean(reglyphBridge?.busy()),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 reglyphBridge=createReglyphBridge({api:figma,post,isBusy:()=>busy||Boolean(landingCanvas?.busy())||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying(),onMutation:()=>{documentAuditBridge.invalidate();invalidateArea();invalidateNativeDiagnostic();}});
 landingCanvas=require('./landing/native').createLandingCanvasBridge({api:figma,hash:engine.stableHash,post,buildId:__APOLLO_NATIVE_BUILD_INPUTS_SHA__,isUnavailable:()=>busy||Boolean(contractFocusTask)||documentAuditBridge.isActionBusy()||layerNamesBridge.isApplying()||reglyphBridge.busy()});
@@ -515,6 +516,7 @@ figma.ui.onmessage = async (message: any) => {
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;
   if (auditStatisticsBridge.accept(message) || tokenJournalBridge.accept(message)) return;
   if (reglyphBridge.accept(message)) return;
+  if (figmaAuditBridge.accept(message)) return;
   if (layerNamesBridge.accept(message)) return;
   if (designCheckUiBridge.accept(message)) return;
   if (generationSessionBridge.accept(message)) return;

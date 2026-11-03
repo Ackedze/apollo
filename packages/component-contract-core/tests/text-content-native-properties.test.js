@@ -82,3 +82,32 @@ test('finite scenario context precondition is accepted only for a declared root 
   f.manual.rules[0].applicability.context={'expectedInput.Placement':'invented'};
   assert(f.compile().issues.some(i=>i.code==='RULE_CONTEXT_UNMAPPED'));
 });
+
+function usageFixture(){
+ const f=nativeFixture();f.manual.metadata.nativeTargetUsageFactsVersion=1;f.manual.semanticApi=[
+  {id:'part-type',kind:'state',valueType:'enum',domain:['Primary','Secondary'],bindings:[{representationId:'desktop',targetId:'part.target',path:'component.properties.Title',transform:'identity'}]},
+  {id:'part-visible',kind:'visibility',valueType:'boolean',domain:[false,true],bindings:[{representationId:'desktop',targetId:'part.target',path:'visibility.effective',transform:'identity'}]},
+ ];
+ f.manual.rules[0].constraints=[{type:'propertyDomain',fact:'semanticApi.part-type',values:['Primary']}];
+ f.manual.rules[0].applicability.context={'semanticApi.part-visible':true};
+ f.snapshot.nodes[3].component.identity.componentKey='part-b';
+ f.snapshot.nodes[3].component.properties.Title='Secondary';
+ return f;
+}
+test('usage facts read a proven same-family boundary root without granting its visual baseline',()=>{
+ const f=usageFixture(),c=core.prepareAuthoringPreviewContract(f.compile().contract);
+ assert.equal(c.runtimePolicy.nativeTargetPropertyFactsVersion,1);
+ const prepared=core.prepareValidationSnapshot(f.snapshot,c);
+ assert.equal(prepared.nodes[0].semanticApi['part-type'],'Secondary');
+ assert.equal(prepared.nodes[0].semanticApi['part-visible'],true);
+ assert(core.evaluateCompiledContract(f.snapshot,c).evaluations.some(e=>e.classification==='violation'));
+ assert.notEqual(prepared.nodes[3].baselineProvenance?.status,'matched');
+ f.snapshot.nodes[3].visible=false;assert(run(f).evaluations.every(e=>e.classification==='not-applicable'));
+});
+for(const [name,mutate]of[
+ ['foreign-family',s=>s.nodes[3].component.identity.componentSetKey='foreign-set'],
+ ['foreign-source',s=>s.nodes[3].component.sourceIdentity.sourceNodeId='foreign-source'],
+ ['missing-reference',s=>delete s.variantReference],
+ ['unknown-visibility',s=>s.nodes[3].unknownFacts=['visible']],
+ ['unknown-property',s=>s.nodes[3].unknownFacts=['component.properties.Title']],
+])test('usage facts preserve UNKNOWN for '+name,()=>{const f=usageFixture();mutate(f.snapshot);assert(run(f).evaluations.some(e=>e.classification==='human-review'));});

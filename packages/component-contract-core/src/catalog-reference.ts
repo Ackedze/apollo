@@ -4,6 +4,7 @@ import { captureVariantReference } from './variant-facts';
 import { snapshotPaths } from './snapshot-topology';
 import { materializeEffectiveBaseline } from './instance-validation';
 import { matchesCaptureRepresentation } from './capture-representation';
+import { configureCatalogReference } from './catalog-configuration';
 import type { CompiledContract, PreviewSnapshot } from './types';
 import type { PreparedSourceTopology } from './prepared-source-identity';
 
@@ -25,6 +26,8 @@ export type PreparedCatalogReference = {
   configuration: CatalogReferenceRequest['selection'];
   definedProperties: string[];
   sourceCollections: Record<string, any>;
+  sourceResources: Record<ResourceKind, Record<string, any>>;
+  fontPairs: Array<{family: string; style: string}>;
   modePaths: Array<{ path: Path; collectionId: string }>;
 };
 const record = (v: any): v is Record<string, any> => Boolean(v && typeof v === 'object' && !Array.isArray(v));
@@ -153,7 +156,8 @@ export function buildCatalogReference(response: any, contract: CompiledContract,
         version: 1, ownerComponentKey: identity.componentKey, ownerMainComponentId: identity.mainComponentId, sourceNodeId: suffix };
     }
     return Object.assign(f, { id: ids.get(id), parentId: i === 0 ? null : ids.get(n.sourceParentId), childIds: n.sourceChildIds.map((child: string) => ids.get(child)),
-      name: row.name, type: i === 0 ? 'INSTANCE' : row.type, order: i, semantic: { role: count === 1 ? role : role + '-' + count, path },
+      name: i === 0 && contract.runtimePolicy.nativeTargetUsageFactsVersion === 1 && text(response.component.name) ? response.component.name : row.name,
+      type: i === 0 ? 'INSTANCE' : row.type, order: i, semantic: { role: count === 1 ? role : role + '-' + count, path },
       unknownFacts: Array.from(new Set<string>((n.unavailable as string[]).concat(n.unavailable.flatMap(normalizedUnavailable)))) });
   });
   const snapshot: PreviewSnapshot = { schemaVersion: 'apollo.predicate-snapshot.v2', generatedAt: contract.package.sourceGeneratedAt,
@@ -166,15 +170,22 @@ export function buildCatalogReference(response: any, contract: CompiledContract,
       ...(nodes.every(n => ['width', 'height'].every(p => Number.isFinite(n.bounds?.[p]))) ? { geometryCaptureVersion: 1 } : {}) } };
   const result: PreparedCatalogReference = { snapshot, variantReference: captureVariantReference(snapshot, s.componentKey, setKey, rootFacts.component.definedProperties),
     preparedSourceTopology, resourceRequirements: [], referenceHash: response.referenceHash, configuration: clone(s), definedProperties: rootFacts.component.definedProperties.slice(),
-    sourceCollections: resources.collection, modePaths: [] };
+    sourceCollections: resources.collection, sourceResources: resources,
+    fontPairs: Array.isArray(response.provenance.source?.fontPairs) ? clone(response.provenance.source.fontPairs) : [], modePaths: [] };
+  return indexCatalogResources(result);
+}
+
+function indexCatalogResources(result: PreparedCatalogReference): PreparedCatalogReference {
+  const snapshot = result.snapshot, resources = result.sourceResources;
+  result.modePaths = [];
   const requirements = new Map<string, CatalogResourceRequirement>();
-  const requireResource = (kind: ResourceKind, id: any, path: Path, asKey = false) => {
+  const requireResource = (kind: ResourceKind, id: any, path?: Path, asKey = false) => {
     if (!text(id)) return;
     const resource = resources[kind][id];
     if (!resource || !key(resource.key)) fail('CATALOG_RESOURCE_KEY_UNAVAILABLE', { kind, sourceId: id });
     const token = kind + ':' + id;
     if (!requirements.has(token)) requirements.set(token, { kind, sourceId: id, sourceKey: resource.key, paths: [], keyPaths: [] });
-    requirements.get(token)![asKey ? 'keyPaths' : 'paths'].push(path);
+    if (path) requirements.get(token)![asKey ? 'keyPaths' : 'paths'].push(path);
   };
   function walk(value: any, path: Path) {
     if (!value || typeof value !== 'object') return;
@@ -200,18 +211,20 @@ export function buildCatalogReference(response: any, contract: CompiledContract,
     const c = node.component as any;
     for (const [name, type] of Object.entries(c.propertyTypes || {})) if (type === 'INSTANCE_SWAP') requireResource('component', c.properties?.[name], ['snapshot', 'nodes', i, 'component', 'properties', name]);
     const variable = node.variable as any;
-    for (const collection of Object.values(resources.collection)) {
+    for (const collectionKey of Object.keys(variable.modes || {})) if (!record(variable.modeCatalog?.[collectionKey])) fail('CATALOG_MODE_IDENTITY_UNAVAILABLE');
+    for (const [collectionKey, catalog] of Object.entries(variable.modeCatalog || {}) as Array<[string, any]>) {
+      const collection = resources.collection[catalog?.collectionId];
+      if (!collection || collection.key !== collectionKey) fail('CATALOG_RESOURCE_IDENTITY_MISMATCH');
       if (Object.prototype.hasOwnProperty.call(variable.modes || {}, collection.key)) {
         requireResource('collection', collection.id, ['snapshot', 'nodes', i, 'variable', 'modeCatalog', collection.key, 'collectionId']);
         result.modePaths.push({ path: ['snapshot', 'nodes', i, 'variable', 'modes', collection.key], collectionId: collection.id });
       }
-      const catalog = variable.modeCatalog?.[collection.key];
-      if (catalog) {
-        if (typeof catalog.defaultModeId === 'string') result.modePaths.push({ path: ['snapshot', 'nodes', i, 'variable', 'modeCatalog', collection.key, 'defaultModeId'], collectionId: collection.id });
-        if (Array.isArray(catalog.modes)) catalog.modes.forEach((mode: any, index: number) => result.modePaths.push({ path: ['snapshot', 'nodes', i, 'variable', 'modeCatalog', collection.key, 'modes', index, 'modeId'], collectionId: collection.id }));
-      }
+      if (typeof catalog.defaultModeId === 'string') result.modePaths.push({ path: ['snapshot', 'nodes', i, 'variable', 'modeCatalog', collection.key, 'defaultModeId'], collectionId: collection.id });
+      if (Array.isArray(catalog.modes)) catalog.modes.forEach((mode: any, index: number) => result.modePaths.push({ path: ['snapshot', 'nodes', i, 'variable', 'modeCatalog', collection.key, 'modes', index, 'modeId'], collectionId: collection.id }));
     }
   }
+  // A selected mode may use another independently pinned alias branch.
+  for (const kind of ['variable', 'collection'] as const) for (const id of Object.keys(resources[kind])) requireResource(kind, id);
   result.resourceRequirements = Array.from(requirements.values());
   return result;
 }
@@ -236,6 +249,8 @@ export function materializeCatalogBaseline(actual: PreviewSnapshot, reference: P
  * non-native IDs so a detached actual style/token remains a detectable difference. */
 export function applyCatalogResourceRemap(reference: PreparedCatalogReference, witnesses: CatalogResourceWitness[]): PreparedCatalogReference {
   const result = clone(reference), used = new Set<CatalogResourceWitness>(), replacements = new Map<string, string>();
+  configureCatalogReference(result, witnesses);
+  indexCatalogResources(result);
   const modeMaps = new Map<string, Map<string, string>>();
   for (const requirement of result.resourceRequirements) {
     const found = witnesses.filter(w => w.kind === requirement.kind && w.sourceId === requirement.sourceId);

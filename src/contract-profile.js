@@ -24,6 +24,7 @@ const RUNTIME_VERSIONS = {
   gradientPaintFactsVersion: [1],
   ruleScopeFactsVersion: [1],
   semanticTargetVisibilityVersion: [1],
+  nativeTargetUsageFactsVersion: [1],
   paintBindingFactsVersion: [1],
   textStyleBindingFactsVersion: [1],
   textBindingIdentityFactsVersion: [1],

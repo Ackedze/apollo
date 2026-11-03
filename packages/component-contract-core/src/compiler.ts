@@ -1062,6 +1062,19 @@ export function compileManualSource(manual: ManualSource, variantEvidence?: Vari
     bindDeclaredTargetRuleSelectors(contract);
   }
   if (contract.capabilities.facts.some(f => f.startsWith('textContentV1.'))) contract.runtimePolicy.textContentFactsVersion = 1;
+  // Usage reads need exact native occurrence proof, independently of visual baseline.
+  const nativeUsageFacts: string[] = [];
+  for (const property of manual.metadata.nativeTargetUsageFactsVersion === 1 ? manual.semanticApi : []) for (const binding of property.bindings) {
+    const target = manual.targets.find(t => t.id === binding.targetId);
+    if (!target?.identityBindingsV1?.length || binding.ownedOccurrence || binding.nativeSlotBinding) continue;
+    const field = binding.path === 'visibility.effective' ? 'effectiveVisible'
+      : binding.path.startsWith('component.properties.') ? 'properties.' + binding.path.slice('component.properties.'.length) : undefined;
+    if (field) nativeUsageFacts.push('nativeTargetPropertiesV1.' + declaredTargetMembershipKey(target.id) + '.' + field);
+  }
+  if (nativeUsageFacts.length) {
+    contract.capabilities.facts = [...new Set(contract.capabilities.facts.concat(nativeUsageFacts))].sort();
+    contract.runtimePolicy.nativeTargetUsageFactsVersion = 1;
+  }
   if (contract.capabilities.facts.some(f => f.startsWith('nativeTargetPropertiesV1.'))) contract.runtimePolicy.nativeTargetPropertyFactsVersion = 1;
   if (contract.runtimePolicy.textContentFactsVersion === 1 || contract.runtimePolicy.nativeTargetPropertyFactsVersion === 1) contract.package.sourceExportVersion = 'component-contract-editor@0.2.94';
   if (contract.runtimePolicy.declaredTargetIdentityVersion === 3) contract.package.sourceExportVersion = 'component-contract-editor@0.2.95';

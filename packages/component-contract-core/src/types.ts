@@ -455,6 +455,7 @@ export type ManualSource = {
     nativeSlotTargetsVersion?: 2;
     dependencyCompletionVersion?: 1;
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     owners: {
       generated: 'athena-cli';
       manual: string;
@@ -592,6 +593,7 @@ export type PreviewSnapshot = {
     instanceSourceIdentityVersion?: 1;
     /** Capture/consumer opt-in; canonical keys may have distinct file-local main IDs. */
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     /** Opt-in occurrence addresses; unmarked historical captures retain name paths. */
     occurrenceAddressVersion?: 1;
     instanceSourceIdentityCapture?: {version:1;owners:Array<{mainComponentId:string;componentKey:string;status:string;sourceInstanceId?:string;reason?:string}>};
@@ -788,6 +790,7 @@ export type CompiledContract = {
     dependencySubjectConditionsVersion?: 1;
     assetIdentityLockVersion?: 1;
     instanceMainComponentAliasesVersion?: 1;
+    nativeTargetUsageFactsVersion?: 1;
     memberCollectionsVersion?: 1;
     directChildDependenciesVersion?: 1;
     occurrenceAddressVersion?: 1;

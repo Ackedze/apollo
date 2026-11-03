@@ -5,6 +5,9 @@ const record = (v: any): Record<string, any> => v && typeof v === 'object' && !A
 
 export function assertNativeRuleFactPolicies(contract: CompiledContract): void {
   contract = sharedUsageContract(contract);
+  if (contract.runtimePolicy.nativeTargetUsageFactsVersion !== undefined
+    && (contract.runtimePolicy.nativeTargetUsageFactsVersion !== 1 || contract.runtimePolicy.nativeTargetPropertyFactsVersion !== 1))
+    throw new Error('NATIVE_TARGET_USAGE_POLICY_UNSUPPORTED');
   const facts = new Set(contract.capabilities.facts);
   const visit = (value: unknown): void => {
     if (!value || typeof value !== 'object') return;

@@ -21,7 +21,7 @@ const {createLayerNamesBridge}=require("./skills/layer-names/native");
 const {createReglyphBridge}=require("./skills/reglyph/native");
 const {resolveNativeNode,currentPageTarget}=require("./canvas-target");
 const {contractFocusTargets}=require("./audit-focus");
-const {boundedRead,cooperativeRead,readScheduling}=require("./document-audit/reads");
+const {boundedRead,cooperativeRead,readScheduling,setHostYieldTransport,completeHostYield}=require("./document-audit/reads");
 const {trace:auditTrace}=require('./document-audit/trace');
 const {verifyFinalCaptures}=require('./audit-final-captures');
 const {minimalRoots}=require("./document-audit/scoped-recheck");
@@ -481,8 +481,9 @@ const progressBarPilot = typeof __APOLLO_PROGRESSBAR_PILOT__ !== 'undefined' && 
     readShared:(root:SceneNode)=>{const shared=areaSession?.sharedArea;if(!shared||shared.root!==root)return null;if(lastAuditRevision!==generation||shared.pageId!==figma.currentPage.id)throw Error('SHARED_AREA_STALE');return shared;} }) : null;
 progressBarPilot?.start();
 figma.showUI(__html__, { width: 800, height: 860, themeColors: true });
+const releaseHostYield = setHostYieldTransport((ticket:string) => post({type:'audit-host-yield',ticket}));
 figma.on('selectionchange', refreshSelection);
-bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
+bindAreaPage();figma.on('currentpagechange',()=>{landingCanvas?.pageChanged();invalidateArea();bindAreaPage();refreshSelection();});figma.on('close',()=>{releaseHostYield();landingCanvas?.close();if(areaPage&&typeof areaPage.off==='function')areaPage.off('nodechange',observeArea);});
 async function focusAuditFinding(message:any){
   const report=lastAudit,revision=lastAuditRevision;
   const reply=(success:boolean,text='',nodeId?:string)=>post({type:'audit-focus-result',requestId:message.requestId,auditId:message.auditId,targetId:message.targetId,success,message:text,nodeId});
@@ -505,6 +506,10 @@ function assertFocusObservation(report:any,revision:number|null){
 nativePageObserver.start();
 documentAuditBridge.start();
 figma.ui.onmessage = async (message: any) => {
+ if(message?.type==='audit-host-yield-done'){
+  if(Object.keys(message).sort().join(',')==='ticket,type' && typeof message.ticket==='string' && message.ticket.length>0 && message.ticket.length<=150) completeHostYield(message.ticket);
+  return;
+ }
   if (landingCanvas.accept(message)) return;
   if (progressBarPilot?.accept(message)) return;
   if (catalogPort.accept(message) || contractDataBridge.accept(message) || auditReportBridge.accept(message)) return;

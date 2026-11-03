@@ -115,6 +115,36 @@ test('resource overlaps map only by exact independent key witness; source visual
   assert.equal(prepared.snapshot.nodes[1].appearance.typography.styleId, 'S:source');
 });
 
+test('a source-owned BOOLEAN visibility binding configures hidden content without copying observed layout', () => {
+  const f = fixture(), root = f.response.structure[0].nativeAuditFactsV1.facts.component;
+  root.properties.Show = true; root.propertyTypes.Show = 'BOOLEAN'; root.definedProperties.push('Show');
+  const child = f.response.structure[1].nativeAuditFactsV1.facts;
+  child.component.propertyReferences = ['Show']; child.component.propertyReferenceBindings = { visible: 'Show' };
+  f.expected.selection.config = { Show: false }; f.response.selection = plain(f.expected.selection); sign(f.response);
+  const before = JSON.stringify(f.response), result = remap(build(f.response, f.contract, f.expected), []);
+  assert.equal(result.snapshot.nodes[1].visible, false);
+  assert.equal(result.snapshot.nodes[0].component.properties.Show, false);
+  assert.equal(result.snapshot.nodes[1].bounds.width, 100);
+  assert.ok(result.snapshot.nodes[1].unknownFacts.includes('bounds'));
+  assert.ok(result.snapshot.nodes[0].unknownFacts.includes('bounds'));
+  assert.equal(JSON.stringify(f.response), before);
+  const foreign = build(f.response, f.contract, f.expected);
+  foreign.snapshot.nodes[1].component.sourceIdentity.ownerComponentKey = C;
+  assert.throws(() => remap(foreign, []), /CATALOG_CONFIGURATION_UNSUPPORTED/);
+  for (const mutate of [
+    g => { g.response.structure[1].nativeAuditFactsV1.facts.component.propertyReferenceBindings.characters = 'Show'; },
+    g => { g.response.structure[1].nativeAuditFactsV1.unavailable.push('visible'); },
+    g => { g.response.structure[1].nativeAuditFactsV1.facts.visible = false; },
+    g => { g.expected.selection.config.Show = 'false'; g.response.selection = plain(g.expected.selection); },
+    g => { g.response.structure[1].nativeAuditFactsV1.facts.component.propertyReferenceBindings = {}; },
+    g => { g.response.structure[1].nativeAuditFactsV1.facts.component.propertyReferences = []; },
+    g => { g.response.structure[0].nativeAuditFactsV1.facts.component.definedProperties.push('Show'); },
+  ]) {
+    const g = plain(f); mutate(g); sign(g.response);
+    assert.throws(() => remap(build(g.response, g.contract, g.expected), []), /CATALOG_CONFIGURATION_UNSUPPORTED/);
+  }
+});
+
 test('missing actual style/token keeps a noncolliding independent expectation instead of blocking detach detection', () => {
   const f = fixture(); resources(f); const result = remap(build(f.response, f.contract, f.expected), []), n = result.snapshot.nodes[1];
   assert.match(n.appearance.typography.styleId, /^catalog-source:style:/);
@@ -168,6 +198,104 @@ test('resource mode correspondence requires unique real mode IDs and names', () 
   const result = remap(build(f.response, f.contract, f.expected), [{ kind: 'collection', sourceId: 'col', sourceKey: E, consumerId: 'consumer-col', consumerKey: E, consumerModes: [{ modeId: 'source-mode', name: 'Foreign mode' }] }]);
   assert.match(result.snapshot.nodes[1].resolvedModes['consumer-col'], /^catalog-source:mode:/);
   assert.match(result.snapshot.nodes[1].variable.modes[E], /^catalog-source:mode:/);
+});
+
+test('unused typed API properties may change only with complete wiring evidence, including hidden nodes', () => {
+  const make = () => {
+    const f = fixture(), c = f.response.structure[0].nativeAuditFactsV1.facts.component;
+    c.properties.Holding = true; c.propertyTypes.Holding = 'BOOLEAN'; c.definedProperties.push('Holding');
+    f.expected.selection.config = { Holding: false }; f.response.selection = plain(f.expected.selection); sign(f.response);
+    return f;
+  };
+  const f = make(), prepared = build(f.response, f.contract, f.expected), before = JSON.stringify(prepared);
+  assert.equal(remap(prepared, []).snapshot.nodes[0].component.properties.Holding, false);
+  assert.equal(JSON.stringify(prepared), before);
+  for (const mutate of [
+    f => { const n = f.response.structure[1].nativeAuditFactsV1.facts; n.visible = false; n.component.propertyReferences.push('Holding'); },
+    f => { f.response.structure[1].nativeAuditFactsV1.facts.component.propertyReferenceBindings.visible = 'Holding'; },
+    f => { f.expected.selection.config.Holding = 'False'; f.response.selection = plain(f.expected.selection); },
+    f => { f.response.structure[0].nativeAuditFactsV1.facts.component.propertyTypes.Holding = 'VARIANT'; },
+    f => { f.response.structure[0].nativeAuditFactsV1.facts.component.definedProperties.push('Holding'); },
+  ]) { const g = make(); mutate(g); sign(g.response); assert.throws(() => remap(build(g.response, g.contract, g.expected), []), /CATALOG_CONFIGURATION_UNSUPPORTED/); }
+});
+
+function fontModeFixture() {
+  const f = fixture(), root = f.response.structure[0].nativeAuditFactsV1, child = f.response.structure[1].nativeAuditFactsV1;
+  const font = { id: 'font-col', key: E, name: 'Font', defaultModeId: 'old', modes: [{ modeId: 'old', name: 'Original' }, { modeId: 'sf', name: 'System' }] };
+  const tracking = { id: 'tracking-col', key: '2'.repeat(40), name: 'Tracking', defaultModeId: 'fixed', modes: [{ modeId: 'fixed', name: 'Fixed' }] };
+  root.resources.collections = { 'font-col': font, 'tracking-col': tracking };
+  root.resources.variables = {
+    family: { id: 'family', key: C, variableCollectionId: font.id, resolvedType: 'STRING', valuesByMode: { old: 'Fixture', sf: 'System' } },
+    tracking: { id: 'tracking', key: D, variableCollectionId: font.id, resolvedType: 'FLOAT', valuesByMode: { old: 0, sf: { type: 'VARIABLE_ALIAS', id: 'sf-tracking' } } },
+    'sf-tracking': { id: 'sf-tracking', key: '3'.repeat(40), variableCollectionId: tracking.id, resolvedType: 'FLOAT', valuesByMode: { fixed: -0.32 } },
+  };
+  for (const n of [root, child]) n.facts.resolvedModes = { 'font-col': 'old', 'tracking-col': 'fixed' };
+  child.facts.text.letterSpacing = { unit: 'PIXELS', value: 0 };
+  child.facts.variable.bindings = { fontFamily: { tokenIds: ['family'] }, letterSpacing: { tokenIds: ['tracking'] } };
+  child.facts.hostVariableUsageV1.bindings = {
+    family: { collectionId: font.id, collectionKey: font.key, referencedVariableIds: [] },
+    tracking: { collectionId: font.id, collectionKey: font.key, referencedVariableIds: [] },
+  };
+  f.response.provenance.source.fontPairs = [{ family: 'System', style: 'Regular' }];
+  f.expected.selection.modes = { 'consumer-font': 'consumer-sf', 'consumer-tracking': 'consumer-fixed' };
+  f.response.selection = plain(f.expected.selection);
+  f.witnesses = [
+    { kind: 'collection', sourceId: font.id, sourceKey: font.key, consumerId: 'consumer-font', consumerKey: font.key,
+      consumerModes: [{ modeId: 'consumer-old', name: 'Original' }, { modeId: 'consumer-sf', name: 'System' }] },
+    { kind: 'collection', sourceId: tracking.id, sourceKey: tracking.key, consumerId: 'consumer-tracking', consumerKey: tracking.key,
+      consumerModes: [{ modeId: 'consumer-fixed', name: 'Fixed' }] },
+  ];
+  sign(f.response); return f;
+}
+
+test('mode projection follows pinned alias values, preserves explicit child modes and marks font geometry unknown', () => {
+  const f = fontModeFixture(), prepared = build(f.response, f.contract, f.expected), before = JSON.stringify(prepared);
+  const result = remap(prepared, f.witnesses), root = result.snapshot.nodes[0], child = result.snapshot.nodes[1];
+  assert.equal(child.text.fontName.family, 'System'); assert.equal(child.text.fontName.style, 'Regular');
+  assert.equal(child.text.letterSpacing.value, -0.32);
+  assert.equal(child.resolvedModes['consumer-font'], 'consumer-sf');
+  assert(child.unknownFacts.includes('bounds')); assert(root.unknownFacts.includes('bounds'));
+  const usage = Object.values(child.hostVariableUsageV1.bindings);
+  assert.equal(usage.length, 3); assert(usage.some(b => b.collectionId === 'consumer-tracking'));
+  assert.equal(JSON.stringify(prepared), before);
+  const g = fontModeFixture(); g.response.structure[1].nativeAuditFactsV1.facts.explicitModes['font-col'] = 'old'; sign(g.response);
+  const explicit = remap(build(g.response, g.contract, g.expected), g.witnesses).snapshot.nodes[1];
+  assert.equal(explicit.text.fontName.family, 'Fixture'); assert.equal(explicit.text.letterSpacing.value, 0);
+  assert.equal(explicit.resolvedModes['consumer-font'], 'consumer-old'); assert(!explicit.unknownFacts.includes('bounds'));
+});
+
+test('mode projection refuses missing aliases, cycles, unproved font pairs and changed unsupported visual fields', () => {
+  for (const [mutate, code] of [
+    [f => { delete f.response.structure[0].nativeAuditFactsV1.resources.variables['sf-tracking']; }, 'CATALOG_VARIABLE_VALUE_UNAVAILABLE'],
+    [f => { f.response.structure[0].nativeAuditFactsV1.resources.variables['sf-tracking'].valuesByMode.fixed = { type: 'VARIABLE_ALIAS', id: 'tracking' }; }, 'CATALOG_VARIABLE_ALIAS_CYCLE'],
+    [f => { f.response.structure[0].nativeAuditFactsV1.resources.variables['sf-tracking'].valuesByMode.fixed = 'wrong'; }, 'CATALOG_VARIABLE_TYPE_MISMATCH'],
+    [f => { f.response.provenance.source.fontPairs = []; }, 'CATALOG_MODE_BINDING_UNSUPPORTED'],
+    [f => { const n = f.response.structure[1].nativeAuditFactsV1.facts; n.variable.bindings.opacity = n.variable.bindings.letterSpacing; delete n.variable.bindings.letterSpacing; }, 'CATALOG_MODE_BINDING_UNSUPPORTED'],
+    [f => { f.response.structure[1].nativeAuditFactsV1.facts.hostVariableUsageV1.complete = false; }, 'CATALOG_MODE_SOURCE_UNPROVEN'],
+  ]) {
+    const f = fontModeFixture(); mutate(f); sign(f.response);
+    assert.throws(() => remap(build(f.response, f.contract, f.expected), f.witnesses), error => error.code === code);
+  }
+});
+
+test('native key witnesses for an unused collection alias do not claim its mode table for another local ID', () => {
+  const f = fontModeFixture(), root = f.response.structure[0].nativeAuditFactsV1;
+  root.resources.collections['font-alias'] = { id: 'font-alias', key: E, name: 'Font',
+    defaultModeId: 'old', modes: [{ modeId: 'old', name: 'Original' }] };
+  const aliasWitness = Object.assign({}, f.witnesses[0], { sourceId: 'font-alias' });
+  f.witnesses.push(aliasWitness); sign(f.response);
+  const prepared = build(f.response, f.contract, f.expected), result = remap(prepared, f.witnesses);
+  for (const node of result.snapshot.nodes) {
+    assert.equal(node.variable.modes[E], 'consumer-sf');
+    assert.equal(node.variable.modeCatalog[E].collectionId, 'consumer-font');
+    assert.deepEqual(plain(node.variable.modeCatalog[E].modes).map(m => m.modeId), ['consumer-old', 'consumer-sf']);
+  }
+  const ambiguous = fontModeFixture(), source = ambiguous.response.structure[0].nativeAuditFactsV1;
+  source.resources.collections['font-alias'] = plain(root.resources.collections['font-alias']);
+  ambiguous.response.structure[1].nativeAuditFactsV1.facts.resolvedModes['font-alias'] = 'old';
+  ambiguous.witnesses.push(aliasWitness); sign(ambiguous.response);
+  assert.throws(() => remap(build(ambiguous.response, ambiguous.contract, ambiguous.expected), ambiguous.witnesses),
+    error => error.code === 'CATALOG_MODE_CONFIGURATION_UNSUPPORTED');
 });
 
 test('prepared-source collectNodes and collectAnatomy read remote instances without creating pristine references', async () => {

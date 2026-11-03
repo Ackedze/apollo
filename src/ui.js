@@ -275,6 +275,10 @@ window.onmessage = event => {
   while (event.source !== ancestor && ancestor !== ancestor.parent) ancestor = ancestor.parent;
   if (event.source !== ancestor) return;
   const data = event.data?.pluginMessage; if (!data) return;
+  if(data.type==='audit-host-yield'){
+    if(Object.keys(data).sort().join(',')==='ticket,type' && typeof data.ticket==='string' && data.ticket.length>0 && data.ticket.length<=150) send({type:'audit-host-yield-done',ticket:data.ticket});
+    return;
+  }
   if (auditStatisticsClient.accept(data) || tokenJournalClient.accept(data) || uiClient.accept(data) || contractData.accept(data) || auditReports.accept(data)) return;
   if (layerNamesClient?.accept(data)) return;
   if (reglyphClient?.accept(data)) return;

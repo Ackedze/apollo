@@ -286,6 +286,12 @@ export function materializeNativeTargetProperties(snapshot: PreviewSnapshot, con
     }
     facts[key] = {properties: props};
     if (!unknown(node, 'component.identity.componentSetKey')) facts[key].componentSetKey = record(component.identity).componentSetKey;
+    if (contract.runtimePolicy.nativeTargetUsageFactsVersion === 1) {
+      facts[key].propertyTypes = Object.fromEntries(Object.keys(props).map(name => [name, record(component.propertyTypes)[name]]));
+      const visible = effectiveVisibility(node, topology);
+      if (visible !== undefined) facts[key].effectiveVisible = visible;
+      facts[key].referenceComponentSetKey = original?.identity?.componentSetKey;
+    }
     proven.set(key, path);
   }
   for (const fact of contract.capabilities.facts.filter(f => f.startsWith('nativeTargetPropertiesV1.swapCountExcept_'))) {

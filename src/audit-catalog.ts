@@ -17,11 +17,35 @@ const transitionSession = 'catalog-' + Date.now() + '-' + Math.random().toString
 let transitionSequence = 0;
 export const catalogPilotComponent = (contract: CompiledContract) => pilotComponents.has(contract.package.componentId);
 
+/** Read semantic resource facts once, without scanning inherited baselines,
+ * report traces or the UI label collector's deliberately bounded metadata. */
+function resourceReferences(snapshot: any) {
+  const references = new Map<string, {kind:string; id:string}>();
+  const add = (kind: string, id: unknown) => {
+    if (typeof id === 'string' && id) references.set(kind + ':' + id, {kind, id});
+  };
+  const visit = (value: any) => {
+    if (!value || typeof value !== 'object') return;
+    if (value.type === 'VARIABLE_ALIAS') add('token', value.id);
+    for (const [field, child] of Object.entries(value)) {
+      if (['fillStyleId', 'strokeStyleId', 'effectStyleId', 'textStyleId', 'styleId'].includes(field)) add('style', child);
+      if (field === 'tokenId' || field === 'variableId') add('token', child);
+      if (['tokenIds', 'referencedVariableIds'].includes(field) && Array.isArray(child)) child.forEach(id => add('token', id));
+      visit(child);
+    }
+  };
+  for (const node of snapshot.nodes) {
+    visit(node.appearance); visit(node.variable?.bindings);
+    visit(node.textStyleEvidenceV1); visit(node.textFillEvidenceV1);
+    for (const id of Object.keys(node.textStyleEvidenceV1?.keysById || {})) add('style', id);
+    for (const id of Object.keys(node.hostVariableUsageV1?.bindings || {})) add('token', id);
+    visit(node.hostVariableUsageV1?.bindings);
+  }
+  return references;
+}
+
 /** Resolve identities already present in the document; never import a resource. */
 async function resourceWitnesses(prepared: any, snapshot: any, control: CaptureReadControl) {
-  const { collectReferences } = require('./v3-binding/resource-labels');
-  const batch = collectReferences(snapshot);
-  if (batch.truncated) fail('CATALOG_RESOURCE_SCOPE_INCOMPLETE', 'Не удалось прочитать все связи ресурсов каталожного эталона.');
   const candidates: any[] = [], collections = new Set<string>(Object.keys(snapshot.context.modes));
   const remember = (kind: string, resource: any) => {
     if (!resource || typeof resource.id !== 'string' || typeof resource.key !== 'string')
@@ -29,7 +53,8 @@ async function resourceWitnesses(prepared: any, snapshot: any, control: CaptureR
     candidates.push(Object.assign({kind, consumerId:resource.id, consumerKey:resource.key},
       kind === 'collection' ? {consumerModes:resource.modes} : {}));
   };
-  for (const row of batch.references) {
+  const references = resourceReferences(snapshot);
+  for (const row of references.values() as Iterable<any>) {
     control.guard();
     const item = await control.read<any>(() => row.kind === 'token'
       ? figma.variables.getVariableByIdAsync(row.id) : figma.getStyleByIdAsync(row.id));
@@ -87,8 +112,17 @@ export async function captureCatalogAudit(subject: InstanceNode, contract: Compi
   const prepared = buildCatalogReference(response, contract, {releaseId, selection});
   const captureControl = Object.assign({}, control, {preparedSourceTopology:prepared.preparedSourceTopology});
   const actual = await collectNodes(subject, representation.platform, modes, undefined, captureControl);
-  const baseline = applyCatalogResourceRemap(prepared, await resourceWitnesses(prepared, actual.snapshot, control));
+  const witnesses = await resourceWitnesses(prepared, actual.snapshot, control);
+  const baseline = applyCatalogResourceRemap(prepared, witnesses);
+  const swapKeys: Record<string, string> = {};
+  if (contract.runtimePolicy.portableSwapIdentityVersion === 1) for (const requirement of baseline.resourceRequirements) {
+    if (requirement.kind !== 'component') continue;
+    const witness = witnesses.find((w: any) => w.kind === 'component' && w.sourceId === requirement.sourceId);
+    const id = witness?.consumerId || 'catalog-source:component:' + prepared.referenceHash + ':' + requirement.sourceId;
+    swapKeys[id] = requirement.sourceKey;
+  }
   for (const snapshot of [actual.snapshot, baseline.snapshot]) {
+    if (contract.runtimePolicy.portableSwapIdentityVersion === 1) snapshot.source!.swapComponentKeys = swapKeys;
     Object.assign(snapshot.source!, {componentKey:main.key, componentSetKey:setKey, representationId:representation.id});
     configureInstanceMainAliases(snapshot, contract.runtimePolicy.instanceMainComponentAliasesVersion === 1);
   }

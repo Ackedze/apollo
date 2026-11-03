@@ -1,12 +1,31 @@
 // Cached RPCs may resolve entirely in microtasks, starving host Stop messages.
-let sliceStarted=Date.now(),hostTurn=null;
+let sliceStarted=Date.now(),hostTurn=null,hostTransport=null,turnSequence=0;
+const hostSession=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
 const scheduling={readCount:0,readWaitMs:0,hostYieldCount:0,hostYieldWaitMs:0};
+function setHostYieldTransport(send){
+ if(send!==null&&typeof send!=='function')throw TypeError('HOST_YIELD_TRANSPORT_INVALID');
+ const binding=send?{send}:null;hostTransport=binding;
+ if(hostTurn)hostTurn.transport=null;
+ return()=>{if(hostTransport!==binding)return;hostTransport=null;if(hostTurn)hostTurn.transport=null;};
+}
+function finishHostTurn(turn){
+ if(hostTurn!==turn)return false;
+ clearTimeout(turn.timer);sliceStarted=Date.now();scheduling.hostYieldWaitMs+=Math.max(0,sliceStarted-turn.started);
+ hostTurn=null;turn.resolve();return true;
+}
+function completeHostYield(ticket){
+ const turn=hostTurn;
+ return typeof ticket==='string'&&turn&&turn.ticket===ticket&&turn.transport&&turn.transport===hostTransport?finishHostTurn(turn):false;
+}
 function yieldToHost(){
- if(hostTurn)return hostTurn;
+ if(hostTurn)return hostTurn.promise;
  if(Date.now()-sliceStarted<8)return null;
- const started=Date.now();scheduling.hostYieldCount++;
- hostTurn=new Promise(resolve=>setTimeout(()=>{sliceStarted=Date.now();scheduling.hostYieldWaitMs+=Math.max(0,sliceStarted-started);hostTurn=null;resolve();},0));
- return hostTurn;
+ const turn={ticket:hostSession+':'+(++turnSequence),started:Date.now(),transport:hostTransport,timer:null,resolve:null,promise:null};
+ scheduling.hostYieldCount++;turn.promise=new Promise(resolve=>{turn.resolve=resolve;});hostTurn=turn;
+ // The existing timer remains a fallback when the UI is unavailable or suspended.
+ turn.timer=setTimeout(()=>finishHostTurn(turn),0);
+ try{turn.transport?.send(turn.ticket);}catch(_){/* The armed timer still yields to the host. */}
+ return turn.promise;
 }
 function readScheduling(since={}){
  return{readCount:scheduling.readCount-(since.readCount||0),readWaitMs:scheduling.readWaitMs-(since.readWaitMs||0),hostYieldCount:scheduling.hostYieldCount-(since.hostYieldCount||0),hostYieldWaitMs:scheduling.hostYieldWaitMs-(since.hostYieldWaitMs||0)};
@@ -44,4 +63,4 @@ function readError(error,context){
  failure.nativeRead=error?.nativeRead||context;
  return failure;
 }
-module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError,readScheduling};
+module.exports={boundedRead,cooperativeRead,parallel,retryableRead,readError,readScheduling,setHostYieldTransport,completeHostYield};

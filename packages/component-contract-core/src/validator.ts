@@ -50,6 +50,11 @@ export function validateManualSource(manual: ManualSource): ValidationIssue[] {
   if (manual.metadata.instanceMainComponentAliasesVersion !== undefined && manual.metadata.instanceMainComponentAliasesVersion !== 1) {
     error('INSTANCE_MAIN_COMPONENT_ALIASES_VERSION', '/metadata/instanceMainComponentAliasesVersion', 'Unsupported native main identity aliases.');
   }
+  if (manual.metadata.nativeTargetUsageFactsVersion !== undefined && (manual.metadata.nativeTargetUsageFactsVersion !== 1
+    || ![1,2,3].includes(manual.metadata.declaredTargetIdentityVersion || 0)
+    || !manual.semanticApi.some(p => p.bindings.some(b => b.targetId && manual.targets.some(t => t.id === b.targetId && t.identityBindingsV1?.length))))) {
+    error('NATIVE_TARGET_USAGE_VERSION', '/metadata/nativeTargetUsageFactsVersion', 'Native usage facts require version1 and explicit independent target bindings.');
+  }
   if (manual.metadata.ruleOwnershipVersion !== undefined && manual.metadata.ruleOwnershipVersion !== 1) {
     error('RULE_OWNERSHIP_VERSION', '/metadata/ruleOwnershipVersion', 'Unsupported rule ownership model.');
   }

@@ -9,7 +9,7 @@ import { isDeclaredRootTarget } from './root-target';
 import { resolveComponentProperty } from './component-property-identity';
 import { declaredTargetMembershipKey } from './declared-target-membership';
 import { materializeInstanceContentReferences } from './instance-content-reference';
-import { projectPublicSwapReference, publicSwapSlots, type PublicSwapShape } from './public-swap-reference';
+import { projectPublicSwapReference, projectInactivePublicSwapReference, publicSwapSlots, type PublicSwapShape } from './public-swap-reference';
 
 export const DECLARED_TARGET_IDENTITY_VERSION = 3 as const;
 export const DECLARED_TARGET_IDENTITY_SCHEMA = 'apollo.declared-target-identities.v1' as const;
@@ -60,6 +60,12 @@ export function publicSwapDeclaredTargetReferenceHash(reference: NonNullable<Pre
     referenceHash: configurationDeclaredTargetReferenceHash(projectPublicSwapReference(reference, shape))});
 }
 
+/** A separate pin domain keeps historical public-swap contracts strict. */
+export function inactivePublicSwapDeclaredTargetReferenceHash(reference: NonNullable<PreviewSnapshot['variantReference']>, shape: PublicSwapShape): string {
+  return stableHash({schemaVersion: 'apollo.declared-target-configuration-reference.v3',
+    referenceHash: configurationDeclaredTargetReferenceHash(projectInactivePublicSwapReference(reference, shape))});
+}
+
 /** Preserve every swap value, including hidden ports; only independently resolved local IDs become published keys. */
 export function portableSwapDeclaredTargetReferenceHash(reference: NonNullable<PreviewSnapshot['variantReference']>, swapComponentKeys: Record<string,string> = {}): string | undefined {
   const projected = JSON.parse(JSON.stringify(reference));
@@ -81,7 +87,14 @@ export function portableSwapDeclaredTargetReferenceHash(reference: NonNullable<P
 
 function contractConfigurationHash(reference: NonNullable<PreviewSnapshot['variantReference']>, contract: CompiledContract, keys?: Record<string,string>): string | undefined {
   if (contract.runtimePolicy.portableSwapIdentityVersion === 1 && contract.facts.targets.some(t => t.identityBindingsV1?.some(b => b.componentKey === reference.componentKey && b.portableSwapReferenceHash))) return portableSwapDeclaredTargetReferenceHash(reference, keys);
-  if (contract.runtimePolicy.declaredTargetConfigurationVersion === 2) return publicSwapDeclaredTargetReferenceHash(reference, {targets: contract.facts.targets, policies: contract.customizationPolicy, representations: contract.facts.representations});
+  if (contract.runtimePolicy.declaredTargetConfigurationVersion === 2) {
+    const shape = {targets: contract.facts.targets, policies: contract.customizationPolicy, representations: contract.facts.representations};
+    const legacy = publicSwapDeclaredTargetReferenceHash(reference, shape);
+    const selected = shape.targets.flatMap(t => t.identityBindingsV1 || []).filter(b => b.componentKey === reference.componentKey && b.componentSetKey === reference.componentSetKey);
+    if (selected.some(b => b.configurationReferenceHash === legacy)) return legacy;
+    const portable = inactivePublicSwapDeclaredTargetReferenceHash(reference, shape);
+    return selected.some(b => b.configurationReferenceHash === portable) ? portable : legacy;
+  }
   if (contract.runtimePolicy.declaredTargetConfigurationVersion === 1) return configurationDeclaredTargetReferenceHash(reference);
 }
 

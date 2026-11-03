@@ -251,7 +251,9 @@ async function resolve(data) {
    try{
     const response=await fetch(BASE+(catalog?'/v2/contracts/catalog-resolve':'/v2/contracts/resolve'),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(catalog?{selection:data.selection,releaseId:data.releaseId}:{components:data.components,releaseId:data.releaseId}),signal:abort.signal});
     const body=await response.json().catch(error=>{if(catalog&&response.status===404)return{success:false,code:'CATALOG_ENDPOINT_REQUIRED',error:'Для проверки с каталогами нужна совместимая сборка Proxy.'};throw error;});if(task.abort.signal.aborted)return;
-    if(!response.ok||body.success===false){const error=Object.assign(Error(body.error||'PROXY_RESPONSE_INVALID'),{code:response.status>=500?'PROXY_UNAVAILABLE':body.code||'PROXY_RESPONSE_INVALID'});throw error;}
+    // Missing pinned catalogue data cannot recover by repeating the same request.
+    const catalogFailure=catalog&&typeof body.code==='string'&&/^CATALOG_[A-Z0-9_]+$/.test(body.code);
+    if(!response.ok||body.success===false){const error=Object.assign(Error(body.error||'PROXY_RESPONSE_INVALID'),{code:catalogFailure?body.code:response.status>=500?'PROXY_UNAVAILABLE':body.code||'PROXY_RESPONSE_INVALID'});throw error;}
     designCheck.setProxyStatus({available:true,version:designCheck.getState().chat.proxy.version});send({type:'contracts-resolved',requestId:data.requestId,data:body});return;
    }catch(error){
     if(task.abort.signal.aborted)return;

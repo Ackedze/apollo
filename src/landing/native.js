@@ -21,22 +21,33 @@ function createLandingCanvasBridge({api,hash,post,buildId=null,isUnavailable=()=
  function field(n,key){try{const value=n[key];return typeof value==='symbol'?'FIGMA_MIXED':value===undefined?null:JSON.parse(JSON.stringify(value));}catch(error){throw Object.assign(Error('LANDING_READ_FAILED'),{code:'LANDING_READ_FAILED',nodeId:n.id,property:key,nativeMessage:String(error?.message||error).slice(0,1000)});}}
  async function capture(r){
   const guard=()=>owned(r);owned(r,true,true);api.skipInvisibleInstanceChildren=false;
-  const sections=[],text=[],queue=[{node:r.root,section:null}],seen=new Set();let count=0,instanceCount=0,textLength=0;
+  const sections=[],text=[],nativeNodes=[],queue=[{node:r.root,section:null}],seen=new Set();let count=0,instanceCount=0,textLength=0;
   while(queue.length){
    guard();const item=queue.pop(),n=item.node;if(seen.has(n.id))fail('LANDING_TREE_INVALID',n.id);seen.add(n.id);count++;
-   let section=item.section;const sectionId=n.getSharedPluginData(NS,'section');
+   let section=item.section,component=null;const sectionId=n.getSharedPluginData(NS,'section');
    if(sectionId){
     if(n===r.root||!/^[a-zA-Z0-9_-]{1,120}$/.test(sectionId)||sections.some(s=>s.sectionId===sectionId))fail('LANDING_SECTION_INVALID',n.id);
     section={id:n.id,sectionId,type:n.type,name:n.name,width:n.width,height:n.height,componentKey:null,fields:[]};sections.push(section);
-    if(n.type==='INSTANCE'){const component=await cooperativeRead(()=>n.getMainComponentAsync(),1000,guard);guard();section.componentKey=component?.key||null;}
+    if(n.type==='INSTANCE'){component=await cooperativeRead(()=>n.getMainComponentAsync(),1000,guard);guard();section.componentKey=component?.key||null;}
    }
-   if(n.type==='INSTANCE')instanceCount++;
+   if(n.type==='INSTANCE'){
+    instanceCount++;
+    if(r.evidenceVersion===1&&!component){component=await cooperativeRead(()=>n.getMainComponentAsync(),1000,guard);guard();}
+   }
+   if(r.evidenceVersion===1){
+    const row={id:n.id,parentId:n.parent?.id||null,type:n.type,name:n.name,role:n.getSharedPluginData(NS,'role'),sectionId:section?.sectionId||null};
+    for(const key of ['x','y','width','height','visible','clipsContent','layoutMode','boundVariables','explicitVariableModes','resolvedVariableModes'])if(key in n)row[key]=field(n,key);
+    if(n.type==='INSTANCE'){row.componentKey=component?.key||null;row.componentSetKey=component?.parent?.type==='COMPONENT_SET'?component.parent.key:null;row.componentProperties=field(n,'componentProperties');}
+    if(n.type==='TEXT'){row.characters=n.characters;row.fontName=field(n,'fontName');row.hasMissingFont=field(n,'hasMissingFont');}
+    const fills='fills'in n?field(n,'fills'):null;row.imageHashes=Array.isArray(fills)?fills.filter(fill=>fill.type==='IMAGE').map(fill=>({imageHash:fill.imageHash||null,visible:fill.visible!==false})):[];
+    nativeNodes.push(row);
+   }
    if(n.type==='TEXT'){text.push(n.characters);textLength+=n.characters.length+1;if(textLength>64000)fail('LANDING_READBACK_TOO_LARGE',n.id);}
    if(section){
     const row={id:n.id,type:n.type,name:n.name,children:'children'in n?Array.from(n.children,c=>c.id):[]};
     for(const key of ['visible','opacity','fills','strokes','effects','boundVariables','explicitVariableModes','layoutMode','itemSpacing','paddingTop','paddingBottom','paddingLeft','paddingRight','componentProperties','textStyleId','fontName','fontSize','characters'])if(key in n)row[key]=field(n,key);
     if(n.id!==section.id)for(const key of ['x','y','width','height'])row[key]=field(n,key);
-    section.fields.push(row);
+    if(component)row.componentKey=component.key||null;section.fields.push(row);
    }
    if('children'in n)for(let i=n.children.length-1;i>=0;i--)queue.push({node:n.children[i],section});
    if(count%128===0){await new Promise(resolve=>setTimeout(resolve,0));guard();}
@@ -45,13 +56,14 @@ function createLandingCanvasBridge({api,hash,post,buildId=null,isUnavailable=()=
   if(r.parent!==r.page){const width=Math.max(r.parent.width,r.root.x+r.root.width+40),height=Math.max(r.parent.height,r.root.y+r.root.height+40);if(width!==r.parent.width||height!==r.parent.height)r.parent.resizeWithoutConstraints(width,height);r.parentWidth=r.parent.width;r.parentHeight=r.parent.height;}
   const rows=sections.map(s=>({id:s.id,sectionId:s.sectionId,type:s.type,name:s.name,width:s.width,height:s.height,componentKey:s.componentKey,fingerprint:hash(s.fields)}));
   const value={rootNodeId:r.root.id,pageId:r.page.id,ownerNonce:r.ownerNonce,leaseNonce:r.leaseNonce,outsideHash:r.outsideHash,nodeCount:count,instanceCount,sections:rows,text:text.join('\n'),coverage:'tagged-sections-and-text'};
+  if(r.evidenceVersion===1)value.native={schemaVersion:'apollo.landing-native.v1',nodes:nativeNodes};
   if(encodeURIComponent(JSON.stringify(value)).replace(/%[0-9A-F]{2}/g,'x').length>262144)fail('LANDING_READBACK_TOO_LARGE',r.root.id);return value;
  }
  async function open(p){
-  const fields=['chatId','revision','pageId','fileKey','rootNodeId','ownerNonce'];
+  const fields=['chatId','revision','pageId','fileKey','rootNodeId','ownerNonce'];if(Object.hasOwn(p||{},'evidenceVersion')){if(p.evidenceVersion!==1)fail('LANDING_CANVAS_INVALID');fields.push('evidenceVersion');}
   if(!(exact(p,fields)||exact(p,fields.concat('placement'))&&placementValid(p.placement))||!UUID.test(p.chatId||'')||!Number.isSafeInteger(p.revision)||p.revision<1||p.pageId!==api.currentPage.id||typeof p.fileKey!=='string'||!/^[a-zA-Z0-9_-]{6,128}$/.test(p.fileKey)||fileKey()&&fileKey()!==p.fileKey||isUnavailable())fail('LANDING_CANVAS_INVALID');
   const old=runs.get(p.chatId);
-  if(old?.active&&old.revision===p.revision){owned(old);return {target:target(old),readback:await capture(old)};}
+  if(old?.active&&old.revision===p.revision){if(old.evidenceVersion!==p.evidenceVersion)fail('LANDING_CANVAS_STALE');owned(old);return {target:target(old),readback:await capture(old)};}
   const page=api.currentPage,guard=()=>{if(api.currentPage!==page||isUnavailable())fail('LANDING_CANVAS_UNAVAILABLE');};let root,parent=page;
   if(p.rootNodeId){root=await cooperativeRead(()=>api.getNodeByIdAsync(p.rootNodeId),1000,guard);guard();if(!root||root.getSharedPluginData(NS,'owner')!==p.ownerNonce||root.getSharedPluginData(NS,'chat')!==p.chatId)fail('LANDING_CANVAS_STALE');parent=root.parent;}
   else{
@@ -68,7 +80,7 @@ function createLandingCanvasBridge({api,hash,post,buildId=null,isUnavailable=()=
    }
   }
   guard();if(root.type!=='FRAME'||parent!==page&&(parent?.type!=='SECTION'||pageOf(parent)!==page)||p.placement?.mode==='section'&&parent.id!==p.placement.sectionId||!/^[a-f0-9]{64}$/.test(root.getSharedPluginData(NS,'owner')))fail('LANDING_CANVAS_STALE');
-  const r={chatId:p.chatId,revision:p.revision,fileKey:p.fileKey,page,parent,root,parentWidth:parent.width,parentHeight:parent.height,ownerNonce:root.getSharedPluginData(NS,'owner'),leaseNonce:hash([p.chatId,p.revision,createOpaqueId()]),active:true,outsideHash:hash(outside(page,root,parent))};
+  const r={evidenceVersion:p.evidenceVersion,chatId:p.chatId,revision:p.revision,fileKey:p.fileKey,page,parent,root,parentWidth:parent.width,parentHeight:parent.height,ownerNonce:root.getSharedPluginData(NS,'owner'),leaseNonce:hash([p.chatId,p.revision,createOpaqueId()]),active:true,outsideHash:hash(outside(page,root,parent))};
   root.setSharedPluginData(NS,'active',r.leaseNonce);runs.set(p.chatId,r);
   return {target:target(r),readback:await capture(r)};
  }

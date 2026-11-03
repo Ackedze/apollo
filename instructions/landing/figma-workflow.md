@@ -6736,3 +6736,228 @@ export { PluginAPI, VariablesAPI, LibraryVariableCollection, LibraryVariable, An
     ]
   }
 }
+
+# Loaded workflow file: figma-use/references/working-with-design-systems/wwds-components.md
+
+# Components
+
+Components overlap a lot with the idea of components in a codebase, but with some gaps and other Figma-specific use cases. Components in Figma can be reusable entities that do not have a comparable library pattern, or they can be published and distributed in a library that is aligned to a code forms.
+
+Properties can vary from code in different ways, but alignment to code can still happen without a direct relationship. For example, an interactive pattern in code (like a button) can have many states. A lot of these states (active, focused etc) would be expressed in Figma as variants, which is a concept more closely aligned to properties in a code library. In the case of web this is confusing since hover is not a prop, it is a pseudo selector. At the same time, a color variant might be perfectly aligned between design and code (a property in both places). These discrepancies are accounted for in translation with Figma's Code Connect (deterministic context mapping), but in the case of these tools, must be understood to be properly used.
+
+Figma has four property types, which can be inspected through `componentPropertyDefinitions` on a component set or a non-variant component. A variant component does not own this property; inspect its parent component set instead. To fully understand the component, its descendants must be traversed. Property types include:
+
+- Variant
+  - This is reflected as permutations of the component in a Component Set on the canvas. Each variant is explicitly visualized, including an redundant permutations ("Small + Primary + Disabled" may look the same as "Small Secondary Sisabled"). These permutations create different variants implicitly in Figma and it is handled through layer naming (`Variant=Primary,Size=Small,State=Disabled`).
+- Text/String
+  - Text properties are stored on the component parent, but can be mapped to Text node descendants.
+  - `node.componentPropertyReferences.characters` on a descendant text node are how you determine where the text property is referenced (can be multiple, though unlikely).
+- Boolean
+  - Boolean properties are stored on the component parent, but can be mapped to any node descendant that can have its visibility toggled.
+  - `node.componentPropertyReferences.visible` on a descendant node are how you determine where the boolean property is referenced.
+- Instance Swap
+  - Instance swap properties are stored on the component parent, but can be mapped to Instance node descendants.
+  - `node.componentPropertyReferences.mainComponent` on a descendant instance node are how you determine where the instance property is referenced. A classic example of this is an icon property.
+
+## Descriptions
+
+Components and component sets inherit `PublishableMixin`, which includes a writable `description` string. Frames, instances, and other scene nodes do not. In `use_figma`, reading `description` on those unsupported types returns `undefined`, while assigning it throws a `no such property` TypeError. Always narrow by `node.type` before reading or writing it. Setting a description is important for any component intended to be used by others — it appears in Figma's dev mode and component panel, and is surfaced when reading component metadata.
+
+Descriptions should explain the component's intent and any non-obvious usage constraints. They are not a substitute for Code Connect annotations, but they are always visible without any tooling setup.
+
+```js
+component.description =
+  "Primary action button. Use for the single most important action on a page.";
+```
+
+Variant components (children of a component set) also have a `description` field, but in practice the component set description is what users see. Set it on the component set, not on individual variant nodes.
+
+To read descriptions when auditing:
+
+```js
+// Get all component sets and their descriptions
+figma.root
+  .findAllWithCriteria({ types: ["COMPONENT_SET"] })
+  .map((n) => ({ name: n.name, description: n.description }));
+```
+
+## Usage guidelines
+
+- [Creating components](wwds-components--creating.md): What you must consider when creating new components.
+- [Using components](wwds-components--using.md): What you must consider when trying to use the right components.
+
+## Code patterns
+
+For runnable code examples (creating, importing, discovering, inspecting components), see [component-patterns.md](../component-patterns.md).
+
+# Loaded workflow file: figma-use/references/working-with-design-systems/wwds-variables.md
+
+# Working with design systems: Variables
+
+Variables overlap a lot with the idea of tokens in a codebase, but with some gaps and other Figma-specific use cases. Variables are single value, number, string, color, boolean.
+
+In Figma you can do conditional logic and use variables to get basic prototyping functionality. String values can also be used as sophisticated placeholder setups that have different modes for different languages. Not everything you use a variable for in Figma would be used exactly the same way in code. However, for design systems, they are often synced to code in some way.
+
+One gap is the lack of composite tokens. You can't put a box shadow behind a single variable. That is an [effect style](wwds-effect-styles.md), but style values can be bound to variables. Similarly for a type ramp, you have to use [Text Styles](wwds-text-styles.md).
+
+## Model
+
+### Collections
+
+Collections can be thought of a groups in Figma. An example Collection would be "Colors" where there might be a light and dark "Mode." Each value would have two definitions.
+
+### Extended Collections
+
+Extended collections allow you to create a colleciton based on another collection and only override _some_ of the values. Just like inheritance and overrides in CSS. This aligns well for scenarios like branded color themes.
+
+### Modes
+
+Modes in Figma can be thought of like light and dark, but users can specify modes for anything, including sizes, languages (string variables exist in Figma too).
+
+### Aliasing
+
+Aliasing in Figma variables is simply when you point a variable to another variable. Common example is pointing a semantic variable to a primitive variable. Some teams also do component level tokens which adds a third component specific layer.
+
+**Decision rule:** If the source data has two tiers (primitives + semantics), create all primitives first, then create semantic variables that alias into them. If the source data is a single flat tier, create flat variables with no aliases. When in doubt, ask.
+
+### Code Syntax
+
+Code syntax is a surface area in Figma for codebase translation context. You can set WEB, iOS, and ANDROID code syntax on any variable, and when that variable is referenced in other places (visually in Figma's dev mode, or as design context when reading component metadata), this codebase form will appear. These are best thought of as "instance" documentation, eg. `var(--the-thing)` instead of `--the-thing` in the case of CSS.
+
+### Scope
+
+`variable.scopes: VariableScope[]` specifies which properties in Figma the variable can be used for. This is important when you create and when you use variables. **Always set specific scopes rather than leaving the default `ALL_SCOPES`** — it pollutes every property picker with irrelevant tokens. The more specific the better. For the canonical scope-to-use-case mapping, see [token-creation.md § Variable Scopes — Complete Reference Table](../../figma-generate-library/references/token-creation.md).
+
+Common scope values:
+
+- `ALL_SCOPES` — unrestricted; **avoid this** — it is the default but almost never the right choice. Only acceptable for very simple files with a handful of variables where the overhead of precise scoping isn't justified
+- `FRAME_FILL`, `SHAPE_FILL`, `TEXT_FILL`, `STROKE_COLOR` — color bindings (use specific fill scopes; `ALL_FILLS` covers all three fill scopes together)
+- `TEXT_CONTENT` — string variables for text layers
+- `FONT_SIZE`, `FONT_WEIGHT`, `LINE_HEIGHT`, `LETTER_SPACING` — typography
+- `CORNER_RADIUS`, `WIDTH_HEIGHT`, `GAP` — layout/spacing
+- `OPACITY` — layer opacity
+
+### Grouping
+
+Variable names in Figma are slash delimited and each slash represents a group that is visualized in Figma. When you are doing matching, consider a part of a code prefix might be the name of the collection, not a top level group. Sometimes you will have prefixes in code that aren't in Figma, and that can be ok, just be sure to ask if it is unclear. You can always validate existing variables by referencing the code syntax.
+
+## Common gotchas
+
+- **`createVariableCollection` always creates a default mode** — you will need to rename it (or delete it and add your own) rather than creating from scratch.
+- **Duplicate variable names throw silently** — Figma does not error; it creates a second variable with the same name. Always check for existence before creating.
+- **Variable aliases require the target to be in the same file** — cross-file aliasing is not supported via the plugin API. If you need to alias to a library variable, import it first.
+- **`setValueForMode` with an alias requires the exact shape** — `{ type: 'VARIABLE_ALIAS', id: '<variableId>' }`. Any deviation will silently set the wrong value or throw.
+
+## Usage guidelines
+
+- [Creating variables](wwds-variables--creating.md): What you must consider when creating new variables.
+- [Using variables](wwds-variables--using.md): What you must consider when trying to use the right variables.
+
+## Code patterns
+
+For runnable code examples (creating collections, binding variables, scopes, aliasing, discovering existing variables), see [variable-patterns.md](../variable-patterns.md).
+
+# Loaded workflow file: figma-use/references/validation-and-recovery.md
+
+# Validation Workflow & Error Recovery
+
+> Part of the [use_figma skill](../SKILL.md). How to debug, validate, and recover from errors.
+
+## Contents
+
+- `get_metadata` vs `get_screenshot`
+- Error Recovery After Failed `use_figma`
+- Recommended Workflow
+
+
+## `get_metadata` vs `get_screenshot`
+
+Prefer structural evidence returned by the write itself. Run a separate audit only when required evidence is missing or after a relevant mutation. Do NOT reach for `get_screenshot` every time — it is expensive and should be reserved for visual checks.
+
+### `get_metadata` — Use for intermediate validation (preferred)
+
+`get_metadata` returns an XML tree of node IDs, types, names, positions, and sizes. Use it to confirm:
+
+- **Structure & hierarchy**: correct parent-child relationships, component nesting, section contents
+- **Node counts**: expected number of variants created, children present
+- **Naming**: variant property names follow the `property=value` convention
+- **Positioning & alignment**: x/y coordinates, width/height values match expectations
+- **Layout properties**: auto-layout direction, sizing mode, padding, spacing
+- **Component set membership**: all expected variants are inside the ComponentSet
+
+```
+Example: After creating a ComponentSet with 120 variants, call get_metadata on the
+ComponentSet node to verify all 120 children exist with correct names, sizes, and positions
+— without waiting for a full render.
+```
+
+**When to use `get_metadata`:**
+- After creating/modifying nodes — to verify structure, counts, and names
+- After layout operations — to verify positions and dimensions
+- After combining variants — to confirm all components are in the ComponentSet
+- After binding variables — to verify node properties (use use_figma to read bound variables if needed)
+- Between multi-step workflows — to confirm step N succeeded before starting step N+1
+
+### `get_screenshot` — Use after composition or a visual fix
+
+`get_screenshot` renders a pixel-accurate image. It is the only way to verify visual correctness (colors, typography rendering, effects, variable mode resolution). Normally take one screenshot after composition. If a visual fix follows, take one post-fix screenshot; the latest passing screenshot is final. Do not add another screenshot when nothing relevant changed.
+
+**When to use `get_screenshot`:**
+- **After creating a component set** — verify variants look correct, grid is readable, nothing is collapsed or overlapping
+- **After composing a layout** — verify overall structure and spacing
+- **After binding variables/modes** — verify colors and tokens resolved correctly
+- **After any fix or recovery** — verify the fix didn't introduce new visual issues
+- **Before reporting results to the user** — final visual proof
+
+**What to look for in screenshots** — these are the most commonly missed issues:
+- **Cropped/clipped text** — line heights or frame sizing cutting off descenders, ascenders, or entire lines
+- **Overlapping content** — elements stacking on top of each other due to incorrect sizing or missing auto-layout
+- **Placeholder text** still showing ("Title", "Heading", "Button") instead of actual content
+
+## Error Recovery After Failed `use_figma`
+
+**Recovery steps when `use_figma` returns an error:**
+- If `safeToRetryWithoutCanvasRead` is `true`, fix the error and retry.
+- If `false`, read the canvas, determine what changed, then make changes.
+
+## Recommended Workflow
+
+```
+1. use_figma  →  Create/modify nodes
+2. get_metadata     →  Verify structure, counts, names, positions (fast, cheap)
+3. use_figma  →  Fix any structural issues found
+4. get_metadata     →  Re-verify fixes
+5. ... repeat as needed ...
+6. get_screenshot   →  Visual check after each major milestone
+
+⚠️ ON ERROR at any step:
+   a. safeToRetryWithoutCanvasRead=true  →  Fix the error and retry
+   b. safeToRetryWithoutCanvasRead=false →  Read the canvas, determine changes, then change
+```
+
+# Loaded workflow file: figma-generate-design/references/componentization.md
+
+# Componentize repeated and reusable elements
+
+Componentization is part of the **default** workflow, not an optional follow-up. Produce a componentized structure on the first pass — do not emit a flat tree of one-off frames and wait for a second "now make it componentized" prompt.
+
+- **Design-system instances are already componentized.** Where Step 2 found a published component, instancing it satisfies this and is the preferred path.
+- **For anything the design system does not cover, create a local component when the element repeats or maps to a reusable source component.** If the source defines a reusable component (`<ListRow>`, `<StatCard>`, `<NavItem>`) or the same element appears more than once, build it **once** with `figma.createComponent()`, then place instances with `.createInstance()` and override per-instance content — instead of hand-building N near-identical frames.
+- **Mirror the source's component boundaries.** One source component maps to one Figma main component. This keeps the output editable and matches what designers expect to receive.
+
+```js
+// Build the reusable element ONCE as a main component...
+const row = figma.createComponent();
+row.name = "List Row";
+row.layoutMode = "HORIZONTAL";
+// ...load fonts, then add its auto-layout, children, and text here...
+
+// ...then place instances and override per-item content instead of rebuilding frames.
+for (const item of items) {
+  const inst = row.createInstance();
+  // override text/props on inst (see setProperties / characters patterns above)
+  listContainer.appendChild(inst);
+}
+```
+
+Keep the main component off to the side of the wrapper (or in a dedicated components area) and place only **instances** inside the view, exactly as you do with design-system components.

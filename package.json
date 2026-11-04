@@ -1,6 +1,6 @@
 {
   "name": "apollo",
-  "version": "0.4.2",
+  "version": "0.4.6",
   "private": true,
   "description": "Apollo Figma plugin and shared contract runtime",
   "scripts": {

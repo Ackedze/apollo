@@ -100,3 +100,15 @@ UNKNOWN; реальный delivery/font/image route проверяет влад�
 Эти source changes не обновляют установленные runtime/data или плагин. Нужен отдельный
 совместимый выпуск и его ручная установка владельцем. Synthetic tests не являются
 успешным лендингом в Figma; полный прогон и затем follow-up/Stop остаются отдельной приёмкой.
+
+Сетевые повторы подтверждений не повторяют запись в Figma. UI хранит один
+pending canvas/observation payload и, при canvasTransport.version=2, его
+operationId; повторяет тот же payload, пока Proxy не подтвердит операцию.
+Потеря poll/POST/ответа сама по себе не отзывает native lease. Пауза повторов
+увеличивается до5секунд. Для старого Proxy подтверждение согласуется по
+изменению sequence; новый wire не отправляется без capability в ответе чата.
+Неопределённая запись MCP по-прежнему требует независимого чтения. Native/scope
+отказы, Stop, закрытие или смена страницы сохраняют прежний отзыв lease;
+недоставленное сообщение о fatal-отказе тоже повторяется без нового native open.
+Автотест с LANDING_TEST_TRANSPORT_FAULTS=1 теряет запросы и ответы canvas,
+observation и status poll; LANDING_TEST_LEGACY_TRANSPORT=1 проверяет прежний wire.

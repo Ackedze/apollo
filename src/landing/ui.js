@@ -73,6 +73,12 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
   if(pendingCanvas&&(next.revision!==pendingCanvas.revision||!WORKING.has(next.status)||pendingCanvas.operationId&&next.canvasTransport?.lastOperationId===pendingCanvas.operationId||next.canvasTransport?.version!==2&&next.sequence>pendingCanvas.sequence)){pendingCanvas=null;operationKey='';}
   if(!pendingCanvas)retryDelay=500;if(lastError?.retryable)lastError=null;selectChatSkill();render();}
  async function release(){if(chat?.id)await native('release',{chatId:chat.id}).catch(()=>{});}
+ async function releaseIfTerminal(){if(chat&&!WORKING.has(chat.status)&&lastRelease!==chat.id+':'+chat.revision){lastRelease=chat.id+':'+chat.revision;await release();await history();}}
+ function sameReadback(a,b){
+  if(a===b)return true;
+  if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;
+  const keys=Object.keys(a);return keys.length===Object.keys(b).length&&keys.every(key=>Object.hasOwn(b,key)&&sameReadback(a[key],b[key]));
+ }
  function schedule(){clearTimeout(timer);if(!closed&&chat&&WORKING.has(chat.status))timer=setTimeout(()=>void poll(),retryDelay);}
  async function processCanvas(token){
   if(!chat||!['awaiting-canvas','awaiting-readback'].includes(chat.status)||token!==version||canvasInFlight)return;
@@ -80,13 +86,23 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
   if(chat.status==='awaiting-canvas'&&!fileKey()){notice('Вставьте ссылку на текущий файл Figma в сообщение и отправьте его снова. Бриф сохранён.');controls();return;}
   operationKey=marker;inFlight=true;canvasInFlight=true;controls();const id=chat.id,revision=chat.revision;
   try{
+   if(pendingCanvas&&pendingCanvas.route!=='failure'){
+    const operation=pendingCanvas,latest=await api('chats/'+id);if(token!==version)return;acceptChat(latest.chat);await releaseIfTerminal();
+    if(pendingCanvas!==operation)return;
+    const t=operation.route==='canvas'?operation.body.target:chat.target,readback=await native('observe',{chatId:id,revision,rootNodeId:t.rootNodeId,ownerNonce:t.ownerNonce,leaseNonce:t.leaseNonce});if(token!==version||pendingCanvas!==operation)return;
+    if(!sameReadback(readback,operation.body.readback)){
+     const current=await api('chats/'+id);if(token!==version)return;acceptChat(current.chat);await releaseIfTerminal();
+     if(pendingCanvas!==operation)return;
+     throw Object.assign(Error('Canvas changed while its acknowledgement was unconfirmed'),{code:'LANDING_CANVAS_STALE',diagnostic:{stage:'retry-readback',rootNodeId:t.rootNodeId}});
+    }
+   }
    if(!pendingCanvas){let route,body;
     if(chat.status==='awaiting-canvas'){const payload={chatId:id,revision,pageId:chat.context.pageId,fileKey:fileKey(),rootNodeId:chat.target?.rootNodeId||null,ownerNonce:chat.target?.ownerNonce||null,placement:chat.context.placement||placement()};if(chat.source?.nativeEvidenceVersion===1)payload.evidenceVersion=1;const c=await native('open',payload);if(token!==version)return;route='canvas';body={revision,target:c.target,readback:c.readback};}
     else{const t=chat.target,readback=await native('observe',{chatId:id,revision,rootNodeId:t.rootNodeId,ownerNonce:t.ownerNonce,leaseNonce:t.leaseNonce});if(token!==version)return;route='observation';body={revision,readback};}
     const operationId=chat.canvasTransport?.version===2?uuid():null;if(operationId)body.operationId=operationId;pendingCanvas={revision,sequence:chat.sequence,operationId,route,body};
    }
    const operation=pendingCanvas,result=await api('chats/'+id+'/'+operation.route,operation.body);
-   if(token===version){acceptChat(result.chat);if(pendingCanvas===operation)pendingCanvas=null;retryDelay=500;if(!WORKING.has(chat.status)){lastRelease=id+':'+chat.revision;await release();await history();}}
+   if(token===version){acceptChat(result.chat);if(pendingCanvas===operation)pendingCanvas=null;retryDelay=500;await releaseIfTerminal();}
   }catch(e){if(token===version){
    if(e.retryable){lastError={code:e.code,retryable:true,diagnostic:{message:String(e.message).slice(0,1000)}};retryDelay=Math.min(5000,retryDelay*2);return;}
    lastError={code:/^LANDING_[A-Z_]+$/.test(e.code||'')?e.code:'LANDING_CANVAS_UNAVAILABLE',diagnostic:e.diagnostic||{message:String(e.message).slice(0,1000)}};await release();
@@ -100,7 +116,7 @@ function mountLanding({root,send,isUnavailable=()=>false,isVisible=()=>true,read
   if(!chat||closed)return;const token=version,id=chat.id;
   try{const value=await api('chats/'+id);if(token!==version)return;acceptChat(value.chat);
    if(WORKING.has(chat.status))await processCanvas(token);
-   else if(lastRelease!==id+':'+chat.revision){lastRelease=id+':'+chat.revision;await release();await history();}
+   else await releaseIfTerminal();
   }catch(e){if(token===version){lastError={code:e.code||e.message,retryable:true};retryDelay=Math.min(5000,retryDelay*2);notice('Нет связи с Proxy. Повторяем подключение; макет сохранён.');}}
   finally{if(token===version)schedule();}
  }

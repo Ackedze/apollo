@@ -6961,3 +6961,63 @@ for (const item of items) {
 ```
 
 Keep the main component off to the side of the wrapper (or in a dedicated components area) and place only **instances** inside the view, exactly as you do with design-system components.
+
+
+---
+
+# Apollo adapter technical protocol (not a loaded skill snapshot)
+
+This adapter note supplements the immutable source snapshots above. It defines
+host transport/evidence handling only; choose components, layout, slots, spacing,
+content and assets from the selected skill and applicable cited sources.
+
+- Proxy owns the full staged plan. Return only the assigned current-step delta.
+  An exact continuation reuses compatible saved execution after fresh native
+  readback. Do not replan or recreate a retained owned root.
+- New staged jobs use native evidence v2. Independent collection default metadata
+  can prove newly resolved defaults; it never licenses changing existing modes,
+  explicit overrides or bindings. Missing proof remains unknown.
+- A successful MCP write can precede native visibility. The host performs bounded
+  fresh read-only observations before any next write/model dispatch. Do not repeat
+  creation merely because one immediate snapshot lacks the new node.
+- SLOT insertion can change IDs. Use the host-confirmed `section.nodeId` and its
+  `nodeBinding` provenance. Only delivered old IDs with a unique typed owned
+  descendant of the pinned mount can be reconciled; do not infer arbitrary aliases.
+- A `bindingIssue` reopens only active structure preparation. Inspect actual root
+  and nested public properties, read the component rules, preserve CTA intent,
+  and return the corrected narrow preparation delta. Semantic action labels are
+  not automatically native root props. Never silently drop a required action.
+- Large prompt readbacks declare a projection and a `nativeRefs` dictionary.
+  Resolve those references; full native facts remain in Proxy. If more detail is
+  needed, perform a narrow read inside the owned root. A missing prompt row is
+  not evidence that the source or component lacks the data.
+- All skeletons precede content. After content, inspect delivered section/page
+  screenshots and report actual verification gaps. Stop, source pins, ownership,
+  neighboring content and total model/MCP budgets remain enforced.
+
+
+## Staged MCP write receipt and default SLOT commit
+
+For a staged write, preserve the host-provided `execution.writeContext` and use
+`finishMcpWrite(context, ownedRoot, {createdNodeIds,mutatedNodeIds,section})` as
+the final MCP return; `section` is the actual active block or null for the
+foundation. Include the needed compact technical recipe functions verbatim.
+The helper checks current root/page/parent/owner/lease. Its versioned result
+correlates the operation; only the independent native readback confirms the
+canonical node IDs and preservation of other content. Do not invent root or
+ownership report shapes or reuse another operation context.
+
+When the selected Hub recipe authorizes fresh default SLOT replacement, finish
+append, replacement verification, fresh full pristine comparison and guarded
+consumption in ONE write call. Perform source/API reads and font preparation
+before mutation. Never commit an intermediate block with the default retained
+for a later deletion: SLOT insertion can rewrite its IDs. Recheck ownership and
+lease after awaited proof and immediately before consumption; do not await
+anything after that mutation before returning the bounded receipt. Missing
+proof or unknown API stops the write. Preserve scope/Stop/source guards; never
+delete a replacement placeholder by name. Keep the complete tool-arguments JSON
+within the existing UTF8 budget by using only the needed compact functions.
+
+При вызове `createMcpInstance` передавать синхронный `beforeMutation`: проверку текущих owner/lease после загрузки шрифтов и перед созданием экземпляра. Конфликтующий новый receipt отклоняется и при прямом canonical ID.
+
+Receipt ограничен 3072 символами — фактической ёмкостью MCP observation reader. Возвращать только необходимые IDs изменённых корней, без перечня всех потомков; переполнение отклоняется до доставки усечённого доказательства.

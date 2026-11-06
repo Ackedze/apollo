@@ -24,6 +24,31 @@ test('independent readback records real tagged sections, keys and changing conte
 test('outside mutation and ownership changes fail closed without deleting the partial root',async()=>{
  const h=harness(),opened=await h.open(),t=opened.value.target,root=h.nodes.get(t.rootNodeId);h.neighbor.x++;assert.equal((await h.observe(t)).error.code,'LANDING_OUTSIDE_CHANGED');assert.ok(h.page.children.includes(root));h.neighbor.x--;root.setSharedPluginData(NS,'owner','foreign');assert.equal((await h.observe(t)).error.code,'LANDING_CANVAS_STALE');assert.ok(h.page.children.includes(root));
 });
+test('outside refusal reports exact geometry while retaining the original baseline across reads',async()=>{
+ const h=harness();h.neighbor.name='Private user content must not enter diagnostics';const opened=await h.open(),t=opened.value.target;h.neighbor.x=12;
+ const first=await h.observe(t),diff=first.error.outsideDiff;assert.equal(first.error.code,'LANDING_OUTSIDE_CHANGED');assert.equal(diff.beforeHash,opened.value.readback.outsideHash);assert.notEqual(diff.afterHash,diff.beforeHash);assert.ok(diff.changes.some(c=>c.nodeId===h.neighbor.id&&c.property==='x'&&c.before===0&&c.after===12));assert.equal(diff.truncated,false);assert.equal(JSON.stringify(first.error).includes(h.neighbor.name),false);
+ h.neighbor.x=20;const second=await h.observe(t);assert.equal(second.error.outsideDiff.beforeHash,diff.beforeHash);assert.ok(second.error.outsideDiff.changes.some(c=>c.property==='x'&&c.before===0&&c.after===20));assert.ok(h.nodes.get(t.rootNodeId));h.bridge.close();
+});
+for(const operation of ['insert','remove','order'])test('outside diagnostic retains '+operation+' topology without permitting the change',async()=>{
+ const h=harness(),other=h.node();h.page.appendChild(other);const opened=await h.open(),t=opened.value.target;
+ let expectedId,property,before,after;
+ if(operation==='insert'){const added=h.node();h.page.appendChild(added);expectedId=added.id;property='presence';before=false;after=true;}
+ if(operation==='remove'){h.page.children.splice(h.page.children.indexOf(h.neighbor),1);h.neighbor.parent=null;expectedId=h.neighbor.id;property='presence';before=true;after=false;}
+ if(operation==='order'){h.page.children.reverse();expectedId=h.neighbor.id;property='index';before=0;after=1;}
+ const reply=await h.observe(t);assert.equal(reply.error.code,'LANDING_OUTSIDE_CHANGED');assert.ok(reply.error.outsideDiff.changes.some(c=>c.nodeId===expectedId&&c.property===property&&c.before===before&&c.after===after));assert.ok(h.nodes.get(t.rootNodeId));h.bridge.close();
+});
+test('outside differences are bounded by UTF-8 bytes and retain explicit truncation',async()=>{
+ const h=harness(),neighbors=[];for(let i=0;i<40;i++){const n=h.node();n.id='foreign-'+i+'ю'.repeat(200);n.name='Secret-'+i;h.page.appendChild(n);neighbors.push(n);}const opened=await h.open();neighbors.forEach(n=>n.x++);
+ const reply=await h.observe(opened.value.target),diff=reply.error.outsideDiff;assert.equal(reply.error.code,'LANDING_OUTSIDE_CHANGED');assert.equal(diff.truncated,true);assert.equal(diff.totalChanges,40);assert(diff.changes.length<=20);assert(Buffer.byteLength(JSON.stringify(diff))<=3000);assert(Buffer.byteLength(JSON.stringify({code:reply.error.code,diagnostic:reply.error}))<=4096);assert.equal(JSON.stringify(diff).includes('Secret-'),false);h.bridge.close();
+});
+test('owned section growth retains the original outside geometry coverage',async()=>{
+ const h=harness(),opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,placement:{mode:'new-section',sectionId:null}}),t=opened.value.target,root=h.nodes.get(t.rootNodeId),parent=root.parent;
+ root.resize(1440,800);assert.equal((await h.observe(t)).error,null);assert(parent.height>=840);assert.equal((await h.observe(t)).error,null);h.bridge.close();
+});
+test('ownership failure still precedes outside diagnostics and retains the partial root',async()=>{
+ const h=harness(),opened=await h.open(),t=opened.value.target,root=h.nodes.get(t.rootNodeId);root.setSharedPluginData(NS,'owner','foreign');h.neighbor.x++;
+ const reply=await h.observe(t);assert.equal(reply.error.code,'LANDING_CANVAS_STALE');assert.equal(reply.error.outsideDiff,undefined);assert.ok(h.page.children.includes(root));
+});
 test('Stop revokes a lease while a main-component read is pending; no late continuation',async()=>{
  const h=harness(),opened=await h.open(),t=opened.value.target,root=h.nodes.get(t.rootNodeId),section=h.node('INSTANCE');section.setSharedPluginData(NS,'section','hero');let started=false,release;section.getMainComponentAsync=()=>{started=true;return new Promise(resolve=>release=resolve);};root.appendChild(section);const pending=h.observe(t);for(let i=0;i<100&&!started;i++)await new Promise(r=>setTimeout(r,1));assert.equal(started,true);await h.call('release',{chatId:CHAT});release({key:'late'});const result=await pending;assert.equal(result.error.code,'LANDING_CANVAS_UNAVAILABLE');assert.equal(root.getSharedPluginData(NS,'active'),'');assert.equal(h.bridge.busy(),false);assert.ok(h.page.children.includes(root));
 });
@@ -69,4 +94,40 @@ test('negotiated native evidence reads actual hierarchy, nested keys, props, mod
 });
 test('legacy capture stays compatible and a lease cannot change its negotiated evidence version',async()=>{
  const h=harness(),opened=await h.open();assert.equal(Object.hasOwn(opened.value.readback,'native'),false);const changed=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:1});assert.equal(changed.error.code,'LANDING_CANVAS_STALE');h.bridge.close();
+});
+test('v2 independently reads collection defaults and leaves missing library evidence unknown',async()=>{
+ const h=harness();h.api.variables={getVariableCollectionByIdAsync:async id=>id==='known'?{defaultModeId:'default'}:null};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2});assert.equal(opened.error,null);const t=opened.value.target,root=h.nodes.get(t.rootNodeId);root.resolvedVariableModes={known:'default',unknown:'chosen'};
+ const result=await h.observe(t);assert.equal(result.error,null);assert.equal(result.value.native.schemaVersion,'apollo.landing-native.v2');assert.deepEqual(result.value.native.modeDefaults,{known:'default'});assert.deepEqual(result.value.native.nodes[0].resolvedVariableModes,{known:'default',unknown:'chosen'});h.bridge.close();
+});
+test('v2 captures a complete snapshot above256KiB while legacy remains bounded',async()=>{
+ const h=harness(),modes=Object.fromEntries(Array.from({length:100},(_,i)=>['VariableCollectionId:fixture-'+i+'/1:1','1:0']));h.api.variables={getVariableCollectionByIdAsync:async()=>({defaultModeId:'1:0'})};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2}),t=opened.value.target,root=h.nodes.get(t.rootNodeId);assert.equal(opened.error,null);
+ for(let i=0;i<65;i++){const n=h.node();n.resolvedVariableModes=modes;root.appendChild(n);}
+ const result=await h.observe(t);assert.equal(result.error,null);assert.equal(result.value.native.nodes.length,66);assert(Buffer.byteLength(JSON.stringify(result.value))>262144);assert(Buffer.byteLength(JSON.stringify(result.value))<2*1024*1024);h.bridge.close();
+});
+test('v2 refuses an inconsistent snapshot rather than certifying fields changed during metadata reads',async()=>{
+ const h=harness();let root;h.api.variables={getVariableCollectionByIdAsync:async()=>{root.name='Changed during capture';return {defaultModeId:'default'};}};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2}),t=opened.value.target;root=h.nodes.get(t.rootNodeId);root.resolvedVariableModes={known:'default'};
+ assert.equal((await h.observe(t)).error.code,'LANDING_READBACK_UNSTABLE');assert.ok(h.page.children.includes(root));h.bridge.close();
+});
+test('unknown evidence version is refused before creating a root',async()=>{
+ const h=harness(),before=h.page.children.length;const result=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:3});assert.equal(result.error.code,'LANDING_CANVAS_INVALID');assert.equal(h.page.children.length,before);assert.equal(h.bridge.busy(),false);h.bridge.close();
+});
+test('v2 refuses a snapshot above2MiB without returning partial evidence or deleting nodes',async()=>{
+ const h=harness(),modes=Object.fromEntries(Array.from({length:100},(_,i)=>['VariableCollectionId:fixture-'+i+'/1:1','1:0']));h.api.variables={getVariableCollectionByIdAsync:async()=>({defaultModeId:'1:0'})};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2}),t=opened.value.target,root=h.nodes.get(t.rootNodeId);
+ for(let i=0;i<600;i++){const n=h.node();n.resolvedVariableModes=modes;root.appendChild(n);}
+ const result=await h.observe(t);assert.equal(result.error.code,'LANDING_READBACK_TOO_LARGE');assert.equal(result.value,null);assert.equal(root.children.length,600);h.bridge.close();
+});
+test('Stop during independent default-mode reads revokes the lease without a late snapshot',async()=>{
+ const h=harness();let started=false,release;h.api.variables={getVariableCollectionByIdAsync:()=>{started=true;return new Promise(resolve=>release=resolve);}};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2}),t=opened.value.target,root=h.nodes.get(t.rootNodeId);root.resolvedVariableModes={known:'default'};
+ const pending=h.observe(t);for(let i=0;i<100&&!started;i++)await new Promise(r=>setTimeout(r,1));assert(started);await h.call('release',{chatId:CHAT});release({defaultModeId:'default'});
+ const result=await pending;assert.equal(result.error.code,'LANDING_CANVAS_UNAVAILABLE');assert.equal(h.bridge.busy(),false);assert.ok(h.page.children.includes(root));h.bridge.close();
+});
+for(const mutation of ['child-added','section-tag','image'])test('v2 refuses '+mutation+' changed during metadata reads',async()=>{
+ const h=harness();let root;h.api.variables={getVariableCollectionByIdAsync:async()=>{if(mutation==='child-added')root.appendChild(h.node());if(mutation==='section-tag')root.setSharedPluginData(NS,'section','foreign');if(mutation==='image')root.fills=[{type:'IMAGE',imageHash:'changed'}];return {defaultModeId:'default'};}};
+ const opened=await h.call('open',{chatId:CHAT,revision:1,pageId:h.page.id,fileKey:'FileKey123',rootNodeId:null,ownerNonce:null,evidenceVersion:2}),t=opened.value.target;root=h.nodes.get(t.rootNodeId);root.resolvedVariableModes={known:'default'};
+ assert.equal((await h.observe(t)).error.code,'LANDING_READBACK_UNSTABLE');h.bridge.close();
 });
